@@ -1,0 +1,28 @@
+[project]
+name = "Fortis"
+version = "0.1.0"
+description = "A featural, autosegmental phonology engine"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pydantic>=2.13.4",
+    "rich>=15.0.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "D", "B", "C4", "UP"]
+ignore = ["D100", "D104"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.39.6",
+    "pytest>=9.0.3",
+    "ruff>=0.15.14",
+]

@@ -1,0 +1,33 @@
+# Segmental
+"ʰ" = { tier = "segment", type = "after", feature_set = "-vc, 1 glap, 0 tns" }
+"ʱ" = { tier = "segment", type = "after", feature_set = "+vc, 1 glap, -1 tns" }
+"ʷ" = { tier = "segment", type = "after", feature_set = "+labial, +rounded" }
+"ⁿ" = { tier = "segment", type = "before", feature_set = "nasal" }
+"̩" = { tier = "segment", type = "combining", feature_set = "+syll" }
+"̯" = { tier = "segment", type = "combining", feature_set = "-syll" }
+# Length
+"ː" = { tier = "segment", type = "after", feature_set = "length: long"}
+"ːː" = { tier = "segment", type = "after", feature_set = "length: overlong"}
+# Primary stress
+"ˈ" = { tier = "syllable", type = "before", boundary = true, feature_set = "stress: primary", default = true }
+"." = { tier = "syllable", type = "after", boundary = true, feature_set = "", default = true }
+# Tone diacritics
+"̋" = { tier = "syllable", type = "combining", feature_set = "tone: 5" }
+"́" = { tier = "syllable", type = "combining", feature_set = "tone: 4" }
+"̄" = { tier = "syllable", type = "combining", feature_set = "tone: 3" }
+"̀" = { tier = "syllable", type = "combining", feature_set = "tone: 2" }
+"̏" = { tier = "syllable", type = "combining", feature_set = "tone: 1" }
+"̂" = { tier = "syllable", type = "combining", feature_set = "tone: 5>3" }
+"̌" = { tier = "syllable", type = "combining", feature_set = "tone: 3>5" }
+"᷇" = { tier = "syllable", type = "combining", feature_set = "tone: 5>3" }
+"᷆" = { tier = "syllable", type = "combining", feature_set = "tone: 3>1" }
+"᷄" = { tier = "syllable", type = "combining", feature_set = "tone: 3>5" }
+"᷅" = { tier = "syllable", type = "combining", feature_set = "tone: 1>3" }
+"᷈" = { tier = "syllable", type = "combining", feature_set = "tone: 5>3>5" }
+"᷉" = { tier = "syllable", type = "combining", feature_set = "tone: 3>1>3" }
+# Tone letters
+"˥" = { tier = "syllable", type = "after", feature_set = "tone: 5", default = true }
+"˦" = { tier = "syllable", type = "after", feature_set = "tone: 4", default = true }
+"˧" = { tier = "syllable", type = "after", feature_set = "tone: 3", default = true }
+"˨" = { tier = "syllable", type = "after", feature_set = "tone: 2", default = true }
+"˩" = { tier = "syllable", type = "after", feature_set = "tone: 1", default = true }

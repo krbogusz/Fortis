@@ -1,0 +1,5 @@
+vowel = { level = 5, feature_set = "syllabic: +", nucleus = true }
+glide = { level = 4, feature_set = "syllabic: -, consonantal: +", nucleus = false }
+nasal = { level = 3, feature_set = "consonantal: +, nasal: +", nucleus = false }
+sibilant = { level = 2, feature_set = "consonantal: +, strident: +", nucleus = false }
+plosive = { level = 1, feature_set = "consonantal: +", nucleus = false }

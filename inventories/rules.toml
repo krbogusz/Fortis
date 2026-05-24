@@ -1,0 +1,4 @@
+[1200.final_devoicing]
+name = "Final devoicing"
+description = "Devoices the final consonant in a sequence"
+definition = "[+cons, -syll] → [-vc] / _#"
