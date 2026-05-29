@@ -9,10 +9,8 @@ def main():
     print(f"Loaded {len(inventories.letters)} letters")
 
     sequence = string_to_sequence("ˈɣʷet͡s.roː", inventories)
-    for segment in sequence:
-        print(segment)
-        print(" ")
     print(sequence.present(inventories.features))
+    print("\n")
     sequence = string_to_sequence("ˈbʱleɣʷ.moː", inventories)
     print(sequence.present(inventories.features))
 

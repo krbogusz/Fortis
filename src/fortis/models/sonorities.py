@@ -22,7 +22,6 @@ class SonorityDefinition:
     label: str
     level: int
     bundle: FeatureBundle | None
-    nucleus: bool
 
     @classmethod
     def load(
@@ -45,10 +44,6 @@ class SonorityDefinition:
         if bundle_result.is_err():
             error_list.extend(bundle_result.unwrap_err())
 
-        nucleus_result = cls._load_nucleus(label, sonority_def_dict)
-        if nucleus_result.is_err():
-            error_list.extend(nucleus_result.unwrap_err())
-
         if error_list:
             return Err(error_list)
         else:
@@ -57,7 +52,6 @@ class SonorityDefinition:
                     label,
                     level_result.unwrap(),
                     bundle_result.unwrap(),
-                    nucleus_result.unwrap(),
                 )
             )
 
@@ -100,24 +94,19 @@ class SonorityDefinition:
             return Err(bundle_result.unwrap_err())
         return Ok(bundle_result.unwrap())
 
-    @staticmethod
-    def _load_nucleus(label: str, sonority_def_dict: dict) -> Result[bool, str]:
-        """Parse the optional 'nucleus' field (defaults to False).
-
-        Args:
-            label: Sonority label (for error messages).
-            sonority_def_dict: Raw dictionary from the TOML file.
-        """
-        value = sonority_def_dict.get("nucleus")
-        if not value:
-            return Ok(False)
-        if not isinstance(value, bool):
-            return Err(f"Sonority '{label}' 'nucleus' must be 'true' or 'false'")
-        return Ok(value)
-
 
 class SonorityInventory(UserDict[str, SonorityDefinition]):
     """Sonority levels keyed by label."""
+
+    def _sort_by_specificity(self):
+        """Sort definitions by specificity for matching (most specific first).
+
+        More features in the bundle means more specific; higher level breaks ties.
+        """
+        self._sorted: list[SonorityDefinition] = sorted(
+            self.data.values(),
+            key=lambda d: (-(len(d.bundle) if d.bundle else 0), -d.level),
+        )
 
     @classmethod
     def load(cls, path: Path, inventory: FeatureInventory) -> Result[SonorityInventory, list[str]]:
@@ -155,6 +144,7 @@ class SonorityInventory(UserDict[str, SonorityDefinition]):
             return Err(error_list)
 
         inv = cls(sonority_inventory)
+        inv._sort_by_specificity()
         check_result = inv.validate()
         if check_result.is_err():
             return Err(check_result.unwrap_err())
@@ -176,3 +166,20 @@ class SonorityInventory(UserDict[str, SonorityDefinition]):
         if error_list:
             return Err(error_list)
         return Ok(None)
+
+    def assign_sonority(self, segment: FeatureBundle) -> SonorityDefinition:
+        """Match a segment against sonority definitions, most-specific-first.
+
+        Args:
+            segment: Feature bundle of the segment to classify.
+
+        Returns:
+            The matching SonorityDefinition.
+
+        Raises:
+            ValueError: If no sonority definition matches the segment.
+        """
+        for sonority_def in self._sorted:
+            if sonority_def.bundle is None or sonority_def.bundle.matches(segment):
+                return sonority_def
+        raise ValueError(f"No sonority definition matches segment {segment}")

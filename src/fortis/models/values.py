@@ -4,6 +4,17 @@ from src.fortis.models.feature_inventory import FeatureInventory
 from src.fortis.result import Err, Ok, Result
 
 
+def present_value(value: int | None) -> str:
+    """Format a single feature value as a display string."""
+    if value is None:
+        return "∅"
+    if value == 1:
+        return "+"
+    if value == 0:
+        return "-"
+    return str(value)
+
+
 def value_from_str(
     raw_string: str, feature: str, inventory: FeatureInventory, bare_unary_means_present: bool = False
 ) -> Result[int | list[int | None] | None, str]:

@@ -3,8 +3,8 @@ from pathlib import Path
 
 from src.fortis.general.file_handling import load_csv_file
 from src.fortis.models.feature_bundle import FeatureBundle
-from src.fortis.models.feature_spec import FeatureSpec
 from src.fortis.models.feature_inventory import FeatureInventory
+from src.fortis.models.feature_spec import FeatureSpec
 from src.fortis.models.values import single_value_from_str
 from src.fortis.result import Err, Ok, Result
 
@@ -41,7 +41,7 @@ class LetterInventory(UserDict[str, FeatureBundle]):
                 error_list.append("Letter is missing required field 'symbol'")
                 continue
 
-            bundle = FeatureBundle()
+            bundle = FeatureBundle(inventory=inventory)
             row_errors = False
             for feature_name, raw_value in row.items():
                 if feature_name == "symbol":

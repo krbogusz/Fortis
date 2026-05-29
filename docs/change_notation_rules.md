@@ -51,7 +51,7 @@
 - `[cont: @2>3] ` – Existential: F is + at the second and third place in the contour
 - `[cont: @all]` – Existential: F is + in every place in the contour
 
-### 1.6 Autosegmental notation (experimental)
+### 1.6 Autosegmental notation (experimental, not yet for use)
 
 `[+syll] ===> [coronal=1] / [+syll, coronal=1] [-syll]* _`
 
@@ -135,9 +135,9 @@ A `+syll` segment links (`===>`) to a specific coronal feature from a preceding 
 
 1. If a parent feature is set to unspecified, its child features are also unspecified.
 2. Alpha variable binding to a parent feature automatically binds to all child features.
-3. A parent node name in feature bundle position with no value (`[Place]`) matches any segment that has that node
+3. A parent node name in feature bundle position with no value (`[place]`) matches any segment that has that node
    specified, regardless of children.
-4. `[Node: ∅]` denotes a delinked node; all children are simultaneously unspecified by §10.1. This is the
+4. `[node: ∅]` denotes a delinked node; all children are simultaneously unspecified by §10.1. This is the
    canonical debuccalization/placeless representation.
 
 ### 11. Contour rules

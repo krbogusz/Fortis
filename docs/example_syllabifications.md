@@ -1,8 +1,8 @@
-pstra → pstra
-pasta → pas.ta
+kata → ka.ta
+kasta → kas.ta
 patsa → pat.sa
 tapsa → tap.sa
+kapsa → kap.sa
 spatsa → spat.sa
-kapsta → kap.sta
-
-
+kapstak → kap.stak
+kapspstak → kaps.pstak

@@ -1,0 +1,3 @@
+[1200]
+onset = { required = "[+cons, -syll]*", forbidden = "$[+cons, +nas, +vel]" }
+nucleus = { required = "[+syll]" }

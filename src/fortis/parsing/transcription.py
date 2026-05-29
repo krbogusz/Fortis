@@ -15,7 +15,7 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> Sequence:
         inventories: Inventories.
     """
     segments: list[FeatureBundle] = []
-    buffer: FeatureBundle = FeatureBundle({})
+    buffer: FeatureBundle = FeatureBundle(inventory=inventories.features)
     i = 0
 
     while i < len(raw_string):
@@ -35,7 +35,7 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> Sequence:
                     segment = inventories.letters[letter_symbol]
                     segment = segment.combine_with(buffer)
                     segments.append(segment)
-                    buffer = FeatureBundle({})
+                    buffer = FeatureBundle(inventory=inventories.features)
                     i += len(letter_symbol)
                     break
             else:

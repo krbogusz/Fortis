@@ -1,5 +1,8 @@
-vowel = { level = 5, feature_bundle = "syllabic: +", nucleus = true }
-glide = { level = 4, feature_bundle = "syllabic: -, consonantal: -", nucleus = false }
-nasal = { level = 3, feature_bundle = "consonantal: +, nasal: +", nucleus = false }
-sibilant = { level = 2, feature_bundle = "consonantal: +, strident: +", nucleus = false }
-plosive = { level = 1, feature_bundle = "consonantal: +", nucleus = false }
+# Levels
+vowel     = { level = 7, feature_bundle = "syllabic: +, consonantal: -"}
+glide     = { level = 6, feature_bundle = "consonantal: -, sonorant: +" }
+rhotic    = { level = 5, feature_bundle = "consonantal: +, sonorant: +, nasal: none, lateral: none" }
+lateral   = { level = 4, feature_bundle = "consonantal: +, sonorant: +, lateral: +" }
+nasal     = { level = 3, feature_bundle = "sonorant: +, nasal: +" }
+fricative = { level = 2, feature_bundle = "sonorant: -, continuant: +" }
+stop      = { level = 1, feature_bundle = "sonorant: -" }

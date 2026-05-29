@@ -3,22 +3,40 @@ from collections import UserDict
 from src.fortis.models.feature_inventory import FeatureInventory
 from src.fortis.models.feature_spec import FeatureSpec, Place
 from src.fortis.models.tiers import Tier
+from src.fortis.models.values import present_value
 from src.fortis.result import Err, Ok, Result
-
-
-def _present_value(value: int | None) -> str:
-    """Format a single feature value as a display string."""
-    if value is None:
-        return "?"
-    if value == 1:
-        return "+"
-    if value == 0:
-        return "-"
-    return str(value)
 
 
 class FeatureBundle(UserDict[str, FeatureSpec]):
     """A collection of feature specifications, keyed by feature name."""
+
+    def __init__(self, *args, inventory: FeatureInventory | None = None, **kwargs):
+        """Init with a reference to inventory."""
+        super().__init__(*args, **kwargs)
+        self._inventory = inventory
+
+    def __repr__(self) -> str:
+        """Represent a feature bundle."""
+        parts: list[str] = []
+        for name, spec in self.data.items():
+            value = spec.value
+            if value is None:
+                parts.append(f"{name}: ∅")
+            elif isinstance(value, list):
+                vals = ">".join(present_value(v) for v in value)
+                parts.append(f"{name}: {vals}")
+            elif self._inventory and name in self._inventory:
+                ft_def = self._inventory[name]
+                if ft_def.type in ("unary", "binary"):
+                    parts.append(f"{name}: {present_value(value)}")
+                else:
+                    label = ft_def.values.get(value, str(value))
+                    parts.append(f"{name}: {label}")
+            elif value in (0, 1):
+                parts.append(f"{name}: {present_value(value)}")
+            else:
+                parts.append(f"{name}: {value}")
+        return "{" + ", ".join(parts) + "}"
 
     @classmethod
     def from_str(
@@ -36,7 +54,7 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         string = raw_string.replace(" ", "").replace(";", ",")
         tokens = [t for t in string.split(",") if t]
 
-        bundle = cls()
+        bundle = cls(inventory=inventory)
         for token in tokens:
             result = FeatureSpec.from_string(token, inventory, bare_unary_means_present)
             if result.is_err():
@@ -99,22 +117,31 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
             if ft_def.tier == Tier.syllable and not has_syllable:
                 lines.append("---")
                 has_syllable = True
-            spec = self.data[feature_name]
             short = ft_def.short
-            if isinstance(spec.value, list):
-                vals = ">".join(_present_value(v) for v in spec.value)
-                lines.append(f"{short}:{vals}")
-            else:
-                lines.append(f"{short}:{_present_value(spec.value)}")
+            spec = self.data[feature_name]
+            if ft_def.type == "unary":
+                lines.append(short)
+            elif ft_def.type == "binary":
+                if isinstance(spec.value, list):
+                    vals = ">".join(present_value(v) for v in spec.value)
+                    lines.append(f"{short}: {vals}")
+                else:
+                    lines.append(f"{short}: {present_value(spec.value)}")
+            elif ft_def.type == "scalar":
+                if isinstance(spec.value, list):
+                    vals = ">".join(present_value(v) for v in spec.value)
+                    lines.append(f"{short}: {vals}")
+                else:
+                    lines.append(f"{short}: {spec.value if spec.value is not None else '∅'}")
 
         if not lines:
             return ["⎡⎤"]
 
         width = max(len(line) for line in lines)
-        result = [f"⎡{lines[0]:^{width}}⎤"]
+        result = [f"⎡{lines[0]:<{width}}⎤"]
         if len(lines) > 1:
-            result.extend(f"⎢{line:^{width}}⎥" for line in lines[1:-1])
-            result.append(f"⎣{lines[-1]:^{width}}⎦")
+            result.extend(f"⎢{line:<{width}}⎥" for line in lines[1:-1])
+            result.append(f"⎣{lines[-1]:<{width}}⎦")
 
         return result
 
@@ -125,7 +152,8 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
             other: The bundle to merge in.
             form_contours: If True, overlapping features form contours instead of overriding.
         """
-        result = FeatureBundle(dict(self.data))
+        inventory = self._inventory or other._inventory
+        result = FeatureBundle(dict(self.data), inventory=inventory)
         for feature_name, feature_spec in other.items():
             if feature_name not in result:
                 result[feature_name] = feature_spec
