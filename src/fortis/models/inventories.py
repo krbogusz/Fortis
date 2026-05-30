@@ -7,6 +7,7 @@ from src.fortis.models.feature_definition import FeatureDefinition
 from src.fortis.models.feature_inventory import FeatureInventory
 from src.fortis.models.letters import LetterInventory
 from src.fortis.models.sonorities import SonorityInventory
+from src.fortis.models.syllable_settings import SyllableSettings
 from src.fortis.models.tiers import Tier
 from src.fortis.result import present_errors
 
@@ -26,6 +27,7 @@ class Inventories:
     letters: LetterInventory
     diacritics: DiacriticInventory
     sonorities: SonorityInventory
+    syllable_settings: SyllableSettings
 
     # Pre-computed sorted symbol lists for greedy longest-first matching
     segment_diacritic_keys: list[str] = field(init=False, repr=False)
@@ -76,6 +78,10 @@ class Inventories:
         if sonorities_result.is_err():
             error_list.extend(sonorities_result.unwrap_err())
 
+        syllable_settings_result = SyllableSettings.load(dir_path / "syllable_settings.toml", features)
+        if syllable_settings_result.is_err():
+            error_list.extend(syllable_settings_result.unwrap_err())
+
         if error_list:
             raise ValueError(present_errors(error_list))
 
@@ -84,6 +90,7 @@ class Inventories:
             letters=letters_result.unwrap(),
             diacritics=diacritics_result.unwrap(),
             sonorities=sonorities_result.unwrap(),
+            syllable_settings=syllable_settings_result.unwrap(),
         )
 
     def segment_features(self) -> dict[str, FeatureDefinition]:

@@ -10,11 +10,6 @@ from src.fortis.result import Err, Ok, Result
 class FeatureBundle(UserDict[str, FeatureSpec]):
     """A collection of feature specifications, keyed by feature name."""
 
-    def __init__(self, *args, inventory: FeatureInventory | None = None, **kwargs):
-        """Init with a reference to inventory."""
-        super().__init__(*args, **kwargs)
-        self._inventory = inventory
-
     def __repr__(self) -> str:
         """Represent a feature bundle."""
         parts: list[str] = []
@@ -25,17 +20,8 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
             elif isinstance(value, list):
                 vals = ">".join(present_value(v) for v in value)
                 parts.append(f"{name}: {vals}")
-            elif self._inventory and name in self._inventory:
-                ft_def = self._inventory[name]
-                if ft_def.type in ("unary", "binary"):
-                    parts.append(f"{name}: {present_value(value)}")
-                else:
-                    label = ft_def.values.get(value, str(value))
-                    parts.append(f"{name}: {label}")
-            elif value in (0, 1):
-                parts.append(f"{name}: {present_value(value)}")
             else:
-                parts.append(f"{name}: {value}")
+                parts.append(f"{name}: {spec.value}")
         return "{" + ", ".join(parts) + "}"
 
     @classmethod
@@ -54,7 +40,7 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         string = raw_string.replace(" ", "").replace(";", ",")
         tokens = [t for t in string.split(",") if t]
 
-        bundle = cls(inventory=inventory)
+        bundle = cls()
         for token in tokens:
             result = FeatureSpec.from_string(token, inventory, bare_unary_means_present)
             if result.is_err():
@@ -152,8 +138,7 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
             other: The bundle to merge in.
             form_contours: If True, overlapping features form contours instead of overriding.
         """
-        inventory = self._inventory or other._inventory
-        result = FeatureBundle(dict(self.data), inventory=inventory)
+        result = FeatureBundle(dict(self.data))
         for feature_name, feature_spec in other.items():
             if feature_name not in result:
                 result[feature_name] = feature_spec

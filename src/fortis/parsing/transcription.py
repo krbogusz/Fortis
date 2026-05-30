@@ -15,17 +15,24 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> Sequence:
         inventories: Inventories.
     """
     segments: list[FeatureBundle] = []
-    buffer: FeatureBundle = FeatureBundle(inventory=inventories.features)
+    buffer: FeatureBundle = FeatureBundle()
+    syllable_buffer: FeatureBundle = FeatureBundle()
+    last_nucleus_index = -1
     i = 0
 
     while i < len(raw_string):
         remaining = raw_string[i:]
 
-        # 1. Before diacritics (accumulated in buffer)
+        # 1. Before diacritics (accumulated in buffers)
         for diacritic_symbol in inventories.before_diacritic_keys:
             if remaining.startswith(diacritic_symbol):
-                diacritic = inventories.diacritics[diacritic_symbol]
-                buffer = buffer.combine_with(diacritic.bundle, form_contours=diacritic.contour)
+                diacritic_def = inventories.diacritics[diacritic_symbol]
+                if diacritic_symbol in inventories.syllable_diacritic_keys:
+                    syllable_buffer = syllable_buffer.combine_with(
+                        diacritic_def.bundle, form_contours=diacritic_def.contour
+                    )
+                else:
+                    buffer = buffer.combine_with(diacritic_def.bundle, form_contours=diacritic_def.contour)
                 i += len(diacritic_symbol)
                 break
         else:
@@ -34,16 +41,26 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> Sequence:
                 if remaining.startswith(letter_symbol):
                     segment = inventories.letters[letter_symbol]
                     segment = segment.combine_with(buffer)
+                    if inventories.syllable_settings.nucleus.matches(segment):
+                        segment = segment.combine_with(syllable_buffer)
+                        last_nucleus_index = len(segments) - 1
                     segments.append(segment)
-                    buffer = FeatureBundle(inventory=inventories.features)
+                    buffer = FeatureBundle()
                     i += len(letter_symbol)
                     break
             else:
                 # 3. Attaching diacritics (combining + after)
                 for diacritic_symbol in inventories.attaching_diacritic_keys:
                     if remaining.startswith(diacritic_symbol):
-                        diacritic = inventories.diacritics[diacritic_symbol]
-                        segments[-1] = segments[-1].combine_with(diacritic.bundle, form_contours=diacritic.contour)
+                        diacritic_def = inventories.diacritics[diacritic_symbol]
+                        if diacritic_symbol in inventories.syllable_diacritic_keys:
+                            segments[last_nucleus_index] = segments[last_nucleus_index].combine_with(
+                                diacritic_def.bundle, form_contours=diacritic_def.contour
+                            )
+                        else:
+                            segments[-1] = segments[-1].combine_with(
+                                diacritic_def.bundle, form_contours=diacritic_def.contour
+                            )
                         i += len(diacritic_symbol)
                         break
                 else:
