@@ -1,0 +1,193 @@
+"""Presentation functions for Fortis model objects.
+
+All display/formatting logic lives here so that model classes stay
+focused on data and matching.  Every function takes the model object
+as its first argument, keeping presentation separate from identity.
+"""
+
+from __future__ import annotations
+
+from src.fortis.inventories.feature_inventory import FeatureInventory
+from src.fortis.models.feature_bundle import FeatureBundle
+from src.fortis.models.sequence import Sequence
+from src.fortis.models.tiers import Tier
+
+# ---------------------------------------------------------------------------
+# Primitive formatters
+# ---------------------------------------------------------------------------
+
+
+def present_value(value: int | None) -> str:
+    """Format a single feature value as a display string.
+
+    Maps: ``None`` → ``"∅"``, ``1`` → ``"+"``, ``0`` → ``"-"``,
+    otherwise ``str(value)``.
+    """
+    if value is None:
+        return "∅"
+    if value == 1:
+        return "+"
+    if value == 0:
+        return "-"
+    return str(value)
+
+
+def format_feature(short: str, feature_type: str, value: int | list[int | None] | None) -> str:
+    """Format a single feature as a display string.
+
+    Args:
+        short: Short/abbreviated feature name.
+        feature_type: ``"unary"``, ``"binary"``, or ``"scalar"``.
+        value: The feature value (int, contour list, or None).
+    """
+    if feature_type == "unary":
+        if isinstance(value, list):
+            vals = ">".join(present_value(v) for v in value)
+            return f"{short}: {vals}"
+        return short
+    if feature_type == "binary":
+        if isinstance(value, list):
+            vals = ">".join(present_value(v) for v in value)
+            return f"{short}: {vals}"
+        return f"{short}: {present_value(value)}"
+    # scalar
+    if isinstance(value, list):
+        vals = ">".join(present_value(v) for v in value)
+        return f"{short}: {vals}"
+    return f"{short}: {value if value is not None else '∅'}"
+
+
+# ---------------------------------------------------------------------------
+# FeatureBundle presentation
+# ---------------------------------------------------------------------------
+
+
+def present_bundle(bundle: FeatureBundle, inventory: FeatureInventory) -> str:
+    """Format a feature bundle as a boxed display string.
+
+    Binary/unary features show as ``+name`` or ``-name`` (using short names).
+    Scalar features show as ``name: label``.
+    Contour values show as ``name: label>label>...``.
+
+    Args:
+        bundle: The feature bundle to present.
+        inventory: Feature inventory for name/type/value lookups.
+    """
+    return "\n".join(present_bundle_lines(bundle, inventory))
+
+
+def present_bundle_lines(bundle: FeatureBundle, inventory: FeatureInventory) -> list[str]:
+    """Return the boxed lines for a feature bundle (for side-by-side display).
+
+    Args:
+        bundle: The feature bundle to present.
+        inventory: Feature inventory for name/type/value lookups.
+    """
+    lines: list[str] = []
+    has_syllable = False
+    for feature_name in inventory:
+        if feature_name not in bundle:
+            continue
+        ft_def = inventory[feature_name]
+        if ft_def.tier == Tier.syllable and not has_syllable:
+            lines.append("---")
+            has_syllable = True
+        short = ft_def.short
+        spec = bundle[feature_name]
+        lines.append(format_feature(short, ft_def.type, spec.value))
+
+    if not lines:
+        return ["⎡⎤"]
+
+    width = max(len(line) for line in lines)
+    result = [f"⎡{lines[0]:<{width}}⎤"]
+    if len(lines) > 1:
+        result.extend(f"⎢{line:<{width}}⎥" for line in lines[1:-1])
+        result.append(f"⎣{lines[-1]:<{width}}⎦")
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Sequence presentation
+# ---------------------------------------------------------------------------
+
+
+def present_sequence(sequence: Sequence, inventory: FeatureInventory) -> str:
+    """Format all bundles in a sequence side-by-side with aligned features.
+
+    Features that are present in any bundle get a row. Features absent
+    from a specific bundle appear as empty rows within that bundle's column.
+    A ``---`` row separates segment and syllable features.
+
+    Args:
+        sequence: The sequence of feature bundles to present.
+        inventory: Feature inventory for name/type/value lookups.
+    """
+    if not sequence.data:
+        return ""
+
+    # Build row template from inventory order
+    rows: list[tuple[str, str | None]] = []  # (feature_name or "", separator_label or None)
+    has_syllable = False
+    for feature_name in inventory:
+        ft_def = inventory[feature_name]
+        if ft_def.tier == Tier.syllable and not has_syllable:
+            rows.append(("", "---"))
+            has_syllable = True
+        if any(feature_name in bundle for bundle in sequence.data):
+            rows.append((feature_name, None))
+
+    # Format each feature value per bundle
+    content: list[list[str]] = []  # content[row][col]
+    is_separator: list[bool] = []
+    for feature_name, separator in rows:
+        is_separator.append(separator is not None)
+        if separator:
+            row = []
+            for bundle in sequence.data:
+                has_syl = any(inventory[fn].tier == Tier.syllable for fn in bundle if fn in inventory)
+                row.append(separator if has_syl else "")
+            content.append(row)
+        else:
+            ft_def = inventory[feature_name]
+            short = ft_def.short
+            row = []
+            for bundle in sequence.data:
+                if feature_name not in bundle:
+                    row.append("")
+                else:
+                    spec = bundle[feature_name]
+                    row.append(format_feature(short, ft_def.type, spec.value))
+            content.append(row)
+
+    if not content:
+        return ""
+
+    # Calculate column widths
+    col_widths = [max(len(content[r][c]) for r in range(len(content))) for c in range(len(sequence.data))]
+
+    # For each column, find the first and last non-empty content row
+    col_ranges: list[tuple[int, int]] = []
+    for c in range(len(sequence.data)):
+        non_empty = [r for r in range(len(content)) if content[r][c]]
+        col_ranges.append((non_empty[0], non_empty[-1]))
+
+    result_lines: list[str] = []
+    for r in range(len(content)):
+        cells = []
+        for c in range(len(sequence.data)):
+            val = content[r][c]
+            padded = f"{val:<{col_widths[c]}}"
+            first_row, last_row = col_ranges[c]
+            if r < first_row or r > last_row:
+                cells.append(" " * (col_widths[c] + 2))
+            elif r == first_row:
+                cells.append(f"⎡{padded}⎤")
+            elif r == last_row:
+                cells.append(f"⎣{padded}⎦")
+            else:
+                cells.append(f"⎢{padded}⎥")
+        result_lines.append(" ".join(cells))
+
+    return "\n".join(result_lines)

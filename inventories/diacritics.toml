@@ -2,7 +2,7 @@
 "ʰ" = { tier = "segment", type = "after", bundle = "-vc, 1 glap, 0 tns" }
 "ʱ" = { tier = "segment", type = "after", bundle = "+vc, 1 glap, -1 tns" }
 "ʷ" = { tier = "segment", type = "after", bundle = "+labial, +rounded" }
-"ⁿ" = { tier = "segment", type = "before", bundle = "nasal" }
+"ⁿ" = { tier = "segment", type = "before", bundle = "nasal: 1>null" }
 "̩" = { tier = "segment", type = "combining", bundle = "+syll" }
 "̯" = { tier = "segment", type = "combining", bundle = "-syll" }
 # Length

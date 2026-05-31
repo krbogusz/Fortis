@@ -6,11 +6,11 @@ from src.fortis.inventories.diacritics import DiacriticDefinition, DiacriticInve
 from src.fortis.inventories.feature_definition import FeatureDefinition
 from src.fortis.inventories.feature_inventory import FeatureInventory
 from src.fortis.inventories.letters import LetterInventory
+from src.fortis.inventories.rule_inventory import RuleInventory
 from src.fortis.inventories.sonorities import SonorityInventory
 from src.fortis.inventories.syllable_settings import SyllableSettings
 from src.fortis.models.tiers import Tier
 from src.fortis.result import present_errors
-from src.fortis.rules.inventory import RuleInventory
 
 
 @dataclass

@@ -1,6 +1,7 @@
 from collections import UserDict
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.utils import present_symbol
@@ -33,7 +34,7 @@ class DiacriticDefinition:
 
     @classmethod
     def load(
-        cls, symbol: str, diacritic_def: dict, inventory: FeatureInventory
+        cls, symbol: str, diacritic_def: dict[str, Any], inventory: FeatureInventory
     ) -> Result[DiacriticDefinition, list[str]]:
         """Build a DiacriticDefinition from a raw TOML entry.
 
@@ -80,7 +81,7 @@ class DiacriticDefinition:
 
     # —— Loading helpers ——————————————————————————————————————————————————————————————————————————
     @staticmethod
-    def _load_tier(symbol: str, diacritic_def: dict) -> Result[Tier, str]:
+    def _load_tier(symbol: str, diacritic_def: dict[str, Any]) -> Result[Tier, str]:
         """Parse and validate the 'tier' field.
 
         Args:
@@ -100,7 +101,7 @@ class DiacriticDefinition:
         return Ok(tier)
 
     @staticmethod
-    def _load_type(symbol: str, diacritic_def: dict) -> Result[DiacriticType, str]:
+    def _load_type(symbol: str, diacritic_def: dict[str, Any]) -> Result[DiacriticType, str]:
         """Parse and validate the 'type' field.
 
         Args:
@@ -120,7 +121,7 @@ class DiacriticDefinition:
         return Ok(dtype)
 
     @staticmethod
-    def _load_bundle(symbol, diacritic_def: dict, inventory: FeatureInventory) -> Result[FeatureBundle, list[str]]:
+    def _load_bundle(symbol: str, diacritic_def: dict[str, Any], inventory: FeatureInventory) -> Result[FeatureBundle, list[str]]:
         """Parse the 'bundle' field; empty string yields None.
 
         Args:
@@ -139,7 +140,7 @@ class DiacriticDefinition:
         return Ok(bundle_result.unwrap())
 
     @staticmethod
-    def _load_default(symbol: str, diacritic_def: dict) -> Result[bool, str]:
+    def _load_default(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str]:
         """Parse the optional 'default' field (defaults to False).
 
         Args:
@@ -154,7 +155,7 @@ class DiacriticDefinition:
         return Ok(value)
 
     @staticmethod
-    def _load_contour(symbol: str, diacritic_def: dict) -> Result[bool, str]:
+    def _load_contour(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str]:
         """Parse the optional 'contour' field (defaults to False).
 
         Args:

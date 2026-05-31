@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 from src.fortis.models.feature_type import FeatureType
 from src.fortis.models.tiers import Tier
@@ -28,7 +29,7 @@ class FeatureDefinition:
 
     # —— Main loading method ——————————————————————————————————————————————————————————————————————
     @classmethod
-    def load(cls, feature_name: str, feature_def: dict) -> Result[FeatureDefinition, list[str]]:
+    def load(cls, feature_name: str, feature_def: dict[str, Any]) -> Result[FeatureDefinition, list[str]]:
         """Build a FeatureDefinition from a raw TOML entry.
 
         Args:
@@ -73,7 +74,7 @@ class FeatureDefinition:
 
     # —— Loading helpers ——————————————————————————————————————————————————————————————————————————
     @staticmethod
-    def _load_tier(feature_name: str, feature_def: dict) -> Result[Tier, str]:
+    def _load_tier(feature_name: str, feature_def: dict[str, Any]) -> Result[Tier, str]:
         """Parse and validate the 'tier' field.
 
         Args:
@@ -93,7 +94,7 @@ class FeatureDefinition:
         return Ok(tier)
 
     @staticmethod
-    def _load_type(feature_name: str, feature_def: dict) -> Result[FeatureType, str]:
+    def _load_type(feature_name: str, feature_def: dict[str, Any]) -> Result[FeatureType, str]:
         """Parse and validate the 'type' field.
 
         Args:
@@ -113,7 +114,7 @@ class FeatureDefinition:
         return Ok(ftype)
 
     @staticmethod
-    def _load_short(feature_name: str, feature_def: dict) -> Result[str, str]:
+    def _load_short(feature_name: str, feature_def: dict[str, Any]) -> Result[str, str]:
         """Parse the 'short' field; defaults to the feature name itself.
 
         Args:
@@ -133,7 +134,7 @@ class FeatureDefinition:
         return Ok(stripped)
 
     @staticmethod
-    def _load_values(feature_name: str, feature_def: dict, feature_type: FeatureType) -> Result[dict[int, str], str]:
+    def _load_values(feature_name: str, feature_def: dict[str, Any], feature_type: FeatureType) -> Result[dict[int, str], str]:
         """Build the values map based on feature type (unary/binary/scalar).
 
         Args:
@@ -171,7 +172,7 @@ class FeatureDefinition:
             return Err(f"Feature '{feature_name}' has an unknown feature type '{feature_type}'")
 
     @staticmethod
-    def _load_children(feature_name: str, feature_def: dict) -> Result[list[str] | None, str]:
+    def _load_children(feature_name: str, feature_def: dict[str, Any]) -> Result[list[str] | None, str]:
         """Parse the optional 'children' field.
 
         Args:

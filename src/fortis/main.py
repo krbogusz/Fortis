@@ -1,5 +1,7 @@
+from src.fortis.general.presentation import present_sequence
 from src.fortis.inventories.inventories import Inventories
-from src.fortis.parsing.transcription import string_to_sequence
+from src.fortis.transcription.parsing import string_to_sequence
+from src.fortis.transcription.rendering import sequence_to_string
 
 
 def main():
@@ -8,11 +10,10 @@ def main():
     print(f"Loaded {len(inventories.features)} features")
     print(f"Loaded {len(inventories.letters)} letters")
 
-    sequence = string_to_sequence("ˈɣʷet͡s.roː", inventories)
-    print(sequence.present(inventories.features))
-    print("\n")
-    sequence = string_to_sequence("ˈbʱleɣʷ.moː", inventories)
-    print(sequence.present(inventories.features))
+    print("ɣet͡sro")
+    sequence = string_to_sequence("ɣet͡sro", inventories)
+    print(present_sequence(sequence, inventories.features))
+    print(sequence_to_string(sequence, inventories))
 
 
 if __name__ == "__main__":

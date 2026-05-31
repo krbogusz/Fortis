@@ -199,50 +199,100 @@ class TestBundleInvalidTokens:
 
 
 # ——————————————————————————————————————————————————————————————————————————————————————
-# FeatureBundle.matches
+# FeatureBundle.match_pattern
 # ——————————————————————————————————————————————————————————————————————————————————————
 
 
-class TestBundleMatches:
+class TestBundleMatchPattern:
     def _bundle(self, **specs: int | list[int | None] | None) -> FeatureBundle:
         return FeatureBundle({f: FeatureSpec(f, v) for f, v in specs.items()})
 
     def test_all_features_match(self):
         pattern = self._bundle(cons=1, nasal=1)
         target = self._bundle(cons=1, nasal=1)
-        assert pattern.matches(target) is True
+        assert target.match_pattern(pattern) is True
 
     def test_one_feature_mismatch(self):
         pattern = self._bundle(cons=1, nasal=1)
         target = self._bundle(cons=1, nasal=0)
-        assert pattern.matches(target) is False
+        assert target.match_pattern(pattern) is False
 
     def test_extra_features_in_target_ok(self):
         pattern = self._bundle(cons=1)
         target = self._bundle(cons=1, nasal=0, ht=2)
-        assert pattern.matches(target) is True
+        assert target.match_pattern(pattern) is True
 
     def test_missing_feature_in_target_no_match(self):
         pattern = self._bundle(cons=1, nasal=1)
         target = self._bundle(cons=1)
-        assert pattern.matches(target) is False
+        assert target.match_pattern(pattern) is False
 
     def test_missing_feature_in_target_ignore_none(self):
         pattern = self._bundle(cons=1, nasal=1)
         target = self._bundle(cons=1)
-        assert pattern.matches(target, ignore_none=True) is True
+        assert target.match_pattern(pattern, ignore_none=True) is True
 
     def test_empty_pattern_matches_anything(self):
         pattern = self._bundle()
         target = self._bundle(cons=1, nasal=0)
-        assert pattern.matches(target) is True
+        assert target.match_pattern(pattern) is True
 
     def test_contour_match(self):
         pattern = self._bundle(ht=[1, 2])
         target = self._bundle(ht=[1, 2, 3])
-        assert pattern.matches(target, place="any") is True
+        assert target.match_pattern(pattern, place="any") is True
 
     def test_contour_mismatch(self):
         pattern = self._bundle(ht=[1, 2])
         target = self._bundle(ht=[0, 3, 4])
-        assert pattern.matches(target, place="any") is False
+        assert target.match_pattern(pattern, place="any") is False
+
+
+# ——————————————————————————————————————————————————————————————————————————————————————
+# FeatureBundle.match_exact
+# ——————————————————————————————————————————————————————————————————————————————————————
+
+
+class TestBundleMatchExact:
+    def _bundle(self, **specs: int | list[int | None] | None) -> FeatureBundle:
+        return FeatureBundle({f: FeatureSpec(f, v) for f, v in specs.items()})
+
+    def test_identical_bundles_match(self):
+        a = self._bundle(cons=1, nasal=0, ht=2)
+        b = self._bundle(cons=1, nasal=0, ht=2)
+        assert a.match_exact(b) is True
+
+    def test_different_values_no_match(self):
+        a = self._bundle(cons=1, nasal=0)
+        b = self._bundle(cons=1, nasal=1)
+        assert a.match_exact(b) is False
+
+    def test_extra_feature_no_match(self):
+        a = self._bundle(cons=1)
+        b = self._bundle(cons=1, nasal=0)
+        assert a.match_exact(b) is False
+
+    def test_missing_feature_no_match(self):
+        a = self._bundle(cons=1, nasal=0)
+        b = self._bundle(cons=1)
+        assert a.match_exact(b) is False
+
+    def test_empty_bundles_match(self):
+        a = self._bundle()
+        b = self._bundle()
+        assert a.match_exact(b) is True
+
+    def test_contour_exact_match(self):
+        a = self._bundle(ht=[1, 2])
+        b = self._bundle(ht=[1, 2])
+        assert a.match_exact(b) is True
+
+    def test_contour_different_lengths_no_match(self):
+        a = self._bundle(ht=[1, 2])
+        b = self._bundle(ht=[1, 2, 3])
+        assert a.match_exact(b) is False
+
+    def test_contour_different_values_no_match(self):
+        a = self._bundle(ht=[1, 2])
+        b = self._bundle(ht=[1, 3])
+        assert a.match_exact(b) is False

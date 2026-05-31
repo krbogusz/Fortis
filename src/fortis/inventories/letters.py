@@ -41,7 +41,7 @@ class LetterInventory(UserDict[str, FeatureBundle]):
                 error_list.append("Letter is missing required field 'symbol'")
                 continue
 
-            bundle = FeatureBundle(inventory=inventory)
+            bundle = FeatureBundle()
             row_errors = False
             for feature_name, raw_value in row.items():
                 if feature_name == "symbol":
@@ -96,12 +96,24 @@ class LetterInventory(UserDict[str, FeatureBundle]):
         return Ok(inv)
 
     def validate(self) -> Result[None, list[str]]:
-        """Check for symbols with empty feature bundles."""
+        """Check for symbols with empty feature bundles or duplicate bundles."""
         error_list = []
 
         for symbol, bundle in self.data.items():
             if not bundle:
                 error_list.append(f"Symbol '{symbol}' has no feature specifications")
+
+        # Check for letters with identical feature bundles
+        bundle_to_symbols: dict[tuple[tuple[str, int | tuple[int | None, ...] | None], ...], list[str]] = {}
+        for symbol, bundle in self.data.items():
+            key = tuple(
+                sorted((k, tuple(spec.value) if isinstance(spec.value, list) else spec.value) for k, spec in bundle.items())
+            )
+            bundle_to_symbols.setdefault(key, []).append(symbol)
+        for symbols in bundle_to_symbols.values():
+            if len(symbols) > 1:
+                names = " and ".join(repr(s) for s in symbols)
+                error_list.append(f"Letters {names} have identical feature bundles")
 
         if error_list:
             return Err(error_list)

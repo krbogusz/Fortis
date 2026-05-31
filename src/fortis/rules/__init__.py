@@ -31,7 +31,6 @@ from src.fortis.rules.elements import (
     Quantifier,
     Ref,
 )
-from src.fortis.rules.inventory import RuleInventory
 from src.fortis.rules.parsing import parse_rule_definition, parse_spe_definition
 from src.fortis.rules.rule import Rule
 
@@ -50,8 +49,6 @@ __all__ = [
     "Ref",
     # Rule
     "Rule",
-    # Inventory
-    "RuleInventory",
     # Parsing
     "parse_rule_definition",
     "parse_spe_definition",

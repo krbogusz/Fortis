@@ -1,6 +1,7 @@
 from collections import UserDict
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.inventories.feature_inventory import FeatureInventory
@@ -25,7 +26,7 @@ class SonorityDefinition:
 
     @classmethod
     def load(
-        cls, label: str, sonority_def_dict: dict, inventory: FeatureInventory
+        cls, label: str, sonority_def_dict: dict[str, Any], inventory: FeatureInventory
     ) -> Result[SonorityDefinition, list[str]]:
         """Build a SonorityDefinition from a raw TOML entry.
 
@@ -57,7 +58,7 @@ class SonorityDefinition:
 
     # —— Loading helpers ——————————————————————————————————————————————————————————————————————————
     @staticmethod
-    def _load_level(label: str, sonority_def_dict: dict) -> Result[int, str]:
+    def _load_level(label: str, sonority_def_dict: dict[str, Any]) -> Result[int, str]:
         """Parse and validate the 'level' field.
 
         Args:
@@ -75,7 +76,7 @@ class SonorityDefinition:
 
     @staticmethod
     def _load_bundle(
-        label: str, sonority_def_dict: dict, inventory: FeatureInventory
+        label: str, sonority_def_dict: dict[str, Any], inventory: FeatureInventory
     ) -> Result[FeatureBundle | None, list[str]]:
         """Parse the 'feature_bundle' field; empty string yields None.
 
@@ -180,6 +181,6 @@ class SonorityInventory(UserDict[str, SonorityDefinition]):
             ValueError: If no sonority definition matches the segment.
         """
         for sonority_def in self._sorted:
-            if sonority_def.bundle is None or sonority_def.bundle.matches(segment):
+            if sonority_def.bundle is None or segment.match_pattern(sonority_def.bundle):
                 return sonority_def
         raise ValueError(f"No sonority definition matches segment {segment}")

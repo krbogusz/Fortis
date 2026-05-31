@@ -6,6 +6,7 @@ import pytest
 
 from src.fortis.inventories.feature_definition import FeatureDefinition
 from src.fortis.inventories.feature_inventory import FeatureInventory
+from src.fortis.inventories.rule_inventory import RuleInventory, _parse_key
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.feature_spec import FeatureSpec
 from src.fortis.models.feature_type import FeatureType
@@ -13,7 +14,6 @@ from src.fortis.models.sequence import Sequence
 from src.fortis.models.tiers import Tier
 from src.fortis.rules.apply import apply_rules, find_loci
 from src.fortis.rules.elements import Application, Boundary, Bundle, Element
-from src.fortis.rules.inventory import RuleInventory, _parse_key
 from src.fortis.rules.match import match
 from src.fortis.rules.parsing import parse_spe_definition
 from src.fortis.rules.rule import Rule
@@ -847,7 +847,7 @@ class TestApplicationMode:
 
     def test_application_mode_from_toml(self, inventory, tmp_path):
         """Application mode is parsed from TOML rule entries."""
-        from src.fortis.rules.inventory import RuleInventory
+        from src.fortis.inventories.rule_inventory import RuleInventory
 
         toml_content = """
 [100.left_to_right_rule]

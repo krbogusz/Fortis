@@ -41,9 +41,10 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> Sequence:
                 if remaining.startswith(letter_symbol):
                     segment = inventories.letters[letter_symbol]
                     segment = segment.combine_with(buffer)
-                    if inventories.syllable_settings.nucleus.matches(segment):
+                    if segment.match_pattern(inventories.syllable_settings.nucleus):
                         segment = segment.combine_with(syllable_buffer)
                         last_nucleus_index = len(segments) - 1
+                        syllable_buffer = FeatureBundle()
                     segments.append(segment)
                     buffer = FeatureBundle()
                     i += len(letter_symbol)

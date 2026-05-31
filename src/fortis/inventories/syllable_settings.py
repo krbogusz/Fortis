@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.inventories.feature_inventory import FeatureInventory
@@ -42,7 +43,7 @@ class SyllableSettings:
 
     # —— Loading helpers ——————————————————————————————————————————————————————————————————————————
     @staticmethod
-    def _load_level(label: str, sonority_def_dict: dict) -> Result[int, str]:
+    def _load_level(label: str, sonority_def_dict: dict[str, Any]) -> Result[int, str]:
         """Parse and validate the 'level' field.
 
         Args:

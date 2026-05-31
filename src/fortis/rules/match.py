@@ -140,10 +140,10 @@ def _match_bundle(
             return
         segment = seq.data[pos]
         if bundle.negated:
-            if not bundle.bundle.matches(segment, ignore_none=True):
+            if not segment.match_pattern(bundle.bundle, ignore_none=True):
                 yield from _match_rest(elements, idx + 1, seq, pos + 1, env)
         else:
-            if bundle.bundle.matches(segment, ignore_none=True):
+            if segment.match_pattern(bundle.bundle, ignore_none=True):
                 yield from _match_rest(elements, idx + 1, seq, pos + 1, env)
         return
 
@@ -185,10 +185,10 @@ def _match_quantified(
 
         segment = seq.data[current_pos]
         if bundle.negated:
-            if bundle.bundle.matches(segment, ignore_none=True):
+            if segment.match_pattern(bundle.bundle, ignore_none=True):
                 break  # negated bundle matched — negation fails
         else:
-            if not bundle.bundle.matches(segment, ignore_none=True):
+            if not segment.match_pattern(bundle.bundle, ignore_none=True):
                 break  # bundle didn't match — can't extend
 
         current_pos += 1

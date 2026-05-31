@@ -2,8 +2,6 @@ from collections import UserDict
 
 from src.fortis.inventories.feature_inventory import FeatureInventory
 from src.fortis.models.feature_spec import FeatureSpec, Place
-from src.fortis.models.tiers import Tier
-from src.fortis.models.values import present_value
 from src.fortis.result import Err, Ok, Result
 
 
@@ -14,14 +12,13 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         """Represent a feature bundle."""
         parts: list[str] = []
         for name, spec in self.data.items():
-            value = spec.value
-            if value is None:
+            if spec.value is None:
                 parts.append(f"{name}: ∅")
-            elif isinstance(value, list):
-                vals = ">".join(present_value(v) for v in value)
+            elif isinstance(spec.value, list):
+                vals = ">".join(_repr_value(v) for v in spec.value)
                 parts.append(f"{name}: {vals}")
             else:
-                parts.append(f"{name}: {spec.value}")
+                parts.append(f"{name}: {_repr_value(spec.value)}")
         return "{" + ", ".join(parts) + "}"
 
     @classmethod
@@ -54,82 +51,59 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
 
         return Ok(bundle)
 
-    def matches(self, other: FeatureBundle, ignore_none: bool = False, place: Place = "any") -> bool:
-        """Check if every feature in this bundle matches the corresponding feature in *other*.
+    def match_pattern(self, other: FeatureBundle, ignore_none: bool = False, place: Place = "any") -> bool:
+        """Check if this bundle satisfies the pattern defined by *other*.
 
-        Features present in *other* but not in *self* are unconstrained (the pattern
-        doesn't care about them). Features present in *self* but not in *other* are
-        treated as unspecified values.
+        *other* is the pattern (typically a rule condition or sonority definition);
+        *self* is the target segment being tested.  Every feature in *other* must
+        be present in *self* with a compatible value.  Features in *self* that
+        *other* does not mention are unconstrained — the pattern doesn't care
+        about them.
 
         Args:
-            other: The target bundle to match against.
+            other: The pattern bundle to match against.
             ignore_none: Treat missing features and None values as wildcards.
             place: Positional control for contour matching, passed to FeatureSpec.matches.
         """
-        for feature, spec in self.data.items():
-            if feature not in other.data:
+        for feature, spec in other.data.items():
+            if feature not in self.data:
                 # Feature not present in target — unspecified
                 if ignore_none:
                     continue
                 return False
-            if not spec.matches(other.data[feature], ignore_none=ignore_none, place=place):
+            if not spec.matches(self.data[feature], ignore_none=ignore_none, place=place):
                 return False
         return True
 
-    def present(self, inventory: FeatureInventory) -> str:
-        """Format this bundle as a boxed display string.
+    def match_exact(self, other: FeatureBundle) -> bool:
+        """Check if this bundle is exactly identical to *other*.
 
-        Binary/unary features show as ``+name`` or ``-name`` (using short names).
-        Scalar features show as ``name: label``.
-        Contour values show as ``name: label>label>...``.
-
-        Args:
-            inventory: Feature inventory for name/type/value lookups.
+        Both bundles must have the same set of features and the same value for
+        every feature. No wildcard or positional semantics — pure structural
+        equality.
         """
-        return "\n".join(self.present_lines(inventory))
+        if set(self.data.keys()) != set(other.data.keys()):
+            return False
+        for feature in self.data:
+            if self.data[feature].value != other.data[feature].value:
+                return False
+        return True
 
-    def present_lines(self, inventory: FeatureInventory) -> list[str]:
-        """Return the boxed lines for this bundle (for side-by-side display).
-
-        Args:
-            inventory: Feature inventory for name/type/value lookups.
-        """
-        lines: list[str] = []
-        has_syllable = False
-        for feature_name in inventory:
-            if feature_name not in self.data:
+    def differing(self, other: FeatureBundle) -> list[str]:
+        """Return the features that are different between this bundle and *other*."""
+        differing: list[str] = []
+        for feature in self.data:
+            if feature not in other.data:
+                differing.append(feature)
                 continue
-            ft_def = inventory[feature_name]
-            if ft_def.tier == Tier.syllable and not has_syllable:
-                lines.append("---")
-                has_syllable = True
-            short = ft_def.short
-            spec = self.data[feature_name]
-            if ft_def.type == "unary":
-                lines.append(short)
-            elif ft_def.type == "binary":
-                if isinstance(spec.value, list):
-                    vals = ">".join(present_value(v) for v in spec.value)
-                    lines.append(f"{short}: {vals}")
-                else:
-                    lines.append(f"{short}: {present_value(spec.value)}")
-            elif ft_def.type == "scalar":
-                if isinstance(spec.value, list):
-                    vals = ">".join(present_value(v) for v in spec.value)
-                    lines.append(f"{short}: {vals}")
-                else:
-                    lines.append(f"{short}: {spec.value if spec.value is not None else '∅'}")
-
-        if not lines:
-            return ["⎡⎤"]
-
-        width = max(len(line) for line in lines)
-        result = [f"⎡{lines[0]:<{width}}⎤"]
-        if len(lines) > 1:
-            result.extend(f"⎢{line:<{width}}⎥" for line in lines[1:-1])
-            result.append(f"⎣{lines[-1]:<{width}}⎦")
-
-        return result
+            if self.data[feature].value != other.data[feature].value:
+                differing.append(feature)
+                continue
+        for feature in other.data:
+            if feature not in self.data and feature not in differing:
+                differing.append(feature)
+                continue
+        return differing
 
     def combine_with(self, other: FeatureBundle, form_contours: bool = False) -> FeatureBundle:
         """Combine this feature bundle with another.
@@ -148,3 +122,14 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
                 result[feature_name] = feature_spec
 
         return result
+
+
+def _repr_value(value: int | None) -> str:
+    """Format a value for __repr__ (inlined to avoid circular import with presentation.py)."""
+    if value is None:
+        return "∅"
+    if value == 1:
+        return "+"
+    if value == 0:
+        return "-"
+    return str(value)
