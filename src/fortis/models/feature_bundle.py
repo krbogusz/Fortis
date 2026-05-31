@@ -12,13 +12,14 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         """Represent a feature bundle."""
         parts: list[str] = []
         for name, spec in self.data.items():
+            prefix = "!" if spec.negated else ""
             if spec.value is None:
-                parts.append(f"{name}: ∅")
+                parts.append(f"{prefix}{name}: ∅")
             elif isinstance(spec.value, list):
                 vals = ">".join(_repr_value(v) for v in spec.value)
-                parts.append(f"{name}: {vals}")
+                parts.append(f"{prefix}{name}: {vals}")
             else:
-                parts.append(f"{name}: {_repr_value(spec.value)}")
+                parts.append(f"{prefix}{name}: {_repr_value(spec.value)}")
         return "{" + ", ".join(parts) + "}"
 
     @classmethod
@@ -39,11 +40,23 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
 
         bundle = cls()
         for token in tokens:
-            result = FeatureSpec.from_string(token, inventory, bare_unary_means_present)
+            # Feature-level negation: ! before a feature spec
+            negated = False
+            work = token
+            while work.startswith("!"):
+                negated = not negated
+                work = work[1:]
+
+            # For negated bare unary features, treat as present+negated
+            # (e.g. !nasal = "not present" = negation of +nasal)
+            effective_bare = bare_unary_means_present or negated
+            result = FeatureSpec.from_string(work, inventory, effective_bare)
             if result.is_err():
                 error_list.append(result.unwrap_err())
                 continue
             spec = result.unwrap()
+            if negated:
+                spec = FeatureSpec(spec.feature, spec.value, negated=True)
             bundle[spec.feature] = spec
 
         if error_list:
@@ -60,6 +73,10 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         *other* does not mention are unconstrained — the pattern doesn't care
         about them.
 
+        A negated spec (``negated=True``) inverts the match: the segment must
+        NOT satisfy that feature's value.  If the feature is absent from the
+        segment, the negated condition passes (the positive condition was not met).
+
         Args:
             other: The pattern bundle to match against.
             ignore_none: Treat missing features and None values as wildcards.
@@ -67,10 +84,20 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         """
         for feature, spec in other.data.items():
             if feature not in self.data:
-                # Feature not present in target — unspecified
+                # Feature absent from segment
+                if spec.negated:
+                    # !feature: absent means positive condition not met → negation satisfied
+                    continue
+                # Normal: feature must be present
                 if ignore_none:
                     continue
                 return False
+            if spec.negated:
+                # Negated: segment must NOT satisfy the positive spec
+                if spec.matches(self.data[feature], ignore_none=False, place=place):
+                    return False
+                # Positive match fails → negation satisfied
+                continue
             if not spec.matches(self.data[feature], ignore_none=ignore_none, place=place):
                 return False
         return True
@@ -80,12 +107,14 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
 
         Both bundles must have the same set of features and the same value for
         every feature. No wildcard or positional semantics — pure structural
-        equality.
+        equality. Negation flags must also match.
         """
         if set(self.data.keys()) != set(other.data.keys()):
             return False
         for feature in self.data:
-            if self.data[feature].value != other.data[feature].value:
+            self_spec = self.data[feature]
+            other_spec = other.data[feature]
+            if self_spec.value != other_spec.value or self_spec.negated != other_spec.negated:
                 return False
         return True
 

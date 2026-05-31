@@ -296,3 +296,127 @@ class TestBundleMatchExact:
         a = self._bundle(ht=[1, 2])
         b = self._bundle(ht=[1, 3])
         assert a.match_exact(b) is False
+
+
+# ——————————————————————————————————————————————————————————————————————————————————————
+# FeatureBundle: Feature-level negation
+# ——————————————————————————————————————————————————————————————————————————————————————
+
+
+class TestFeatureNegationParsing:
+    """Test that ! prefix on individual features is parsed correctly."""
+
+    def test_negated_unary(self, inventory):
+        """!nasal means 'not nasal'."""
+        result = FeatureBundle.from_str("!nasal", inventory, bare_unary_means_present=True)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert "nasal" in bundle
+        assert bundle["nasal"].negated is True
+        assert bundle["nasal"].value == 1  # still parses as unary present
+
+    def test_negated_binary(self, inventory):
+        """!+consonantal means 'not consonantal'."""
+        result = FeatureBundle.from_str("!+consonantal", inventory)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert bundle["consonantal"].negated is True
+        assert bundle["consonantal"].value == 1
+
+    def test_negated_scalar(self, inventory):
+        """!height:2 means 'height is not 2'."""
+        result = FeatureBundle.from_str("!height:2", inventory)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert bundle["height"].negated is True
+        assert bundle["height"].value == 2
+
+    def test_mixed_negated_and_normal(self, inventory):
+        """[-syll, !nasal] — consonant that is not nasal."""
+        result = FeatureBundle.from_str("-consonantal, !nasal", inventory, bare_unary_means_present=True)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert bundle["consonantal"].negated is False
+        assert bundle["consonantal"].value == 0
+        assert bundle["nasal"].negated is True
+        assert bundle["nasal"].value == 1
+
+    def test_double_negation(self, inventory):
+        """!!nasal is equivalent to nasal (double negation cancels)."""
+        result = FeatureBundle.from_str("!!nasal", inventory, bare_unary_means_present=True)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert bundle["nasal"].negated is False
+
+    def test_negation_with_short_name(self, inventory):
+        """!nas uses the short name for nasal."""
+        result = FeatureBundle.from_str("!nas", inventory, bare_unary_means_present=True)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert "nasal" in bundle
+        assert bundle["nasal"].negated is True
+
+
+class TestFeatureNegationMatching:
+    """Test that negated features match correctly in match_pattern."""
+
+    def _bundle(self, **specs: int | list[int | None] | None) -> FeatureBundle:
+        return FeatureBundle({f: FeatureSpec(f, v) for f, v in specs.items()})
+
+    def _neg_bundle(self, **specs: int | list[int | None] | None) -> FeatureBundle:
+        """Like _bundle but all specs are negated."""
+        return FeatureBundle({f: FeatureSpec(f, v, negated=True) for f, v in specs.items()})
+
+    def test_negated_spec_feature_absent_passes(self):
+        """![+nasal] passes when the feature is absent from the segment."""
+        pattern = self._neg_bundle(nasal=1)
+        target = self._bundle(cons=1)  # no nasal feature at all
+        assert target.match_pattern(pattern) is True
+
+    def test_negated_spec_feature_present_matching_fails(self):
+        """![+nasal] fails when the segment has nasal=1."""
+        pattern = self._neg_bundle(nasal=1)
+        target = self._bundle(nasal=1)
+        assert target.match_pattern(pattern) is False
+
+    def test_negated_spec_feature_present_nonmatching_passes(self):
+        """![+nasal] passes when the segment has nasal=0 (unary absent)."""
+        # For a unary feature, 0 is "absent", so !+nasal passes
+        pattern = self._neg_bundle(nasal=1)
+        # Unary features don't typically have value 0, but let's test with binary
+        pattern_bin = self._neg_bundle(cons=1)
+        target = self._bundle(cons=0)
+        assert target.match_pattern(pattern_bin) is True
+
+    def test_negated_with_normal_combo(self):
+        """[+cons, !nasal] matches a non-nasal consonant."""
+        pattern = FeatureBundle({
+            "cons": FeatureSpec("cons", 1, negated=False),
+            "nasal": FeatureSpec("nasal", 1, negated=True),
+        })
+        # Consonant that is NOT nasal
+        target = self._bundle(cons=1, nasal=0)
+        assert target.match_pattern(pattern) is True
+
+    def test_negated_with_normal_combo_fails(self):
+        """[+cons, !nasal] does NOT match a nasal consonant."""
+        pattern = FeatureBundle({
+            "cons": FeatureSpec("cons", 1, negated=False),
+            "nasal": FeatureSpec("nasal", 1, negated=True),
+        })
+        # Nasal consonant
+        target = self._bundle(cons=1, nasal=1)
+        assert target.match_pattern(pattern) is False
+
+    def test_negated_scalar(self):
+        """![height:2] passes when height is not 2."""
+        pattern = self._neg_bundle(ht=2)
+        # Height is 3, not 2
+        target = self._bundle(ht=3)
+        assert target.match_pattern(pattern) is True
+
+    def test_negated_scalar_matching_fails(self):
+        """![height:2] fails when height IS 2."""
+        pattern = self._neg_bundle(ht=2)
+        target = self._bundle(ht=2)
+        assert target.match_pattern(pattern) is False

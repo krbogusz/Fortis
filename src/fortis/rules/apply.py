@@ -6,9 +6,9 @@ then match the right context.  If the exception generator yields nothing,
 the locus is valid.
 
 Stage 4 (rewrite):  From the winning Env and target span, instantiate the
-result template and splice into the Sequence.  Phase 1 only supports plain
-feature-bundle deltas (combine_with); insertion, deletion, and alpha-variable
-resolution are deferred.
+result template and splice into the Sequence.  Supports feature-bundle
+deltas (combine_with), insertion (Null in target), deletion (Null in result),
+and reference copying (Ref).
 
 The top-level ``apply_rules`` orchestrates the full pipeline: for each rule
 (in time order), find all loci, then rewrite simultaneously (one rule
@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.sequence import Sequence
-from src.fortis.rules.elements import _EMPTY_ENV, Application, Bundle, Element, Env, Group, Null
+from src.fortis.rules.elements import _EMPTY_ENV, Application, Bundle, Disjunction, Element, Env, Group, Null, Ref
 from src.fortis.rules.match import match
 from src.fortis.rules.rule import Rule
 
@@ -189,7 +189,8 @@ def _min_consuming(elements: list[Element]) -> int:
     """Count the minimum number of segments consumed by an element list.
 
     Boundaries consume zero; Null consumes zero; Bundles consume their
-    quantifier.min; Groups consume their quantifier.min times inner min.
+    quantifier.min; Groups consume their quantifier.min times inner min;
+    Disjunction consumes the minimum across all branches.
     """
     count = 0
     for el in elements:
@@ -200,7 +201,11 @@ def _min_consuming(elements: list[Element]) -> int:
         elif isinstance(el, Group):
             inner_min = _min_consuming(el.elements)
             count += el.quantifier.min * inner_min
-        # Boundary, Disjunction, Ref, Binding consume zero (or variable)
+        elif isinstance(el, Disjunction):
+            # Use the minimum across all branches
+            branch_mins = [_min_consuming(branch) for branch in el.branches]
+            count += min(branch_mins) if branch_mins else 0
+        # Boundary, Ref, Binding consume zero (or variable)
     return count
 
 
@@ -212,37 +217,93 @@ def _min_consuming(elements: list[Element]) -> int:
 def rewrite(seq: Sequence, loci: list[Locus], rule: Rule) -> Sequence:
     """Apply the result template to all matched loci simultaneously.
 
-    Phase 1: the result template consists of Bundle elements with quantifier
-    (1,1).  Each Bundle in the result is a feature delta that is combined with
-    the matched segment via ``combine_with``.
+    Supports three result element types:
+    - ``Bundle``: a feature delta combined with the corresponding target segment
+      via ``combine_with``.  If there is no corresponding target segment
+      (insertion), the bundle is inserted as-is.
+    - ``Null``: delete the corresponding target segment.
+    - ``Ref``: copy the referenced span's segments from the matched locus.
 
     All loci are applied to the original sequence state (simultaneous
-    application), so later loci don't see each other's changes.
+    application), so later loci don't see each other's changes.  Loci are
+    processed in reverse position order so that insertions/deletions don't
+    shift earlier loci's indices.
     """
     if not loci:
         return seq
 
-    # Collect result deltas from the rule
-    result_deltas: list[FeatureBundle] = []
-    for el in rule.result:
-        if isinstance(el, Bundle):
-            result_deltas.append(el.bundle)
+    # Sort loci in reverse order by start position so that
+    # insertions/deletions don't shift earlier loci's indices.
+    sorted_loci = sorted(loci, key=lambda l: l.start, reverse=True)
 
-    if not result_deltas:
-        return seq  # no changes to apply
-
-    # Copy the sequence data
     new_data = list(seq.data)
 
-    # Apply each locus
-    for locus in loci:
-        delta_idx = 0
-        for seg_idx in range(locus.start, locus.end):
-            if delta_idx < len(result_deltas):
-                new_data[seg_idx] = new_data[seg_idx].combine_with(result_deltas[delta_idx])
-                delta_idx += 1
+    for locus in sorted_loci:
+        replacement = _instantiate_result(
+            rule.result, seq.data, locus.start, locus.end, locus.env
+        )
+        new_data[locus.start : locus.end] = replacement
 
     return Sequence(new_data)
+
+
+def _instantiate_result(
+    result_elements: list[Element],
+    seq_data: list[FeatureBundle],
+    target_start: int,
+    target_end: int,
+    env: Env,
+) -> list[FeatureBundle]:
+    """Build the replacement segments from a rule's result template.
+
+    Iterates through result elements and produces a list of FeatureBundles:
+
+    - ``Bundle``: if there is a corresponding target segment (i within the
+      target span), combine the delta with it.  Otherwise, insert the bundle
+      as-is (pure insertion).
+    - ``Null``: skip the corresponding target segment (deletion).  If there
+      is no corresponding target segment, Null is ignored.
+    - ``Ref``: copy the referenced span's segments from the environment.
+
+    Args:
+        result_elements: The rule's result element list.
+        seq_data: The sequence data (list of feature bundles).
+        target_start: Start index of the matched target span.
+        target_end: End index (exclusive) of the matched target span.
+        env: The environment captured during matching (carries ref bindings).
+
+    Returns:
+        A list of FeatureBundles to splice in at the target span.
+    """
+    replacement: list[FeatureBundle] = []
+    target_idx = 0  # index into the target span [target_start, target_end)
+
+    for el in result_elements:
+        if isinstance(el, Bundle):
+            if target_start + target_idx < target_end:
+                # Delta: combine with the corresponding target segment
+                replacement.append(
+                    seq_data[target_start + target_idx].combine_with(el.bundle)
+                )
+                target_idx += 1
+            else:
+                # Pure insertion: no target segment to combine with
+                replacement.append(FeatureBundle(dict(el.bundle.data)))
+            # Note: for quantified bundles in result position, we'd need
+            # to loop, but result bundles currently use (1,1) quantifier.
+        elif isinstance(el, Null):
+            # Deletion: skip one target segment
+            if target_start + target_idx < target_end:
+                target_idx += 1
+            # If no target segment left, Null is a no-op
+        elif isinstance(el, Ref):
+            # Copy referenced span's segments
+            if el.name in env.refs:
+                ref_start, ref_end = env.refs[el.name]
+                replacement.extend(seq_data[ref_start:ref_end])
+            # If ref not found in env, skip (shouldn't happen with valid rules)
+
+    return replacement
 
 
 # ---------------------------------------------------------------------------

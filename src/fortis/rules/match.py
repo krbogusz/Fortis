@@ -5,13 +5,14 @@ every way the element list can match the sequence starting at *pos*.  Failed
 branches simply stop yielding; the caller's ``for`` loop moves to the next
 alternative, and because ``Env`` is frozen there is nothing to unwind.
 
-Phase 1 supports:
-- ``Bundle`` with quantifier (1, 1) — match a single segment
+Supported element types:
+- ``Bundle`` with quantifier and negation — match one or more segments
 - ``Boundary`` — zero-width positional assertion (# word, $ syllable)
 - ``Null`` — zero-width insertion point (matches zero segments)
-
-Quantifiers other than (1, 1), negation, groups, disjunction, refs, and
-bindings are deferred to later phases.
+- ``Group`` — parenthesised group with optional quantifier
+- ``Disjunction`` — alternation (``|``)
+- ``Binding`` — capture a matched span under a name
+- ``Ref`` — recall a previously saved reference
 """
 
 from __future__ import annotations
@@ -87,9 +88,7 @@ def _match_rest(
         # Null matches zero segments — just advance to the next element
         yield from _match_rest(elements, idx + 1, seq, pos, env)
     elif isinstance(el, Group):
-        # Flatten group into the element stream and continue
-        expanded = el.elements + elements[idx + 1 :]
-        yield from _match_rest(expanded, 0, seq, pos, env)
+        yield from _match_quantified_group(el, elements, idx, seq, pos, env)
     elif isinstance(el, Disjunction):
         for branch in el.branches:
             expanded = branch + elements[idx + 1 :]
@@ -196,6 +195,62 @@ def _match_quantified(
 
 
 # ---------------------------------------------------------------------------
+# Group matching
+# ---------------------------------------------------------------------------
+
+
+def _match_quantified_group(
+    group: Group,
+    elements: list[Element],
+    idx: int,
+    seq: Sequence,
+    pos: int,
+    env: Env,
+) -> Iterator[tuple[int, Env]]:
+    """Match a Group element with its quantifier.
+
+    For quantifier (1,1): match the inner elements once (equivalent to
+    flattening).  For other quantifiers, try matching the inner elements
+    min..max times, yielding after each valid count ≥ min.
+    """
+    quant = group.quantifier
+
+    # Optimised path for the common case: exactly one match
+    if quant is _ONE:
+        # Flatten: match inner elements once then continue with remaining
+        expanded = group.elements + elements[idx + 1 :]
+        yield from _match_rest(expanded, 0, seq, pos, env)
+        return
+
+    # General quantified group: try matching the group 0..max times
+    current_pos = pos
+    current_env = env
+    count = 0
+
+    while True:
+        # If we've matched enough (≥ min), try continuing with remaining elements
+        if count >= quant.min:
+            yield from _match_rest(elements, idx + 1, seq, current_pos, current_env)
+
+        # Stop if we've reached max
+        if quant.max is not None and count >= quant.max:
+            break
+
+        # Try to match one more occurrence of the inner elements
+        found_match = False
+        for next_pos, next_env in _match_rest(group.elements, 0, seq, current_pos, current_env):
+            current_pos = next_pos
+            current_env = next_env
+            found_match = True
+            break  # Take the first match; backtracking explores alternatives
+
+        if not found_match:
+            break
+
+        count += 1
+
+
+# ---------------------------------------------------------------------------
 # Boundary matching
 # ---------------------------------------------------------------------------
 
@@ -211,9 +266,13 @@ def _match_boundary(
     """Match a Boundary element (zero-width assertion).
 
     Word boundary (#): matches at position 0 or at the end of the sequence.
-    Syllable boundary ($): placeholder for future syllable-boundary matching.
+    Syllable boundary ($): matches at positions stored in
+        ``seq.syllable_boundaries``.  Position i means "between segment i-1
+        and i".  Also matches at position 0 (start) and len(data) (end).
     """
     if boundary.kind == "word":
         if pos == 0 or pos == len(seq.data):
             yield from _match_rest(elements, idx + 1, seq, pos, env)
-    # Syllable boundaries are deferred to a later phase
+    elif boundary.kind == "syllable":
+        if pos in seq.syllable_boundaries:
+            yield from _match_rest(elements, idx + 1, seq, pos, env)

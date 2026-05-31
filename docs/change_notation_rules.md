@@ -34,6 +34,7 @@
 ### 1.4. Control elements
 
 - `!p`, `![+syll]` – Not this letter or element
+- `[!+syll]` – Not an element with a positive syllabic specification
 - `([+syll][+cons])` – Group
 - `([height: 3] | [height: 2])` – Disjunction
 - `[α high]` – Alpha notation

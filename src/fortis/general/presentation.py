@@ -32,29 +32,31 @@ def present_value(value: int | None) -> str:
     return str(value)
 
 
-def format_feature(short: str, feature_type: str, value: int | list[int | None] | None) -> str:
+def format_feature(short: str, feature_type: str, value: int | list[int | None] | None, negated: bool = False) -> str:
     """Format a single feature as a display string.
 
     Args:
         short: Short/abbreviated feature name.
         feature_type: ``"unary"``, ``"binary"``, or ``"scalar"``.
         value: The feature value (int, contour list, or None).
+        negated: If True, prefix with ``!`` (feature-level negation).
     """
+    prefix = "!" if negated else ""
     if feature_type == "unary":
         if isinstance(value, list):
             vals = ">".join(present_value(v) for v in value)
-            return f"{short}: {vals}"
-        return short
+            return f"{prefix}{short}: {vals}"
+        return f"{prefix}{short}"
     if feature_type == "binary":
         if isinstance(value, list):
             vals = ">".join(present_value(v) for v in value)
-            return f"{short}: {vals}"
-        return f"{short}: {present_value(value)}"
+            return f"{prefix}{short}: {vals}"
+        return f"{prefix}{short}: {present_value(value)}"
     # scalar
     if isinstance(value, list):
         vals = ">".join(present_value(v) for v in value)
-        return f"{short}: {vals}"
-    return f"{short}: {value if value is not None else '∅'}"
+        return f"{prefix}{short}: {vals}"
+    return f"{prefix}{short}: {value if value is not None else '∅'}"
 
 
 # ---------------------------------------------------------------------------
@@ -94,7 +96,7 @@ def present_bundle_lines(bundle: FeatureBundle, inventory: FeatureInventory) -> 
             has_syllable = True
         short = ft_def.short
         spec = bundle[feature_name]
-        lines.append(format_feature(short, ft_def.type, spec.value))
+        lines.append(format_feature(short, ft_def.type, spec.value, spec.negated))
 
     if not lines:
         return ["⎡⎤"]
@@ -158,7 +160,7 @@ def present_sequence(sequence: Sequence, inventory: FeatureInventory) -> str:
                     row.append("")
                 else:
                     spec = bundle[feature_name]
-                    row.append(format_feature(short, ft_def.type, spec.value))
+                    row.append(format_feature(short, ft_def.type, spec.value, spec.negated))
             content.append(row)
 
     if not content:

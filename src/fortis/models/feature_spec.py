@@ -16,10 +16,13 @@ class FeatureSpec:
     Args:
         feature: Full feature name.
         value: The feature's value (int, contour list, or None).
+        negated: If True, this spec matches when the feature does NOT satisfy
+            the value (feature-level negation, e.g. ``!nasal``).
     """
 
     feature: str
     value: int | list[int | None] | None
+    negated: bool = False
 
     @classmethod
     def from_string(

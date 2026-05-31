@@ -13,7 +13,7 @@ from src.fortis.models.feature_type import FeatureType
 from src.fortis.models.sequence import Sequence
 from src.fortis.models.tiers import Tier
 from src.fortis.rules.apply import apply_rules, find_loci
-from src.fortis.rules.elements import Application, Boundary, Bundle, Element
+from src.fortis.rules.elements import Application, Binding, Boundary, Bundle, Disjunction, Element, Group, Null, Quantifier, Ref, _ONE
 from src.fortis.rules.match import match
 from src.fortis.rules.parsing import parse_spe_definition
 from src.fortis.rules.rule import Rule
@@ -867,3 +867,571 @@ definition = "[+cons] → [-voice]"
         rules = result.unwrap()
         assert rules["left_to_right_rule"].application == Application.left_to_right
         assert rules["default_rule"].application == Application.simultaneous
+
+
+# ---------------------------------------------------------------------------
+# Quantifier and negation parsing
+# ---------------------------------------------------------------------------
+
+
+class TestQuantifierParsing:
+    """Test that quantifier suffixes are parsed correctly on bundles."""
+
+    def test_star_quantifier(self, inventory: FeatureInventory):
+        """[*+cons] means zero or more consonant segments."""
+        result = parse_spe_definition("[+cons]* -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Bundle)
+        assert target[0].quantifier.min == 0
+        assert target[0].quantifier.max is None
+        assert target[0].negated is False
+
+    def test_plus_quantifier(self, inventory: FeatureInventory):
+        """[+cons]+ means one or more consonant segments."""
+        result = parse_spe_definition("[+cons]+ -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert target[0].quantifier.min == 1
+        assert target[0].quantifier.max is None
+
+    def test_exact_quantifier(self, inventory: FeatureInventory):
+        """[+cons]{3} means exactly 3 consonant segments."""
+        result = parse_spe_definition("[+cons]{3} -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert target[0].quantifier.min == 3
+        assert target[0].quantifier.max == 3
+
+    def test_range_quantifier(self, inventory: FeatureInventory):
+        """[+cons]{2,4} means 2 to 4 consonant segments."""
+        result = parse_spe_definition("[+cons]{2,4} -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert target[0].quantifier.min == 2
+        assert target[0].quantifier.max == 4
+
+    def test_open_range_quantifier(self, inventory: FeatureInventory):
+        """[+cons]{1,} means 1 or more (same as + but explicit)."""
+        result = parse_spe_definition("[+cons]{1,} -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert target[0].quantifier.min == 1
+        assert target[0].quantifier.max is None
+
+    def test_default_quantifier_is_one(self, inventory: FeatureInventory):
+        """[+cons] without suffix has quantifier (1, 1)."""
+        result = parse_spe_definition("[+cons] -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert target[0].quantifier.min == 1
+        assert target[0].quantifier.max == 1
+
+    def test_quantifier_in_context(self, inventory: FeatureInventory):
+        """Quantifiers work in context positions."""
+        result = parse_spe_definition("[+cons] -> [-vc] / [+nas]+_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert left_ctx[0].quantifier == Quantifier(min=1, max=None)
+
+    def test_quantifier_in_result(self, inventory: FeatureInventory):
+        """Quantifiers work in result positions."""
+        result = parse_spe_definition("[+cons] -> [-vc]{2}", inventory)
+        assert result.is_ok()
+        result_elems = result.unwrap()[1]
+        assert len(result_elems) == 1
+        assert result_elems[0].quantifier.min == 2
+        assert result_elems[0].quantifier.max == 2
+
+
+class TestNegationParsing:
+    """Test that negation prefix ! is parsed correctly on bundles."""
+
+    def test_negated_bundle(self, inventory: FeatureInventory):
+        """![+cons] matches any segment that is NOT [+cons]."""
+        result = parse_spe_definition("![+cons] -> [+vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Bundle)
+        assert target[0].negated is True
+        assert target[0].quantifier == _ONE
+
+    def test_negated_bundle_with_quantifier(self, inventory: FeatureInventory):
+        """![+cons]+ means one or more segments that are NOT [+cons]."""
+        result = parse_spe_definition("![+cons]+ -> [+vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert target[0].negated is True
+        assert target[0].quantifier == Quantifier(min=1, max=None)
+
+    def test_negated_bundle_in_context(self, inventory: FeatureInventory):
+        """Negation works in context positions."""
+        result = parse_spe_definition("[+cons] -> [-vc] / ![-syll]_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert left_ctx[0].negated is True
+
+    def test_bang_without_bracket_is_error(self, inventory: FeatureInventory):
+        """! without a following [ is a parse error."""
+        result = parse_spe_definition("!+cons] -> [-vc]", inventory)
+        assert result.is_err()
+
+    def test_quantifier_match_and_apply(self, inventory: FeatureInventory):
+        """Quantified bundles match multiple segments and rewrite them."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        voice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Bundle(bundle=cons, quantifier=Quantifier(min=2, max=2))],
+            result=[Bundle(bundle=voice), Bundle(bundle=voice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Two consonants
+        seq = _seq({"consonantal": 1, "voice": 1}, {"consonantal": 1, "voice": 1}, {"consonantal": 0, "voice": 1})
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+        assert loci[0].start == 0
+        assert loci[0].end == 2
+        result = apply_rules(seq, [rule])
+        assert result.data[0]["voice"].value == 0
+        assert result.data[1]["voice"].value == 0
+        assert result.data[2]["voice"].value == 1  # vowel unchanged
+
+    def test_negated_bundle_match(self, inventory: FeatureInventory):
+        """![+cons] matches a segment that does NOT satisfy [+cons]."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        devoice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Bundle(bundle=cons, negated=True)],
+            result=[Bundle(bundle=devoice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Vowel should match ![+cons]
+        seq = _seq({"consonantal": 0, "syllabic": 1, "voice": 1})
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+
+
+class TestFeatureNegationInRules:
+    """Test that feature-level negation (! inside brackets) works in rules."""
+
+    def test_feature_negation_parsed_in_bundle(self, inventory: FeatureInventory):
+        """[+cons, !nasal] — ! applies to individual features inside brackets."""
+        result = parse_spe_definition("[+cons, !nasal] -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert isinstance(target[0], Bundle)
+        # consonantal is not negated
+        assert target[0].bundle["consonantal"].negated is False
+        # nasal IS negated
+        assert target[0].bundle["nasal"].negated is True
+
+    def test_feature_negation_match(self, inventory: FeatureInventory):
+        """A rule with [+cons, !nasal] matches a non-nasal consonant."""
+        cons_not_nasal = FeatureBundle({
+            "consonantal": FeatureSpec("consonantal", 1),
+            "nasal": FeatureSpec("nasal", 1, negated=True),
+        })
+        devoice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Bundle(bundle=cons_not_nasal)],
+            result=[Bundle(bundle=devoice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Non-nasal consonant should match [+cons, !nasal]
+        seq = _seq({"consonantal": 1, "nasal": 0, "voice": 1})
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+
+        # Nasal consonant should NOT match [+cons, !nasal]
+        seq_nasal = _seq({"consonantal": 1, "nasal": 1, "voice": 1})
+        loci_nasal = find_loci(rule, seq_nasal)
+        assert len(loci_nasal) == 0
+
+
+class TestNullParsing:
+    """Test that ∅ and 0 are parsed as Null elements."""
+
+    def test_unicode_null_in_target(self, inventory: FeatureInventory):
+        """∅ in target marks an insertion point."""
+        result = parse_spe_definition("∅ -> [+cons]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Null)
+
+    def test_ascii_zero_in_target(self, inventory: FeatureInventory):
+        """0 in target marks an insertion point (same as ∅)."""
+        result = parse_spe_definition("0 -> [+cons]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Null)
+
+    def test_null_in_result_deletion(self, inventory: FeatureInventory):
+        """0 in result marks deletion of the corresponding target segment."""
+        result = parse_spe_definition("[+cons] -> 0", inventory)
+        assert result.is_ok()
+        result_elems = result.unwrap()[1]
+        assert len(result_elems) == 1
+        assert isinstance(result_elems[0], Null)
+
+    def test_null_in_context(self, inventory: FeatureInventory):
+        """0 in context is a zero-width insertion point."""
+        result = parse_spe_definition("[+cons] -> [-cons] / 0_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert isinstance(left_ctx[0], Null)
+
+    def test_mixed_null_and_bundle(self, inventory: FeatureInventory):
+        """Null and bundles can coexist in a rule."""
+        result = parse_spe_definition("[+cons] -> 0 [+cons]", inventory)
+        assert result.is_ok()
+        result_elems = result.unwrap()[1]
+        assert len(result_elems) == 2
+        assert isinstance(result_elems[0], Null)
+        assert isinstance(result_elems[1], Bundle)
+
+
+class TestInsertionDeletion:
+    """Test insertion and deletion via Null elements in rules."""
+
+    def test_deletion(self, inventory: FeatureInventory):
+        """A rule that deletes a segment: [+cons] -> 0."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        rule = Rule(
+            rule_id="delete",
+            name="delete consonant",
+            time=100,
+            target=[Bundle(bundle=cons)],
+            result=[Null()],
+            left_context=None,
+            right_context=None,
+        )
+        seq = _seq({"consonantal": 0, "voice": 1}, {"consonantal": 1, "voice": 1}, {"consonantal": 0, "voice": 1})
+        result = apply_rules(seq, [rule])
+        # The consonant (index 1) should be deleted
+        assert len(result.data) == 2
+        assert result.data[0]["voice"].value == 1  # vowel unchanged
+        assert result.data[1]["voice"].value == 1  # vowel unchanged
+
+    def test_partial_deletion(self, inventory: FeatureInventory):
+        """Delete one segment from a two-segment target."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        voice = FeatureBundle({"voice": FeatureSpec("voice", 1)})
+        rule = Rule(
+            rule_id="partial_del",
+            name="delete first of two",
+            time=100,
+            target=[Bundle(bundle=cons), Bundle(bundle=cons)],
+            result=[Null(), Bundle(bundle=voice)],
+            left_context=None,
+            right_context=None,
+        )
+        seq = _seq(
+            {"consonantal": 1, "voice": 0},
+            {"consonantal": 1, "voice": 0},
+            {"consonantal": 0, "voice": 1},
+        )
+        result = apply_rules(seq, [rule])
+        # First consonant deleted, second becomes voiced
+        assert len(result.data) == 2
+        assert result.data[0]["voice"].value == 1  # second consonant (now voiced)
+        assert result.data[1]["voice"].value == 1  # vowel unchanged
+
+
+class TestGroupParsing:
+    """Test that parenthesised groups are parsed correctly."""
+
+    def test_simple_group(self, inventory: FeatureInventory):
+        """([+cons][+nas]) parses as a Group with two Bundle children."""
+        result = parse_spe_definition("([+cons][+nas]) -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Group)
+        assert len(target[0].elements) == 2
+        assert target[0].quantifier == _ONE
+
+    def test_group_with_quantifier(self, inventory: FeatureInventory):
+        """([+cons][+nas])+ parses as a quantified Group."""
+        result = parse_spe_definition("([+cons][+nas])+ -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert isinstance(target[0], Group)
+        assert target[0].quantifier == Quantifier(min=1, max=None)
+
+    def test_group_star_quantifier(self, inventory: FeatureInventory):
+        """([+cons])* parses as a Group with * quantifier."""
+        result = parse_spe_definition("([+cons])* -> [-vc]", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert isinstance(target[0], Group)
+        assert target[0].quantifier == Quantifier(min=0, max=None)
+
+    def test_nested_group(self, inventory: FeatureInventory):
+        """Nested groups: ([+cons]([+nas])) parses with inner Group."""
+        result = parse_spe_definition("([+cons]([+nas])) -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert isinstance(target[0], Group)
+        assert len(target[0].elements) == 2
+        assert isinstance(target[0].elements[1], Group)
+
+    def test_unclosed_parenthesis_is_error(self, inventory: FeatureInventory):
+        """Unclosed parenthesis produces an error."""
+        result = parse_spe_definition("([+cons] -> [-vc]", inventory)
+        assert result.is_err()
+
+    def test_group_in_context(self, inventory: FeatureInventory):
+        """Groups work in context positions."""
+        result = parse_spe_definition("[+cons] -> [-vc] / ([+nas])+_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert isinstance(left_ctx[0], Group)
+        assert left_ctx[0].quantifier == Quantifier(min=1, max=None)
+
+
+class TestGroupMatching:
+    """Test that groups match correctly in the match engine."""
+
+    def test_group_matches_sequence(self, inventory: FeatureInventory):
+        """A group matches the sequence of its inner elements."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        nas = FeatureBundle({"nasal": FeatureSpec("nasal", 1)})
+        voice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Group(elements=[Bundle(bundle=cons), Bundle(bundle=nas)])],
+            result=[Bundle(bundle=voice), Bundle(bundle=voice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Consonant followed by nasal
+        # All segments have explicit consonantal and nasal values to avoid
+        # ignore_none wildcard matching
+        seq = _seq(
+            {"consonantal": 1, "nasal": 0, "voice": 1},  # consonant, non-nasal
+            {"consonantal": 0, "nasal": 1, "voice": 1},  # nasal consonant
+            {"consonantal": 0, "nasal": 0, "voice": 1},  # vowel
+        )
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+        assert loci[0].start == 0
+        assert loci[0].end == 2
+
+    def test_quantified_group_match(self, inventory: FeatureInventory):
+        """A quantified group matches repeated sequences."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        voice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Group(elements=[Bundle(bundle=cons)], quantifier=Quantifier(min=2, max=2))],
+            result=[Bundle(bundle=voice), Bundle(bundle=voice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Two consonants
+        seq = _seq({"consonantal": 1, "voice": 1}, {"consonantal": 1, "voice": 1}, {"consonantal": 0, "voice": 1})
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+        assert loci[0].start == 0
+        assert loci[0].end == 2
+
+
+class TestDisjunctionParsing:
+    """Test that disjunction (|) is parsed correctly."""
+
+    def test_simple_disjunction(self, inventory: FeatureInventory):
+        """[+cons] | [+nas] parses as a Disjunction with two branches."""
+        result = parse_spe_definition("[+cons] | [+nas] -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Disjunction)
+        assert len(target[0].branches) == 2
+
+    def test_three_way_disjunction(self, inventory: FeatureInventory):
+        """[+cons] | [+nas] | [+voice] parses as three branches."""
+        result = parse_spe_definition("[+cons] | [+nas] | [+voice] -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert isinstance(target[0], Disjunction)
+        assert len(target[0].branches) == 3
+
+    def test_disjunction_in_context(self, inventory: FeatureInventory):
+        """Disjunction works in context positions."""
+        result = parse_spe_definition("[+cons] -> [-vc] / [+nas] | [+vc]_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert isinstance(left_ctx[0], Disjunction)
+
+
+class TestDisjunctionMatching:
+    """Test that disjunction matches correctly in the match engine."""
+
+    def test_disjunction_matches_first_branch(self, inventory: FeatureInventory):
+        """A disjunction matches when the first branch matches."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        nas = FeatureBundle({"nasal": FeatureSpec("nasal", 1)})
+        devoice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Disjunction(branches=[[Bundle(bundle=cons)], [Bundle(bundle=nas)]])],
+            result=[Bundle(bundle=devoice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Consonant should match the first branch
+        seq = _seq({"consonantal": 1, "nasal": 0, "voice": 1})
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+
+    def test_disjunction_matches_second_branch(self, inventory: FeatureInventory):
+        """A disjunction matches when the second branch matches."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        nas = FeatureBundle({"nasal": FeatureSpec("nasal", 1)})
+        devoice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Disjunction(branches=[[Bundle(bundle=cons)], [Bundle(bundle=nas)]])],
+            result=[Bundle(bundle=devoice)],
+            left_context=None,
+            right_context=None,
+        )
+        # Nasal (not consonantal) should match the second branch
+        seq = _seq({"consonantal": 0, "nasal": 1, "voice": 1})
+        loci = find_loci(rule, seq)
+        assert len(loci) == 1
+
+
+class TestBindingRefParsing:
+    """Test that Binding (V=...) and Ref (@V) are parsed correctly."""
+
+    def test_binding_with_bundle(self, inventory: FeatureInventory):
+        """V=[+cons] captures a consonant span."""
+        result = parse_spe_definition("V=[+cons] -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Binding)
+        assert target[0].name == "V"
+        assert len(target[0].pattern) == 1
+        assert isinstance(target[0].pattern[0], Bundle)
+
+    def test_ref_in_result(self, inventory: FeatureInventory):
+        """@V in result recalls a bound span."""
+        result = parse_spe_definition("[+cons] -> @V", inventory)
+        assert result.is_ok()
+        result_elems = result.unwrap()[1]
+        assert len(result_elems) == 1
+        assert isinstance(result_elems[0], Ref)
+        assert result_elems[0].name == "V"
+
+    def test_binding_with_group(self, inventory: FeatureInventory):
+        """V=([+cons][+nas]) captures a two-segment span."""
+        result = parse_spe_definition("V=([+cons][+nas]) -> 0", inventory)
+        assert result.is_ok()
+        target = result.unwrap()[0]
+        assert len(target) == 1
+        assert isinstance(target[0], Binding)
+        assert target[0].name == "V"
+        assert len(target[0].pattern) == 1  # Group wraps the two bundles
+        assert isinstance(target[0].pattern[0], Group)
+
+    def test_binding_in_context(self, inventory: FeatureInventory):
+        """Binding works in context positions."""
+        result = parse_spe_definition("[+cons] -> [-vc] / V=[+nas]_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert isinstance(left_ctx[0], Binding)
+        assert left_ctx[0].name == "V"
+
+    def test_ref_in_context(self, inventory: FeatureInventory):
+        """@V in context recalls a previously bound span."""
+        result = parse_spe_definition("[+cons] -> 0 / V=[+nas]_@V", inventory)
+        assert result.is_ok()
+        # Right context should have a Ref
+        right_ctx = result.unwrap()[3]
+        assert right_ctx is not None
+        assert isinstance(right_ctx[0], Ref)
+        assert right_ctx[0].name == "V"
+
+
+class TestSyllableBoundary:
+    """Test that $ matches syllable boundaries stored in the Sequence."""
+
+    def test_dollar_in_context(self, inventory: FeatureInventory):
+        """$ is parsed as a syllable boundary in context."""
+        result = parse_spe_definition("[+cons] -> [-vc] / $_", inventory)
+        assert result.is_ok()
+        left_ctx = result.unwrap()[2]
+        assert left_ctx is not None
+        assert any(isinstance(el, Boundary) and el.kind == "syllable" for el in left_ctx)
+
+    def test_dollar_matches_syllable_boundary(self, inventory: FeatureInventory):
+        """A rule with $ matches when there's a syllable boundary."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        devoice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Bundle(bundle=cons)],
+            result=[Bundle(bundle=devoice)],
+            left_context=[Boundary(kind="syllable")],
+            right_context=None,
+        )
+        # Sequence with a syllable boundary at position 1 (between seg 0 and 1)
+        seq = _seq({"consonantal": 0, "voice": 1}, {"consonantal": 1, "voice": 1})
+        seq.syllable_boundaries = {1}
+        loci = find_loci(rule, seq)
+        # The consonant at index 1 should match (boundary before it)
+        assert len(loci) == 1
+        assert loci[0].start == 1
+
+    def test_dollar_no_match_without_boundary(self, inventory: FeatureInventory):
+        """A rule with $ does NOT match when there's no syllable boundary."""
+        cons = FeatureBundle({"consonantal": FeatureSpec("consonantal", 1)})
+        devoice = FeatureBundle({"voice": FeatureSpec("voice", 0)})
+        rule = Rule(
+            rule_id="test",
+            name="test",
+            time=100,
+            target=[Bundle(bundle=cons)],
+            result=[Bundle(bundle=devoice)],
+            left_context=[Boundary(kind="syllable")],
+            right_context=None,
+        )
+        # Sequence WITHOUT any syllable boundaries
+        seq = _seq({"consonantal": 0, "voice": 1}, {"consonantal": 1, "voice": 1})
+        seq.syllable_boundaries = set()
+        loci = find_loci(rule, seq)
+        assert len(loci) == 0
