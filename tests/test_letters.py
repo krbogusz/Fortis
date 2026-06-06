@@ -57,13 +57,13 @@ class TestLetterDefinitionLoad:
         row = {"symbol": "a", "height": "3"}
         result = LetterDefinition.load(row, features)
         assert result.is_ok()
-        assert result.unwrap().bundle["height"].value == 3
+        assert result.unwrap().bundle["height"].value.value == 3
 
     def test_contour_value(self, features):
         row = {"symbol": "x", "height": "1>3"}
         result = LetterDefinition.load(row, features)
         assert result.is_ok()
-        assert result.unwrap().bundle["height"].value == [1, 3]
+        assert result.unwrap().bundle["height"].value.value == [1, 3]
 
 
 # ---------------------------------------------------------------------------
@@ -101,7 +101,7 @@ class TestLetterInventoryValidate:
 
     def test_duplicate_bundles_is_error(self, features):
         """Two letters with identical bundles should be caught."""
-        bundle = FeatureBundle.from_str("+cons, -syll", features).unwrap()
+        bundle = FeatureBundle.from_string("+cons, -syll", features).unwrap()
         ld1 = LetterDefinition(symbol="p", bundle=bundle)
         ld2 = LetterDefinition(symbol="b", bundle=bundle)
         inv = LetterInventory({"p": ld1, "b": ld2})
@@ -110,8 +110,8 @@ class TestLetterInventoryValidate:
 
     def test_distinct_bundles_ok(self, features):
         """Two letters with different bundles should pass."""
-        b1 = FeatureBundle.from_str("+cons, -syll", features).unwrap()
-        b2 = FeatureBundle.from_str("-cons, +syll", features).unwrap()
+        b1 = FeatureBundle.from_string("+cons, -syll", features).unwrap()
+        b2 = FeatureBundle.from_string("-cons, +syll", features).unwrap()
         ld1 = LetterDefinition(symbol="p", bundle=b1)
         ld2 = LetterDefinition(symbol="a", bundle=b2)
         inv = LetterInventory({"p": ld1, "a": ld2})

@@ -41,7 +41,7 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
                     segment = inventories.letters[letter_symbol].bundle
                     segment = segment.combine_with(buffer)
                     nucleus = inventories.syllable_parts.get_nucleus(inventories.time)
-                    if nucleus is not None and segment.match_pattern(nucleus):
+                    if nucleus is not None and segment.matches_pattern(nucleus):
                         segment = segment.combine_with(syllable_buffer)
                         last_nucleus_index = len(segments) - 1
                         syllable_buffer = FeatureBundle()

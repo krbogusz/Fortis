@@ -5,11 +5,12 @@ from src.fortis.config import config
 from src.fortis.imports.diacritics import DiacriticDefinition, DiacriticInventory
 from src.fortis.imports.features import FeatureDefinition, FeatureInventory
 from src.fortis.imports.letters import LetterInventory
+from src.fortis.imports.rules import RuleInventory
 from src.fortis.imports.sonorities import SonorityInventory
 from src.fortis.imports.syllable_parts import SyllablePartsInventory
 from src.fortis.imports.words import WordInventory
 from src.fortis.models.tier import Tier
-from src.fortis.result import present_errors
+from src.fortis.result import Err, Ok, Result, present_errors
 
 
 @dataclass
@@ -29,6 +30,7 @@ class Inventories:
     sonorities: SonorityInventory
     syllable_parts: SyllablePartsInventory
     words: WordInventory
+    rules: RuleInventory
     time: int = 0
 
     # Pre-computed sorted symbol lists for greedy longest-first matching
@@ -44,6 +46,8 @@ class Inventories:
         times: set[int] = set()
         if self.syllable_parts:
             times.update(self.syllable_parts.keys())
+        if self.rules:
+            times.update(rule.time for rule in self.rules.values())
         return min(times) if times else 0
 
     def __post_init__(self):
@@ -98,8 +102,9 @@ class Inventories:
         if words_result.is_err():
             error_list.extend(words_result.unwrap_err())
 
-        if error_list:
-            raise ValueError(present_errors(error_list))
+        rules_result = RuleInventory.load(dir_path / "rules.toml")
+        if rules_result.is_err():
+            error_list.extend(rules_result.unwrap_err())
 
         if error_list:
             raise ValueError(present_errors(error_list))
@@ -111,6 +116,7 @@ class Inventories:
             sonorities=sonorities_result.unwrap(),
             syllable_parts=syllable_settings_result.unwrap(),
             words=words_result.unwrap(),
+            rules=rules_result.unwrap(),
         )
 
     def segment_features(self) -> dict[str, FeatureDefinition]:
@@ -144,3 +150,27 @@ class Inventories:
             if diacritic_def.tier == Tier.syllable:
                 syllable_diacritics[diacritic_symbol] = diacritic_def
         return syllable_diacritics
+
+    def parse_rules(self) -> Result[None, list[str]]:
+        """Parse all rule definition strings into Element lists.
+
+        Constructs a ParserContext from the loaded feature and letter
+        inventories and calls ``parse_rule()`` for each rule.
+
+        Returns:
+            Ok(None) if all rules parse successfully, or Err with a list
+            of error messages for any rules that failed to parse.
+        """
+        from src.fortis.application.parser import ParserContext, parse_rule
+
+        ctx = ParserContext(features=self.features, letters=self.letters)
+        error_list: list[str] = []
+
+        for rule in self.rules.values():
+            result = parse_rule(rule, ctx)
+            if result.is_err():
+                error_list.extend(result.unwrap_err())
+
+        if error_list:
+            return Err(error_list)
+        return Ok(None)

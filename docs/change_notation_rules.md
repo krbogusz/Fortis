@@ -50,23 +50,23 @@ Quantifiers may be applied to any element — feature bundles, wildcards, groups
 ### 1.5. Contour specification
 
 - `[cont: 1>2>3]` — Contour feature and values
+- `[cont: +@any]` — F is + at any position in the contour (default, explicit)
 - `[cont: +@initial]` — F is + at the start of the contour
 - `[cont: -@initial]` — F is – at the start of the contour
 - `[cont: +@final]` — F is + at the end of the contour
-- `[cont: +@any]` — F is + at any position in the contour (default, explicit)
 - `[tone: 5@2]` — Tone is 5 at the second place in the contour
-- `[tone: 5@2>3]` — Tone is 5 at the second and third place in the contour
+- `[tone: 5@2;3]` — Tone is 5 at the second and third place in the contour
 - `[tone: 5@all]` — Tone is 5 at every place in the contour
 
-Positional modifiers (`@initial`, `@final`, `@any`, `@all`, `@n`) are suffixes on the value after a colon. The pattern is `[feature: value@position]` — sign or scalar value comes first, then the position.
+Positional modifiers (`@any`, `@initial`, `@final`, `@all`, `@n`) are suffixes on the value after a colon. The pattern is `[feature: value@position]` — sign or scalar value comes first, then the position.
 
 ### 1.6. Application modes
 
 Rules may specify how they apply when multiple loci match. The `application` TOML key takes one of:
 
 - `simultaneous` (default) — find every locus against the original input, rewrite all at once
-- `left-to-right` — scan left to right, apply at each locus, changed segments visible to later applications
-- `right-to-left` — scan right to left, mirror of left-to-right
+- `left_to_right` — scan left to right, apply at each locus, changed segments visible to later applications
+- `right_to_left` — scan right to left, mirror of left-to-right
 
 ### 1.7. Time ordering
 

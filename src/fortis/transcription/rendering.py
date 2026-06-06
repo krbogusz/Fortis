@@ -24,7 +24,7 @@ def render_segment(segment: FeatureBundle, inventories: Inventories) -> str:
     """Render a single FeatureBundle as an IPA string (letter + diacritics)."""
     # 1. Try exact match first
     for letter_symbol, letter_def in inventories.letters.items():
-        if segment.match_exact(letter_def.bundle):
+        if segment.matches_exactly(letter_def.bundle):
             return letter_symbol
 
     # 2. Find the best letter: the one whose differences leave the
@@ -93,7 +93,7 @@ def _find_diacritics(
             # a new difference or express the wrong value).
             fits = True
             for feature, spec in dia_def.bundle.items():
-                if feature not in target_bundle or spec.value != target_bundle[feature].value:
+                if feature not in target_bundle or spec.value.value != target_bundle[feature].value.value:
                     fits = False
                     break
             if not fits:

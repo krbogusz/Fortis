@@ -144,7 +144,7 @@ class DiacriticDefinition:
             return Err([f"Diacritic '{present_symbol(symbol)}' is missing required field 'bundle'"])
         if value == "":
             return Err([f"Diacritic '{present_symbol(symbol)}' is missing required field 'bundle'"])
-        bundle_result = FeatureBundle.from_str(value, features, bare_unary_means_present=True)
+        bundle_result = FeatureBundle.from_string(value, features)
         if bundle_result.is_err():
             return Err(bundle_result.unwrap_err())
         return Ok(bundle_result.unwrap())

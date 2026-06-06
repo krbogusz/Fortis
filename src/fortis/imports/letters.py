@@ -6,7 +6,7 @@ from src.fortis.general.file_handling import load_csv_file
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.feature_spec import FeatureSpec
-from src.fortis.models.value import single_value_from_str
+from src.fortis.models.feature_value import FeatureValue
 from src.fortis.result import Err, Ok, Result
 
 
@@ -32,32 +32,16 @@ class LetterDefinition:
             if feature_name not in features:
                 error_list.append(f"Letter '{symbol}' has a feature '{feature_name}' that is unknown")
                 continue
-            raw_value = raw_value.strip()
+            raw_value = raw_value.strip() if raw_value is not None else ""
             if not raw_value:
-                continue  # unspecified
+                continue  # empty cell = feature not applicable, omit from bundle
+            value_result = FeatureValue.from_str(raw_value, feature_name, features)
 
-            if ">" in raw_value:
-                contour: list[int | None] = []
-                for step in raw_value.split(">"):
-                    step = step.strip()
-                    if not step:
-                        error_list.append(f"Empty contour step for '{feature_name}' in letter '{symbol}'")
-                        break
-                    result = single_value_from_str(step, feature_name, features)
-                    if result.is_err():
-                        error_list.append(result.unwrap_err())
-                        break
-                    contour.append(result.unwrap())
-                else:
-                    bundle[feature_name] = FeatureSpec(feature_name, contour)
-            else:
-                result = single_value_from_str(raw_value, feature_name, features)
-                if result.is_err():
-                    error_list.append(result.unwrap_err())
-                    continue
-                value = result.unwrap()
-                if value is not None:
-                    bundle[feature_name] = FeatureSpec(feature_name, value)
+            if value_result.is_err():
+                error_list.append(value_result.unwrap_err())
+                continue
+            value = value_result.unwrap()
+            bundle[feature_name] = FeatureSpec(feature_name, value)
 
         if error_list:
             return Err(error_list)
@@ -126,8 +110,9 @@ class LetterInventory(UserDict[str, LetterDefinition]):
         for symbol, letter_def in self.data.items():
             key = tuple(
                 sorted(
-                    (k, tuple(spec.value) if isinstance(spec.value, list) else spec.value)
+                    (k, tuple(v) if isinstance(v, list) else v)
                     for k, spec in letter_def.bundle.items()
+                    for v in [spec.value.value]
                 )
             )
             bundle_to_symbols.setdefault(key, []).append(symbol)

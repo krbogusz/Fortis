@@ -89,7 +89,7 @@ class SonorityDefinition:
             return Err([f"Sonority '{label}' is missing required field 'feature_bundle'"])
         if value == "":
             return Ok(None)
-        bundle_result = FeatureBundle.from_str(value, features, bare_unary_means_present=True)
+        bundle_result = FeatureBundle.from_string(value, features)
         if bundle_result.is_err():
             return Err(bundle_result.unwrap_err())
         return Ok(bundle_result.unwrap())
@@ -180,6 +180,6 @@ class SonorityInventory(UserDict[str, SonorityDefinition]):
             ValueError: If no sonority definition matches the segment.
         """
         for sonority_def in self._sorted:
-            if sonority_def.bundle is None or segment.match_pattern(sonority_def.bundle):
+            if sonority_def.bundle is None or segment.matches_pattern(sonority_def.bundle):
                 return sonority_def
         raise ValueError(f"No sonority definition matches segment {segment}")

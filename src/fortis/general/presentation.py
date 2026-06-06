@@ -100,7 +100,7 @@ def present_bundle_lines(bundle: FeatureBundle, features: FeatureInventory) -> l
             has_syllable = True
         short = ft_def.short
         spec = bundle[feature_name]
-        lines.append(format_feature(short, ft_def.type, spec.value))
+        lines.append(format_feature(short, ft_def.type, spec.value.value))
 
     if not lines:
         return ["⎡⎤"]
@@ -164,7 +164,7 @@ def present_sequence(sequence: list[FeatureBundle], features: FeatureInventory) 
                     row.append("")
                 else:
                     spec = bundle[feature_name]
-                    row.append(format_feature(short, ft_def.type, spec.value))
+                    row.append(format_feature(short, ft_def.type, spec.value.value))
             content.append(row)
 
     if not content:

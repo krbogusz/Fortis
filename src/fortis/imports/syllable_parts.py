@@ -64,7 +64,7 @@ class SyllablePartDefinition:
             if not defn_raw:
                 error_list.append(f"Nucleus at time {time} is missing required field 'definition'")
             else:
-                bundle_result = FeatureBundle.from_str(str(defn_raw), features=features)
+                bundle_result = FeatureBundle.from_string(str(defn_raw), features=features)
                 if bundle_result.is_err():
                     error_list.extend(bundle_result.unwrap_err())
                 else:

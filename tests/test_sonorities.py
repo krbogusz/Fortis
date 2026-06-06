@@ -111,7 +111,7 @@ class TestAssignSonority:
         sd = SonorityDefinition.load("vowel", {"level": 5, "feature_bundle": "+syll"}, features).unwrap()
         inv = SonorityInventory({"vowel": sd})
         inv._sort_by_specificity()
-        segment = FeatureBundle.from_str("+syll", features).unwrap()
+        segment = FeatureBundle.from_string("+syll", features).unwrap()
         result = inv.assign_sonority(segment)
         assert result.label == "vowel"
 
@@ -119,7 +119,7 @@ class TestAssignSonority:
         sd = SonorityDefinition.load("vowel", {"level": 5, "feature_bundle": "+syll"}, features).unwrap()
         inv = SonorityInventory({"vowel": sd})
         inv._sort_by_specificity()
-        segment = FeatureBundle.from_str("+cons, -syll", features).unwrap()
+        segment = FeatureBundle.from_string("+cons, -syll", features).unwrap()
         with pytest.raises(ValueError):
             inv.assign_sonority(segment)
 

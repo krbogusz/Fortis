@@ -28,7 +28,36 @@ class Config:
 
     paths: Paths = field(default_factory=Paths)
     value_symbols: ValueSymbols = field(default_factory=ValueSymbols)
-    reserved_symbols: set[str] = field(default_factory=lambda: {"."})
+    special_symbols: set[str] = field(default_factory=lambda: {"."})
+    greek_alphabet: set[str] = field(
+        default_factory=lambda: {
+            "α",
+            "β",
+            "γ",
+            "δ",
+            "ε",
+            "ζ",
+            "η",
+            "θ",
+            "ι",
+            "κ",
+            "λ",
+            "μ",
+            "ν",
+            "ξ",
+            "ο",
+            "π",
+            "ρ",
+            "σ",
+            "ς",
+            "τ",
+            "υ",
+            "φ",
+            "χ",
+            "ψ",
+            "ω",
+        }
+    )
 
 
 config = Config()

@@ -5,7 +5,7 @@
 ```
 - unary (e.g., [oral])
 - binary (e.g., [±sonorant])
-- scalar (e.g., [position] – [-1: palatal, 0: postalveolar, 1: advanced])
+- scalar (e.g., [larynx_height] – [-1: lowered; 0: neutral; 1: raised])
 ```
 
 ## Segmental Features
@@ -34,9 +34,17 @@ ROOT
         - [advancement] → [RTR], [ATR]
 - [glottal]
     - [±voice]
-    - [aperture] – [-1: constricted, 0: neutral, 1: spread]
+    - [glottal_aperture] – [-1: constricted, 0: neutral, 1: spread]
     - [tension] – [-1: slack, 0: neutral, 1: stiff]
-    - [larynx height] – [-1: lowered; 0: neutral; 1: raised]
+    - [larynx_height] – [-1: lowered; 0: neutral; 1: raised]
+```
+
+## Syllabic Features
+
+```
+ROOT
+- [stress] – [1: secondary, 2: primary]
+- [tone] – [1: extra-low, 2: low, 3: mid, 4: high, 5: extra-high]
 ```
 
 ## Coronals
@@ -61,7 +69,7 @@ ROOT
 | [low]      | [ATR] | æ • -     | ɐ          | -          |
 | [low]      | [RTR] | -         | a • ɶ      | ɑ • ɒ      |
 
-Consonants are not marked for advancement
+Coronal and dorsal consonants are not marked for advancement
 
 |                   | [coronal] | _unmarked_ | [guttural] |
 | ----------------- | --------- | ---------- | ---------- |
