@@ -1,8 +1,10 @@
 """Feature values: a single value, a contour, or their union."""
 
+type AlphaValue = str  # Greek letter used as a variable name (e.g. "α", "β")
 type SingleValue = int | None  # None == undefined / unspecified
 type ContourValue = tuple[SingleValue, ...]  # ordered limbs; None per-limb allowed
 type Value = SingleValue | ContourValue
+type ContourPosition = str | tuple[int, ...]  # "initial", "final", "any", "all", or explicit positions
 
 
 def make_value(limbs: list[SingleValue]) -> Value:

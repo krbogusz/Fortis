@@ -5,10 +5,15 @@ It is populated during pattern matching and consulted during change
 application.
 """
 
-from dataclasses import dataclass, field
+from __future__ import annotations
 
-from src.fortis.models.pattern_spec import PatternSpec
+from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
+
 from src.fortis.models.values import AlphaValue, Value
+
+if TYPE_CHECKING:
+    from src.fortis.models.pattern_spec import PatternSpec
 
 
 @dataclass

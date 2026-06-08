@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 from collections import UserDict
+from typing import TYPE_CHECKING
 
 from src.fortis.imports.features import FeatureInventory
-from src.fortis.models.bindings import Bindings
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.pattern_spec import PatternSpec
 from src.fortis.result import Err, Ok, Result
+
+if TYPE_CHECKING:
+    from src.fortis.models.bindings import Bindings
 
 
 class PatternBundle(UserDict[str, PatternSpec]):
