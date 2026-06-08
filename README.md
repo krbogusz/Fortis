@@ -196,25 +196,65 @@ match and rules should not rely on syllable structure.
 
 ## Layout
 
-One module per stage; `model.py` is the only piece that exists today.
-
 ```
 fortis/
-  model.py        # domain types (data only)            — done
-  loaders.py      # TOML → Project                      — planned
-  notation.py     # RuleParser: definition → SD         — planned
-  segmenter.py    # Segmenter: IPA → Sequence           — planned
-  matcher.py      # RuleMatcher + Env                   — planned
-  applier.py      # Applier: rewrite one locus          — planned
-  renderer.py     # Renderer: Sequence → IPA            — planned
-  engine.py       # DerivationEngine: derive a word     — planned
-data/
+  models/           # pure data — imports nothing outside models (+ stdlib, result)
+    values.py         # SingleValue, ContourValue, Value, AlphaValue
+    feature_bundle.py # FeatureBundle (UserDict[str, FeatureValue])
+    feature_value.py  # FeatureValue
+    pattern_spec.py   # PatternSpec (value, negated, contour_position, alpha_var, alpha_op)
+    pattern_bundle.py # PatternBundle (UserDict[str, PatternSpec])
+    bindings.py       # Bindings (alpha variable environment)
+    elements.py       # Rule AST: AlphaOp, ValueSpec, AlphaSpec, ResultBundle, Element, …
+    segments.py       # Sequence type alias
+    tier.py           # Tier enum
+    syllable.py       # Syllable dataclass
+    alpha_notation.py # AlphaOperation (legacy, see elements.AlphaOp)
+  application/
+    parsing.py        # string → model objects (parse_feature_bundle, parse_pattern_spec, …)
+    merge.py          # geometry-aware merge (apply_bundle with delinking)
+  imports/            # TOML/CSV → model objects, using application.parsing
+    features.py       # FeatureDefinition, FeatureInventory
+    letters.py         # LetterDefinition, LetterInventory
+    diacritics.py      # DiacriticDefinition, DiacriticInventory
+    sonorities.py      # SonorityDefinition, SonorityInventory
+    syllable_parts.py  # SyllablePartsInventory
+    words.py           # WordInventory
+    rules.py           # RuleDefinition, RuleInventory
+    inventories.py     # Inventories (top-level container)
+  operations/
+    segmentation.py    # string_to_sequence (IPA → Sequence)
+    rendering.py       # sequence_to_string, render_segment
+    matching.py        # (planned)
+    rewriting.py       # (planned)
+    derivation.py      # (planned)
+    rule_parsing.py    # split_rule_definition (stub)
+  transcription/
+    parsing.py         # IPA → Sequence
+    rendering.py       # Sequence → IPA
+  general/
+    utils.py           # safe_int, is_combining
+    presentation.py    # format_feature, present_bundle, present_sequence
+    file_handling.py   # load_toml_file, load_csv_file
+  config.py            # Config, Paths, ValueSymbols
+  result.py            # Result, Ok, Err
+  main.py              # CLI entry point
+inventories/
   features.toml
-  letters.toml
+  letters.csv
   diacritics.toml
   sonorities.toml
+  syllable_parts.toml
   words.toml
   rules.toml
 docs/
-  reference.md    # the Fortis reference manual
+  reference.md
+  change_notation_rules.md
+  special_characters.md
+  user_guide.md
 ```
+
+The `models/` package is **provably inert** — a test asserts that no module under
+`models/` imports from `imports`, `application`, `parsing`, or `config`. All
+string→object parsing lives in `application/parsing.py`; all model↔vocabulary
+bridging (geometry-aware merge, delinking) lives in `application/merge.py`.
