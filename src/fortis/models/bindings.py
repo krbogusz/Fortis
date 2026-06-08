@@ -8,12 +8,9 @@ application.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
 
+from src.fortis.models.pattern_spec import PatternSpec
 from src.fortis.models.values import AlphaValue, Value
-
-if TYPE_CHECKING:
-    from src.fortis.models.pattern_spec import PatternSpec
 
 
 @dataclass

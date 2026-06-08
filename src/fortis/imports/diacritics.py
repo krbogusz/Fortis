@@ -7,7 +7,7 @@ from typing import Any
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.presentation import present_symbol
 from src.fortis.imports.features import FeatureInventory
-from src.fortis.application.parsing import parse_feature_bundle
+from src.fortis.parsing import parse_feature_bundle
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.tier import Tier
 from src.fortis.result import Err, Ok, Result

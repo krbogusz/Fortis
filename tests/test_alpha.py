@@ -1,6 +1,6 @@
 """Tests for alpha variable resolution in pattern matching."""
 
-from src.fortis.application.parsing import parse_pattern_bundle
+from src.fortis.parsing import parse_pattern_bundle
 from src.fortis.imports.features import FeatureDefinition, FeatureInventory, FeatureKind
 from src.fortis.models.bindings import Bindings
 from src.fortis.models.feature_bundle import FeatureBundle

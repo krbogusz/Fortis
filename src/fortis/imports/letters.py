@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from src.fortis.application.parsing import parse_feature_value
+from src.fortis.parsing import parse_feature_value
 from src.fortis.general.file_handling import load_csv_file
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle

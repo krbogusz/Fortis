@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from src.fortis.application.parsing import parse_feature_bundle
+from src.fortis.parsing import parse_feature_bundle
 
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.imports.sonorities import SonorityDefinition, SonorityInventory

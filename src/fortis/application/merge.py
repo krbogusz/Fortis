@@ -11,7 +11,6 @@ take ``FeatureInventory`` without re-coupling models to the vocabulary).
 
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
-from src.fortis.models.feature_value import FeatureValue
 
 
 def apply_bundle(
