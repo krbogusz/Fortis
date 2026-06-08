@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from src.fortis.application.parsing import parse_pattern_bundle
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.utils import safe_int
 from src.fortis.imports.features import FeatureInventory
@@ -64,7 +65,7 @@ class SyllablePartDefinition:
             if not defn_raw:
                 error_list.append(f"Nucleus at time {time} is missing required field 'definition'")
             else:
-                bundle_result = PatternBundle.from_string(str(defn_raw), features=features)
+                bundle_result = parse_pattern_bundle(str(defn_raw), features=features)
                 if bundle_result.is_err():
                     error_list.extend(bundle_result.unwrap_err())
                 else:

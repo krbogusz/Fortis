@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import pytest
 
+from src.fortis.application.parsing import parse_feature_bundle
+
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.imports.sonorities import SonorityDefinition, SonorityInventory
 from src.fortis.models.feature_bundle import FeatureBundle
@@ -111,7 +113,7 @@ class TestAssignSonority:
         sd = SonorityDefinition.load("vowel", {"level": 5, "feature_bundle": "+syll"}, features).unwrap()
         inv = SonorityInventory({"vowel": sd})
         inv._sort_by_specificity()
-        segment = FeatureBundle.from_string("+syll", features).unwrap()
+        segment = parse_feature_bundle("+syll", features).unwrap()
         result = inv.assign_sonority(segment)
         assert result.label == "vowel"
 
@@ -119,7 +121,7 @@ class TestAssignSonority:
         sd = SonorityDefinition.load("vowel", {"level": 5, "feature_bundle": "+syll"}, features).unwrap()
         inv = SonorityInventory({"vowel": sd})
         inv._sort_by_specificity()
-        segment = FeatureBundle.from_string("+cons, -syll", features).unwrap()
+        segment = parse_feature_bundle("+cons, -syll", features).unwrap()
         with pytest.raises(ValueError):
             inv.assign_sonority(segment)
 

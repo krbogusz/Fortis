@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import pytest
 
+from src.fortis.application.parsing import parse_feature_bundle
+
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.imports.letters import LetterDefinition, LetterInventory
 from src.fortis.models.feature_bundle import FeatureBundle
@@ -101,7 +103,7 @@ class TestLetterInventoryValidate:
 
     def test_duplicate_bundles_is_error(self, features):
         """Two letters with identical bundles should be caught."""
-        bundle = FeatureBundle.from_string("+cons, -syll", features).unwrap()
+        bundle = parse_feature_bundle("+cons, -syll", features).unwrap()
         ld1 = LetterDefinition(symbol="p", bundle=bundle)
         ld2 = LetterDefinition(symbol="b", bundle=bundle)
         inv = LetterInventory({"p": ld1, "b": ld2})
@@ -110,8 +112,8 @@ class TestLetterInventoryValidate:
 
     def test_distinct_bundles_ok(self, features):
         """Two letters with different bundles should pass."""
-        b1 = FeatureBundle.from_string("+cons, -syll", features).unwrap()
-        b2 = FeatureBundle.from_string("-cons, +syll", features).unwrap()
+        b1 = parse_feature_bundle("+cons, -syll", features).unwrap()
+        b2 = parse_feature_bundle("-cons, +syll", features).unwrap()
         ld1 = LetterDefinition(symbol="p", bundle=b1)
         ld2 = LetterDefinition(symbol="a", bundle=b2)
         inv = LetterInventory({"p": ld1, "a": ld2})
