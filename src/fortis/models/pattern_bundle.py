@@ -3,11 +3,9 @@ from __future__ import annotations
 from collections import UserDict
 from typing import TYPE_CHECKING
 
-from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.feature_value import FeatureValue
 from src.fortis.models.pattern_spec import PatternSpec
-from src.fortis.result import Err, Ok, Result
 
 if TYPE_CHECKING:
     from src.fortis.models.bindings import Bindings
@@ -27,35 +25,6 @@ class PatternBundle(UserDict[str, PatternSpec]):
         for feature, spec in self.data.items():
             parts.append(f"{feature}: {spec}")
         return "[" + ", ".join(parts) + "]"
-
-    @classmethod
-    def from_string(cls, raw_string: str, features: FeatureInventory) -> Result[PatternBundle, list[str]]:
-        """Parse a comma-separated pattern bundle string.
-
-        Supports negation (``!``) and contour positions (``@initial``, ``@2``,
-        etc.) which are not valid in FeatureBundle.
-
-        Args:
-            raw_string: Comma- or semicolon-separated pattern specs.
-            features: Feature inventory for name/value resolution.
-        """
-        error_list = []
-        string = raw_string.replace(";", ",")
-        tokens = [t.strip() for t in string.split(",") if t.strip()]
-
-        bundle = cls()
-        for token in tokens:
-            result = PatternSpec.from_string(token, features)
-            if result.is_err():
-                error_list.append(result.unwrap_err())
-                continue
-            feature_name, spec = result.unwrap()
-            bundle[feature_name] = spec
-
-        if error_list:
-            return Err(error_list)
-
-        return Ok(bundle)
 
     def matches_against(self, segment: FeatureBundle, bindings: Bindings | None = None) -> bool:
         """Check if *self* (a pattern) matches *segment* (realized material).

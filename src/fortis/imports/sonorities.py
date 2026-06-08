@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from src.fortis.application.parsing import parse_pattern_bundle
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
@@ -90,7 +91,7 @@ class SonorityDefinition:
             return Err([f"Sonority '{label}' is missing required field 'feature_bundle'"])
         if value == "":
             return Ok(None)
-        bundle_result = PatternBundle.from_string(value, features)
+        bundle_result = parse_pattern_bundle(value, features)
         if bundle_result.is_err():
             return Err(bundle_result.unwrap_err())
         return Ok(bundle_result.unwrap())

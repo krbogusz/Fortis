@@ -1,8 +1,6 @@
 from collections import UserDict
 
-from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_value import FeatureValue
-from src.fortis.result import Err, Ok, Result
 
 
 class FeatureBundle(UserDict[str, FeatureValue]):
@@ -19,39 +17,6 @@ class FeatureBundle(UserDict[str, FeatureValue]):
         for feature, value in self.data.items():
             parts.append(f"{feature}: {value}")
         return "[" + ", ".join(parts) + "]"
-
-    @classmethod
-    def from_string(cls, raw_string: str, features: FeatureInventory) -> Result[FeatureBundle, list[str]]:
-        """Parse a comma-separated feature bundle string (e.g. '+syll, -cons, height:2').
-
-        Args:
-            raw_string: Comma- or semicolon-separated feature specs.
-            features: Feature inventory for name/value resolution.
-        """
-        error_list = []
-        string = raw_string.replace(";", ",")
-        tokens = [t.strip() for t in string.split(",") if t.strip()]
-
-        bundle = cls()
-        for token in tokens:
-            # Identify feature name first, then parse value
-            match features.identify_feature(token.replace(" ", "")):
-                case Ok(feature_name):
-                    pass
-                case Err() as err:
-                    error_list.append(err.unwrap_err())
-                    continue
-
-            value_result = FeatureValue.from_str(token, feature_name, features)
-            if value_result.is_err():
-                error_list.append(value_result.unwrap_err())
-                continue
-            bundle[feature_name] = value_result.unwrap()
-
-        if error_list:
-            return Err(error_list)
-
-        return Ok(bundle)
 
     def combine_with(self, other: FeatureBundle, form_contours: bool = False) -> FeatureBundle:
         """Combine this feature bundle with another.

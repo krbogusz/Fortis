@@ -3,10 +3,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from src.fortis.application.parsing import parse_feature_value
 from src.fortis.general.file_handling import load_csv_file
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
-from src.fortis.models.feature_value import FeatureValue
 from src.fortis.result import Err, Ok, Result
 
 
@@ -35,7 +35,7 @@ class LetterDefinition:
             raw_value = raw_value.strip()
             if not raw_value:
                 continue  # empty cell = unspecified = omitted from bundle
-            value_result = FeatureValue.from_str(raw_value, feature_name, features)
+            value_result = parse_feature_value(raw_value, feature_name, features)
             if value_result.is_err():
                 error_list.append(value_result.unwrap_err())
                 continue

@@ -7,6 +7,7 @@ from typing import Any
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.presentation import present_symbol
 from src.fortis.imports.features import FeatureInventory
+from src.fortis.application.parsing import parse_feature_bundle
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.tier import Tier
 from src.fortis.result import Err, Ok, Result
@@ -144,7 +145,7 @@ class DiacriticDefinition:
             return Err([f"Diacritic '{present_symbol(symbol)}' is missing required field 'bundle'"])
         if value == "":
             return Err([f"Diacritic '{present_symbol(symbol)}' is missing required field 'bundle'"])
-        bundle_result = FeatureBundle.from_string(value, features)
+        bundle_result = parse_feature_bundle(value, features)
         if bundle_result.is_err():
             return Err(bundle_result.unwrap_err())
         return Ok(bundle_result.unwrap())
