@@ -61,14 +61,46 @@ class PatternSpec:
         For non-negated specs: the segment value must equal the pattern value.
         For negated specs: the segment value must *not* equal the pattern value.
 
-        # TODO: Phase 5 — alpha variable resolution at match time
+        Alpha variable resolution:
+        - If alpha_var is unbound in bindings, bind it to the segment value and succeed.
+        - If alpha_var is already bound, compare per alpha_op (same/opposite/other).
         """
-        # Alpha variable: match any value (binding/recall happens in Phase 5)
+        # Alpha variable resolution
         if self.alpha_var is not None:
-            return not self.negated
+            if bindings is None:
+                # No bindings context — alpha always matches (permissive)
+                return not self.negated
+
+            segment_atoms: list[SingleValue] = (
+                segment_value.value if isinstance(segment_value.value, list) else [segment_value.value]
+            )
+
+            if self.alpha_var not in bindings.alpha:
+                # First occurrence: bind the variable
+                bound_value = segment_atoms[0] if len(segment_atoms) == 1 else tuple(segment_atoms)
+                bindings.alpha[self.alpha_var] = bound_value
+                return not self.negated
+
+            # Subsequent occurrence: compare per alpha_op
+            bound = bindings.alpha[self.alpha_var]
+            bound_atoms: list[SingleValue] = [bound] if not isinstance(bound, tuple) else list(bound)
+
+            match self.alpha_op:
+                case AlphaOp.same:
+                    match = segment_atoms == bound_atoms
+                case AlphaOp.opposite:
+                    # For binary features, opposite means different value
+                    match = segment_atoms != bound_atoms
+                case AlphaOp.other:
+                    # "Other" means any different value
+                    match = segment_atoms != bound_atoms
+                case _:
+                    match = segment_atoms == bound_atoms
+
+            return (not match) if self.negated else match
 
         pattern_atoms: list[SingleValue] = self.value if isinstance(self.value, list) else [self.value]
-        segment_atoms: list[SingleValue] = (
+        segment_atoms = (
             segment_value.value if isinstance(segment_value.value, list) else [segment_value.value]
         )
 
