@@ -5,7 +5,7 @@ validation can collect every problem at once instead of failing on the first.
 """
 
 from dataclasses import dataclass
-from enum import Enum, auto
+from enum import StrEnum, auto
 
 from src.fortis.models.values import Value
 
@@ -14,35 +14,32 @@ from src.fortis.models.values import Value
 # --------------------------------------------------------------------------- #
 
 
-class AlphaOp(Enum):
+class AlphaOp(StrEnum):
     """Greek-variable notation; bind-vs-recall is resolved at match time."""
 
-    SAME = auto()  # [alpha F]
-    OPPOSITE = auto()  # [-alpha F]   (binary/unary only)
-    OTHER = auto()  # [!alpha F]
+    same = auto()  # [α F]
+    opposite = auto()  # [-α F]   (binary/unary only)
+    other = auto()  # [!α F]
 
 
-class ContourEdge(Enum):
+class ContourEdge(StrEnum):
     """A named position within a feature contour (sections 5.6, 5.9)."""
 
-    INITIAL = auto()
-    FINAL = auto()
-    ANY = auto()
-    ALL = auto()
+    initial = auto()
+    final = auto()
+    any = auto()
+    all = auto()
 
 
 type ContourPosition = ContourEdge | tuple[int, ...]  # tuple for @2, @2;3
 
 
-class BoundaryKind(Enum):
-    WORD = auto()  # #
-    SYLLABLE = auto()  # $   (inert until syllabification lands)
+class ApplicationMode(StrEnum):
+    """How a rule should be applied."""
 
-
-class ApplicationMode(Enum):
-    SIMULTANEOUS = auto()
-    LEFT_TO_RIGHT = auto()
-    RIGHT_TO_LEFT = auto()
+    simultaneous = auto()
+    left_to_right = auto()
+    right_to_left = auto()
 
 
 @dataclass(frozen=True)
@@ -111,7 +108,7 @@ class AlphaAssign:
     """Recall a bound Greek variable into the output segment."""
 
     var: str
-    op: AlphaOp = AlphaOp.SAME
+    op: AlphaOp = AlphaOp.same
 
 
 # + ConditionalAssign later
@@ -228,7 +225,8 @@ type Element = (
     | BundleElem
     | ResultElem
     | Wildcard
-    | Boundary
+    | SyllableBoundary
+    | WordBoundary
     | Null
     | Group
     | Disjunction
