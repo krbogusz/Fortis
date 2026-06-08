@@ -9,6 +9,7 @@ from src.fortis.general.utils import is_combining
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
 from src.fortis.models.tier import Tier
+from src.fortis.models.values import Value
 
 # ---------------------------------------------------------------------------
 # Primitive formatters
@@ -23,12 +24,14 @@ def present_symbol(symbol: str) -> str:
         return symbol
 
 
-def present_value(value: int | None) -> str:
+def present_value(value: int | None | str) -> str:
     """Format a single feature value as a display string.
 
     Maps: ``None`` → ``"∅"``, ``1`` → ``"+"``, ``0`` → ``"-"``,
-    otherwise ``str(value)``.
+    alpha variables (str) pass through as-is, otherwise ``str(value)``.
     """
+    if isinstance(value, str):
+        return value
     if value is None:
         return "∅"
     if value == 1:
@@ -38,14 +41,17 @@ def present_value(value: int | None) -> str:
     return str(value)
 
 
-def format_feature(short: str, feature_type: str, value: int | list[int | None] | None) -> str:
+def format_feature(short: str, feature_type: str, value: Value) -> str:
     """Format a single feature as a display string.
 
     Args:
         short: Short/abbreviated feature name.
         feature_type: ``"unary"``, ``"binary"``, or ``"scalar"``.
-        value: The feature value (int, contour list, or None).
+        value: The feature value (int, contour, None, or alpha variable).
     """
+    if isinstance(value, str):
+        # Alpha variable — display the Greek letter
+        return f"{short}: {value}"
     if feature_type == "unary":
         if isinstance(value, list):
             vals = ">".join(present_value(v) for v in value)
@@ -94,13 +100,15 @@ def present_bundle_lines(bundle: FeatureBundle, features: FeatureInventory) -> l
     for feature_name in features:
         if feature_name not in bundle:
             continue
+        spec = bundle[feature_name]
+        if spec.value.value is None:
+            continue
         ft_def = features[feature_name]
         if ft_def.tier == Tier.syllable and not has_syllable:
             lines.append("---")
             has_syllable = True
         short = ft_def.short
-        spec = bundle[feature_name]
-        lines.append(format_feature(short, ft_def.type, spec.value.value))
+        lines.append(format_feature(short, ft_def.kind, spec.value.value))
 
     if not lines:
         return ["⎡⎤"]
@@ -141,7 +149,7 @@ def present_sequence(sequence: list[FeatureBundle], features: FeatureInventory) 
         if ft_def.tier == Tier.syllable and not has_syllable:
             rows.append(("", "---"))
             has_syllable = True
-        if any(feature_name in bundle for bundle in sequence):
+        if any(feature_name in bundle and bundle[feature_name].value.value is not None for bundle in sequence):
             rows.append((feature_name, None))
 
     # Format each feature value per bundle
@@ -164,7 +172,10 @@ def present_sequence(sequence: list[FeatureBundle], features: FeatureInventory) 
                     row.append("")
                 else:
                     spec = bundle[feature_name]
-                    row.append(format_feature(short, ft_def.type, spec.value.value))
+                    if spec.value.value is None:
+                        row.append("")
+                    else:
+                        row.append(format_feature(short, ft_def.kind, spec.value.value))
             content.append(row)
 
     if not content:

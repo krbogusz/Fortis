@@ -6,7 +6,7 @@ from typing import Any
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.utils import safe_int
 from src.fortis.imports.features import FeatureInventory
-from src.fortis.models.feature_bundle import FeatureBundle
+from src.fortis.models.pattern_bundle import PatternBundle
 from src.fortis.result import Err, Ok, Result
 
 
@@ -24,7 +24,7 @@ class SyllablePartDefinition:
 
     part_type: str
     time: int
-    definition: FeatureBundle | None = None
+    definition: PatternBundle | None = None
     required: str | None = None
     forbidden: str | None = None
 
@@ -33,7 +33,7 @@ class SyllablePartDefinition:
         cls,
         part_type: str,
         time: int,
-        part_dict: dict[str, Any],
+        part_dict: Any,
         features: FeatureInventory,
     ) -> Result[SyllablePartDefinition, list[str]]:
         """Build a SyllablePart from a raw TOML entry.
@@ -53,7 +53,7 @@ class SyllablePartDefinition:
         if not isinstance(part_dict, dict):
             return Err([f"Syllable part '{part_type}' at time {time} must be a table"])
 
-        definition: FeatureBundle | None = None
+        definition: PatternBundle | None = None
         required: str | None = None
         forbidden: str | None = None
 
@@ -64,7 +64,7 @@ class SyllablePartDefinition:
             if not defn_raw:
                 error_list.append(f"Nucleus at time {time} is missing required field 'definition'")
             else:
-                bundle_result = FeatureBundle.from_string(str(defn_raw), features=features)
+                bundle_result = PatternBundle.from_string(str(defn_raw), features=features)
                 if bundle_result.is_err():
                     error_list.extend(bundle_result.unwrap_err())
                 else:
@@ -163,7 +163,7 @@ class SyllablePartsInventory(UserDict[int, dict[str, SyllablePartDefinition]]):
         """Check for cross-part consistency issues."""
         return Ok(None)
 
-    def get_nucleus(self, time: int = 0) -> FeatureBundle | None:
+    def get_nucleus(self, time: int = 0) -> PatternBundle | None:
         """Get the nucleus definition bundle at the given time."""
         part = self.data.get(time, {}).get("nucleus")
         if part is not None and part.definition is not None:

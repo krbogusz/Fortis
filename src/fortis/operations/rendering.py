@@ -35,7 +35,7 @@ def render_segment(segment: FeatureBundle, inventories: Inventories) -> str:
     best_total_diffs = float("inf")
     best_diacritics: tuple[list[str], list[str], list[str]] | None = None
 
-    segment_diacritics = inventories.segment_diacritics()
+    segment_diacritics = inventories.diacritics.segment_dict
 
     for letter_symbol, letter_def in inventories.letters.items():
         total_diffs = segment.differing(letter_def.bundle)

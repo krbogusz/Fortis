@@ -2,7 +2,7 @@
 "ʰ" = { tier = "segment", type = "after", bundle = "1 glap" }
 "ʱ" = { tier = "segment", type = "after", bundle = "+vc, 1 glap, -1 tns" }
 "ʷ" = { tier = "segment", type = "after", bundle = "+labial, +rounded" }
-"ʲ" = { tier = "segment", type = "after", bundle = "+coronal, +high" }
+"ʲ" = { tier = "segment", type = "after", bundle = "+front, +high" }
 "ⁿ" = { tier = "segment", type = "before", bundle = "nasal: 1>null" }
 "̩" = { tier = "segment", type = "combining", bundle = "+syll" }
 "̯" = { tier = "segment", type = "combining", bundle = "-syll" }

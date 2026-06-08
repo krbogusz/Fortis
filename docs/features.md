@@ -28,8 +28,8 @@ ROOT
     - [labial] → [rounded], [compressed]
     - [dental]
     - [lingual]
-        - [coronal] → [anterior], [posterior], [apical], [retroflex]
-        - [guttural]
+        - [front] → [anterior], [posterior], [apical], [retroflex]
+        - [back]
         - [aperture] → [high], [low]
         - [advancement] → [RTR], [ATR]
 - [glottal]
@@ -59,23 +59,23 @@ ROOT
 
 (unrounded • rounded)
 
-|            |       | [coronal] | _unmarked_ | [guttural] |
-| ---------- | ----- | --------- | ---------- | ---------- |
-| [high]     | [ATR] | i • y     | ɨ • ʉ      | ɯ • u      |
-| [high]     | [RTR] | ɪ • ʏ     | -          | - • ʊ      |
-| _unmarked_ | [ATR] | e • ø     | ɘ • ɵ      | ɤ • o      |
-| _unmarked_ | -     |           | ə          |            |
-| _unmarked_ | [RTR] | ɛ • œ     | ɜ • ɞ      | ʌ • ɔ      |
-| [low]      | [ATR] | æ • -     | ɐ          | -          |
-| [low]      | [RTR] | -         | a • ɶ      | ɑ • ɒ      |
+|            |       | [front] | _unmarked_ | [back] |
+| ---------- | ----- | ------- | ---------- | ------ |
+| [high]     | [ATR] | i • y   | ɨ • ʉ      | ɯ • u  |
+| [high]     | [RTR] | ɪ • ʏ   | -          | - • ʊ  |
+| _unmarked_ | [ATR] | e • ø   | ɘ • ɵ      | ɤ • o  |
+| _unmarked_ | -     |         | ə          |        |
+| _unmarked_ | [RTR] | ɛ • œ   | ɜ • ɞ      | ʌ • ɔ  |
+| [low]      | [ATR] | æ • -   | ɐ          | -      |
+| [low]      | [RTR] | -       | a • ɶ      | ɑ • ɒ  |
 
 Coronal and dorsal consonants are not marked for advancement
 
-|                   | [coronal] | _unmarked_ | [guttural] |
-| ----------------- | --------- | ---------- | ---------- |
-| [high]            | i, j, c   | -          | u, w, k    |
-| _unmarked_, [RTR] | -         | -          | ʌ, ʁ, q    |
-| [low], [RTR]      | -         | -          | ɑ, ʕ, ʡ    |
+|                   | [front] | _unmarked_ | [back]  |
+| ----------------- | ------- | ---------- | ------- |
+| [high]            | i, j, c | -          | u, w, k |
+| _unmarked_, [RTR] | -       | -          | ʌ, ʁ, q |
+| [low], [RTR]      | -       | -          | ɑ, ʕ, ʡ |
 
 ## Laryngeal features
 

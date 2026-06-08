@@ -181,7 +181,60 @@ class DiacriticDefinition:
 
 
 class DiacriticInventory(UserDict[str, DiacriticDefinition]):
-    """Diacritic symbols mapped to their definitions."""
+    """Diacritic symbols mapped to their definitions.
+
+    Pre-computes sorted symbol lists at construction time for greedy
+    longest-first matching in IPA tokenisation.  Access them via the
+    ``segment_keys``, ``syllable_keys``, ``before_keys``, and
+    ``attaching_keys`` properties.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initiate the inventory."""
+        super().__init__(*args, **kwargs)
+        self._build_sorted_keys()
+
+    def _build_sorted_keys(self) -> None:
+        """Pre-compute sorted symbol lists for greedy longest-first matching."""
+        segment_symbols = {s for s, d in self.data.items() if d.tier == Tier.segment}
+        syllable_symbols = {s for s, d in self.data.items() if d.tier == Tier.syllable}
+        before_symbols = {s for s, d in self.data.items() if d.type == DiacriticType.before}
+        attaching_symbols = {s for s, d in self.data.items() if d.type != DiacriticType.before}
+
+        self._segment_keys: list[str] = sorted(segment_symbols, key=len, reverse=True)
+        self._syllable_keys: list[str] = sorted(syllable_symbols, key=len, reverse=True)
+        self._before_keys: list[str] = sorted(before_symbols, key=len, reverse=True)
+        self._attaching_keys: list[str] = sorted(attaching_symbols, key=len, reverse=True)
+
+    @property
+    def segment_keys(self) -> list[str]:
+        """Segment-tier diacritic symbols sorted longest-first."""
+        return self._segment_keys
+
+    @property
+    def syllable_keys(self) -> list[str]:
+        """Syllable-tier diacritic symbols sorted longest-first."""
+        return self._syllable_keys
+
+    @property
+    def before_keys(self) -> list[str]:
+        """Before-type diacritic symbols sorted longest-first."""
+        return self._before_keys
+
+    @property
+    def attaching_keys(self) -> list[str]:
+        """Combining/after-type diacritic symbols sorted longest-first."""
+        return self._attaching_keys
+
+    @property
+    def segment_dict(self) -> dict[str, DiacriticDefinition]:
+        """Segment-tier diacritics as a dict (symbol → definition)."""
+        return {s: d for s, d in self.data.items() if d.tier == Tier.segment}
+
+    @property
+    def syllable_dict(self) -> dict[str, DiacriticDefinition]:
+        """Syllable-tier diacritics as a dict (symbol → definition)."""
+        return {s: d for s, d in self.data.items() if d.tier == Tier.syllable}
 
     @classmethod
     def load(cls, path: Path, features: FeatureInventory) -> Result[DiacriticInventory, list[str]]:

@@ -6,6 +6,7 @@ from typing import Any
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.imports.features import FeatureInventory
 from src.fortis.models.feature_bundle import FeatureBundle
+from src.fortis.models.pattern_bundle import PatternBundle
 from src.fortis.result import Err, Ok, Result
 
 
@@ -21,7 +22,7 @@ class SonorityDefinition:
 
     label: str
     level: int
-    bundle: FeatureBundle | None
+    bundle: PatternBundle | None
 
     @classmethod
     def load(
@@ -76,7 +77,7 @@ class SonorityDefinition:
     @staticmethod
     def _load_bundle(
         label: str, sonority_def_dict: dict[str, Any], features: FeatureInventory
-    ) -> Result[FeatureBundle | None, list[str]]:
+    ) -> Result[PatternBundle | None, list[str]]:
         """Parse the 'feature_bundle' field; empty string yields None.
 
         Args:
@@ -89,7 +90,7 @@ class SonorityDefinition:
             return Err([f"Sonority '{label}' is missing required field 'feature_bundle'"])
         if value == "":
             return Ok(None)
-        bundle_result = FeatureBundle.from_string(value, features)
+        bundle_result = PatternBundle.from_string(value, features)
         if bundle_result.is_err():
             return Err(bundle_result.unwrap_err())
         return Ok(bundle_result.unwrap())
@@ -180,6 +181,6 @@ class SonorityInventory(UserDict[str, SonorityDefinition]):
             ValueError: If no sonority definition matches the segment.
         """
         for sonority_def in self._sorted:
-            if sonority_def.bundle is None or segment.matches_pattern(sonority_def.bundle):
+            if sonority_def.bundle is None or sonority_def.bundle.matches_against(segment):
                 return sonority_def
         raise ValueError(f"No sonority definition matches segment {segment}")

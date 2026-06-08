@@ -1,122 +1,239 @@
-"""Element types for the phonological rule engine.
+"""The rule AST: parsed structural descriptions and their building blocks.
 
-An Element is the structural unit that rules operate on — feature bundles,
-letter shorthands, wildcards, boundaries, null segments, groups, disjunctions,
-negations, alpha variables, conditional features, and references.  Each element
-carries its own quantifier (default: exactly one match).
+Permissive on purpose — it can represent invalid rules so that load-time
+validation can collect every problem at once instead of failing on the first.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from enum import Enum, auto
 
-from src.fortis.models.feature_bundle import FeatureBundle
+from src.fortis.models.values import Value
+
+# --------------------------------------------------------------------------- #
+# Enums consumed by the AST
+# --------------------------------------------------------------------------- #
 
 
-@dataclass
+class AlphaOp(Enum):
+    """Greek-variable notation; bind-vs-recall is resolved at match time."""
+
+    SAME = auto()  # [alpha F]
+    OPPOSITE = auto()  # [-alpha F]   (binary/unary only)
+    OTHER = auto()  # [!alpha F]
+
+
+class ContourEdge(Enum):
+    """A named position within a feature contour (sections 5.6, 5.9)."""
+
+    INITIAL = auto()
+    FINAL = auto()
+    ANY = auto()
+    ALL = auto()
+
+
+type ContourPosition = ContourEdge | tuple[int, ...]  # tuple for @2, @2;3
+
+
+class BoundaryKind(Enum):
+    WORD = auto()  # #
+    SYLLABLE = auto()  # $   (inert until syllabification lands)
+
+
+class ApplicationMode(Enum):
+    SIMULTANEOUS = auto()
+    LEFT_TO_RIGHT = auto()
+    RIGHT_TO_LEFT = auto()
+
+
+@dataclass(frozen=True)
 class Quantifier:
-    """How many times an element can match.
+    """A repetition count. ``?`` ``*`` ``+`` are sugar over (min, max)."""
 
-    min is the minimum number of repetitions (default 1).
-    max is the maximum; None means unbounded.
+    min: int
+    max: int | None  # None = unbounded
+
+
+# --------------------------------------------------------------------------- #
+# Pattern side (target / context / exception)
+# --------------------------------------------------------------------------- #
+
+
+@dataclass(frozen=True)
+class ValueSpec:
+    """Match a feature against a value. ``value=None`` means 'unspecified'.
+
+    The feature being constrained is the key in the enclosing ``PatternBundle``.
     """
 
-    min: int = 1
-    max: int | None = 1  # None = unbounded
-
-    def __post_init__(self) -> None:
-        """Post initiation check."""
-        if self.min < 0:
-            raise ValueError(f"Quantifier min must be >= 0, got {self.min}")
-        if self.max is not None and self.max < self.min:
-            raise ValueError(f"Quantifier max ({self.max}) must be >= min ({self.min})")
+    value: Value
+    negated: bool = False  # [!+syll]
+    at: ContourPosition | None = None  # None = @any; target/context only
 
 
-@dataclass
-class Element:
-    """Base class for all rule elements. Carries a quantifier."""
+@dataclass(frozen=True)
+class AlphaSpec:
+    """Bind or recall a Greek variable over a feature.
 
-    quantifier: Quantifier = field(default_factory=Quantifier)
+    ``at`` selects a contour edge to bind to; None binds the whole contour.
+    """
 
-
-@dataclass
-class BundleElement(Element):
-    """Feature pattern to match or merge — e.g. [+cons, -syll]."""
-
-    bundle: FeatureBundle = field(default_factory=FeatureBundle)
+    var: str
+    op: AlphaOp
+    at: ContourPosition | None = None  # target/context only
 
 
-@dataclass
-class LetterShorthand(Element):
-    """Letter key from the inventory — e.g. 'p', 'x'."""
-
-    letter: str = ""
+# + ConditionalSpec later; + PresenceSpec only if a binary/scalar node is
+#   ever named bare (a unary node named bare is just ValueSpec(present)).
+type PatternSpec = ValueSpec | AlphaSpec
 
 
-@dataclass
-class WildcardElement(Element):
-    """Matches any segment — written as '[]'."""
+@dataclass(frozen=True)
+class PatternBundle:
+    """A pattern bundle: every feature's spec must hold against one segment."""
+
+    specs: dict[str, PatternSpec]
 
 
-@dataclass
-class BoundaryElement(Element):
-    """Positional assertion — '#' for word boundary, '$' for syllable boundary."""
-
-    boundary_type: str = "word"  # "word" or "syllable"
+# --------------------------------------------------------------------------- #
+# Result side
+# --------------------------------------------------------------------------- #
 
 
-@dataclass
-class NullElement(Element):
-    """Insertion (in target) or deletion (in result) marker — written as '∅'."""
+@dataclass(frozen=True)
+class ValueAssign:
+    """Assign a value. ``value=None`` delinks (cascades via geometry)."""
+
+    value: Value
 
 
-@dataclass
-class GroupElement(Element):
-    """Contiguous sequence of elements — (e1 e2 ...). Must match in order."""
+@dataclass(frozen=True)
+class AlphaAssign:
+    """Recall a bound Greek variable into the output segment."""
 
-    children: list[Element] = field(default_factory=list)
-
-
-@dataclass
-class DisjunctionElement(Element):
-    """Alternatives — (e1 | e2 | ...). Exactly one branch must match."""
-
-    branches: list[Element] = field(default_factory=list)
+    var: str
+    op: AlphaOp = AlphaOp.SAME
 
 
-@dataclass
-class NegationElement(Element):
-    """Negated element — !e. Matches what does NOT match the child."""
-
-    child: Element = field(default_factory=WildcardElement)
+# + ConditionalAssign later
+type ResultSpec = ValueAssign | AlphaAssign
 
 
-@dataclass
-class AlphaElement(Element):
-    """Alpha variable — [αF] binds/recalls a feature value using Greek letters."""
+@dataclass(frozen=True)
+class ResultBundle:
+    """A result bundle merges its per-feature specs into the matched segment."""
 
-    alpha_name: str = ""
-    bundle: FeatureBundle = field(default_factory=FeatureBundle)
-    negated: bool = False
+    specs: dict[str, ResultSpec]
 
 
-@dataclass
-class ConditionalElement(Element):
-    """Conditional feature — <n: F> applies only if paired condition is met."""
-
-    label: int = 0
-    bundle: FeatureBundle = field(default_factory=FeatureBundle)
-    negated: bool = False
+# --------------------------------------------------------------------------- #
+# Sequence elements
+# --------------------------------------------------------------------------- #
 
 
-@dataclass
-class ReferenceElement(Element):
-    """Reference recall — @n recalls a previously bound group/element."""
+@dataclass(frozen=True)
+class LetterRef:
+    """Matches by features; in result position replaces the segment wholesale."""
 
-    index: int = 0
+    symbol: str
 
 
-@dataclass
-class BindingElement(Element):
-    """Reference binding — n=element saves a matched element as reference n."""
+@dataclass(frozen=True)
+class BundleElem:
+    """Bundle element."""
 
-    index: int = 0
-    binding: Element = field(default_factory=WildcardElement)
+    bundle: PatternBundle
+
+
+@dataclass(frozen=True)
+class ResultElem:
+    """Result element."""
+
+    bundle: ResultBundle
+
+
+@dataclass(frozen=True)
+class Wildcard:
+    """Wildcard."""
+
+    pass  # []
+
+
+@dataclass(frozen=True)
+class WordBoundary:  # zero-width assertion; excluded from cardinality checks
+    """Word boundary."""
+
+    pass
+
+
+@dataclass(frozen=True)
+class SyllableBoundary:  # zero-width assertion; excluded from cardinality checks
+    """Syllable boundary."""
+
+    pass
+
+
+@dataclass(frozen=True)
+class Null:
+    """Null element."""
+
+    pass  # the null segment, for insertion/deletion
+
+
+@dataclass(frozen=True)
+class Group:
+    """Group."""
+
+    elements: tuple[Element, ...]
+
+
+@dataclass(frozen=True)
+class Disjunction:
+    """Disjunction."""
+
+    branches: tuple[tuple[Element, ...], ...]
+
+
+@dataclass(frozen=True)
+class Negated:
+    """Not element."""
+
+    inner: Element  # !X
+
+
+@dataclass(frozen=True)
+class Quantified:
+    """Quantified element."""
+
+    inner: Element
+    quant: Quantifier
+
+
+@dataclass(frozen=True)
+class Bound:
+    """Binding for an element."""
+
+    ref: int  # 1=...
+    inner: Element
+
+
+@dataclass(frozen=True)
+class RecallRef:
+    """Recall reference like '@1'."""
+
+    ref: int
+
+
+type Element = (
+    LetterRef
+    | BundleElem
+    | ResultElem
+    | Wildcard
+    | Boundary
+    | Null
+    | Group
+    | Disjunction
+    | Negated
+    | Quantified
+    | Bound
+    | RecallRef
+)

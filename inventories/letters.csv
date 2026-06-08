@@ -1,4 +1,4 @@
-symbol,syllabic,consonantal,click,sonorant,manner,continuant,strident,lateral,tap,trill,nasal,oral,labial,rounded,compressed,dental,lingual,coronal,apical,anterior,posterior,retroflex,guttural,aperture,high,low,advancement,ATR,RTR,glottal,voice,glottal_aperture,tension,larynx_height
+symbol,syllabic,consonantal,click,sonorant,manner,continuant,strident,lateral,tap,trill,nasal,oral,labial,rounded,compressed,dental,lingual,front,apical,anterior,posterior,retroflex,back,aperture,high,low,advancement,ATR,RTR,glottal,voice,glottal_aperture,tension,larynx_height
 m,-,+,,+,+,-,,,,,+,+,+,,,,,,,,,,,,,,,,,+,+,0,0,0
 ɱ,-,+,,+,+,-,,,,,+,+,+,,,+,,,,,,,,,,,,,,+,+,0,0,0
 n,-,+,,+,+,-,,,,,+,+,,,,,+,+,,+,,,,,,,,,,+,+,0,0,0

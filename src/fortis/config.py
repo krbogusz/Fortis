@@ -19,7 +19,7 @@ class ValueSymbols:
 
     present: set[str] = field(default_factory=lambda: {"+", "1", "present"})
     absent: set[str] = field(default_factory=lambda: {"-", "0", "absent"})
-    unspecified: set[str] = field(default_factory=lambda: {"∅", "none", "null", "unspecified"})
+    unspecified: set[str] = field(default_factory=lambda: {"∅", "none", "unspecified"})
 
 
 @dataclass

@@ -9,7 +9,7 @@ from src.fortis.models.tier import Tier
 from src.fortis.result import Err, Ok, Result
 
 
-class FeatureType(StrEnum):
+class FeatureKind(StrEnum):
     """Whether a feature is unary, binary, or scalar."""
 
     unary = auto()
@@ -32,7 +32,7 @@ class FeatureDefinition:
 
     name: str
     tier: Tier
-    type: FeatureType
+    kind: FeatureKind
     short: str
     values: dict[int, str]
     children: list[str] | None
@@ -61,7 +61,7 @@ class FeatureDefinition:
         if short_result.is_err():
             error_list.append(short_result.unwrap_err())
 
-        values_result = cls._load_values(feature_name, feature_def, type_result.unwrap_or(FeatureType.unary))
+        values_result = cls._load_values(feature_name, feature_def, type_result.unwrap_or(FeatureKind.unary))
         if values_result.is_err():
             error_list.append(values_result.unwrap_err())
 
@@ -76,7 +76,7 @@ class FeatureDefinition:
                 FeatureDefinition(
                     name=feature_name,
                     tier=tier_result.unwrap(),
-                    type=type_result.unwrap(),
+                    kind=type_result.unwrap(),
                     short=short_result.unwrap(),
                     values=values_result.unwrap(),
                     children=children_result.unwrap(),
@@ -105,7 +105,7 @@ class FeatureDefinition:
         return Ok(tier)
 
     @staticmethod
-    def _load_type(feature_name: str, feature_def: dict[str, Any]) -> Result[FeatureType, str]:
+    def _load_type(feature_name: str, feature_def: dict[str, Any]) -> Result[FeatureKind, str]:
         """Parse and validate the 'type' field.
 
         Args:
@@ -116,11 +116,11 @@ class FeatureDefinition:
         if not value:
             return Err(f"Feature '{feature_name}' is missing required field 'type'")
         try:
-            ftype = FeatureType(value.strip().lower())
+            ftype = FeatureKind(value.strip().lower())
         except ValueError:
             return Err(
                 f"Feature '{feature_name}' has invalid type '{value}' "
-                + f"(expected {', '.join(t.value for t in FeatureType)})"
+                + f"(expected {', '.join(t.value for t in FeatureKind)})"
             )
         return Ok(ftype)
 
@@ -146,7 +146,7 @@ class FeatureDefinition:
 
     @staticmethod
     def _load_values(
-        feature_name: str, feature_def: dict[str, Any], feature_type: FeatureType
+        feature_name: str, feature_def: dict[str, Any], feature_type: FeatureKind
     ) -> Result[dict[int, str], str]:
         """Build the values map based on feature type (unary/binary/scalar).
 
@@ -155,11 +155,11 @@ class FeatureDefinition:
             feature_def: Raw dictionary from the TOML file.
             feature_type: Resolved feature type (falls back to unary on earlier errors).
         """
-        if feature_type == FeatureType.unary:
+        if feature_type == FeatureKind.unary:
             return Ok({1: "present"})
-        elif feature_type == FeatureType.binary:
+        elif feature_type == FeatureKind.binary:
             return Ok({0: "absent", 1: "present"})
-        elif feature_type == FeatureType.scalar:
+        elif feature_type == FeatureKind.scalar:
             raw_values = feature_def.get("values")
             if not raw_values:
                 return Err(f"Feature '{feature_name}' is scalar, but does not have specified 'values'")
@@ -215,6 +215,34 @@ class FeatureDefinition:
 
 class FeatureInventory(UserDict[str, FeatureDefinition]):
     """Feature definitions keyed by name, loaded from TOML with cross-feature validation."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initiate the inventory."""
+        super().__init__(*args, **kwargs)
+        self._build_name_indices()
+
+    def _build_name_indices(self) -> None:
+        """Pre-compute sorted name lists and short→full mapping for greedy longest-first matching."""
+        self._full_names: list[str] = sorted(self.keys(), key=len, reverse=True)
+        self._short_to_full: dict[str, str] = {}
+        for name, ft_def in self.items():
+            if ft_def.short != name:
+                self._short_to_full[ft_def.short] = name
+        self._short_names: list[str] = sorted(self._short_to_full.keys(), key=len, reverse=True)
+
+    def identify_feature(self, raw_string: str) -> Result[str, str]:
+        """Identify a feature name in *raw_string* by greedy longest-first matching.
+
+        Scans for full feature names first, then short names, picking the
+        longest match. Returns the full (canonical) feature name.
+
+        Args:
+            raw_string: A raw token that may contain a feature name (e.g. '+nasal', 'height:2').
+        """
+        for name in self._full_names + self._short_names:
+            if name in raw_string:
+                return Ok(self._short_to_full.get(name, name))
+        return Err(f"Could not identify feature in '{raw_string}'")
 
     @classmethod
     def load(cls, path: Path) -> Result[FeatureInventory, list[str]]:

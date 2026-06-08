@@ -1,6 +1,7 @@
 from collections import UserDict
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from src.fortis.general.file_handling import load_csv_file
 from src.fortis.imports.features import FeatureInventory
@@ -32,15 +33,16 @@ class LetterDefinition:
             if feature_name not in features:
                 error_list.append(f"Letter '{symbol}' has a feature '{feature_name}' that is unknown")
                 continue
-            raw_value = raw_value.strip() if raw_value is not None else ""
+            raw_value = raw_value.strip()
             if not raw_value:
-                continue  # empty cell = feature not applicable, omit from bundle
+                continue  # empty cell = unspecified = omitted from bundle
             value_result = FeatureValue.from_str(raw_value, feature_name, features)
-
             if value_result.is_err():
                 error_list.append(value_result.unwrap_err())
                 continue
             value = value_result.unwrap()
+            if value.value is None:
+                continue  # parsed as unspecified = omitted from bundle
             bundle[feature_name] = FeatureSpec(feature_name, value)
 
         if error_list:
@@ -49,7 +51,22 @@ class LetterDefinition:
 
 
 class LetterInventory(UserDict[str, LetterDefinition]):
-    """Segment symbols mapped to their feature bundles."""
+    """Segment symbols mapped to their feature bundles.
+
+    Pre-computes sorted symbol lists at construction time for greedy
+    longest-first matching in IPA tokenisation.  Access them via the
+    ``sorted_keys`` property.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initialise the inventory and pre-compute sorted keys."""
+        super().__init__(*args, **kwargs)
+        self._sorted_keys: list[str] = sorted(self.keys(), key=len, reverse=True)
+
+    @property
+    def sorted_keys(self) -> list[str]:
+        """Letter symbols sorted longest-first for greedy matching."""
+        return self._sorted_keys
 
     @classmethod
     def load(cls, path: Path, features: FeatureInventory) -> Result[LetterInventory, list[str]]:
@@ -106,7 +123,7 @@ class LetterInventory(UserDict[str, LetterDefinition]):
                 error_list.append(f"Symbol '{symbol}' has no feature specifications")
 
         # Check for letters with identical feature bundles
-        bundle_to_symbols: dict[tuple[tuple[str, int | tuple[int | None, ...] | None], ...], list[str]] = {}
+        bundle_to_symbols: dict[tuple[tuple[str, int | tuple[int | None | str, ...] | str | None], ...], list[str]] = {}
         for symbol, letter_def in self.data.items():
             key = tuple(
                 sorted(

@@ -6,7 +6,12 @@ from src.fortis.result import Err, Ok, Result
 
 
 class FeatureBundle(UserDict[str, FeatureSpec]):
-    """A collection of feature specifications, keyed by feature name."""
+    """A collection of realized feature specifications, keyed by feature name.
+
+    Used for concrete phonological material — segments in the lexicon,
+    diacritics, syllable parts, etc. No matching or negation methods;
+    those belong on PatternBundle.
+    """
 
     def __repr__(self) -> str:
         """Represent a feature bundle."""
@@ -22,8 +27,6 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
         Args:
             raw_string: Comma- or semicolon-separated feature specs.
             features: Feature inventory for name/value resolution.
-            bare_unary_means_present: If True (default), a bare feature name on a unary
-                feature is interpreted as present (value 1).
         """
         error_list = []
         string = raw_string.replace(";", ",")
@@ -43,34 +46,30 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
 
         return Ok(bundle)
 
-    def matches_pattern(self, other: FeatureBundle) -> bool:
-        """Check if this bundle satisfies the pattern defined by *other*.
-
-        *other* is the pattern; *self* is the target segment being tested.
-        Every feature in *other* must be present in *self* with a compatible value.
-        Features in *self* that *other* does not mention are unconstrained.
-
-        A feature that is **entirely absent** from the segment never satisfies
-        a positive pattern requirement — absence means the segment definitively
-        does not have that feature. A feature present with value ``None``
-        (unspecified) also does not match a pattern requiring a specific value.
+    def combine_with(self, other: FeatureBundle, form_contours: bool = False) -> FeatureBundle:
+        """Combine this feature bundle with another.
 
         Args:
-            other: The pattern bundle to match against.
-            contour_position: Positional control for contour matching, passed to FeatureSpec.matches.
+            other: The bundle to merge in.
+            form_contours: If True, overlapping features form contours instead of overriding.
         """
-        for feature, feature_spec in other.data.items():
-            if feature not in self.data:
-                return False
-            if not self.data[feature].matches_pattern(feature_spec):
-                return False
-        return True
+        result = FeatureBundle(dict(self.data))
+        for feature_name, feature_spec in other.items():
+            if feature_name not in result:
+                result[feature_name] = feature_spec
+            elif form_contours:
+                new_value = result[feature_name].value.form_contour_with(feature_spec.value)
+                result[feature_name] = FeatureSpec(feature_name, new_value)
+            else:
+                result[feature_name] = feature_spec
+
+        return result
 
     def matches_exactly(self, other: FeatureBundle) -> bool:
         """Check if this bundle is exactly identical to *other*.
 
         Both bundles must have the same set of features and the same value
-        (int, list[int], None) for every feature.
+        for every feature.
         """
         if set(self.data.keys()) != set(other.data.keys()):
             return False
@@ -94,30 +93,3 @@ class FeatureBundle(UserDict[str, FeatureSpec]):
                 differing.append(feature)
                 continue
         return differing
-
-    def negated(self) -> FeatureBundle:
-        """Return a new bundle with every spec's negation flag flipped."""
-        return FeatureBundle(
-            {
-                name: FeatureSpec(spec.feature, spec.value, is_negated=not spec.is_negated)
-                for name, spec in self.data.items()
-            }
-        )
-
-    def combine_with(self, other: FeatureBundle, form_contours: bool = False) -> FeatureBundle:
-        """Combine this feature bundle with another.
-
-        Args:
-            other: The bundle to merge in.
-            form_contours: If True, overlapping features form contours instead of overriding.
-        """
-        result = FeatureBundle(dict(self.data))
-        for feature_name, feature_spec in other.items():
-            if feature_name not in result:
-                result[feature_name] = feature_spec
-            elif form_contours:
-                result[feature_name] = result[feature_name].form_contour(feature_spec)
-            else:
-                result[feature_name] = feature_spec
-
-        return result

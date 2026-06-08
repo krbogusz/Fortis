@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 
-from src.fortis.imports.features import FeatureDefinition, FeatureInventory, FeatureType
+from src.fortis.imports.features import FeatureDefinition, FeatureInventory, FeatureKind
 from src.fortis.imports.inventories import Inventories
 from src.fortis.models.tier import Tier
 
@@ -36,7 +37,7 @@ def make_feature_inventory(
     defs["consonantal"] = FeatureDefinition(
         name="consonantal",
         tier=Tier.segment,
-        type=FeatureType.binary,
+        kind=FeatureKind.binary,
         short="cons",
         values={0: "absent", 1: "present"},
         children=None,
@@ -44,7 +45,7 @@ def make_feature_inventory(
     defs["syllabic"] = FeatureDefinition(
         name="syllabic",
         tier=Tier.segment,
-        type=FeatureType.binary,
+        kind=FeatureKind.binary,
         short="syll",
         values={0: "absent", 1: "present"},
         children=None,
@@ -52,7 +53,7 @@ def make_feature_inventory(
     defs["nasal"] = FeatureDefinition(
         name="nasal",
         tier=Tier.segment,
-        type=FeatureType.unary,
+        kind=FeatureKind.unary,
         short="nas",
         values={1: "present"},
         children=None,
@@ -60,7 +61,7 @@ def make_feature_inventory(
     defs["height"] = FeatureDefinition(
         name="height",
         tier=Tier.segment,
-        type=FeatureType.scalar,
+        kind=FeatureKind.scalar,
         short="hgt",
         values={1: "low", 2: "mid", 3: "high"},
         children=None,
@@ -68,7 +69,7 @@ def make_feature_inventory(
     defs["tone"] = FeatureDefinition(
         name="tone",
         tier=Tier.syllable,
-        type=FeatureType.scalar,
+        kind=FeatureKind.scalar,
         short="tn",
         values={1: "low", 2: "mid", 3: "high"},
         children=None,
@@ -76,7 +77,7 @@ def make_feature_inventory(
     return FeatureInventory(defs)
 
 
-def load_feature_inventory_from_dict(raw: dict[str, dict]) -> FeatureInventory:
+def load_feature_inventory_from_dict(raw: dict[str, Any]) -> FeatureInventory:
     """Build a FeatureInventory from a raw dict (mimics FeatureInventory.load without file I/O).
 
     Applies parent assignment and validation. Raises ValueError on errors.
