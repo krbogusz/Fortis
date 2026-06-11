@@ -2,9 +2,8 @@
 
 import pytest
 
-from src.fortis.loaders.inventories import load_project
+from src.fortis.loaders.project import load_project
 from src.fortis.result import Err
-
 
 FEATURES_TOML = """\
 [consonantal]
@@ -27,7 +26,9 @@ LETTERS_CSV = "symbol,consonantal,sonorant\nm,+,+\n"
 
 DIACRITICS_TOML = '"̩" = { tier = "segment", kind = "combining", bundle = "+syll" }\n'
 
-SONORITIES_TOML = 'vowel = { level = 7, bundle = "+syllabic" }\nstop = { level = 1, bundle = "-sonorant" }\n'
+SONORITIES_TOML = (
+    'vowel = { level = 7, bundle = "+syllabic" }\nstop = { level = 1, bundle = "-sonorant" }\n'
+)
 
 SYLLABLE_PARTS_TOML = '[-2000]\nnucleus = { definition = "+syll" }\n'
 

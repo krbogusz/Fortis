@@ -1,5 +1,4 @@
 from src.fortis.config import config
-from src.fortis.loaders.inventories import Inventories
 from src.fortis.models.bundles import FeatureBundle
 
 

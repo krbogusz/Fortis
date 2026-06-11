@@ -15,6 +15,7 @@ from src.fortis.models.inventories import (
     WordInventory,
 )
 from src.fortis.models.project import Project
+from src.fortis.models.rules import RuleInventory
 from src.fortis.result import Err, Ok, Result
 
 
@@ -33,50 +34,50 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
 
     error_list: list[str] = []
 
-    # ---- Features (no dependency) — required to proceed -----------------------------------------------
+    # ---- Features (no dependency) — required to proceed ------------------------------------------
     match load_feature_inventory(inventories_dir / "features.toml"):
         case Err(err):
-            return Err(err)
+            return Err([f"features.toml: {e}" for e in err] if len(err) > 1 else err)
         case Ok(result):
             features = result
 
-    # ---- Letters ---------------------------------------------------------------------------------------
+    # ---- Letters ---------------------------------------------------------------------------------
     letters: LetterInventory | None = None
     match load_letter_inventory(inventories_dir / "letters.csv", features):
         case Err(err):
-            error_list.extend(err)
+            error_list.extend(f"letters.csv: {e}" for e in err)
         case Ok(result):
             letters = result
 
-    # ---- Diacritics ------------------------------------------------------------------------------------
+    # ---- Diacritics ------------------------------------------------------------------------------
     diacritics: DiacriticInventory | None = None
     match load_diacritic_inventory(inventories_dir / "diacritics.toml", features):
         case Err(err):
-            error_list.extend(err)
+            error_list.extend(f"diacritics.toml: {e}" for e in err)
         case Ok(result):
             diacritics = result
 
-    # ---- Sonorities ------------------------------------------------------------------------------------
+    # ---- Sonorities ------------------------------------------------------------------------------
     sonority: SonorityInventory | None = None
     match load_sonority_inventory(inventories_dir / "sonorities.toml", features):
         case Err(err):
-            error_list.extend(err)
+            error_list.extend(f"sonorities.toml: {e}" for e in err)
         case Ok(result):
             sonority = result
 
-    # ---- Syllable parts --------------------------------------------------------------------------------
+    # ---- Syllable parts --------------------------------------------------------------------------
     syllable_parts: SyllablePartsInventory | None = None
     match load_syllable_parts_inventory(inventories_dir / "syllable_parts.toml", features):
         case Err(err):
-            error_list.extend(err)
+            error_list.extend(f"syllable_parts.toml: {e}" for e in err)
         case Ok(result):
             syllable_parts = result
 
-    # ---- Words -----------------------------------------------------------------------------------------
+    # ---- Words -----------------------------------------------------------------------------------
     words: WordInventory | None = None
     match load_word_inventory(inventories_dir / "words.toml"):
         case Err(err):
-            error_list.extend(err)
+            error_list.extend(f"words.toml: {e}" for e in err)
         case Ok(result):
             words = result
 
@@ -90,6 +91,7 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
     assert words is not None
 
     # TODO: load rules once the rules loader exists
+    rules = RuleInventory()
     return Ok(
         Project(
             features=features,
@@ -98,6 +100,6 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
             sonority=sonority,
             syllable_parts=syllable_parts,
             words=words,
-            rules=None,  # TODO
+            rules=rules,
         )
     )

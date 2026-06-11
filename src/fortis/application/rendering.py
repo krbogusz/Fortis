@@ -1,4 +1,3 @@
-from src.fortis.loaders.inventories import Inventories
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Diacritic, DiacriticKind
 
@@ -107,7 +106,10 @@ def _find_diacritics(
             # Prefer diacritics that cover more remaining differences;
             # break ties by preferring default diacritics
             if coverage > best_coverage or (
-                coverage == best_coverage and best_def is not None and dia_def.default and not best_def.default
+                coverage == best_coverage
+                and best_def is not None
+                and dia_def.default
+                and not best_def.default
             ):
                 best_symbol = dia_symbol
                 best_def = dia_def

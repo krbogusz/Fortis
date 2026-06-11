@@ -1,5 +1,7 @@
 """Bundle and value parsing — concrete and pattern material from strings."""
 
+from enum import StrEnum, auto
+
 from src.fortis.config import config
 from src.fortis.general.utils import safe_int
 from src.fortis.loaders.features import FeatureInventory
@@ -16,6 +18,15 @@ from src.fortis.models.values import (
     make_value,
 )
 from src.fortis.result import Err, Ok, Result
+
+
+class ParseContext(StrEnum):
+    """Which parsing regime to apply for alpha and contour handling."""
+
+    realized = auto()  # No alpha, no contour position
+    pattern = auto()  # Full alpha support (same/opposite/other)
+    result = auto()  # Alpha same/opposite only; no 'other'
+
 
 # --------------------------------------------------------------------------------------------------
 # General
@@ -69,36 +80,41 @@ def determine_contour_position(contour_position: str) -> Result[ContourPosition,
     return Err(f"Could not identify contour specification from {contour_position}")
 
 
-# --------------------------------------------------------------------------------------------------
-# Realized
-# --------------------------------------------------------------------------------------------------
-
-
-def parse_single_value(
-    raw_value: str, feature: str, features: FeatureInventory
+def _parse_scalar_value(
+    raw_value: str, feature: str, features: FeatureInventory, context: ParseContext
 ) -> Result[Limb, str]:
-    """Identify a single value (unary/binary/scalar).
+    """Core scalar-value dispatch shared by realized, pattern, and result contexts.
 
-    Alpha variables (Greek letters) are not valid in realized material
-    and produce a specific error.
-
-    Args:
-        raw_value: The value token after stripping the feature name.
-        feature: Full feature name.
-        features: Feature inventory for type/value resolution.
+    Handles unspecified symbols, alpha references (context-dependent), and
+    unary/binary/scalar kind dispatch.
     """
     if raw_value in config.value_symbols.unspecified:
         return Ok(None)
 
-    # Find if this is an alpha feature spec
+    # Alpha references — behaviour depends on context
     for letter in config.greek_alphabet:
         if letter in raw_value:
-            return Err("Alpha value notation is not supported for realized features")
+            match context:
+                case ParseContext.realized:
+                    return Err("Alpha value notation is not supported for realized features")
+                case ParseContext.pattern | ParseContext.result:
+                    alpha_var = letter
+                    alpha_var_index = raw_value.index(alpha_var)
+                    if alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "-":
+                        alpha_op = AlphaOp.opposite
+                    elif alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "!":
+                        if context == ParseContext.result:
+                            return Err("Result spec does not support 'other' alpha notation")
+                        alpha_op = AlphaOp.other
+                    else:
+                        alpha_op = AlphaOp.same
+                    return Ok(AlphaRef(alpha_var, alpha_op))
 
-    # Contour position
-    if "@" in raw_value:
+    # Contour position — only realized context rejects it here
+    if context == ParseContext.realized and "@" in raw_value:
         return Err("Result spec does not support contour position")
 
+    # Kind dispatch (identical across all contexts)
     if features[feature].kind == "unary":
         if raw_value in config.value_symbols.present:
             return Ok(1)
@@ -109,16 +125,28 @@ def parse_single_value(
             return Ok(0)
     elif features[feature].kind == "scalar":
         int_value = safe_int(raw_value)
-        if int_value is None:
-            pass
-        elif int_value in features[feature].values:
+        if int_value is not None and int_value in features[feature].values:
             return Ok(int_value)
-        elif raw_value in features[feature].values.values():
+        if raw_value in features[feature].values.values():
             key = next((k for k, v in features[feature].values.items() if v == raw_value), None)
             if key is not None:
                 return Ok(key)
 
     return Err(f"Could not identify value for '{feature}' from string '{raw_value}'")
+
+
+# --------------------------------------------------------------------------------------------------
+# Realized
+# --------------------------------------------------------------------------------------------------
+def parse_single_value(
+    raw_value: str, feature: str, features: FeatureInventory
+) -> Result[Limb, str]:
+    """Identify a single value (unary/binary/scalar) in realized contexts.
+
+    Alpha variables (Greek letters) are not valid in realized material
+    and produce a specific error.
+    """
+    return _parse_scalar_value(raw_value, feature, features, ParseContext.realized)
 
 
 def parse_value(raw_string: str, feature: str, features: FeatureInventory) -> Result[Value, str]:
@@ -180,7 +208,7 @@ def parse_feature_bundle(
             case Ok(result):
                 feature_name, matched_string = result
 
-        raw_value = raw_string.replace(matched_string, "", 1)
+        raw_value = raw_feature.replace(matched_string, "", 1)
         match parse_value(raw_value, feature_name, features):
             case Err(err):
                 error_list.append(err)
@@ -204,48 +232,9 @@ def parse_single_pattern_value(
 ) -> Result[Limb, str]:
     """Identify a single value (unary/binary/scalar) in pattern contexts.
 
-    Args:
-        raw_value: The value token after stripping the feature name.
-        feature: Full feature name.
-        features: Feature inventory for type/value resolution.
+    Supports alpha variables with same/opposite/other operators.
     """
-    if raw_value in config.value_symbols.unspecified:
-        return Ok(None)
-
-    # Find if this is an alpha feature spec
-    for letter in config.greek_alphabet:
-        if letter in raw_value:
-            alpha_var = letter
-            alpha_var_index = raw_value.index(alpha_var)
-            if raw_value[alpha_var_index - 1] == "-":
-                alpha_op = AlphaOp.opposite
-            elif raw_value[alpha_var_index - 1] == "!":
-                alpha_op = AlphaOp.other
-            else:
-                alpha_op = AlphaOp.same
-
-            return Ok(AlphaRef(alpha_var, alpha_op))
-
-    if features[feature].kind == "unary":
-        if raw_value in config.value_symbols.present:
-            return Ok(1)
-    elif features[feature].kind == "binary":
-        if raw_value in config.value_symbols.present:
-            return Ok(1)
-        elif raw_value in config.value_symbols.absent:
-            return Ok(0)
-    elif features[feature].kind == "scalar":
-        int_value = safe_int(raw_value)
-        if int_value is None:
-            pass
-        elif int_value in features[feature].values:
-            return Ok(int_value)
-        elif raw_value in features[feature].values.values():
-            key = next((k for k, v in features[feature].values.items() if v == raw_value), None)
-            if key is not None:
-                return Ok(key)
-
-    return Err(f"Could not identify value for '{feature}' from string '{raw_value}'")
+    return _parse_scalar_value(raw_value, feature, features, ParseContext.pattern)
 
 
 def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[PatternSpec, str]:
@@ -374,7 +363,7 @@ def parse_pattern_bundle(
 
 
 # --------------------------------------------------------------------------------------------------
-# Pattern
+# Result
 # --------------------------------------------------------------------------------------------------
 
 
@@ -383,48 +372,10 @@ def parse_single_result_value(
 ) -> Result[Limb, str]:
     """Identify a single value (unary/binary/scalar) in result contexts.
 
-    Args:
-        raw_value: The value token after stripping the feature name.
-        feature: Full feature name.
-        features: Feature inventory for type/value resolution.
+    Supports alpha variables with same/opposite operators only;
+    the 'other' operator is rejected.
     """
-    if raw_value in config.value_symbols.unspecified:
-        return Ok(None)
-
-    # Find if this is an alpha feature spec
-    for letter in config.greek_alphabet:
-        if letter in raw_value:
-            alpha_var = letter
-            alpha_var_index = raw_value.index(alpha_var)
-            if raw_value[alpha_var_index - 1] == "-":
-                alpha_op = AlphaOp.opposite
-            elif raw_value[alpha_var_index - 1] == "!":
-                return Err("Result spec does not support 'other' alpha notation")
-            else:
-                alpha_op = AlphaOp.same
-
-            return Ok(AlphaRef(alpha_var, alpha_op))
-
-    if features[feature].kind == "unary":
-        if raw_value in config.value_symbols.present:
-            return Ok(1)
-    elif features[feature].kind == "binary":
-        if raw_value in config.value_symbols.present:
-            return Ok(1)
-        elif raw_value in config.value_symbols.absent:
-            return Ok(0)
-    elif features[feature].kind == "scalar":
-        int_value = safe_int(raw_value)
-        if int_value is None:
-            pass
-        elif int_value in features[feature].values:
-            return Ok(int_value)
-        elif raw_value in features[feature].values.values():
-            key = next((k for k, v in features[feature].values.items() if v == raw_value), None)
-            if key is not None:
-                return Ok(key)
-
-    return Err(f"Could not identify value for '{feature}' from string '{raw_value}'")
+    return _parse_scalar_value(raw_value, feature, features, ParseContext.result)
 
 
 def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[ResultSpec, str]:

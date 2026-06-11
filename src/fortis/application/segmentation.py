@@ -1,5 +1,4 @@
 from src.fortis.config import config
-from src.fortis.loaders.inventories import Inventories
 from src.fortis.models.bundles import FeatureBundle
 
 
@@ -31,7 +30,9 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
                         diacritic_def.bundle, form_contours=diacritic_def.contour
                     )
                 else:
-                    buffer = buffer.combine_with(diacritic_def.bundle, form_contours=diacritic_def.contour)
+                    buffer = buffer.combine_with(
+                        diacritic_def.bundle, form_contours=diacritic_def.contour
+                    )
                 i += len(diacritic_symbol)
                 break
         else:
@@ -55,7 +56,9 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
                     if remaining.startswith(diacritic_symbol):
                         diacritic_def = inventories.diacritics[diacritic_symbol]
                         if diacritic_symbol in inventories.diacritics.syllable_keys:
-                            segments[last_nucleus_index] = segments[last_nucleus_index].combine_with(
+                            segments[last_nucleus_index] = segments[
+                                last_nucleus_index
+                            ].combine_with(
                                 diacritic_def.bundle, form_contours=diacritic_def.contour
                             )
                         else:

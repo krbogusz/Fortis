@@ -8,7 +8,7 @@ from src.fortis.models.inventories import (
     SyllablePartsInventory,
     WordInventory,
 )
-from src.fortis.models.rules import Rule
+from src.fortis.models.rules import RuleInventory
 
 
 @dataclass(frozen=True)
@@ -21,4 +21,4 @@ class Project:
     sonority: SonorityInventory
     syllable_parts: SyllablePartsInventory
     words: WordInventory
-    rules: Rule | None = None  # pre-sorted by (time, file order); None until rules loader exists
+    rules: RuleInventory  # pre-sorted by (time, file order); None until rules loader exists

@@ -3,7 +3,7 @@
 "ʱ" = { tier = "segment", kind = "after", bundle = "+vc, 1 glap, -1 tns" }
 "ʷ" = { tier = "segment", kind = "after", bundle = "+labial, +rounded" }
 "ʲ" = { tier = "segment", kind = "after", bundle = "+front, +high" }
-"ⁿ" = { tier = "segment", kind = "before", bundle = "nasal: 1>null" }
+"ⁿ" = { tier = "segment", kind = "before", bundle = "nasal: 1>none" }
 "̩" = { tier = "segment", kind = "combining", bundle = "+syll" }
 "̯" = { tier = "segment", kind = "combining", bundle = "-syll" }
 "ː" = { tier = "segment", kind = "after", bundle = "length: long"}
