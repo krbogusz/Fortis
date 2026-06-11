@@ -47,7 +47,7 @@ ROOT
 - [tone] – [1: extra-low, 2: low, 3: mid, 4: high, 5: extra-high]
 ```
 
-## Coronals
+## Front/Coronals
 
 |             | [anterior]      | [posterior]          | [high]  |
 | ----------- | --------------- | -------------------- | ------- |

@@ -1,33 +1,33 @@
 # Segmental
-"ʰ" = { tier = "segment", type = "after", bundle = "1 glap" }
-"ʱ" = { tier = "segment", type = "after", bundle = "+vc, 1 glap, -1 tns" }
-"ʷ" = { tier = "segment", type = "after", bundle = "+labial, +rounded" }
-"ʲ" = { tier = "segment", type = "after", bundle = "+front, +high" }
-"ⁿ" = { tier = "segment", type = "before", bundle = "nasal: 1>null" }
-"̩" = { tier = "segment", type = "combining", bundle = "+syll" }
-"̯" = { tier = "segment", type = "combining", bundle = "-syll" }
-"ː" = { tier = "segment", type = "after", bundle = "length: long"}
-"ːː" = { tier = "segment", type = "after", bundle = "length: overlong"}
+"ʰ" = { tier = "segment", kind = "after", bundle = "1 glap" }
+"ʱ" = { tier = "segment", kind = "after", bundle = "+vc, 1 glap, -1 tns" }
+"ʷ" = { tier = "segment", kind = "after", bundle = "+labial, +rounded" }
+"ʲ" = { tier = "segment", kind = "after", bundle = "+front, +high" }
+"ⁿ" = { tier = "segment", kind = "before", bundle = "nasal: 1>null" }
+"̩" = { tier = "segment", kind = "combining", bundle = "+syll" }
+"̯" = { tier = "segment", kind = "combining", bundle = "-syll" }
+"ː" = { tier = "segment", kind = "after", bundle = "length: long"}
+"ːː" = { tier = "segment", kind = "after", bundle = "length: overlong"}
 # Syllable
 ## Primary stress
-"ˈ" = { tier = "syllable", type = "before", bundle = "stress: primary", default = true }
+"ˈ" = { tier = "syllable", kind = "before", bundle = "stress: primary", default = true }
 ## Tone diacritics
-"̋" = { tier = "syllable", type = "combining", bundle = "tone: 5" }
-"́" = { tier = "syllable", type = "combining", bundle = "tone: 4" }
-"̄" = { tier = "syllable", type = "combining", bundle = "tone: 3" }
-"̀" = { tier = "syllable", type = "combining", bundle = "tone: 2" }
-"̏" = { tier = "syllable", type = "combining", bundle = "tone: 1" }
-"̂" = { tier = "syllable", type = "combining", bundle = "tone: 5>3" }
-"̌" = { tier = "syllable", type = "combining", bundle = "tone: 3>5" }
-"᷇" = { tier = "syllable", type = "combining", bundle = "tone: 5>3" }
-"᷆" = { tier = "syllable", type = "combining", bundle = "tone: 3>1" }
-"᷄" = { tier = "syllable", type = "combining", bundle = "tone: 3>5" }
-"᷅" = { tier = "syllable", type = "combining", bundle = "tone: 1>3" }
-"᷈" = { tier = "syllable", type = "combining", bundle = "tone: 5>3>5" }
-"᷉" = { tier = "syllable", type = "combining", bundle = "tone: 3>1>3" }
+"̋" = { tier = "syllable", kind = "combining", bundle = "tone: 5" }
+"́" = { tier = "syllable", kind = "combining", bundle = "tone: 4" }
+"̄" = { tier = "syllable", kind = "combining", bundle = "tone: 3" }
+"̀" = { tier = "syllable", kind = "combining", bundle = "tone: 2" }
+"̏" = { tier = "syllable", kind = "combining", bundle = "tone: 1" }
+"̂" = { tier = "syllable", kind = "combining", bundle = "tone: 5>3" }
+"̌" = { tier = "syllable", kind = "combining", bundle = "tone: 3>5" }
+"᷇" = { tier = "syllable", kind = "combining", bundle = "tone: 5>3" }
+"᷆" = { tier = "syllable", kind = "combining", bundle = "tone: 3>1" }
+"᷄" = { tier = "syllable", kind = "combining", bundle = "tone: 3>5" }
+"᷅" = { tier = "syllable", kind = "combining", bundle = "tone: 1>3" }
+"᷈" = { tier = "syllable", kind = "combining", bundle = "tone: 5>3>5" }
+"᷉" = { tier = "syllable", kind = "combining", bundle = "tone: 3>1>3" }
 ## Tone letters
-"˥" = { tier = "syllable", type = "after", bundle = "tone: 5", default = true, contour = true}
-"˦" = { tier = "syllable", type = "after", bundle = "tone: 4", default = true, contour = true}
-"˧" = { tier = "syllable", type = "after", bundle = "tone: 3", default = true, contour = true}
-"˨" = { tier = "syllable", type = "after", bundle = "tone: 2", default = true, contour = true}
-"˩" = { tier = "syllable", type = "after", bundle = "tone: 1", default = true, contour = true}
+"˥" = { tier = "syllable", kind = "after", bundle = "tone: 5", default = true, contour = true}
+"˦" = { tier = "syllable", kind = "after", bundle = "tone: 4", default = true, contour = true}
+"˧" = { tier = "syllable", kind = "after", bundle = "tone: 3", default = true, contour = true}
+"˨" = { tier = "syllable", kind = "after", bundle = "tone: 2", default = true, contour = true}
+"˩" = { tier = "syllable", kind = "after", bundle = "tone: 1", default = true, contour = true}

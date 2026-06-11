@@ -19,7 +19,7 @@ class ValueSymbols:
 
     present: set[str] = field(default_factory=lambda: {"+", "1", "present"})
     absent: set[str] = field(default_factory=lambda: {"-", "0", "absent"})
-    unspecified: set[str] = field(default_factory=lambda: {"∅", "none", "null", "unspecified"})
+    unspecified: set[str] = field(default_factory=lambda: {"∅", "none", "unspecified"})
 
 
 @dataclass
@@ -29,7 +29,9 @@ class Config:
     paths: Paths = field(default_factory=Paths)
     value_symbols: ValueSymbols = field(default_factory=ValueSymbols)
     special_symbols: set[str] = field(default_factory=lambda: {"."})
-    reserved_symbols: set[str] = field(default_factory=lambda: {"[", "]", ".", "#", "$", ">", "!", "@", ";", ":"})
+    reserved_symbols: set[str] = field(
+        default_factory=lambda: {"[", "]", "{", "}", ".", "#", "$", "<", ">", "!", "@", ";", ":"}
+    )
     greek_alphabet: set[str] = field(
         default_factory=lambda: {
             "α",

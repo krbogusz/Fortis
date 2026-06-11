@@ -1,3 +1,2 @@
 [-2000]
-onset = { required = "[+cons, -syll]*", exception = "$[+cons, +nas, +vel][+cons]*" }
 nucleus = { definition = "+syll" }

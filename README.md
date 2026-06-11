@@ -1,260 +1,54 @@
-# Fortis
-
-A sound-change engine for diachronic and synchronic phonology. Fortis takes a
-user-defined phonology — feature vocabulary, IPA inventory, diacritics, sonority
-scale, lexicon, and an ordered set of rules — applies the rules to every word,
-and produces a step-by-step derivation trace.
-
-Fortis ships no built-in phonology. Everything is loaded from TOML; the engine
-runs whatever inventories and rules you supply.
-
-## Requirements
-
-- Python 3.12+
-- [uv](https://docs.astral.sh/uv/) for dependency management
-
-```bash
-uv sync
-```
-
-## The pipeline
-
-At load time the TOML inventories become a `Project` and each rule's
-`definition` string is parsed into a `StructuralDescription`. Then every word
-runs through:
-
-```
-IPA string
-  → segmentation      (Segmenter:   IPA → Sequence)
-  → rule application  (RuleMatcher + Applier, rules in time order)
-  → rendering         (Renderer:    Sequence → IPA string)
-  → derivation trace  (DerivationEngine records each rule that fired)
-```
-
-Segmentation is greedy longest-match against the letter and diacritic tables: no
-Unicode normalisation, exact code-point matching, and parse errors are surfaced
-rather than silently repaired. Round-trip _identity_ (IPA → features → IPA) is
-not guaranteed; only round-trip _stability_ is (segmenting and re-rendering
-twice yields the same string both times).
-
-## The data model
-
-`model.py` defines the domain types. The one idea to internalise before reading
-it: **"feature bundle" is three different things**, kept as three separate types
-because a matcher, a piece of data, and a rewrite are genuinely different
-operations. All three are feature-keyed maps and differ only in what each
-feature maps to:
-
-| Type            | Maps feature →                               | Role                                                     |
-| --------------- | -------------------------------------------- | -------------------------------------------------------- |
-| `FeatureBundle` | `Value`                                      | concrete data (segments, letters, diacritics)            |
-| `PatternBundle` | `PatternSpec` (`ValueSpec`/`AlphaSpec`/…)    | a _matcher_ (rule targets/contexts, sonority predicates) |
-| `ResultBundle`  | `ResultSpec` (`ValueAssign`/`AlphaAssign`/…) | a _transform_ (rule results)                             |
-
-The concrete side needs no spec wrapper: a segment has only one way to specify a
-feature — a value — so there is no union and nothing to wrap. The pattern and
-result sides are unions because a feature can be constrained or rewritten in
-several distinct ways. The feature name is the map key, so it never appears
-inside a spec.
-
-Layers, top to bottom:
-
-- **Values** — `SingleValue` (`int | None`, where `None` means unspecified),
-  `ContourValue` (a tuple of single values), and their union `Value`.
-  `make_value` collapses a length-1 contour to a scalar at construction.
-- **Vocabulary** — `FeatureDef` and `FeatureSystem`. A feature's `kind` is
-  `UNARY` / `BINARY` / `SCALAR`; being a _node_ is not a kind but a geometry
-  fact (the feature has children). The only special node behaviour — `none` and
-  `α` cascading to children — is handled at apply time from the geometry, not by
-  a tag.
-- **Segments** — `Segment` is exactly a `FeatureBundle` (no source spelling
-  retained); `Sequence` is a frozen tuple of segments.
-- **Inventories** — `Letter`, `Diacritic`, `SonorityLevel`, `LexicalEntry`.
-- **Rule AST** — a `PatternBundle` maps each feature to a `PatternSpec`
-  (`ValueSpec | AlphaSpec`); a `ResultBundle` maps each feature to a
-  `ResultSpec` (`ValueAssign | AlphaAssign`); the `Element` union (letters,
-  bundles, wildcards, boundaries, the null segment, groups, disjunctions,
-  negation, quantifiers, element references); and `StructuralDescription` /
-  `Rule`.
-- **Output** — `DerivationStep`, `Derivation`, `ValidationError`, and `Project`
-  (the loaded root bundling every inventory).
-
-## Architecture
-
-The model (`model.py`) is inert data and imports nothing else in the project.
-All behaviour — parsing, matching, rewriting, rendering — lives in separate
-stage classes that operate _over_ the model. Three reasons: each algorithm stays
-readable in one place; new passes can be added without touching the AST; and the
-data layer never depends on the engine. Parsing and matching also need outside
-context (the `FeatureSystem`, and for matching a binding `Env`), which a method
-on a frozen dataclass has nowhere to take.
-
-Each stage is named for the transformation it performs, so no two share a verb:
-
-| Stage        | Input → Output                                           | Class              | When      |
-| ------------ | -------------------------------------------------------- | ------------------ | --------- |
-| Segmentation | IPA `str` → `Sequence`                                   | `Segmenter`        | run time  |
-| Rule parsing | `definition` str → `StructuralDescription`               | `RuleParser`       | load time |
-| Matching     | `(StructuralDescription, Sequence)` → loci `(span, Env)` | `RuleMatcher`      | run time  |
-| Application  | `(locus, ResultBundle, Sequence)` → `Sequence`           | `Applier`          | run time  |
-| Rendering    | `Sequence` → IPA `str`                                   | `Renderer`         | run time  |
-| Derivation   | `(LexicalEntry, rules)` → `Derivation`                   | `DerivationEngine` | run time  |
-
-Only `RuleParser` keeps the word "parse"; the IPA side is _segmentation_, so the
-two parse-like steps never get confused. Alongside the stages, **loaders** turn
-the TOML files into a `Project` (invoking `RuleParser` at load time), and
-**validation** runs as a single collect-all pass that returns every
-`ValidationError` at once — the reason the AST is permissive enough to hold
-invalid rules.
-
-### The binding environment
-
-Matching is not a plain yes/no test, because a pattern can _bind_. An alpha
-variable like `[α back]` records a segment's value on first occurrence; a
-reference like `1=[…]` captures the span it matched. `RuleMatcher` threads an
-immutable `Env` carrying those bindings, so a single-segment match returns
-`Env | None` — the `Env` is "yes, and here is what it learned" — while
-element-level matching, nondeterministic because of quantifiers and
-disjunctions, yields `(span, Env)` outcomes. `Applier` reads that `Env` whenever
-a result recalls a variable (`AlphaAssign`) or a reference (`@1`, as in
-metathesis).
-
-## Configuration files
-
-Every inventory is a user-authored TOML file:
-
-| File              | Contents                                |
-| ----------------- | --------------------------------------- |
-| `features.toml`   | feature vocabulary and geometry         |
-| `letters.toml`    | IPA symbol → feature bundle             |
-| `diacritics.toml` | diacritic modifications to base bundles |
-| `sonorities.toml` | sonority levels and their predicates    |
-| `words.toml`      | the lexicon                             |
-| `rules.toml`      | the rules                               |
-
-`syllable.toml` is reserved for syllabification (not yet active).
-
-### Value notation
-
-In rules and inventories, a value can be written several ways:
-
-| Value     | Notation                   | Internal |
-| --------- | -------------------------- | -------- |
-| undefined | `∅`, `none`, `unspecified` | `None`   |
-| present   | `+`, `1`, `present`        | `1`      |
-| absent    | `-`, `0`, `absent`         | `0`      |
-| level     | `n`, label                 | `n`      |
-
-### A rule
-
-Each rule is a TOML table keyed by its id; chronology lives in `time`, not the
-header:
-
-```toml
-[centumization]
-time        = -2000
-name        = "Centumization"
-description = "Merger of palatovelar and velar plosives"
-definition  = "[+cons, +guttural, +coronal] → [cor: none]"
-```
-
-Rules sort by `time` ascending, then by file order. The full rule notation
-(quantifiers, alpha variables, conditionals, contours, references) lives in the
-reference manual.
-
-## Design notes
-
-A few decisions that aren't obvious from the code:
-
-- **The AST is permissive on purpose.** It can represent invalid rules, because
-  validation runs as a single collect-all-errors pass (`ValidationError`) and
-  needs to _see_ every problem to report it. Making invalid states
-  unrepresentable would defeat that.
-- **Contours are tuples, not lists** — so bundles stay hashable and a segment
-  can't be mutated through an aliased contour.
-- **No `ANY` or node sentinels.** A feature omitted from a pattern means "don't
-  care"; `ValueSpec(f, None)` means "must be unspecified". Bare `[place]` (a
-  unary node named with no value) is just its present value, so it needs no
-  special case.
-- **Segments carry no spelling.** Rendering reconstructs IPA from features, so
-  there is no stored symbol to keep in sync.
-
-## Status
-
-The core data model is complete. Two notation features remain deferred in
-`model.py`: conditional features (`ConditionalSpec` / `ConditionalAssign`) and
-the presence spec (only needed if a binary or scalar node is ever named bare).
-Contour positions are modelled — `ContourEdge` / `ContourPosition` via the
-optional `at` field on `ValueSpec` and `AlphaSpec` (target/context only; result
-contours must use explicit values).
-
-None of the stage classes exist yet: `Segmenter`, `RuleParser`, `RuleMatcher`,
-`Applier`, `Renderer`, `DerivationEngine`, and the TOML loaders are all still to
-be written. Syllabification (the `$` boundary and sonority-driven boundary
-placement) is designed but not implemented; until it lands, `$` has nothing to
-match and rules should not rely on syllable structure.
-
-## Layout
-
 ```
 fortis/
-  models/           # pure data — imports nothing outside models (+ stdlib, result)
-    values.py         # SingleValue, ContourValue, Value, AlphaValue
-    feature_bundle.py # FeatureBundle (UserDict[str, FeatureValue])
-    feature_value.py  # FeatureValue
-    pattern_spec.py   # PatternSpec (value, negated, contour_position, alpha_var, alpha_op)
-    pattern_bundle.py # PatternBundle (UserDict[str, PatternSpec])
-    bindings.py       # Bindings (alpha variable environment)
-    elements.py       # Rule AST: AlphaOp, ValueSpec, AlphaSpec, ResultBundle, Element, …
-    segments.py       # Sequence type alias
-    tier.py           # Tier enum
-    syllable.py       # Syllable dataclass
-    alpha_notation.py # AlphaOperation (legacy, see elements.AlphaOp)
-  application/
-    parsing.py        # string → model objects (parse_feature_bundle, parse_pattern_spec, …)
-    merge.py          # geometry-aware merge (apply_bundle with delinking)
-  imports/            # TOML/CSV → model objects, using application.parsing
-    features.py       # FeatureDefinition, FeatureInventory
-    letters.py         # LetterDefinition, LetterInventory
-    diacritics.py      # DiacriticDefinition, DiacriticInventory
-    sonorities.py      # SonorityDefinition, SonorityInventory
-    syllable_parts.py  # SyllablePartsInventory
-    words.py           # WordInventory
-    rules.py           # RuleDefinition, RuleInventory
-    inventories.py     # Inventories (top-level container)
-  operations/
-    segmentation.py    # string_to_sequence (IPA → Sequence)
-    rendering.py       # sequence_to_string, render_segment
-    matching.py        # (planned)
-    rewriting.py       # (planned)
-    derivation.py      # (planned)
-    rule_parsing.py    # split_rule_definition (stub)
-  transcription/
-    parsing.py         # IPA → Sequence
-    rendering.py       # Sequence → IPA
-  general/
-    utils.py           # safe_int, is_combining
-    presentation.py    # format_feature, present_bundle, present_sequence
-    file_handling.py   # load_toml_file, load_csv_file
-  config.py            # Config, Paths, ValueSymbols
-  result.py            # Result, Ok, Err
-  main.py              # CLI entry point
-inventories/
-  features.toml
-  letters.csv
-  diacritics.toml
-  sonorities.toml
-  syllable_parts.toml
-  words.toml
-  rules.toml
-docs/
-  reference.md
-  change_notation_rules.md
-  special_characters.md
-  user_guide.md
+├── pyproject.toml
+├── data/                        # user-authored inventories
+│   ├── features.toml  letters.csv  diacritics.toml
+│   ├── sonorities.toml  syllable_parts.toml
+│   └── words.toml  rules.toml
+├── docs/reference.md
+├── tests/
+└── src/fortis/
+    ├── config.py                # paths, value symbols, greek alphabet, special symbols
+    ├── result.py                # Result / Ok / Err
+    │
+    ├── general/                 # generic helpers, zero domain knowledge
+    │   ├── file_handling.py     #   load_toml_file, load_csv_file
+    │   ├── presentation.py      #   present_symbol, trace formatting
+    │   └── utils.py             #   safe_int, ...
+    │
+    ├── models/                  # INERT DATA — imports only stdlib + within models
+    │   ├── values.py            #   SingleValue, ContourValue, Value, AlphaOp, ContourEdge
+    │   ├── tiers.py             #   Tier
+    │   ├── specs.py             #   PatternSpec, ResultSpec
+    │   ├── bundles.py           #   FeatureBundle, PatternBundle, ResultBundle
+    │   ├── bindings.py          #   Bindings (alpha + element-ref state)
+    │   ├── elements.py          #   Element union (LetterRef, Group, Quantified, Boundary…)
+    │   ├── rules.py             #   ApplicationMode, StructuralDescription, Rule
+    │   ├── features.py          #   FeatureKind, Feature, FeatureInventory
+    │   ├── inventories.py       #   Letter/Diacritic/Sonority/Syllable/Word defs + Inventories
+    │   ├── derivation.py        #   DerivationStep, Derivation
+    │   └── syllable.py          #   Syllable (placeholder for future syllable structure)
+    │
+    ├── parsing/                 # STRING → models       (depends on: models)
+    │   ├── bundles.py           #   parse_value, parse_*_spec, parse_*_bundle
+    │   └── notation.py          #   parse_definition: SPE string → StructuralDescription/Elements
+    │
+    ├── loaders/                 # FILE → models         (depends on: models, parsing)
+    │   ├── features.py          #   features.toml      → FeatureInventory
+    │   ├── letters.py           #   letters.csv        → LetterInventory
+    │   ├── diacritics.py
+    │   ├── sonorities.py
+    │   ├── syllable_parts.py
+    │   ├── words.py
+    │   ├── rules.py             #   rules.toml (bodies parsed via parsing.notation)
+    │   └── project.py           #   load everything    → Project
+    │
+    └── application/             # THE ENGINE            (depends on: models, parsing, loaders)
+        ├── segmenter.py         #   IPA string → Sequence
+        ├── merge.py             #   apply_bundle: combine + node-delink (shared)
+        ├── matcher.py           #   locate loci where a rule's SD holds; bind alpha/refs
+        ├── applier.py           #   rewrite a locus from a ResultBundle + Bindings
+        ├── syllabifier.py       #   (planned) sonority-driven boundaries
+        ├── renderer.py          #   Sequence → IPA string
+        └── engine.py            #   DerivationEngine: derive a word → Derivation
 ```
-
-The `models/` package is **provably inert** — a test asserts that no module under
-`models/` imports from `imports`, `application`, `parsing`, or `config`. All
-string→object parsing lives in `application/parsing.py`; all model↔vocabulary
-bridging (geometry-aware merge, delinking) lives in `application/merge.py`.

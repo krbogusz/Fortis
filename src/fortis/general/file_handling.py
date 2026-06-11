@@ -30,7 +30,7 @@ def load_toml_file(path: Path) -> Result[dict[str, Any], str]:
     return Ok(data)
 
 
-def load_csv_file(path: Path) -> Result[list[dict[str, str]], str]:
+def load_csv_file(path: Path) -> Result[list[dict[str, Any]], str]:
     """Load a CSV file into a list of dicts. Return an Ok with the rows or Err with description."""
     if not path.is_file():
         return Err(f"There is no file at '{path}'")

@@ -1,0 +1,168 @@
+from collections import UserDict
+from dataclasses import dataclass
+from enum import StrEnum, auto
+from functools import cached_property
+
+from src.fortis.models.bundles import FeatureBundle, PatternBundle
+from src.fortis.models.tiers import Tier
+
+
+@dataclass(frozen=True)
+class Letter:
+    """A letter symbol with its symbol and feature bundle."""
+
+    symbol: str
+    bundle: FeatureBundle
+
+
+class LetterInventory(UserDict[str, Letter]):
+    """Segment symbols mapped to their feature bundles.
+
+    Pre-computes sorted symbol lists at construction time for greedy
+    longest-first matching in IPA tokenisation.  Access them via the
+    ``sorted_keys`` property.
+    """
+
+    @cached_property
+    def sorted_keys(self) -> list[str]:
+        """All symbol keys sorted longest-first."""
+        return sorted(self.data.keys(), key=len, reverse=True)
+
+
+class DiacriticKind(StrEnum):
+    """Where a diacritic attaches relative to its base symbol."""
+
+    before = auto()
+    combining = auto()
+    after = auto()
+
+
+@dataclass(frozen=True)
+class Diacritic:
+    """A diacritic symbol with its tier, attachment type, and feature bundle.
+
+    Args:
+        symbol: The diacritic character(s).
+        tier: Phonological tier this diacritic belongs to.
+        kind: Where the diacritic attaches relative to its base.
+        bundle: Feature bundle the diacritic contributes.
+        default: Whether this is the default diacritic for its features.
+        contour: Whether this diacritic forms contours when combined.
+    """
+
+    symbol: str
+    tier: Tier
+    kind: DiacriticKind
+    bundle: FeatureBundle
+    default: bool
+    contour: bool
+
+
+class DiacriticInventory(UserDict[str, Diacritic]):
+    """Diacritic symbols mapped to their definitions.
+
+    Pre-computes sorted symbol lists at construction time for greedy
+    longest-first matching in IPA tokenisation.  Access them via the
+    ``segment_keys``, ``syllable_keys``, ``before_keys``, and
+    ``attaching_keys`` properties.
+    """
+
+    @cached_property
+    def segment_keys(self) -> list[str]:
+        """Segment-tier diacritic symbols sorted longest-first."""
+        return sorted(
+            (s for s, d in self.data.items() if d.tier == Tier.segment),
+            key=len,
+            reverse=True,
+        )
+
+    @cached_property
+    def syllable_keys(self) -> list[str]:
+        """Syllable-tier diacritic symbols sorted longest-first."""
+        return sorted(
+            (s for s, d in self.data.items() if d.tier == Tier.syllable),
+            key=len,
+            reverse=True,
+        )
+
+    @cached_property
+    def before_keys(self) -> list[str]:
+        """Before-type diacritic symbols sorted longest-first."""
+        return sorted(
+            (s for s, d in self.data.items() if d.kind == DiacriticKind.before),
+            key=len,
+            reverse=True,
+        )
+
+    @cached_property
+    def attaching_keys(self) -> list[str]:
+        """Combining/after-type diacritic symbols sorted longest-first."""
+        return sorted(
+            (s for s, d in self.data.items() if d.kind != DiacriticKind.before),
+            key=len,
+            reverse=True,
+        )
+
+
+@dataclass
+class Sonority:
+    """A sonority level with its feature bundle.
+
+    Args:
+        label: Name/label of this sonority level.
+        level: Numerical sonority level (higher = more sonorous).
+        bundle: Feature bundle for this level, or None.
+    """
+
+    label: str
+    level: int
+    bundle: PatternBundle | None
+
+
+class SonorityInventory(UserDict[str, Sonority]):
+    """Sonority levels keyed by label."""
+
+
+@dataclass
+class SyllablePart:
+    """A constraint definition for one syllable part (onset, nucleus, or coda).
+
+    Args:
+        part_type: Which part of the syllable ("onset", "nucleus", or "coda").
+        time: Application time for this constraint.
+        definition: Exact feature bundle for nucleus matching (nucleus only).
+        required: Raw pattern string for required features (onset/coda only).
+        forbidden: Raw pattern string for forbidden features (onset/coda only).
+    """
+
+    part_type: str
+    time: int
+    definition: PatternBundle | None = None
+
+
+class SyllablePartsInventory(UserDict[int, dict[str, SyllablePart]]):
+    """Syllable part constraints keyed by application time.
+
+    Each time key maps to a dict of part_type → SyllablePart (e.g. "onset",
+    "nucleus", "coda"). Dict keys enforce one of each part per time.
+    """
+
+
+@dataclass
+class Word:
+    """A word with its IPA transcription and optional gloss.
+
+    Attributes:
+        ipa: The IPA transcription string.
+        gloss: An optional gloss or translation.
+    """
+
+    ipa: str
+    gloss: str = ""
+
+
+class WordInventory(UserDict[str, Word]):
+    """Words keyed by their IPA form, loaded from TOML.
+
+    The key is the IPA string itself (same as ``Word.ipa``).
+    """

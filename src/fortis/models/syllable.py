@@ -7,7 +7,7 @@ onset/nucleus/coda segmentation.
 
 from dataclasses import dataclass
 
-from src.fortis.models.feature_bundle import FeatureBundle
+from src.fortis.models.bundles import FeatureBundle
 
 
 @dataclass
