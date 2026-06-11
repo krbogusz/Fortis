@@ -5,17 +5,15 @@ It is populated during pattern matching and consulted during change
 application.
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass, field
 
-from src.fortis.models.pattern_spec import PatternSpec
-from src.fortis.models.values import AlphaValue, Value
+from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.values import Value
 
 
 @dataclass
 class Bindings:
     """Bindings for different elements."""
 
-    alpha: dict[AlphaValue, Value] = field(default_factory=lambda: {})
-    reference: dict[int, PatternSpec] = field(default_factory=lambda: {})
+    alpha: dict[str, Value] = field(default_factory=dict)
+    reference: dict[int, FeatureBundle] = field(default_factory=dict)

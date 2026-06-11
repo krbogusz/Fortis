@@ -4,42 +4,11 @@ Permissive on purpose — it can represent invalid rules so that load-time
 validation can collect every problem at once instead of failing on the first.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
-from enum import StrEnum, auto
 
-from src.fortis.models.values import Value
-
-# --------------------------------------------------------------------------- #
-# Enums consumed by the AST
-# --------------------------------------------------------------------------- #
-
-
-class AlphaOp(StrEnum):
-    """Greek-variable notation; bind-vs-recall is resolved at match time."""
-
-    same = auto()  # [α F]
-    opposite = auto()  # [-α F]   (binary/unary only)
-    other = auto()  # [!α F]
-
-
-class ContourEdge(StrEnum):
-    """A named position within a feature contour (sections 5.6, 5.9)."""
-
-    initial = auto()
-    final = auto()
-    any = auto()
-    all = auto()
-
-
-type ContourPosition = ContourEdge | tuple[int, ...]  # tuple for @2, @2;3
-
-
-class ApplicationMode(StrEnum):
-    """How a rule should be applied."""
-
-    simultaneous = auto()
-    left_to_right = auto()
-    right_to_left = auto()
+from src.fortis.models.bundles import PatternBundle, ResultBundle
 
 
 @dataclass(frozen=True)
@@ -48,83 +17,6 @@ class Quantifier:
 
     min: int
     max: int | None  # None = unbounded
-
-
-# --------------------------------------------------------------------------- #
-# Pattern side (target / context / exception)
-# --------------------------------------------------------------------------- #
-
-
-@dataclass(frozen=True)
-class ValueSpec:
-    """Match a feature against a value. ``value=None`` means 'unspecified'.
-
-    The feature being constrained is the key in the enclosing ``PatternBundle``.
-    """
-
-    value: Value
-    negated: bool = False  # [!+syll]
-    at: ContourPosition | None = None  # None = @any; target/context only
-
-
-@dataclass(frozen=True)
-class AlphaSpec:
-    """Bind or recall a Greek variable over a feature.
-
-    ``at`` selects a contour edge to bind to; None binds the whole contour.
-    """
-
-    var: str
-    op: AlphaOp
-    at: ContourPosition | None = None  # target/context only
-
-
-# + ConditionalSpec later; + PresenceSpec only if a binary/scalar node is
-#   ever named bare (a unary node named bare is just ValueSpec(present)).
-type PatternSpec = ValueSpec | AlphaSpec
-
-
-@dataclass(frozen=True)
-class PatternBundle:
-    """A pattern bundle: every feature's spec must hold against one segment."""
-
-    specs: dict[str, PatternSpec]
-
-
-# --------------------------------------------------------------------------- #
-# Result side
-# --------------------------------------------------------------------------- #
-
-
-@dataclass(frozen=True)
-class ValueAssign:
-    """Assign a value. ``value=None`` delinks (cascades via geometry)."""
-
-    value: Value
-
-
-@dataclass(frozen=True)
-class AlphaAssign:
-    """Recall a bound Greek variable into the output segment."""
-
-    var: str
-    op: AlphaOp = AlphaOp.same
-
-
-# + ConditionalAssign later
-type ResultSpec = ValueAssign | AlphaAssign
-
-
-@dataclass(frozen=True)
-class ResultBundle:
-    """A result bundle merges its per-feature specs into the matched segment."""
-
-    specs: dict[str, ResultSpec]
-
-
-# --------------------------------------------------------------------------- #
-# Sequence elements
-# --------------------------------------------------------------------------- #
 
 
 @dataclass(frozen=True)
@@ -136,70 +28,62 @@ class LetterRef:
 
 @dataclass(frozen=True)
 class BundleElem:
-    """Bundle element."""
+    """A pattern bundle in target, context, or exception position."""
 
     bundle: PatternBundle
 
 
 @dataclass(frozen=True)
 class ResultElem:
-    """Result element."""
+    """A result bundle in result position."""
 
     bundle: ResultBundle
 
 
 @dataclass(frozen=True)
 class Wildcard:
-    """Wildcard."""
-
-    pass  # []
+    """Matches any single segment. ``[]``."""
 
 
 @dataclass(frozen=True)
-class WordBoundary:  # zero-width assertion; excluded from cardinality checks
-    """Word boundary."""
-
-    pass
+class WordBoundary:
+    """Zero-width word-edge assertion; excluded from cardinality checks."""
 
 
 @dataclass(frozen=True)
-class SyllableBoundary:  # zero-width assertion; excluded from cardinality checks
-    """Syllable boundary."""
-
-    pass
+class SyllableBoundary:
+    """Zero-width syllable-edge assertion; excluded from cardinality checks."""
 
 
 @dataclass(frozen=True)
 class Null:
-    """Null element."""
-
-    pass  # the null segment, for insertion/deletion
+    """The null segment, for insertion and deletion."""
 
 
 @dataclass(frozen=True)
 class Group:
-    """Group."""
+    """A parenthesised sub-sequence."""
 
     elements: tuple[Element, ...]
 
 
 @dataclass(frozen=True)
 class Disjunction:
-    """Disjunction."""
+    """An alternation: any one of its branches may match."""
 
     branches: tuple[tuple[Element, ...], ...]
 
 
 @dataclass(frozen=True)
 class Negated:
-    """Not element."""
+    """A negated element. ``!X``."""
 
-    inner: Element  # !X
+    inner: Element
 
 
 @dataclass(frozen=True)
 class Quantified:
-    """Quantified element."""
+    """An element under a repetition count."""
 
     inner: Element
     quant: Quantifier
@@ -207,15 +91,15 @@ class Quantified:
 
 @dataclass(frozen=True)
 class Bound:
-    """Binding for an element."""
+    """An element bound to a back-reference index. ``1=...``."""
 
-    ref: int  # 1=...
+    ref: int
     inner: Element
 
 
 @dataclass(frozen=True)
 class RecallRef:
-    """Recall reference like '@1'."""
+    """A recall of a bound element. ``@1``."""
 
     ref: int
 

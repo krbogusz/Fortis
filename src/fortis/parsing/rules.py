@@ -22,11 +22,3 @@ def split_rule_definition(rule_definition: str) -> dict[str, str]:
         rule_parts["target"] = rule_definition.split("→")[0]
         rule_parts["result"] = rule_definition.split("→")[1]
     return rule_parts
-
-
-def parse_rule_part(rule_part_string: str):
-    """Parse a rule part into a list of Element objects.
-
-    An example rule part: [+cons,-syll]p[]{2,3}
-    """
-    ...
