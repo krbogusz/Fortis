@@ -70,14 +70,16 @@ Rules may specify how they apply when multiple loci match. The `application` TOM
 
 ### 1.7. Time ordering
 
-Rules are keyed in TOML as `[<time>.<id>]` (e.g. `[-2000.laryngeal_coloring]`, `[1300.backness_harmony]`). Lower time values are applied earlier. Rules with the same time are applied in the order of declaration.
+Each rule is a TOML table headed by its id, `[<id>]` (e.g. `[laryngeal_coloring]`, `[backness_harmony]`), with the chronology supplied by a separate required `time` field inside the table. Lower time values are applied earlier. Rules sharing a time are applied in the order of declaration.
 
 ## 2. Rules
 
 ### 2.1. Structural rules
 
-1. Target and result must have the same number of elements, where `∅` counts as an element.
-2. Corresponding elements in target and result must carry identical quantifiers.
+1. A rule must be **unambiguous** about how the target maps to the result. A result **bundle** merges into a corresponding target (preserving that target's other features, per 2.1.5), so it needs exactly one source — bundle results therefore require target and result to have the same number of elements (`∅` counts; boundaries do not). A **letter shorthand** replaces wholesale and fully specifies the output, so a result made entirely of letter shorthands may have a different count from the target: the matched span **collapses into** or **expands to** those letters. A count mismatch with any result bundle is ambiguous (which target does the bundle merge with, and which is gone?) and is invalid.
+   - Valid: `au → e`, `e → au`, `∅ [+cons] → u` (full-replacement results).
+   - Invalid: `[+cons][-cons] → [nas]`, `[+syll] → [+lo][+hi]` (a count mismatch onto merge bundles).
+2. A result **bundle** lines up one-to-one with its corresponding target (it merges), so it must carry the same quantifier as that target. A full-replacement **letter** result is unconstrained by the target's quantifier — e.g. `a{2} → b` is valid (two a's collapse into b), while `[+cons]{2} → [+nas]` is not (the merge-bundle's quantifier must match).
 3. The only exception to rule 2.1.2 is `∅`, which carries no quantifier.
 4. A quantified target element paired with `∅` in the result deletes all matched segments.
 5. Letter shorthands and bundles behave identically in target position (both match the segment's features). In result position they differ:
@@ -95,7 +97,10 @@ Rules are keyed in TOML as `[<time>.<id>]` (e.g. `[-2000.laryngeal_coloring]`, `
 
 ### 2.3. Reference rules
 
-1. Every `@n` recall must have a corresponding `n=` binding earlier in the rule.
+1. Every `@n` recall must have a corresponding `n=` binding somewhere in the rule. Binding and recall are
+   scope-based, not order-based: the position of the binding relative to the recall does not matter (e.g.
+   `1=a → b / @1 _` binds in the target and recalls in the left context). The target is ref-bound first at
+   match time, so no left-to-right ordering across positions is imposed.
 2. Every `n=` binding must be recalled at least once.
 3. `n=` is not valid in result position.
 4. Group bindings follow the same rules as single-element bindings.
@@ -121,7 +126,7 @@ Rules are keyed in TOML as `[<time>.<id>]` (e.g. `[-2000.laryngeal_coloring]`, `
 
 ### 2.6. Exception clause rules
 
-1. An exception clause `//` may only appear if a context clause `/` is present.
+1. An exception clause `//` may appear with or without a context clause `/`.
 2. Exceptions may contain any elements valid in context position: boundaries, bundles, letter shorthands,
    quantifiers, groups, disjunctions, negation, references, alpha variables, and conditional features. Exception
    positions follow the same validation rules as context positions (e.g. `∅` is not valid in exception position,

@@ -50,7 +50,7 @@ Derivation trace
 
 ### 2.1 Segmentation and parsing
 
-The parser consumes an IPA string left to right using greedy longest-match tokenisation against the user-defined inventories. At each position it takes the longest substring that matches a letter in `letters.toml`, then consumes any following substrings that match diacritics in `diacritics.toml`, buffering them onto the preceding base and applying their feature modifications. The result is a `Sequence` — an ordered list of `Segment` objects, each carrying a complete `FeatureBundle`.
+The parser consumes an IPA string left to right using greedy longest-match tokenisation against the user-defined inventories. At each position it takes the longest substring that matches a letter in `letters.csv`, then consumes any following substrings that match diacritics in `diacritics.toml`, buffering them onto the preceding base and applying their feature modifications. The result is a `Sequence` — an ordered list of `Segment` objects, each carrying a complete `FeatureBundle`.
 
 The letter and diacritic tables are the sole authority on how a string is divided. There is no Unicode normalisation step: Fortis matches the code points exactly as written, against the entries exactly as the user authored them. If a string contains a substring that matches no letter (and no diacritic on a preceding base), that is a parse error, surfaced to the user rather than silently repaired — so the inventory and the lexicon must be written in the same form.
 
@@ -80,7 +80,7 @@ Below is the table displaying which values different types of features can take,
 | ------------- | ----- | ------ | ------ |
 | Undefined     | +     | +      | +      |
 | Present       | +     | +      | -      |
-| Absent        | +     | +      | -      |
+| Absent        | -     | +      | -      |
 | Level         | -     | -      | +      |
 
 **Undefined applies to every feature, not only unary ones.** Any feature — binary, unary, or scalar — can be marked unspecified with the value `none`. For example, `[cor: none]` removes the coronal specification entirely; this is distinct from `[−cor]`, which specifies a negative value. Both differ from a feature simply being absent from a bundle: in a concrete segment an absent feature is unspecified (equivalent to none), but in a pattern an absent feature is unconstrained — it places no condition on the segment, whereas [cor: none] requires the segment to be unspecified for coronal. Within a single bundle, each feature may be specified at most once.
@@ -128,18 +128,21 @@ but the number of levels, their ordering, and the predicates are all yours to de
 
 ## 4. The TOML Configuration Files
 
-Every inventory Fortis uses is loaded from a TOML file. All of them are user-authored.
+Every inventory Fortis uses is loaded from a file. All of them are user-authored.
 
-| File              | Contents                                            |
-| ----------------- | --------------------------------------------------- |
-| `features.toml`   | The feature vocabulary and geometry                 |
-| `letters.toml`    | IPA symbol → feature bundle mappings                |
-| `diacritics.toml` | Diacritic modifications to base segment bundles     |
-| `sonorities.toml` | Sonority levels and the predicates that assign them |
-| `words.toml`      | The lexicon                                         |
-| `rules.toml`      | Phonological rules                                  |
+| File                   | Contents                                                |
+| ---------------------- | ------------------------------------------------------- |
+| `features.toml`        | The feature vocabulary and geometry                     |
+| `letters.csv`          | IPA symbol → feature bundle mappings                    |
+| `diacritics.toml`      | Diacritic modifications to base segment bundles         |
+| `sonorities.toml`      | Sonority levels and the predicates that assign them     |
+| `syllable_parts.toml`  | Onset/nucleus/coda constraints, keyed by time           |
+| `words.toml`           | The lexicon                                             |
+| `rules.toml`           | Phonological rules                                      |
 
-A `syllable.toml` for syllabification parameters is planned but not yet active (§7).
+`syllable_parts.toml` is already loaded (its nucleus definitions drive nucleus
+identification during parsing). The full sonority-driven syllabification pass that
+places syllable boundaries is still planned (§7).
 
 ### 4.1 words.toml
 
@@ -318,7 +321,7 @@ Example — backness harmony:
 @1           recall element reference 1   (all positions)
 ```
 
-Every `@n` recall needs a corresponding `n=` binding earlier in the rule, and every `n=` binding must be recalled at least once. `n=` is **not** valid in result position. Group bindings follow the same rules, and a group recall `@n` is valid in all positions.
+Every `@n` recall needs a corresponding `n=` binding somewhere in the rule (position doesn't matter — e.g. you can bind in the target and recall in the context), and every `n=` binding must be recalled at least once. `n=` is **not** valid in result position. Group bindings follow the same rules, and a group recall `@n` is valid in all positions.
 
 Example — metathesis:
 
@@ -425,7 +428,7 @@ Two rules sharing both a `time` and an adjacent file position with overlapping l
 
 **Not yet implemented — TODO.**
 
-Syllabification is planned to sit between parsing and rule application, placing boundaries between pre-identified nuclei without inserting or deleting segments, driven by the user-defined sonority scale (§3.3) and a forthcoming `syllable.toml` parameter file. Until it lands, sequences are not syllabified, the `$` syllable-boundary assertion has nothing to match against, and rules should not rely on syllable structure.
+Syllabification is planned to sit between parsing and rule application, placing boundaries between pre-identified nuclei without inserting or deleting segments, driven by the user-defined sonority scale (§3.3) and the `syllable_parts.toml` parameter file. Until it lands, sequences are not syllabified, the `$` syllable-boundary assertion has nothing to match against, and rules should not rely on syllable structure.
 
 ---
 

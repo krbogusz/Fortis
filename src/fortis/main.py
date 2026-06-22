@@ -15,13 +15,13 @@ from src.fortis.parsing.notation import parse_definition
 def main() -> None:
     """Load inventories, run derivations for all words, and print results."""
     project = load_project().unwrap()
-    pprint(project.rules)
-    spec = "!tone: 1>2@1;2"
+    # pprint(project.rules)
+    spec = "tone: 2>α"
     print(f"{spec} -> {parse_pattern_spec(spec, project.features)}")
 
-    rule = "[+nasal] → [+voice, nasal: none] / (v{1,2}|n) _ v // _ m"
+    rule = "[+nasal] → [+voice, nasal: none] / [tone: 2>α] _ v // _ m"
     print(rule)
-    pprint(parse_definition(rule, project.features).unwrap())
+    pprint(parse_definition(rule, project.features))
 
 
 if __name__ == "__main__":

@@ -89,13 +89,17 @@ class TestParseValue:
         assert spec.feature == "manner"
         assert spec.value == 1
 
-    def test_binary_name_defaults_to_any(self, features):
-        """A plain binary feature name with no value should default to 'any'."""
+    def test_bare_non_unary_realized_feature_rejected(self, features):
+        """A bare binary feature in realized context is invalid (pattern-only)."""
         result = parse_feature_spec("nasal", features)
+        assert result.is_err()
+        assert "explicit value" in result.unwrap_err()
+
+    def test_bare_unary_realized_feature_ok(self, features):
+        """A bare unary feature resolves to present (1), not 'any'."""
+        result = parse_feature_spec("manner", features)
         assert result.is_ok()
-        spec = result.unwrap()
-        assert spec.feature == "nasal"
-        assert spec.value == "any"
+        assert result.unwrap().value == 1
 
     def test_binary_name_with_plus(self, features):
         result = parse_feature_spec("+consonantal", features)
@@ -178,6 +182,101 @@ class TestParsePatternSpec:
         assert spec.value.var == "α"
         assert spec.value.op == AlphaOp.same
 
+    def test_negated_bare_feature(self, features):
+        # '!nasal' = complement of the bare "present" feature (matches none).
+        result = parse_pattern_spec("!nasal", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.feature == "nasal"
+        assert spec.value == "any"
+        assert spec.negated is True
+
+    def test_negated_bare_unary_feature(self, features):
+        result = parse_pattern_spec("!manner", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.value == 1
+        assert spec.negated is True
+
+    def test_alpha_other_is_value_level_not_spec_negation(self, features):
+        # '!α' is the alpha-other value (AlphaOp.other), NOT spec negation.
+        result = parse_pattern_spec("voice: !α", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.negated is False
+        assert isinstance(spec.value, AlphaRef)
+        assert spec.value.op == AlphaOp.other
+
+    def test_alpha_other_limb_in_contour(self, features):
+        result = parse_pattern_spec("tone: !α>2", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.negated is False
+        assert spec.value[0] == AlphaRef("α", AlphaOp.other)
+        assert spec.value[1] == 2
+
+    def test_conditional_feature(self, features):
+        result = parse_pattern_spec("<1: +high>", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.feature == "high"
+        assert spec.value == 1
+        assert spec.condition_label == 1
+
+    def test_conditional_negated_condition(self, features):
+        # '<n: !F>' — negation rides on the inner spec parse.
+        result = parse_pattern_spec("<1: !high>", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.negated is True
+        assert spec.condition_label == 1
+
+    def test_conditional_alpha_condition(self, features):
+        result = parse_pattern_spec("<2: αvoice>", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert isinstance(spec.value, AlphaRef)
+        assert spec.value.op == AlphaOp.same
+        assert spec.condition_label == 2
+
+    def test_conditional_contour_inner(self, features):
+        # The closing '>' must not be confused with a contour limb separator.
+        result = parse_pattern_spec("<1: tone: 1>2>", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.feature == "tone"
+        assert spec.value == (1, 2)
+        assert spec.condition_label == 1
+
+    def test_conditional_unconditional_has_no_label(self, features):
+        spec = parse_pattern_spec("+high", features).unwrap()
+        assert spec.condition_label is None
+
+    def test_conditional_missing_closing_bracket(self, features):
+        assert parse_pattern_spec("<1: +high", features).is_err()
+
+    def test_conditional_non_integer_label(self, features):
+        assert parse_pattern_spec("<x: +high>", features).is_err()
+
+    def test_opposite_alpha_on_binary_ok(self, features):
+        result = parse_pattern_spec("voice: -α", features)
+        assert result.is_ok()
+        assert result.unwrap().value == AlphaRef("α", AlphaOp.opposite)
+
+    def test_opposite_alpha_on_scalar_rejected(self, features):
+        # '-α' (opposite) is binary/unary only — scalar has no single opposite.
+        result = parse_pattern_spec("tone: -α", features)
+        assert result.is_err()
+        assert "Alpha-opposite" in result.unwrap_err()
+
+    def test_opposite_alpha_scalar_contour_limb_rejected(self, features):
+        assert parse_pattern_spec("tone: 1>-α", features).is_err()
+
+    def test_same_and_other_alpha_on_scalar_ok(self, features):
+        # 'α' (same) and '!α' (other) remain valid on scalar features.
+        assert parse_pattern_spec("tone: α", features).is_ok()
+        assert parse_pattern_spec("tone: !α", features).is_ok()
+
 
 class TestParsePatternBundle:
     """Tests for pattern bundle parsing."""
@@ -194,6 +293,26 @@ class TestParsePatternBundle:
         assert result.is_ok()
         bundle = result.unwrap()
         assert "consonantal" in bundle
+
+    def test_comma_separates_features(self, features):
+        result = parse_pattern_bundle("+nasal, +voice", features)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert set(bundle) == {"nasal", "voice"}
+
+    def test_semicolon_does_not_separate_features(self, features):
+        # ';' is reserved for contour-position index lists, not feature separation.
+        result = parse_pattern_bundle("+nasal; +voice", features)
+        assert result.is_err()
+
+    def test_semicolon_contour_position_in_bundle(self, features):
+        # A multi-limb contour with a ';'-list position survives bundle splitting.
+        result = parse_pattern_bundle("+nasal, tone: 1>2@2;3", features)
+        assert result.is_ok()
+        bundle = result.unwrap()
+        assert set(bundle) == {"nasal", "tone"}
+        assert bundle["tone"].value == (1, 2)
+        assert bundle["tone"].contour_position == (2, 3)
 
 
 class TestParseResultSpec:
@@ -217,15 +336,30 @@ class TestParseResultSpec:
     def test_rejects_negation(self, features):
         result = parse_result_spec("!nasal", features)
         assert result.is_err()
+        assert "negation" in result.unwrap_err()
 
     def test_rejects_contour_position(self, features):
         result = parse_result_spec("tone:1@initial", features)
         assert result.is_err()
 
+    def test_conditional_feature(self, features):
+        result = parse_result_spec("<1: +high>", features)
+        assert result.is_ok()
+        spec = result.unwrap()
+        assert spec.feature == "high"
+        assert spec.value == 1
+        assert spec.condition_label == 1
+
+    def test_conditional_rejects_negated_condition(self, features):
+        # A result conditional cannot be negated — the inner runs through
+        # parse_result_spec, which forbids '!'.
+        assert parse_result_spec("<1: !high>", features).is_err()
+
     def test_rejects_other_alpha(self, features):
-        """Result spec should reject '!α' (other) notation."""
+        """Result spec should reject '!α' (other) notation with its own message."""
         result = parse_result_spec("!αconsonantal", features)
         assert result.is_err()
+        assert "'other' alpha" in result.unwrap_err()
 
     def test_alpha_same(self, features):
         result = parse_result_spec("αconsonantal", features)
@@ -240,6 +374,12 @@ class TestParseResultSpec:
         spec = result.unwrap()
         assert isinstance(spec.value, AlphaRef)
         assert spec.value.op == AlphaOp.opposite
+
+    def test_opposite_alpha_on_scalar_rejected(self, features):
+        # '-α' (opposite) is binary/unary only — also enforced result-side.
+        result = parse_result_spec("tone: -α", features)
+        assert result.is_err()
+        assert "Alpha-opposite" in result.unwrap_err()
 
     def test_scalar_numeric(self, features):
         result = parse_result_spec("stress:1", features)

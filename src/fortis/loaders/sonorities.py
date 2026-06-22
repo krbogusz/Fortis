@@ -9,7 +9,7 @@ from src.fortis.models.inventories import Sonority, SonorityInventory
 from src.fortis.parsing.bundles import parse_pattern_bundle
 from src.fortis.result import Err, Ok, Result
 
-# ---- Sonority ---------------------------------------------------------------------------------------------------------
+# ---- Sonority ------------------------------------------------------------------------------------
 
 
 def load_sonority(
@@ -43,7 +43,7 @@ def load_sonority(
     return Ok(Sonority(label=label, level=level, bundle=bundle))
 
 
-# ---- Per-field helpers ------------------------------------------------------------------------------------------------
+# ---- Per-field helpers ---------------------------------------------------------------------------
 
 
 def load_level(label: str, sonority_def: dict[str, Any]) -> Result[int, str]:
@@ -85,7 +85,7 @@ def load_bundle(
             return Ok(result)
 
 
-# ---- Sonority Inventory -----------------------------------------------------------------------------------------------
+# ---- Sonority Inventory --------------------------------------------------------------------------
 
 
 def load_sonority_inventory(
@@ -145,7 +145,8 @@ def validate_sonority_inventory(inventory: SonorityInventory) -> Result[None, li
     for label, sonority in inventory.data.items():
         if sonority.level in seen_levels:
             error_list.append(
-                f"Sonority '{label}' and '{seen_levels[sonority.level]}' share level {sonority.level}"
+                f"Sonority '{label}' and '{seen_levels[sonority.level]}' "
+                f"share level {sonority.level}"
             )
         else:
             seen_levels[sonority.level] = label
