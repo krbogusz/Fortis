@@ -11,7 +11,7 @@ from src.fortis.models.inventories import (
 from src.fortis.models.rules import RuleInventory
 
 
-@dataclass(frozen=True)
+@dataclass
 class Project:
     """The loaded project: every inventory bundled together."""
 
@@ -21,4 +21,5 @@ class Project:
     sonority: SonorityInventory
     syllable_parts: SyllablePartsInventory
     words: WordInventory
-    rules: RuleInventory  # pre-sorted by (time, file order); None until rules loader exists
+    rules: RuleInventory  # pre-sorted by (time, file order)
+    time: int  # current time

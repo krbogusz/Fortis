@@ -61,9 +61,7 @@ Applies to unary, binary, scalar. The `+`/`-` forms are unary/binary only
 (scalar uses explicit values). Contours negate the same way:
 `!tone: 1>2` matches any contour other than `(1, 2)`, `none` included.
 
-> Note: `!nasal` means _nasal is undefined_ — not "non-nasal segment." The
-> latter is `!+nasal` ({absent, none}). Worth stating for readers expecting bare
-> `!` to mean "absent."
+!α includes none. !α is the value-space complement of the bound value — any value other than what α matched, the unspecified case included — the alpha analogue of spec-level !. By feature type: scalar !α = any other level or none; binary !α = {−α, none}, distinct from −α (just the opposite pole); unary (privative) !α = none, the only value other than the bound +. This is what keeps !α from being redundant with −α.
 
 ---
 
@@ -86,14 +84,14 @@ Each limb is any value atom (`1`, `none`, `α`, `-α`, `!α`); limbs joined by `
 
 The position suffix decides how the limb pattern aligns to the target contour.
 
-| Form       | Behaviour                                                       |
-| ---------- | --------------------------------------------------------------- |
-| `@any`     | pattern aligns at **some** position (subsequence / "some limb") |
-| `@all`     | pattern covers the **whole** contour → exact arity              |
-| `@initial` | prefix — target starts with these limbs, any total length       |
-| `@final`   | suffix                                                          |
-| `@2`       | at limb index 2 (any total length covering it)                  |
-| `@2;3`     | at limbs 2 and 3                                                |
+| Form       | Behaviour                                                                             |
+| ---------- | ------------------------------------------------------------------------------------- |
+| `@any`     | pattern aligns at **some** position (subsequence / "some limb")                       |
+| `@all`     | predicate holds at **every** limb — whole contour; a multi-limb pattern ⇒ exact arity |
+| `@initial` | prefix — target starts with these limbs, any total length                             |
+| `@final`   | suffix                                                                                |
+| `@2`       | at limb index 2 (any total length covering it)                                        |
+| `@2;3`     | at limbs 2 and 3                                                                      |
 
 **Default position depends on value shape** — the parser sets it; the
 `PatternSpec.contour_position = ContourEdge.any` field default is just a
@@ -104,12 +102,9 @@ hand-construction fallback:
 | scalar / single limb (`tone: 1`)              | `any`   | matches at some limb                                                                       |
 | multi-limb contour (`tone: 1>2`, `tone: α>β`) | `all`   | must _be_ the whole contour (exact arity)                                                  |
 | value-level `α` (`tone: α`)                   | —       | binds the entire contour at any length;                                                    |
-|                                               | -       | a position **narrows** it to the limb(s) at that position (`tone: α@initial` = first limb) |
+|                                               |         | a position **narrows** it to the limb(s) at that position (`tone: α@initial` = first limb) |
 
-> **To pin down:** `@all` on a single-limb predicate is overloaded.
-> `tone: 1@all` could mean "_every_ limb is 1" (universal) or "the contour is
-> exactly the length-1 contour `(1)`". The sequence case (`α>β@all` = exact
-> whole contour) doesn't disambiguate it — pick one.
+`@all` on a single-limb predicate is universal: `tone: 1@all` matches a contour in which every limb is 1 (so 1, 1>1, 1>1>1, …). This is consistent with `@all` meaning "the whole contour" — the predicate must hold at every position.
 
 ---
 

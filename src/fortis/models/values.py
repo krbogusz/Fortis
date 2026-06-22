@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from enum import StrEnum, auto
+from typing import Literal
 
 
 class AlphaOp(StrEnum):
@@ -20,13 +21,7 @@ class AlphaRef:
     op: AlphaOp = AlphaOp.same
 
 
-class Wildcard(StrEnum):
-    """Match-only sentinels standing in for a concrete value."""
-
-    wildcard = auto()
-
-
-type SingleValue = int | None | Wildcard  # None == undefined / unspecified
+type SingleValue = int | None | Literal["any"]  # None == undefined / unspecified
 type Limb = SingleValue | AlphaRef
 type ContourValue = tuple[Limb, ...]
 type Value = SingleValue | AlphaRef | ContourValue
@@ -44,7 +39,7 @@ class ContourEdge(StrEnum):
 type ContourPosition = ContourEdge | int | tuple[int, ...]  # tuple for @2, @2;3
 
 
-def make_value(limbs: tuple[SingleValue, ...]) -> Value:
+def make_value(limbs: tuple[Limb, ...]) -> Value:
     """Build a feature value, collapsing a length-1 contour to a scalar."""
     return limbs[0] if len(limbs) == 1 else limbs
 

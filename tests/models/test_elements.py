@@ -36,14 +36,14 @@ class TestLetterRef:
 
 class TestBundleElem:
     def test_construction(self):
-        bundle = PatternBundle(voice=PatternSpec(value=1))
+        bundle = PatternBundle(voice=PatternSpec(feature="voice", value=1))
         elem = BundleElem(bundle=bundle)
         assert elem.bundle == bundle
 
 
 class TestResultElem:
     def test_construction(self):
-        bundle = ResultBundle(voice=ResultSpec(value=1))
+        bundle = ResultBundle(voice=ResultSpec(feature="voice", value=1))
         elem = ResultElem(bundle=bundle)
         assert elem.bundle == bundle
 

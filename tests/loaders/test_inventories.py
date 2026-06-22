@@ -34,6 +34,12 @@ SYLLABLE_PARTS_TOML = '[-2000]\nnucleus = { definition = "+syll" }\n'
 
 WORDS_TOML = '"xenti" = "in front"\n'
 
+RULES_TOML = """\
+[test_rule]
+time = -2000
+definition = "m → n"
+"""
+
 
 def _write_inventory_files(tmp_path):
     (tmp_path / "features.toml").write_text(FEATURES_TOML)
@@ -42,6 +48,7 @@ def _write_inventory_files(tmp_path):
     (tmp_path / "sonorities.toml").write_text(SONORITIES_TOML)
     (tmp_path / "syllable_parts.toml").write_text(SYLLABLE_PARTS_TOML)
     (tmp_path / "words.toml").write_text(WORDS_TOML)
+    (tmp_path / "rules.toml").write_text(RULES_TOML)
 
 
 class TestLoadProject:

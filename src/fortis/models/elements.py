@@ -55,6 +55,9 @@ class SyllableBoundary:
     """Zero-width syllable-edge assertion; excluded from cardinality checks."""
 
 
+type Boundary = SyllableBoundary | WordBoundary
+
+
 @dataclass(frozen=True)
 class Null:
     """The null segment, for insertion and deletion."""

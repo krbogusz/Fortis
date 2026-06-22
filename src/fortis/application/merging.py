@@ -11,13 +11,12 @@ take ``FeatureInventory`` without re-coupling models to the vocabulary).
 
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.features import FeatureInventory
+from src.fortis.models.specs import FeatureSpec
+from src.fortis.result import Err, Ok, Result
 
 
-def apply_bundle(
-    base: FeatureBundle,
-    delta: FeatureBundle,
-    features: FeatureInventory,
-    form_contours: bool = False,
+def merge_feature_bundles(
+    base: FeatureBundle, delta: FeatureBundle, features: FeatureInventory, form_contours: bool
 ) -> FeatureBundle:
     """Merge *delta* into *base* with geometry-aware delinking.
 
@@ -30,8 +29,7 @@ def apply_bundle(
         base: The base feature bundle (e.g. a segment's features).
         delta: The delta feature bundle (e.g. a diacritic or rule result).
         features: Feature inventory providing the hierarchy (children/parent).
-        form_contours: If True, overlapping features form contours instead
-            of overriding.
+        form_contours: merge contours?
     """
     merged = base.combine_with(delta, form_contours)
 
@@ -54,11 +52,9 @@ def apply_bundle(
     return merged
 
 
-def _collect_descendants(feature_name: str, features: FeatureInventory, result: set[str]) -> None:
-    """Recursively collect a feature name and all its descendants."""
-    result.add(feature_name)
-    if feature_name in features:
-        feature_def = features[feature_name]
-        if feature_def.children:
-            for child in feature_def.children:
-                _collect_descendants(child, features, result)
+def merge_feature_specs(
+    base: FeatureSpec, delta: FeatureSpec, features: FeatureInventory, make_contours: bool
+) -> Result[FeatureSpec, str]:
+    """Merge feature specs."""
+    if base.feature != delta.feature:
+        return Err(f"Features are not the same: '{base.feature}' vs '{delta.feature}'")

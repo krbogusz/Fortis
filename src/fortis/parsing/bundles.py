@@ -1,12 +1,10 @@
 """Bundle and value parsing — concrete and pattern material from strings."""
 
-from enum import StrEnum, auto
-
 from src.fortis.config import config
 from src.fortis.general.utils import safe_int
-from src.fortis.loaders.features import FeatureInventory
-from src.fortis.models.bundles import FeatureBundle, PatternBundle
-from src.fortis.models.specs import PatternSpec, ResultSpec
+from src.fortis.models.bundles import FeatureBundle, PatternBundle, ResultBundle
+from src.fortis.models.features import FeatureInventory
+from src.fortis.models.specs import FeatureSpec, PatternSpec, ResultSpec
 from src.fortis.models.values import (
     AlphaOp,
     AlphaRef,
@@ -14,19 +12,9 @@ from src.fortis.models.values import (
     ContourPosition,
     Limb,
     Value,
-    Wildcard,
     make_value,
 )
 from src.fortis.result import Err, Ok, Result
-
-
-class ParseContext(StrEnum):
-    """Which parsing regime to apply for alpha and contour handling."""
-
-    realized = auto()  # No alpha, no contour position
-    pattern = auto()  # Full alpha support (same/opposite/other)
-    result = auto()  # Alpha same/opposite only; no 'other'
-
 
 # --------------------------------------------------------------------------------------------------
 # General
@@ -67,57 +55,34 @@ def determine_contour_position(contour_position: str) -> Result[ContourPosition,
     if "any" in contour_position:
         return Ok(ContourEdge.any)
     if ";" in contour_position:
-        contour_list: tuple = ()
+        contour_list: tuple[int, ...] = ()
         for single_spec in contour_position.split(";"):
             parsed = safe_int(single_spec)
-            if parsed is None or parsed == 0:
-                return Err(f"Could not identify contour specification from {contour_position}")
+            if parsed is None:
+                return Err(f"Could not identify contour specification from '{contour_position}'")
+            elif parsed < 1:
+                return Err(f"Contour position cannot be smaller than 1: '{contour_position}'")
             contour_list += (parsed,)
         return Ok(contour_list)
     parsed = safe_int(contour_position)
-    if parsed is not None and parsed != 0:
-        return Ok(parsed)
-    return Err(f"Could not identify contour specification from {contour_position}")
+    if parsed is None:
+        return Err(f"Could not identify contour specification from '{contour_position}'")
+    if parsed < 0:
+        return Err(f"Contour position cannot be smaller than 1: '{contour_position}'")
+    return Ok(parsed)
 
 
-def _parse_scalar_value(
-    raw_value: str, feature: str, features: FeatureInventory, context: ParseContext
-) -> Result[Limb, str]:
-    """Core scalar-value dispatch shared by realized, pattern, and result contexts.
+def parse_kind_value(raw_value: str, feature: str, features: FeatureInventory) -> Result[Limb, str]:
+    """Dispatch value parsing by feature kind (unary / binary / scalar).
 
-    Handles unspecified symbols, alpha references (context-dependent), and
-    unary/binary/scalar kind dispatch.
+    Shared across all three contexts — only the kind-dispatch logic,
+    no alpha or context-dependent checks.
     """
-    if raw_value in config.value_symbols.unspecified:
-        return Ok(None)
-
-    # Alpha references — behaviour depends on context
-    for letter in config.greek_alphabet:
-        if letter in raw_value:
-            match context:
-                case ParseContext.realized:
-                    return Err("Alpha value notation is not supported for realized features")
-                case ParseContext.pattern | ParseContext.result:
-                    alpha_var = letter
-                    alpha_var_index = raw_value.index(alpha_var)
-                    if alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "-":
-                        alpha_op = AlphaOp.opposite
-                    elif alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "!":
-                        if context == ParseContext.result:
-                            return Err("Result spec does not support 'other' alpha notation")
-                        alpha_op = AlphaOp.other
-                    else:
-                        alpha_op = AlphaOp.same
-                    return Ok(AlphaRef(alpha_var, alpha_op))
-
-    # Contour position — only realized context rejects it here
-    if context == ParseContext.realized and "@" in raw_value:
-        return Err("Result spec does not support contour position")
-
-    # Kind dispatch (identical across all contexts)
     if features[feature].kind == "unary":
         if raw_value in config.value_symbols.present:
             return Ok(1)
+        if raw_value in ("0", "-"):
+            return Err(f"Unary features don't support 'absent' values like '{raw_value}'")
     elif features[feature].kind == "binary":
         if raw_value in config.value_symbols.present:
             return Ok(1)
@@ -136,59 +101,14 @@ def _parse_scalar_value(
 
 
 # --------------------------------------------------------------------------------------------------
-# Realized
+# Realized (feature) parsing
 # --------------------------------------------------------------------------------------------------
-def parse_single_value(
-    raw_value: str, feature: str, features: FeatureInventory
-) -> Result[Limb, str]:
-    """Identify a single value (unary/binary/scalar) in realized contexts.
-
-    Alpha variables (Greek letters) are not valid in realized material
-    and produce a specific error.
-    """
-    return _parse_scalar_value(raw_value, feature, features, ParseContext.realized)
-
-
-def parse_value(raw_string: str, feature: str, features: FeatureInventory) -> Result[Value, str]:
-    """Parse a Value from a raw string.
-
-    Args:
-        raw_string: The raw token (e.g. '+', ':2', 'high').
-        feature: Full feature name
-        features: Feature inventory for type/value resolution.
-    """
-    # Cleaning the input
-    raw_value = raw_string.replace(":", "").replace(" ", "")
-
-    if ">" in raw_value:
-        contour = ()
-        raw_contour = raw_value.split(">")
-        for raw_contour_value in raw_contour:
-            match parse_single_value(raw_contour_value, feature, features):
-                case Err(err):
-                    return Err(err)
-                case Ok(result):
-                    contour = contour + (result,)
-        return Ok(contour)
-
-    # Plain feature name – could be unary, could be an error
-    if not raw_value:
-        if features[feature].kind == "unary":
-            return Ok(1)
-        else:
-            return Err(f"Could not identify value for '{feature}' from string '{raw_string}'")
-
-    match parse_single_value(raw_value, feature, features):
-        case Err(err):
-            return Err(err)
-        case Ok(result):
-            return Ok(result)
 
 
 def parse_feature_bundle(
     raw_string: str, features: FeatureInventory
 ) -> Result[FeatureBundle, list[str]]:
-    """Parse a comma-separated feature bundle string  (e.g. '+syll, -cons, height:2').
+    """Parse a comma-separated pattern bundle string.
 
     Args:
         raw_string: Comma- or semicolon-separated feature specs.
@@ -199,22 +119,13 @@ def parse_feature_bundle(
     raw_features = [t.strip() for t in string.split(",") if t.strip()]
 
     bundle = FeatureBundle()
-    for raw_feature in raw_features:
-        # Identify feature name first, then parse value
-        match identify_feature(raw_feature, features):
+    for raw_spec in raw_features:
+        match parse_feature_spec(raw_spec, features):
             case Err(err):
                 error_list.append(err)
                 continue
             case Ok(result):
-                feature_name, matched_string = result
-
-        raw_value = raw_feature.replace(matched_string, "", 1)
-        match parse_value(raw_value, feature_name, features):
-            case Err(err):
-                error_list.append(err)
-                continue
-            case Ok(result):
-                bundle[feature_name] = result
+                bundle[result.feature] = result
 
     if error_list:
         return Err(error_list)
@@ -222,19 +133,148 @@ def parse_feature_bundle(
     return Ok(bundle)
 
 
-# --------------------------------------------------------------------------------------------------
-# Pattern
-# --------------------------------------------------------------------------------------------------
+def parse_feature_spec(
+    raw_spec: str, features: FeatureInventory, feature: str | None = None
+) -> Result[FeatureSpec, str]:
+    """Parse a FeatureSpec from a string.
+
+    Args:
+        raw_spec: The raw token to parse (may include feature name, or just value).
+        features: Feature inventory for name/value resolution.
+        feature: Optional feature name. When provided, raw_spec is treated as
+            just the value part (feature identification is skipped).
+    """
+    # Clean input
+    raw_spec = raw_spec.replace(" ", "")
+
+    if feature is None:
+        # Identify feature name via greedy longest-first matching
+        match identify_feature(raw_spec, features):
+            case Ok(result):
+                feature, matched_string = result
+            case Err(err):
+                return Err(f"Could not identify feature spec from string '{raw_spec}'")
+
+        # Strip the matched feature name
+        raw_value = raw_spec.replace(matched_string, "", 1)
+        raw_value = raw_value.replace(":", "")
+    else:
+        # Feature name provided — validate it exists in the inventory
+        if feature not in features:
+            return Err(f"Unknown feature '{feature}'")
+        # raw_spec is the value part; strip leading colon if present
+        raw_value = raw_spec
+        if raw_value.startswith(":"):
+            raw_value = raw_value[1:]
+
+    # Plain feature name – unary defaults to present; non-unary defaults to "any"
+    if not raw_value:
+        if features[feature].kind == "unary":
+            value: Value = 1
+        else:
+            value = "any"
+        feature_spec = FeatureSpec(feature, value)
+        match validate_feature_spec(feature_spec):
+            case Err(err):
+                return Err("\n".join(err))
+            case Ok():
+                return Ok(feature_spec)
+
+    # Negation
+    if "!" in raw_value:
+        return Err("Realized feature specifications don't support negation")
+
+    # Contour position
+    if "@" in raw_value:
+        return Err("Realized feature specifications don't support contour positions")
+
+    # Contour
+    if ">" in raw_value:
+        contour_limbs: list[Limb] = []
+        raw_contour_string = raw_value.split(">")
+        for raw_limb_value in raw_contour_string:
+            match parse_feature_value(raw_limb_value, feature, features):
+                case Err(err):
+                    return Err(err)
+                case Ok(result):
+                    contour_limbs.append(result)
+        value = make_value(tuple(contour_limbs))
+
+    # Single value
+    else:
+        match parse_feature_value(raw_value, feature, features):
+            case Err(err):
+                return Err(err)
+            case Ok(single_value):
+                value = single_value
+
+    feature_spec = FeatureSpec(feature, value)
+    match validate_feature_spec(feature_spec):
+        case Err(err):
+            return Err("\n".join(err))
+        case Ok():
+            return Ok(feature_spec)
 
 
-def parse_single_pattern_value(
+def validate_feature_spec(feature_spec: FeatureSpec) -> Result[None, list[str]]:
+    """Validate the feature spec."""
+    return Ok(None)
+
+
+def parse_feature_value(
     raw_value: str, feature: str, features: FeatureInventory
 ) -> Result[Limb, str]:
-    """Identify a single value (unary/binary/scalar) in pattern contexts.
+    """Parse a single value in realized (feature) context.
 
-    Supports alpha variables with same/opposite/other operators.
+    Handles unspecified symbols and unary/binary/scalar kind dispatch.
+    Rejects alpha references and contour positions.
     """
-    return _parse_scalar_value(raw_value, feature, features, ParseContext.pattern)
+    if raw_value in config.value_symbols.unspecified:
+        return Ok(None)
+
+    # Alpha references are not allowed in realized context
+    for letter in config.greek_alphabet:
+        if letter in raw_value:
+            return Err("Alpha value notation is not supported for realized features")
+
+    # Contour positions are not allowed in realized context
+    if "@" in raw_value:
+        return Err("Realized feature specifications don't support contour positions")
+
+    return parse_kind_value(raw_value, feature, features)
+
+
+# --------------------------------------------------------------------------------------------------
+# Pattern parsing
+# --------------------------------------------------------------------------------------------------
+
+
+def parse_pattern_bundle(
+    raw_string: str, features: FeatureInventory
+) -> Result[PatternBundle, list[str]]:
+    """Parse a comma-separated pattern bundle string.
+
+    Args:
+        raw_string: Comma- or semicolon-separated feature specs.
+        features: Feature inventory for name/value resolution.
+    """
+    error_list = []
+    string = raw_string.replace(";", ",")
+    raw_features = [t.strip() for t in string.split(",") if t.strip()]
+
+    bundle = PatternBundle()
+    for raw_spec in raw_features:
+        match parse_pattern_spec(raw_spec, features):
+            case Err(err):
+                error_list.append(err)
+                continue
+            case Ok(result):
+                bundle[result.feature] = result
+
+    if error_list:
+        return Err(error_list)
+
+    return Ok(bundle)
 
 
 def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[PatternSpec, str]:
@@ -264,6 +304,19 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
     raw_value = raw_spec.replace(matched_string, "", 1)
     raw_value = raw_value.replace(":", "")
 
+    # Plain feature name – unary defaults to present; others default to "any"
+    if not raw_value:
+        if features[feature].kind == "unary":
+            value: Value = 1
+        else:
+            value = "any"
+        pattern_spec = PatternSpec(feature, value, negated=False, contour_position=ContourEdge.any)
+        match validate_pattern_spec(pattern_spec):
+            case Err(err):
+                return Err("\n".join(err))
+            case Ok():
+                return Ok(pattern_spec)
+
     # Negation
     negated = False
     if "!" in raw_value:
@@ -271,48 +324,45 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
             if letter in raw_value:
                 if f"!{letter}" in raw_value:
                     negated = False
-                else:
-                    negated = True
-                    raw_value = raw_value.replace("!", "", 1)
+        else:
+            negated = True
+            raw_value = raw_value.replace("!", "", 1)
 
     # Contour position
+    contour_position_assigned = False
     contour_position: ContourPosition = ContourEdge.any
     if "@" in raw_value:
         match determine_contour_position(raw_value.split("@")[1]):
             case Err(err):
                 return Err(err)
-            case Ok(contour_position_spec):
-                contour_position = contour_position_spec
+            case Ok(result):
+                contour_position = result
+                contour_position_assigned = True
         raw_value = raw_value.split("@")[0]
 
-    # Plain feature name – could be unary, could be an error
-    if not raw_value:
-        if features[feature].kind == "unary":
-            value: Value = 1
-        else:
-            value = Wildcard.wildcard
-
     # No '>' means not a contour
-    elif ">" in raw_value:
-        values: tuple = ()
+    if ">" in raw_value:
+        if not contour_position_assigned:
+            contour_position = ContourEdge.all
+        contour_limbs: list[Limb] = []
         raw_contour_string = raw_value.split(">")
         for raw_atom_value in raw_contour_string:
-            match parse_single_pattern_value(raw_atom_value, feature, features):
+            match parse_pattern_value(raw_atom_value, feature, features):
                 case Err(err):
                     return Err(err)
                 case Ok(result):
-                    values += (result,)
-        value = make_value(values)
+                    contour_limbs.append(result)
+        value = make_value(tuple(contour_limbs))
 
     # Single value
     else:
-        match parse_single_pattern_value(raw_value, feature, features):
+        match parse_pattern_value(raw_value, feature, features):
             case Err(err):
                 return Err(err)
             case Ok(single_value):
                 value = single_value
 
-    pattern_spec = PatternSpec(value, negated, contour_position)
+    pattern_spec = PatternSpec(feature, value, negated, contour_position)
     match validate_pattern_spec(pattern_spec):
         case Err(err):
             return Err("\n".join(err))
@@ -320,18 +370,64 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
             return Ok(pattern_spec)
 
 
-def validate_pattern_spec(pattern: PatternSpec) -> Result[None, list[str]]:
-    """Valdidate the pattern spec - stub."""
-    if pattern:
+def validate_pattern_spec(pattern_spec: PatternSpec) -> Result[None, list[str]]:
+    """Validate the pattern spec — stub."""
+    error_list = []
+    if isinstance(pattern_spec.value, tuple):
+        if isinstance(pattern_spec.contour_position, int):
+            error_list.append(
+                f"Contour position for a contour must be a list or an edge: '{pattern_spec}'"
+            )
+        if isinstance(pattern_spec.contour_position, tuple):
+            if len(pattern_spec.value) != len(pattern_spec.contour_position):
+                error_list.append(
+                    f"Contour position and a contour must be the same length: '{pattern_spec}'"
+                )
+            for index, position in enumerate(pattern_spec.contour_position):
+                if index > 0:
+                    if position - pattern_spec.contour_position[index - 1] != 1:
+                        error_list.append(f"Contour positions must be contiguous: '{pattern_spec}'")
+    if error_list:
+        return Err(error_list)
+    return Ok(None)
+
+
+def parse_pattern_value(
+    raw_value: str, feature: str, features: FeatureInventory
+) -> Result[Limb, str]:
+    """Parse a single value in pattern context.
+
+    Handles unspecified symbols, full alpha support (same/opposite/other),
+    and unary/binary/scalar kind dispatch.
+    """
+    if raw_value in config.value_symbols.unspecified:
         return Ok(None)
-    else:
-        return Err(["No pattern"])
+
+    # Alpha references — pattern context supports same/opposite/other
+    for letter in config.greek_alphabet:
+        if letter in raw_value:
+            alpha_var = letter
+            alpha_var_index = raw_value.index(alpha_var)
+            if alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "-":
+                alpha_op = AlphaOp.opposite
+            elif alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "!":
+                alpha_op = AlphaOp.other
+            else:
+                alpha_op = AlphaOp.same
+            return Ok(AlphaRef(alpha_var, alpha_op))
+
+    return parse_kind_value(raw_value, feature, features)
 
 
-def parse_pattern_bundle(
+# --------------------------------------------------------------------------------------------------
+# Result parsing
+# --------------------------------------------------------------------------------------------------
+
+
+def parse_result_bundle(
     raw_string: str, features: FeatureInventory
-) -> Result[PatternBundle, list[str]]:
-    """Parse a comma-separated pattern bundle string.
+) -> Result[ResultBundle, list[str]]:
+    """Parse a comma- or semicolon-separated result bundle string.
 
     Args:
         raw_string: Comma- or semicolon-separated feature specs.
@@ -341,41 +437,19 @@ def parse_pattern_bundle(
     string = raw_string.replace(";", ",")
     raw_features = [t.strip() for t in string.split(",") if t.strip()]
 
-    bundle = PatternBundle()
+    bundle = ResultBundle()
     for raw_spec in raw_features:
-        match identify_feature(raw_spec, features):
+        match parse_result_spec(raw_spec, features):
             case Err(err):
                 error_list.append(err)
                 continue
             case Ok(result):
-                feature_name, _ = result
-        match parse_pattern_spec(raw_spec, features):
-            case Err(err):
-                error_list.append(err)
-                continue
-            case Ok(result):
-                bundle[feature_name] = result
+                bundle[result.feature] = result
 
     if error_list:
         return Err(error_list)
 
     return Ok(bundle)
-
-
-# --------------------------------------------------------------------------------------------------
-# Result
-# --------------------------------------------------------------------------------------------------
-
-
-def parse_single_result_value(
-    raw_value: str, feature: str, features: FeatureInventory
-) -> Result[Limb, str]:
-    """Identify a single value (unary/binary/scalar) in result contexts.
-
-    Supports alpha variables with same/opposite operators only;
-    the 'other' operator is rejected.
-    """
-    return _parse_scalar_value(raw_value, feature, features, ParseContext.result)
 
 
 def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[ResultSpec, str]:
@@ -407,34 +481,34 @@ def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[Resul
     if "@" in raw_value:
         return Err("Result spec does not support contour position")
 
-    # Plain feature name – could be unary, could be an error
+    # Plain feature name – unary defaults to present; others require a value
     if not raw_value:
         if features[feature].kind == "unary":
             value: Value = 1
         else:
             return Err(f"Could not identify value for '{feature}' from string '{raw_spec}'")
 
-    # No '>' means not a contour
+    # Contour
     elif ">" in raw_value:
-        values: tuple = ()
+        values: list[Limb] = []
         raw_contour_string = raw_value.split(">")
-        for raw_atom_value in raw_contour_string:
-            match parse_single_result_value(raw_atom_value, feature, features):
+        for raw_limb_value in raw_contour_string:
+            match parse_result_value(raw_limb_value, feature, features):
                 case Err(err):
                     return Err(err)
                 case Ok(result):
-                    values += (result,)
-        value = make_value(values)
+                    values.append(result)
+        value = make_value(tuple(values))
 
     # Single value
     else:
-        match parse_single_result_value(raw_value, feature, features):
+        match parse_result_value(raw_value, feature, features):
             case Err(err):
                 return Err(err)
             case Ok(single_value):
                 value = single_value
 
-    result_spec = ResultSpec(value)
+    result_spec = ResultSpec(feature, value)
     match validate_result_spec(result_spec):
         case Err(err):
             return Err("\n".join(err))
@@ -443,8 +517,33 @@ def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[Resul
 
 
 def validate_result_spec(pattern: ResultSpec) -> Result[None, list[str]]:
-    """Valdidate the result spec - stub."""
-    if pattern:
+    """Validate the result spec — stub."""
+    _ = pattern  # TODO: implement real validation
+    return Ok(None)
+
+
+def parse_result_value(
+    raw_value: str, feature: str, features: FeatureInventory
+) -> Result[Limb, str]:
+    """Parse a single value in result context.
+
+    Handles unspecified symbols, alpha same/opposite only (no 'other'),
+    and unary/binary/scalar kind dispatch.
+    """
+    if raw_value in config.value_symbols.unspecified:
         return Ok(None)
-    else:
-        return Err(["No pattern"])
+
+    # Alpha references — result context supports same/opposite only
+    for letter in config.greek_alphabet:
+        if letter in raw_value:
+            alpha_var = letter
+            alpha_var_index = raw_value.index(alpha_var)
+            if alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "-":
+                alpha_op = AlphaOp.opposite
+            elif alpha_var_index > 0 and raw_value[alpha_var_index - 1] == "!":
+                return Err("Result spec does not support 'other' alpha notation")
+            else:
+                alpha_op = AlphaOp.same
+            return Ok(AlphaRef(alpha_var, alpha_op))
+
+    return parse_kind_value(raw_value, feature, features)

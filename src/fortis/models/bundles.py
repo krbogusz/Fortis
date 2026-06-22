@@ -1,11 +1,10 @@
 from collections import UserDict
 
-from src.fortis.models.specs import PatternSpec, ResultSpec
-from src.fortis.models.values import Value
+from src.fortis.models.specs import FeatureSpec, PatternSpec, ResultSpec
 
 
-class FeatureBundle(UserDict[str, Value]):
-    """A collection of realized feature values, keyed by feature name.
+class FeatureBundle(UserDict[str, FeatureSpec]):
+    """A collection of realized feature specifications, keyed by feature name.
 
     Used for concrete phonological material — segments in the lexicon,
     diacritics, letters, etc.

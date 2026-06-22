@@ -1,6 +1,6 @@
 """Tests for rule definition parsing."""
 
-from src.fortis.parsing.rules import split_rule_definition
+from src.fortis.application.rule_parsing import split_rule_definition
 
 
 class TestSplitRuleDefinition:
