@@ -8,7 +8,7 @@ definition = "xe → xa"
 time = -2000
 name = "Centumization"
 description = "Merging of PIE 'palatovelar' and 'velar' plosives"
-definition = "[+cons, +bk, +fr] → [cor: none]"
+definition = "[+cons, +sonorant, -voice] → [+voice]"
 
 [u_epenthesis]
 time = -2000
@@ -16,9 +16,9 @@ name = "'u' epenthesis"
 description = "Epenthesis of /u/ before the syllabic sonorants"
 definition = "∅ [+cons, +syll] → u [-syll]"
 
-# [backness_harmony]
-# time = 1300
-# name = "Backness harmony"
-# description = "Backness spreads rightward from a vowel onto following vowels."
-# definition = "[+syll] → [α fr, β bk] / [+syll, α fr, β bk] [-syll]* _"
-# application = "left_to_right"
+[backness_harmony]
+time = 1300
+name = "Backness harmony"
+description = "Backness spreads rightward from a vowel onto following vowels."
+definition = "[+syll] → [α fr, β bk] / [+syll, α fr, β bk] [-syll]* _"
+application = "left_to_right"

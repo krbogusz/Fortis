@@ -145,7 +145,36 @@ class SyllablePartsInventory(UserDict[int, dict[str, SyllablePart]]):
 
     Each time key maps to a dict of part_type → SyllablePart (e.g. "onset",
     "nucleus", "coda"). Dict keys enforce one of each part per time.
+
+    Definitions carry forward independently per part: a later time that
+    redefines only some parts leaves the others in force from earlier.
     """
+
+    def get_part(self, time: int, part_type: str) -> SyllablePart | None:
+        """Return the ``part_type`` definition in effect at ``time``.
+
+        The active part is the one from the greatest time ≤ ``time`` that
+        defines ``part_type``; a later time redefining only other parts does
+        not clear it. Returns ``None`` if no such part exists at or before
+        ``time``.
+
+        Args:
+            time: The current derivation time.
+            part_type: Which part to resolve ("onset", "nucleus", or "coda").
+        """
+        for defined_time in sorted((t for t in self.data if t <= time), reverse=True):
+            part = self.data[defined_time].get(part_type)
+            if part is not None:
+                return part
+        return None
+
+    def get_nucleus(self, time: int) -> SyllablePart | None:
+        """Return the nucleus definition in effect at ``time``.
+
+        Args:
+            time: The current derivation time.
+        """
+        return self.get_part(time, "nucleus")
 
 
 @dataclass

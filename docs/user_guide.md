@@ -289,7 +289,7 @@ A disjunction in **result** position must correspond to a disjunction in **targe
 ```
 [α high]     bind or recall the value of feature 'high' as α
 [−α high]    the opposite of the bound value   (binary and unary features only)
-[!α high]    any value other than the bound value
+[!α high]    any value other than the bound value, the unspecified case (none) included
 ```
 
 Each Greek letter is an independent variable ranging over the legal values of its feature. A variable **binds** at its first occurrence during left-to-right evaluation of the structural description, evaluated in the order left context → target → right context. Later occurrences recall the bound value.
@@ -358,7 +358,7 @@ The target gains ATR only if it is high.
 [tone: 5@2;3]        tone is 5 at positions 2 and 3
 ```
 
-By default `[+F]` matches if F is `+` at any position in its contour. The positional modifiers (`@initial`, `@final`, `@any`, `@all`, `@n`) override this and are **valid in target and context positions only**. In **result** position, a contour must be given with explicit concrete values.
+By default `[+F]` matches if F is `+` at any position in its contour. That `@any` default holds for a single value or single limb. A multi-limb contour pattern (e.g. [tone: 1>2]) instead defaults to @all — it matches only a target contour of the same arity, limb for limb — so to match it as a sub-sequence of a longer contour you must give @initial, @final, or @n explicitly. The positional modifiers (`@initial`, `@final`, `@any`, `@all`, `@n`) override this and are **valid in target and context positions only**. In **result** position, a contour must be given with explicit concrete values.
 
 Contour reduction is 1:1:
 

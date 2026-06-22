@@ -8,7 +8,6 @@ from src.fortis.models.values import (
     ContourValue,
     SingleValue,
     Value,
-    Wildcard,
     form_contour,
     make_value,
 )
@@ -25,12 +24,6 @@ class TestEnums:
         assert ContourEdge.final == "final"
         assert ContourEdge.any == "any"
         assert ContourEdge.all == "all"
-
-
-class TestWildcard:
-    def test_wildcard_is_str(self):
-        assert Wildcard.wildcard == "wildcard"
-        assert isinstance(Wildcard.wildcard, str)
 
 
 class TestMakeValue:

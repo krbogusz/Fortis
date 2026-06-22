@@ -1,8 +1,9 @@
 from src.fortis.config import config
 from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.project import Project
 
 
-def string_to_sequence(raw_string: str, inventories: Inventories) -> list[FeatureBundle]:
+def string_to_sequence(raw_string: str, project: Project) -> list[FeatureBundle]:
     """Turn IPA strings into lists of segments.
 
     Uses greedy longest-first matching so that multi-character symbols
@@ -10,7 +11,7 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
 
     Args:
         raw_string: Raw IPA string.
-        inventories: Inventories.
+        project: Inventories and other dependencies.
     """
     segments: list[FeatureBundle] = []
     buffer: FeatureBundle = FeatureBundle()
@@ -22,10 +23,10 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
         remaining = raw_string[i:]
 
         # 1. Before diacritics (accumulated in buffers)
-        for diacritic_symbol in inventories.diacritics.before_keys:
+        for diacritic_symbol in project.diacritics.before_keys:
             if remaining.startswith(diacritic_symbol):
-                diacritic_def = inventories.diacritics[diacritic_symbol]
-                if diacritic_symbol in inventories.diacritics.syllable_keys:
+                diacritic_def = project.diacritics[diacritic_symbol]
+                if diacritic_symbol in project.diacritics.syllable_keys:
                     syllable_buffer = syllable_buffer.combine_with(
                         diacritic_def.bundle, form_contours=diacritic_def.contour
                     )
@@ -37,11 +38,11 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
                 break
         else:
             # 2. Letters (combine with buffered before-diacritics)
-            for letter_symbol in inventories.letters.sorted_keys:
+            for letter_symbol in project.letters.sorted_keys:
                 if remaining.startswith(letter_symbol):
-                    segment = inventories.letters[letter_symbol].bundle
+                    segment = project.letters[letter_symbol].bundle
                     segment = segment.combine_with(buffer)
-                    nucleus = inventories.syllable_parts.get_nucleus(inventories.time)
+                    nucleus = project.syllable_parts.get_nucleus(project.time)
                     if nucleus is not None and nucleus.matches_against(segment):
                         segment = segment.combine_with(syllable_buffer)
                         last_nucleus_index = len(segments) - 1
@@ -52,10 +53,10 @@ def string_to_sequence(raw_string: str, inventories: Inventories) -> list[Featur
                     break
             else:
                 # 3. Attaching diacritics (combining + after)
-                for diacritic_symbol in inventories.diacritics.attaching_keys:
+                for diacritic_symbol in project.diacritics.attaching_keys:
                     if remaining.startswith(diacritic_symbol):
-                        diacritic_def = inventories.diacritics[diacritic_symbol]
-                        if diacritic_symbol in inventories.diacritics.syllable_keys:
+                        diacritic_def = project.diacritics[diacritic_symbol]
+                        if diacritic_symbol in project.diacritics.syllable_keys:
                             segments[last_nucleus_index] = segments[
                                 last_nucleus_index
                             ].combine_with(

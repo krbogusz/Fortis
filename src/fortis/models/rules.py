@@ -49,5 +49,8 @@ class Rule:
     description: str | None = None
 
 
-class RuleInventory(UserDict[str, tuple[Rule]]):
-    """Rules mapped by their time and then order in the rules.toml."""
+class RuleInventory(UserDict[int, tuple[Rule, ...]]):
+    """Rules keyed by time, with rules at each time in file order.
+
+    Access ``inventory[-2000]`` to get all rules that apply at time −2000.
+    """

@@ -4,7 +4,7 @@ from src.fortis.general.file_handling import load_csv_file
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import Letter, LetterInventory
-from src.fortis.parsing.bundles import parse_value
+from src.fortis.parsing.bundles import parse_feature_spec
 from src.fortis.result import Err, Ok, Result
 
 
@@ -25,22 +25,23 @@ def load_letter(row: dict[str, str], features: FeatureInventory) -> Result[Lette
         raw_value = raw_value.strip()
         if not raw_value:
             continue  # empty cell = unspecified = omitted from bundle
-        match parse_value(raw_value, feature_name, features):
+        match parse_feature_spec(feature_name + raw_value, features):
             case Err(err):
                 error_list.append(err)
                 continue
-            case Ok(result):
-                value = result
-        if value is None:
-            continue  # parsed as unspecified = omitted from bundle
-        bundle[feature_name] = value
+            case Ok(spec):
+                if spec.value is None:
+                    continue  # parsed as unspecified = omitted from bundle
+                bundle[feature_name] = spec
 
     if error_list:
         return Err(error_list)
     return Ok(Letter(symbol, bundle))
 
 
-def load_letter_inventory(path: Path, features: FeatureInventory) -> Result[LetterInventory, list[str]]:
+def load_letter_inventory(
+    path: Path, features: FeatureInventory
+) -> Result[LetterInventory, list[str]]:
     """Load from a CSV file (columns = features, rows = symbols).
 
     Args:
@@ -84,6 +85,7 @@ def load_letter_inventory(path: Path, features: FeatureInventory) -> Result[Lett
         case Ok():
             return Ok(letter_inventory)
 
+
 def validate_letter_inventory(letter_inventory: LetterInventory) -> Result[None, list[str]]:
     """Check for symbols with empty feature bundles or duplicate bundles."""
     error_list = []
@@ -93,11 +95,11 @@ def validate_letter_inventory(letter_inventory: LetterInventory) -> Result[None,
             error_list.append(f"Symbol '{symbol}' has no feature specifications")
 
     # Check for letters with identical feature bundles
-    bundle_to_symbols: dict[tuple[tuple[str, int | tuple[int | None | str, ...] | str | None], ...], list[str]] = {}
+    bundle_to_symbols: dict[tuple[tuple[str, object], ...], list[str]] = {}
     for symbol, letter_def in letter_inventory.data.items():
         key = tuple(
             sorted(
-                (k, tuple(v) if isinstance(v, tuple) else v)
+                (k, tuple(v.value) if isinstance(v.value, tuple) else v.value)
                 for k, v in letter_def.bundle.items()
             )
         )
