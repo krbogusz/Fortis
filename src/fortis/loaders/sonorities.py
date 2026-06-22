@@ -5,7 +5,7 @@ from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.utils import safe_int
 from src.fortis.models.bundles import PatternBundle
 from src.fortis.models.features import FeatureInventory
-from src.fortis.models.inventories import Sonority, SonorityInventory
+from src.fortis.models.inventories import SonoritiesInventory, Sonority
 from src.fortis.parsing.bundles import parse_pattern_bundle
 from src.fortis.result import Err, Ok, Result
 
@@ -88,9 +88,9 @@ def load_bundle(
 # ---- Sonority Inventory --------------------------------------------------------------------------
 
 
-def load_sonority_inventory(
+def load_sonorities_inventory(
     path: Path, features: FeatureInventory
-) -> Result[SonorityInventory, list[str]]:
+) -> Result[SonoritiesInventory, list[str]]:
     """Load all sonority levels from a TOML file.
 
     Args:
@@ -105,7 +105,7 @@ def load_sonority_inventory(
         case Ok(result):
             data = result
 
-    inventory = SonorityInventory()
+    inventory = SonoritiesInventory()
     for label, sonority_def in data.items():
         label = label.strip()
         if label in inventory:
@@ -124,14 +124,14 @@ def load_sonority_inventory(
     if error_list:
         return Err(error_list)
 
-    match validate_sonority_inventory(inventory):
+    match validate_sonorities_inventory(inventory):
         case Err(err):
             return Err(err)
         case Ok():
             return Ok(inventory)
 
 
-def validate_sonority_inventory(inventory: SonorityInventory) -> Result[None, list[str]]:
+def validate_sonorities_inventory(inventory: SonoritiesInventory) -> Result[None, list[str]]:
     """Check for cross-sonority consistency issues.
 
     Validates that sonority levels are unique.

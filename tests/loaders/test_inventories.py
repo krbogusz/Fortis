@@ -1,9 +1,7 @@
 """Tests for the top-level project loader (integration)."""
 
-import pytest
 
 from src.fortis.loaders.project import load_project
-from src.fortis.result import Err
 
 FEATURES_TOML = """\
 [consonantal]
@@ -60,7 +58,7 @@ class TestLoadProject:
         assert "consonantal" in project.features
         assert "m" in project.letters
         assert "̩" in project.diacritics
-        assert "vowel" in project.sonority
+        assert "vowel" in project.sonorities
         assert -2000 in project.syllable_parts
         assert "xenti" in project.words
 

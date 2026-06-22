@@ -1,21 +1,19 @@
 """Tests for inventory types."""
 
-from src.fortis.models.bundles import FeatureBundle, PatternBundle
-from src.fortis.models.features import Feature, FeatureKind, FeatureInventory
+from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import (
     Diacritic,
-    DiacriticKind,
     DiacriticInventory,
+    DiacriticKind,
     Letter,
     LetterInventory,
+    SonoritiesInventory,
     Sonority,
-    SonorityInventory,
     SyllablePart,
     SyllablePartsInventory,
     Word,
     WordInventory,
 )
-from src.fortis.models.specs import PatternSpec
 from src.fortis.models.tiers import Tier
 
 
@@ -75,9 +73,9 @@ class TestDiacriticInventory:
         assert inv.segment_keys == ["abc", "ab", "a"]
 
 
-class TestSonorityInventory:
+class TestSonoritiesInventory:
     def test_basic_access(self):
-        inv = SonorityInventory()
+        inv = SonoritiesInventory()
         inv["vowel"] = Sonority(label="vowel", level=7, bundle=None)
         assert inv["vowel"].level == 7
         assert inv["vowel"].bundle is None
