@@ -5,13 +5,13 @@ from src.fortis.loaders.diacritics import load_diacritic_inventory
 from src.fortis.loaders.features import load_feature_inventory
 from src.fortis.loaders.letters import load_letter_inventory
 from src.fortis.loaders.rules import load_rule_inventory
-from src.fortis.loaders.sonorities import load_sonority_inventory
+from src.fortis.loaders.sonorities import load_sonorities_inventory
 from src.fortis.loaders.syllable_parts import load_syllable_parts_inventory
 from src.fortis.loaders.words import load_word_inventory
 from src.fortis.models.inventories import (
     DiacriticInventory,
     LetterInventory,
-    SonorityInventory,
+    SonoritiesInventory,
     SyllablePartsInventory,
     WordInventory,
 )
@@ -59,12 +59,12 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
             diacritics = result
 
     # ---- Sonorities ------------------------------------------------------------------------------
-    sonority: SonorityInventory | None = None
-    match load_sonority_inventory(inventories_dir / "sonorities.toml", features):
+    sonorities: SonoritiesInventory | None = None
+    match load_sonorities_inventory(inventories_dir / "sonorities.toml", features):
         case Err(err):
             error_list.extend(f"sonorities.toml: {e}" for e in err)
         case Ok(result):
-            sonority = result
+            sonorities = result
 
     # ---- Syllable parts --------------------------------------------------------------------------
     syllable_parts: SyllablePartsInventory | None = None
@@ -95,7 +95,7 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
 
     assert letters is not None
     assert diacritics is not None
-    assert sonority is not None
+    assert sonorities is not None
     assert syllable_parts is not None
     assert words is not None
     assert rules is not None
@@ -109,7 +109,7 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
             features=features,
             letters=letters,
             diacritics=diacritics,
-            sonority=sonority,
+            sonorities=sonorities,
             syllable_parts=syllable_parts,
             words=words,
             rules=rules,

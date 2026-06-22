@@ -4,7 +4,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import (
     DiacriticInventory,
     LetterInventory,
-    SonorityInventory,
+    SonoritiesInventory,
     SyllablePartsInventory,
     WordInventory,
 )
@@ -18,7 +18,7 @@ class Project:
     features: FeatureInventory
     letters: LetterInventory  # ordered for longest-match tokenisation
     diacritics: DiacriticInventory
-    sonority: SonorityInventory
+    sonorities: SonoritiesInventory
     syllable_parts: SyllablePartsInventory
     words: WordInventory
     rules: RuleInventory  # pre-sorted by (time, file order)

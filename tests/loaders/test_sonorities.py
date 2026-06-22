@@ -3,12 +3,9 @@
 from src.fortis.loaders.sonorities import (
     load_bundle,
     load_level,
+    load_sonorities_inventory,
     load_sonority,
-    load_sonority_inventory,
-    validate_sonority_inventory,
 )
-from src.fortis.models.features import FeatureInventory
-from src.fortis.result import Err
 
 
 class TestLoadLevel:
@@ -64,12 +61,12 @@ class TestLoadSonority:
         assert result.is_err()
 
 
-class TestLoadSonorityInventory:
+class TestLoadSonoritiesInventory:
     def test_from_file(self, tmp_path, features):
         toml_content = 'vowel = { level = 7, bundle = "syllabic: +, consonantal: -" }\nstop = { level = 1, bundle = "sonorant: -" }\n'
         path = tmp_path / "sonorities.toml"
         path.write_text(toml_content)
-        result = load_sonority_inventory(path, features)
+        result = load_sonorities_inventory(path, features)
         assert result.is_ok()
         inv = result.unwrap()
         assert "vowel" in inv
@@ -79,5 +76,5 @@ class TestLoadSonorityInventory:
         toml_content = 'vowel = { level = 7, bundle = "syllabic: +" }\nglide = { level = 7, bundle = "consonantal: -" }\n'
         path = tmp_path / "sonorities.toml"
         path.write_text(toml_content)
-        result = load_sonority_inventory(path, features)
+        result = load_sonorities_inventory(path, features)
         assert result.is_err()

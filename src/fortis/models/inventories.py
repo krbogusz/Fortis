@@ -119,7 +119,7 @@ class Sonority:
     bundle: PatternBundle | None
 
 
-class SonorityInventory(UserDict[str, Sonority]):
+class SonoritiesInventory(UserDict[str, Sonority]):
     """Sonority levels keyed by label."""
 
 
