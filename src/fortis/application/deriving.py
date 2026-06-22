@@ -41,9 +41,10 @@ output, only enables ``$``-conditioned rules.)
 from src.fortis.application.applying import apply_match
 from src.fortis.application.combining import differing, matches_exactly
 from src.fortis.application.matching import Match, find_matches
-from src.fortis.application.syllabifying import syllabify
+from src.fortis.application.syllabifying import SyllabificationError, syllabify
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.derivation import Derivation, DerivationStep
+from src.fortis.models.elements import SyllableBoundary
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import (
     LetterInventory,
@@ -57,6 +58,7 @@ from src.fortis.models.rules import (
     RuleInventory,
     StructuralDescription,
 )
+from src.fortis.parsing.rule_validation import _walk
 
 
 def _boundaries(
@@ -71,6 +73,19 @@ def _boundaries(
     return syllabify(form, sonorities, syllable_parts, time)
 
 
+def _uses_boundary(sd: StructuralDescription) -> bool:
+    """Whether the rule references the ``$`` syllable-boundary assertion anywhere."""
+    sequences = (
+        sd.target,
+        sd.result,
+        sd.left_context,
+        sd.right_context,
+        sd.left_exception,
+        sd.right_exception,
+    )
+    return any(isinstance(e, SyllableBoundary) for seq in sequences for e in _walk(seq))
+
+
 def apply_rule(
     rule: Rule,
     segments: list[FeatureBundle],
@@ -82,10 +97,13 @@ def apply_rule(
     """Apply *rule* to *segments* once, per its application mode.
 
     Returns a new form; *segments* is never mutated. A rule whose loci do not
-    match returns an unchanged copy. The form is (re)syllabified for each match
-    pass using the syllable-part constraints in force at ``rule.time``; the ``$``
-    assertion matches against those boundaries.
+    match returns an unchanged copy. Syllabification runs only for rules that
+    actually reference ``$`` (its sole consumer) — so a ``$``-free rule never
+    syllabifies, and thus never aborts on a transiently-unsyllabifiable form under
+    onset/coda constraints it does not consult.
     """
+    if not _uses_boundary(rule.sd):
+        sonorities = syllable_parts = None  # $ unused → skip syllabification entirely
     match rule.application:
         case ApplicationMode.simultaneous:
             boundaries = _boundaries(segments, sonorities, syllable_parts, rule.time)
@@ -244,4 +262,16 @@ def derive(
                 )
                 current = after
 
-    return Derivation(word=word, input=input_form, steps=tuple(steps), surface=current)
+    # Surface structure is a display aid, so an unsyllabifiable surface yields no
+    # boundaries rather than aborting the (otherwise complete) derivation.
+    try:
+        surface_boundaries = _boundaries(current, sonorities, syllable_parts, max(rules, default=0))
+    except SyllabificationError:
+        surface_boundaries = frozenset()
+    return Derivation(
+        word=word,
+        input=input_form,
+        steps=tuple(steps),
+        surface=current,
+        surface_boundaries=surface_boundaries,
+    )

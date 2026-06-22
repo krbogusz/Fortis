@@ -2,12 +2,10 @@
 
 from src.fortis.loaders.syllable_parts import (
     VALID_PART_TYPES,
-    load_definition,
+    load_pattern_field,
     load_syllable_part,
     load_syllable_parts_inventory,
 )
-from src.fortis.models.features import FeatureInventory
-from src.fortis.result import Err
 
 
 class TestValidPartTypes:
@@ -15,19 +13,19 @@ class TestValidPartTypes:
         assert VALID_PART_TYPES == {"onset", "nucleus", "coda"}
 
 
-class TestLoadDefinition:
+class TestLoadPatternField:
     def test_present(self, features):
-        result = load_definition("nucleus", -2000, {"definition": "+syll"}, features)
+        result = load_pattern_field("definition", {"definition": "+syll"}, features)
         assert result.is_ok()
         assert result.unwrap() is not None
 
     def test_absent_returns_none(self, features):
-        result = load_definition("onset", -2000, {}, features)
+        result = load_pattern_field("definition", {}, features)
         assert result.is_ok()
         assert result.unwrap() is None
 
     def test_empty_returns_none(self, features):
-        result = load_definition("onset", -2000, {"definition": ""}, features)
+        result = load_pattern_field("definition", {"definition": ""}, features)
         assert result.is_ok()
         assert result.unwrap() is None
 
@@ -40,6 +38,16 @@ class TestLoadSyllablePart:
         assert sp.part_type == "nucleus"
         assert sp.time == -2000
         assert sp.definition is not None
+
+    def test_onset_required_and_forbidden(self, features):
+        result = load_syllable_part(
+            "onset", 0, {"required": "+cons", "forbidden": "+syll"}, features
+        )
+        assert result.is_ok()
+        sp = result.unwrap()
+        assert sp.required is not None
+        assert sp.forbidden is not None
+        assert sp.definition is None
 
     def test_invalid_part_type(self, features):
         result = load_syllable_part("codu", -2000, {}, features)

@@ -30,43 +30,47 @@ def load_syllable_part(
     if part_type not in VALID_PART_TYPES:
         return Err([f"Invalid syllable part type '{part_type}' (expected {', '.join(sorted(VALID_PART_TYPES))})"])
 
-    match load_definition(part_type, time, part_dict, features):
-        case Err(err):
-            error_list.extend(err)
-            definition = None  # Dummy value for the type checker
-        case Ok(result):
-            definition = result
+    bundles: dict[str, PatternBundle | None] = {}
+    for field in ("definition", "required", "forbidden"):
+        match load_pattern_field(field, part_dict, features):
+            case Err(err):
+                error_list.extend(err)
+            case Ok(result):
+                bundles[field] = result
 
     if error_list:
         return Err(error_list)
-    return Ok(SyllablePart(part_type=part_type, time=time, definition=definition))
+    return Ok(
+        SyllablePart(
+            part_type=part_type,
+            time=time,
+            definition=bundles.get("definition"),
+            required=bundles.get("required"),
+            forbidden=bundles.get("forbidden"),
+        )
+    )
 
 
 # ---- Per-field helpers ------------------------------------------------------------------------------------------------
 
 
-def load_definition(
-    part_type: str, time: int, part_dict: dict[str, Any], features: FeatureInventory
+def load_pattern_field(
+    field: str, part_dict: dict[str, Any], features: FeatureInventory
 ) -> Result[PatternBundle | None, list[str]]:
-    """Parse the 'definition' field; absent or empty yields None.
+    """Parse a pattern-bundle field by name; absent or empty yields None.
 
     Args:
-        part_type: Syllable part type (for error messages).
-        time: Application time (for error messages).
+        field: The TOML key to read ("definition", "required", or "forbidden").
         part_dict: Raw dictionary from the TOML sub-table.
         features: Feature inventory for bundle parsing.
     """
-    value = part_dict.get("definition")
+    value = part_dict.get(field)
     if value is None:
         return Ok(None)
     value = str(value).strip()
     if not value:
         return Ok(None)
-    match parse_pattern_bundle(value, features):
-        case Err(err):
-            return Err(err)
-        case Ok(result):
-            return Ok(result)
+    return parse_pattern_bundle(value, features)
 
 
 # ---- SyllableParts Inventory ------------------------------------------------------------------------------------------

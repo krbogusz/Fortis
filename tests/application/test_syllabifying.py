@@ -3,10 +3,22 @@
 The ``sonorities`` and ``syllable_parts`` fixtures come from conftest.
 """
 
-from src.fortis.application.syllabifying import syllabify
+import pytest
+
+from src.fortis.application.syllabifying import (
+    SyllabificationError,
+    render_syllabified,
+    syllabify,
+)
 from src.fortis.models.bundles import FeatureBundle
-from src.fortis.models.inventories import SyllablePartsInventory
+from src.fortis.models.inventories import (
+    Letter,
+    LetterInventory,
+    SyllablePart,
+    SyllablePartsInventory,
+)
 from src.fortis.models.specs import FeatureSpec
+from src.fortis.parsing.bundles import parse_pattern_bundle
 
 
 def _fb(**features: object) -> FeatureBundle:
@@ -73,3 +85,66 @@ class TestSyllabify:
     def test_no_nucleus_definition_yields_nothing(self, sonorities, features):
         empty_parts = SyllablePartsInventory()
         assert syllabify([_v()], sonorities, empty_parts, time=0) == frozenset()
+
+
+class TestOnsetCodaConstraints:
+    """Constraints narrow the sonority-legal splits (a stop forbidden in the onset)."""
+
+    def _parts(self, features, **parts):
+        nucleus = SyllablePart("nucleus", 0, parse_pattern_bundle("+syll", features).unwrap())
+        return SyllablePartsInventory({0: {"nucleus": nucleus, **parts}})
+
+    def _stop0(self):
+        # continuant given explicitly so a "continuant: 0" predicate can match it
+        return _fb(consonantal=1, sonorant=0, continuant=0)
+
+    def _fric(self):
+        return _fb(consonantal=1, sonorant=0, continuant=1)
+
+    def test_unconstrained_split_is_maximal_onset(self, sonorities, features):
+        # a S F L a (stop<fric<lat, all rising) → a.SFL.a with no constraints.
+        word = [_v(), self._stop0(), self._fric(), _lat(), _v()]
+        parts = self._parts(features)
+        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 1, 5]
+
+    def test_onset_forbidden_forces_a_different_split(self, sonorities, features):
+        # Forbid stops (continuant:0) in the onset: the stop is pushed into the coda,
+        # moving the boundary from 1 (a.SFL) to 2 (aS.FL) — a split sonority alone
+        # would not pick.
+        word = [_v(), self._stop0(), self._fric(), _lat(), _v()]
+        forbid_stop = parse_pattern_bundle("continuant: 0", features).unwrap()
+        parts = self._parts(features, onset=SyllablePart("onset", 0, forbidden=forbid_stop))
+        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 2, 5]
+
+    def test_no_legal_division_raises(self, sonorities, features):
+        # Forbidding the stop in both onset and coda leaves it nowhere to go.
+        word = [_v(), self._stop0(), self._fric(), _lat(), _v()]
+        forbid_stop = parse_pattern_bundle("continuant: 0", features).unwrap()
+        parts = self._parts(
+            features,
+            onset=SyllablePart("onset", 0, forbidden=forbid_stop),
+            coda=SyllablePart("coda", 0, forbidden=forbid_stop),
+        )
+        with pytest.raises(SyllabificationError):
+            syllabify(word, sonorities, parts, 0)
+
+
+class TestRenderSyllabified:
+    def test_boundaries_shown_as_dots(self, sonorities, syllable_parts):
+        # planta → plan.ta; each segment is an exact-match letter (distinct bundles).
+        p = _fb(consonantal=1, sonorant=0, labial=1)
+        ll = _fb(consonantal=1, sonorant=1, lateral=1)
+        a = _fb(syllabic=1, consonantal=0)
+        n = _fb(consonantal=1, sonorant=1, nasal=1)
+        t = _fb(consonantal=1, sonorant=0)
+        letters = LetterInventory(
+            {"p": Letter("p", p), "l": Letter("l", ll), "a": Letter("a", a),
+             "n": Letter("n", n), "t": Letter("t", t)}
+        )
+        word = [p, ll, a, n, t, a]
+        boundaries = syllabify(word, sonorities, syllable_parts, 0)
+        assert render_syllabified(word, boundaries, letters) == "plan.ta"
+
+    def test_unmatched_segment_is_question_mark(self):
+        seg = _fb(consonantal=1)
+        assert render_syllabified([seg], frozenset({0, 1}), LetterInventory()) == "?"

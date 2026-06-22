@@ -19,9 +19,15 @@ class DerivationStep:
 
 @dataclass(frozen=True)
 class Derivation:
-    """The whole record of change."""
+    """The whole record of change.
+
+    ``surface_boundaries`` carries the syllable structure of the surface form (the
+    boundary positions from syllabification), so the structure is available to the
+    output without re-syllabifying; empty when syllabification is unconfigured.
+    """
 
     word: Word
     input: list[FeatureBundle]
     steps: tuple[DerivationStep, ...]  # firing steps only
     surface: list[FeatureBundle]
+    surface_boundaries: frozenset[int] = frozenset()

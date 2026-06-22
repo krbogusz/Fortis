@@ -127,17 +127,24 @@ class SonoritiesInventory(UserDict[str, Sonority]):
 class SyllablePart:
     """A constraint definition for one syllable part (onset, nucleus, or coda).
 
+    For an onset or coda, ``required``/``forbidden`` are per-segment phonotactic
+    predicates: every segment of the constituent must match ``required`` and none
+    may match ``forbidden``. (Per-segment only — cluster-level or length
+    constraints like "onset ≤ 2" are not expressible in this model.)
+
     Args:
         part_type: Which part of the syllable ("onset", "nucleus", or "coda").
         time: Application time for this constraint.
-        definition: Exact feature bundle for nucleus matching (nucleus only).
-        required: Raw pattern string for required features (onset/coda only).
-        forbidden: Raw pattern string for forbidden features (onset/coda only).
+        definition: Feature pattern identifying nuclei (nucleus only).
+        required: Pattern every segment of the constituent must match (onset/coda).
+        forbidden: Pattern no segment of the constituent may match (onset/coda).
     """
 
     part_type: str
     time: int
     definition: PatternBundle | None = None
+    required: PatternBundle | None = None
+    forbidden: PatternBundle | None = None
 
 
 class SyllablePartsInventory(UserDict[int, dict[str, SyllablePart]]):
