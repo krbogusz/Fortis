@@ -116,6 +116,21 @@ def parse_definition(
     return _Parser(source, features).parse()
 
 
+def parse_sequence(
+    source: str, features: FeatureInventory
+) -> Result[tuple[Element, ...], list[str]]:
+    """Parse a bare element sequence (no ``->``/context), e.g. an onset/coda pattern.
+
+    Args:
+        source: The notation, e.g. ``"[+cons][-syll, -cons]?"``.
+        features: The feature inventory, needed to parse embedded bundles.
+
+    Returns:
+        ``Ok`` with the element tuple, or ``Err`` with every collected error.
+    """
+    return _Parser(source, features).parse_sequence()
+
+
 class _Parser:
     """A single-use cursor over the token stream.
 
@@ -148,6 +163,23 @@ class _Parser:
         if self._errors:
             return Err(self._errors)
         return Ok(sd)
+
+    def parse_sequence(self) -> Result[tuple[Element, ...], list[str]]:
+        """Lex and parse a bare pattern sequence to end of input."""
+        try:
+            self._toks = lex(self._source)
+        except LexError as exc:
+            return Err([self._format(exc.message, exc.pos)])
+
+        try:
+            sequence = self._sequence(frozenset(), self._pattern_bundle)
+            self._expect_end()
+        except _Abort:
+            return Err(self._errors)
+
+        if self._errors:
+            return Err(self._errors)
+        return Ok(sequence)
 
     def _definition(self) -> StructuralDescription:
         """Parse the full ``definition`` production."""

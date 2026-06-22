@@ -3,15 +3,15 @@ from typing import Any
 
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.general.utils import safe_int
-from src.fortis.models.bundles import PatternBundle
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import SyllablePart, SyllablePartsInventory
 from src.fortis.parsing.bundles import parse_pattern_bundle
+from src.fortis.parsing.notation import parse_sequence
 from src.fortis.result import Err, Ok, Result
 
 VALID_PART_TYPES = {"onset", "nucleus", "coda"}
 
-# ---- SyllablePart -----------------------------------------------------------------------------------------------------
+# ---- SyllablePart -------------------------------------------------------------------------------
 
 
 def load_syllable_part(
@@ -19,58 +19,39 @@ def load_syllable_part(
 ) -> Result[SyllablePart, list[str]]:
     """Load a SyllablePart from a raw TOML sub-table.
 
+    The ``definition`` string is parsed as a single-segment bundle for a nucleus,
+    or as an element sequence (the onset/coda pattern) for an onset or coda.
+
     Args:
         part_type: Syllable part type ("onset", "nucleus", or "coda").
         time: Application time for this constraint.
         part_dict: Raw dictionary from the TOML sub-table.
-        features: Feature inventory for bundle parsing.
+        features: Feature inventory for parsing.
     """
-    error_list: list[str] = []
-
     if part_type not in VALID_PART_TYPES:
-        return Err([f"Invalid syllable part type '{part_type}' (expected {', '.join(sorted(VALID_PART_TYPES))})"])
+        expected = ", ".join(sorted(VALID_PART_TYPES))
+        return Err([f"Invalid syllable part type '{part_type}' (expected {expected})"])
 
-    bundles: dict[str, PatternBundle | None] = {}
-    for field in ("definition", "required", "forbidden"):
-        match load_pattern_field(field, part_dict, features):
+    raw = part_dict.get("definition")
+    raw = str(raw).strip() if raw is not None else ""
+
+    if part_type == "nucleus":
+        if not raw:
+            return Ok(SyllablePart(part_type=part_type, time=time))
+        match parse_pattern_bundle(raw, features):
             case Err(err):
-                error_list.extend(err)
-            case Ok(result):
-                bundles[field] = result
+                return Err(err)
+            case Ok(definition):
+                return Ok(SyllablePart(part_type=part_type, time=time, definition=definition))
 
-    if error_list:
-        return Err(error_list)
-    return Ok(
-        SyllablePart(
-            part_type=part_type,
-            time=time,
-            definition=bundles.get("definition"),
-            required=bundles.get("required"),
-            forbidden=bundles.get("forbidden"),
-        )
-    )
-
-
-# ---- Per-field helpers ------------------------------------------------------------------------------------------------
-
-
-def load_pattern_field(
-    field: str, part_dict: dict[str, Any], features: FeatureInventory
-) -> Result[PatternBundle | None, list[str]]:
-    """Parse a pattern-bundle field by name; absent or empty yields None.
-
-    Args:
-        field: The TOML key to read ("definition", "required", or "forbidden").
-        part_dict: Raw dictionary from the TOML sub-table.
-        features: Feature inventory for bundle parsing.
-    """
-    value = part_dict.get(field)
-    if value is None:
-        return Ok(None)
-    value = str(value).strip()
-    if not value:
-        return Ok(None)
-    return parse_pattern_bundle(value, features)
+    # onset or coda: the definition is an element-sequence pattern.
+    if not raw:
+        return Ok(SyllablePart(part_type=part_type, time=time))
+    match parse_sequence(raw, features):
+        case Err(err):
+            return Err(err)
+        case Ok(pattern):
+            return Ok(SyllablePart(part_type=part_type, time=time, pattern=pattern))
 
 
 # ---- SyllableParts Inventory ------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ from src.fortis.models.inventories import (
 from src.fortis.models.rules import ApplicationMode, Rule, RuleInventory
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.parsing.bundles import parse_pattern_bundle
-from src.fortis.parsing.notation import parse_definition
+from src.fortis.parsing.notation import parse_definition, parse_sequence
 
 
 def _fb(**features: object) -> FeatureBundle:
@@ -178,25 +178,25 @@ class TestDerive:
     def test_boundary_free_rule_does_not_abort_on_unsyllabifiable_form(
         self, features, letters, sonorities
     ):
-        # Onset+coda both forbid stops → a vowel-stop-vowel form is unsyllabifiable.
-        # A $-free rule must not syllabify at all, so it cannot abort on it.
-        forbid = parse_pattern_bundle("continuant: 0", features).unwrap()
+        # Onset and coda must each be a vowel → an intervocalic consonant can be
+        # neither, so the form is unsyllabifiable. A $-free rule must not syllabify
+        # at all, so it cannot abort on it.
         nucleus = SyllablePart("nucleus", 0, parse_pattern_bundle("+syll", features).unwrap())
+        vowel_only = parse_sequence("[+syllabic]", features).unwrap()
         parts = SyllablePartsInventory(
             {
                 0: {
                     "nucleus": nucleus,
-                    "onset": SyllablePart("onset", 0, forbidden=forbid),
-                    "coda": SyllablePart("coda", 0, forbidden=forbid),
+                    "onset": SyllablePart("onset", 0, pattern=vowel_only),
+                    "coda": SyllablePart("coda", 0, pattern=vowel_only),
                 }
             }
         )
         rule = _rule("[+nasal] -> [+voice]", features)  # does not use $
         rules = RuleInventory({0: (rule,)})
-        segs = [_fb(syllabic=1, consonantal=0), _fb(consonantal=1, sonorant=0, continuant=0),
-                _fb(nasal=1, voice=0), _fb(syllabic=1)]
-        result = derive(Word(ipa="atna"), segs, rules, letters, features, sonorities, parts)
-        assert _values(result.surface)[2]["voice"] == 1  # rule fired, no abort
+        segs = [_fb(syllabic=1, consonantal=0), _fb(nasal=1, voice=0), _fb(syllabic=1)]
+        result = derive(Word(ipa="ana"), segs, rules, letters, features, sonorities, parts)
+        assert _values(result.surface)[1]["voice"] == 1  # rule fired, no abort
         assert result.surface_boundaries == frozenset()  # surface unsyllabifiable → no structure
 
     def test_input_snapshot_unchanged_by_derivation(self, features, letters):

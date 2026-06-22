@@ -2,7 +2,6 @@
 
 from src.fortis.loaders.syllable_parts import (
     VALID_PART_TYPES,
-    load_pattern_field,
     load_syllable_part,
     load_syllable_parts_inventory,
 )
@@ -13,23 +12,6 @@ class TestValidPartTypes:
         assert VALID_PART_TYPES == {"onset", "nucleus", "coda"}
 
 
-class TestLoadPatternField:
-    def test_present(self, features):
-        result = load_pattern_field("definition", {"definition": "+syll"}, features)
-        assert result.is_ok()
-        assert result.unwrap() is not None
-
-    def test_absent_returns_none(self, features):
-        result = load_pattern_field("definition", {}, features)
-        assert result.is_ok()
-        assert result.unwrap() is None
-
-    def test_empty_returns_none(self, features):
-        result = load_pattern_field("definition", {"definition": ""}, features)
-        assert result.is_ok()
-        assert result.unwrap() is None
-
-
 class TestLoadSyllablePart:
     def test_valid_nucleus(self, features):
         result = load_syllable_part("nucleus", -2000, {"definition": "+syll"}, features)
@@ -38,16 +20,22 @@ class TestLoadSyllablePart:
         assert sp.part_type == "nucleus"
         assert sp.time == -2000
         assert sp.definition is not None
+        assert sp.pattern is None
 
-    def test_onset_required_and_forbidden(self, features):
+    def test_onset_parses_definition_as_sequence(self, features):
+        # An onset definition is an element sequence: a consonant + optional glide.
         result = load_syllable_part(
-            "onset", 0, {"required": "+cons", "forbidden": "+syll"}, features
+            "onset", 0, {"definition": "[+cons][-syllabic, -consonantal]?"}, features
         )
         assert result.is_ok()
         sp = result.unwrap()
-        assert sp.required is not None
-        assert sp.forbidden is not None
         assert sp.definition is None
+        assert sp.pattern is not None
+        assert len(sp.pattern) == 2  # two elements: the consonant and the optional glide
+
+    def test_onset_bad_pattern_errors(self, features):
+        result = load_syllable_part("onset", 0, {"definition": "[+nope]"}, features)
+        assert result.is_err()
 
     def test_invalid_part_type(self, features):
         result = load_syllable_part("codu", -2000, {}, features)

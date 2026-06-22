@@ -4,6 +4,7 @@ from enum import StrEnum, auto
 from functools import cached_property
 
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
+from src.fortis.models.elements import Element
 from src.fortis.models.tiers import Tier
 
 
@@ -127,24 +128,24 @@ class SonoritiesInventory(UserDict[str, Sonority]):
 class SyllablePart:
     """A constraint definition for one syllable part (onset, nucleus, or coda).
 
-    For an onset or coda, ``required``/``forbidden`` are per-segment phonotactic
-    predicates: every segment of the constituent must match ``required`` and none
-    may match ``forbidden``. (Per-segment only — cluster-level or length
-    constraints like "onset ≤ 2" are not expressible in this model.)
+    The **nucleus** is a single-segment predicate (``definition``): a segment is a
+    nucleus iff it matches. An **onset** or **coda** is an element-sequence
+    ``pattern`` (the same notation as a rule context) that a candidate constituent
+    must match in full — so length, cluster shape, and optionality are expressed
+    directly (``[+cons][-syll, -cons]?`` is "≤2, a consonant then optional glide";
+    ``[nasal]?`` is an optional nasal coda).
 
     Args:
         part_type: Which part of the syllable ("onset", "nucleus", or "coda").
         time: Application time for this constraint.
-        definition: Feature pattern identifying nuclei (nucleus only).
-        required: Pattern every segment of the constituent must match (onset/coda).
-        forbidden: Pattern no segment of the constituent may match (onset/coda).
+        definition: Single-segment pattern identifying nuclei (nucleus only).
+        pattern: Element sequence a constituent must fully match (onset/coda only).
     """
 
     part_type: str
     time: int
     definition: PatternBundle | None = None
-    required: PatternBundle | None = None
-    forbidden: PatternBundle | None = None
+    pattern: tuple[Element, ...] | None = None
 
 
 class SyllablePartsInventory(UserDict[int, dict[str, SyllablePart]]):

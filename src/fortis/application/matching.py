@@ -398,6 +398,20 @@ def _match_span(
             yield branch
 
 
+def full_match(
+    elements: tuple[Element, ...],
+    segments: list[FeatureBundle],
+    letters: LetterInventory | None = None,
+) -> bool:
+    """Whether *elements* match *segments* exactly — the whole list, start to end.
+
+    Used to test a candidate onset/coda against a syllable-part pattern. An empty
+    *elements* matches only an empty *segments*; quantifiers express optionality.
+    """
+    letters = letters if letters is not None else LetterInventory()
+    return any(_match_span(elements, segments, 0, len(segments), Bindings(), letters, frozenset()))
+
+
 def find_matches(
     sd: StructuralDescription,
     segments: list[FeatureBundle],
