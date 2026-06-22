@@ -17,19 +17,22 @@ Sonority levels come from the user's scale by first-match in file order
 (``SonoritiesInventory`` preserves it); a segment matching no predicate is
 treated as least sonorous.
 
-Onset/coda **constraints** from ``syllable_parts`` (per-segment ``required`` /
-``forbidden`` predicates) narrow the choice. Sonority remains a hard filter: the
-candidates are the sonority-rising onsets (suffixes of the maximal rising onset,
-i.e. progressively shorter onsets with more in the coda); among those whose onset
-and coda satisfy the constraints, the longest onset wins. With no constraints
-this is exactly the Maximal Onset division. If no candidate is legal, the cluster
-is unsyllabifiable and ``SyllabificationError`` is raised rather than emitting a
-constraint-violating division. Constraints apply only at the interior split where
-there is a choice; word-edge onsets/codas are forced and not constraint-checked.
+Onset/coda **patterns** from ``syllable_parts`` are element sequences (the same
+notation as a rule context) that a candidate constituent must match in full.
+When a pattern is defined, it *defines* legality: every split point is a
+candidate, the longest pattern-legal onset wins, and sonority is not consulted —
+so a pattern may license a non-sonority-rising onset (e.g. ``s``+stop). With no
+pattern, the sonority Maximal Onset division above is used. ``[nasal]`` is a
+mandatory single-nasal coda; ``[nasal]?`` an optional one (the matcher's
+quantifiers express optionality — there is no implicit empty). If no split is
+pattern-legal the cluster is unsyllabifiable and ``SyllabificationError`` is
+raised rather than emitting an illegal division. Patterns apply only at the
+interior split where there is a choice; word-edge onsets/codas are forced and not
+checked.
 """
 
 from src.fortis.application.combining import matches_exactly
-from src.fortis.application.matching import pattern_matches
+from src.fortis.application.matching import full_match, pattern_matches
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import (
     LetterInventory,
@@ -69,16 +72,18 @@ def _onset_start(cluster: list[int]) -> int:
     return start
 
 
-def _legal(segments: list[FeatureBundle], part: SyllablePart | None) -> bool:
-    """Whether every segment satisfies *part*'s required/forbidden predicates."""
-    if part is None:
+def _has_pattern(part: SyllablePart | None) -> bool:
+    """Whether *part* carries an onset/coda pattern."""
+    return part is not None and part.pattern is not None
+
+
+def _legal_constituent(
+    segments: list[FeatureBundle], part: SyllablePart | None, letters: LetterInventory
+) -> bool:
+    """Whether a candidate onset/coda fully matches *part*'s pattern (None = unconstrained)."""
+    if not _has_pattern(part):
         return True
-    for segment in segments:
-        if part.required is not None and not pattern_matches(part.required, segment):
-            return False
-        if part.forbidden is not None and pattern_matches(part.forbidden, segment):
-            return False
-    return True
+    return full_match(part.pattern, segments, letters)
 
 
 def _split(
@@ -86,19 +91,24 @@ def _split(
     segments: list[FeatureBundle],
     onset_part: SyllablePart | None,
     coda_part: SyllablePart | None,
+    letters: LetterInventory,
 ) -> int:
-    """The onset-start index for an interior cluster, narrowing sonority by constraints.
+    """The onset-start index for an interior cluster.
 
-    Candidates are the sonority-rising onsets — ``segments[k:]`` for ``k`` from the
-    maximal rising onset down to the empty onset — and the longest legal one wins.
-    Raises ``SyllabificationError`` if none is legal.
+    With an onset or coda pattern defined, every split point is a candidate and the
+    longest pattern-legal onset wins — the patterns define legality, so sonority is
+    not consulted (this is what lets a pattern license a non-sonority-rising onset).
+    With no pattern, the sonority Maximal Onset division is used. Raises
+    ``SyllabificationError`` when a pattern admits no division.
     """
-    for k in range(_onset_start(levels), len(segments) + 1):
-        if _legal(segments[k:], onset_part) and _legal(segments[:k], coda_part):
+    if not (_has_pattern(onset_part) or _has_pattern(coda_part)):
+        return _onset_start(levels)
+    for k in range(len(segments) + 1):  # k = 0 is the maximal (whole-cluster) onset
+        if _legal_constituent(segments[k:], onset_part, letters) and _legal_constituent(
+            segments[:k], coda_part, letters
+        ):
             return k
-    raise SyllabificationError(
-        "no legal onset/coda division for an intervocalic cluster"
-    )
+    raise SyllabificationError("no pattern-legal onset/coda division for an intervocalic cluster")
 
 
 def syllabify(
@@ -106,6 +116,7 @@ def syllabify(
     sonorities: SonoritiesInventory,
     syllable_parts: SyllablePartsInventory,
     time: int,
+    letters: LetterInventory | None = None,
 ) -> frozenset[int]:
     """Return the syllable-boundary positions of *segments* at *time*.
 
@@ -113,13 +124,14 @@ def syllabify(
         segments: The form to syllabify.
         sonorities: The sonority scale (first-match in file order).
         syllable_parts: Syllable-part constraints; supplies the nucleus definition
-            and the optional onset/coda phonotactic predicates.
+            and the optional onset/coda patterns.
         time: Derivation time, selecting the constraints in force.
+        letters: Letter inventory, for letter shorthands inside onset/coda patterns.
 
     Raises:
-        SyllabificationError: if an interior cluster admits no constraint-legal
-            division.
+        SyllabificationError: if an interior cluster admits no pattern-legal division.
     """
+    letters = letters if letters is not None else LetterInventory()
     nucleus_part = syllable_parts.get_nucleus(time)
     if nucleus_part is None or nucleus_part.definition is None:
         return frozenset()
@@ -135,7 +147,8 @@ def syllabify(
     for left, right in zip(nuclei, nuclei[1:], strict=False):
         cluster_levels = levels[left + 1 : right]
         cluster_segs = segments[left + 1 : right]
-        boundaries.add(left + 1 + _split(cluster_levels, cluster_segs, onset_part, coda_part))
+        start = _split(cluster_levels, cluster_segs, onset_part, coda_part, letters)
+        boundaries.add(left + 1 + start)
     return frozenset(boundaries)
 
 

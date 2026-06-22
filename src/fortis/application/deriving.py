@@ -66,11 +66,12 @@ def _boundaries(
     sonorities: SonoritiesInventory | None,
     syllable_parts: SyllablePartsInventory | None,
     time: int,
+    letters: LetterInventory,
 ) -> frozenset[int]:
     """Syllable boundaries of *form* at *time*, or none if syllabification is unconfigured."""
     if sonorities is None or syllable_parts is None:
         return frozenset()
-    return syllabify(form, sonorities, syllable_parts, time)
+    return syllabify(form, sonorities, syllable_parts, time, letters)
 
 
 def _uses_boundary(sd: StructuralDescription) -> bool:
@@ -106,7 +107,7 @@ def apply_rule(
         sonorities = syllable_parts = None  # $ unused → skip syllabification entirely
     match rule.application:
         case ApplicationMode.simultaneous:
-            boundaries = _boundaries(segments, sonorities, syllable_parts, rule.time)
+            boundaries = _boundaries(segments, sonorities, syllable_parts, rule.time, letters)
             return _apply_simultaneous(rule.sd, segments, letters, features, boundaries)
         case ApplicationMode.left_to_right:
             return _apply_directional(
@@ -164,7 +165,7 @@ def _apply_directional(
     form = list(segments)
     cursor = len(form) if reverse else 0
     while True:
-        boundaries = _boundaries(form, sonorities, syllable_parts, time)
+        boundaries = _boundaries(form, sonorities, syllable_parts, time, letters)
         if reverse:
             candidates = [m for m in find_matches(sd, form, letters, boundaries) if m.end <= cursor]
             if not candidates:
@@ -265,7 +266,9 @@ def derive(
     # Surface structure is a display aid, so an unsyllabifiable surface yields no
     # boundaries rather than aborting the (otherwise complete) derivation.
     try:
-        surface_boundaries = _boundaries(current, sonorities, syllable_parts, max(rules, default=0))
+        surface_boundaries = _boundaries(
+            current, sonorities, syllable_parts, max(rules, default=0), letters
+        )
     except SyllabificationError:
         surface_boundaries = frozenset()
     return Derivation(

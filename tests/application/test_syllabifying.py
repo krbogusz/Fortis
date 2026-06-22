@@ -19,6 +19,7 @@ from src.fortis.models.inventories import (
 )
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.parsing.bundles import parse_pattern_bundle
+from src.fortis.parsing.notation import parse_sequence
 
 
 def _fb(**features: object) -> FeatureBundle:
@@ -88,43 +89,48 @@ class TestSyllabify:
 
 
 class TestOnsetCodaConstraints:
-    """Constraints narrow the sonority-legal splits (a stop forbidden in the onset)."""
+    """Onset/coda patterns define legality and override the sonority division."""
 
-    def _parts(self, features, **parts):
+    def _parts(self, features, onset=None, coda=None):
         nucleus = SyllablePart("nucleus", 0, parse_pattern_bundle("+syll", features).unwrap())
-        return SyllablePartsInventory({0: {"nucleus": nucleus, **parts}})
+        parts = {"nucleus": nucleus}
+        if onset is not None:
+            seq = parse_sequence(onset, features).unwrap()
+            parts["onset"] = SyllablePart("onset", 0, pattern=seq)
+        if coda is not None:
+            seq = parse_sequence(coda, features).unwrap()
+            parts["coda"] = SyllablePart("coda", 0, pattern=seq)
+        return SyllablePartsInventory({0: parts})
 
-    def _stop0(self):
-        # continuant given explicitly so a "continuant: 0" predicate can match it
-        return _fb(consonantal=1, sonorant=0, continuant=0)
+    def _stop(self):
+        return _fb(consonantal=1, sonorant=0)
 
     def _fric(self):
         return _fb(consonantal=1, sonorant=0, continuant=1)
 
     def test_unconstrained_split_is_maximal_onset(self, sonorities, features):
-        # a S F L a (stop<fric<lat, all rising) → a.SFL.a with no constraints.
-        word = [_v(), self._stop0(), self._fric(), _lat(), _v()]
-        parts = self._parts(features)
-        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 1, 5]
+        # a S F a (stop<fric, rising) → a.SF.a (maximal onset) with no pattern.
+        word = [_v(), self._stop(), self._fric(), _v()]
+        assert sorted(syllabify(word, sonorities, self._parts(features), 0)) == [0, 1, 4]
 
-    def test_onset_forbidden_forces_a_different_split(self, sonorities, features):
-        # Forbid stops (continuant:0) in the onset: the stop is pushed into the coda,
-        # moving the boundary from 1 (a.SFL) to 2 (aS.FL) — a split sonority alone
-        # would not pick.
-        word = [_v(), self._stop0(), self._fric(), _lat(), _v()]
-        forbid_stop = parse_pattern_bundle("continuant: 0", features).unwrap()
-        parts = self._parts(features, onset=SyllablePart("onset", 0, forbidden=forbid_stop))
-        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 2, 5]
+    def test_onset_pattern_forces_a_different_split(self, sonorities, features):
+        # An onset of exactly one segment ("[]") overrides sonority: the stop, which
+        # MOP would put in the onset (a.SF), is pushed to the coda (aS.F).
+        word = [_v(), self._stop(), self._fric(), _v()]
+        parts = self._parts(features, onset="[]")
+        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 2, 4]
+
+    def test_non_sonority_rising_onset_is_licensed(self, sonorities, features):
+        # s+stop is sonority-FALLING (fric 2 > stop 1); MOP would split it (aF.Sa),
+        # but an onset pattern that allows it keeps both in the onset (a.FSa).
+        word = [_v(), self._fric(), self._stop(), _v()]
+        parts = self._parts(features, onset="[+cons][+cons]")
+        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 1, 4]
 
     def test_no_legal_division_raises(self, sonorities, features):
-        # Forbidding the stop in both onset and coda leaves it nowhere to go.
-        word = [_v(), self._stop0(), self._fric(), _lat(), _v()]
-        forbid_stop = parse_pattern_bundle("continuant: 0", features).unwrap()
-        parts = self._parts(
-            features,
-            onset=SyllablePart("onset", 0, forbidden=forbid_stop),
-            coda=SyllablePart("coda", 0, forbidden=forbid_stop),
-        )
+        # Onset and coda must each be exactly one segment, but the cluster has three.
+        word = [_v(), self._stop(), self._fric(), _lat(), _v()]
+        parts = self._parts(features, onset="[]", coda="[]")
         with pytest.raises(SyllabificationError):
             syllabify(word, sonorities, parts, 0)
 
