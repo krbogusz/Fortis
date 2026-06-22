@@ -44,6 +44,31 @@ def identify_feature(raw_string: str, features: FeatureInventory) -> Result[tupl
     return Err(f"No feature could be identified from '{raw_string}'")
 
 
+def split_conditional(raw_spec: str) -> Result[tuple[int, str], str]:
+    """Split a conditional-feature wrapper ``<n: F>`` into ``(label, inner)``.
+
+    ``raw_spec`` is assumed to start with ``<`` (whitespace already stripped).
+    The label is the integer before the first colon; the inner spec string is
+    returned for the caller to parse normally. Because only the first colon is
+    consumed and only one trailing ``>`` is stripped, a contour inner such as
+    ``<1: tone: 1>2>`` splits correctly into ``(1, 'tone:1>2')``.
+
+    Args:
+        raw_spec: A whitespace-free spec string beginning with ``<``.
+    """
+    if not raw_spec.endswith(">"):
+        return Err(f"Malformed conditional feature (missing closing '>'): '{raw_spec}'")
+    label_str, sep, inner = raw_spec[1:-1].partition(":")
+    if not sep:
+        return Err(f"Conditional feature is missing its ':' label separator: '{raw_spec}'")
+    label = safe_int(label_str)
+    if label is None:
+        return Err(f"Conditional feature label must be an integer: '{raw_spec}'")
+    if not inner:
+        return Err(f"Conditional feature has no inner spec: '{raw_spec}'")
+    return Ok((label, inner))
+
+
 def determine_contour_position(contour_position: str) -> Result[ContourPosition, str]:
     """Parse the contour position from the part after '@'."""
     if "initial" in contour_position:
@@ -111,12 +136,12 @@ def parse_feature_bundle(
     """Parse a comma-separated pattern bundle string.
 
     Args:
-        raw_string: Comma- or semicolon-separated feature specs.
+        raw_string: Comma-separated feature specs (``;`` is reserved for
+            contour-position index lists and does not separate features).
         features: Feature inventory for name/value resolution.
     """
     error_list = []
-    string = raw_string.replace(";", ",")
-    raw_features = [t.strip() for t in string.split(",") if t.strip()]
+    raw_features = [t.strip() for t in raw_string.split(",") if t.strip()]
 
     bundle = FeatureBundle()
     for raw_spec in raw_features:
@@ -217,7 +242,21 @@ def parse_feature_spec(
 
 
 def validate_feature_spec(feature_spec: FeatureSpec) -> Result[None, list[str]]:
-    """Validate the feature spec."""
+    """Validate a realized (lexicon) feature spec.
+
+    Parsing already rejects negation, alpha, and contour positions in realized
+    context. The one remaining reachable-but-invalid state is the bare-feature
+    form ``value == "any"`` (Wildcard.present), which is pattern-only — a
+    concrete segment must carry an explicit value. Bare unary features are
+    unaffected: they resolve to present (1), never "any".
+    """
+    if feature_spec.value == "any":
+        return Err(
+            [
+                f"Realized feature '{feature_spec.feature}' needs an explicit value; "
+                "a bare feature name matches any value and is pattern-only"
+            ]
+        )
     return Ok(None)
 
 
@@ -255,12 +294,12 @@ def parse_pattern_bundle(
     """Parse a comma-separated pattern bundle string.
 
     Args:
-        raw_string: Comma- or semicolon-separated feature specs.
+        raw_string: Comma-separated feature specs (``;`` is reserved for
+            contour-position index lists and does not separate features).
         features: Feature inventory for name/value resolution.
     """
     error_list = []
-    string = raw_string.replace(";", ",")
-    raw_features = [t.strip() for t in string.split(",") if t.strip()]
+    raw_features = [t.strip() for t in raw_string.split(",") if t.strip()]
 
     bundle = PatternBundle()
     for raw_spec in raw_features:
@@ -293,6 +332,19 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
     # Clean input
     raw_spec = raw_spec.replace(" ", "")
 
+    # Conditional feature '<n: F>' — parse the inner spec normally, tag the label.
+    if raw_spec.startswith("<"):
+        match split_conditional(raw_spec):
+            case Err(err):
+                return Err(err)
+            case Ok((label, inner)):
+                match parse_pattern_spec(inner, features):
+                    case Err(err):
+                        return Err(err)
+                    case Ok(spec):
+                        spec.condition_label = label
+                        return Ok(spec)
+
     # Identify feature name via greedy longest-first matching
     match identify_feature(raw_spec, features):
         case Ok(result):
@@ -304,29 +356,28 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
     raw_value = raw_spec.replace(matched_string, "", 1)
     raw_value = raw_value.replace(":", "")
 
+    # Negation — a leading '!' negates the whole spec, UNLESS it immediately
+    # precedes a Greek letter, where it is the value-level alpha-other marker
+    # ('!α', resolved by parse_pattern_value to AlphaOp.other).
+    negated = False
+    if raw_value.startswith("!") and not (
+        len(raw_value) > 1 and raw_value[1] in config.greek_alphabet
+    ):
+        negated = True
+        raw_value = raw_value[1:]
+
     # Plain feature name – unary defaults to present; others default to "any"
     if not raw_value:
         if features[feature].kind == "unary":
             value: Value = 1
         else:
             value = "any"
-        pattern_spec = PatternSpec(feature, value, negated=False, contour_position=ContourEdge.any)
-        match validate_pattern_spec(pattern_spec):
+        pattern_spec = PatternSpec(feature, value, negated, contour_position=ContourEdge.any)
+        match validate_pattern_spec(pattern_spec, features):
             case Err(err):
                 return Err("\n".join(err))
             case Ok():
                 return Ok(pattern_spec)
-
-    # Negation
-    negated = False
-    if "!" in raw_value:
-        for letter in config.greek_alphabet:
-            if letter in raw_value:
-                if f"!{letter}" in raw_value:
-                    negated = False
-        else:
-            negated = True
-            raw_value = raw_value.replace("!", "", 1)
 
     # Contour position
     contour_position_assigned = False
@@ -363,16 +414,49 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
                 value = single_value
 
     pattern_spec = PatternSpec(feature, value, negated, contour_position)
-    match validate_pattern_spec(pattern_spec):
+    match validate_pattern_spec(pattern_spec, features):
         case Err(err):
             return Err("\n".join(err))
         case Ok():
             return Ok(pattern_spec)
 
 
-def validate_pattern_spec(pattern_spec: PatternSpec) -> Result[None, list[str]]:
-    """Validate the pattern spec — stub."""
+def opposite_alpha_on_scalar(
+    feature: str, value: Value | None, features: FeatureInventory
+) -> str | None:
+    """Return an error message if ``value`` uses alpha-opposite on a scalar feature.
+
+    Alpha-opposite (``-α``) is defined only for binary/unary features, whose
+    bound value has a single opposite (the other pole, or ``none`` for unary).
+    A scalar feature has no single opposite, so ``-α`` is invalid on it — for a
+    single value or any contour limb. Returns ``None`` when the spec is fine.
+    """
+    if features[feature].kind != "scalar":
+        return None
+    limbs = value if isinstance(value, tuple) else (value,)
+    if any(isinstance(limb, AlphaRef) and limb.op == AlphaOp.opposite for limb in limbs):
+        return (
+            f"Alpha-opposite ('-α') is not valid for scalar feature '{feature}' "
+            "(binary/unary only)"
+        )
+    return None
+
+
+def validate_pattern_spec(
+    pattern_spec: PatternSpec, features: FeatureInventory
+) -> Result[None, list[str]]:
+    """Validate an assembled pattern spec.
+
+    Enforces the contour-position invariants that parsing cannot check
+    incrementally: a multi-limb contour's positional modifier must be an index
+    list (not a single index or bare edge), whose length matches the contour's
+    limb count and whose indices are contiguous. Also rejects alpha-opposite
+    (``-α``) on scalar features (binary/unary only).
+    """
     error_list = []
+    message = opposite_alpha_on_scalar(pattern_spec.feature, pattern_spec.value, features)
+    if message is not None:
+        error_list.append(message)
     if isinstance(pattern_spec.value, tuple):
         if isinstance(pattern_spec.contour_position, int):
             error_list.append(
@@ -427,15 +511,15 @@ def parse_pattern_value(
 def parse_result_bundle(
     raw_string: str, features: FeatureInventory
 ) -> Result[ResultBundle, list[str]]:
-    """Parse a comma- or semicolon-separated result bundle string.
+    """Parse a comma-separated result bundle string.
 
     Args:
-        raw_string: Comma- or semicolon-separated feature specs.
+        raw_string: Comma-separated feature specs (``;`` is reserved for
+            contour-position index lists and does not separate features).
         features: Feature inventory for name/value resolution.
     """
     error_list = []
-    string = raw_string.replace(";", ",")
-    raw_features = [t.strip() for t in string.split(",") if t.strip()]
+    raw_features = [t.strip() for t in raw_string.split(",") if t.strip()]
 
     bundle = ResultBundle()
     for raw_spec in raw_features:
@@ -462,6 +546,19 @@ def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[Resul
     # Clean input
     raw_spec = raw_spec.replace(" ", "")
 
+    # Conditional feature '<n: F>' — parse the inner spec normally, tag the label.
+    if raw_spec.startswith("<"):
+        match split_conditional(raw_spec):
+            case Err(err):
+                return Err(err)
+            case Ok((label, inner)):
+                match parse_result_spec(inner, features):
+                    case Err(err):
+                        return Err(err)
+                    case Ok(spec):
+                        spec.condition_label = label
+                        return Ok(spec)
+
     # Identify feature name via greedy longest-first matching
     match identify_feature(raw_spec, features):
         case Ok(result):
@@ -473,8 +570,13 @@ def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[Resul
     raw_value = raw_spec.replace(matched_string, "", 1)
     raw_value = raw_value.replace(":", "")
 
-    # Negation
-    if "!" in raw_value:
+    # Negation — a leading '!' is spec negation, rejected here. A '!' that
+    # precedes a Greek letter is the value-level alpha-other marker ('!α');
+    # it falls through to parse_result_value, which rejects it with its own
+    # ('other' alpha) message.
+    if raw_value.startswith("!") and not (
+        len(raw_value) > 1 and raw_value[1] in config.greek_alphabet
+    ):
         return Err("Result spec does not support negation")
 
     # Contour position
@@ -509,16 +611,30 @@ def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[Resul
                 value = single_value
 
     result_spec = ResultSpec(feature, value)
-    match validate_result_spec(result_spec):
+    match validate_result_spec(result_spec, features):
         case Err(err):
             return Err("\n".join(err))
         case Ok():
             return Ok(result_spec)
 
 
-def validate_result_spec(pattern: ResultSpec) -> Result[None, list[str]]:
-    """Validate the result spec — stub."""
-    _ = pattern  # TODO: implement real validation
+def validate_result_spec(
+    result_spec: ResultSpec, features: FeatureInventory
+) -> Result[None, list[str]]:
+    """Validate an assembled result spec.
+
+    Parsing already rejects negation, alpha-other, and contour positions in
+    result position. The remaining spec-level invariant is that alpha-opposite
+    (``-α``) is binary/unary only — a scalar feature has no single opposite.
+    Cross-position rules (conditional-label pairing with the target, alpha
+    binding) belong to the not-yet-built rule-level validation layer.
+    """
+    error_list: list[str] = []
+    message = opposite_alpha_on_scalar(result_spec.feature, result_spec.value, features)
+    if message is not None:
+        error_list.append(message)
+    if error_list:
+        return Err(error_list)
     return Ok(None)
 
 

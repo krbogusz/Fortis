@@ -5,6 +5,7 @@ from src.fortis.general.file_handling import load_toml_file
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.rules import ApplicationMode, Rule, RuleInventory, StructuralDescription
 from src.fortis.parsing.notation import parse_definition
+from src.fortis.parsing.rule_validation import validate_structural_description
 from src.fortis.result import Err, Ok, Result
 
 # ---- Per-field helpers ----------------------------------------------------------------
@@ -95,6 +96,11 @@ def load_rule(
         match parse_definition(definition, features):
             case Ok(result):
                 sd = result
+                match validate_structural_description(sd):
+                    case Err(errs):
+                        error_list.extend(errs)
+                    case Ok():
+                        pass
             case Err(errs):
                 error_list.extend(errs)
 

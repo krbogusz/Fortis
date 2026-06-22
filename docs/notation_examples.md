@@ -26,7 +26,7 @@ Fill any scalar slot or any single limb of a contour.
 | `none`           | node absent / undefined (`None`)         | as a **result** = unlink                                          |
 | _(bare feature)_ | any non-none value — `Wildcard.present`  | pattern-only; the complement of `none`                            |
 | `α`              | alpha, same — bind or recall             | scalar; **whole contour** on a contour feature                    |
-| `-α`             | alpha, opposite                          | binary / unary / simple only                                      |
+| `-α`             | alpha, opposite                          | binary / unary only (scalar has no single opposite)               |
 | `!α`             | alpha, other                             | distinct from spec negation `!feature` (value `!` vs feature `!`) |
 
 ---
@@ -41,7 +41,7 @@ Fill any scalar slot or any single limb of a contour.
 | `tone: 1`    | value 1                                                            | scalar                |
 | `tone: none` | node absent                                                        | all                   |
 | `voice: α`   | bind / recall α                                                    | all                   |
-| `voice: -α`  | opposite of α                                                      | unary, binary, simple |
+| `voice: -α`  | opposite of α                                                      | unary, binary         |
 | `voice: !α`  | other than α                                                       | all                   |
 
 ---
@@ -138,7 +138,7 @@ Role of `none`: pattern = "node absent"; **result scalar = unlink**; limb =
 
 - `@position` is contour-only and **pattern-side only** (`ResultSpec` has no `contour_position`).
 - Negation is **pattern-side only** (`ResultSpec` has no `negated`).
-- `-α` (opposite) restricted to binary / unary / simple features.
+- `-α` (opposite) restricted to binary / unary features (scalar has no single opposite).
 - Value-level `α`: scalar on a simple feature, whole-contour on a contour feature.
 - Default contour position is value-shape-driven: scalar/single-limb → `any`; multi-limb contour → `all` (exact arity).
 
