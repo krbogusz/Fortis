@@ -23,14 +23,14 @@ Implemented:
     §2.7    a result disjunction needs a paired target disjunction (same arity)
     §2.8.1  negation is not valid in result position
     §2.8.2  negation may not be applied to ∅ or []
-    §2.9    conditional labels appear exactly once in target and once in result
+    §2.9    each conditional label is a condition (target or context) and applies
+            ≥1 result feature; only orphan labels error
 
 Deferred: §2.5.1-.3/.5 null insertion/deletion *semantics* (runtime, not
 validation). (The old §2.3.1 'binding must precede recall' ordering constraint
 was dropped — binding/recall is scope-based, not order-based.)
 """
 
-from collections import Counter
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 
@@ -211,20 +211,22 @@ def validate_structural_description(sd: StructuralDescription) -> Result[None, l
     for var in sorted(used_alphas - bound_alphas):
         errors.append(f"Alpha variable '{var}' is used but never bound in target or context")
 
-    # §2.9 — conditional labels: exactly once in target and exactly once in result.
-    target_labels = Counter(target.labels)
-    result_labels = Counter(result.labels)
-    for label in sorted(set(target_labels) | set(result_labels)):
-        if target_labels[label] != 1:
-            errors.append(
-                f"Conditional label '{label}' must appear exactly once in target "
-                f"(found {target_labels[label]})"
-            )
-        if result_labels[label] != 1:
-            errors.append(
-                f"Conditional label '{label}' must appear exactly once in result "
-                f"(found {result_labels[label]})"
-            )
+    # §2.9 — a conditional label must be a *condition* somewhere (target or context)
+    # AND drive at least one *result* feature. A label may repeat: several result
+    # features can share it (a conditional multi-feature change, e.g. "become a"), and
+    # several conditions can share it (target + context, AND-ed). Only orphans error:
+    # a result feature with no condition, or a condition that gates nothing.
+    condition_labels = set(target.labels) | set(left_ctx.labels) | set(right_ctx.labels)
+    result_labels = set(result.labels)
+    for label in sorted(result_labels - condition_labels):
+        errors.append(
+            f"Conditional label '{label}' is applied in the result but has no condition "
+            "in the target or context"
+        )
+    for label in sorted(condition_labels - result_labels):
+        errors.append(
+            f"Conditional label '{label}' is a condition but applies no result feature"
+        )
 
     has_context = bool(sd.left_context or sd.right_context)
 

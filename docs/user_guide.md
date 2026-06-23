@@ -341,7 +341,7 @@ _Valid in target, result, and context positions._
 [<1: α high>]   condition references an alpha variable
 ```
 
-A conditional feature applies a result feature only when its condition holds. Each label must appear exactly once in the target and exactly once in the result; a label present in one without a match in the other is a validation error. A conditional in the context sharing a label with one in the target means **both** conditions must hold for the paired result feature to apply. An alpha variable referenced in a condition must be bound in the target or context of the same rule.
+A conditional feature applies its result feature(s) only when its condition holds. Each label must be a condition **somewhere** — in the target *or* the context — and must drive at least one feature in the result; a result label with no condition, or a condition that drives nothing, is a validation error. A label may repeat: several result features can share a label (one condition driving a multi-feature change, e.g. colouring *e* to *a*), and a condition may sit purely in the context (assimilation from a neighbour — this is how laryngeal colouring works) or in the target itself. When a label has conditions in more than one position, **all** of them must hold. An alpha variable referenced in a condition must be bound in the target or context of the same rule.
 
 Example — ATR harmony conditioned on height:
 
@@ -491,7 +491,8 @@ Rule definitions are validated at load time. Errors are collected rather than fa
 
 **Conditional features**
 
-- A conditional label in the result with no matching label in the target, or vice versa.
+- A conditional label applied in the result with no condition for it in the target or context.
+- A conditional label that is a condition (in target or context) but drives no result feature.
 - An alpha variable referenced in a condition but not bound in the target or context.
 
 **Disjunctions**

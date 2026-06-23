@@ -30,6 +30,16 @@ class TestValid:
         # §2.9.5 — a label may also appear in context (shared condition).
         assert check("[<1:+high>] -> [<1:+nasal>] / [<1:+voice>] _", features).is_ok()
 
+    def test_conditional_label_context_only(self, features):
+        # §2.9 — a label may be conditioned purely on the context (no target
+        # condition): assimilation from a neighbour, e.g. laryngeal colouring.
+        assert check("[+syll] -> [<1:+nasal>] / [<1:+voice>] _", features).is_ok()
+
+    def test_conditional_label_multifeature_result(self, features):
+        # §2.9 — one label may drive several result features (a conditional change
+        # of more than one feature at once).
+        assert check("[<1:+high>] -> [<1:+nasal>, <1:+voice>] / a _", features).is_ok()
+
     def test_collapse_to_letter(self, features):
         # §2.1.1 — many targets may coalesce into a full-replacement letter.
         assert check("a a -> b / c _", features).is_ok()
@@ -134,10 +144,12 @@ class TestBatch2Invalid:
         errors = check("a -> [αnasal] / c _", features).unwrap_err()
         assert any("never bound" in e for e in errors)
 
-    def test_conditional_label_missing_in_result(self, features):
+    def test_conditional_label_condition_without_result(self, features):
+        # A label that conditions but applies nothing in the result is an orphan.
         errors = check("[<1:+high>] -> b / a _", features).unwrap_err()
-        assert any("exactly once in result" in e for e in errors)
+        assert any("applies no result feature" in e for e in errors)
 
-    def test_conditional_label_twice_in_target(self, features):
-        errors = check("[<1:+high>] [<1:+nasal>] -> b c / a _", features).unwrap_err()
-        assert any("exactly once in target" in e for e in errors)
+    def test_conditional_label_result_without_condition(self, features):
+        # A result label with no condition anywhere (target or context) is an orphan.
+        errors = check("a -> [<1:+nasal>] / b _", features).unwrap_err()
+        assert any("has no condition" in e for e in errors)

@@ -153,12 +153,16 @@ Each rule is a TOML table headed by its id, `[<id>]` (e.g. `[laryngeal_coloring]
 ### 2.9. Conditional feature rules
 
 1. Conditional features `[<n: F>]` are valid in target, result, and context positions.
-2. Each label `n` must appear exactly once in the target and exactly once in the result.
-3. A conditional label in the result without a matching label in the target is a validation error.
-4. A conditional label in the target without a matching label in the result is a validation error.
-5. A conditional feature sharing a label with a context conditional means both conditions must be satisfied for the
-   paired result feature to apply. Example: `[<1: +high>]` in the context and `[<1: +ATR>]` in the target — both
-   must hold for the paired result feature to apply.
+2. Each label `n` must appear **at least once as a condition** — in the target *or* the context — **and at least once
+   in the result**. A label may repeat on either side: several result features may share a label (a single condition
+   driving a multi-feature change, e.g. "become *a*"), and several conditions may share a label (combined, per rule 5).
+3. A conditional label used in the result with **no** condition (in target or context) is a validation error — the
+   feature would apply unconditionally.
+4. A conditional label that is a condition but drives **no** result feature is a validation error — it gates nothing.
+5. A label's conditions are **AND**ed across every position they appear in (target and/or context): the paired result
+   feature(s) apply only when *all* of them hold. So a label may be conditioned purely on the context — assimilation
+   from a neighbour, e.g. laryngeal colouring (`[<1: +low>]` on the adjacent laryngeal colours *e* → *a*) — or on the
+   target itself (`[<1: +high>]` in the target → height-conditioned), or both.
 6. The condition may be negated: `<n: !F>` means apply the paired result feature only if the condition is not
    satisfied.
 7. Conditional features may reference alpha variables: `<n: αF>` means the condition is satisfied if the feature
