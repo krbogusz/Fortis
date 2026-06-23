@@ -63,27 +63,38 @@ name = "Loss of initial laryngeals"
 description = "Word-initial laryngeals are lost before a consonant"
 definition = "#[+cons, +RTR][+cons] → ∅[+cons]"
 
-[loss_of_laryngeals_before_vowels]
+[cowgills_law]
 time = -2000
-name = "Loss of laryngeals before vowels"
-description = "Laryngeals are lost before vowels — *h₁ésti 'is' > *ésti > *isti"
-definition = "[+cons, +RTR][+syll, -cons] → ∅[+syll, -cons]"
+name = "Cowgill's law"
+description = "*/h₃/ (and possibly */h₂/) is strengthened to */g/ between a sonorant and */w/"
+definition = "ʁʷ → g / [+son] _ w"
 
+# Post-vocalic loss runs *before* pre-vocalic loss so that an intervocalic laryngeal
+# lengthens its preceding vowel (VHV > VːV) instead of being deleted pre-vocalically.
+# Only a laryngeal with no preceding vowel (#HV, CHV) then falls through to the
+# pre-vocalic rule.
 [loss_of_laryngeals_after_vowels]
 time = -2000
 name = "Loss of laryngeals after vowels"
 description = "Laryngeals are lost after vowels but lengthen the preceding vowel"
 definition = "[+syll, -cons] [+cons, +RTR] → [+syll, -cons, length: long] ∅"
 
-# After the loss rules leave two vowels in hiatus (*-oHom > *oom, *-eh₂es > *aas),
-# they contract: the first vowel becomes overlong (merge keeps its quality and any
-# stress) and the second is deleted. Placed after the loss rules so it sees the
-# hiatus; it makes its own overlong, so it does not depend on `overlong_vowels`.
+[loss_of_laryngeals_before_vowels]
+time = -2000
+name = "Loss of laryngeals before vowels"
+description = "Laryngeals are lost before vowels — *h₁ésti 'is' > *ésti > *isti"
+definition = "[+cons, +RTR][+syll, -cons] → ∅[+syll, -cons]"
+
+# The long vowel left by post-vocalic laryngeal loss then absorbs a following short
+# vowel in hiatus: Vː V > V̂. The overlong takes the long first vowel's quality (the
+# merge keeps it, and any stress); the short second vowel is deleted. The first must
+# be [length: long], so only laryngeal-lengthened hiatus contracts — *-oHom (> *oːom)
+# > *-ôm; *-eh₂es (> *aːas) > *-âs.
 [vowel_contraction]
 time = -2000
 name = "Vowel contraction in hiatus"
-description = "Two vowels in hiatus contract to an overlong vowel — *-oHom > *-ôm"
-definition = "[+syll, -cons] [+syll, -cons] → [length: overlong] ∅"
+description = "A long vowel absorbs a following short vowel into an overlong — *-oHom > *-ôm"
+definition = "[+syll, -cons, length: long] [+syll, -cons] → [length: overlong] ∅"
 
 [backness_harmony]
 time = 1300
