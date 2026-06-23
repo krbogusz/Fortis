@@ -56,6 +56,7 @@ from src.fortis.models.elements import (
     Disjunction,
     Element,
     Group,
+    LetterBundle,
     LetterRef,
     Negated,
     Null,
@@ -392,6 +393,10 @@ def _match_element(
             if pos < len(segments) and symbol in letters:
                 if _letter_matches(letters[symbol].bundle, segments[pos]):
                     yield pos + 1, bindings
+
+        case LetterBundle(bundle):
+            if pos < len(segments) and _letter_matches(bundle, segments[pos]):
+                yield pos + 1, bindings
 
         case Wildcard():
             if pos < len(segments):

@@ -8,7 +8,7 @@ structure (``.`` between syllables) on the surface.
 
 import sys
 
-from src.fortis.application.deriving import derive
+from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.loaders.project import load_project
@@ -24,13 +24,19 @@ def main() -> None:
             print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1)
     project = result.unwrap()
+    # Resolve the letter+diacritic runs a rule writes (e.g. ʁʷ, au) into segments.
+    try:
+        rules = resolve_rule_letters(project.rules, project)
+    except ValueError as error:
+        print(f"error: {error}", file=sys.stderr)
+        raise SystemExit(1) from error
 
     for ipa, word in project.words.items():
         segments = string_to_sequence(ipa, project)
         derivation = derive(
             word,
             segments,
-            project.rules,
+            rules,
             project.letters,
             project.features,
             project.sonorities,
@@ -47,7 +53,7 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
     forms and a change summary on the indented line below.
     """
     word = derivation.word
-    gloss = f'  "{word.gloss}"' if word.gloss else ""
+    gloss = f' – "{word.gloss}"' if word.gloss else ""
     print("")
     print(f"{word.ipa}{gloss}")  # echo the input verbatim (no render round-trip)
 

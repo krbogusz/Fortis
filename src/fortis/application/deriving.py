@@ -38,9 +38,12 @@ boundaries and ``$`` simply never matches. (No rule in the current set uses
 output, only enables ``$``-conditioned rules.)
 """
 
+from dataclasses import replace
+
 from src.fortis.application.applying import apply_match
 from src.fortis.application.combining import matches_exactly
 from src.fortis.application.matching import Match, SyllableView, find_matches
+from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import (
     SyllabificationError,
     consolidate_suprasegmentals,
@@ -49,6 +52,16 @@ from src.fortis.application.syllabifying import (
 )
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.derivation import Derivation, DerivationStep
+from src.fortis.models.elements import (
+    Bound,
+    Disjunction,
+    Element,
+    Group,
+    LetterBundle,
+    LetterRef,
+    Negated,
+    Quantified,
+)
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import (
     LetterInventory,
@@ -56,6 +69,7 @@ from src.fortis.models.inventories import (
     SyllablePartsInventory,
     Word,
 )
+from src.fortis.models.project import Project
 from src.fortis.models.rules import (
     ApplicationMode,
     Rule,
@@ -68,6 +82,87 @@ from src.fortis.models.tiers import Tier
 def _syllable_features(features: FeatureInventory) -> frozenset[str]:
     """The names of the syllable-tier features (tone, stress, …)."""
     return frozenset(name for name, feature in features.items() if feature.tier == Tier.syllable)
+
+
+def _resolve_elements(
+    elements: tuple[Element, ...], project: Project, rule_id: str
+) -> tuple[Element, ...]:
+    """Replace each non-letter ``LetterRef`` run with its segmented ``LetterBundle``s.
+
+    A run of letters and diacritics the parser kept as a single ``LetterRef`` (e.g.
+    ``ʁʷ`` — one segment — or ``au`` — two) is sent through the segmenter and
+    spliced in as one ``LetterBundle`` per segment, so it behaves like the segments
+    it spells. A plain single letter is left as a ``LetterRef`` (still resolved
+    against the inventory). Recurses into all nesting; a multi-segment run nested
+    under a quantifier/binding/negation is wrapped in a ``Group`` to stay one inner.
+    """
+    resolved: list[Element] = []
+    for element in elements:
+        match element:
+            case LetterRef(symbol) if symbol not in project.letters:
+                segments = string_to_sequence(symbol, project)
+                if not segments:
+                    raise ValueError(
+                        f"rule '{rule_id}': letter reference '{symbol}' resolves to no "
+                        "segment — it is not a known letter or letter+diacritic sequence"
+                    )
+                resolved.extend(LetterBundle(bundle=segment) for segment in segments)
+            case Group(inner):
+                resolved.append(Group(_resolve_elements(inner, project, rule_id)))
+            case Disjunction(branches):
+                resolved.append(
+                    Disjunction(tuple(_resolve_elements(b, project, rule_id) for b in branches))
+                )
+            case Negated(inner):
+                resolved.append(Negated(_resolve_one(inner, project, rule_id)))
+            case Quantified(inner, quant):
+                resolved.append(Quantified(_resolve_one(inner, project, rule_id), quant))
+            case Bound(ref, inner):
+                resolved.append(Bound(ref, _resolve_one(inner, project, rule_id)))
+            case _:
+                resolved.append(element)
+    return tuple(resolved)
+
+
+def _resolve_one(element: Element, project: Project, rule_id: str) -> Element:
+    """Resolve a single nested element; a multi-segment run becomes a ``Group``."""
+    resolved = _resolve_elements((element,), project, rule_id)
+    return resolved[0] if len(resolved) == 1 else Group(resolved)
+
+
+def _resolve_rule(rule: Rule, project: Project) -> Rule:
+    """A copy of *rule* with every ``LetterRef`` run in its description resolved."""
+    sd = rule.sd
+    resolved = StructuralDescription(
+        target=_resolve_elements(sd.target, project, rule.id),
+        result=_resolve_elements(sd.result, project, rule.id),
+        left_context=_resolve_elements(sd.left_context, project, rule.id),
+        right_context=_resolve_elements(sd.right_context, project, rule.id),
+        left_exception=_resolve_elements(sd.left_exception, project, rule.id),
+        right_exception=_resolve_elements(sd.right_exception, project, rule.id),
+    )
+    return replace(rule, sd=resolved)
+
+
+def resolve_rule_letters(rules: RuleInventory, project: Project) -> RuleInventory:
+    """Resolve the letter+diacritic runs a rule writes into per-segment bundles.
+
+    The notation tokenises a contiguous run of letters and diacritics as one
+    ``LetterRef`` whose symbol may be a complex segment like ``ʁʷ`` or a
+    multi-segment run like ``au`` — neither a plain letter, so on its own it matches
+    nothing. This sends every such run through the segmenter — the same path that
+    turns an IPA word into segments — and rewrites it as one ``LetterBundle`` per
+    segment, so a rule may spell complex segments directly. Run before derivation.
+
+    Raises:
+        ValueError: a run resolves to no segment (an unknown symbol).
+    """
+    return RuleInventory(
+        {
+            time: tuple(_resolve_rule(rule, project) for rule in rules_at_time)
+            for time, rules_at_time in rules.items()
+        }
+    )
 
 
 def _consolidate(
@@ -304,10 +399,16 @@ def derive(
     rule — without ``sonorities``/``syllable_parts`` there are simply no
     boundaries and the ``$`` assertion never matches.
 
+    Rules that spell a complex symbol (e.g. ``ʁʷ``) or a multi-segment run must be
+    passed through ``resolve_rule_letters`` first; an unresolved such ``LetterRef``
+    matches nothing and the rule silently does not fire.
+
     Args:
         word: The word being derived (carried into the trace).
         segments: The starting form (already segmented).
         rules: Rules keyed by time; applied ascending by time, file order within.
+            Pre-resolve with ``resolve_rule_letters`` if any rule uses a complex
+            symbol or multi-segment run.
         letters: Letter inventory, for shorthands and recalls.
         features: Feature inventory, for the geometry-aware merge.
         sonorities: Sonority scale for syllabification (optional).

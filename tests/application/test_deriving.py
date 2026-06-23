@@ -2,8 +2,10 @@
 
 import pytest
 
-from src.fortis.application.deriving import apply_rule, derive
+from src.fortis.application.deriving import apply_rule, derive, resolve_rule_letters
+from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.elements import LetterBundle
 from src.fortis.models.inventories import (
     Letter,
     LetterInventory,
@@ -280,3 +282,48 @@ class TestDerive:
         result = derive(word, segs, rules, letters, features)
         assert _values(result.input) == [{"nasal": 1, "voice": 0}]
         assert _values(result.surface) == [{"nasal": 1, "voice": 1}]
+
+
+class TestResolveRuleLetters:
+    """A letter+diacritic run a rule writes is resolved into per-segment bundles."""
+
+    def _cowgill(self, project):
+        return RuleInventory({0: (_rule("ʁʷ → g / [+son] _ w", project.features),)})
+
+    def test_complex_symbol_resolves_to_one_letterbundle(self, project):
+        # ʁʷ (ʁ + labialisation) is not a plain letter; it resolves to a single
+        # LetterBundle carrying that segment's features.
+        resolved = resolve_rule_letters(self._cowgill(project), project)
+        assert resolved[0][0].sd.target == (
+            LetterBundle(bundle=string_to_sequence("ʁʷ", project)[0]),
+        )
+
+    def test_multisegment_run_resolves_to_several_bundles(self, project):
+        # A run that spells two segments (au) becomes two LetterBundles — like
+        # segmenting an IPA string, not a single nonexistent letter.
+        rules = RuleInventory({0: (_rule("au → o", project.features),)})
+        target = resolve_rule_letters(rules, project)[0][0].sd.target
+        assert target == tuple(LetterBundle(bundle=s) for s in string_to_sequence("au", project))
+        assert len(target) == 2
+
+    def test_resolved_rule_fires_where_bare_does_not(self, project):
+        rules = self._cowgill(project)
+        seq = string_to_sequence("gʷiʁʷwos", project)
+        # The unresolved LetterRef('ʁʷ') matches nothing.
+        bare = derive(Word(ipa="gʷiʁʷwos"), seq, rules, project.letters, project.features)
+        assert bare.steps == ()
+        # After resolution, Cowgill's law fires: ʁʷ → g.
+        resolved = resolve_rule_letters(rules, project)
+        fired = derive(Word(ipa="gʷiʁʷwos"), seq, resolved, project.letters, project.features)
+        assert [step.rule.id for step in fired.steps] == ["r"]
+
+    def test_multisegment_run_fires_and_collapses_the_span(self, project):
+        # The two-segment run 'au' matches two consecutive segments and collapses to
+        # one: kaut → kot (the whole point of "like parsing IPA strings").
+        bare = RuleInventory({0: (_rule("au → o", project.features),)})
+        rules = resolve_rule_letters(bare, project)
+        seq = string_to_sequence("kaut", project)
+        d = derive(Word(ipa="kaut"), seq, rules, project.letters, project.features)
+        assert [step.rule.id for step in d.steps] == ["r"]
+        assert len(d.surface) == 3  # k a u t (4) → k o t (3)
+        assert d.surface[1] == project.letters["o"].bundle

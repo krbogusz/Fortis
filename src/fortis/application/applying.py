@@ -43,6 +43,7 @@ from src.fortis.models.elements import (
     Bound,
     BundleElem,
     Element,
+    LetterBundle,
     LetterRef,
     Negated,
     Null,
@@ -67,7 +68,7 @@ from src.fortis.parsing.rule_validation import _is_merge_bundle
 # Target elements the merge path can pair one-to-one with the span: each consumes
 # exactly one segment, except Null, which consumes none. A ``Bound`` wrapping a
 # wider inner is caught by the ``consumed == len(span)`` guard below, not here.
-_CONSUMES_ONE = (BundleElem, LetterRef, Wildcard, RecallRef, Negated, Bound)
+_CONSUMES_ONE = (BundleElem, LetterRef, LetterBundle, Wildcard, RecallRef, Negated, Bound)
 
 
 def _content(elements: tuple[Element, ...]) -> list[Element]:
@@ -139,6 +140,9 @@ def _render_result_element(
             if symbol not in letters:
                 raise KeyError(f"result letter '{symbol}' is not in the letter inventory")
             return [FeatureBundle(dict(letters[symbol].bundle.data))]
+
+        case LetterBundle(bundle):
+            return [FeatureBundle(dict(bundle.data))]
 
         case RecallRef(ref):
             bound = bindings.reference.get(ref)

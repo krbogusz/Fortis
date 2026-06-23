@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from src.fortis.models.bundles import PatternBundle, ResultBundle
+from src.fortis.models.bundles import FeatureBundle, PatternBundle, ResultBundle
 
 
 @dataclass(frozen=True)
@@ -24,6 +24,20 @@ class LetterRef:
     """Matches by features; in result position replaces the segment wholesale."""
 
     symbol: str
+
+
+@dataclass(frozen=True)
+class LetterBundle:
+    """A run of letters+diacritics resolved (via the segmenter) to one segment.
+
+    Behaves exactly like a :class:`LetterRef` — subset match in target/context,
+    wholesale replacement in result — but carries the feature bundle directly, so a
+    complex symbol like ``ʁʷ`` (or one segment of a multi-segment run like ``au``)
+    needs no entry in the letter inventory. Distinct from :class:`BundleElem`, which
+    is a pattern that *merges* in result position.
+    """
+
+    bundle: FeatureBundle
 
 
 @dataclass(frozen=True)
@@ -109,6 +123,7 @@ class RecallRef:
 
 type Element = (
     LetterRef
+    | LetterBundle
     | BundleElem
     | ResultElem
     | Wildcard
