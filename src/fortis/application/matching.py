@@ -340,11 +340,16 @@ class SyllableView:
 
 @dataclass(frozen=True)
 class Match:
-    """One locus: the target spans ``segments[start:end]``, with its bindings."""
+    """One locus: the target spans ``segments[start:end]``, with its bindings.
+
+    ``target_choices`` is the branch index taken at each disjunction *in the target*
+    (in encounter order); the applier uses it to select the paired result branch.
+    """
 
     start: int
     end: int
     bindings: Bindings = field(default_factory=Bindings)
+    target_choices: tuple[int, ...] = ()
 
 
 def _copy(bindings: Bindings) -> Bindings:
@@ -354,6 +359,7 @@ def _copy(bindings: Bindings) -> Bindings:
         reference=dict(bindings.reference),
         permissive_alpha=bindings.permissive_alpha,
         conditions=dict(bindings.conditions),
+        disjunction_choices=bindings.disjunction_choices,
     )
 
 
@@ -422,9 +428,13 @@ def _match_element(
             )
 
         case Disjunction(branches):
-            for branch in branches:
+            # Record which branch matched so the applier can select the paired
+            # result branch; only a branch that yields carries its index forward.
+            for index, branch in enumerate(branches):
+                chosen = _copy(bindings)
+                chosen.disjunction_choices = bindings.disjunction_choices + (index,)
                 yield from _match_sequence(
-                    branch, segments, pos, bindings, letters, boundaries, syllables
+                    branch, segments, pos, chosen, letters, boundaries, syllables
                 )
 
         case Negated(inner):
@@ -695,11 +705,17 @@ def _locate(
         for after_target in _match_span(
             sd.target, segments, start, end, after_left, letters, boundaries, syllables
         ):
+            # The target's own branch choices are those gained over the left context.
+            target_choices = after_target.disjunction_choices[
+                len(after_left.disjunction_choices) :
+            ]
             for after_right in _match_starting_at(
                 sd.right_context, segments, end, after_target, letters, boundaries, syllables
             ):
                 if not _exception_blocks(
                     sd, segments, start, end, after_right, letters, boundaries, syllables
                 ):
-                    return Match(start=start, end=end, bindings=after_right)
+                    return Match(
+                        start=start, end=end, bindings=after_right, target_choices=target_choices
+                    )
     return None

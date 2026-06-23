@@ -25,9 +25,14 @@ class Bindings:
     condition(s) held — accumulated (AND) across the target and context as the
     matcher evaluates them, then consulted by the applier to gate the paired
     result feature.
+
+    ``disjunction_choices`` records, in encounter order, the branch index taken at
+    each disjunction matched so far. The applier reads the *target's* slice of these
+    (see ``Match.target_choices``) to select the paired result branch.
     """
 
     alpha: dict[str, Value] = field(default_factory=dict)
     reference: dict[int, FeatureBundle] = field(default_factory=dict)
     permissive_alpha: bool = False
     conditions: dict[int, bool] = field(default_factory=dict)
+    disjunction_choices: tuple[int, ...] = ()

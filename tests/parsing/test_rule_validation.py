@@ -82,6 +82,10 @@ class TestBatch2Valid:
     def test_paired_disjunction(self, features):
         assert check("(a|b) -> (c|d) / f _", features).is_ok()
 
+    def test_disjunction_collapse_to_single_result(self, features):
+        # §2.7 — a target disjunction may collapse to one (non-disjunction) result.
+        assert check("(a|b|c) -> d / f _", features).is_ok()
+
     def test_negation_in_target(self, features):
         assert check("!a -> b / c _", features).is_ok()
 
@@ -115,6 +119,16 @@ class TestBatch2Invalid:
     def test_disjunction_branch_count_mismatch(self, features):
         errors = check("(a|b) -> (c|d|e) / f _", features).unwrap_err()
         assert any("same number of branches" in e for e in errors)
+
+    def test_more_than_one_disjunction_per_side(self, features):
+        # §2.7.1 — pairing is by the matched branch, so only one disjunction per side.
+        errors = check("(a|b) (e|f) -> (c|d) (g|h)", features).unwrap_err()
+        assert any("at most one disjunction" in e for e in errors)
+
+    def test_nested_disjunction(self, features):
+        # §2.7.1 — a disjunction must be a top-level element, not nested in a branch.
+        errors = check("(a | (b|c)) -> x", features).unwrap_err()
+        assert any("nested disjunction" in e for e in errors)
 
     def test_negation_in_result(self, features):
         errors = check("a -> !b / c _", features).unwrap_err()

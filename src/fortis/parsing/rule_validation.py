@@ -20,7 +20,8 @@ Implemented:
             cross-position ordering is imposed — `1=a → b / @1 _` is valid.
     §2.4.1  every alpha variable is bound in target or context
     §2.5.4  ∅ as the entire target is invalid without a context
-    §2.7    a result disjunction needs a paired target disjunction (same arity)
+    §2.7    a result disjunction needs a paired target disjunction (same arity);
+            at most one disjunction per side, top-level (§2.7.1)
     §2.8.1  negation is not valid in result position
     §2.8.2  negation may not be applied to ∅ or []
     §2.9    each conditional label is a condition (target or context) and applies
@@ -296,6 +297,20 @@ def validate_structural_description(sd: StructuralDescription) -> Result[None, l
                     "disjunction with the same number of branches"
                 )
                 break
+
+    # §2.7.1 — branch pairing is by the target's matched branch, so a disjunction
+    # must be a top-level element (not nested) and there may be at most one per side;
+    # otherwise the recorded choice would desync from how the result is resolved.
+    for side, top_seq, elements in (
+        ("target", target_seq, sd.target),
+        ("result", result_seq, sd.result),
+    ):
+        top_level = [e for e in top_seq if isinstance(e, Disjunction)]
+        total = sum(1 for e in _walk(elements) if isinstance(e, Disjunction))
+        if total > len(top_level):
+            errors.append(f"a nested disjunction in the {side} is not supported (top-level only)")
+        if len(top_level) > 1:
+            errors.append(f"at most one disjunction per side (in the {side})")
 
     if errors:
         return Err(errors)
