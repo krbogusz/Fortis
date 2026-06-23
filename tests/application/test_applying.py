@@ -159,6 +159,18 @@ class TestComplexMergeTargets:
         with pytest.raises(NotImplementedError):
             apply_match(sd, match, [_fb(consonantal=1, voice=1)], letters, features)
 
+    def test_multisegment_recall_replays_the_whole_span(self, features, letters):
+        # A group binding captures several segments; @1 in the result replays them
+        # all — 1=([+cons][+syll]) -> @1 @1 reduplicates the CV (CV → CVCV).
+        segs = [_fb(consonantal=1, voice=1), _fb(syllabic=1)]
+        out = _apply("1=([+cons][+syll]) -> @1 @1", segs, features, letters)
+        assert _values(out) == [
+            {"consonantal": 1, "voice": 1},
+            {"syllabic": 1},
+            {"consonantal": 1, "voice": 1},
+            {"syllabic": 1},
+        ]
+
 
 class TestConditionalFeatures:
     def test_condition_gates_result_without_filtering(self, features, letters):

@@ -32,7 +32,7 @@ class Bindings:
     """
 
     alpha: dict[str, Value] = field(default_factory=dict)
-    reference: dict[int, FeatureBundle] = field(default_factory=dict)
+    reference: dict[int, tuple[FeatureBundle, ...]] = field(default_factory=dict)
     permissive_alpha: bool = False
     conditions: dict[int, bool] = field(default_factory=dict)
     disjunction_choices: tuple[int, ...] = ()

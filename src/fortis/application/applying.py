@@ -205,7 +205,8 @@ def _render_result_element(
             bound = bindings.reference.get(ref)
             if bound is None:
                 raise KeyError(f"result recall @{ref} has no bound element")
-            return [FeatureBundle(dict(bound.data))]
+            # Replay every captured segment (one for 1=[X], several for 1=([X][Y])).
+            return [FeatureBundle(dict(seg.data)) for seg in bound]
 
         case Null():
             return []

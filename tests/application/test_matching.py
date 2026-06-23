@@ -274,6 +274,14 @@ class TestSequenceMatcher:
         other = _fb(nasal=1, labial=0)
         assert find_matches(sd, [other, same]) == []
 
+    def test_multisegment_reference_bind_and_recall(self, features):
+        # A group binding captures the whole span; @1 must match an identical copy.
+        # CVCV (second CV == first) is a locus; a differing second C is not.
+        sd = parse_definition("1=([+cons][+syll]) @1 -> @1", features).unwrap()
+        c, v = _fb(consonantal=1, voice=1), _fb(syllabic=1, high=1)
+        assert _spans(find_matches(sd, [c, v, c, v])) == [(0, 4)]
+        assert find_matches(sd, [c, v, _fb(consonantal=1, voice=0), v]) == []
+
 
 class TestBindingOrder:
     """Pin the two-pass semantics: alpha is left-first, references are target-first."""
