@@ -1,31 +1,24 @@
-# Laryngeal colouring: *h₂ (x) colours an adjacent *e to *a, *h₃ (ɣʷ) to *o, on
-# either side (*h₁ leaves *e alone). A merge result (not a letter) so a stressed /e/
-# keeps its stress. *h₃ is the rounded back fricative (-sonorant, vs the glide w).
-# The target is *e specifically — the mid front vowel [+syll, +front, !+aperture];
-# the !+aperture excludes *i and *a (which are [+aperture]), so only *e colours.
-[a_colouring_after_h2]
+# Laryngeal colouring, in one rule per direction via conditionals. The context is the
+# laryngeal natural class — a guttural [+cons, +RTR] (= *h₁ χ, *h₂ ħ, *h₃ ʁʷ here).
+# Two conditional labels then pick the colour from the laryngeal's own quality:
+# label 1 fires next to a [+low] guttural (*h₂ ħ) and lowers *e to *a; label 2 fires
+# next to a [+rounded] guttural (*h₃ ʁʷ) and backs/rounds *e to *o. *h₁ (χ) is neither
+# [+low] nor [+rounded], so neither label fires and *e is left alone — its neutrality
+# falls out. A merge result keeps a stressed /e/'s stress; the target *e is the mid
+# front vowel [+syll, -cons, +front, !+aperture]: -cons excludes syllabic consonants
+# (r̩, l̩, …) and !+aperture excludes *i/*a (both [+aperture]).
+# Two rules, not one: the notation can't put the laryngeal on "either" side at once.
+[laryngeal_colouring_after]
 time = -2000
-name = "A-colouring after *h₂"
-description = "*h₂e > *h₂a"
-definition = "[+syll, +front, !+aperture] → [low: 1, aperture: 1, RTR: 1, ATR: none] / x _"
+name = "Laryngeal colouring after a laryngeal"
+description = "*h₂e > *h₂a, *h₃e > *h₃o (h₁ leaves e)"
+definition = "[+syll, -cons, +front, !+aperture] → [<1: low: 1>, <1: aperture: 1>, <1: RTR: 1>, <1: ATR: none>, <2: back: 1>, <2: rounded: 1>, <2: labial: 1>, <2: front: none>] / [+cons, +RTR, <1: +low>, <2: +rounded>] _"
 
-[a_colouring_before_h2]
+[laryngeal_colouring_before]
 time = -2000
-name = "A-colouring before *h₂"
-description = "*eh₂ > *ah₂"
-definition = "[+syll, +front, !+aperture] → [low: 1, aperture: 1, RTR: 1, ATR: none] / _ x"
-
-[o_colouring_after_h3]
-time = -2000
-name = "O-colouring after *h₃"
-description = "*h₃e > *h₃o"
-definition = "[+syll, +front, !+aperture] → [back: 1, rounded: 1, labial: 1, front: none] / [+cons, +continuant, +back, +rounded, -sonorant] _"
-
-[o_colouring_before_h3]
-time = -2000
-name = "O-colouring before *h₃"
-description = "*eh₃ > *oh₃"
-definition = "[+syll, +front, !+aperture] → [back: 1, rounded: 1, labial: 1, front: none] / _ [+cons, +continuant, +back, +rounded, -sonorant]"
+name = "Laryngeal colouring before a laryngeal"
+description = "*eh₂ > *ah₂, *eh₃ > *oh₃"
+definition = "[+syll, -cons, +front, !+aperture] → [<1: low: 1>, <1: aperture: 1>, <1: RTR: 1>, <1: ATR: none>, <2: back: 1>, <2: rounded: 1>, <2: labial: 1>, <2: front: none>] / _ [+cons, +RTR, <1: +low>, <2: +rounded>]"
 
 [centumization]
 time = -2000
@@ -47,6 +40,50 @@ time = -2000
 name = "Dental cluster simplification"
 description = "*TsT > ss — *wid-tós (*widstos) > *wissós 'certain'"
 definition = "[+cons, -continuant, +anterior, -sonorant] s [+cons, -continuant, +anterior, -sonorant] → s s"
+
+# A geminate is one consonant doubled, so match it as `1=[+cons] @1` (capture, then
+# the same consonant again) — not `[+cons]{2}`, which is any two consonants AND whose
+# single quantified element can't pair with the two-element result. The first copy
+# stays ([+cons] is a no-op merge), the second is deleted (∅); counts match, 2:2.
+[geminate_shortening]
+time = -2000
+name = "Geminate shortening"
+description = "A geminate shortens after a consonant or a long vowel"
+definition = "1=[+cons] @1 → [+cons] ∅ / ([+cons]|[length: long]) _"
+
+[overlong_vowels]
+time = -2000
+name = "Overlong vowels creation"
+description = "Word-final long vowels are lengthened to 'overlong' vowels"
+definition = "[length: long]# → [length: overlong]"
+
+[loss_of_initial_laryngeals]
+time = -2000
+name = "Loss of initial laryngeals"
+description = "Word-initial laryngeals are lost before a consonant"
+definition = "#[+cons, +RTR][+cons] → ∅[+cons]"
+
+[loss_of_laryngeals_before_vowels]
+time = -2000
+name = "Loss of laryngeals before vowels"
+description = "Laryngeals are lost before vowels — *h₁ésti 'is' > *ésti > *isti"
+definition = "[+cons, +RTR][+syll, -cons] → ∅[+syll, -cons]"
+
+[loss_of_laryngeals_after_vowels]
+time = -2000
+name = "Loss of laryngeals after vowels"
+description = "Laryngeals are lost after vowels but lengthen the preceding vowel"
+definition = "[+syll, -cons] [+cons, +RTR] → [+syll, -cons, length: long] ∅"
+
+# After the loss rules leave two vowels in hiatus (*-oHom > *oom, *-eh₂es > *aas),
+# they contract: the first vowel becomes overlong (merge keeps its quality and any
+# stress) and the second is deleted. Placed after the loss rules so it sees the
+# hiatus; it makes its own overlong, so it does not depend on `overlong_vowels`.
+[vowel_contraction]
+time = -2000
+name = "Vowel contraction in hiatus"
+description = "Two vowels in hiatus contract to an overlong vowel — *-oHom > *-ôm"
+definition = "[+syll, -cons] [+syll, -cons] → [length: overlong] ∅"
 
 [backness_harmony]
 time = 1300
