@@ -26,10 +26,11 @@ Conditional result features (``[<n: F>]``) are applied only when their label's
 condition held during matching (recorded in ``bindings.conditions``); otherwise
 the feature is skipped.
 
-Deferred (each raises ``NotImplementedError`` rather than silently misapplying):
-quantified / grouped / disjoined target or result elements on the merge path,
-disjunction-result branch pairing, and alpha recall into a *contour* limb in the
-result.
+Complex elements are resolved before the merge/replace logic: a disjunction to its
+matched branch, a group to its sub-sequence, a fixed-count quantifier to that many
+copies. The one shape still deferred (it raises ``NotImplementedError`` rather than
+silently misapplying) is a **variable** quantifier on the merge/replace path, whose
+per-locus width is not recoverable here.
 """
 
 from src.fortis.application.combining import merge
@@ -44,6 +45,7 @@ from src.fortis.models.elements import (
     BundleElem,
     Disjunction,
     Element,
+    Group,
     LetterBundle,
     LetterRef,
     Negated,
@@ -59,7 +61,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec
-from src.fortis.models.values import AlphaRef, Value
+from src.fortis.models.values import AlphaRef
 
 # Reused verbatim from the validator so the applier's path decision can never
 # disagree with what the parser accepted. ``parsing/rule_validation`` is the
@@ -101,9 +103,29 @@ def _resolve_disjunctions(content: list[Element], choices: tuple[int, ...]) -> l
     return resolved
 
 
-def _limbs(value: Value) -> tuple[object, ...]:
-    """The contour limbs of a value (a scalar becomes a single limb)."""
-    return value if isinstance(value, tuple) else (value,)
+def _expand(content: list[Element]) -> list[Element]:
+    """Flatten groups and expand fixed-count quantifiers to a flat, 1-per-segment list.
+
+    A ``Group``'s sub-sequence is spliced in; a ``Quantified`` with a fixed count
+    ``{n,n}`` is repeated ``n`` times (its inner expanded first). This lets the
+    merge/replace logic — which pairs one element per segment — handle a complex
+    target like ``[+cons]{2}`` or ``([+cons][+syll])``. A *variable* quantifier has
+    no recoverable per-locus width at this point, so it is refused (loudly).
+    """
+    flat: list[Element] = []
+    for element in content:
+        if isinstance(element, Group):
+            flat.extend(_expand(list(element.elements)))
+        elif isinstance(element, Quantified):
+            if element.quant.max is None or element.quant.min != element.quant.max:
+                raise NotImplementedError(
+                    f"a variable quantifier {element.quant} on the merge/replace path "
+                    "is not supported (no fixed per-locus width)"
+                )
+            flat.extend(_expand([element.inner]) * element.quant.min)
+        else:
+            flat.append(element)
+    return flat
 
 
 def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureBundle:
@@ -115,8 +137,8 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
     (recorded in ``bindings.conditions``); when the condition was false the feature
     is skipped. A missing label means the condition was never evaluated (e.g. the
     target conditional sat in a branch that did not run) — a real inconsistency, so
-    it raises rather than silently dropping the feature. An alpha recall buried in a
-    contour limb is still unsupported and raises.
+    it raises rather than silently dropping the feature. An alpha recall inside a
+    contour is resolved limb by limb (``[F: α>3]`` recalls α into the first limb).
     """
     delta = FeatureBundle()
     for feature, spec in bundle.items():
@@ -131,10 +153,23 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
         value = spec.value
         if isinstance(value, AlphaRef):
             value = bindings.alpha[value.var]
-        elif isinstance(value, tuple) and any(isinstance(limb, AlphaRef) for limb in _limbs(value)):
-            raise NotImplementedError(
-                f"alpha recall inside a contour result ('{feature}') is not yet supported"
-            )
+        elif isinstance(value, tuple):
+            # A contour: resolve any alpha recall limb by limb, keeping the shape. A
+            # limb must be a single value, so an alpha bound to a contour cannot nest
+            # into one — refuse loudly rather than build a malformed nested value.
+            limbs: list[object] = []
+            for limb in value:
+                if not isinstance(limb, AlphaRef):
+                    limbs.append(limb)
+                    continue
+                bound = bindings.alpha[limb.var]
+                if isinstance(bound, tuple):
+                    raise NotImplementedError(
+                        f"alpha '{limb.var}' is bound to a contour and cannot be recalled "
+                        f"into a single contour limb of '{feature}'"
+                    )
+                limbs.append(bound)
+            value = tuple(limbs)
         delta[feature] = FeatureSpec(feature=feature, value=value)
     return delta
 
@@ -226,9 +261,10 @@ def apply_match(
             write is refused.
     """
     span = segments[match.start : match.end]
-    # Select the branch each disjunction took (the target's branch is reused for the
-    # paired result disjunction); the rest of the logic sees disjunction-free content.
-    result_content = _resolve_disjunctions(_content(sd.result), match.target_choices)
+    # Resolve the branch each disjunction took (the target's branch is reused for the
+    # paired result disjunction), then flatten groups and expand fixed quantifiers —
+    # so the rest of the logic sees a flat, one-element-per-segment sequence.
+    result_content = _expand(_resolve_disjunctions(_content(sd.result), match.target_choices))
 
     if not any(_is_merge_bundle(e) for e in result_content):
         # Replacement path: the result fully specifies the output; the span
@@ -238,10 +274,9 @@ def apply_match(
             out.extend(_render_result_element(element, None, match.bindings, letters, features))
         return out
 
-    # Merge path: target and result line up one-to-one. Only flat, fixed-width
-    # target elements are supported; anything else is deferred rather than
-    # silently misaligned.
-    target_content = _resolve_disjunctions(_content(sd.target), match.target_choices)
+    # Merge path: target and result line up one-to-one. After expansion the target is
+    # flat and fixed-width; the guard below still catches anything else.
+    target_content = _expand(_resolve_disjunctions(_content(sd.target), match.target_choices))
     if len(target_content) != len(result_content):
         raise NotImplementedError(
             "merge result with unequal target/result counts is not supported "

@@ -59,6 +59,13 @@ class TestMergePath:
         out = _apply("[+high] -> [αfront] / [αfront] _", segs, features, letters)
         assert _values(out) == [{"front": 1, "high": 1}]
 
+    def test_alpha_recall_into_a_contour_limb(self, features, letters):
+        # α binds the left neighbour's length; the result recalls it as the first
+        # limb of a contour, [length: α>3] → the contour (2, 3).
+        segs = [_fb(length=2), _fb(syllabic=1)]
+        out = _apply("[+syll] -> [length: α>3] / [αlength] _", segs, features, letters)
+        assert _values(out) == [{"syllabic": 1, "length": (2, 3)}]
+
     def test_mixed_null_and_bundle(self, features, letters):
         # ∅ deletes the consonant; the bundle modifies the vowel (§2.5.5).
         segs = [_fb(consonantal=1), _fb(syllabic=1)]
@@ -132,13 +139,26 @@ class TestReplacementPath:
         assert _values(out) == [{"consonantal": 1, "voice": 1}]
 
 
-class TestDeferredShapesRefused:
-    def test_quantified_merge_refused(self, features, letters):
-        sd = parse_definition("[+cons]{2} -> [-voice]{2}", features).unwrap()
+class TestComplexMergeTargets:
+    def test_fixed_quantified_merge(self, features, letters):
+        # [+cons]{2} -> [-voice]{2}: each of the two matched consonants is devoiced.
         segs = [_fb(consonantal=1, voice=1), _fb(consonantal=1, voice=1)]
-        match = find_matches(sd, segs, letters)[0]
+        out = _apply("[+cons]{2} -> [-voice]{2}", segs, features, letters)
+        assert _values(out) == [{"consonantal": 1, "voice": 0}, {"consonantal": 1, "voice": 0}]
+
+    def test_grouped_merge(self, features, letters):
+        # ([+cons][+syll]) -> ([-voice][+nasal]): the group flattens, then pairs.
+        segs = [_fb(consonantal=1, voice=1), _fb(syllabic=1)]
+        out = _apply("([+cons][+syll]) -> ([-voice][+nasal])", segs, features, letters)
+        assert _values(out) == [{"consonantal": 1, "voice": 0}, {"syllabic": 1, "nasal": 1}]
+
+    def test_variable_quantifier_still_refused(self, features, letters):
+        # A variable quantifier has no fixed per-locus width to expand here.
+        sd = parse_definition("[+cons]{1,2} -> [-voice]{1,2}", features).unwrap()
+        match = find_matches(sd, [_fb(consonantal=1, voice=1)], letters)[0]
         with pytest.raises(NotImplementedError):
-            apply_match(sd, match, segs, letters, features)
+            apply_match(sd, match, [_fb(consonantal=1, voice=1)], letters, features)
+
 
 class TestConditionalFeatures:
     def test_condition_gates_result_without_filtering(self, features, letters):
