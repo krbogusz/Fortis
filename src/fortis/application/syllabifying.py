@@ -32,7 +32,7 @@ checked.
 """
 
 from src.fortis.application.matching import full_match, pattern_matches
-from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.inventories import (
     LetterInventory,
     SonoritiesInventory,
@@ -149,3 +149,80 @@ def syllabify(
         start = _split(cluster_levels, cluster_segs, onset_part, coda_part, letters)
         boundaries.add(left + 1 + start)
     return frozenset(boundaries)
+
+
+def nuclei_by_position(
+    segments: list[FeatureBundle],
+    boundaries: frozenset[int],
+    nucleus_definition: PatternBundle,
+) -> list[FeatureBundle | None]:
+    """For each segment position, the nucleus bundle of its syllable (or ``None``).
+
+    This realises the ``Syllable.bundle`` *view*: a segment's syllable-tier features
+    are those of its syllable's nucleus, so syllable-tier matching reads them here.
+    Consecutive *boundaries* delimit each syllable; the nucleus is its first segment
+    matching *nucleus_definition*. Positions in a syllable with no nucleus stay
+    ``None`` (no syllable-tier info).
+    """
+    nuclei: list[FeatureBundle | None] = [None] * len(segments)
+    edges = sorted(boundaries)
+    for left, right in zip(edges, edges[1:], strict=False):
+        nucleus: FeatureBundle | None = None
+        for i in range(left, right):
+            if pattern_matches(nucleus_definition, segments[i]):
+                nucleus = segments[i]
+                break
+        if nucleus is not None:
+            for i in range(left, right):
+                nuclei[i] = nucleus
+    return nuclei
+
+
+def consolidate_suprasegmentals(
+    segments: list[FeatureBundle],
+    boundaries: frozenset[int],
+    nucleus_definition: PatternBundle,
+    syllable_features: frozenset[str],
+) -> list[FeatureBundle]:
+    """Move each syllable's syllable-tier features onto its current nucleus.
+
+    Suprasegmentals belong to the syllable, so when the nucleus shifts — e.g.
+    u-epenthesis turns syllabic ``l̩`` into onset-vowel ``u`` + coda ``l``, stranding
+    the stress on ``l`` — this gathers the syllable-tier features from every segment
+    of the syllable onto its current nucleus and strips them from the rest. Run as
+    part of resyllabification; segments are otherwise unchanged.
+
+    This is **spatial**, not identity-tracking: a strand is reunited with the
+    nucleus of whatever syllable that segment currently sits in. For epenthesis the
+    strand stays co-syllabic with the new nucleus, so it is correct; but if a rule
+    ever moved the carrying segment into a neighbouring syllable, the suprasegmental
+    would follow to *that* syllable's nucleus. That is the defined behaviour of the
+    no-cross-pass-identity design, not a bug.
+    """
+    if not syllable_features:
+        return segments
+    out = list(segments)
+    edges = sorted(boundaries | {0, len(segments)})
+    for left, right in zip(edges, edges[1:], strict=False):
+        nucleus_pos: int | None = None
+        for i in range(left, right):
+            if pattern_matches(nucleus_definition, segments[i]):
+                nucleus_pos = i
+                break
+        if nucleus_pos is None:
+            continue
+        # Pool the span's syllable-tier features (the nucleus's own values win).
+        pooled: dict[str, object] = {}
+        for i in range(left, right):
+            if i == nucleus_pos:
+                continue
+            pooled.update({f: s for f, s in segments[i].items() if f in syllable_features})
+        pooled.update({f: s for f, s in segments[nucleus_pos].items() if f in syllable_features})
+        # Rebuild: nucleus = segmental + pooled suprasegmentals; others drop theirs.
+        for i in range(left, right):
+            segmental = {f: s for f, s in out[i].items() if f not in syllable_features}
+            if i == nucleus_pos:
+                out[i] = FeatureBundle({**segmental, **pooled})
+            elif len(segmental) != len(out[i]):
+                out[i] = FeatureBundle(segmental)
+    return out

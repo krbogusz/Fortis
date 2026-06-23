@@ -36,7 +36,7 @@ from src.fortis.application.combining import merge
 
 # Forward reference only; importing the class would be circular-safe but the type
 # is used purely for annotation here.
-from src.fortis.application.matching import Match
+from src.fortis.application.matching import Match, SyllableView
 from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle, ResultBundle
 from src.fortis.models.elements import (
@@ -153,12 +153,39 @@ def _render_result_element(
             raise NotImplementedError(f"result element {element!r} is not yet supported")
 
 
+def _refuse_nonnucleus_syllable_write(
+    result_elem: Element,
+    pos: int | None,
+    segments: list[FeatureBundle],
+    syllables: SyllableView | None,
+) -> None:
+    """Refuse a syllable-tier result feature whose target segment is not the nucleus.
+
+    Suprasegmentals live on the syllable's nucleus, so a syllable-tier write that
+    does not land on the nucleus is a cross-syllable edit (unsupported). With no
+    syllable view (syllabification unconfigured) there is no nucleus to check
+    against, so the write proceeds as an ordinary segment merge.
+    """
+    if syllables is None or not isinstance(result_elem, ResultElem):
+        return
+    tier_features = [f for f in result_elem.bundle if f in syllables.features]
+    if not tier_features:
+        return
+    is_nucleus = pos is not None and syllables.at(pos) is segments[pos]
+    if not is_nucleus:
+        raise NotImplementedError(
+            f"writing syllable-tier feature(s) {sorted(tier_features)} to a non-nucleus "
+            "target is not supported (suprasegmentals live on the syllable nucleus)"
+        )
+
+
 def apply_match(
     sd: StructuralDescription,
     match: Match,
     segments: list[FeatureBundle],
     letters: LetterInventory,
     features: FeatureInventory,
+    syllables: SyllableView | None = None,
 ) -> list[FeatureBundle]:
     """Compute the bundles that replace ``segments[match.start:match.end]``.
 
@@ -168,6 +195,9 @@ def apply_match(
         segments: The whole current word.
         letters: Letter inventory, for letter shorthands / recalls in the result.
         features: Feature inventory, for the geometry-aware merge.
+        syllables: Per-position nucleus view. A syllable-tier result feature is
+            written only when its target is the nucleus; a non-nucleus syllable-tier
+            write is refused.
     """
     span = segments[match.start : match.end]
     result_content = _content(sd.result)
@@ -202,9 +232,10 @@ def apply_match(
     cursor = match.start
     for target_elem, result_elem in zip(target_content, result_content, strict=True):
         if isinstance(target_elem, Null):
-            source = None  # insertion point — nothing to merge onto
+            source, pos = None, None  # insertion point — nothing to merge onto
         else:
-            source = segments[cursor]
+            source, pos = segments[cursor], cursor
             cursor += 1
+        _refuse_nonnucleus_syllable_write(result_elem, pos, segments, syllables)
         out.extend(_render_result_element(result_elem, source, match.bindings, letters, features))
     return out

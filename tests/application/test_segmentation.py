@@ -41,6 +41,17 @@ class TestStringToSequence:
         seq = string_to_sequence("an" + "̄", project)
         assert seq[0]["tone"].value == 3
 
+    def test_stress_attaches_to_a_diacritic_made_nucleus(self, project):
+        # ˈl̩ : the syllabic diacritic makes l a nucleus *after* the letter is read;
+        # the pending stress must still attach to it (not get stranded / skipped).
+        seq = string_to_sequence("ˈl̩", project)
+        assert "stress" in seq[0]
+
+    def test_stress_not_stolen_by_a_later_plain_vowel(self, project):
+        # ˈl̩a : stress belongs to the syllabic l̩, not the following plain vowel a.
+        seq = string_to_sequence("ˈl̩a", project)
+        assert "stress" in seq[0] and "stress" not in seq[1]
+
 
 class TestRoundTrip:
     def test_feature_level_round_trip_for_all_words(self, project):

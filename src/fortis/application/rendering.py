@@ -2,6 +2,7 @@ from src.fortis.application.combining import differing, matches_exactly
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Diacritic, DiacriticKind
 from src.fortis.models.project import Project
+from src.fortis.models.tiers import Tier
 
 
 def sequence_to_string(sequence: list[FeatureBundle], inventories: Project) -> str:
@@ -13,7 +14,9 @@ def sequence_to_string(sequence: list[FeatureBundle], inventories: Project) -> s
        by diacritics (fewest remaining differences after diacritic search).
     3. Output: before-diacritics + letter + combining-diacritics + after-diacritics.
 
-    Suprasegmental (syllable-tier) diacritics are not yet handled.
+    Syllable-tier (suprasegmental) diacritics are emitted on the segment that
+    carries those features — the nucleus — at the nucleus position (not yet
+    repositioned to the syllable edge).
     """
     output = ""
     for segment in sequence:
@@ -70,20 +73,52 @@ def render_syllabified(
 ) -> str:
     """Render *sequence* as IPA with ``.`` at each interior syllable boundary.
 
-    Each segment goes through the full ``render_segment`` (letter + diacritics);
-    the word-edge boundaries (``0`` and ``len``) are not shown.
+    Segments render through ``render_segment`` *without* their syllable-tier
+    features; those (tone, stress) are positioned per syllable instead: before-kind
+    marks (e.g. stress ``ˈ``) at the syllable's left edge, combining/after-kind
+    (e.g. tone) on the nucleus that carries them. So ``ˈxenti`` surfaces as
+    ``ˈxen.ti`` (stress at the syllable onset), not ``xˈen.ti``.
     """
+    syllable_features = frozenset(
+        name for name, feature in inventories.features.items() if feature.tier == Tier.syllable
+    )
+    all_diacritics = dict(inventories.diacritics)
     interior = boundaries - {0, len(sequence)}
+    edges = sorted(boundaries | {0, len(sequence)})
     parts: list[str] = []
-    for i, segment in enumerate(sequence):
-        if i in interior:
+    for left, right in zip(edges, edges[1:], strict=False):
+        if left in interior:
             parts.append(".")
-        parts.append(render_segment(segment, inventories))
+        # The syllable's suprasegmentals live on its nucleus — the segment in the
+        # span carrying syllable-tier features. Split its marks by attachment kind.
+        before: list[str] = []
+        combining: list[str] = []
+        after: list[str] = []
+        carrier: int | None = None
+        for i in range(left, right):
+            present = {f for f in sequence[i] if f in syllable_features}
+            if present:
+                _find_diacritics(sequence[i], present, all_diacritics, before, combining, after)
+                carrier = i
+                break
+        parts.append("".join(before))  # syllable-initial marks (e.g. stress)
+        for i in range(left, right):
+            parts.append(render_segment(sequence[i], inventories, syllable_features))
+            if i == carrier:
+                parts.append("".join(combining) + "".join(after))  # nucleus marks (e.g. tone)
     return "".join(parts)
 
 
-def render_segment(segment: FeatureBundle, inventories: Project) -> str:
-    """Render a single FeatureBundle as an IPA string (letter + diacritics)."""
+def render_segment(
+    segment: FeatureBundle, inventories: Project, exclude: frozenset[str] = frozenset()
+) -> str:
+    """Render a single FeatureBundle as an IPA string (letter + diacritics).
+
+    Features named in *exclude* are ignored — used by ``render_syllabified`` to
+    render a segment without its syllable-tier features, which it positions itself.
+    """
+    if exclude:
+        segment = FeatureBundle({f: spec for f, spec in segment.items() if f not in exclude})
     # 1. Try exact match first
     for letter_symbol, letter_def in inventories.letters.items():
         if matches_exactly(segment, letter_def.bundle):
@@ -97,7 +132,10 @@ def render_segment(segment: FeatureBundle, inventories: Project) -> str:
     best_total_diffs = float("inf")
     best_diacritics: tuple[list[str], list[str], list[str]] | None = None
 
-    segment_diacritics = inventories.diacritics.segment_dict
+    # All diacritics, segment- and syllable-tier: a segment carrying syllable-tier
+    # features (a nucleus, where suprasegmentals live) gets its tone/stress marks;
+    # non-nuclei have no syllable-tier features, so syllable-tier diacritics never fit.
+    all_diacritics = dict(inventories.diacritics)
 
     for letter_symbol, letter_def in inventories.letters.items():
         total_diffs = differing(segment, letter_def.bundle)
@@ -105,7 +143,7 @@ def render_segment(segment: FeatureBundle, inventories: Project) -> str:
         before: list[str] = []
         combining: list[str] = []
         after: list[str] = []
-        _find_diacritics(segment, remaining, segment_diacritics, before, combining, after)
+        _find_diacritics(segment, remaining, all_diacritics, before, combining, after)
 
         if (len(remaining) < best_remaining) or (
             len(remaining) == best_remaining and len(total_diffs) < best_total_diffs

@@ -216,6 +216,62 @@ class TestDerive:
         assert _values(result.surface)[1]["voice"] == 1  # rule fired, no abort
         assert result.surface_boundaries == frozenset()  # surface unsyllabifiable → no structure
 
+    def test_tier_aware_match_reads_the_syllable_end_to_end(
+        self, features, letters, sonorities, syllable_parts
+    ):
+        # [+cons, tone: 3] voices a consonant *in a tone-3 syllable*: +cons on the
+        # consonant, tone:3 on its syllable's nucleus. The driver builds the view
+        # because the rule mentions a syllable-tier feature.
+        rule = _rule("[+cons, tone: 3] -> [+voice]", features)
+        rules = RuleInventory({0: (rule,)})
+        cons = _fb(consonantal=1, sonorant=0, voice=0)
+        vowel = _fb(syllabic=1, consonantal=0, tone=3)
+        result = derive(
+            Word(ipa="CV"), [cons, vowel], rules, letters, features, sonorities, syllable_parts
+        )
+        assert _values(result.surface)[0]["voice"] == 1  # voiced via its syllable's tone
+        # The same consonant in a tone-4 syllable is left alone.
+        vowel4 = _fb(syllabic=1, consonantal=0, tone=4)
+        result4 = derive(
+            Word(ipa="CV"), [cons, vowel4], rules, letters, features, sonorities, syllable_parts
+        )
+        assert _values(result4.surface)[0]["voice"] == 0
+
+    def test_syllable_tier_write_to_nucleus(self, features, letters, sonorities, syllable_parts):
+        # Writing a syllable-tier feature whose target is the nucleus works (in-span merge).
+        rule = _rule("[+syll] -> [tone: 3]", features)
+        rules = RuleInventory({0: (rule,)})
+        result = derive(Word(ipa="a"), [_fb(syllabic=1, consonantal=0)], rules, letters, features,
+                        sonorities, syllable_parts)
+        assert _values(result.surface)[0]["tone"] == 3
+
+    def test_syllable_tier_write_to_nonnucleus_refused(
+        self, features, letters, sonorities, syllable_parts
+    ):
+        # Writing tone to a consonant (not its syllable's nucleus) is refused.
+        rule = _rule("[+cons] -> [tone: 3]", features)
+        rules = RuleInventory({0: (rule,)})
+        segs = [_fb(consonantal=1, sonorant=0), _fb(syllabic=1, consonantal=0)]
+        with pytest.raises(NotImplementedError):
+            derive(Word(ipa="CV"), segs, rules, letters, features, sonorities, syllable_parts)
+
+    def test_consolidation_follows_an_epenthesis_nucleus_shift(
+        self, features, letters, sonorities, syllable_parts
+    ):
+        # l̩(stress) → V + l (epenthesis inserts a vowel and desyllabifies the
+        # sonorant): the stress strands on l, then resyllabification consolidates it
+        # onto the new vowel nucleus.
+        rule = _rule("∅ [+cons, +syll] → [+syll, high: 1] [-syll]", features)
+        rules = RuleInventory({0: (rule,)})
+        stressed_l = _fb(consonantal=1, sonorant=1, lateral=1, syllabic=1, stress=2)
+        result = derive(
+            Word(ipa="l̩"), [stressed_l], rules, letters, features, sonorities, syllable_parts
+        )
+        nuclei = [s for s in result.surface if s.get("syllabic") and s["syllabic"].value == 1]
+        assert nuclei and nuclei[0]["stress"].value == 2  # stress on the new nucleus u
+        others = [s for s in result.surface if not (s.get("syllabic") and s["syllabic"].value == 1)]
+        assert all("stress" not in s for s in others)  # no longer stranded on l
+
     def test_input_snapshot_unchanged_by_derivation(self, features, letters):
         word = Word(ipa="snap")
         a = _rule("[+nasal] -> [+voice]", features, time=0)

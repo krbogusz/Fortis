@@ -2,7 +2,13 @@
 
 import pytest
 
-from src.fortis.application.matching import Match, find_matches, pattern_matches
+from src.fortis.application.matching import (
+    Match,
+    SyllableView,
+    find_matches,
+    pattern_matches,
+)
+from src.fortis.application.syllabifying import nuclei_by_position
 from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.inventories import Letter, LetterInventory
@@ -143,6 +149,30 @@ class TestContourPosition:
         bundle = parse_pattern_bundle("tone: α>2@any", features).unwrap()
         with pytest.raises(NotImplementedError):
             pattern_matches(bundle, _fb(tone=(1, 2)), Bindings())
+
+
+class TestTierAwareMatching:
+    def test_syllable_tier_spec_reads_the_nucleus(self, features):
+        # A consonant and a tone-3 vowel forming one syllable. [+cons, tone: 3]
+        # matches the consonant: +cons against the segment, tone:3 against its
+        # syllable's nucleus (where suprasegmentals live).
+        cons = _fb(consonantal=1)
+        vowel = _fb(syllabic=1, tone=3)
+        segs = [cons, vowel]
+        nucleus_def = parse_pattern_bundle("+syll", features).unwrap()
+        nuclei = nuclei_by_position(segs, frozenset({0, 2}), nucleus_def)
+        view = SyllableView(nuclei=nuclei, features=frozenset({"tone"}))
+        sd = parse_definition("[+cons, tone: 3] -> [+voice]", features).unwrap()
+        assert [(m.start, m.end) for m in find_matches(sd, segs, syllables=view)] == [(0, 1)]
+        # The same vowel's syllable at tone 4 → the consonant no longer matches.
+        segs4 = [cons, _fb(syllabic=1, tone=4)]
+        view4 = SyllableView(
+            nuclei=nuclei_by_position(segs4, frozenset({0, 2}), nucleus_def),
+            features=frozenset({"tone"}),
+        )
+        assert find_matches(sd, segs4, syllables=view4) == []
+        # Without the view, tone is matched on the consonant itself (no tone) → no match.
+        assert find_matches(sd, segs) == []
 
 
 def _spans(matches: list[Match]) -> list[tuple[int, int]]:

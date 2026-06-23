@@ -256,7 +256,12 @@ def _condition_holds(spec: PatternSpec, segment: FeatureBundle, bindings: Bindin
 
 
 def pattern_matches(
-    pattern: PatternBundle, segment: FeatureBundle, bindings: Bindings | None = None
+    pattern: PatternBundle,
+    segment: FeatureBundle,
+    bindings: Bindings | None = None,
+    *,
+    syllable: FeatureBundle | None = None,
+    syllable_features: frozenset[str] = frozenset(),
 ) -> bool:
     """Whether *pattern* matches realized *segment*.
 
@@ -274,19 +279,30 @@ def pattern_matches(
     (AND-accumulated across the positions the label appears in), which the applier
     later consults to gate the paired result feature.
 
+    A **syllable-tier** feature (one named in *syllable_features*) is tested
+    against *syllable* — the bundle of the segment's syllable nucleus — rather than
+    the segment itself, so e.g. ``[+cons, tone: 3]`` checks the consonant's
+    *syllable's* tone. With no *syllable* (unsyllabified, or no tier info) every
+    feature falls back to the segment, preserving the prior behaviour.
+
     Args:
         pattern: The pattern bundle to test.
         segment: The realized segment to test against.
         bindings: Alpha-variable environment, threaded for binding/recall.
+        syllable: The segment's syllable nucleus bundle (for syllable-tier specs).
+        syllable_features: Names of the features that live on the syllable tier.
     """
     for feature, spec in pattern.data.items():
+        target = segment
+        if syllable is not None and feature in syllable_features:
+            target = syllable
         if spec.condition_label is not None:
             if bindings is not None:
                 label = spec.condition_label
-                holds = _condition_holds(spec, segment, bindings)
+                holds = _condition_holds(spec, target, bindings)
                 bindings.conditions[label] = bindings.conditions.get(label, True) and holds
             continue
-        if feature not in segment:
+        if feature not in target:
             if spec.value is None:
                 # "F: none" is satisfied by absence; "F: !none" requires presence.
                 if spec.negated:
@@ -295,12 +311,30 @@ def pattern_matches(
             if spec.negated:
                 continue  # "F: !val" is satisfied by absence
             return False
-        if not _spec_matches(spec, segment[feature], bindings):
+        if not _spec_matches(spec, target[feature], bindings):
             return False
     return True
 
 
 # ---- Sequence matcher -----------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class SyllableView:
+    """Syllable-tier context for tier-aware matching.
+
+    ``nuclei[pos]`` is the nucleus bundle of the segment at ``pos``'s syllable (the
+    ``Syllable.bundle`` view); ``features`` names the syllable-tier features. A
+    syllable-tier spec is then matched against ``nuclei[pos]`` rather than the
+    segment itself.
+    """
+
+    nuclei: list[FeatureBundle | None]
+    features: frozenset[str]
+
+    def at(self, pos: int) -> FeatureBundle | None:
+        """The syllable (nucleus) bundle for position *pos*, if any."""
+        return self.nuclei[pos] if 0 <= pos < len(self.nuclei) else None
 
 
 @dataclass(frozen=True)
@@ -334,18 +368,24 @@ def _match_element(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> Iterator[tuple[int, Bindings]]:
     """Yield every ``(end_pos, bindings)`` for matching one *element* at *pos*.
 
     Bindings are copied before any mutation, so each yielded branch is
     independent and the caller's environment is never disturbed. *boundaries* are
-    the syllable-boundary positions, consulted only by the ``$`` assertion.
+    the syllable-boundary positions (the ``$`` assertion); *syllables* supplies the
+    per-position nucleus bundle for tier-aware matching of syllable-tier features.
     """
     match element:
         case BundleElem(bundle):
             if pos < len(segments):
                 branch = _copy(bindings)
-                if pattern_matches(bundle, segments[pos], branch):
+                syllable = syllables.at(pos) if syllables else None
+                feats = syllables.features if syllables else frozenset()
+                if pattern_matches(
+                    bundle, segments[pos], branch, syllable=syllable, syllable_features=feats
+                ):
                     yield pos + 1, branch
 
         case LetterRef(symbol):
@@ -372,11 +412,15 @@ def _match_element(
             yield pos, bindings
 
         case Group(inner):
-            yield from _match_sequence(inner, segments, pos, bindings, letters, boundaries)
+            yield from _match_sequence(
+                inner, segments, pos, bindings, letters, boundaries, syllables
+            )
 
         case Disjunction(branches):
             for branch in branches:
-                yield from _match_sequence(branch, segments, pos, bindings, letters, boundaries)
+                yield from _match_sequence(
+                    branch, segments, pos, bindings, letters, boundaries, syllables
+                )
 
         case Negated(inner):
             # One segment that the inner element does NOT match. Bindings from the
@@ -392,7 +436,7 @@ def _match_element(
                 matched = any(
                     end == pos + 1
                     for end, _ in _match_element(
-                        inner, segments, pos, _copy(bindings), letters, boundaries
+                        inner, segments, pos, _copy(bindings), letters, boundaries, syllables
                     )
                 )
                 if not matched:
@@ -400,11 +444,14 @@ def _match_element(
 
         case Quantified(inner, quant):
             yield from _match_repeat(
-                inner, segments, pos, bindings, letters, boundaries, quant.min, quant.max, 0
+                inner, segments, pos, bindings, letters, boundaries, syllables, quant.min,
+                quant.max, 0,
             )
 
         case Bound(ref, inner):
-            for end, branch in _match_element(inner, segments, pos, bindings, letters, boundaries):
+            for end, branch in _match_element(
+                inner, segments, pos, bindings, letters, boundaries, syllables
+            ):
                 captured = _copy(branch)
                 if end == pos + 1:  # single-segment binding (multi-segment deferred)
                     captured.reference[ref] = segments[pos]
@@ -426,17 +473,21 @@ def _match_repeat(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
     min_n: int,
     max_n: int | None,
     count: int,
 ) -> Iterator[tuple[int, Bindings]]:
     """Greedy quantifier match: try more repetitions before fewer."""
     if max_n is None or count < max_n:
-        for end, branch in _match_element(inner, segments, pos, bindings, letters, boundaries):
+        for end, branch in _match_element(
+            inner, segments, pos, bindings, letters, boundaries, syllables
+        ):
             if end == pos:  # zero-width progress would loop forever
                 continue
             yield from _match_repeat(
-                inner, segments, end, branch, letters, boundaries, min_n, max_n, count + 1
+                inner, segments, end, branch, letters, boundaries, syllables,
+                min_n, max_n, count + 1,
             )
     if count >= min_n:
         yield pos, bindings
@@ -449,14 +500,17 @@ def _match_sequence(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> Iterator[tuple[int, Bindings]]:
     """Yield every ``(end_pos, bindings)`` for matching *elements* in order at *pos*."""
     if not elements:
         yield pos, bindings
         return
     first, rest = elements[0], elements[1:]
-    for mid, branch in _match_element(first, segments, pos, bindings, letters, boundaries):
-        yield from _match_sequence(rest, segments, mid, branch, letters, boundaries)
+    for mid, branch in _match_element(
+        first, segments, pos, bindings, letters, boundaries, syllables
+    ):
+        yield from _match_sequence(rest, segments, mid, branch, letters, boundaries, syllables)
 
 
 def _match_ending_at(
@@ -466,6 +520,7 @@ def _match_ending_at(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> Iterator[Bindings]:
     """Yield bindings for which *elements* match a span ending exactly at *end*.
 
@@ -474,7 +529,7 @@ def _match_ending_at(
     """
     for start in range(end, -1, -1):
         for stop, branch in _match_sequence(
-            elements, segments, start, bindings, letters, boundaries
+            elements, segments, start, bindings, letters, boundaries, syllables
         ):
             if stop == end:
                 yield branch
@@ -487,13 +542,16 @@ def _match_starting_at(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> Iterator[Bindings]:
     """Yield bindings for which *elements* match a span starting at *start*.
 
     Used for right context/exception, whose left edge is anchored to the target
     but whose right edge floats.
     """
-    for _stop, branch in _match_sequence(elements, segments, start, bindings, letters, boundaries):
+    for _stop, branch in _match_sequence(
+        elements, segments, start, bindings, letters, boundaries, syllables
+    ):
         yield branch
 
 
@@ -505,12 +563,17 @@ def _exception_blocks(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> bool:
     """Whether the exception environment holds around the locus (blocking the rule)."""
     if not (sd.left_exception or sd.right_exception):
         return False
-    for left in _match_ending_at(sd.left_exception, segments, start, bindings, letters, boundaries):
-        for _ in _match_starting_at(sd.right_exception, segments, end, left, letters, boundaries):
+    for left in _match_ending_at(
+        sd.left_exception, segments, start, bindings, letters, boundaries, syllables
+    ):
+        for _ in _match_starting_at(
+            sd.right_exception, segments, end, left, letters, boundaries, syllables
+        ):
             return True
     return False
 
@@ -528,9 +591,12 @@ def _match_span(
     bindings: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> Iterator[Bindings]:
     """Yield bindings for which *elements* match *segments* consuming exactly ``[start, end)``."""
-    for stop, branch in _match_sequence(elements, segments, start, bindings, letters, boundaries):
+    for stop, branch in _match_sequence(
+        elements, segments, start, bindings, letters, boundaries, syllables
+    ):
         if stop == end:
             yield branch
 
@@ -546,7 +612,9 @@ def full_match(
     *elements* matches only an empty *segments*; quantifiers express optionality.
     """
     letters = letters if letters is not None else LetterInventory()
-    return any(_match_span(elements, segments, 0, len(segments), Bindings(), letters, frozenset()))
+    return any(
+        _match_span(elements, segments, 0, len(segments), Bindings(), letters, frozenset(), None)
+    )
 
 
 def find_matches(
@@ -554,6 +622,7 @@ def find_matches(
     segments: list[FeatureBundle],
     letters: LetterInventory | None = None,
     boundaries: frozenset[int] = frozenset(),
+    syllables: SyllableView | None = None,
 ) -> list[Match]:
     """Find every locus in *segments* where rule *sd* applies.
 
@@ -573,6 +642,8 @@ def find_matches(
         letters: Letter inventory for resolving letter shorthands in the rule.
         boundaries: Syllable-boundary positions for the ``$`` assertion; empty
             (the default) means the form is unsyllabified, so ``$`` never matches.
+        syllables: Per-position nucleus view for tier-aware syllable-tier matching
+            (``None`` means every feature is matched against its own segment).
     """
     letters = letters if letters is not None else LetterInventory()
     matches: list[Match] = []
@@ -585,10 +656,10 @@ def find_matches(
         # valid span is still reached and none is missed.
         seed_pass1 = Bindings(permissive_alpha=True)
         for end, pass1 in _match_sequence(
-            sd.target, segments, start, seed_pass1, letters, boundaries
+            sd.target, segments, start, seed_pass1, letters, boundaries, syllables
         ):
             located = _locate(
-                sd, segments, start, end, _seed_references(pass1), letters, boundaries
+                sd, segments, start, end, _seed_references(pass1), letters, boundaries, syllables
             )
             if located is not None:
                 matches.append(located)
@@ -604,6 +675,7 @@ def _locate(
     seed: Bindings,
     letters: LetterInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> Match | None:
     """Pass 2: evaluate the environment in alpha order; return the Match or None.
 
@@ -612,15 +684,17 @@ def _locate(
     context, then the exception. *seed* carries the target's reference bindings
     from pass 1.
     """
-    for after_left in _match_ending_at(sd.left_context, segments, start, seed, letters, boundaries):
+    for after_left in _match_ending_at(
+        sd.left_context, segments, start, seed, letters, boundaries, syllables
+    ):
         for after_target in _match_span(
-            sd.target, segments, start, end, after_left, letters, boundaries
+            sd.target, segments, start, end, after_left, letters, boundaries, syllables
         ):
             for after_right in _match_starting_at(
-                sd.right_context, segments, end, after_target, letters, boundaries
+                sd.right_context, segments, end, after_target, letters, boundaries, syllables
             ):
                 if not _exception_blocks(
-                    sd, segments, start, end, after_right, letters, boundaries
+                    sd, segments, start, end, after_right, letters, boundaries, syllables
                 ):
                     return Match(start=start, end=end, bindings=after_right)
     return None

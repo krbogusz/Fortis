@@ -5,6 +5,16 @@ from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.project import Project
 
 
+def _is_nucleus(segment: FeatureBundle, project: Project) -> bool:
+    """Whether *segment* matches the nucleus definition in force at the project time."""
+    nucleus = project.syllable_parts.get_nucleus(project.time)
+    return (
+        nucleus is not None
+        and nucleus.definition is not None
+        and pattern_matches(nucleus.definition, segment)
+    )
+
+
 def string_to_sequence(raw_string: str, project: Project) -> list[FeatureBundle]:
     """Turn IPA strings into lists of segments.
 
@@ -44,12 +54,7 @@ def string_to_sequence(raw_string: str, project: Project) -> list[FeatureBundle]
                 if remaining.startswith(letter_symbol):
                     segment = project.letters[letter_symbol].bundle
                     segment = combine(segment, buffer)
-                    nucleus = project.syllable_parts.get_nucleus(project.time)
-                    if (
-                        nucleus is not None
-                        and nucleus.definition is not None
-                        and pattern_matches(nucleus.definition, segment)
-                    ):
+                    if _is_nucleus(segment, project):
                         segment = combine(segment, syllable_buffer)
                         last_nucleus_index = len(segments)  # index the nucleus gets on append
                         syllable_buffer = FeatureBundle()
@@ -74,6 +79,15 @@ def string_to_sequence(raw_string: str, project: Project) -> list[FeatureBundle]
                                 diacritic_def.bundle,
                                 form_contours=diacritic_def.contour,
                             )
+                            # A segment-tier diacritic (e.g. syllabic ̩) can turn the
+                            # segment into a nucleus; if so, it claims any pending
+                            # syllable-tier before-diacritics (e.g. stress) and becomes
+                            # the current nucleus for later attaching diacritics.
+                            if _is_nucleus(segments[-1], project):
+                                if syllable_buffer:
+                                    segments[-1] = combine(segments[-1], syllable_buffer)
+                                    syllable_buffer = FeatureBundle()
+                                last_nucleus_index = len(segments) - 1
                         i += len(diacritic_symbol)
                         break
                 else:

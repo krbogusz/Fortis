@@ -40,11 +40,15 @@ output, only enables ``$``-conditioned rules.)
 
 from src.fortis.application.applying import apply_match
 from src.fortis.application.combining import matches_exactly
-from src.fortis.application.matching import Match, find_matches
-from src.fortis.application.syllabifying import SyllabificationError, syllabify
+from src.fortis.application.matching import Match, SyllableView, find_matches
+from src.fortis.application.syllabifying import (
+    SyllabificationError,
+    consolidate_suprasegmentals,
+    nuclei_by_position,
+    syllabify,
+)
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.derivation import Derivation, DerivationStep
-from src.fortis.models.elements import SyllableBoundary
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import (
     LetterInventory,
@@ -58,7 +62,71 @@ from src.fortis.models.rules import (
     RuleInventory,
     StructuralDescription,
 )
-from src.fortis.parsing.rule_validation import _walk
+from src.fortis.models.tiers import Tier
+
+
+def _syllable_features(features: FeatureInventory) -> frozenset[str]:
+    """The names of the syllable-tier features (tone, stress, …)."""
+    return frozenset(name for name, feature in features.items() if feature.tier == Tier.syllable)
+
+
+def _consolidate(
+    form: list[FeatureBundle],
+    sonorities: SonoritiesInventory | None,
+    syllable_parts: SyllablePartsInventory | None,
+    time: int,
+    letters: LetterInventory,
+    syllable_features: frozenset[str],
+) -> list[FeatureBundle]:
+    """Resyllabify *form* and move each syllable's suprasegmentals onto its nucleus.
+
+    Part of resyllabification: keeps suprasegmentals on the current nucleus as the
+    nucleus shifts (e.g. epenthesis). Best-effort — an unsyllabifiable form or
+    unconfigured syllabification leaves the form unchanged.
+
+    Runs after each rule fires. Note the directional modes resyllabify per *step*
+    inside ``apply_rule`` for matching, but consolidation happens here, once per
+    rule — so a directional rule that shifts a nucleus and then tier-matches that
+    same syllable later in the *same* pass would read the pre-consolidation strand.
+    Unreachable with current data (the only directional rule is segment-tier).
+    """
+    if sonorities is None or syllable_parts is None or not syllable_features:
+        return form
+    nucleus_part = syllable_parts.get_nucleus(time)
+    if nucleus_part is None or nucleus_part.definition is None:
+        return form
+    try:
+        boundaries = syllabify(form, sonorities, syllable_parts, time, letters)
+    except SyllabificationError:
+        return form
+    return consolidate_suprasegmentals(form, boundaries, nucleus_part.definition, syllable_features)
+
+
+def _syllable_context(
+    form: list[FeatureBundle],
+    sonorities: SonoritiesInventory | None,
+    syllable_parts: SyllablePartsInventory | None,
+    time: int,
+    letters: LetterInventory,
+    syllable_features: frozenset[str],
+) -> tuple[frozenset[int], SyllableView | None]:
+    """Boundaries (for ``$``) and the per-position nucleus view (for tier-aware matching).
+
+    Returns ``(frozenset(), None)`` when syllabification is unconfigured.
+    """
+    if sonorities is None or syllable_parts is None:
+        return frozenset(), None
+    try:
+        boundaries = syllabify(form, sonorities, syllable_parts, time, letters)
+    except SyllabificationError:
+        # Syllabification runs after every rule; an unsyllabifiable form (under
+        # onset/coda constraints) yields no structure rather than aborting.
+        return frozenset(), None
+    nucleus_part = syllable_parts.get_nucleus(time)
+    if nucleus_part is None or nucleus_part.definition is None:
+        return boundaries, None
+    nuclei = nuclei_by_position(form, boundaries, nucleus_part.definition)
+    return boundaries, SyllableView(nuclei=nuclei, features=syllable_features)
 
 
 def _boundaries(
@@ -92,19 +160,6 @@ def _display_boundaries(
         return frozenset()
 
 
-def _uses_boundary(sd: StructuralDescription) -> bool:
-    """Whether the rule references the ``$`` syllable-boundary assertion anywhere."""
-    sequences = (
-        sd.target,
-        sd.result,
-        sd.left_context,
-        sd.right_context,
-        sd.left_exception,
-        sd.right_exception,
-    )
-    return any(isinstance(e, SyllableBoundary) for seq in sequences for e in _walk(seq))
-
-
 def apply_rule(
     rule: Rule,
     segments: list[FeatureBundle],
@@ -116,24 +171,28 @@ def apply_rule(
     """Apply *rule* to *segments* once, per its application mode.
 
     Returns a new form; *segments* is never mutated. A rule whose loci do not
-    match returns an unchanged copy. Syllabification runs only for rules that
-    actually reference ``$`` (its sole consumer) — so a ``$``-free rule never
-    syllabifies, and thus never aborts on a transiently-unsyllabifiable form under
-    onset/coda constraints it does not consult.
+    match returns an unchanged copy. The form is re-syllabified for every rule, so
+    ``$`` and syllable-tier matching always reflect the current form; an
+    unsyllabifiable form (under onset/coda constraints) yields no structure rather
+    than aborting, and a rule that consults neither ``$`` nor a syllable-tier
+    feature is simply unaffected by it.
     """
-    if not _uses_boundary(rule.sd):
-        sonorities = syllable_parts = None  # $ unused → skip syllabification entirely
+    syllable_features = _syllable_features(features)
     match rule.application:
         case ApplicationMode.simultaneous:
-            boundaries = _boundaries(segments, sonorities, syllable_parts, rule.time, letters)
-            return _apply_simultaneous(rule.sd, segments, letters, features, boundaries)
+            boundaries, view = _syllable_context(
+                segments, sonorities, syllable_parts, rule.time, letters, syllable_features
+            )
+            return _apply_simultaneous(rule.sd, segments, letters, features, boundaries, view)
         case ApplicationMode.left_to_right:
             return _apply_directional(
-                rule.sd, segments, letters, features, sonorities, syllable_parts, rule.time, False
+                rule.sd, segments, letters, features, sonorities, syllable_parts, rule.time,
+                syllable_features, False,
             )
         case ApplicationMode.right_to_left:
             return _apply_directional(
-                rule.sd, segments, letters, features, sonorities, syllable_parts, rule.time, True
+                rule.sd, segments, letters, features, sonorities, syllable_parts, rule.time,
+                syllable_features, True,
             )
 
 
@@ -154,14 +213,17 @@ def _apply_simultaneous(
     letters: LetterInventory,
     features: FeatureInventory,
     boundaries: frozenset[int],
+    syllables: SyllableView | None,
 ) -> list[FeatureBundle]:
     """Find every locus against the original form, then splice all rewrites at once."""
-    selected = _select_non_overlapping(find_matches(sd, segments, letters, boundaries))
+    selected = _select_non_overlapping(find_matches(sd, segments, letters, boundaries, syllables))
     out = list(segments)
     # Splice right-to-left so each replacement's indices stay valid, and compute
     # every replacement from the ORIGINAL form (no application sees another's output).
     for match in sorted(selected, key=lambda m: m.start, reverse=True):
-        out[match.start : match.end] = apply_match(sd, match, segments, letters, features)
+        out[match.start : match.end] = apply_match(
+            sd, match, segments, letters, features, syllables
+        )
     return out
 
 
@@ -173,19 +235,24 @@ def _apply_directional(
     sonorities: SonoritiesInventory | None,
     syllable_parts: SyllablePartsInventory | None,
     time: int,
+    syllable_features: frozenset[str],
     reverse: bool,
 ) -> list[FeatureBundle]:
     """Scan and rewrite in place; each output is visible to later loci in the pass.
 
     Because the form mutates as it is rewritten, it is re-syllabified before each
-    scan so the ``$`` assertion always reflects the current form.
+    scan so the ``$`` assertion and syllable-tier matching reflect the current form.
     """
     form = list(segments)
     cursor = len(form) if reverse else 0
     while True:
-        boundaries = _boundaries(form, sonorities, syllable_parts, time, letters)
+        boundaries, view = _syllable_context(
+            form, sonorities, syllable_parts, time, letters, syllable_features
+        )
         if reverse:
-            candidates = [m for m in find_matches(sd, form, letters, boundaries) if m.end <= cursor]
+            candidates = [
+                m for m in find_matches(sd, form, letters, boundaries, view) if m.end <= cursor
+            ]
             if not candidates:
                 break
             # Rightmost, tie-broken to longest (min start) — the mirror of
@@ -193,14 +260,14 @@ def _apply_directional(
             match = max(candidates, key=lambda m: (m.end, -m.start))
         else:
             candidates = [
-                m for m in find_matches(sd, form, letters, boundaries) if m.start >= cursor
+                m for m in find_matches(sd, form, letters, boundaries, view) if m.start >= cursor
             ]
             if not candidates:
                 break
             # Leftmost; the matcher already made it longest for that start.
             match = min(candidates, key=lambda m: m.start)
 
-        replacement = apply_match(sd, match, form, letters, features)
+        replacement = apply_match(sd, match, form, letters, features, view)
         form[match.start : match.end] = replacement
 
         no_op = match.end == match.start and not replacement
@@ -249,12 +316,18 @@ def derive(
     input_form = list(segments)
     current = list(segments)
     steps: list[DerivationStep] = []
+    syllable_features = _syllable_features(features)
 
     for time in sorted(rules.keys()):
         for rule in rules[time]:
             before = list(current)
             after = apply_rule(rule, current, letters, features, sonorities, syllable_parts)
             if _fired(before, after):
+                # Resyllabify after the rule, keeping each syllable's suprasegmentals
+                # on its (possibly shifted) nucleus.
+                after = _consolidate(
+                    after, sonorities, syllable_parts, rule.time, letters, syllable_features
+                )
                 steps.append(
                     DerivationStep(
                         before=before,

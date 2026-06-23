@@ -8,5 +8,5 @@ def test_main_derives_every_word(project, capsys):
     out = capsys.readouterr().out
     # One surface form per word, and known syllabified derivations come through.
     assert out.count("Surface:") == len(project.words)
-    assert "xen.ti" in out  # plain syllabification
+    assert "ˈxen.ti" in out  # syllabified; stress rendered at the syllable's left edge
     assert "wul.kʷos" in out  # centumization + u-epenthesis, then syllabified

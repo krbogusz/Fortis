@@ -5,7 +5,12 @@ The ``sonorities`` and ``syllable_parts`` fixtures come from conftest.
 
 import pytest
 
-from src.fortis.application.syllabifying import SyllabificationError, syllabify
+from src.fortis.application.syllabifying import (
+    SyllabificationError,
+    consolidate_suprasegmentals,
+    nuclei_by_position,
+    syllabify,
+)
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import SyllablePart, SyllablePartsInventory
 from src.fortis.models.specs import FeatureSpec
@@ -77,6 +82,58 @@ class TestSyllabify:
     def test_no_nucleus_definition_yields_nothing(self, sonorities, features):
         empty_parts = SyllablePartsInventory()
         assert syllabify([_v()], sonorities, empty_parts, time=0) == frozenset()
+
+
+class TestNucleiByPosition:
+    def test_every_position_maps_to_its_syllable_nucleus(self, features):
+        # C V . C V  (two syllables); every position maps to its syllable's nucleus.
+        nuc = parse_pattern_bundle("+syll", features).unwrap()
+        c1, v1, c2, v2 = _stop(), _v(), _stop(), _v()
+        segs = [c1, v1, c2, v2]
+        nuclei = nuclei_by_position(segs, frozenset({0, 2, 4}), nuc)
+        assert nuclei == [v1, v1, v2, v2]
+
+    def test_no_nucleus_in_a_span_is_none(self, features):
+        nuc = parse_pattern_bundle("+syll", features).unwrap()
+        segs = [_stop(), _stop()]  # no nucleus
+        assert nuclei_by_position(segs, frozenset({0, 2}), nuc) == [None, None]
+
+
+class TestConsolidateSuprasegmentals:
+    def test_strands_move_to_the_nucleus(self, features):
+        # A syllable [u(nucleus) l(coda, with a stranded stress)] — consolidation
+        # moves the stress onto the nucleus u and strips it from l.
+        nuc = parse_pattern_bundle("+syll", features).unwrap()
+        u = _fb(syllabic=1, consonantal=0)
+        coda = _fb(consonantal=1, sonorant=1, lateral=1, stress=2)  # stranded stress
+        out = consolidate_suprasegmentals([u, coda], frozenset({0, 2}), nuc, frozenset({"stress"}))
+        assert out[0]["stress"].value == 2  # moved onto the nucleus
+        assert "stress" not in out[1]  # stripped from the coda
+
+    def test_no_op_when_already_on_the_nucleus(self, features):
+        nuc = parse_pattern_bundle("+syll", features).unwrap()
+        u = _fb(syllabic=1, consonantal=0, stress=2)
+        coda = _fb(consonantal=1, sonorant=1, lateral=1)
+        out = consolidate_suprasegmentals([u, coda], frozenset({0, 2}), nuc, frozenset({"stress"}))
+        assert out[0]["stress"].value == 2 and "stress" not in out[1]
+
+    def test_per_syllable_isolation(self, features):
+        # Two syllables: syl 1 has a stranded stress on its coda; syl 2 carries its
+        # own tone on its nucleus. Each consolidates within its own span — no merge.
+        nuc = parse_pattern_bundle("+syll", features).unwrap()
+        segs = [
+            _stop(),                                                   # 0  syl1 onset
+            _fb(syllabic=1, consonantal=0),                            # 1  syl1 nucleus
+            _fb(consonantal=1, sonorant=1, lateral=1, stress=2),       # 2  syl1 coda (strand)
+            _stop(),                                                   # 3  syl2 onset
+            _fb(syllabic=1, consonantal=0, tone=3),                    # 4  syl2 nucleus (own tone)
+        ]
+        out = consolidate_suprasegmentals(
+            segs, frozenset({0, 3, 5}), nuc, frozenset({"stress", "tone"})
+        )
+        assert out[1]["stress"].value == 2 and "stress" not in out[2]  # syl1 strand → syl1 nucleus
+        assert "tone" not in out[1]  # syl 2's tone did not bleed into syl 1
+        assert out[4]["tone"].value == 3 and "stress" not in out[4]  # syl 2 unchanged
 
 
 class TestOnsetCodaConstraints:
