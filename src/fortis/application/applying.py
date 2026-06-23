@@ -42,6 +42,7 @@ from src.fortis.models.bundles import FeatureBundle, ResultBundle
 from src.fortis.models.elements import (
     Bound,
     BundleElem,
+    Disjunction,
     Element,
     LetterBundle,
     LetterRef,
@@ -77,6 +78,27 @@ def _content(elements: tuple[Element, ...]) -> list[Element]:
     Boundaries are positional markers that never count toward cardinality.
     """
     return [e for e in elements if not isinstance(e, (WordBoundary, SyllableBoundary))]
+
+
+def _resolve_disjunctions(content: list[Element], choices: tuple[int, ...]) -> list[Element]:
+    """Replace each top-level ``Disjunction`` with its chosen branch's elements.
+
+    The i-th disjunction encountered takes branch ``choices[i]`` — the branch the
+    *target* matched (``Match.target_choices``). A result disjunction therefore
+    reuses the matching target disjunction's branch (positional 1-to-1); resolving
+    the target disjunction to a plain element is also what lets it ride the merge
+    path. Validation guarantees ≤1 disjunction per side and an in-range index, so a
+    bare element (collapse, ``(A|B|C) -> x``) simply has no disjunction to resolve.
+    """
+    resolved: list[Element] = []
+    index = 0
+    for element in content:
+        if isinstance(element, Disjunction):
+            resolved.extend(element.branches[choices[index]])
+            index += 1
+        else:
+            resolved.append(element)
+    return resolved
 
 
 def _limbs(value: Value) -> tuple[object, ...]:
@@ -204,7 +226,9 @@ def apply_match(
             write is refused.
     """
     span = segments[match.start : match.end]
-    result_content = _content(sd.result)
+    # Select the branch each disjunction took (the target's branch is reused for the
+    # paired result disjunction); the rest of the logic sees disjunction-free content.
+    result_content = _resolve_disjunctions(_content(sd.result), match.target_choices)
 
     if not any(_is_merge_bundle(e) for e in result_content):
         # Replacement path: the result fully specifies the output; the span
@@ -217,7 +241,7 @@ def apply_match(
     # Merge path: target and result line up one-to-one. Only flat, fixed-width
     # target elements are supported; anything else is deferred rather than
     # silently misaligned.
-    target_content = _content(sd.target)
+    target_content = _resolve_disjunctions(_content(sd.target), match.target_choices)
     if len(target_content) != len(result_content):
         raise NotImplementedError(
             "merge result with unequal target/result counts is not supported "

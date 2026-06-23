@@ -196,3 +196,34 @@ class TestConditionalFeatures:
         bogus = Match(start=0, end=1, bindings=Bindings())  # no conditions recorded
         with pytest.raises(NotImplementedError):
             apply_match(sd, bogus, [_fb(syllabic=1, high=1)], letters, features)
+
+
+class TestDisjunction:
+    def test_branch_selection_is_positional(self, features, letters):
+        # ([+high]|[+front]) -> ([+nasal]|[+voice]): a [+high] segment takes branch 0
+        # (→ +nasal); a [+front] segment takes branch 1 (→ +voice). Distinct results
+        # prove the pairing follows the matched branch, not always branch 0.
+        rule = "([+high] | [+front]) -> ([+nasal] | [+voice])"
+        hi = _apply(rule, [_fb(high=1)], features, letters)
+        fr = _apply(rule, [_fb(front=1)], features, letters)
+        assert _values(hi) == [{"high": 1, "nasal": 1}]
+        assert _values(fr) == [{"front": 1, "voice": 1}]
+
+    def test_collapse_to_single_result(self, features, letters):
+        # ([+high]|[+front]) -> [+nasal]: every branch collapses to the one result, and
+        # a disjunction target on the merge path is resolved (it used to be refused).
+        rule = "([+high] | [+front]) -> [+nasal]"
+        hi = _apply(rule, [_fb(high=1)], features, letters)
+        fr = _apply(rule, [_fb(front=1)], features, letters)
+        assert _values(hi) == [{"high": 1, "nasal": 1}]
+        assert _values(fr) == [{"front": 1, "nasal": 1}]
+
+    def test_scalar_chain_shift_flips_the_value(self, features, letters):
+        # The requested shape on a scalar: ([length:3]|[length:2]) -> ([length:2]|[length:1]).
+        # A scalar merge overwrites, so each branch shifts the value down one step
+        # (length 3 → 2, length 2 → 1) — a chain shift, not an additive stack.
+        rule = "([length: 3] | [length: 2]) -> ([length: 2] | [length: 1])"
+        three = _apply(rule, [_fb(length=3, syllabic=1)], features, letters)
+        two = _apply(rule, [_fb(length=2, syllabic=1)], features, letters)
+        assert _values(three) == [{"length": 2, "syllabic": 1}]
+        assert _values(two) == [{"length": 1, "syllabic": 1}]
