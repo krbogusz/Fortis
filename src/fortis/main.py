@@ -41,18 +41,26 @@ def main() -> None:
 
 
 def _print_derivation(derivation: Derivation, project: Project) -> None:
-    """Print one word's derivation: input, each firing rule, then the surface."""
+    """Print one word's derivation: headword, each firing rule, then the surface.
+
+    Each firing rule is shown as ``<time>: <rule name>``, with the before → after
+    forms and a change summary on the indented line below.
+    """
     word = derivation.word
     gloss = f'  "{word.gloss}"' if word.gloss else ""
+    print("")
     print(f"{word.ipa}{gloss}")  # echo the input verbatim (no render round-trip)
 
     for step in derivation.steps:
+        before = render_syllabified(step.before, step.before_boundaries, project)
         after = render_syllabified(step.after, step.after_boundaries, project)
         change = describe_change(step.before, step.after, project)
-        print(f"  →  [{step.rule.id}]  {after}   ({change})")
+        print(f"    {step.rule.time}: {step.rule.name or step.rule.id}")
+        print(f"        {before} → {after}   ({change})")
 
     surface = render_syllabified(derivation.surface, derivation.surface_boundaries, project)
-    print(f"Surface: {surface}")
+    print(f"    Surface: {surface}")
+    print("")
 
 
 if __name__ == "__main__":
