@@ -1,29 +1,31 @@
 # Laryngeal colouring: *h₂ (x) colours an adjacent *e to *a, *h₃ (ɣʷ) to *o, on
 # either side (*h₁ leaves *e alone). A merge result (not a letter) so a stressed /e/
 # keeps its stress. *h₃ is the rounded back fricative (-sonorant, vs the glide w).
+# The target is *e specifically — the mid front vowel [+syll, +front, !+aperture];
+# the !+aperture excludes *i and *a (which are [+aperture]), so only *e colours.
 [a_colouring_after_h2]
 time = -2000
 name = "A-colouring after *h₂"
 description = "*h₂e > *h₂a"
-definition = "e → [low: 1, aperture: 1, RTR: 1, ATR: none] / x _"
+definition = "[+syll, +front, !+aperture] → [low: 1, aperture: 1, RTR: 1, ATR: none] / x _"
 
 [a_colouring_before_h2]
 time = -2000
 name = "A-colouring before *h₂"
 description = "*eh₂ > *ah₂"
-definition = "e → [low: 1, aperture: 1, RTR: 1, ATR: none] / _ x"
+definition = "[+syll, +front, !+aperture] → [low: 1, aperture: 1, RTR: 1, ATR: none] / _ x"
 
 [o_colouring_after_h3]
 time = -2000
 name = "O-colouring after *h₃"
 description = "*h₃e > *h₃o"
-definition = "e → [back: 1, rounded: 1, labial: 1, front: none] / [+cons, +continuant, +back, +rounded, -sonorant] _"
+definition = "[+syll, +front, !+aperture] → [back: 1, rounded: 1, labial: 1, front: none] / [+cons, +continuant, +back, +rounded, -sonorant] _"
 
 [o_colouring_before_h3]
 time = -2000
 name = "O-colouring before *h₃"
 description = "*eh₃ > *oh₃"
-definition = "e → [back: 1, rounded: 1, labial: 1, front: none] / _ [+cons, +continuant, +back, +rounded, -sonorant]"
+definition = "[+syll, +front, !+aperture] → [back: 1, rounded: 1, labial: 1, front: none] / _ [+cons, +continuant, +back, +rounded, -sonorant]"
 
 [centumization]
 time = -2000
