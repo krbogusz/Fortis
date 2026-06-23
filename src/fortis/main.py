@@ -1,27 +1,57 @@
 """Main entry point for the Fortis phonology engine.
 
-Loads all inventories, processes every word through all phonological
-rules, and prints a step-by-step derivation table showing which rules
-applied and what changed at each stage.
+Loads every inventory, then for each word: segments the IPA into feature
+bundles, runs it through all rules in time order, and prints a step-by-step
+derivation showing only the rules that changed the form, with syllable
+structure (``.`` between syllables) on the surface.
 """
 
-from pprint import pprint
+import sys
 
+from src.fortis.application.deriving import derive
+from src.fortis.application.rendering import render_syllabified
+from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.loaders.project import load_project
-from src.fortis.parsing.bundles import parse_pattern_spec
-from src.fortis.parsing.notation import parse_definition
+from src.fortis.models.derivation import Derivation
+from src.fortis.models.project import Project
 
 
 def main() -> None:
-    """Load inventories, run derivations for all words, and print results."""
-    project = load_project().unwrap()
-    # pprint(project.rules)
-    spec = "tone: 2>α"
-    print(f"{spec} -> {parse_pattern_spec(spec, project.features)}")
+    """Load inventories, derive every word, and print the traces."""
+    result = load_project()
+    if result.is_err():
+        for error in result.unwrap_err():
+            print(f"error: {error}", file=sys.stderr)
+        raise SystemExit(1)
+    project = result.unwrap()
 
-    rule = "[+nasal] → [+voice, nasal: none] / [tone: 2>α] _ v // _ m"
-    print(rule)
-    pprint(parse_definition(rule, project.features))
+    for ipa, word in project.words.items():
+        segments = string_to_sequence(ipa, project)
+        derivation = derive(
+            word,
+            segments,
+            project.rules,
+            project.letters,
+            project.features,
+            project.sonorities,
+            project.syllable_parts,
+        )
+        _print_derivation(derivation, project)
+        print()
+
+
+def _print_derivation(derivation: Derivation, project: Project) -> None:
+    """Print one word's derivation: input, each firing rule, then the surface."""
+    word = derivation.word
+    gloss = f'  "{word.gloss}"' if word.gloss else ""
+    print(f"{word.ipa}{gloss}")  # echo the input verbatim (no render round-trip)
+
+    for step in derivation.steps:
+        after = render_syllabified(step.after, step.after_boundaries, project)
+        print(f"  →  [{step.rule.id}]  {after}   {step.change}")
+
+    surface = render_syllabified(derivation.surface, derivation.surface_boundaries, project)
+    print(f"Surface: {surface}")
 
 
 if __name__ == "__main__":
