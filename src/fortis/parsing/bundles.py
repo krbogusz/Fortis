@@ -421,23 +421,24 @@ def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[Patt
             return Ok(pattern_spec)
 
 
-def opposite_alpha_on_scalar(
+def opposite_alpha_on_nonbinary(
     feature: str, value: Value | None, features: FeatureInventory
 ) -> str | None:
-    """Return an error message if ``value`` uses alpha-opposite on a scalar feature.
+    """Return an error message if ``value`` uses alpha-opposite on a non-binary feature.
 
-    Alpha-opposite (``-α``) is defined only for binary/unary features, whose
-    bound value has a single opposite (the other pole, or ``none`` for unary).
-    A scalar feature has no single opposite, so ``-α`` is invalid on it — for a
-    single value or any contour limb. Returns ``None`` when the spec is fine.
+    Alpha-opposite (``-α``) means "the other pole", so it is defined only for
+    **binary** features, whose two values flip cleanly (0 ↔ 1). A scalar feature
+    has no single opposite, and a unary (privative) feature has no value-opposite
+    at all (its only realized value is *present*), so ``-α`` is invalid on either —
+    for a single value or any contour limb. Returns ``None`` when the spec is fine.
     """
-    if features[feature].kind != "scalar":
+    if features[feature].kind == "binary":
         return None
     limbs = value if isinstance(value, tuple) else (value,)
     if any(isinstance(limb, AlphaRef) and limb.op == AlphaOp.opposite for limb in limbs):
         return (
-            f"Alpha-opposite ('-α') is not valid for scalar feature '{feature}' "
-            "(binary/unary only)"
+            f"Alpha-opposite ('-α') is not valid for {features[feature].kind} feature "
+            f"'{feature}' (binary only)"
         )
     return None
 
@@ -451,10 +452,10 @@ def validate_pattern_spec(
     incrementally: a multi-limb contour's positional modifier must be an index
     list (not a single index or bare edge), whose length matches the contour's
     limb count and whose indices are contiguous. Also rejects alpha-opposite
-    (``-α``) on scalar features (binary/unary only).
+    (``-α``) on non-binary features (binary only).
     """
     error_list = []
-    message = opposite_alpha_on_scalar(pattern_spec.feature, pattern_spec.value, features)
+    message = opposite_alpha_on_nonbinary(pattern_spec.feature, pattern_spec.value, features)
     if message is not None:
         error_list.append(message)
     if isinstance(pattern_spec.value, tuple):
@@ -625,12 +626,12 @@ def validate_result_spec(
 
     Parsing already rejects negation, alpha-other, and contour positions in
     result position. The remaining spec-level invariant is that alpha-opposite
-    (``-α``) is binary/unary only — a scalar feature has no single opposite.
+    (``-α``) is binary only — scalar/unary features have no single value-opposite.
     Cross-position rules (conditional-label pairing with the target, alpha
     binding) belong to the not-yet-built rule-level validation layer.
     """
     error_list: list[str] = []
-    message = opposite_alpha_on_scalar(result_spec.feature, result_spec.value, features)
+    message = opposite_alpha_on_nonbinary(result_spec.feature, result_spec.value, features)
     if message is not None:
         error_list.append(message)
     if error_list:

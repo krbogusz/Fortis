@@ -29,6 +29,11 @@ class Bindings:
     ``disjunction_choices`` records, in encounter order, the branch index taken at
     each disjunction matched so far. The applier reads the *target's* slice of these
     (see ``Match.target_choices``) to select the paired result branch.
+
+    ``pending_other`` holds deferred ``!α`` (alpha-*other*) constraints — ``(var,
+    atom)`` pairs that require ``atom != α[var]``. Because ``!α`` is a ≠ relation it
+    cannot itself *bind* α, so it is recorded here and verified once matching has
+    bound the variable (keeping alpha resolution order-independent).
     """
 
     alpha: dict[str, Value] = field(default_factory=dict)
@@ -36,3 +41,4 @@ class Bindings:
     permissive_alpha: bool = False
     conditions: dict[int, bool] = field(default_factory=dict)
     disjunction_choices: tuple[int, ...] = ()
+    pending_other: list[tuple[str, object]] = field(default_factory=list)

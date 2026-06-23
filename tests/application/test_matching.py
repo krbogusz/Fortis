@@ -284,17 +284,28 @@ class TestSequenceMatcher:
 
 
 class TestBindingOrder:
-    """Pin the two-pass semantics: alpha is left-first, references are target-first."""
+    """Pin the matcher semantics: alpha is order-independent, references target-first."""
 
-    def test_alpha_binds_in_left_context_not_target(self, features):
-        # `[-αhigh]` on the left and `[αhigh]` (same) on the target. First occurrence
-        # binds regardless of op, evaluated left context → target → right context, so
-        # the LEFT neighbour binds α and the target must agree → high values must be
-        # EQUAL. (Target-first binding would instead force them to DIFFER — the old,
-        # pre-rebuild behaviour. This test is what distinguishes the two.)
-        sd = parse_definition("[αhigh] -> [+voice] / [-αhigh] _", features).unwrap()
-        assert _spans(find_matches(sd, [_fb(high=1), _fb(high=1)])) == [(1, 2)]
-        assert find_matches(sd, [_fb(high=0), _fb(high=1)]) == []
+    def test_alpha_opposite_is_order_independent_disagreement(self, features):
+        # α is a value-agreement variable (SPE): [αhigh] and [-αhigh] must DISAGREE,
+        # regardless of which position is reached first. (The old engine read this as
+        # agreement because the binder dropped its op — the bug this fix corrects.)
+        ctx_left = parse_definition("[αhigh] -> [+voice] / [-αhigh] _", features).unwrap()
+        # left high=0, target high=1 → disagree → match; high=1,high=1 → agree → none.
+        assert _spans(find_matches(ctx_left, [_fb(high=0), _fb(high=1)])) == [(1, 2)]
+        assert find_matches(ctx_left, [_fb(high=1), _fb(high=1)]) == []
+        # Putting the opposite spec on the TARGET instead gives the SAME disagreement —
+        # the relation is symmetric, proving order-independence.
+        ctx_right = parse_definition("[-αhigh] -> [+voice] / [αhigh] _", features).unwrap()
+        assert _spans(find_matches(ctx_right, [_fb(high=0), _fb(high=1)])) == [(1, 2)]
+        assert find_matches(ctx_right, [_fb(high=1), _fb(high=1)]) == []
+
+    def test_alpha_other_is_deferred_until_bound(self, features):
+        # !α (other) is a ≠ relation that cannot bind α, so it is deferred and checked
+        # once α is bound — here the binder sits to its RIGHT, yet it still resolves.
+        sd = parse_definition("[!αhigh] -> [+voice] / _ [αhigh]", features).unwrap()
+        assert _spans(find_matches(sd, [_fb(high=1), _fb(high=0)])) == [(0, 1)]  # differ → holds
+        assert find_matches(sd, [_fb(high=0), _fb(high=0)]) == []  # equal → !α fails
 
     def test_pass1_is_alpha_blind_for_multi_occurrence_target(self, features):
         # Regression: a two-segment target whose FIRST alpha occurrence is non-`same`,
