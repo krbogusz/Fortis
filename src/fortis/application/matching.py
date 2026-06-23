@@ -27,12 +27,16 @@ boundary positions threaded in alongside ``letters`` (empty when the form is
 unsyllabified, so ``$`` then simply never matches); the positions come from
 ``application.syllabifying``.
 
+Contour matching honours the positional modifier (``@initial``/``@final``/
+``@any``/``@all``/``@n``/``@n;m``): see ``_value_at_position``. The one refused
+case is alpha inside a multi-limb ``@any`` (a sub-sequence search that would leak
+a binding across failed window attempts).
+
 Deferred for v1 (each is an explicit no-match or error, never a silent pass):
-multi-segment reference bindings (only single-segment ``n=`` is captured),
-contour positional windowing (inherited from ``pattern_matches``), and references
-*bound* in a context/exception and recalled in an earlier position — only target
-bindings are order-independent; context bindings follow the left → target → right
-order.
+multi-segment reference bindings (only single-segment ``n=`` is captured), and
+references *bound* in a context/exception and recalled in an earlier position —
+only target bindings are order-independent; context bindings follow the
+left → target → right order.
 
 Negated alpha is fully supported at both layers, since pass 1 is alpha-blind and
 defers either to pass 2: a negated *element* wrapping an alpha bundle (``![αF]``)
@@ -40,7 +44,7 @@ and a negated alpha *spec* (constructible as ``!-α``, i.e. "not opposite") both
 resolve correctly. (``!α`` is the alpha-*other* value marker, not a negation.)
 """
 
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 
 from src.fortis.application.combining import matches_exactly
@@ -64,7 +68,7 @@ from src.fortis.models.elements import (
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec, PatternSpec
-from src.fortis.models.values import AlphaOp, AlphaRef, Limb, Value
+from src.fortis.models.values import AlphaOp, AlphaRef, ContourEdge, ContourPosition, Limb, Value
 
 
 def _limbs(value: Value) -> tuple[Limb, ...]:
@@ -95,24 +99,108 @@ def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool
     return atom == bound_atom
 
 
-def _value_matches(pattern: Value, segment: Value, bindings: Bindings | None) -> bool:
-    """Whether a pattern value matches a realized segment value, limb by limb.
+def _limb_match_binding(p_limb: Limb, s_limb: Limb, bindings: Bindings | None) -> bool:
+    """Compare one pattern limb to a segment limb, binding/recalling alpha."""
+    if isinstance(p_limb, AlphaRef):
+        return _alpha_matches(p_limb, s_limb, bindings)
+    return p_limb == s_limb
 
-    A contour matches only a contour of the same length (no positional
-    windowing yet — deferred). Each pattern limb is either an alpha reference
-    (resolved against the segment atom) or a concrete value (compared equal).
-    """
-    pattern_limbs = _limbs(pattern)
-    segment_limbs = _limbs(segment)
-    if len(pattern_limbs) != len(segment_limbs):
-        return False
-    for p_limb, s_limb in zip(pattern_limbs, segment_limbs, strict=True):
-        if isinstance(p_limb, AlphaRef):
-            if not _alpha_matches(p_limb, s_limb, bindings):
-                return False
-        elif p_limb != s_limb:
+
+def _limb_match_readonly(p_limb: Limb, s_limb: Limb, bindings: Bindings | None) -> bool:
+    """Compare one limb with alpha **recall-only** — an unbound alpha never matches."""
+    if isinstance(p_limb, AlphaRef):
+        if bindings is None or p_limb.var not in bindings.alpha:
             return False
-    return True
+        bound = bindings.alpha[p_limb.var]
+        bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
+        return s_limb == bound_atom if p_limb.op == AlphaOp.same else s_limb != bound_atom
+    return p_limb == s_limb
+
+
+def _window(
+    p_limbs: tuple[Limb, ...],
+    s_limbs: tuple[Limb, ...],
+    start: int,
+    cmp: Callable[[Limb, Limb], bool],
+) -> bool:
+    """Whether each pattern limb matches the segment limb at ``start + i``."""
+    return all(cmp(p, s_limbs[start + i]) for i, p in enumerate(p_limbs))
+
+
+def _value_at_position(
+    p_limbs: tuple[Limb, ...],
+    position: ContourPosition,
+    s_limbs: tuple[Limb, ...],
+    cmp: Callable[[Limb, Limb], bool],
+    binds: bool,
+) -> bool:
+    """Whether *p_limbs* match *s_limbs* at *position*, comparing limbs with *cmp*.
+
+    Mirrors what the parser emits (§5.9): a single pattern limb is tested at the
+    named position(s) of the segment's contour; a multi-limb pattern is a window
+    or a per-limb alignment. ``@all`` of a single value means it holds at *every*
+    position; of a contour, same arity limb-for-limb. ``@any`` of a single value
+    means *some* position; of a contour, a sub-sequence anywhere. ``@initial`` /
+    ``@final`` align the pattern as a prefix / suffix; a tuple position pins each
+    limb to its own segment index (1-based).
+
+    *binds* says whether *cmp* mutates the alpha environment: a multi-limb ``@any``
+    search would leak a binding from a failed window into the next, so an
+    alpha-bearing one is refused (rather than risk a silent miscompare).
+    """
+    if isinstance(position, tuple):
+        if len(p_limbs) == 1:  # one value at each listed position (e.g. 5@2;3)
+            return all(1 <= n <= len(s_limbs) and cmp(p_limbs[0], s_limbs[n - 1]) for n in position)
+        # a contour pinned limb-by-limb to positions (validator forces equal length)
+        return len(position) == len(p_limbs) and all(
+            1 <= n <= len(s_limbs) and cmp(p, s_limbs[n - 1])
+            for p, n in zip(p_limbs, position, strict=True)
+        )
+    if isinstance(position, int):
+        return (
+            len(p_limbs) == 1
+            and 1 <= position <= len(s_limbs)
+            and cmp(p_limbs[0], s_limbs[position - 1])
+        )
+    if position == ContourEdge.all:
+        if len(p_limbs) == 1:
+            return bool(s_limbs) and all(cmp(p_limbs[0], s) for s in s_limbs)
+        return len(p_limbs) == len(s_limbs) and _window(p_limbs, s_limbs, 0, cmp)
+    if position == ContourEdge.any:
+        if len(p_limbs) == 1:
+            return any(cmp(p_limbs[0], s) for s in s_limbs)
+        if binds and any(isinstance(limb, AlphaRef) for limb in p_limbs):
+            raise NotImplementedError(
+                "alpha in a multi-limb @any contour pattern is not supported"
+            )
+        return any(
+            _window(p_limbs, s_limbs, i, cmp) for i in range(len(s_limbs) - len(p_limbs) + 1)
+        )
+    if position == ContourEdge.initial:
+        return len(p_limbs) <= len(s_limbs) and _window(p_limbs, s_limbs, 0, cmp)
+    if position == ContourEdge.final:
+        return len(p_limbs) <= len(s_limbs) and _window(
+            p_limbs, s_limbs, len(s_limbs) - len(p_limbs), cmp
+        )
+    return False
+
+
+def _value_matches(
+    value: Value, position: ContourPosition, segment_value: Value, bindings: Bindings | None
+) -> bool:
+    """Whether a pattern value matches a realized value at the given contour position.
+
+    A single-value default (``@any``) holds if the value appears at any segment
+    position — including against a contour segment. An unbound alpha at ``@any``
+    binds to the first segment limb.
+    """
+    return _value_at_position(
+        _limbs(value),
+        position,
+        _limbs(segment_value),
+        lambda p, s: _limb_match_binding(p, s, bindings),
+        binds=True,
+    )
 
 
 def _has_alpha(value: Value) -> bool:
@@ -127,33 +215,26 @@ def _spec_matches(pattern: PatternSpec, segment: FeatureSpec, bindings: Bindings
         # more so when negated, e.g. ``!-α``), so defer the whole spec to pass 2
         # rather than letting permissive alpha decide — and, under negation, flip.
         return True
-    matched = _value_matches(pattern.value, segment.value, bindings)
+    matched = _value_matches(pattern.value, pattern.contour_position, segment.value, bindings)
     return (not matched) if pattern.negated else matched
 
 
-def _value_holds(pattern: Value, segment: Value, bindings: Bindings | None) -> bool:
-    """Limb-by-limb truth of a value with alpha **recall-only** (never binds).
+def _value_holds(
+    value: Value, position: ContourPosition, segment_value: Value, bindings: Bindings | None
+) -> bool:
+    """Like ``_value_matches`` but alpha is **recall-only** (for conditional features).
 
-    Used to evaluate conditional features: an alpha limb holds only if the variable
-    is already bound and the segment atom agrees per the op; an unbound alpha never
-    holds and is never bound — a condition only reads the environment.
+    Shares the positional structure; an alpha limb holds only if the variable is
+    already bound and the segment atom agrees per the op — an unbound alpha never
+    holds and is never bound, so a condition only reads the environment.
     """
-    pattern_limbs = _limbs(pattern)
-    segment_limbs = _limbs(segment)
-    if len(pattern_limbs) != len(segment_limbs):
-        return False
-    for p_limb, s_limb in zip(pattern_limbs, segment_limbs, strict=True):
-        if isinstance(p_limb, AlphaRef):
-            if bindings is None or p_limb.var not in bindings.alpha:
-                return False
-            bound = bindings.alpha[p_limb.var]
-            bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
-            agrees = s_limb == bound_atom if p_limb.op == AlphaOp.same else s_limb != bound_atom
-            if not agrees:
-                return False
-        elif p_limb != s_limb:
-            return False
-    return True
+    return _value_at_position(
+        _limbs(value),
+        position,
+        _limbs(segment_value),
+        lambda p, s: _limb_match_readonly(p, s, bindings),
+        binds=False,
+    )
 
 
 def _condition_holds(spec: PatternSpec, segment: FeatureBundle, bindings: Bindings | None) -> bool:
@@ -170,7 +251,7 @@ def _condition_holds(spec: PatternSpec, segment: FeatureBundle, bindings: Bindin
     if feature not in segment:
         base = spec.value is None
     else:
-        base = _value_holds(spec.value, segment[feature].value, bindings)
+        base = _value_holds(spec.value, spec.contour_position, segment[feature].value, bindings)
     return (not base) if spec.negated else base
 
 

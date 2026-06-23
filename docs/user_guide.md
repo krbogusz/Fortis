@@ -363,7 +363,7 @@ The target gains ATR only if it is high.
 [tone: 5@2;3]        tone is 5 at positions 2 and 3
 ```
 
-By default `[+F]` matches if F is `+` at any position in its contour. That `@any` default holds for a single value or single limb. A multi-limb contour pattern (e.g. [tone: 1>2]) instead defaults to @all — it matches only a target contour of the same arity, limb for limb — so to match it as a sub-sequence of a longer contour you must give @initial, @final, or @n explicitly. The positional modifiers (`@initial`, `@final`, `@any`, `@all`, `@n`) override this and are **valid in target and context positions only**. In **result** position, a contour must be given with explicit concrete values.
+By default `[+F]` matches if F is `+` at any position in its contour. That `@any` default holds for a single value or single limb. A multi-limb contour pattern (e.g. [tone: 1>2]) instead defaults to @all — it matches only a target contour of the same arity, limb for limb — so to match it as a sub-sequence of a longer contour you must give `@initial`, `@final`, `@any` (the contour anywhere), or per-limb positions (`@2;3`, one index per limb) explicitly. A bare `@n` is for single values only; on a multi-limb contour the positions must be an edge or a same-length list. The positional modifiers (`@initial`, `@final`, `@any`, `@all`, `@n`, `@n;m`) override the default and are **valid in target and context positions only**. In **result** position, a contour must be given with explicit concrete values.
 
 Contour reduction is 1:1:
 
