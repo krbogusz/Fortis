@@ -22,11 +22,14 @@ A merge-path target may be any single-segment element — feature bundle, letter
 wildcard, recall, a negated class (``![+nasal]``), or a single-segment binding
 (``1=[X]``) — plus ``∅`` for an insertion point.
 
+Conditional result features (``[<n: F>]``) are applied only when their label's
+condition held during matching (recorded in ``bindings.conditions``); otherwise
+the feature is skipped.
+
 Deferred (each raises ``NotImplementedError`` rather than silently misapplying):
 quantified / grouped / disjoined target or result elements on the merge path,
-disjunction-result branch pairing, conditional features (``[<n: F>]`` — the
-``Match`` does not record which condition held), and alpha recall into a
-*contour* limb in the result.
+disjunction-result branch pairing, and alpha recall into a *contour* limb in the
+result.
 """
 
 from src.fortis.application.combining import merge
@@ -84,15 +87,24 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
     """Turn a result bundle into a realized delta, resolving alpha recalls.
 
     A spec value of ``None`` is kept (it instructs ``merge`` to delink). A bare
-    ``AlphaRef`` is replaced by its bound value. A conditional spec, or an alpha
-    recall buried in a contour limb, is unsupported and raises.
+    ``AlphaRef`` is replaced by its bound value. A **conditional** feature
+    (``[<n: F>]``) is applied only when its label's condition held during matching
+    (recorded in ``bindings.conditions``); when the condition was false the feature
+    is skipped. A missing label means the condition was never evaluated (e.g. the
+    target conditional sat in a branch that did not run) — a real inconsistency, so
+    it raises rather than silently dropping the feature. An alpha recall buried in a
+    contour limb is still unsupported and raises.
     """
     delta = FeatureBundle()
     for feature, spec in bundle.items():
         if spec.condition_label is not None:
-            raise NotImplementedError(
-                f"conditional result feature '{feature}' is not yet supported"
-            )
+            if spec.condition_label not in bindings.conditions:
+                raise NotImplementedError(
+                    f"conditional result feature '{feature}' (label {spec.condition_label}) "
+                    "has no condition recorded from matching"
+                )
+            if not bindings.conditions[spec.condition_label]:
+                continue  # condition was false → do not apply this feature
         value = spec.value
         if isinstance(value, AlphaRef):
             value = bindings.alpha[value.var]

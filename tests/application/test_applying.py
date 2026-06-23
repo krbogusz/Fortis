@@ -3,7 +3,8 @@
 import pytest
 
 from src.fortis.application.applying import apply_match
-from src.fortis.application.matching import find_matches
+from src.fortis.application.matching import Match, find_matches
+from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Letter, LetterInventory
 from src.fortis.models.specs import FeatureSpec
@@ -139,9 +140,59 @@ class TestDeferredShapesRefused:
         with pytest.raises(NotImplementedError):
             apply_match(sd, match, segs, letters, features)
 
-    def test_conditional_result_feature_refused(self, features, letters):
-        sd = parse_definition("[<1: +high>] -> [<1: +voice>]", features).unwrap()
-        segs = [_fb(high=1)]
-        match = find_matches(sd, segs, letters)[0]
+class TestConditionalFeatures:
+    def test_condition_gates_result_without_filtering(self, features, letters):
+        rule = "[+syll, <1: +high>] -> [<1: +voice>]"
+        # +high → condition holds → voice applied.
+        assert _values(_apply(rule, [_fb(syllabic=1, high=1)], features, letters)) == [
+            {"syllabic": 1, "high": 1, "voice": 1}
+        ]
+        # −high → still MATCHES (a condition does not filter), but voice is not applied.
+        assert _values(_apply(rule, [_fb(syllabic=1, high=0)], features, letters)) == [
+            {"syllabic": 1, "high": 0}
+        ]
+
+    def test_negated_condition(self, features, letters):
+        rule = "[+syll, <1: !+high>] -> [<1: +voice>]"  # apply only if NOT high
+        assert _values(_apply(rule, [_fb(syllabic=1, high=0)], features, letters)) == [
+            {"syllabic": 1, "high": 0, "voice": 1}
+        ]
+        assert _values(_apply(rule, [_fb(syllabic=1, high=1)], features, letters)) == [
+            {"syllabic": 1, "high": 1}
+        ]
+
+    def test_context_shared_label_requires_both(self, features, letters):
+        # The target is the +syll segment; _apply returns its span replacement only.
+        rule = "[+syll, <1: +high>] -> [<1: +voice>] / [<1: +nasal>] _"
+        # context +nasal AND target +high → voice.
+        out = _apply(rule, [_fb(nasal=1), _fb(syllabic=1, high=1)], features, letters)
+        assert _values(out) == [{"syllabic": 1, "high": 1, "voice": 1}]
+        # context not nasal → the AND fails → no voice (but still matches).
+        out = _apply(rule, [_fb(nasal=0), _fb(syllabic=1, high=1)], features, letters)
+        assert _values(out) == [{"syllabic": 1, "high": 1}]
+
+    def test_alpha_condition_is_recall_only(self, features, letters):
+        # <1: αhigh> recalls α bound by the left context; holds iff target.high == α.
+        rule = "[+syll, <1: αhigh>] -> [<1: +voice>] / [αhigh] _"
+        out = _apply(rule, [_fb(high=1), _fb(syllabic=1, high=1)], features, letters)
+        assert _values(out) == [{"syllabic": 1, "high": 1, "voice": 1}]
+        out = _apply(rule, [_fb(high=1), _fb(syllabic=1, high=0)], features, letters)
+        assert _values(out) == [{"syllabic": 1, "high": 0}]
+
+    def test_conditions_isolated_per_locus(self, features, letters):
+        # Each locus records its own condition truth; no leak across loci.
+        sd = parse_definition("[+syll, <1: +high>] -> [<1: +voice>]", features).unwrap()
+        segs = [_fb(syllabic=1, high=0), _fb(syllabic=1, high=1)]
+        matches = find_matches(sd, segs, letters)
+        assert [m.bindings.conditions[1] for m in matches] == [False, True]
+
+    def test_missing_condition_label_raises(self, features, letters):
+        # Defensive guard: if a label was never recorded during matching, the applier
+        # refuses rather than silently dropping the feature. This is unreachable via
+        # real rules — a conditional in a non-always-evaluated target (quantifier,
+        # disjunction branch) is a non-flat merge target and is refused earlier — so
+        # we exercise the guard with a hand-built empty-conditions Match.
+        sd = parse_definition("[+syll, <1: +high>] -> [<1: +voice>]", features).unwrap()
+        bogus = Match(start=0, end=1, bindings=Bindings())  # no conditions recorded
         with pytest.raises(NotImplementedError):
-            apply_match(sd, match, segs, letters, features)
+            apply_match(sd, bogus, [_fb(syllabic=1, high=1)], letters, features)

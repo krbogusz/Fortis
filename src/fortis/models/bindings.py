@@ -20,8 +20,14 @@ class Bindings:
     first pass uses it to find a target's structural span and capture its
     reference bindings without committing alpha (which must bind left-context
     first, in the second pass).
+
+    ``conditions`` records, per conditional-feature label, whether that label's
+    condition(s) held — accumulated (AND) across the target and context as the
+    matcher evaluates them, then consulted by the applier to gate the paired
+    result feature.
     """
 
     alpha: dict[str, Value] = field(default_factory=dict)
     reference: dict[int, FeatureBundle] = field(default_factory=dict)
     permissive_alpha: bool = False
+    conditions: dict[int, bool] = field(default_factory=dict)

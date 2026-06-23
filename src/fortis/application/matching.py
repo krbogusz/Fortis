@@ -131,35 +131,90 @@ def _spec_matches(pattern: PatternSpec, segment: FeatureSpec, bindings: Bindings
     return (not matched) if pattern.negated else matched
 
 
+def _value_holds(pattern: Value, segment: Value, bindings: Bindings | None) -> bool:
+    """Limb-by-limb truth of a value with alpha **recall-only** (never binds).
+
+    Used to evaluate conditional features: an alpha limb holds only if the variable
+    is already bound and the segment atom agrees per the op; an unbound alpha never
+    holds and is never bound — a condition only reads the environment.
+    """
+    pattern_limbs = _limbs(pattern)
+    segment_limbs = _limbs(segment)
+    if len(pattern_limbs) != len(segment_limbs):
+        return False
+    for p_limb, s_limb in zip(pattern_limbs, segment_limbs, strict=True):
+        if isinstance(p_limb, AlphaRef):
+            if bindings is None or p_limb.var not in bindings.alpha:
+                return False
+            bound = bindings.alpha[p_limb.var]
+            bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
+            agrees = s_limb == bound_atom if p_limb.op == AlphaOp.same else s_limb != bound_atom
+            if not agrees:
+                return False
+        elif p_limb != s_limb:
+            return False
+    return True
+
+
+def _condition_holds(spec: PatternSpec, segment: FeatureBundle, bindings: Bindings | None) -> bool:
+    """Whether a conditional feature's condition holds against *segment* (read-only alpha).
+
+    Mirrors the spec-matching truth but never binds and never filters: an absent
+    feature satisfies only ``none``; negation flips the result, so ``<n: !+F>``
+    holds exactly when F is not ``+``. Because alpha is recall-only here, an alpha
+    condition (``<n: αF>``) requires α to be bound *earlier* in the
+    left-context → target → right-context order; otherwise the condition is simply
+    false (it never binds).
+    """
+    feature = spec.feature
+    if feature not in segment:
+        base = spec.value is None
+    else:
+        base = _value_holds(spec.value, segment[feature].value, bindings)
+    return (not base) if spec.negated else base
+
+
 def pattern_matches(
     pattern: PatternBundle, segment: FeatureBundle, bindings: Bindings | None = None
 ) -> bool:
     """Whether *pattern* matches realized *segment*.
 
-    Every feature the pattern mentions must be present in the segment with a
-    compatible value; features the pattern does not mention are unconstrained.
+    Every (unconditional) feature the pattern mentions must be present in the
+    segment with a compatible value; features the pattern does not mention are
+    unconstrained.
 
     Against an *absent* feature: a ``none`` spec (``[F: none]``, value ``None``)
     matches — it asserts F is unspecified — as does a negated concrete spec
     (``[F: !val]``); a plain concrete spec fails, and ``[F: !none]`` (negated
     ``none``, i.e. "must be specified") fails.
 
+    A **conditional** feature (``[<n: F>]``, ``condition_label`` set) never filters:
+    it records into ``bindings.conditions[n]`` whether its condition holds
+    (AND-accumulated across the positions the label appears in), which the applier
+    later consults to gate the paired result feature.
+
     Args:
         pattern: The pattern bundle to test.
         segment: The realized segment to test against.
         bindings: Alpha-variable environment, threaded for binding/recall.
     """
-    for feature, pattern_spec in pattern.data.items():
+    for feature, spec in pattern.data.items():
+        if spec.condition_label is not None:
+            if bindings is not None:
+                label = spec.condition_label
+                holds = _condition_holds(spec, segment, bindings)
+                bindings.conditions[label] = bindings.conditions.get(label, True) and holds
+            continue
         if feature not in segment:
-            if pattern_spec.value is None:
+            if spec.value is None:
                 # "F: none" is satisfied by absence; "F: !none" requires presence.
-                if pattern_spec.negated:
+                if spec.negated:
                     return False
                 continue
-            if pattern_spec.negated:
+            if spec.negated:
                 continue  # "F: !val" is satisfied by absence
             return False
-        if not _spec_matches(pattern_spec, segment[feature], bindings):
+        if not _spec_matches(spec, segment[feature], bindings):
             return False
     return True
 
@@ -182,6 +237,7 @@ def _copy(bindings: Bindings) -> Bindings:
         alpha=dict(bindings.alpha),
         reference=dict(bindings.reference),
         permissive_alpha=bindings.permissive_alpha,
+        conditions=dict(bindings.conditions),
     )
 
 
