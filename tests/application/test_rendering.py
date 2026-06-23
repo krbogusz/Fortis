@@ -4,6 +4,7 @@ These run against the real project inventories (the ``project`` fixture).
 """
 
 from src.fortis.application.rendering import (
+    describe_change,
     render_segment,
     render_syllabified,
     sequence_to_string,
@@ -22,6 +23,24 @@ class TestRenderSegment:
         # ɣʷ is a labialised ɣ: a base letter plus a combining diacritic.
         seq = string_to_sequence("ɣʷ", project)
         assert render_segment(seq[0], project) == "ɣʷ"
+
+
+class TestDescribeChange:
+    def test_equal_length_shows_changed_segment(self, project):
+        before = string_to_sequence("kʲ", project)
+        after = string_to_sequence("k", project)
+        assert describe_change(before, after, project) == "kʲ→k"
+
+    def test_length_change_trims_to_differing_region(self, project):
+        # km̩tom → kumtom: only the syllabic m → um is shown, prefix/suffix trimmed.
+        before = string_to_sequence("km̩tom", project)
+        after = string_to_sequence("kumtom", project)
+        assert describe_change(before, after, project) == "m̩→um"
+
+    def test_deletion_shows_null(self, project):
+        before = string_to_sequence("kat", project)
+        after = string_to_sequence("ka", project)
+        assert describe_change(before, after, project) == "t→∅"
 
 
 class TestRenderSyllabified:

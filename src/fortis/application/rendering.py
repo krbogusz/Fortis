@@ -21,6 +21,50 @@ def sequence_to_string(sequence: list[FeatureBundle], inventories: Project) -> s
     return output
 
 
+def describe_change(
+    before: list[FeatureBundle], after: list[FeatureBundle], inventories: Project
+) -> str:
+    """A human-readable IPA summary of how *before* became *after*.
+
+    For an equal-length change, the segments that actually changed are shown as
+    ``old→new`` (e.g. ``kʲ→k``). For a length change (insertion, deletion,
+    coalescence) the common prefix and suffix are trimmed and only the differing
+    region is shown (e.g. ``m̩→um``; an empty side is ``∅``).
+    """
+    if len(before) == len(after):
+        changed = [
+            f"{render_segment(b, inventories)}→{render_segment(a, inventories)}"
+            for b, a in zip(before, after, strict=True)
+            if not matches_exactly(b, a)
+        ]
+        return ", ".join(changed)
+
+    before_mid, after_mid = _trim_common(before, after)
+    return f"{_render_or_null(before_mid, inventories)}→{_render_or_null(after_mid, inventories)}"
+
+
+def _trim_common(
+    before: list[FeatureBundle], after: list[FeatureBundle]
+) -> tuple[list[FeatureBundle], list[FeatureBundle]]:
+    """Strip the shared leading/trailing segments, leaving just the differing region."""
+    head = 0
+    while head < len(before) and head < len(after) and matches_exactly(before[head], after[head]):
+        head += 1
+    tail = 0
+    while (
+        tail < len(before) - head
+        and tail < len(after) - head
+        and matches_exactly(before[-1 - tail], after[-1 - tail])
+    ):
+        tail += 1
+    return before[head : len(before) - tail], after[head : len(after) - tail]
+
+
+def _render_or_null(sequence: list[FeatureBundle], inventories: Project) -> str:
+    """Render *sequence*, or ``∅`` if it is empty (a fully deleted/inserted side)."""
+    return sequence_to_string(sequence, inventories) if sequence else "∅"
+
+
 def render_syllabified(
     sequence: list[FeatureBundle], boundaries: frozenset[int], inventories: Project
 ) -> str:
