@@ -49,6 +49,8 @@ class Diacritic:
         bundle: Feature bundle the diacritic contributes.
         default: Whether this is the default diacritic for its features.
         contour: Whether this diacritic forms contours when combined.
+        marks_boundary: Whether this diacritic, placed at a syllable edge, is
+            itself the boundary marker — so rendering omits the separate ``.``.
     """
 
     symbol: str
@@ -57,6 +59,7 @@ class Diacritic:
     bundle: FeatureBundle
     default: bool
     contour: bool
+    marks_boundary: bool = False
 
 
 class DiacriticInventory(UserDict[str, Diacritic]):

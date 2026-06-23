@@ -78,6 +78,9 @@ def render_syllabified(
     marks (e.g. stress ``ˈ``) at the syllable's left edge, combining/after-kind
     (e.g. tone) on the nucleus that carries them. So ``ˈxenti`` surfaces as
     ``ˈxen.ti`` (stress at the syllable onset), not ``xˈen.ti``.
+
+    A before-mark whose diacritic ``marks_boundary`` (e.g. stress ``ˈ``) *is* the
+    syllable boundary, so it replaces the ``.`` there: ``kumˈtom``, not ``kum.ˈtom``.
     """
     syllable_features = frozenset(
         name for name, feature in inventories.features.items() if feature.tier == Tier.syllable
@@ -87,8 +90,6 @@ def render_syllabified(
     edges = sorted(boundaries | {0, len(sequence)})
     parts: list[str] = []
     for left, right in zip(edges, edges[1:], strict=False):
-        if left in interior:
-            parts.append(".")
         # The syllable's suprasegmentals live on its nucleus — the segment in the
         # span carrying syllable-tier features. Split its marks by attachment kind.
         before: list[str] = []
@@ -101,6 +102,10 @@ def render_syllabified(
                 _find_diacritics(sequence[i], present, all_diacritics, before, combining, after)
                 carrier = i
                 break
+        # A boundary-marking before-mark stands in for the "." at an interior edge.
+        marks_boundary = any(inventories.diacritics[s].marks_boundary for s in before)
+        if left in interior and not marks_boundary:
+            parts.append(".")
         parts.append("".join(before))  # syllable-initial marks (e.g. stress)
         for i in range(left, right):
             parts.append(render_segment(sequence[i], inventories, syllable_features))

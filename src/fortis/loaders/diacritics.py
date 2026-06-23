@@ -10,7 +10,7 @@ from src.fortis.models.tiers import Tier
 from src.fortis.parsing.bundles import parse_feature_bundle
 from src.fortis.result import Err, Ok, Result
 
-# ---- Diacritic --------------------------------------------------------------------------------------------------------
+# ---- Diacritic -----------------------------------------------------------------------------------
 
 
 def load_diacritic(
@@ -60,6 +60,13 @@ def load_diacritic(
         case Ok(result):
             contour = result
 
+    match load_marks_boundary(symbol, diacritic_def):
+        case Err(err):
+            error_list.append(err)
+            marks_boundary = False  # Dummy value for the type checker
+        case Ok(result):
+            marks_boundary = result
+
     if error_list:
         return Err(error_list)
     return Ok(
@@ -70,11 +77,12 @@ def load_diacritic(
             bundle=bundle,
             default=default,
             contour=contour,
+            marks_boundary=marks_boundary,
         )
     )
 
 
-# ---- Per-field helpers ------------------------------------------------------------------------------------------------
+# ---- Per-field helpers ---------------------------------------------------------------------------
 
 
 def load_tier(symbol: str, diacritic_def: dict[str, Any]) -> Result[Tier, str]:
@@ -167,10 +175,29 @@ def load_contour(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str
     return Ok(value)
 
 
-# ---- Diacritic Inventory ----------------------------------------------------------------------------------------------
+def load_marks_boundary(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str]:
+    """Parse the optional 'marks_boundary' field (defaults to False).
+
+    Args:
+        symbol: Diacritic symbol (for error messages).
+        diacritic_def: Raw dictionary from the TOML file.
+    """
+    value = diacritic_def.get("marks_boundary")
+    if value is None:
+        return Ok(False)
+    if not isinstance(value, bool):
+        return Err(
+            f"Diacritic '{present_symbol(symbol)}' 'marks_boundary' must be 'true' or 'false'"
+        )
+    return Ok(value)
 
 
-def load_diacritic_inventory(path: Path, features: FeatureInventory) -> Result[DiacriticInventory, list[str]]:
+# ---- Diacritic Inventory -------------------------------------------------------------------------
+
+
+def load_diacritic_inventory(
+    path: Path, features: FeatureInventory
+) -> Result[DiacriticInventory, list[str]]:
     """Load all diacritics from a TOML file.
 
     Args:
@@ -211,7 +238,9 @@ def load_diacritic_inventory(path: Path, features: FeatureInventory) -> Result[D
             return Ok(inventory)
 
 
-def validate_diacritic_inventory(inventory: DiacriticInventory, features: FeatureInventory) -> Result[None, list[str]]:
+def validate_diacritic_inventory(
+    inventory: DiacriticInventory, features: FeatureInventory
+) -> Result[None, list[str]]:
     """Check for cross-diacritic consistency issues.
 
     Validates that each diacritic's bundle features match its declared tier.

@@ -10,7 +10,7 @@
 "ːː" = { tier = "segment", kind = "after", bundle = "length: overlong"}
 # Syllable
 ## Primary stress
-"ˈ" = { tier = "syllable", kind = "before", bundle = "stress: primary", default = true }
+"ˈ" = { tier = "syllable", kind = "before", bundle = "stress: primary", default = true, marks_boundary = true}
 ## Tone diacritics
 "̋" = { tier = "syllable", kind = "combining", bundle = "tone: 5" }
 "́" = { tier = "syllable", kind = "combining", bundle = "tone: 4" }

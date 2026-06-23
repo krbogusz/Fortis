@@ -53,6 +53,15 @@ class TestRenderSyllabified:
         )
         assert render_syllabified(seq, boundaries, project) == "mex.teːr"
 
+    def test_boundary_marking_stress_replaces_the_dot(self, project):
+        # kaˈta: the stress mark ˈ (marks_boundary) sits at the interior boundary and
+        # stands in for the ".", so it is kaˈta, not ka.ˈta.
+        seq = string_to_sequence("kaˈta", project)
+        boundaries = syllabify(
+            seq, project.sonorities, project.syllable_parts, project.time, project.letters
+        )
+        assert render_syllabified(seq, boundaries, project) == "kaˈta"
+
 
 class TestSequenceToString:
     def test_string_round_trip_for_invertible_words(self, project):
