@@ -32,10 +32,12 @@ Contour matching honours the positional modifier (``@initial``/``@final``/
 case is alpha inside a multi-limb ``@any`` (a sub-sequence search that would leak
 a binding across failed window attempts).
 
-Deferred for v1 (each is an explicit no-match or error, never a silent pass):
-multi-segment reference bindings (only single-segment ``n=`` is captured), and
-references *bound* in a context/exception and recalled in an earlier position —
-only target bindings are order-independent; context bindings follow the
+A reference binding captures its whole matched span — one segment for ``1=[X]``,
+several for a group ``1=([X][Y])`` — and a recall ``@n`` replays that span.
+
+Deferred for v1 (an explicit no-match, never a silent pass): a reference *bound*
+in a context/exception and recalled in an earlier position. Only target bindings
+are order-independent (captured in pass 1); context bindings follow the
 left → target → right order.
 
 Negated alpha is fully supported at both layers, since pass 1 is alpha-blind and
@@ -468,14 +470,22 @@ def _match_element(
                 inner, segments, pos, bindings, letters, boundaries, syllables
             ):
                 captured = _copy(branch)
-                if end == pos + 1:  # single-segment binding (multi-segment deferred)
-                    captured.reference[ref] = segments[pos]
+                # Capture the whole matched span — one segment for `1=[X]`, several
+                # for a group `1=([X][Y])` (a multi-segment binding).
+                captured.reference[ref] = tuple(segments[pos:end])
                 yield end, captured
 
         case RecallRef(ref):
+            # Recall replays the bound span: each captured segment must match the
+            # corresponding segment here (single- or multi-segment), consuming them.
             bound = bindings.reference.get(ref)
-            if bound is not None and pos < len(segments) and matches_exactly(segments[pos], bound):
-                yield pos + 1, bindings
+            if bound is None:
+                return
+            end = pos + len(bound)
+            if end <= len(segments) and all(
+                matches_exactly(segments[pos + offset], seg) for offset, seg in enumerate(bound)
+            ):
+                yield end, bindings
 
         case _:
             raise NotImplementedError(f"cannot match element {element!r} in this position")
