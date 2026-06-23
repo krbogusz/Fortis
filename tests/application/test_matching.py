@@ -1,11 +1,14 @@
 """Tests for single-segment pattern matching (application/matching.py)."""
 
+import pytest
+
 from src.fortis.application.matching import Match, find_matches, pattern_matches
 from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.inventories import Letter, LetterInventory
 from src.fortis.models.specs import FeatureSpec, PatternSpec
-from src.fortis.models.values import AlphaOp, AlphaRef
+from src.fortis.models.values import AlphaOp, AlphaRef, ContourEdge
+from src.fortis.parsing.bundles import parse_pattern_bundle
 from src.fortis.parsing.notation import parse_definition
 
 
@@ -50,10 +53,13 @@ class TestPatternMatches:
         assert pattern_matches(_pb(PatternSpec("nasal", None, negated=True)), _fb(nasal=0))
 
     def test_contour_matches_equal_length(self):
-        assert pattern_matches(_pb(PatternSpec("tone", (1, 2))), _fb(tone=(1, 2)))
+        # A contour defaults to @all (same arity, limb for limb) — as the parser sets it.
+        pat = _pb(PatternSpec("tone", (1, 2), contour_position=ContourEdge.all))
+        assert pattern_matches(pat, _fb(tone=(1, 2)))
 
     def test_contour_length_mismatch_fails(self):
-        assert not pattern_matches(_pb(PatternSpec("tone", (1, 2))), _fb(tone=1))
+        pat = _pb(PatternSpec("tone", (1, 2), contour_position=ContourEdge.all))
+        assert not pattern_matches(pat, _fb(tone=1))
 
 
 class TestAlpha:
@@ -72,10 +78,71 @@ class TestAlpha:
     def test_alpha_in_contour_limb(self):
         bindings = Bindings()
         bindings.alpha["α"] = 2
-        # tone: 2>α — first limb concrete, second recalls α (=2 here).
-        pat = _pb(PatternSpec("tone", (2, AlphaRef("α", AlphaOp.same))))
+        # tone: 2>α — first limb concrete, second recalls α (=2 here). @all alignment.
+        spec = PatternSpec(
+            "tone", (2, AlphaRef("α", AlphaOp.same)), contour_position=ContourEdge.all
+        )
+        pat = _pb(spec)
         assert pattern_matches(pat, _fb(tone=(2, 2)), bindings)
         assert not pattern_matches(pat, _fb(tone=(2, 3)), bindings)
+
+
+class TestContourPosition:
+    def _m(self, features, spec: str, **seg) -> bool:
+        bundle = parse_pattern_bundle(spec, features).unwrap()
+        return pattern_matches(bundle, _fb(**seg), Bindings())
+
+    def test_single_value_at_named_edges(self, features):
+        assert self._m(features, "tone: 5@final", tone=(1, 5))
+        assert not self._m(features, "tone: 5@final", tone=(5, 1))
+        assert self._m(features, "tone: 5@initial", tone=(5, 1))
+        assert not self._m(features, "tone: 5@initial", tone=(1, 5))
+
+    def test_single_value_at_numeric_position(self, features):
+        # @n is 1-indexed: @2 is the second limb.
+        assert self._m(features, "tone: 5@2", tone=(1, 5))
+        assert not self._m(features, "tone: 5@2", tone=(5, 1))
+
+    def test_single_value_at_multiple_positions(self, features):
+        assert self._m(features, "tone: 5@2;3", tone=(1, 5, 5))
+        assert not self._m(features, "tone: 5@2;3", tone=(1, 5, 1))
+
+    def test_single_value_all(self, features):
+        assert self._m(features, "tone: 5@all", tone=(5, 5))
+        assert not self._m(features, "tone: 5@all", tone=(5, 1))
+
+    def test_single_value_any_matches_contour(self, features):
+        # @any is the single-value default; it matches a contour containing the value
+        # (previously a length mismatch silently failed) and is unchanged for scalars.
+        assert self._m(features, "+high", high=(0, 1))
+        assert not self._m(features, "+high", high=(0, 0))
+        assert self._m(features, "+high", high=1)
+
+    def test_contour_initial_final_window(self, features):
+        assert self._m(features, "tone: 1>2@initial", tone=(1, 2, 3))
+        assert not self._m(features, "tone: 1>2@initial", tone=(3, 1, 2))
+        assert self._m(features, "tone: 1>2@final", tone=(3, 1, 2))
+
+    def test_contour_any_is_subsequence(self, features):
+        assert self._m(features, "tone: 1>2@any", tone=(3, 1, 2))
+        assert not self._m(features, "tone: 1>2@any", tone=(1, 3, 2))
+
+    def test_contour_default_all_is_exact(self, features):
+        assert self._m(features, "tone: 1>2", tone=(1, 2))
+        assert not self._m(features, "tone: 1>2", tone=(1, 2, 3))
+
+    def test_negated_positional(self, features):
+        # !5@final → the final limb is not 5.
+        assert self._m(features, "tone: !5@final", tone=(1, 3))
+        assert not self._m(features, "tone: !5@final", tone=(1, 5))
+        # !+F → F at no position.
+        assert not self._m(features, "!+high", high=(0, 1))
+        assert self._m(features, "!+high", high=(0, 0))
+
+    def test_alpha_in_multi_limb_any_is_refused(self, features):
+        bundle = parse_pattern_bundle("tone: α>2@any", features).unwrap()
+        with pytest.raises(NotImplementedError):
+            pattern_matches(bundle, _fb(tone=(1, 2)), Bindings())
 
 
 def _spans(matches: list[Match]) -> list[tuple[int, int]]:
