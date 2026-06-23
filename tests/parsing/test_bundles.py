@@ -264,8 +264,14 @@ class TestParsePatternSpec:
         assert result.unwrap().value == AlphaRef("α", AlphaOp.opposite)
 
     def test_opposite_alpha_on_scalar_rejected(self, features):
-        # '-α' (opposite) is binary/unary only — scalar has no single opposite.
+        # '-α' (opposite) is binary only — scalar/unary have no single value-opposite.
         result = parse_pattern_spec("tone: -α", features)
+        assert result.is_err()
+        assert "Alpha-opposite" in result.unwrap_err()
+
+    def test_opposite_alpha_on_unary_rejected(self, features):
+        # '-α' on a unary (privative) feature is rejected too — present has no opposite.
+        result = parse_pattern_spec("manner: -α", features)
         assert result.is_err()
         assert "Alpha-opposite" in result.unwrap_err()
 
@@ -376,7 +382,7 @@ class TestParseResultSpec:
         assert spec.value.op == AlphaOp.opposite
 
     def test_opposite_alpha_on_scalar_rejected(self, features):
-        # '-α' (opposite) is binary/unary only — also enforced result-side.
+        # '-α' (opposite) is binary only — also enforced result-side.
         result = parse_result_spec("tone: -α", features)
         assert result.is_err()
         assert "Alpha-opposite" in result.unwrap_err()

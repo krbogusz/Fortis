@@ -4,23 +4,27 @@ Two layers:
 
 * ``pattern_matches`` — the leaf: does one pattern bundle match one realized
   segment? Alpha variables resolve limb by limb against a threaded ``Bindings``
-  environment (first occurrence binds, later ones compare per the alpha op).
+  environment — a value-agreement variable: each occurrence's op (same / opposite
+  / other) states how its position relates to α, and any consistent assignment
+  satisfies it (binding honours the op, so it is order-independent).
 * ``find_matches`` — the sequence matcher: a backtracking walk over the rule's
   Element AST that finds every locus where the target matches and the contexts
   hold (and the exception environment does not). It builds on ``pattern_matches``
   for each single segment.
 
-The two binding namespaces have *different* ordering rules (per the notation
-spec), so the matcher runs in two passes per candidate locus:
+The matcher runs in two passes per candidate locus:
 
 * **References** (``n=`` / ``@n``) are scope-based, not order-based: "the target
   is ref-bound first at match time" (§2.3.1). Pass 1 matches the target alone to
   discover its span and capture its reference bindings; these are then available
   everywhere in pass 2 regardless of position.
-* **Alpha** variables are order-based — first occurrence binds, evaluated
-  left context → target → right context (§5.6 / §2.4). Pass 2 re-evaluates the
-  whole environment in that order (seeded with pass 1's references), so the
-  target's alpha resolves against an already-bound left context.
+* **Alpha** variables are order-*independent* value-agreement variables (SPE):
+  binding honours the op (``same`` binds α to the atom, ``opposite`` to its
+  opposite), so a ``-α`` position imposes disagreement whether it is reached
+  before or after its partner. Pass 1 is alpha-blind (it only fixes the span);
+  pass 2 walks left context → target → right context binding/checking alpha, but
+  the *result* no longer depends on that walk order. ``!α`` (other) is a ≠
+  relation that cannot bind, so it is deferred and verified once α is bound.
 
 The ``$`` syllable boundary is a zero-width assertion checked against a set of
 boundary positions threaded in alongside ``letters`` (empty when the form is
@@ -79,18 +83,47 @@ def _limbs(value: Value) -> tuple[Limb, ...]:
     return value if isinstance(value, tuple) else (value,)
 
 
-def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool:
-    """Resolve one alpha limb against a realized atom.
+def _opposite(atom: Limb) -> Limb:
+    """The opposite of a binary value (0 ↔ 1).
 
-    First occurrence binds the variable to the atom and succeeds. A later
-    occurrence compares per the alpha op: ``same`` requires equality;
-    ``opposite``/``other`` require inequality. With no bindings context, or in a
-    permissive-alpha environment, alpha always matches and binds nothing.
+    Alpha-opposite is validation-restricted to binary features (scalar and unary
+    are rejected), so the atom is 0/1; anything else is left unchanged (defensive,
+    unreachable).
+    """
+    if atom == 0:
+        return 1
+    if atom == 1:
+        return 0
+    return atom
+
+
+def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool:
+    """Resolve one alpha limb against a realized atom — order-independently.
+
+    Alpha is a value-agreement variable (SPE): each occurrence's op states how its
+    position relates to α, and *any* consistent assignment satisfies the rule —
+    there is no privileged "first binder". So binding **honours the op**: a ``same``
+    occurrence binds α to the atom, an ``opposite`` (``-α``) occurrence binds α to
+    the atom's opposite. Either way a ``-α`` position then imposes disagreement
+    whether it is reached before or after its partner, so matching order does not
+    change the result. A subsequent occurrence checks: ``same`` → equal,
+    ``opposite``/``other`` → unequal.
+
+    ``other`` (``!α``) is a ≠ relation that cannot determine α, so it never binds;
+    it is deferred (``pending_other``) and verified once α is bound. In a
+    permissive-alpha environment (pass 1) or with no bindings, alpha always matches
+    and binds nothing.
     """
     if bindings is None or bindings.permissive_alpha:
         return True
     if ref.var not in bindings.alpha:
-        bindings.alpha[ref.var] = atom
+        match ref.op:
+            case AlphaOp.same:
+                bindings.alpha[ref.var] = atom
+            case AlphaOp.opposite:
+                bindings.alpha[ref.var] = _opposite(atom)
+            case AlphaOp.other:
+                bindings.pending_other.append((ref.var, atom))  # ≠ α, checked later
         return True
     bound = bindings.alpha[ref.var]
     bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
@@ -362,6 +395,7 @@ def _copy(bindings: Bindings) -> Bindings:
         permissive_alpha=bindings.permissive_alpha,
         conditions=dict(bindings.conditions),
         disjunction_choices=bindings.disjunction_choices,
+        pending_other=list(bindings.pending_other),
     )
 
 
@@ -722,10 +756,18 @@ def _locate(
             for after_right in _match_starting_at(
                 sd.right_context, segments, end, after_target, letters, boundaries, syllables
             ):
-                if not _exception_blocks(
+                if _pending_other_holds(after_right) and not _exception_blocks(
                     sd, segments, start, end, after_right, letters, boundaries, syllables
                 ):
                     return Match(
                         start=start, end=end, bindings=after_right, target_choices=target_choices
                     )
     return None
+
+
+def _pending_other_holds(bindings: Bindings) -> bool:
+    """Every deferred ``!α`` constraint holds: α is bound and the atom differs."""
+    return all(
+        var in bindings.alpha and atom != bindings.alpha[var]
+        for var, atom in bindings.pending_other
+    )
