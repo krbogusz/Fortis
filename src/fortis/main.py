@@ -9,7 +9,7 @@ structure (``.`` between syllables) on the surface.
 import sys
 
 from src.fortis.application.deriving import derive
-from src.fortis.application.rendering import render_syllabified
+from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.loaders.project import load_project
 from src.fortis.models.derivation import Derivation
@@ -48,7 +48,8 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
 
     for step in derivation.steps:
         after = render_syllabified(step.after, step.after_boundaries, project)
-        print(f"  →  [{step.rule.id}]  {after}   {step.change}")
+        change = describe_change(step.before, step.after, project)
+        print(f"  →  [{step.rule.id}]  {after}   ({change})")
 
     surface = render_syllabified(derivation.surface, derivation.surface_boundaries, project)
     print(f"Surface: {surface}")

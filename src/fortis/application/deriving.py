@@ -39,7 +39,7 @@ output, only enables ``$``-conditioned rules.)
 """
 
 from src.fortis.application.applying import apply_match
-from src.fortis.application.combining import differing, matches_exactly
+from src.fortis.application.combining import matches_exactly
 from src.fortis.application.matching import Match, find_matches
 from src.fortis.application.syllabifying import SyllabificationError, syllabify
 from src.fortis.models.bundles import FeatureBundle
@@ -221,22 +221,6 @@ def _fired(before: list[FeatureBundle], after: list[FeatureBundle]) -> bool:
     return any(not matches_exactly(b, a) for b, a in zip(before, after, strict=True))
 
 
-def _describe_change(before: list[FeatureBundle], after: list[FeatureBundle]) -> str:
-    """A provisional, total feature-level summary of the change (no IPA yet)."""
-    if len(before) != len(after):
-        return f"{len(before)}→{len(after)} segments"
-    parts: list[str] = []
-    for i, (b, a) in enumerate(zip(before, after, strict=True)):
-        diffs = differing(b, a)
-        if diffs:
-            changes = ",".join(
-                f"{f}:{b[f].value if f in b else None}→{a[f].value if f in a else None}"
-                for f in diffs
-            )
-            parts.append(f"@{i} {changes}")
-    return "; ".join(parts)
-
-
 def derive(
     word: Word,
     segments: list[FeatureBundle],
@@ -275,7 +259,6 @@ def derive(
                     DerivationStep(
                         before=before,
                         rule=rule,
-                        change=_describe_change(before, after),
                         after=list(after),
                         before_boundaries=_display_boundaries(
                             before, sonorities, syllable_parts, rule.time, letters
