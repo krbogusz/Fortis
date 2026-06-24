@@ -199,11 +199,23 @@ def load_rule_inventory(path: Path, features: FeatureInventory) -> Result[RuleIn
 
 
 def validate_rule_inventory(inventory: RuleInventory) -> Result[None, list[str]]:
-    """Check for cross-rule consistency issues.
+    """Check cross-rule consistency: rule ids must be unique.
+
+    Ids label derivation steps and are otherwise the rule's handle, so two rules
+    sharing one is ambiguous. This is reachable now that a list ``definition``
+    mints ``id#1``, ``id#2`` — which can collide with an explicit table of that
+    name. (Per-rule structure is already validated during load.)
 
     Args:
         inventory: The loaded rule inventory.
     """
-    # No cross-rule validation needed yet — individual rules are already
-    # validated during load. Kept as a stub for future checks.
+    seen: set[str] = set()
+    duplicates: set[str] = set()
+    for rules in inventory.values():
+        for rule in rules:
+            if rule.id in seen:
+                duplicates.add(rule.id)
+            seen.add(rule.id)
+    if duplicates:
+        return Err([f"duplicate rule id '{rule_id}'" for rule_id in sorted(duplicates)])
     return Ok(None)
