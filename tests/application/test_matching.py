@@ -292,6 +292,17 @@ class TestSequenceMatcher:
         assert _spans(find_matches(sd, [same, c, same])) == [(1, 2)]  # identical flanks
         assert find_matches(sd, [other, c, same]) == []  # differing flanks → no locus
 
+    def test_target_recalling_a_right_context_binding(self, features):
+        # Case B: the target IS a recall of a binding in the right context. Pass 1
+        # cannot span it, so the end is enumerated and the right-context pre-seed
+        # resolves the recall. @1 -> x / _ 1=[+nasal] matches the first of two
+        # identical nasals; nothing when they differ, or when there is no pair.
+        sd = parse_definition("@1 -> x / _ 1=[+nasal]", features).unwrap()
+        same, other = _fb(nasal=1, labial=1), _fb(nasal=1, labial=0)
+        assert _spans(find_matches(sd, [same, same])) == [(0, 1)]
+        assert find_matches(sd, [other, same]) == []
+        assert find_matches(sd, [same]) == []  # no right-context nasal to bind
+
     def test_reference_bound_in_right_exception_recalled_to_the_left(self, features):
         # Scope-based references hold inside the exception too: @1 in the left
         # exception recalls 1 bound in the right exception, so the rule is blocked
