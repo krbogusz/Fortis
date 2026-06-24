@@ -1,6 +1,5 @@
 """Tests for the rules loader."""
 
-import pytest
 
 from src.fortis.loaders.rules import (
     load_application,
@@ -8,9 +7,7 @@ from src.fortis.loaders.rules import (
     load_rule_inventory,
     load_time,
 )
-from src.fortis.models.features import FeatureInventory
-from src.fortis.models.rules import ApplicationMode, Rule, RuleInventory
-from src.fortis.models.elements import BundleElem, LetterRef, Null
+from src.fortis.models.rules import ApplicationMode
 
 
 class TestLoadTime:
@@ -71,7 +68,7 @@ class TestLoadRule:
             features,
         )
         assert result.is_ok(), f"Errors: {result.unwrap_err() if result.is_err() else None}"
-        rule = result.unwrap()
+        [rule] = result.unwrap()  # a string definition yields exactly one rule
         assert rule.id == "test_rule"
         assert rule.time == -2000
         assert rule.application == ApplicationMode.simultaneous
@@ -91,12 +88,37 @@ class TestLoadRule:
             features,
         )
         assert result.is_ok()
-        rule = result.unwrap()
+        [rule] = result.unwrap()
         assert rule.id == "backness_harmony"
         assert rule.time == 1300
         assert rule.name == "Backness harmony"
         assert rule.description == "Backness spreads rightward"
         assert rule.application == ApplicationMode.left_to_right
+
+    def test_list_definition_yields_ordered_subrules(self, features):
+        # A list 'definition' becomes one sub-rule per entry — same time/name, in
+        # order, with id-suffixed ids — so a multi-step change reads as one rule.
+        result = load_rule(
+            "final_loss",
+            {
+                "time": -1500,
+                "name": "Final vowel loss",
+                "definition": ["a → b", "c → d"],
+            },
+            features,
+        )
+        assert result.is_ok(), result.unwrap_err() if result.is_err() else None
+        rules = result.unwrap()
+        assert [r.id for r in rules] == ["final_loss#1", "final_loss#2"]
+        assert all(r.time == -1500 and r.name == "Final vowel loss" for r in rules)
+        assert [r.raw_definition for r in rules] == ["a → b", "c → d"]
+
+    def test_empty_definition_list_is_an_error(self, features):
+        assert load_rule("bad", {"time": 0, "definition": []}, features).is_err()
+
+    def test_one_bad_definition_fails_the_whole_rule(self, features):
+        result = load_rule("bad", {"time": 0, "definition": ["a → b", "→ → →"]}, features)
+        assert result.is_err()
 
     def test_missing_time(self, features):
         result = load_rule("bad", {"definition": "a → b"}, features)

@@ -50,10 +50,34 @@ def load_application(rule_id: str, rule_def: dict[str, Any]) -> Result[Applicati
 # ---- Per-rule loader ------------------------------------------------------------------
 
 
+def _read_definitions(rule_id: str, rule_def: dict[str, Any]) -> Result[list[str], str]:
+    """The rule's ``definition`` as a list of one or more definition strings.
+
+    Accepts a single string (one structural description) or a non-empty list of
+    strings (ordered sub-steps that share the table's time/name/description) — so a
+    multi-part change like a loss plus its conditioned stress shift reads as one
+    named rule.
+    """
+    raw = rule_def.get("definition")
+    if raw is None:
+        return Err(f"Rule '{rule_id}' is missing the required 'definition' field")
+    if isinstance(raw, str):
+        return Ok([raw])
+    if isinstance(raw, list) and all(isinstance(item, str) for item in raw):
+        if not raw:
+            return Err(f"Rule '{rule_id}' has an empty 'definition' list")
+        return Ok(raw)
+    return Err(f"Rule '{rule_id}' has a 'definition' that is not a string or list of strings")
+
+
 def load_rule(
     rule_id: str, rule_def: dict[str, Any], features: FeatureInventory
-) -> Result[Rule, list[str]]:
-    """Load a Rule from a raw TOML entry.
+) -> Result[list[Rule], list[str]]:
+    """Load the rule(s) from a raw TOML entry.
+
+    Returns one ``Rule`` per definition: a string ``definition`` yields a single
+    rule (id ``rule_id``); a list yields one sub-rule per entry, in order, sharing
+    the table's time/name/description and id-suffixed ``rule_id#1``, ``#2``, ….
 
     Args:
         rule_id: Rule slug (the TOML table key).
@@ -69,12 +93,12 @@ def load_rule(
         case Ok(result):
             time = result
 
-    definition = rule_def.get("definition")
-    if definition is None:
-        error_list.append(f"Rule '{rule_id}' is missing the required 'definition' field")
-    elif not isinstance(definition, str):
-        error_list.append(f"Rule '{rule_id}' has non-string 'definition' value")
-        definition = None
+    definitions: list[str] = []
+    match _read_definitions(rule_id, rule_def):
+        case Err(err):
+            error_list.append(err)
+        case Ok(result):
+            definitions = result
 
     match load_application(rule_id, rule_def):
         case Err(err):
@@ -91,33 +115,36 @@ def load_rule(
     if description is not None and not isinstance(description, str):
         error_list.append(f"Rule '{rule_id}' has non-string 'description' value")
 
-    sd = StructuralDescription(target=(), result=())
-    if definition is not None:
+    sds: list[StructuralDescription] = []
+    for definition in definitions:
         match parse_definition(definition, features):
-            case Ok(result):
-                sd = result
+            case Ok(sd):
                 match validate_structural_description(sd):
                     case Err(errs):
                         error_list.extend(errs)
                     case Ok():
                         pass
+                sds.append(sd)
             case Err(errs):
                 error_list.extend(errs)
 
     if error_list:
         return Err(error_list)
 
-    return Ok(
+    multiple = len(definitions) > 1
+    rules = [
         Rule(
-            id=rule_id,
+            id=f"{rule_id}#{index}" if multiple else rule_id,
             time=time,
-            raw_definition=definition or "",
+            raw_definition=definition,
             sd=sd,
             application=application,
             name=name,
             description=description,
         )
-    )
+        for index, (definition, sd) in enumerate(zip(definitions, sds, strict=True), start=1)
+    ]
+    return Ok(rules)
 
 
 # ---- Inventory loader -----------------------------------------------------------------
@@ -149,8 +176,9 @@ def load_rule_inventory(path: Path, features: FeatureInventory) -> Result[RuleIn
             case Err(errs):
                 error_list.extend(f"rule '{rule_id}': {e}" for e in errs)
                 continue
-            case Ok(rule):
-                rules_by_time.setdefault(rule.time, []).append(rule)
+            case Ok(rules):
+                for rule in rules:
+                    rules_by_time.setdefault(rule.time, []).append(rule)
 
     if error_list:
         return Err(error_list)
