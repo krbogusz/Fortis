@@ -298,19 +298,24 @@ def validate_structural_description(sd: StructuralDescription) -> Result[None, l
                 )
                 break
 
-    # §2.7.1 — branch pairing is by the target's matched branch, so a disjunction
-    # must be a top-level element (not nested) and there may be at most one per side;
-    # otherwise the recorded choice would desync from how the result is resolved.
+    # §2.7.1 — result/target branch pairing resolves *top-level* disjunctions
+    # positionally, so a side may carry at most one top-level disjunction, and a
+    # nested disjunction may not coexist with a top-level one (the recorded choice
+    # would desync from how the result is resolved). A nested disjunction on its own
+    # — e.g. a `(j|w)?` alternation under a quantifier, with no result disjunction to
+    # pair — is fine: the matcher handles it and no branch is resolved into a result.
     for side, top_seq, elements in (
         ("target", target_seq, sd.target),
         ("result", result_seq, sd.result),
     ):
         top_level = [e for e in top_seq if isinstance(e, Disjunction)]
-        total = sum(1 for e in _walk(elements) if isinstance(e, Disjunction))
-        if total > len(top_level):
-            errors.append(f"a nested disjunction in the {side} is not supported (top-level only)")
+        nested = sum(1 for e in _walk(elements) if isinstance(e, Disjunction)) - len(top_level)
         if len(top_level) > 1:
-            errors.append(f"at most one disjunction per side (in the {side})")
+            errors.append(f"at most one top-level disjunction per side (in the {side})")
+        if nested and top_level:
+            errors.append(
+                f"a nested disjunction cannot coexist with a top-level disjunction (in the {side})"
+            )
 
     if errors:
         return Err(errors)

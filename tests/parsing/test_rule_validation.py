@@ -121,14 +121,20 @@ class TestBatch2Invalid:
         assert any("same number of branches" in e for e in errors)
 
     def test_more_than_one_disjunction_per_side(self, features):
-        # §2.7.1 — pairing is by the matched branch, so only one disjunction per side.
+        # §2.7.1 — pairing is by the matched branch, so only one top-level per side.
         errors = check("(a|b) (e|f) -> (c|d) (g|h)", features).unwrap_err()
-        assert any("at most one disjunction" in e for e in errors)
+        assert any("at most one top-level disjunction" in e for e in errors)
 
-    def test_nested_disjunction(self, features):
-        # §2.7.1 — a disjunction must be a top-level element, not nested in a branch.
-        errors = check("(a | (b|c)) -> x", features).unwrap_err()
-        assert any("nested disjunction" in e for e in errors)
+    def test_nested_disjunction_with_a_top_level_one_rejected(self, features):
+        # §2.7.1 — a nested disjunction may not coexist with a top-level one (it would
+        # desync the recorded branch choice from how the result is resolved).
+        errors = check("(a | (b|c)) -> (d|e)", features).unwrap_err()
+        assert any("nested disjunction cannot coexist" in e for e in errors)
+
+    def test_nested_only_disjunction_is_allowed(self, features):
+        # A nested alternation with no top-level disjunction to pair is fine —
+        # e.g. (a|b)? before a target, deleted wholesale.
+        assert check("(a|b)? c -> ∅ / d _", features).is_ok()
 
     def test_negation_in_result(self, features):
         errors = check("a -> !b / c _", features).unwrap_err()
