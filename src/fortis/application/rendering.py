@@ -1,4 +1,5 @@
 from src.fortis.application.combining import differing, matches_exactly
+from src.fortis.application.syllabifying import SyllabificationError, syllabify
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Diacritic, DiacriticKind
 from src.fortis.models.project import Project
@@ -6,22 +7,30 @@ from src.fortis.models.tiers import Tier
 
 
 def sequence_to_string(sequence: list[FeatureBundle], inventories: Project) -> str:
-    """Turn a Sequence of FeatureBundles back into an IPA string.
+    """Turn a sequence of FeatureBundles back into an IPA string.
 
-    For each segment:
-    1. If it matches a letter exactly, output the letter.
-    2. Otherwise, find the letter whose differences can be best covered
-       by diacritics (fewest remaining differences after diacritic search).
-    3. Output: before-diacritics + letter + combining-diacritics + after-diacritics.
-
-    Syllable-tier (suprasegmental) diacritics are emitted on the segment that
-    carries those features — the nucleus — at the nucleus position (not yet
-    repositioned to the syllable edge).
+    Each segment renders as a letter plus diacritics (exact letter match if there
+    is one; otherwise the letter whose remaining differences the fewest diacritics
+    cover). Suprasegmental (syllable-tier) marks are positioned per syllable: a
+    before-kind mark like stress ``ˈ`` at the syllable's left edge, a combining/
+    after-kind mark like tone on the nucleus — so a stressed word round-trips as
+    ``ˈseχmoː``, not ``sˈeχmoː``. To do that the sequence is syllabified; when it
+    has no nucleus or no legal division (e.g. a bare cluster), it falls back to a
+    flat per-segment render with no repositioning.
     """
-    output = ""
-    for segment in sequence:
-        output += render_segment(segment, inventories)
-    return output
+    try:
+        boundaries = syllabify(
+            sequence,
+            inventories.sonorities,
+            inventories.syllable_parts,
+            inventories.time,
+            inventories.letters,
+        )
+    except SyllabificationError:
+        boundaries = frozenset()
+    if boundaries:
+        return render_syllabified(sequence, boundaries, inventories, dots=False)
+    return "".join(render_segment(segment, inventories) for segment in sequence)
 
 
 def describe_change(
@@ -69,7 +78,10 @@ def _render_or_null(sequence: list[FeatureBundle], inventories: Project) -> str:
 
 
 def render_syllabified(
-    sequence: list[FeatureBundle], boundaries: frozenset[int], inventories: Project
+    sequence: list[FeatureBundle],
+    boundaries: frozenset[int],
+    inventories: Project,
+    dots: bool = True,
 ) -> str:
     """Render *sequence* as IPA with ``.`` at each interior syllable boundary.
 
@@ -81,6 +93,10 @@ def render_syllabified(
 
     A before-mark whose diacritic ``marks_boundary`` (e.g. stress ``ˈ``) *is* the
     syllable boundary, so it replaces the ``.`` there: ``kumˈtom``, not ``kum.ˈtom``.
+
+    With ``dots=False`` the interior boundary dots are omitted but the suprasegmental
+    repositioning is kept — used by ``sequence_to_string`` for a flat, re-segmentable
+    string that still places stress/tone correctly.
     """
     syllable_features = frozenset(
         name for name, feature in inventories.features.items() if feature.tier == Tier.syllable
@@ -104,7 +120,7 @@ def render_syllabified(
                 break
         # A boundary-marking before-mark stands in for the "." at an interior edge.
         marks_boundary = any(inventories.diacritics[s].marks_boundary for s in before)
-        if left in interior and not marks_boundary:
+        if dots and left in interior and not marks_boundary:
             parts.append(".")
         parts.append("".join(before))  # syllable-initial marks (e.g. stress)
         for i in range(left, right):
