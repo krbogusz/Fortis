@@ -83,13 +83,16 @@ def _limbs(value: Value) -> tuple[Limb, ...]:
     return value if isinstance(value, tuple) else (value,)
 
 
-def _opposite(atom: Limb) -> Limb:
-    """The opposite of a binary value (0 ↔ 1).
+def _opposite(atom: Limb, unary: bool) -> Limb:
+    """The opposite pole of a value.
 
-    Alpha-opposite is validation-restricted to binary features (scalar and unary
-    are rejected), so the atom is 0/1; anything else is left unchanged (defensive,
-    unreachable).
+    A **unary** (privative) feature flips present (1) ↔ absent (``None``); a
+    **binary** feature flips 0 ↔ 1. Alpha-opposite is validation-restricted to
+    these two kinds (scalar is rejected), so any other atom is left unchanged
+    (defensive, unreachable).
     """
+    if unary:
+        return None if atom == 1 else 1
     if atom == 0:
         return 1
     if atom == 1:
@@ -121,7 +124,7 @@ def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool
             case AlphaOp.same:
                 bindings.alpha[ref.var] = atom
             case AlphaOp.opposite:
-                bindings.alpha[ref.var] = _opposite(atom)
+                bindings.alpha[ref.var] = _opposite(atom, ref.unary)
             case AlphaOp.other:
                 bindings.pending_other.append((ref.var, atom))  # ≠ α, checked later
         return True
@@ -244,6 +247,11 @@ def _has_alpha(value: Value) -> bool:
     return any(isinstance(limb, AlphaRef) for limb in _limbs(value))
 
 
+def _has_unary_alpha(value: Value) -> bool:
+    """Whether *value* carries a unary alpha limb (whose absent pole is ``none``)."""
+    return any(isinstance(limb, AlphaRef) and limb.unary for limb in _limbs(value))
+
+
 def _spec_matches(pattern: PatternSpec, segment: FeatureSpec, bindings: Bindings | None) -> bool:
     """Whether one pattern spec matches a realized feature spec (negation-aware)."""
     if bindings is not None and bindings.permissive_alpha and _has_alpha(pattern.value):
@@ -339,6 +347,12 @@ def pattern_matches(
                 bindings.conditions[label] = bindings.conditions.get(label, True) and holds
             continue
         if feature not in target:
+            if _has_unary_alpha(spec.value):
+                # A unary alpha's absent pole is "none": resolve α against None, so
+                # `αF`/`-αF` can bind or check the present↔absent opposition.
+                if not _spec_matches(spec, FeatureSpec(feature=feature, value=None), bindings):
+                    return False
+                continue
             if spec.value is None:
                 # "F: none" is satisfied by absence; "F: !none" requires presence.
                 if spec.negated:

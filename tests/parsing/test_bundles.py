@@ -269,11 +269,12 @@ class TestParsePatternSpec:
         assert result.is_err()
         assert "Alpha-opposite" in result.unwrap_err()
 
-    def test_opposite_alpha_on_unary_rejected(self, features):
-        # '-α' on a unary (privative) feature is rejected too — present has no opposite.
+    def test_opposite_alpha_on_unary_accepted(self, features):
+        # '-α' IS valid on a unary feature — its opposite is the absent pole (none).
         result = parse_pattern_spec("manner: -α", features)
-        assert result.is_err()
-        assert "Alpha-opposite" in result.unwrap_err()
+        assert result.is_ok()
+        assert result.unwrap().value.op == AlphaOp.opposite
+        assert result.unwrap().value.unary is True
 
     def test_opposite_alpha_scalar_contour_limb_rejected(self, features):
         assert parse_pattern_spec("tone: 1>-α", features).is_err()

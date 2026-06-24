@@ -300,6 +300,16 @@ class TestBindingOrder:
         assert _spans(find_matches(ctx_right, [_fb(high=0), _fb(high=1)])) == [(1, 2)]
         assert find_matches(ctx_right, [_fb(high=1), _fb(high=1)]) == []
 
+    def test_unary_opposite_is_present_absent_opposition(self, features):
+        # On a unary (privative) feature, -α flips present(1) ↔ absent(none): [α manner]
+        # and [-α manner] must disagree in manner presence (manner is unary here). This
+        # needs α to bind/match an *absent* feature as the "none" pole.
+        sd = parse_definition("[α manner] -> [+voice] / [-α manner] _", features).unwrap()
+        has, lacks = _fb(manner=1), _fb(consonantal=1)
+        assert _spans(find_matches(sd, [has, lacks])) == [(1, 2)]  # present vs absent → disagree
+        assert find_matches(sd, [has, has]) == []  # both present → agree → no match
+        assert _spans(find_matches(sd, [lacks, has])) == [(1, 2)]  # absent vs present → disagree
+
     def test_alpha_other_is_deferred_until_bound(self, features):
         # !α (other) is a ≠ relation that cannot bind α, so it is deferred and checked
         # once α is bound — here the binder sits to its RIGHT, yet it still resolves.

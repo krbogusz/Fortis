@@ -15,10 +15,16 @@ class AlphaOp(StrEnum):
 
 @dataclass(frozen=True)
 class AlphaRef:
-    """Alpha reference."""
+    """Alpha reference.
+
+    ``unary`` records that the alpha sits on a unary (privative) feature, whose
+    poles are *present* (1) and *absent* (none). Its opposite (``-α``) therefore
+    flips 1 ↔ none, as opposed to a binary feature's 0 ↔ 1.
+    """
 
     var: str
     op: AlphaOp = AlphaOp.same
+    unary: bool = False
 
 
 type SingleValue = int | None | Literal["any"]  # None == undefined / unspecified
