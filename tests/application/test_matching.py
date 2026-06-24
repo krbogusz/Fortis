@@ -5,6 +5,7 @@ import pytest
 from src.fortis.application.matching import (
     Match,
     SyllableView,
+    _cannot_match,
     find_matches,
     pattern_matches,
 )
@@ -377,3 +378,36 @@ class TestSequenceEdgeCases:
         # The nasal before the lateral is blocked; the final nasal applies.
         segs = [_fb(nasal=1), _fb(lateral=1), _fb(nasal=1)]
         assert _spans(find_matches(sd, segs)) == [(2, 3)]
+
+
+class TestNecessaryConditionPruning:
+    """`_cannot_match` is a conservative pre-check.
+
+    It skips a rule the word provably cannot satisfy, and must never prune a rule
+    that could still match.
+    """
+
+    def test_prunes_when_a_required_feature_is_absent(self, features):
+        sd = parse_definition("[+nasal] -> [+voice]", features).unwrap()
+        assert _cannot_match(sd, [_fb(consonantal=1), _fb(voice=1)], LetterInventory())
+        assert not _cannot_match(sd, [_fb(nasal=1), _fb(voice=1)], LetterInventory())
+
+    def test_charges_a_recall_for_a_second_copy(self, features):
+        # 1=[+nasal] @1 needs TWO nasals — the binding and its identical recall.
+        sd = parse_definition("1=[+nasal] @1 -> [+voice] @1", features).unwrap()
+        n = _fb(nasal=1, labial=1)
+        assert _cannot_match(sd, [n, _fb(consonantal=1)], LetterInventory())  # only one nasal
+        assert not _cannot_match(sd, [n, n], LetterInventory())  # two
+
+    def test_never_prunes_a_disjunction_branch_away(self, features):
+        # ([+nasal]|[+cons]) can match via [+cons]; a nasal-less word must NOT be pruned,
+        # and the locus must still be found.
+        sd = parse_definition("([+nasal]|[+cons]) -> [+voice]", features).unwrap()
+        segs = [_fb(consonantal=1, sonorant=0), _fb(voice=1)]
+        assert not _cannot_match(sd, segs, LetterInventory())
+        assert _spans(find_matches(sd, segs)) == [(0, 1)]
+
+    def test_never_prunes_an_optional_element_away(self, features):
+        # [+nasal]? imposes no requirement (min 0); a cons-only word is not pruned.
+        sd = parse_definition("[+nasal]? [+cons] -> [-voice]", features).unwrap()
+        assert not _cannot_match(sd, [_fb(consonantal=1, voice=1)], LetterInventory())
