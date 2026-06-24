@@ -193,3 +193,20 @@ definition = "∅ [+cons] → u"
         path.write_text(toml_content)
         result = load_rule_inventory(path, features)
         assert result.is_ok(), f"Errors: {result.unwrap_err() if result.is_err() else None}"
+
+    def test_duplicate_rule_id_is_an_error(self, tmp_path, features):
+        # A list definition mints foo#1/foo#2; an explicit "foo#1" table collides.
+        toml_content = """\
+[foo]
+time = 0
+definition = ["a → b", "c → d"]
+
+["foo#1"]
+time = 0
+definition = "e → f"
+"""
+        path = tmp_path / "rules.toml"
+        path.write_text(toml_content)
+        result = load_rule_inventory(path, features)
+        assert result.is_err()
+        assert any("duplicate rule id 'foo#1'" in e for e in result.unwrap_err())
