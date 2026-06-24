@@ -143,6 +143,13 @@ class TestReplacementPath:
         out = _apply("1=[+cons] -> @1", segs, features, letters)
         assert _values(out) == [{"consonantal": 1, "voice": 1}]
 
+    def test_case_b_target_recall_rewrites_the_matched_segment(self, features, letters):
+        # Case B: @1 is a recall of a right-context binding, found by span enumeration.
+        # The matched first nasal is rewritten (devoiced); the second stays as context.
+        n = _fb(nasal=1, labial=1)
+        out = _apply("@1 -> [-voice] / _ 1=[+nasal]", [n, n], features, letters)
+        assert _values(out) == [{"nasal": 1, "labial": 1, "voice": 0}]
+
 
 class TestComplexMergeTargets:
     def test_fixed_quantified_merge(self, features, letters):

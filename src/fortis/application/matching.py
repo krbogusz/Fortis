@@ -39,13 +39,14 @@ a binding across failed window attempts).
 A reference binding captures its whole matched span — one segment for ``1=[X]``,
 several for a group ``1=([X][Y])`` — and a recall ``@n`` replays that span.
 
-A reference may be recalled earlier than it is bound: the target's bindings are
-captured in pass 1, and the right context's (and, within the exception, the right
-exception's) are pre-captured before they are matched, so a recall to their left
-resolves. The remaining deferral (an explicit no-match, never a silent pass) is a
-target that recalls a binding it does not itself contain — its span depends on the
-recall length, which depends on the binding, which the target's pass-1 match
-cannot resolve.
+A reference may be recalled earlier than it is bound: the target's own bindings are
+captured in pass 1; the right context's (and the right exception's) are pre-captured
+before they are matched; and a target that recalls a *context* binding — which pass
+1 cannot span on its own — has its span found by enumerating the end, letting the
+right-context pre-seed resolve the recall (its length then fixes the span). The
+remaining deferral (an explicit no-match, never a silent pass) is a target that
+recalls a binding bound *later within the target itself*; write the binding before
+the recall to avoid it.
 
 Negated alpha is fully supported at both layers, since pass 1 is alpha-blind and
 defers either to pass 2: a negated *element* wrapping an alpha bundle (``![αF]``)
@@ -814,6 +815,54 @@ def _cannot_match(
     return any(supply[demand] < count for demand, count in _required_counts(sd, letters).items())
 
 
+def _bound_refs(elements: tuple[Element, ...]) -> set[int]:
+    """Reference numbers bound (``n=``) anywhere in *elements*, descending into nesting."""
+    refs: set[int] = set()
+    for element in elements:
+        match element:
+            case Bound(ref, inner):
+                refs.add(ref)
+                refs |= _bound_refs((inner,))
+            case Group(inner):
+                refs |= _bound_refs(inner)
+            case Disjunction(branches):
+                for branch in branches:
+                    refs |= _bound_refs(branch)
+            case Quantified(inner, _) | Negated(inner):
+                refs |= _bound_refs((inner,))
+    return refs
+
+
+def _recall_refs(elements: tuple[Element, ...]) -> set[int]:
+    """Reference numbers recalled (``@n``) anywhere in *elements*, descending into nesting."""
+    refs: set[int] = set()
+    for element in elements:
+        match element:
+            case RecallRef(ref):
+                refs.add(ref)
+            case Bound(_, inner):
+                refs |= _recall_refs((inner,))
+            case Group(inner):
+                refs |= _recall_refs(inner)
+            case Disjunction(branches):
+                for branch in branches:
+                    refs |= _recall_refs(branch)
+            case Quantified(inner, _) | Negated(inner):
+                refs |= _recall_refs((inner,))
+    return refs
+
+
+def _target_recalls_a_context_binding(sd: StructuralDescription) -> bool:
+    """Whether the target recalls a reference bound only in a context (Case B).
+
+    Such a target cannot fix its own span in pass 1 — the recall is unbound there —
+    so find_matches enumerates the span and lets the right-context pre-seed resolve
+    the recall (whose length then fixes the span).
+    """
+    context_binds = _bound_refs(sd.left_context) | _bound_refs(sd.right_context)
+    return bool((_recall_refs(sd.target) - _bound_refs(sd.target)) & context_binds)
+
+
 def find_matches(
     sd: StructuralDescription,
     segments: list[FeatureBundle],
@@ -847,6 +896,7 @@ def find_matches(
     if _cannot_match(sd, segments, letters):
         return []  # the word lacks material the rule provably needs — skip the search
     matches: list[Match] = []
+    case_b = _target_recalls_a_context_binding(sd)
 
     for start in range(len(segments) + 1):
         # Pass 1: target alone, alpha-permissive — captures the structural span and
@@ -854,6 +904,7 @@ def find_matches(
         # and must bind left-context first). Being fully alpha-blind, pass 1 yields
         # a true superset of valid spans in greedy order, so the greediest fully
         # valid span is still reached and none is missed.
+        located = None
         seed_pass1 = Bindings(permissive_alpha=True)
         for end, pass1 in _match_sequence(
             sd.target, segments, start, seed_pass1, letters, boundaries, syllables
@@ -862,8 +913,21 @@ def find_matches(
                 sd, segments, start, end, _seed_references(pass1), letters, boundaries, syllables
             )
             if located is not None:
-                matches.append(located)
                 break  # greediest fully-valid target parse at this start wins
+        if located is None and case_b:
+            # Case B: the target recalls a binding it does not contain, so pass 1
+            # cannot fix its span. Enumerate the end (longest first, to stay greedy
+            # like the rest of the matcher); _locate pre-seeds the right context's
+            # binding, the recall resolves, and its length fixes the span.
+            for end in range(len(segments), start - 1, -1):
+                located = _locate(
+                    sd, segments, start, end, _seed_references(Bindings()),
+                    letters, boundaries, syllables,
+                )
+                if located is not None:
+                    break
+        if located is not None:
+            matches.append(located)
     return matches
 
 
