@@ -64,6 +64,15 @@ class TestRenderSyllabified:
 
 
 class TestSequenceToString:
+    def test_repositions_stress_to_the_syllable_edge(self, project):
+        # The flat re-render syllabifies internally, so stress sits at the syllable
+        # onset (koˈta), not before the nucleus (kotˈa).
+        assert sequence_to_string(string_to_sequence("koˈta", project), project) == "koˈta"
+
+    def test_falls_back_to_flat_when_unsyllabifiable(self, project):
+        # A bare cluster has no nucleus, so it renders flat without raising.
+        assert sequence_to_string(string_to_sequence("kt", project), project) == "kt"
+
     def test_string_round_trip_for_invertible_words(self, project):
         # Most words round-trip exactly; the one diacritic-ordering case is covered
         # at the feature level in the segmentation tests.
