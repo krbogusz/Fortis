@@ -53,6 +53,7 @@ and a negated alpha *spec* (constructible as ``!-α``, i.e. "not opposite") both
 resolve correctly. (``!α`` is the alpha-*other* value marker, not a negation.)
 """
 
+from collections import Counter
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 
@@ -693,6 +694,121 @@ def full_match(
     )
 
 
+# --- Necessary-condition pruning ----------------------------------------------------------------
+# A cheap pre-check that skips a rule when the word provably cannot satisfy it. Pure optimisation:
+# the requirement is a conservative *lower bound* — only unconditionally-required, value-forcing
+# specs contribute — so a word failing it has no locus, and pruning never drops a real match.
+
+
+def _spec_demands(bundle: PatternBundle | FeatureBundle) -> Iterator[tuple[str, object]]:
+    """The (feature, value) pairs a bundle forces a segment to carry.
+
+    Skips everything that does not pin a present value: conditional and negated
+    specs, alpha (variable), ``none`` (absence), and contours.
+    """
+    for feature, spec in bundle.items():
+        if getattr(spec, "condition_label", None) is not None or getattr(spec, "negated", False):
+            continue
+        value = spec.value
+        if value is None or isinstance(value, (AlphaRef, tuple)):
+            continue
+        yield (feature, value)
+
+
+def _element_demands(element: Element, letters: LetterInventory) -> list[tuple[str, object]]:
+    """The demands of a single bundle/letter element (empty for anything else)."""
+    match element:
+        case BundleElem(bundle) | LetterBundle(bundle):
+            return list(_spec_demands(bundle))
+        case LetterRef(symbol) if symbol in letters:
+            return list(_spec_demands(letters[symbol].bundle))
+        case _:
+            return []
+
+
+def _binding_demands(
+    sd: StructuralDescription, letters: LetterInventory
+) -> dict[int, list[tuple[str, object]]]:
+    """Each *unconditionally-bound* single-element reference's demands, by ref number.
+
+    Used to charge a recall ``@n`` with its binding's demands (the recall must match
+    an identical copy). Only required bindings are recorded, so a recall of an
+    optional/disjoined binding contributes nothing (staying a true lower bound).
+    """
+    out: dict[int, list[tuple[str, object]]] = {}
+
+    def walk(elements: tuple[Element, ...], required: bool) -> None:
+        for element in elements:
+            match element:
+                case Bound(ref, inner) if required:
+                    demands = _element_demands(inner, letters)
+                    if demands:
+                        out[ref] = demands
+                    walk((inner,), required)
+                case Group(inner):
+                    walk(inner, required)
+                case Quantified(inner, quant):
+                    walk((inner,), required and quant.min >= 1)
+                case _:
+                    pass  # disjunction / negated / leaf — no required binding here
+
+    for elements in (sd.target, sd.left_context, sd.right_context):
+        walk(elements, required=True)
+    return out
+
+
+def _required_counts(sd: StructuralDescription, letters: LetterInventory) -> Counter:
+    """A conservative lower bound on (feature, value) occurrences any locus needs.
+
+    Walks the target and contexts (not exceptions — they are negative). Only
+    unconditionally-required positions contribute: a disjunction branch, an optional
+    quantifier (``min`` 0), a negation, and exceptions add nothing. A reference's
+    binding demands are charged once per recall too, so ``1=[+nasal] @1`` needs two
+    ``[+nasal]`` segments.
+    """
+    bindings = _binding_demands(sd, letters)
+    counts: Counter = Counter()
+
+    def accumulate(elements: tuple[Element, ...], required: bool) -> None:
+        for element in elements:
+            match element:
+                case (BundleElem(bundle) | LetterBundle(bundle)) if required:
+                    counts.update(_spec_demands(bundle))
+                case LetterRef(symbol) if required and symbol in letters:
+                    counts.update(_spec_demands(letters[symbol].bundle))
+                case RecallRef(ref) if required and ref in bindings:
+                    counts.update(bindings[ref])
+                case Bound(_, inner):
+                    accumulate((inner,), required)
+                case Group(inner):
+                    accumulate(inner, required)
+                case Quantified(inner, quant):
+                    accumulate((inner,), required and quant.min >= 1)
+                case _:
+                    pass  # disjunction / negated / wildcard / boundary / null — no demand
+
+    for elements in (sd.target, sd.left_context, sd.right_context):
+        accumulate(elements, required=True)
+    return counts
+
+
+def _word_supply(segments: list[FeatureBundle]) -> Counter:
+    """How many segments carry each (feature, value)."""
+    supply: Counter = Counter()
+    for segment in segments:
+        for feature, spec in segment.items():
+            supply[(feature, spec.value)] += 1
+    return supply
+
+
+def _cannot_match(
+    sd: StructuralDescription, segments: list[FeatureBundle], letters: LetterInventory
+) -> bool:
+    """Whether *segments* provably lack the material *sd* needs (so it cannot fire)."""
+    supply = _word_supply(segments)
+    return any(supply[demand] < count for demand, count in _required_counts(sd, letters).items())
+
+
 def find_matches(
     sd: StructuralDescription,
     segments: list[FeatureBundle],
@@ -723,6 +839,8 @@ def find_matches(
             (``None`` means every feature is matched against its own segment).
     """
     letters = letters if letters is not None else LetterInventory()
+    if _cannot_match(sd, segments, letters):
+        return []  # the word lacks material the rule provably needs — skip the search
     matches: list[Match] = []
 
     for start in range(len(segments) + 1):
