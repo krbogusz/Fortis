@@ -282,6 +282,15 @@ class TestSequenceMatcher:
         assert _spans(find_matches(sd, [c, v, c, v])) == [(0, 4)]
         assert find_matches(sd, [c, v, _fb(consonantal=1, voice=0), v]) == []
 
+    def test_reference_bound_in_right_context_recalled_to_the_left(self, features):
+        # A reference bound in the RIGHT context is recalled by the LEFT context — the
+        # two flanks of the target must be identical. References are scope-based, so the
+        # right-context binding is pre-captured and visible to the earlier recall.
+        sd = parse_definition("[+cons] -> [+voice] / @1 _ 1=[+nasal]", features).unwrap()
+        same, other, c = _fb(nasal=1, labial=1), _fb(nasal=1, labial=0), _fb(consonantal=1)
+        assert _spans(find_matches(sd, [same, c, same])) == [(1, 2)]  # identical flanks
+        assert find_matches(sd, [other, c, same]) == []  # differing flanks → no locus
+
 
 class TestBindingOrder:
     """Pin the matcher semantics: alpha is order-independent, references target-first."""

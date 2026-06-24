@@ -39,10 +39,13 @@ a binding across failed window attempts).
 A reference binding captures its whole matched span — one segment for ``1=[X]``,
 several for a group ``1=([X][Y])`` — and a recall ``@n`` replays that span.
 
-Deferred for v1 (an explicit no-match, never a silent pass): a reference *bound*
-in a context/exception and recalled in an earlier position. Only target bindings
-are order-independent (captured in pass 1); context bindings follow the
-left → target → right order.
+A reference may be recalled earlier than it is bound: the target's bindings are
+captured in pass 1, and the right context's are pre-captured before pass 2, so
+both are visible to a recall anywhere. The remaining deferral (an explicit
+no-match, never a silent pass) is a target that recalls a binding it does not
+itself contain — its span depends on the recall length, which depends on the
+binding, which the target's pass-1 match cannot resolve. Exception-position
+bindings are likewise not pre-captured.
 
 Negated alpha is fully supported at both layers, since pass 1 is alpha-blind and
 defers either to pass 2: a negated *element* wrapping an alpha bundle (``![αF]``)
@@ -706,8 +709,9 @@ def find_matches(
 
     Two passes per candidate span (see module docstring): pass 1 matches the
     target alone to fix its span and capture its reference bindings; pass 2
-    re-evaluates left context → target → right context → exception, binding alpha
-    in that order with the target references pre-seeded.
+    re-evaluates left context → target → right context → exception, with the
+    target *and* right-context references pre-seeded (references are scope-based)
+    and alpha resolved order-independently.
 
     Args:
         sd: The parsed rule to apply.
@@ -750,13 +754,17 @@ def _locate(
     boundaries: frozenset[int],
     syllables: SyllableView | None,
 ) -> Match | None:
-    """Pass 2: evaluate the environment in alpha order; return the Match or None.
+    """Pass 2: evaluate the whole environment; return the Match or None.
 
-    Left context binds alpha first, then the target is re-matched over its exact
-    span (so its alpha resolves against the bound left context), then the right
-    context, then the exception. *seed* carries the target's reference bindings
-    from pass 1.
+    Left context → target → right context → exception. *seed* carries the target's
+    reference bindings from pass 1; we additionally pre-bind the right context's
+    references so an earlier position may recall them (references are scope-based,
+    not left → right). Alpha is order-independent, so the walk order does not affect
+    which alpha assignment is accepted.
     """
+    seed = _seed_right_context_references(
+        sd, segments, end, seed, letters, boundaries, syllables
+    )
     for after_left in _match_ending_at(
         sd.left_context, segments, start, seed, letters, boundaries, syllables
     ):
@@ -777,6 +785,40 @@ def _locate(
                         start=start, end=end, bindings=after_right, target_choices=target_choices
                     )
     return None
+
+
+def _seed_right_context_references(
+    sd: StructuralDescription,
+    segments: list[FeatureBundle],
+    end: int,
+    seed: Bindings,
+    letters: LetterInventory,
+    boundaries: frozenset[int],
+    syllables: SyllableView | None,
+) -> Bindings:
+    """Pre-bind the right context's references so a position to its left can recall them.
+
+    References are scope-based, not left → right (§2.3.1), so a reference bound in
+    the right context must be visible to the target/left context that recall it. We
+    capture the *first* right-context match alpha-blind (alpha is order-independent,
+    so this commits nothing about alpha) and seed any references it binds. For a
+    deterministic right context the captured binding matches the one pass 2 re-binds;
+    an ambiguous right context (multiple matches binding differently) seeds the
+    first, which is the only edge where the recall could see a different binding.
+    """
+    if not sd.right_context:
+        return seed
+    blind = _copy(seed)
+    blind.permissive_alpha = True
+    for captured in _match_starting_at(
+        sd.right_context, segments, end, blind, letters, boundaries, syllables
+    ):
+        if captured.reference == seed.reference:
+            return seed  # the right context binds no new references
+        enriched = _copy(seed)
+        enriched.reference.update(captured.reference)
+        return enriched
+    return seed
 
 
 def _pending_other_holds(bindings: Bindings) -> bool:
