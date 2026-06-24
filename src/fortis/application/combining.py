@@ -66,6 +66,7 @@ def merge(
         form_contours: Passed through to ``combine``.
     """
     merged = combine(base, delta, form_contours)
+    # Downward: unspecifying a node (value None) unlinks the node and its whole subtree.
     to_drop: set[str] = set()
     for feature, spec in merged.items():
         if spec.value is None:
@@ -73,6 +74,16 @@ def merge(
             to_drop.update(features.descendants(feature))
     for feature in to_drop:
         merged.pop(feature, None)
+    # Upward: a feature the *delta* sets implies its ancestor nodes — +rounded makes
+    # the segment +labial (and +oral …), the mirror of the downward delink. Scoped to
+    # the delta: a well-formed base already carries its ancestors, so completing only
+    # what this merge introduces keeps the pass from masking a pre-existing orphan.
+    # Ancestor class nodes are unary, so their present value is 1.
+    for feature in delta:
+        if feature in merged:  # the delta set a value here (not delinked away)
+            for ancestor in features.ancestors(feature):
+                if ancestor not in merged:
+                    merged[ancestor] = FeatureSpec(feature=ancestor, value=1)
     return merged
 
 

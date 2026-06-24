@@ -79,6 +79,20 @@ class TestMerge:
         # A feature outside the subtree is untouched.
         assert result["voice"].value == 1
 
+    def test_set_daughter_adds_its_ancestor_nodes(self, features):
+        # The mirror of the delink: a delta that sets a daughter (nasal) pulls in its
+        # mother node (manner), so the merged segment is geometrically well-formed.
+        result = merge(_fb(voice=1), _delta(nasal=1), features)
+        assert result["nasal"].value == 1
+        assert result["manner"].value == 1  # nasal's parent, completed by the upward pass
+
+    def test_upward_completion_is_scoped_to_the_delta(self, features):
+        # Only what the delta sets is completed. A base feature missing its ancestor
+        # is left alone, so the pass cannot mask a pre-existing orphan.
+        base = _fb(nasal=1)  # nasal without its parent manner — an incomplete base
+        result = merge(base, _delta(voice=0), features)
+        assert "manner" not in result  # not added: nasal came from the base, not the delta
+
     def test_does_not_mutate_base(self, features):
         base = _fb(nasal=1)
         merge(base, _delta(nasal=None), features)

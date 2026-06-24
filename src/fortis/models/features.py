@@ -60,6 +60,15 @@ class FeatureInventory(UserDict[str, Feature]):
         """Parent of the feature."""
         return self.data[feature].parent
 
+    def ancestors(self, feature: str) -> tuple[str, ...]:
+        """All ancestor nodes of the feature, nearest first; empty if it is a root."""
+        result: list[str] = []
+        parent = self.parent(feature)
+        while parent is not None:
+            result.append(parent)
+            parent = self.parent(parent)
+        return tuple(result)
+
     @cached_property
     def names_by_length(self) -> tuple[str, ...]:
         """Feature names sorted longest-first (for greedy matching)."""

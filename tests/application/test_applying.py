@@ -93,7 +93,12 @@ class TestMergePath:
         # ∅ inserts a fresh segment between them.
         segs = [_fb(consonantal=1), _fb(syllabic=1)]
         out = _apply("[+cons] ∅ [+syll] -> [+voice][+nasal][-syll]", segs, features, letters)
-        assert _values(out) == [{"consonantal": 1, "voice": 1}, {"nasal": 1}, {"syllabic": 0}]
+        # The inserted [+nasal] implies its parent node manner (geometry completion).
+        assert _values(out) == [
+            {"consonantal": 1, "voice": 1},
+            {"nasal": 1, "manner": 1},
+            {"syllabic": 0},
+        ]
 
     def test_three_pair_merge_keeps_correspondence(self, features, letters):
         segs = [_fb(nasal=1), _fb(lateral=1), _fb(continuant=1)]
@@ -150,7 +155,11 @@ class TestComplexMergeTargets:
         # ([+cons][+syll]) -> ([-voice][+nasal]): the group flattens, then pairs.
         segs = [_fb(consonantal=1, voice=1), _fb(syllabic=1)]
         out = _apply("([+cons][+syll]) -> ([-voice][+nasal])", segs, features, letters)
-        assert _values(out) == [{"consonantal": 1, "voice": 0}, {"syllabic": 1, "nasal": 1}]
+        # +nasal implies its parent node manner (geometry completion).
+        assert _values(out) == [
+            {"consonantal": 1, "voice": 0},
+            {"syllabic": 1, "nasal": 1, "manner": 1},
+        ]
 
     def test_variable_quantifier_merge_takes_count_from_span(self, features, letters):
         # [-syll]* -> [-voice]*: the matched run's width sets the count, so every
@@ -267,7 +276,7 @@ class TestDisjunction:
         rule = "([+high] | [+front]) -> ([+nasal] | [+voice])"
         hi = _apply(rule, [_fb(high=1)], features, letters)
         fr = _apply(rule, [_fb(front=1)], features, letters)
-        assert _values(hi) == [{"high": 1, "nasal": 1}]
+        assert _values(hi) == [{"high": 1, "nasal": 1, "manner": 1}]  # +nasal ⇒ +manner
         assert _values(fr) == [{"front": 1, "voice": 1}]
 
     def test_collapse_to_single_result(self, features, letters):
@@ -276,8 +285,8 @@ class TestDisjunction:
         rule = "([+high] | [+front]) -> [+nasal]"
         hi = _apply(rule, [_fb(high=1)], features, letters)
         fr = _apply(rule, [_fb(front=1)], features, letters)
-        assert _values(hi) == [{"high": 1, "nasal": 1}]
-        assert _values(fr) == [{"front": 1, "nasal": 1}]
+        assert _values(hi) == [{"high": 1, "nasal": 1, "manner": 1}]  # +nasal ⇒ +manner
+        assert _values(fr) == [{"front": 1, "nasal": 1, "manner": 1}]
 
     def test_scalar_chain_shift_flips_the_value(self, features, letters):
         # The requested shape on a scalar: ([length:3]|[length:2]) -> ([length:2]|[length:1]).
