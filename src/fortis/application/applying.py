@@ -28,12 +28,12 @@ the feature is skipped.
 
 Complex elements are resolved before the merge/replace logic: a disjunction to its
 matched branch, a group to its sub-sequence, a fixed-count quantifier to that many
-copies. A **variable** quantifier on the merge path (``X* -> Y*``) takes its
-per-locus count from the matched span, so its paired result quantifier repeats the
-same number of times. What still raises (rather than misapply silently): *two*
-variable-width target elements (the span split is ambiguous), a variable quantifier
-whose inner is itself variable-width, and a variable quantifier on the *replacement*
-path (no target span to pair against).
+copies. A **variable** quantifier in the result mirrors the target — it repeats as
+many times as the target matched, taking that count from the span — on the merge
+path (``X* -> Y*``) and the replacement path (``X* -> a*``) alike. What still raises
+(rather than misapply silently): *two* variable-width target elements (the span
+split is ambiguous), a variable quantifier whose inner is itself variable-width, and
+a variable result quantifier with no single variable target to mirror.
 """
 
 from src.fortis.application.combining import merge
@@ -308,11 +308,18 @@ def apply_match(
             write is refused.
     """
     span = segments[match.start : match.end]
-    # Resolve the branch each disjunction took (the target's branch is reused for the
-    # paired result disjunction), then flatten groups and expand fixed quantifiers.
-    # A *variable* quantifier is left in place for now — its per-locus width is set
-    # below from the matched span, once the merge vs replacement path is decided.
+    # Resolve disjunction branches, flatten groups, and expand fixed quantifiers.
+    # A *variable* quantifier in the result mirrors the target: it repeats as many
+    # times as the target matched, taking that count from the span — on the merge
+    # path (X* -> Y*) and the replacement path (X* -> a*) alike. The count is only
+    # derived when the result actually has one, so a fixed or collapsing result over
+    # a multi-variable target (e.g. X* Y* -> z) stays valid.
+    target_content = _expand(_resolve_disjunctions(_content(sd.target), match.target_choices))
     result_content = _expand(_resolve_disjunctions(_content(sd.result), match.target_choices))
+    if any(isinstance(element, Quantified) for element in result_content):
+        count = _variable_count(target_content, len(span))
+        target_content = _expand(target_content, count)
+        result_content = _expand(result_content, count)
 
     if not any(_is_merge_bundle(e) for e in result_content):
         # Replacement path: the result fully specifies the output; the span
@@ -322,15 +329,7 @@ def apply_match(
             out.extend(_render_result_element(element, None, match.bindings, letters, features))
         return out
 
-    # Merge path: target and result line up one-to-one. A single variable-width
-    # target quantifier (X* / X{1,2}) takes its count from the span; its paired
-    # result quantifier (validated to match) gets the same count, so X* -> Y*
-    # applies Y to each of the matched segments.
-    target_content = _expand(_resolve_disjunctions(_content(sd.target), match.target_choices))
-    count = _variable_count(target_content, len(span))
-    if count is not None:
-        target_content = _expand(target_content, count)
-        result_content = _expand(result_content, count)
+    # Merge path: target and result line up one-to-one.
     if len(target_content) != len(result_content):
         raise NotImplementedError(
             "merge result with unequal target/result counts is not supported "

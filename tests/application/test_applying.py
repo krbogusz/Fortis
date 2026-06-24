@@ -173,6 +173,21 @@ class TestComplexMergeTargets:
         with pytest.raises(NotImplementedError):
             apply_match(sd, match, segs, letters, features)
 
+    def test_variable_quantifier_replacement_mirrors_the_target(self, features, letters):
+        # On the replacement path too, a variable result quantifier mirrors the
+        # target's matched count: [-syll]* -> a* turns N segments into N a's.
+        a = {"syllabic": 1, "high": 0}  # the test letter 'a'
+        segs = [_fb(consonantal=1, syllabic=0)] * 3
+        assert _values(_apply("[-syll]* -> a*", segs, features, letters)) == [a, a, a]
+        assert _values(_apply("[-syll]* -> a*", segs[:1], features, letters)) == [a]
+
+    def test_variable_result_without_a_variable_target_is_refused(self, features, letters):
+        # No variable target to mirror, so the result quantifier's count is undecidable.
+        sd = parse_definition("[+cons] -> a*", features).unwrap()
+        match = find_matches(sd, [_fb(consonantal=1)], letters)[0]
+        with pytest.raises(NotImplementedError):
+            apply_match(sd, match, [_fb(consonantal=1)], letters, features)
+
     def test_multisegment_recall_replays_the_whole_span(self, features, letters):
         # A group binding captures several segments; @1 in the result replays them
         # all — 1=([+cons][+syll]) -> @1 @1 reduplicates the CV (CV → CVCV).
