@@ -153,8 +153,7 @@ fortis/
     │   ├── features.py          #   FeatureKind, Feature, FeatureInventory
     │   ├── inventories.py       #   Letter/Diacritic/Sonority/SyllablePart/Word + inventories
     │   ├── project.py           #   Project (every inventory bundled together)
-    │   ├── derivation.py        #   DerivationStep, Derivation
-    │   └── syllable.py          #   Syllable (index-based onset/nucleus/coda)
+    │   └── derivation.py        #   DerivationStep, Derivation
     │
     ├── parsing/                 # STRING → models       (depends on: models)
     │   ├── lexer.py             #   tokenise rule notation
