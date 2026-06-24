@@ -152,12 +152,26 @@ class TestComplexMergeTargets:
         out = _apply("([+cons][+syll]) -> ([-voice][+nasal])", segs, features, letters)
         assert _values(out) == [{"consonantal": 1, "voice": 0}, {"syllabic": 1, "nasal": 1}]
 
-    def test_variable_quantifier_still_refused(self, features, letters):
-        # A variable quantifier has no fixed per-locus width to expand here.
-        sd = parse_definition("[+cons]{1,2} -> [-voice]{1,2}", features).unwrap()
-        match = find_matches(sd, [_fb(consonantal=1, voice=1)], letters)[0]
+    def test_variable_quantifier_merge_takes_count_from_span(self, features, letters):
+        # [-syll]* -> [-voice]*: the matched run's width sets the count, so every
+        # matched segment is devoiced (X* -> Y* applies Y to each).
+        segs = [_fb(consonantal=1, syllabic=0, voice=1)] * 3
+        out = _apply("[-syll]* -> [-voice]*", segs, features, letters)
+        assert _values(out) == [{"consonantal": 1, "syllabic": 0, "voice": 0}] * 3
+
+    def test_bounded_variable_quantifier_merge(self, features, letters):
+        # A bounded variable quantifier ({1,2}) is recoverable from the span too.
+        segs = [_fb(consonantal=1, voice=1), _fb(consonantal=1, voice=1)]
+        out = _apply("[+cons]{1,2} -> [-voice]{1,2}", segs, features, letters)
+        assert _values(out) == [{"consonantal": 1, "voice": 0}, {"consonantal": 1, "voice": 0}]
+
+    def test_two_variable_quantifiers_still_refused(self, features, letters):
+        # Two variable-width elements: the span split between them is ambiguous.
+        sd = parse_definition("[-syll]* [-syll]* -> [-voice]* [-voice]*", features).unwrap()
+        segs = [_fb(consonantal=1, voice=1), _fb(consonantal=1, voice=1)]
+        match = find_matches(sd, segs, letters)[0]
         with pytest.raises(NotImplementedError):
-            apply_match(sd, match, [_fb(consonantal=1, voice=1)], letters, features)
+            apply_match(sd, match, segs, letters, features)
 
     def test_multisegment_recall_replays_the_whole_span(self, features, letters):
         # A group binding captures several segments; @1 in the result replays them

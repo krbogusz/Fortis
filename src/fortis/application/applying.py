@@ -28,9 +28,12 @@ the feature is skipped.
 
 Complex elements are resolved before the merge/replace logic: a disjunction to its
 matched branch, a group to its sub-sequence, a fixed-count quantifier to that many
-copies. The one shape still deferred (it raises ``NotImplementedError`` rather than
-silently misapplying) is a **variable** quantifier on the merge/replace path, whose
-per-locus width is not recoverable here.
+copies. A **variable** quantifier on the merge path (``X* -> Y*``) takes its
+per-locus count from the matched span, so its paired result quantifier repeats the
+same number of times. What still raises (rather than misapply silently): *two*
+variable-width target elements (the span split is ambiguous), a variable quantifier
+whose inner is itself variable-width, and a variable quantifier on the *replacement*
+path (no target span to pair against).
 """
 
 from src.fortis.application.combining import merge
@@ -103,29 +106,72 @@ def _resolve_disjunctions(content: list[Element], choices: tuple[int, ...]) -> l
     return resolved
 
 
-def _expand(content: list[Element]) -> list[Element]:
-    """Flatten groups and expand fixed-count quantifiers to a flat, 1-per-segment list.
+def _expand(content: list[Element], variable_count: int | None = None) -> list[Element]:
+    """Flatten groups and expand quantifiers to a flat, one-element-per-segment list.
 
-    A ``Group``'s sub-sequence is spliced in; a ``Quantified`` with a fixed count
-    ``{n,n}`` is repeated ``n`` times (its inner expanded first). This lets the
-    merge/replace logic — which pairs one element per segment — handle a complex
-    target like ``[+cons]{2}`` or ``([+cons][+syll])``. A *variable* quantifier has
-    no recoverable per-locus width at this point, so it is refused (loudly).
+    A ``Group``'s sub-sequence is spliced in; a fixed ``Quantified`` (``{n,n}``) is
+    repeated ``n`` times. A *variable* quantifier (``*``, ``{1,2}``, …) is repeated
+    ``variable_count`` times when that is given — its per-locus width, recovered
+    from the matched span — and otherwise left in place (so the caller can decide
+    the merge vs replacement path first, then re-expand with the count).
     """
     flat: list[Element] = []
     for element in content:
         if isinstance(element, Group):
-            flat.extend(_expand(list(element.elements)))
+            flat.extend(_expand(list(element.elements), variable_count))
         elif isinstance(element, Quantified):
-            if element.quant.max is None or element.quant.min != element.quant.max:
-                raise NotImplementedError(
-                    f"a variable quantifier {element.quant} on the merge/replace path "
-                    "is not supported (no fixed per-locus width)"
-                )
-            flat.extend(_expand([element.inner]) * element.quant.min)
+            quant = element.quant
+            if quant.max is not None and quant.min == quant.max:
+                flat.extend(_expand([element.inner], variable_count) * quant.min)
+            elif variable_count is not None:
+                flat.extend(_expand([element.inner], variable_count) * variable_count)
+            else:
+                flat.append(element)  # variable width unknown here — left for the merge path
         else:
             flat.append(element)
     return flat
+
+
+def _min_width(element: Element) -> int | None:
+    """The fixed number of segments an element consumes, or ``None`` if variable."""
+    match element:
+        case Null():
+            return 0
+        case Group(inner):
+            widths = [_min_width(e) for e in inner]
+            return None if any(w is None for w in widths) else sum(widths)
+        case Quantified(inner, quant):
+            if quant.max is not None and quant.min == quant.max:
+                inner_width = _min_width(inner)
+                return None if inner_width is None else inner_width * quant.min
+            return None
+        case _:
+            return 1
+
+
+def _variable_count(flat_target: list[Element], span_width: int) -> int | None:
+    """Repetitions a single variable-width target quantifier needs to fill the span.
+
+    *flat_target* has groups and fixed quantifiers already expanded, so only flat
+    one-segment elements, the null, and leftover variable ``Quantified``s remain.
+    Returns ``None`` when the target is all fixed-width. Refuses (loudly) when more
+    than one variable element remains — the split between them is ambiguous.
+    """
+    fixed = sum(1 for el in flat_target if not isinstance(el, (Quantified, Null)))
+    variable = [el for el in flat_target if isinstance(el, Quantified)]
+    if not variable:
+        return None
+    if len(variable) > 1:
+        raise NotImplementedError(
+            "more than one variable-width element on the merge path (ambiguous span split)"
+        )
+    inner_width = _min_width(variable[0].inner)
+    if not inner_width:  # None (variable inner) or 0
+        raise NotImplementedError("a variable quantifier with a non-fixed-width inner is refused")
+    remaining = span_width - fixed
+    if remaining < 0 or remaining % inner_width:
+        raise NotImplementedError("span width does not divide evenly across the quantifier")
+    return remaining // inner_width
 
 
 def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureBundle:
@@ -263,8 +309,9 @@ def apply_match(
     """
     span = segments[match.start : match.end]
     # Resolve the branch each disjunction took (the target's branch is reused for the
-    # paired result disjunction), then flatten groups and expand fixed quantifiers —
-    # so the rest of the logic sees a flat, one-element-per-segment sequence.
+    # paired result disjunction), then flatten groups and expand fixed quantifiers.
+    # A *variable* quantifier is left in place for now — its per-locus width is set
+    # below from the matched span, once the merge vs replacement path is decided.
     result_content = _expand(_resolve_disjunctions(_content(sd.result), match.target_choices))
 
     if not any(_is_merge_bundle(e) for e in result_content):
@@ -275,9 +322,15 @@ def apply_match(
             out.extend(_render_result_element(element, None, match.bindings, letters, features))
         return out
 
-    # Merge path: target and result line up one-to-one. After expansion the target is
-    # flat and fixed-width; the guard below still catches anything else.
+    # Merge path: target and result line up one-to-one. A single variable-width
+    # target quantifier (X* / X{1,2}) takes its count from the span; its paired
+    # result quantifier (validated to match) gets the same count, so X* -> Y*
+    # applies Y to each of the matched segments.
     target_content = _expand(_resolve_disjunctions(_content(sd.target), match.target_choices))
+    count = _variable_count(target_content, len(span))
+    if count is not None:
+        target_content = _expand(target_content, count)
+        result_content = _expand(result_content, count)
     if len(target_content) != len(result_content):
         raise NotImplementedError(
             "merge result with unequal target/result counts is not supported "
