@@ -6,6 +6,7 @@ derivation showing only the rules that changed the form, with syllable
 structure (``.`` between syllables) on the surface.
 """
 
+import re
 import sys
 
 from src.fortis.application.deriving import derive, resolve_rule_letters
@@ -46,22 +47,31 @@ def main() -> None:
         print()
 
 
+_SUBRULE_SUFFIX = re.compile(r"#\d+$")
+
+
 def _print_derivation(derivation: Derivation, project: Project) -> None:
     """Print one word's derivation: headword, each firing rule, then the surface.
 
     Each firing rule is shown as ``<time>: <rule name>``, with the before → after
-    forms and a change summary on the indented line below.
+    forms and a change summary on the indented line below. Consecutive steps from
+    one list-``definition`` rule (sub-rules sharing a ``name#1``/``#2`` id) are
+    grouped under a single heading, one change line per sub-step.
     """
     word = derivation.word
     gloss = f' – "{word.gloss}"' if word.gloss else ""
     print("")
     print(f"{word.ipa}{gloss}")  # echo the input verbatim (no render round-trip)
 
+    previous_base: str | None = None
     for step in derivation.steps:
         before = render_syllabified(step.before, step.before_boundaries, project)
         after = render_syllabified(step.after, step.after_boundaries, project)
         change = describe_change(step.before, step.after, project)
-        print(f"    {step.rule.time}: {step.rule.name or step.rule.id}")
+        base = _SUBRULE_SUFFIX.sub("", step.rule.id)
+        if base != previous_base:
+            print(f"    {step.rule.time}: {step.rule.name or base}")
+            previous_base = base
         print(f"        {before} → {after}   ({change})")
 
     surface = render_syllabified(derivation.surface, derivation.surface_boundaries, project)
