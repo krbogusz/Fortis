@@ -96,9 +96,193 @@ name = "Vowel contraction in hiatus"
 description = "A long vowel absorbs a following short vowel into an overlong — *-oHom > *-ôm"
 definition = "[+syll, -cons, length: long] [+syll, -cons] → [length: overlong] ∅"
 
-[backness_harmony]
-time = 1300
-name = "Backness harmony"
-description = "Backness spreads rightward from a vowel onto following vowels."
-definition = "[+syll] → [α fr, β bk] / [+syll, α fr, β bk] [-syll]* _"
-application = "left_to_right"
+[laryngeal_vocalization]
+time = -2000
+name = "Vocalisation of remaining laryngeals"
+description = "Vocalisation of remaining laryngeals"
+definition = "[+cons, +RTR] → ə"
+
+[velar_labialization]
+time = -2000
+name = "Velar labialization"
+description = "Velars are labialised by following */w/, which is deleted"
+definition = "[+bk, +hi] w → [+rounded] ∅ "
+
+[labiovelar_delabialization]
+time = -2000
+name = "Labiovelar delabialization"
+description = "Labiovelars are delabialised next to */u/ (or */un/) or before */t/"
+definition = "[+bk, +hi, +rnd, -son] → [rnd: none] / _ (u|t)"
+
+[final_non_high_short_vowel_loss]
+time = -1000
+name = "Word-final non-high short vowel loss"
+description = "Word-final non-high short vowels are lost, along with preceding /j/ or /w/ (single syllables not affected)"
+definition = [
+    "[+syll] → [stress: primary] / _ [-syll]* [+syll, stress: primary, -cons, !+high, length: short] #",
+    "j?w?[+syll, -cons, !+high, length: short] → ∅ / [+syll] []* _ #"
+]
+
+[grimms_law]
+time = -1000
+name = "Grimm's law"
+description = "Chain shift of the three series of plosives. Voiced plosives had already been devoiced before a voiceless obstruent prior to this stage."
+definition = [
+    # Prerequisite
+    "[-son, -cont, +voice] → [-voice] / _ [-son, -voice]",
+    "[-son, -cont, -voice] → [+cont] // [-son, -voice] _", # p t k → ɸ θ x (except after obstruents)
+    "[-son, -cont, +voice, glottal_aperture: neutral] → [-voice]", # b d g → p t k
+    "[-son, -cont, +voice, glottal_aperture: spread] → [glottal_aperture: neutral, tension: neutral]", # bʱ dʱ gʱ → b d g
+]
+
+[verners_law]
+time = -1000
+name = "Verner's law"
+description = "Voiceless fricatives are voiced when preceded by an unaccented vowel, including cases where the vowel and fricative are separated by a sonorant (n, m, r, l, j, w)"
+definition = "[-son, +cont, -voice] → [+vc] / [+syll, stress: none] [+son, -syll]? _ "
+
+[stress_change]
+time = -1000
+name = "Stress change to first syllable"
+description = "All words become stressed on their first syllable. The PIE contrastive accent is lost, phonemicising the voicing distinction created by Verner's law"
+definition = [
+    "[+syll] → [stress: primary] / # [-syll]* _ []* [+syll, stress: primary]",
+    "[+syll] → [stress: none] / [+syll] []* _",
+]
+
+[word_initial_gw_to_b]
+time = -1000
+name = "Word-initial */gʷ/ > */b/"
+description = "Word-initial */gʷ/ > */b/"
+definition = "gʷ → b / # _"
+
+[unstressed_owo_to_long_o]
+time = -1000
+name = "Unstressed */owo/ > */oː/"
+description = "Unstressed */owo/ > */oː/"
+definition = "[+syll, +bk, length: short, stress: none] w [+syll, +bk, length: short, stress: none] → oː"
+
+[unstressed_ew_to_ow_before_consonant_or_finally]
+time = -1000
+name = "Unstressed */ew/ > */ow/ before a consonant or word-finally"
+description = "Unstressed */ew/ > */ow/ before a consonant or word-finally"
+definition = "[+syll, !hi, +fr, length: short, stress: none] w → ow / _ ([-syll]|#)"
+
+[unstressed_e_to_i_except_before_r]
+time = -1000
+name = "Unstressed */e/ > */i/ except before */r/"
+description = "Unstressed */e/ > */i/ except before */r/. Unstressed */ej/ contracts to */iː/"
+definition = [
+    "[+syll, !hi, +fr, length: short, stress: none] → i // _ r",
+    "[+syll, !hi, +fr, length: short, stress: none]j → iː // _ r"
+]
+
+[unstressed_ji_to_i]
+time = -1000
+name = "Unstressed */ji/ > */i/"
+description = "Unstressed */ji/ > */i/"
+definition = [
+    "[+syll, +hi, +fr, length: short, stress: none]j[+syll, +hi, +fr, length: short, stress: none]  → iː",
+    "j[+syll, +hi, +fr, length: short, stress: none] → i",
+
+]
+
+[non_high_back_merger]
+time = -1000
+name = "Merging of non-high back vowels"
+description = "Merging of non-high back vowels"
+definition = "([+syll, !hi, !fr, ATR] |[+syll, !hi, !fr, RTR]) → [hi: none, +lo, fr:none, +bk, ATR:none, +RTR, rnd: none]"
+
+[final_m_to_n]
+time = 0
+name = "Word-final */m/ > */n/"
+description = "Word-final */m/ > */n/"
+definition = "m → n / _#"
+
+[m_to_n_before_t_d]
+time = 0
+name = "*/m/ > */n/ before */t/, */d/, */θ̠/, */ð̠/"
+description = "*/m/ > */n/ before */t/, */d/, */θ̠/, */ð̠/"
+definition = "m → n / _ (t | d | θ̠ | ð̠)"
+
+[final_n_loss]
+time = 0
+name = "Final /n/ loss"
+description = "Word-final */n/ is lost after unstressed syllables, and the preceding vowel is nasalised"
+definition = "[+syll, stress:none] n → [+nas] ∅ / _#"
+
+[lowering_of_nasal_long_e]
+time = 0
+name = "Lowering of nasal */ẽː/ to */ɑ̃ː/"
+description = "Lowering of nasal */ẽː/ to */ɑ̃ː/"
+definition = "[+syll, !hi, +fr, length: long, nasal] → [hi: none, +lo, fr: none, +bk, ATR:none, +RTR, rnd: none]"
+
+[schwa_elimination]
+time = 0
+name = "Elimination of */ə/"
+description = "Unstressed */ə/ is lost between consonants; */ə/ > */ɑ/ elsewhere"
+definition = [
+    "[+syll, !hi, !lo, !fr, !bk, stress: none] → ∅ / _ [-syll]",
+    "[+syll, !hi, !lo, !fr, !bk] → ɑ"
+]
+
+[assimilation_of_sonorants]
+time = 0
+name = "Assimilation of sonorants"
+description = "Assimilation of sonorants"
+definition = [
+    "1=n w → @1 @1",     # nw > nn
+    "1=l n → @1 @1",     # ln > ll
+    "z → @1 / _ 1=m",    # zm > mm
+]
+
+[final_t_loss]
+time = 0
+name = "Final /t/ loss"
+description = "Loss of word-final */t/ after unstressed syllables"
+definition = "[+syll, stress:none][-syll]*t → [+syll, stress:none][-syll]*∅ / _# "
+
+[gw_to_w]
+time = 0
+name = "*/gʷ/ > */w/"
+description = "*/gʷ/ > */w/"
+definition = "gʷ → w"
+
+[long_a_raising]
+time = 0
+name = "Long /ɑ/ raising"
+description = "*/ɑː/ > */ɔː/ "
+definition = "[hi: none, +lo, fr:none, +bk, ATR:none, +RTR, !length: short] → [aperture: none, rnd]"
+
+[early_i_mutation]
+time = 0
+name = "Early i-mutation"
+description = "*/e/ > */i/ before */i j/ in the same or next syllable; also eliminates */ei/ > */iː/"
+definition = [
+    "[+syll, -cons, +front, !+aperture] → [+high] / _ [-syll]* [+high, +front]",   # e > i / _ (C) {i,j}
+    "[+syll, +high, +front] [+syll, +high, +front] → [length: long] ∅",            # ii > iː
+]
+
+[e_to_i_before_syllable_final_nasal]
+time = 0
+application = "right_to_left"
+name = "/e/ to /i/ before a syllable-final nasal"
+description = "/e/ to /i/ before a syllable-final nasal"
+definition = "e → i / _ [+nas]$"
+
+[intervocalic_j_loss]
+time = 0
+name = "Loss of intervocalic *j"
+description = "*/j/ is lost between vowels except after *i* (and, automatically, after *w*). The two vowels then contract — same quality to a long vowel, otherwise a diphthong."
+definition = [
+    "j → ∅ / [+syll] _ [+syll] // [+syll, +high, +front] _",   # j-loss (kept after i; w handled by the context)
+    "[+syll, +low] [+syll, +low] → [length: long] ∅",          # aa > aː  (same quality, e.g. aja > stānti)
+    "[+syll, +high, stress: none] → [-syll] / [+syll] _",       # Vi, Vu > diphthong  (offglide)
+]
+
+# [backness_harmony]
+# time = 1300
+# name = "Backness harmony"
+# description = "Backness spreads rightward from a vowel onto following vowels."
+# definition = "[+syll] → [α fr, β bk] / [+syll, α fr, β bk] [-syll]* _"
+# application = "left_to_right"
