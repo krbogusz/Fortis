@@ -30,6 +30,7 @@ raised rather than emitting an illegal division. Patterns apply only at the
 interior split where there is a choice; word-edge onsets/codas are forced and not
 checked.
 """
+from __future__ import annotations
 
 from src.fortis.application.matching import full_match, pattern_matches
 from src.fortis.models.bundles import FeatureBundle, PatternBundle

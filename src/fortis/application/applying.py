@@ -35,6 +35,7 @@ path (``X* -> Y*``) and the replacement path (``X* -> a*``) alike. What still ra
 split is ambiguous), a variable quantifier whose inner is itself variable-width, and
 a variable result quantifier with no single variable target to mirror.
 """
+from __future__ import annotations
 
 from src.fortis.application.combining import merge
 

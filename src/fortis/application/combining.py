@@ -14,6 +14,7 @@ Two layers, both pure functions over ``FeatureBundle`` data:
 geometry-aware half was split off. Now that both are application-layer functions
 that may depend on the vocabulary, they belong together.)
 """
+from __future__ import annotations
 
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.features import FeatureInventory

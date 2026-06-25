@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from typing import Any
 
@@ -54,7 +56,7 @@ def load_syllable_part(
             return Ok(SyllablePart(part_type=part_type, time=time, pattern=pattern))
 
 
-# ---- SyllableParts Inventory ------------------------------------------------------------------------------------------
+# ---- SyllableParts Inventory --------------------------------------------------------------------
 
 
 def load_syllable_parts_inventory(
@@ -124,7 +126,7 @@ def validate_syllable_parts_inventory(inventory: SyllablePartsInventory) -> Resu
     error_list: list[str] = []
 
     for time, parts in inventory.data.items():
-        for part_type, part in parts.items():
+        for part in parts.values():
             if part.part_type not in VALID_PART_TYPES:
                 error_list.append(
                     f"Invalid syllable part type '{part.part_type}' at time {time}"

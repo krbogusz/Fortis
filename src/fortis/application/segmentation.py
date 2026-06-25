@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from src.fortis.application.combining import combine
 from src.fortis.application.matching import pattern_matches
 from src.fortis.config import config

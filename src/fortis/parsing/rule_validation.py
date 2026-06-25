@@ -31,6 +31,7 @@ Deferred: §2.5.1-.3/.5 null insertion/deletion *semantics* (runtime, not
 validation). (The old §2.3.1 'binding must precede recall' ordering constraint
 was dropped — binding/recall is scope-based, not order-based.)
 """
+from __future__ import annotations
 
 from collections.abc import Iterator
 from dataclasses import dataclass, field

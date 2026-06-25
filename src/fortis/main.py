@@ -5,6 +5,7 @@ bundles, runs it through all rules in time order, and prints a step-by-step
 derivation showing only the rules that changed the form, with syllable
 structure (``.`` between syllables) on the surface.
 """
+from __future__ import annotations
 
 import re
 import sys

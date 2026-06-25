@@ -4,6 +4,7 @@ All display/formatting logic lives here so that model classes stay
 focused on data and matching.  Every function takes the model object
 as its first argument, keeping presentation separate from identity.
 """
+from __future__ import annotations
 
 from src.fortis.general.utils import is_combining
 from src.fortis.models.specs import FeatureSpec, PatternSpec, ResultSpec

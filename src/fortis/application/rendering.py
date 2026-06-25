@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from src.fortis.application.combining import differing, matches_exactly
 from src.fortis.application.syllabifying import SyllabificationError, syllabify
 from src.fortis.models.bundles import FeatureBundle

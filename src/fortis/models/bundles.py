@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import UserDict
 
 from src.fortis.models.specs import FeatureSpec, PatternSpec, ResultSpec

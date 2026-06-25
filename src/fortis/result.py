@@ -5,6 +5,7 @@ combinator methods (``map``, ``map_err``, ``and_then``, ``or_else``,
 ``unwrap_or_else``) let fallible stages be threaded together without
 unwrapping; the first ``Err`` short-circuits the rest of a chain.
 """
+from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass

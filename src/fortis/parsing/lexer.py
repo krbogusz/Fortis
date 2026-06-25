@@ -15,6 +15,7 @@ whitespace nor structural punctuation. The lexer therefore accepts any IPA
 letter name without consulting the inventory; whether the name refers to a real
 letter is a question for validation, not lexing.
 """
+from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum, auto

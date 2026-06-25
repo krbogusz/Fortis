@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from typing import Any
 
@@ -6,7 +8,7 @@ from src.fortis.models.features import Feature, FeatureInventory, FeatureKind
 from src.fortis.models.tiers import Tier
 from src.fortis.result import Err, Ok, Result
 
-# ---- Feature ---------------------------------------------------------------------------------------------------------
+# ---- Feature ------------------------------------------------------------------------------------
 
 
 def load_feature(feature: str, feature_def: dict[str, Any]) -> Result[Feature, list[str]]:
@@ -81,7 +83,8 @@ def load_tier(feature: str, feature_def: dict[str, Any]) -> Result[Tier, str]:
     try:
         tier = Tier(tier.strip().lower())
     except ValueError:
-        return Err(f"Feature '{feature}' has an invalid tier '{tier}' (expected {', '.join(t.value for t in Tier)})")
+        expected = ", ".join(t.value for t in Tier)
+        return Err(f"Feature '{feature}' has an invalid tier '{tier}' (expected {expected})")
     return Ok(tier)
 
 
@@ -98,9 +101,8 @@ def load_kind(feature: str, feature_def: dict[str, Any]) -> Result[FeatureKind, 
     try:
         kind = FeatureKind(kind.strip().lower())
     except ValueError:
-        return Err(
-            f"Feature '{feature}' has an invalid kind '{kind}' (expected {', '.join(t.value for t in FeatureKind)})"
-        )
+        expected = ", ".join(t.value for t in FeatureKind)
+        return Err(f"Feature '{feature}' has an invalid kind '{kind}' (expected {expected})")
     return Ok(kind)
 
 
@@ -124,7 +126,9 @@ def load_short(feature: str, feature_def: dict[str, Any]) -> Result[str, str]:
     return Ok(stripped)
 
 
-def load_values(feature: str, feature_def: dict[str, Any], kind: FeatureKind) -> Result[dict[int, str], str]:
+def load_values(
+    feature: str, feature_def: dict[str, Any], kind: FeatureKind
+) -> Result[dict[int, str], str]:
     """Build the values map based on feature kind (unary/binary/scalar).
 
     Args:
@@ -190,7 +194,7 @@ def load_children(feature: str, feature_def: dict[str, Any]) -> Result[tuple[str
     return Err(f"Feature '{feature}' field 'children' is neither a string nor a list")
 
 
-# ---- Feature Inventory -----------------------------------------------------------------------------------------------
+# ---- Feature Inventory --------------------------------------------------------------------------
 
 
 def load_feature_inventory(path: Path) -> Result[FeatureInventory, list[str]]:
@@ -253,15 +257,18 @@ def validate_feature_inventory(feature_inventory: FeatureInventory) -> Result[No
     for feature, ft_def in feature_inventory.data.items():
         # Unique long names
         if feature in seen_names:
-            error_list.append(f"Feature name '{feature}' is already used by feature '{seen_names[feature]}'")
+            error_list.append(
+                f"Feature name '{feature}' is already used by feature '{seen_names[feature]}'"
+            )
         seen_names[feature] = feature
 
         # Unique short names — a feature's own long name matching its short is fine
         if ft_def.short_name in seen_shorts:
             other = seen_shorts[ft_def.short_name]
             if other != feature:
+                short = ft_def.short_name
                 error_list.append(
-                    f"Feature '{feature}' has short name '{ft_def.short_name}' already used by feature '{other}'"
+                    f"Feature '{feature}' has short name '{short}' already used by '{other}'"
                 )
         if ft_def.short_name != feature:
             seen_shorts[ft_def.short_name] = feature

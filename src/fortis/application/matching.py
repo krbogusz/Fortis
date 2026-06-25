@@ -53,6 +53,7 @@ defers either to pass 2: a negated *element* wrapping an alpha bundle (``![αF]`
 and a negated alpha *spec* (constructible as ``!-α``, i.e. "not opposite") both
 resolve correctly. (``!α`` is the alpha-*other* value marker, not a negation.)
 """
+from __future__ import annotations
 
 from collections import Counter
 from collections.abc import Callable, Iterator

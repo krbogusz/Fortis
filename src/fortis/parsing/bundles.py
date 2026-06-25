@@ -1,4 +1,5 @@
 """Bundle and value parsing — concrete and pattern material from strings."""
+from __future__ import annotations
 
 from src.fortis.config import config
 from src.fortis.general.utils import safe_int

@@ -1,4 +1,5 @@
 """Derivation output: the per-word trace."""
+from __future__ import annotations
 
 from dataclasses import dataclass
 

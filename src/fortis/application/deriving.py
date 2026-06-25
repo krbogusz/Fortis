@@ -37,6 +37,7 @@ boundaries and ``$`` simply never matches. (No rule in the current set uses
 ``$``, so this integration is presently preparatory — it changes no derivation
 output, only enables ``$``-conditioned rules.)
 """
+from __future__ import annotations
 
 from dataclasses import replace
 

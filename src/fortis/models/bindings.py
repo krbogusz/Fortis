@@ -4,6 +4,7 @@ A ``Bindings`` maps Greek letters (α, β, γ, …) to their bound ``Value``.
 It is populated during pattern matching and consulted during change
 application.
 """
+from __future__ import annotations
 
 from dataclasses import dataclass, field
 
