@@ -17,7 +17,7 @@ that may depend on the vocabulary, they belong together.)
 from __future__ import annotations
 
 from src.fortis.models.bundles import FeatureBundle
-from src.fortis.models.features import FeatureInventory
+from src.fortis.models.features import FeatureInventory, FeatureKind
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.values import form_contour
 
@@ -79,11 +79,13 @@ def merge(
     # the segment +labial (and +oral …), the mirror of the downward delink. Scoped to
     # the delta: a well-formed base already carries its ancestors, so completing only
     # what this merge introduces keeps the pass from masking a pre-existing orphan.
-    # Ancestor class nodes are unary, so their present value is 1.
+    # Only unary class nodes have an unambiguous "present" value (1). A non-unary
+    # ancestor (a scalar/binary node carrying children) holds a value we cannot infer
+    # from a daughter being set, so we leave it rather than fabricate one.
     for feature in delta:
         if feature in merged:  # the delta set a value here (not delinked away)
             for ancestor in features.ancestors(feature):
-                if ancestor not in merged:
+                if ancestor not in merged and features[ancestor].kind == FeatureKind.unary:
                     merged[ancestor] = FeatureSpec(feature=ancestor, value=1)
     return merged
 

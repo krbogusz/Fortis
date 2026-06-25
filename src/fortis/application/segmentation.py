@@ -70,12 +70,22 @@ def string_to_sequence(raw_string: str, project: Project) -> list[FeatureBundle]
                     if remaining.startswith(diacritic_symbol):
                         diacritic_def = project.diacritics[diacritic_symbol]
                         if diacritic_symbol in project.diacritics.syllable_keys:
+                            if last_nucleus_index < 0:
+                                raise ValueError(
+                                    f"Suprasegmental diacritic '{diacritic_symbol}' at "
+                                    f"position {i} has no preceding nucleus to attach to"
+                                )
                             segments[last_nucleus_index] = combine(
                                 segments[last_nucleus_index],
                                 diacritic_def.bundle,
                                 form_contours=diacritic_def.contour,
                             )
                         else:
+                            if not segments:
+                                raise ValueError(
+                                    f"Diacritic '{diacritic_symbol}' at position {i} "
+                                    "has no preceding segment to attach to"
+                                )
                             segments[-1] = combine(
                                 segments[-1],
                                 diacritic_def.bundle,

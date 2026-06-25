@@ -148,6 +148,8 @@ def _limb_match_binding(p_limb: Limb, s_limb: Limb, bindings: Bindings | None) -
     """Compare one pattern limb to a segment limb, binding/recalling alpha."""
     if isinstance(p_limb, AlphaRef):
         return _alpha_matches(p_limb, s_limb, bindings)
+    if p_limb == "any":
+        return s_limb is not None  # bare feature `[F]`: present with any value
     return p_limb == s_limb
 
 
@@ -159,6 +161,8 @@ def _limb_match_readonly(p_limb: Limb, s_limb: Limb, bindings: Bindings | None) 
         bound = bindings.alpha[p_limb.var]
         bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
         return s_limb == bound_atom if p_limb.op == AlphaOp.same else s_limb != bound_atom
+    if p_limb == "any":
+        return s_limb is not None  # bare feature `[F]`: present with any value
     return p_limb == s_limb
 
 
@@ -717,8 +721,8 @@ def _spec_demands(bundle: PatternBundle | FeatureBundle) -> Iterator[tuple[str, 
         if getattr(spec, "condition_label", None) is not None or getattr(spec, "negated", False):
             continue
         value = spec.value
-        if value is None or isinstance(value, (AlphaRef, tuple)):
-            continue
+        if value is None or value == "any" or isinstance(value, (AlphaRef, tuple)):
+            continue  # `any` is a wildcard — it pins no concrete value, so demands nothing
         yield (feature, value)
 
 

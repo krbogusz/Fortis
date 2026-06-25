@@ -119,7 +119,7 @@ def load_short(feature: str, feature_def: dict[str, Any]) -> Result[str, str]:
     if not isinstance(value, str):
         return Err(f"Feature '{feature}' field 'short' is not a string")
     if not value.strip():
-        Ok(feature)
+        return Ok(feature)  # a blank `short` field defaults to the feature name
     stripped = value.strip()
     if " " in stripped or "\t" in stripped:
         return Err(f"Feature '{feature}' has a short name '{stripped}' that contains whitespace")

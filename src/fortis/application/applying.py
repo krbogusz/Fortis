@@ -146,6 +146,8 @@ def _min_width(element: Element) -> int | None:
                 inner_width = _min_width(inner)
                 return None if inner_width is None else inner_width * quant.min
             return None
+        case Bound(_, inner):
+            return _min_width(inner)  # a bound element spans whatever its content does
         case _:
             return 1
 
@@ -158,10 +160,19 @@ def _variable_count(flat_target: list[Element], span_width: int) -> int | None:
     Returns ``None`` when the target is all fixed-width. Refuses (loudly) when more
     than one variable element remains — the split between them is ambiguous.
     """
-    fixed = sum(1 for el in flat_target if not isinstance(el, (Quantified, Null)))
     variable = [el for el in flat_target if isinstance(el, Quantified)]
     if not variable:
         return None
+    fixed = 0
+    for el in flat_target:
+        if isinstance(el, Quantified):
+            continue
+        width = _min_width(el)  # a Bound/group consumes more than one segment
+        if width is None:
+            raise NotImplementedError(
+                "a variable-width non-quantifier element on the merge path is unsupported"
+            )
+        fixed += width
     if len(variable) > 1:
         raise NotImplementedError(
             "more than one variable-width element on the merge path (ambiguous span split)"

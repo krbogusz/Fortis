@@ -33,14 +33,18 @@ def identify_feature(raw_string: str, features: FeatureInventory) -> Result[tupl
         scalar – 'height: 1', 'height: low', 'lo: lo'
     """
     raw_string = raw_string.replace(" ", "")
-
+    # Search only the part before any ':value'. The feature name lives there (possibly
+    # wrapped in a sign or alpha marker, with the value adjacent, e.g. `+nasal`,
+    # `syllabic-`, `1glap`, `α fr`), so substring matching still finds it — but a value
+    # *label* after the colon may itself be a feature name (`tone: high`), and matching
+    # the whole string would mistake that label for the feature.
+    lhs = raw_string.split(":", 1)[0]
     for name in features.names_by_length:
-        if name in raw_string:
+        if name in lhs:
             return Ok((name, name))
     for short_name in features.short_names_by_length:
-        if short_name in raw_string:
-            name = features.short_to_long_name[short_name]
-            return Ok((name, short_name))
+        if short_name in lhs:
+            return Ok((features.short_to_long_name[short_name], short_name))
 
     return Err(f"No feature could be identified from '{raw_string}'")
 
@@ -93,7 +97,7 @@ def determine_contour_position(contour_position: str) -> Result[ContourPosition,
     parsed = safe_int(contour_position)
     if parsed is None:
         return Err(f"Could not identify contour specification from '{contour_position}'")
-    if parsed < 0:
+    if parsed < 1:
         return Err(f"Contour position cannot be smaller than 1: '{contour_position}'")
     return Ok(parsed)
 
