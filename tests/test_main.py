@@ -1,5 +1,7 @@
 """Smoke test for the end-to-end pipeline (src/fortis/main.py)."""
 
+from pathlib import Path
+
 from src.fortis.application.deriving import derive
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.loaders.rules import load_rule
@@ -9,12 +11,22 @@ from src.fortis.models.rules import RuleInventory
 
 
 def test_main_derives_every_word(project, capsys):
-    main()
+    main([])  # no CLI args → all shipped rules over all shipped words
     out = capsys.readouterr().out
     # One surface form per word, and known syllabified derivations come through.
     assert out.count("Surface:") == len(project.words)
     assert "ˈħan.ti" in out  # *h₂énti: a-coloured by h₂ (now ħ, [+low]), stress kept
     assert "wul.kʷos" in out  # centumization + u-epenthesis, then syllabified
+
+
+def test_cli_overrides_words_and_rules(capsys):
+    # --words / --rules run a different lexicon + rules with the *shipped* feature system,
+    # letters, tiers, etc. (the tonal example needs tone, which the shipped inventories support).
+    example = Path(__file__).resolve().parent.parent / "examples" / "tonal"
+    main(["--words", str(example / "words.toml"), "--rules", str(example / "rules.toml")])
+    out = capsys.readouterr().out
+    assert "High-tone spread" in out  # the tonal rule fired on the tonal words
+    assert "ˈħan.ti" not in out  # ...and the shipped PIE lexicon was not used
 
 
 def _derive(word, rules, project):

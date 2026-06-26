@@ -9,10 +9,19 @@ stress) live on autosegmental tiers, so rules can spread, dock, and delink them,
 and a tone survives its vowel's deletion. The reference data models the
 development from Proto-Indo-European to Proto-Germanic.
 
-Run the derivations:
+Run the derivations — every shipped rule over every shipped word:
 
 ```
 python -m src.fortis.main
+```
+
+Or point it at your own data. `--words FILE` and `--rules FILE` override just the lexicon and
+the sound changes (the feature system, letters, sonority, tiers, etc. stay the shipped
+defaults); `--inventories DIR` swaps the whole set:
+
+```
+python -m src.fortis.main --words my_words.toml --rules my_rules.toml
+python -m src.fortis.main --inventories examples/tonal
 ```
 
 ## How rule matching works

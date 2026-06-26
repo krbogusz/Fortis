@@ -7,6 +7,7 @@ structure (``.`` between syllables) on the surface.
 """
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -20,14 +21,47 @@ from src.fortis.models.derivation import Derivation
 from src.fortis.models.project import Project
 
 
-def main(inventories_dir: Path | None = None) -> None:
+def _parse_args(argv: list[str] | None) -> argparse.Namespace:
+    """Parse the command-line interface."""
+    parser = argparse.ArgumentParser(
+        prog="fortis",
+        description=(
+            "Run a phonological derivation: segment each word, apply the rules in time order, "
+            "and print a step-by-step trace. With no arguments, runs every shipped rule over "
+            "every shipped word."
+        ),
+    )
+    parser.add_argument(
+        "--inventories",
+        type=Path,
+        metavar="DIR",
+        help="directory of inventory files (default: the shipped inventories/)",
+    )
+    parser.add_argument(
+        "--words",
+        type=Path,
+        metavar="FILE",
+        help="lexicon file to run (default: <inventories>/words.toml)",
+    )
+    parser.add_argument(
+        "--rules",
+        type=Path,
+        metavar="FILE",
+        help="sound-change file to apply (default: <inventories>/rules.toml)",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> None:
     """Load inventories, derive every word, and print the traces.
 
-    *inventories_dir* names an alternative inventories directory (the entry point passes the
-    first command-line argument, e.g. ``python -m src.fortis.main examples/tonal``); with
-    none, the shipped ``inventories/`` is used.
+    With no arguments, runs every shipped rule over every shipped word. ``--words`` and
+    ``--rules`` override just the lexicon and the sound-change file; the feature system,
+    letters, sonority, tiers, etc. stay the shipped defaults unless ``--inventories`` points
+    the whole set elsewhere.
     """
-    result = load_project(inventories_dir)
+    args = _parse_args(argv)
+    result = load_project(args.inventories, words_path=args.words, rules_path=args.rules)
     if result.is_err():
         for error in result.unwrap_err():
             print(f"error: {error}", file=sys.stderr)
@@ -91,4 +125,4 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]) if len(sys.argv) > 1 else None)
+    main()

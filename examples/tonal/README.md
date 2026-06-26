@@ -4,7 +4,7 @@ A small tonal language that exercises the autosegmental tier operations on real 
 the phenomena the curated PIE→Germanic sample (which uses *stress*) doesn't show. Run it:
 
 ```
-python -m src.fortis.main examples/tonal
+python -m src.fortis.main --inventories examples/tonal
 ```
 
 It reuses the shipped feature system, letters, and tone diacritics (high tone is a combining

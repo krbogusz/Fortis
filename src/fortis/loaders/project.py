@@ -24,7 +24,12 @@ from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.result import Err, Ok, Result
 
 
-def load_project(inventories_dir: Path | None = None) -> Result[Project, list[str]]:
+def load_project(
+    inventories_dir: Path | None = None,
+    *,
+    words_path: Path | None = None,
+    rules_path: Path | None = None,
+) -> Result[Project, list[str]]:
     """Load every inventory and assemble a Project.
 
     Features are loaded first since all other inventories depend on them.
@@ -33,9 +38,16 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
     Args:
         inventories_dir: Directory containing the TOML/CSV data files.
             Defaults to ``config.paths.inventories``.
+        words_path: The lexicon file. Defaults to ``inventories_dir/words.toml`` — so the
+            words can be overridden while the rest of the inventories stay the defaults.
+        rules_path: The sound-change file. Defaults to ``inventories_dir/rules.toml``.
     """
     if inventories_dir is None:
         inventories_dir = config.paths.inventories
+    if words_path is None:
+        words_path = inventories_dir / "words.toml"
+    if rules_path is None:
+        rules_path = inventories_dir / "rules.toml"
 
     error_list: list[str] = []
 
@@ -80,7 +92,7 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
 
     # ---- Words -----------------------------------------------------------------------------------
     words: WordInventory | None = None
-    match load_word_inventory(inventories_dir / "words.toml"):
+    match load_word_inventory(words_path):
         case Err(err):
             error_list.extend(f"words.toml: {e}" for e in err)
         case Ok(result):
@@ -88,7 +100,7 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
 
     # ---- Rules -----------------------------------------------------------------------------------
     rules: RuleInventory | None = None
-    match load_rule_inventory(inventories_dir / "rules.toml", features):
+    match load_rule_inventory(rules_path, features):
         case Err(err):
             error_list.extend(f"rules.toml: {e}" for e in err)
         case Ok(result):
