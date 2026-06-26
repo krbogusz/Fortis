@@ -5,7 +5,7 @@ from src.fortis.application.tiers import associate_tiers, lower_tiers
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.form import Form
 from src.fortis.models.inventories import Word
-from src.fortis.models.rules import Rule, RuleInventory
+from src.fortis.models.rules import ApplicationMode, Rule, RuleInventory
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.parsing.notation import parse_definition
 
@@ -77,6 +77,47 @@ def test_high_spreads_across_a_consonant_via_context(project):
         None,
         4,
     ]
+
+
+def test_spread_propagates_across_a_run_left_to_right(project):
+    # Under left_to_right, one H spreads across a whole toneless run, each step feeding the
+    # next. Regression: directional mode shares source/out, which once crashed the spread
+    # (a set mutated during iteration).
+    form = associate_tiers(
+        Form.from_bundles(
+            [
+                _fb(syllabic=1, tone=4),
+                _fb(consonantal=1, syllabic=0),
+                _fb(syllabic=1),
+                _fb(consonantal=1, syllabic=0),
+                _fb(syllabic=1),
+            ]
+        ),
+        project.tiers,
+    )  # a(H) k a k a — H on the first vowel only
+    definition = (
+        "[+syllabic, tone: none] -> [+syllabic, tone: ~1] "
+        "/ [+syllabic, tone: ~1=high] [-syllabic]* _"
+    )
+    rule = Rule(
+        id="spread",
+        time=0,
+        raw_definition="spread",
+        sd=parse_definition(definition, project.features).unwrap(),
+        application=ApplicationMode.left_to_right,
+    )
+    surface = derive(
+        Word(ipa="akaka"),
+        form,
+        RuleInventory({0: (rule,)}),
+        project.letters,
+        project.features,
+        tiers=project.tiers,
+    ).surface
+    tier = surface.tiers["tone"]
+    assert len(tier.autosegs) == 1  # one H autosegment...
+    h = tier.autosegs[0].id
+    assert tier.links == {(h, 0), (h, 2), (h, 4)}  # ...spread onto all three vowels
 
 
 def test_unbound_recall_is_a_no_op(project):

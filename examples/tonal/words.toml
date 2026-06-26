@@ -1,0 +1,7 @@
+# A small tonal language showcasing the autosegmental tier operations on real derivations.
+# Run with:  python -m src.fortis.main examples/tonal
+#
+# High tone is written with a combining acute (a + U+0301); a plain vowel is toneless.
+
+"táka" = "high-tone spread: the high on the first vowel spreads onto the second"
+"katá" = "tonal stability: the final high survives when its vowel is lost"

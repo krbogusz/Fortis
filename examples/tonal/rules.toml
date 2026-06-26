@@ -1,0 +1,14 @@
+# Two rules, demonstrating the autosegmental tier operations on tone.
+
+[high_spread]
+time        = 0
+name        = "High-tone spread"
+description = "A high tone spreads rightward onto a following toneless vowel (one autosegment, two anchors)."
+definition  = "[+syllabic, tone: none] → [+syllabic, tone: ~1] / [+syllabic, tone: ~1=high] [-syllabic]* _"
+application = "left_to_right"
+
+[final_vowel_loss]
+time        = 100
+name        = "Final vowel loss"
+description = "A word-final vowel is lost; a high tone it bore survives on the preceding syllable (stability)."
+definition  = "[+syllabic] → ∅ / [-syllabic] _ #"

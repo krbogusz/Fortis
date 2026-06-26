@@ -353,7 +353,8 @@ def _spread_autoseg(
         return
     bound_anchor = source.segments[bound_position].id
     out_tier = out.tiers.setdefault(tier_name, AutosegmentalTier())
-    for autoseg_id, anchor in source_tier.links:
+    # Snapshot: in directional mode out_tier IS source_tier, and we add to it below.
+    for autoseg_id, anchor in list(source_tier.links):
         if anchor == bound_anchor:
             out_tier.links.add((autoseg_id, seg_id))
 

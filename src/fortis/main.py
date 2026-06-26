@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 import sys
+from pathlib import Path
 
 from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.rendering import describe_change, render_syllabified
@@ -19,9 +20,14 @@ from src.fortis.models.derivation import Derivation
 from src.fortis.models.project import Project
 
 
-def main() -> None:
-    """Load inventories, derive every word, and print the traces."""
-    result = load_project()
+def main(inventories_dir: Path | None = None) -> None:
+    """Load inventories, derive every word, and print the traces.
+
+    *inventories_dir* names an alternative inventories directory (the entry point passes the
+    first command-line argument, e.g. ``python -m src.fortis.main examples/tonal``); with
+    none, the shipped ``inventories/`` is used.
+    """
+    result = load_project(inventories_dir)
     if result.is_err():
         for error in result.unwrap_err():
             print(f"error: {error}", file=sys.stderr)
@@ -85,4 +91,4 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
 
 
 if __name__ == "__main__":
-    main()
+    main(Path(sys.argv[1]) if len(sys.argv) > 1 else None)
