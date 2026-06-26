@@ -432,7 +432,7 @@ A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an *auto
 ⟨tone: ~1=high⟩    a floating autosegment (no anchor); zero-width, bound for docking
 ```
 
-- **Spread** — `[+syll, tone: ~1=high] [+syll, tone: none] → [+syll, tone: ~1] [+syll, tone: ~1]` links one H to both syllables (one autosegment, two anchors — not a copy). Use a directional mode (§6.2) to spread across a longer run.
+- **Spread** — `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _` gives a toneless vowel the tone of a preceding high vowel (one autosegment, now two anchors — not a copy). Adjacent elements match adjacent *segments*, so the `[-syll]*` is what spans the consonants between the two syllables — without it the two `[+syll]` would have to be a vowel hiatus. Under a directional mode (§6.2) the H spreads across a whole toneless run.
 - **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality).
 - **Delink** — `[+syll] → [tone: none]` removes the association.
 - **Stability** — *automatic*: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put.

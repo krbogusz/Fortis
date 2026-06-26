@@ -211,8 +211,12 @@ bundle. Four operations manipulate those associations:
 
 1. **Spread** — `~n=V` in a pattern binds the autosegment carrying value *V*; `~n` in the result links that
    **same** autosegment onto another anchor, so one autosegment associates to many segments (not a copy).
-   Example: `[+syll, tone: ~1=high] [+syll, tone: none] → [+syll, tone: ~1] [+syll, tone: ~1]` spreads one H
-   across both syllables. A directional application mode (§1.6) spreads iteratively across a longer run.
+   Because adjacent elements match adjacent *segments*, a rule must span the consonants between two syllables
+   explicitly — `[-syll]*`. Example (a toneless vowel takes a preceding high vowel's tone):
+   `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _`. Under a directional
+   application mode (§1.6) the H walks rightward across a toneless run, one syllable at a time. (Written with
+   both vowels in the target instead — `[+syll, tone: ~1=high] [-syll]* [+syll, tone: none] → [+syll, tone:
+   ~1] [-syll]* [+syll, tone: ~1]` — the `[-syll]*` must appear, and mirror, on each side.)
 2. **Delink** — a result `[tone: none]` removes the segment's association on that tier.
 3. **Dock** — a floating autosegment `⟨tone: ~1=high⟩` (no anchor — e.g. a lexical floating tone, or one
    stranded by its vowel's deletion) is matched and bound; the result `~1` links it onto an anchor.
