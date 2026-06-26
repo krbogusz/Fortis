@@ -41,6 +41,7 @@ from src.fortis.models.elements import (
     BundleElem,
     Disjunction,
     Element,
+    FloatingAutoseg,
     Group,
     Negated,
     Null,
@@ -106,9 +107,14 @@ def _markers(elements: tuple[Element, ...]) -> _Markers:
     return markers
 
 
+# Zero-width elements occupy a position but consume no segment, so they never count toward a
+# side's cardinality — boundary assertions and ⟨...⟩ floating autosegments alike.
+_ZERO_WIDTH = (WordBoundary, SyllableBoundary, FloatingAutoseg)
+
+
 def _cardinality(elements: tuple[Element, ...]) -> int:
-    """Top-level element count, excluding zero-width boundary assertions."""
-    return sum(1 for e in elements if not isinstance(e, (WordBoundary, SyllableBoundary)))
+    """Top-level element count, excluding zero-width assertions."""
+    return sum(1 for e in elements if not isinstance(e, _ZERO_WIDTH))
 
 
 def _is_merge_bundle(element: Element) -> bool:
@@ -144,8 +150,8 @@ def _walk(elements: tuple[Element, ...]) -> Iterator[Element]:
 
 
 def _without_boundaries(elements: tuple[Element, ...]) -> list[Element]:
-    """Top-level elements with zero-width boundary assertions removed."""
-    return [e for e in elements if not isinstance(e, (WordBoundary, SyllableBoundary))]
+    """Top-level elements with zero-width assertions removed."""
+    return [e for e in elements if not isinstance(e, _ZERO_WIDTH)]
 
 
 def _quant(element: Element) -> Quantifier | None:
