@@ -306,8 +306,12 @@ def apply_match(
     letters: LetterInventory,
     features: FeatureInventory,
     syllables: SyllableView | None = None,
-) -> list[FeatureBundle]:
-    """Compute the bundles that replace ``segments[match.start:match.end]``.
+) -> list[tuple[FeatureBundle, int | None]]:
+    """Compute the ``(bundle, source)`` pairs that replace ``segments[match.start:match.end]``.
+
+    ``source`` is the position in *segments* the bundle one-to-one feature-merges (so the
+    splice can carry that segment's id, and its tier links, forward), or ``None`` for a
+    freshly made segment (an insertion or replacement-path output).
 
     Args:
         sd: The rule being applied.
@@ -336,9 +340,10 @@ def apply_match(
     if not any(_is_merge_bundle(e) for e in result_content):
         # Replacement path: the result fully specifies the output; the span
         # collapses into or expands to it, with no per-segment correspondence.
-        out: list[FeatureBundle] = []
+        out: list[tuple[FeatureBundle, int | None]] = []
         for element in result_content:
-            out.extend(_render_result_element(element, None, match.bindings, letters, features))
+            rendered = _render_result_element(element, None, match.bindings, letters, features)
+            out.extend((bundle, None) for bundle in rendered)
         return out
 
     # Merge path: target and result line up one-to-one.
@@ -365,5 +370,9 @@ def apply_match(
             source, pos = segments[cursor], cursor
             cursor += 1
         _refuse_nonnucleus_syllable_write(result_elem, pos, segments, syllables)
-        out.extend(_render_result_element(result_elem, source, match.bindings, letters, features))
+        rendered = _render_result_element(result_elem, source, match.bindings, letters, features)
+        if pos is not None and len(rendered) == 1:
+            out.append((rendered[0], pos))  # 1:1 feature-merge keeps the target's identity
+        else:
+            out.extend((bundle, None) for bundle in rendered)
     return out

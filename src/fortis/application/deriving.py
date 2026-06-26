@@ -322,7 +322,10 @@ def _apply_simultaneous(
     # outside the spliced span keep their identity; the replacement gets fresh ids.
     for match in sorted(selected, key=lambda m: m.start, reverse=True):
         replacement = apply_match(sd, match, bundles, letters, features, syllables)
-        out.segments[match.start : match.end] = [Segment(b, out.fresh_id()) for b in replacement]
+        out.segments[match.start : match.end] = [
+            Segment(bundle, form.segments[pos].id if pos is not None else out.fresh_id())
+            for (bundle, pos) in replacement
+        ]
     return out
 
 
@@ -368,7 +371,10 @@ def _apply_directional(
             match = min(candidates, key=lambda m: m.start)
 
         replacement = apply_match(sd, match, bundles, letters, features, view)
-        work.segments[match.start : match.end] = [Segment(b, work.fresh_id()) for b in replacement]
+        work.segments[match.start : match.end] = [
+            Segment(bundle, work.segments[pos].id if pos is not None else work.fresh_id())
+            for (bundle, pos) in replacement
+        ]
 
         no_op = match.end == match.start and not replacement
         if reverse:

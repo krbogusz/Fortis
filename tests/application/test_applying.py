@@ -30,11 +30,14 @@ def letters() -> LetterInventory:
 
 
 def _apply(rule, segs, features, letters):
-    """Parse *rule*, match it against *segs*, and apply at the first locus."""
+    """Parse *rule*, match it against *segs*, and apply at the first locus.
+
+    Returns just the replacement bundles (dropping each pair's source-position provenance).
+    """
     sd = parse_definition(rule, features).unwrap()
     matches = find_matches(sd, segs, letters)
     assert matches, f"rule {rule!r} found no locus"
-    return apply_match(sd, matches[0], segs, letters, features)
+    return [bundle for (bundle, _source) in apply_match(sd, matches[0], segs, letters, features)]
 
 
 def _values(bundles) -> list[dict]:
