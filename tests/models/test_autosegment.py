@@ -33,3 +33,11 @@ def test_spread_is_one_autoseg_on_several_anchors():
     tier = AutosegmentalTier(autosegs=[h], links={(10, 0), (10, 1)})  # one H, two anchors
     anchors = {segment_id for (autoseg_id, segment_id) in tier.links if autoseg_id == 10}
     assert anchors == {0, 1}
+
+
+def test_float_host_positions_a_floating_autoseg():
+    # A positioned floating tone: H sits after segment 3, with no association line.
+    h = Autoseg(_b(tone=4), id=10)
+    tier = AutosegmentalTier(autosegs=[h], links=set(), float_hosts={10: (3, "after")})
+    assert tier.float_hosts[10] == (3, "after")
+    assert not any(autoseg_id == 10 for (autoseg_id, _seg) in tier.links)  # still floating

@@ -34,7 +34,13 @@ class AutosegmentalTier:
 
     ``links`` pairs ``(autoseg_id, segment_id)``. An autoseg id absent from every link
     is floating; a segment id shared by several links carries a contour.
+
+    ``float_hosts`` records a floating autoseg's *position* as adjacency to a segment —
+    ``autoseg_id -> (segment_id, "before" | "after")`` — so a positioned floating tone (a
+    lexical/grammatical melody, e.g. a suffixal H) docks where it sits rather than onto any
+    toneless anchor. Keyed by id, so it survives the splice exactly like ``links``.
     """
 
     autosegs: list[Autoseg] = field(default_factory=list)
     links: set[tuple[int, int]] = field(default_factory=set)
+    float_hosts: dict[int, tuple[int, str]] = field(default_factory=dict)

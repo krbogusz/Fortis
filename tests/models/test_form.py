@@ -1,5 +1,6 @@
 """Tests for the Form/Segment scaffolding (autosegmental Phase 0)."""
 
+from src.fortis.models.autosegment import AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.form import Form
 from src.fortis.models.segment import Segment
@@ -39,3 +40,11 @@ def test_copy_is_independent():
     clone = form.copy()
     clone.segments.append(Segment(_b(a=0), clone.fresh_id()))
     assert len(form.segments) == 1 and len(clone.segments) == 2
+
+
+def test_copy_isolates_tier_float_hosts():
+    form = Form.from_bundles([_b(a=1)])
+    form.tiers["tone"] = AutosegmentalTier(float_hosts={5: (0, "before")})
+    clone = form.copy()
+    clone.tiers["tone"].float_hosts[6] = (0, "after")  # mutate the clone's tier
+    assert 6 not in form.tiers["tone"].float_hosts  # the original is untouched

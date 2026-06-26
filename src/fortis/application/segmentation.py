@@ -4,9 +4,42 @@ from src.fortis.application.combining import combine
 from src.fortis.application.matching import pattern_matches
 from src.fortis.application.tiers import associate_tiers
 from src.fortis.config import config
+from src.fortis.models.autosegment import Autoseg, AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.form import Form
 from src.fortis.models.project import Project
+from src.fortis.models.tier_declaration import TierInventory
+
+# A floating tone in the lexicon is written ⟨◌◌́⟩ — a tone diacritic on a dotted-circle
+# placeholder, in float brackets. The dotted circle (U+25CC) is the carrier and is ignored.
+_FLOAT_OPEN, _FLOAT_CLOSE, _DOTTED_CIRCLE = "⟨", "⟩", "◌"
+
+
+def _parse_float_tone(inner: str, project: Project) -> FeatureBundle:
+    """The tone bundle of a floating-tone marker's inner text (its tone diacritics)."""
+    bundle = FeatureBundle()
+    for ch in inner:
+        if ch == _DOTTED_CIRCLE or ch.isspace():
+            continue
+        if ch not in project.diacritics:
+            marker = f"{_FLOAT_OPEN}{inner}{_FLOAT_CLOSE}"
+            raise ValueError(f"floating tone '{marker}' has no diacritic '{ch}'")
+        diacritic = project.diacritics[ch]
+        bundle = combine(bundle, diacritic.bundle, form_contours=diacritic.contour)
+    return bundle
+
+
+def _add_floating_autoseg(
+    form: Form, tone: FeatureBundle, position: tuple[int, str], tiers: TierInventory
+) -> None:
+    """Add a positioned floating autosegment carrying *tone* to the tier that declares it."""
+    name = next((n for n, decl in tiers.items() if any(f in decl.carries for f in tone)), None)
+    if name is None:
+        return
+    autoseg = Autoseg(tone, form.fresh_id())
+    tier = form.tiers.setdefault(name, AutosegmentalTier())
+    tier.autosegs.append(autoseg)
+    tier.float_hosts[autoseg.id] = position
 
 
 def _is_nucleus(segment: FeatureBundle, project: Project) -> bool:
@@ -31,6 +64,7 @@ def string_to_sequence(raw_string: str, project: Project) -> Form:
         project: Inventories and other dependencies.
     """
     segments: list[FeatureBundle] = []
+    float_markers: list[tuple[FeatureBundle, tuple[int, str]]] = []
     buffer: FeatureBundle = FeatureBundle()
     syllable_buffer: FeatureBundle = FeatureBundle()
     last_nucleus_index = -1
@@ -38,6 +72,18 @@ def string_to_sequence(raw_string: str, project: Project) -> Form:
 
     while i < len(raw_string):
         remaining = raw_string[i:]
+
+        # 0. A floating tone ⟨◌◌́⟩ — a tier autosegment with no anchor, positioned by where it
+        #    sits: after the last segment so far, or before the first (a word-initial float).
+        if remaining.startswith(_FLOAT_OPEN):
+            close = remaining.find(_FLOAT_CLOSE)
+            if close == -1:
+                raise ValueError(f"unterminated floating tone '{_FLOAT_OPEN}' at position {i}")
+            tone = _parse_float_tone(remaining[1:close], project)
+            position = (len(segments) - 1, "after") if segments else (0, "before")
+            float_markers.append((tone, position))
+            i += close + 1
+            continue
 
         # 1. Before diacritics (accumulated in buffers)
         for diacritic_symbol in project.diacritics.before_keys:
@@ -113,4 +159,7 @@ def string_to_sequence(raw_string: str, project: Project) -> Form:
                     else:
                         raise ValueError(f"Unknown character '{raw_string[i]}' at position {i}")
     form = Form.from_bundles(segments)
-    return associate_tiers(form, project.tiers)
+    form = associate_tiers(form, project.tiers)
+    for tone, position in float_markers:
+        _add_floating_autoseg(form, tone, position, project.tiers)
+    return form

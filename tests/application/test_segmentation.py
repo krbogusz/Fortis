@@ -65,3 +65,26 @@ class TestRoundTrip:
             seq = string_to_sequence(word, project).bundles()
             reseg = string_to_sequence(sequence_to_string(seq, project), project).bundles()
             assert _feature_equal(seq, reseg), word
+
+
+class TestFloatingTone:
+    _FLOAT_HIGH = "⟨◌́⟩"  # a floating high tone (dotted circle + combining acute, in float brackets)
+
+    def test_marker_creates_a_positioned_float(self, project):
+        form = string_to_sequence("kata" + self._FLOAT_HIGH, project)
+        assert len(form.segments) == 4  # the marker adds no segment
+        tier = form.tiers["tone"]
+        assert len(tier.autosegs) == 1
+        autoseg = tier.autosegs[0]
+        assert autoseg.bundle["tone"].value == 4  # high
+        assert not any(a == autoseg.id for (a, _s) in tier.links)  # floating, no anchor
+        assert tier.float_hosts[autoseg.id] == (3, "after")  # after the final segment
+
+    def test_word_initial_float_is_before_the_first_segment(self, project):
+        form = string_to_sequence(self._FLOAT_HIGH + "kata", project)
+        autoseg = form.tiers["tone"].autosegs[0]
+        assert form.tiers["tone"].float_hosts[autoseg.id] == (0, "before")
+
+    def test_unterminated_float_marker_rejected(self, project):
+        with pytest.raises(ValueError, match="unterminated floating tone"):
+            string_to_sequence("ka⟨◌́", project)

@@ -53,7 +53,7 @@ class Form:
         containers (their autoseg lists and link sets) are copied.
         """
         tiers = {
-            name: AutosegmentalTier(list(tier.autosegs), set(tier.links))
+            name: AutosegmentalTier(list(tier.autosegs), set(tier.links), dict(tier.float_hosts))
             for name, tier in self.tiers.items()
         }
         return Form(list(self.segments), tiers, self._next_id)
