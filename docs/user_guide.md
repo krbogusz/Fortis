@@ -212,6 +212,7 @@ Declares the autosegmental tiers (§5.12). Each table's header is the tier's nam
 carries     = ["tone"]      # the feature(s) this tier holds
 anchor      = "+syllabic"   # a segment matching this pattern can bear an autosegment
 melody      = true          # melody (tone): floats and re-docks under stability
+stability   = "left"        # which way a stranded tone carries — "left" (default) or "right"
 ocp         = true          # merge adjacent identical autosegments (the OCP)
 stray_erase = true          # remove a still-floating autosegment at the surface
 
@@ -229,6 +230,7 @@ ocp     = false
 - `melody` _(required)_ — `true` for a melody tier (tone): an autosegment stranded by deletion floats and is carried to a neighbour (stability, §5.12). `false` for a metrical tier (stress): it stays put.
 - `ocp` _(optional, default `true`)_ — merge adjacent identical autosegments.
 - `stray_erase` _(optional, default `true`)_ — delete a still-floating autosegment at the surface.
+- `stability` _(optional, default `"left"`)_ — for a melody tier, which neighbour a tone stranded by deletion carries to: `"left"` (the preceding syllable) or `"right"` (the following).
 
 ---
 
@@ -435,7 +437,7 @@ A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an *auto
 - **Spread** — `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _` gives a toneless vowel the tone of a preceding high vowel (one autosegment, now two anchors — not a copy). Adjacent elements match adjacent *segments*, so the `[-syll]*` is what spans the consonants between the two syllables — without it the two `[+syll]` would have to be a vowel hiatus. Under a directional mode (§6.2) the H spreads across a whole toneless run.
 - **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality).
 - **Delink** — `[+syll] → [tone: none]` removes the association.
-- **Stability** — *automatic*: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put.
+- **Stability** — *automatic*: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour (the tier's `stability` direction — `"left"` by default, or `"right"`) and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put.
 
 A `tiers.toml` entry declares which features a tier `carries`, the `anchor` it links to, whether it is a `melody` (vs metrical), and its `ocp` / `stray_erase` policies. With no `tiers.toml`, none of this runs.
 

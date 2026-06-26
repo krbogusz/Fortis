@@ -227,7 +227,8 @@ bundle. Four operations manipulate those associations:
    directional mode or context to dock once.
 4. **Stability** — *automatic*, no rule needed. When a rule deletes a segment carrying a **melody**-tier
    autosegment (a tier declared `melody = true`, e.g. tone), the autosegment is carried onto the surviving
-   neighbour and re-docked to that syllable's nucleus, so a tone outlives its vowel (the autosegmental
+   neighbour (the tier's `stability` direction — `left` by default, or `right`) and re-docked to that
+   syllable's nucleus, so a tone outlives its vowel (the autosegmental
    Stability principle). **Metrical** tiers (`melody = false`, e.g. stress) do not follow a deletion — stress
    stays put. A word-initial deletion (no left neighbour) lets the autosegment float, and a still-floating
    autosegment is stray-erased at the surface.

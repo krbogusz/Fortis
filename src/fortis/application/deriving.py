@@ -393,28 +393,33 @@ def _spliced_segments(
 def _carry_stranded_melody(
     out: Form, source: Form, start: int, end: int, new_segments: list[Segment], tiers: TierInventory
 ) -> None:
-    """Carry a deleted segment's melody-tier autosegments onto the surviving left neighbour.
+    """Carry a deleted segment's melody-tier autosegments onto a surviving neighbour.
 
-    Tonal stability: a tone outlives its anchor instead of floating away. Only melody tiers
-    (tone) move — metrical tiers (stress) stay put, which keeps the shipped stress data
-    unchanged. A word-initial deletion (no left neighbour) leaves the tone to float (and be
-    stray-erased); ``redock_to_nuclei`` later moves a carried tone onto the neighbour's nucleus.
+    Tonal stability: a tone outlives its anchor instead of floating away. Each melody tier
+    carries to the neighbour named by its ``stability`` direction (``"left"`` default, or
+    ``"right"``); metrical tiers (stress) stay put, which keeps the shipped stress data
+    unchanged. The neighbour is taken by id from *source* (stable across the right-to-left
+    splice); if it was itself deleted, ``cleanup_tiers`` prunes the link and the tone floats.
+    No neighbour on the chosen side ⇒ the tone floats (and is stray-erased). ``redock_to_nuclei``
+    then moves a carried tone onto the neighbour's nucleus.
     """
-    melody = {name for name, declaration in tiers.items() if declaration.melody}
-    if not melody or start == 0:
-        return
     kept = {segment.id for segment in new_segments}
     stranded = {seg.id for seg in source.segments[start:end] if seg.id not in kept}
     if not stranded:
         return
-    neighbour = out.segments[start - 1].id
-    for name in melody:
+    left = source.segments[start - 1].id if start > 0 else None
+    right = source.segments[end].id if end < len(source.segments) else None
+    for name, declaration in tiers.items():
+        if not declaration.melody:
+            continue
+        neighbour = right if declaration.stability == "right" else left
         tier = out.tiers.get(name)
-        if tier is not None:
-            tier.links = {
-                (autoseg, neighbour if anchor in stranded else anchor)
-                for (autoseg, anchor) in tier.links
-            }
+        if neighbour is None or tier is None:
+            continue
+        tier.links = {
+            (autoseg, neighbour if anchor in stranded else anchor)
+            for (autoseg, anchor) in tier.links
+        }
 
 
 def _apply_simultaneous(

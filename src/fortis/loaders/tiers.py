@@ -60,6 +60,10 @@ def load_tier(
         if not isinstance(value, bool):
             error_list.append(f"Tier '{name}' field '{field_name}' must be a boolean")
 
+    stability = tier_def.get("stability", "left")
+    if stability not in ("left", "right"):
+        error_list.append(f"Tier '{name}' field 'stability' must be 'left' or 'right'")
+
     if error_list:
         return Err(error_list)
     assert anchor is not None
@@ -71,6 +75,7 @@ def load_tier(
             melody=melody,
             ocp=bool(ocp),
             stray_erase=bool(stray_erase),
+            stability=str(stability),
         )
     )
 

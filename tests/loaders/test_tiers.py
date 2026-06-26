@@ -41,3 +41,19 @@ def test_shipped_tiers_loaded_into_project(project):
     assert set(project.tiers.keys()) == {"tone", "stress"}
     assert project.tiers["tone"].melody is True
     assert project.tiers["stress"].melody is False
+
+
+def test_stability_defaults_to_left(project):
+    table = {"carries": ["tone"], "anchor": "+syllabic", "melody": True}
+    assert load_tier("tone", table, project.features).unwrap().stability == "left"
+
+
+def test_stability_right_loads(project):
+    table = {"carries": ["tone"], "anchor": "+syllabic", "melody": True, "stability": "right"}
+    assert load_tier("tone", table, project.features).unwrap().stability == "right"
+
+
+def test_invalid_stability_rejected(project):
+    table = {"carries": ["tone"], "anchor": "+syllabic", "melody": True, "stability": "up"}
+    result = load_tier("tone", table, project.features)
+    assert result.is_err() and "must be 'left' or 'right'" in str(result.unwrap_err())

@@ -1,5 +1,7 @@
 """Tests for automatic tonal stability (a deleted vowel's tone survives; stress does not)."""
 
+from dataclasses import replace
+
 from src.fortis.application.deriving import derive
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
@@ -8,6 +10,7 @@ from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Word
 from src.fortis.models.rules import Rule, RuleInventory
 from src.fortis.models.specs import FeatureSpec
+from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.parsing.notation import parse_definition
 
 # Delete the first vowel (the one after the word-initial consonant).
@@ -53,3 +56,38 @@ def test_stress_does_not_follow_a_deletion(project):
     form.tiers["stress"].links.add((s_id, 1))  # stress on the first vowel
     surface = _derive_deleting_first_vowel(form, project)
     assert not any(autoseg == s_id for (autoseg, _anchor) in surface.tiers["stress"].links)
+
+
+def test_stability_direction_is_per_tier(project):
+    # stability="right" carries a stranded tone to the RIGHT syllable; left (default) to the
+    # left. takata, deleting the middle vowel: left lands on vowel 1, right on the last vowel.
+    definition = "[+syllabic] → ∅ / [+syllabic] [-syllabic] _ [-syllabic]"
+    rule = Rule(
+        id="del",
+        time=0,
+        raw_definition="del",
+        sd=parse_definition(definition, project.features).unwrap(),
+    )
+
+    def carried_position(direction):
+        form = string_to_sequence("takata", project)  # t a k a t a — vowels at 1, 3, 5
+        h_id = form.fresh_id()
+        form.tiers["tone"].autosegs.append(_autoseg("tone", 4, h_id))
+        form.tiers["tone"].links.add((h_id, 3))  # H on the middle vowel
+        tiers = TierInventory()
+        tiers["tone"] = replace(project.tiers["tone"], stability=direction)
+        tiers["stress"] = project.tiers["stress"]
+        surface = derive(
+            Word(ipa="takata"),
+            form,
+            RuleInventory({0: (rule,)}),
+            project.letters,
+            project.features,
+            project.sonorities,
+            project.syllable_parts,
+            tiers,
+        ).surface
+        return [i for i, b in enumerate(lower_tiers(surface)) if "tone" in b]
+
+    assert carried_position("left") == [1]  # the preceding syllable
+    assert carried_position("right") == [4]  # the following syllable
