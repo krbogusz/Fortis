@@ -57,7 +57,7 @@ from __future__ import annotations
 
 from collections import Counter
 from collections.abc import Callable, Iterator
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from src.fortis.application.combining import matches_exactly
 from src.fortis.models.bindings import Bindings
@@ -81,7 +81,16 @@ from src.fortis.models.elements import (
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec, PatternSpec
-from src.fortis.models.values import AlphaOp, AlphaRef, ContourEdge, ContourPosition, Limb, Value
+from src.fortis.models.values import (
+    AlphaOp,
+    AlphaRef,
+    AutosegBind,
+    AutosegRecall,
+    ContourEdge,
+    ContourPosition,
+    Limb,
+    Value,
+)
 
 
 def _limbs(value: Value) -> tuple[Limb, ...]:
@@ -316,6 +325,7 @@ def pattern_matches(
     *,
     syllable: FeatureBundle | None = None,
     syllable_features: frozenset[str] = frozenset(),
+    position: int | None = None,
 ) -> bool:
     """Whether *pattern* matches realized *segment*.
 
@@ -345,6 +355,8 @@ def pattern_matches(
         bindings: Alpha-variable environment, threaded for binding/recall.
         syllable: The segment's syllable nucleus bundle (for syllable-tier specs).
         syllable_features: Names of the features that live on the syllable tier.
+        position: The segment's index, recorded under a tier-autosegment bind (``~ref``)
+            so the applier can recall the same autosegment.
     """
     for feature, spec in pattern.data.items():
         target = segment
@@ -371,6 +383,14 @@ def pattern_matches(
             if spec.negated:
                 continue  # "F: !val" is satisfied by absence
             return False
+        if isinstance(spec.value, AutosegBind):
+            # Match the bound autosegment's value, then record the position it sits on, so
+            # the applier can recall the *same* autosegment (spread it) via `~ref`.
+            if not _spec_matches(replace(spec, value=spec.value.value), target[feature], bindings):
+                return False
+            if bindings is not None and position is not None:
+                bindings.autoseg_reference[spec.value.ref] = position
+            continue
         if not _spec_matches(spec, target[feature], bindings):
             return False
     return True
@@ -416,6 +436,7 @@ def _copy(bindings: Bindings) -> Bindings:
     return Bindings(
         alpha=dict(bindings.alpha),
         reference=dict(bindings.reference),
+        autoseg_reference=dict(bindings.autoseg_reference),
         permissive_alpha=bindings.permissive_alpha,
         conditions=dict(bindings.conditions),
         disjunction_choices=bindings.disjunction_choices,
@@ -451,7 +472,8 @@ def _match_element(
                 syllable = syllables.at(pos) if syllables else None
                 feats = syllables.features if syllables else frozenset()
                 if pattern_matches(
-                    bundle, segments[pos], branch, syllable=syllable, syllable_features=feats
+                    bundle, segments[pos], branch, syllable=syllable, syllable_features=feats,
+                    position=pos,
                 ):
                     yield pos + 1, branch
 
@@ -723,6 +745,8 @@ def _spec_demands(bundle: PatternBundle | FeatureBundle) -> Iterator[tuple[str, 
         value = spec.value
         if value is None or value == "any" or isinstance(value, (AlphaRef, tuple)):
             continue  # `any` is a wildcard — it pins no concrete value, so demands nothing
+        if isinstance(value, (AutosegBind, AutosegRecall)):
+            continue  # a tier reference matches an autosegment, not a segment-bundle value
         yield (feature, value)
 
 

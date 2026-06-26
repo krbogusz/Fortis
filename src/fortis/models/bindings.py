@@ -39,6 +39,9 @@ class Bindings:
 
     alpha: dict[str, Value] = field(default_factory=dict)
     reference: dict[int, tuple[FeatureBundle, ...]] = field(default_factory=dict)
+    # Tier-autosegment references (``tone: ~1=H``): the matched *position* a bound
+    # autosegment sits on, so the applier can recall the same autosegment for spread.
+    autoseg_reference: dict[int, int] = field(default_factory=dict)
     permissive_alpha: bool = False
     conditions: dict[int, bool] = field(default_factory=dict)
     disjunction_choices: tuple[int, ...] = ()
