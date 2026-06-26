@@ -2,9 +2,11 @@
 
 A diachronic phonology engine. Everything is user-supplied in `inventories/`
 (feature system, letters, diacritics, sonority scale, syllable parameters,
-lexicon, sound-change rules); the engine segments each word into feature
-bundles, runs it through the rules in chronological order, and prints a
-step-by-step derivation with syllable structure. The reference data models the
+autosegmental tiers, lexicon, sound-change rules); the engine segments each word
+into feature bundles, runs it through the rules in chronological order, and prints
+a step-by-step derivation with syllable structure. Suprasegmental features (tone,
+stress) live on autosegmental tiers, so rules can spread, dock, and delink them,
+and a tone survives its vowel's deletion. The reference data models the
 development from Proto-Indo-European to Proto-Germanic.
 
 Run the derivations:
@@ -119,6 +121,29 @@ Rule `[+syll] → [+nasal] / [+nasal] _` ("a vowel nasalises after a nasal"), wo
 So `find_matches` returns one match, on the final `a`. The applier then rewrites
 just that span; `deriving.py` splices the result back and moves to the next rule.
 
+## Autosegmental tiers
+
+A feature declared on a tier (`inventories/tiers.toml`) — e.g. `tone` or `stress` — lives
+not in the segment's feature bundle but as an **autosegment** on a separate tier, linked to
+its anchor segment by identity. That identity link is what makes classic autosegmental
+behaviour fall out:
+
+- **Stability** — the link is to a segment _id_, so when a rule deletes that segment the
+  autosegment survives as _floating_; a **melody** tier (`melody = true`, e.g. tone) carries
+  it onto the surviving neighbour and re-docks it, so a tone outlives its vowel. A **metrical**
+  tier (`melody = false`, e.g. stress) stays put.
+- **Spread / dock / delink** — rules link one autosegment to many anchors (`~n`), dock a
+  floating autosegment (`⟨…⟩`) onto an anchor, or remove an association (`tone: none`). See
+  `docs/change_notation_rules.md` §1.8 and §2.12.
+- **Optional** — with no `tiers.toml` the tier machinery never runs; the engine behaves
+  exactly as before, so a project that doesn't need tones pays nothing.
+
+Internally a word is a `Form` (`models/form.py`): a list of `Segment`s (a feature bundle plus
+a stable id) alongside the tiers. The matcher and renderer read suprasegmentals back through a
+transient "lowered" view, so they keep working on plain bundles; `application/tiers.py` holds
+the tier operations (associate at construction, prune/OCP cleanup, redock, and the
+spread/dock/delink writes).
+
 ## Layout
 
 A strict downward dependency DAG — each layer imports only from those above it
@@ -128,7 +153,7 @@ A strict downward dependency DAG — each layer imports only from those above it
 fortis/
 ├── inventories/                 # user-authored data
 │   ├── features.toml  letters.csv  diacritics.toml
-│   ├── sonorities.toml  syllable_parts.toml
+│   ├── sonorities.toml  syllable_parts.toml  tiers.toml
 │   └── words.toml  rules.toml
 ├── docs/                        # user_guide, notation reference, feature/rule docs
 ├── tests/
@@ -153,7 +178,10 @@ fortis/
     │   ├── features.py          #   FeatureKind, Feature, FeatureInventory
     │   ├── inventories.py       #   Letter/Diacritic/Sonority/SyllablePart/Word + inventories
     │   ├── project.py           #   Project (every inventory bundled together)
-    │   └── derivation.py        #   DerivationStep, Derivation
+    │   ├── derivation.py        #   DerivationStep, Derivation
+    │   ├── segment.py  form.py  #   Segment (bundle + stable id), Form (segments + tiers)
+    │   ├── autosegment.py       #   Autoseg, AutosegmentalTier (the tier representation)
+    │   └── tier_declaration.py  #   TierDeclaration, TierInventory (from tiers.toml)
     │
     ├── parsing/                 # STRING → models       (depends on: models)
     │   ├── lexer.py             #   tokenise rule notation
@@ -164,7 +192,7 @@ fortis/
     ├── loaders/                 # FILE → models         (depends on: models, parsing)
     │   ├── features.py          #   features.toml      → FeatureInventory
     │   ├── letters.py           #   letters.csv        → LetterInventory
-    │   ├── diacritics.py  sonorities.py  syllable_parts.py  words.py
+    │   ├── diacritics.py  sonorities.py  syllable_parts.py  tiers.py  words.py
     │   ├── rules.py             #   rules.toml (bodies parsed via parsing.notation)
     │   └── project.py           #   load everything    → Project
     │
@@ -175,5 +203,6 @@ fortis/
         ├── syllabifying.py      #   syllabify: sonority + onset/coda-pattern boundaries
         ├── segmentation.py      #   string_to_sequence: IPA → feature bundles
         ├── rendering.py         #   sequence_to_string, render_syllabified, describe_change
+        ├── tiers.py             #   autosegmental tier ops: associate, cleanup/OCP, redock, spread/dock
         └── deriving.py          #   apply_rule per mode; derive a word → Derivation
 ```

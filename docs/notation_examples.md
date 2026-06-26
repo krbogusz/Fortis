@@ -28,6 +28,8 @@ Fill any scalar slot or any single limb of a contour.
 | `α`              | alpha, same — bind or recall             | scalar; **whole contour** on a contour feature                    |
 | `-α`             | alpha, opposite                          | binary / unary only (scalar has no single opposite)               |
 | `!α`             | alpha, other                             | distinct from spec negation `!feature` (value `!` vs feature `!`) |
+| `~1=val`         | bind a tier autosegment (value `val`)    | tier features only; binds it under reference 1 for spread / dock  |
+| `~1`             | recall a bound autosegment — spread/dock | tier features; links the **same** autosegment (see user guide §5.12) |
 
 ---
 

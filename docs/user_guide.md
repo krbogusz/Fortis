@@ -203,6 +203,33 @@ definition  = "∅ [+cons, +syll] → u [-syll]"
 
 The three rules above also illustrate the result-position distinction of §5.1: in `laryngeal_coloring`, `a` is a **letter** and replaces the matched segment entirely; in `u_epenthesis`, the inserted `u` is a letter (full segment) while `[+cons, +syll] → [-syll]` is a **bundle** that merges, changing only syllabicity and leaving the rest of the consonant intact.
 
+### 4.3 tiers.toml
+
+Declares the autosegmental tiers (§5.12). Each table's header is the tier's name; the features it `carries` then live as autosegments linked to an anchor, not in the segment bundle. The file is **optional** — omit it and the engine runs with no tiers.
+
+```toml
+[tone]
+carries     = ["tone"]      # the feature(s) this tier holds
+anchor      = "+syllabic"   # a segment matching this pattern can bear an autosegment
+melody      = true          # melody (tone): floats and re-docks under stability
+ocp         = true          # merge adjacent identical autosegments (the OCP)
+stray_erase = true          # remove a still-floating autosegment at the surface
+
+[stress]
+carries = ["stress"]
+anchor  = "+syllabic"
+melody  = false             # metrical (stress): stays put under deletion
+ocp     = false
+```
+
+**Fields:**
+
+- `carries` _(required)_ — the feature name(s) lifted onto this tier. No feature may be carried by more than one tier.
+- `anchor` _(required)_ — a feature pattern; a segment matching it can bear an autosegment (typically the syllable nucleus, `+syllabic`).
+- `melody` _(required)_ — `true` for a melody tier (tone): an autosegment stranded by deletion floats and is carried to a neighbour (stability, §5.12). `false` for a metrical tier (stress): it stays put.
+- `ocp` _(optional, default `true`)_ — merge adjacent identical autosegments.
+- `stray_erase` _(optional, default `true`)_ — delete a still-floating autosegment at the surface.
+
 ---
 
 ## 5. Rule Notation Reference
@@ -393,6 +420,26 @@ _`∅` is valid in target and result positions only._
 ```
 
 This is a feature value, distinct from the null segment `∅`. All children of the delinked node become unspecified at once.
+
+### 5.12 Autosegmental tier operations
+
+A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an *autosegment* linked to its anchor segment, not a value in the segment's bundle. Rules manipulate those links:
+
+```
+[tone: ~1=high]    bind: record the tone autosegment (value high) under reference 1
+[tone: ~1]         recall: link that SAME autosegment to this anchor (spread)
+[tone: none]       delink: remove this anchor's association on the tone tier
+⟨tone: ~1=high⟩    a floating autosegment (no anchor); zero-width, bound for docking
+```
+
+- **Spread** — `[+syll, tone: ~1=high] [+syll, tone: none] → [+syll, tone: ~1] [+syll, tone: ~1]` links one H to both syllables (one autosegment, two anchors — not a copy). Use a directional mode (§6.2) to spread across a longer run.
+- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality).
+- **Delink** — `[+syll] → [tone: none]` removes the association.
+- **Stability** — *automatic*: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put.
+
+A `tiers.toml` entry declares which features a tier `carries`, the `anchor` it links to, whether it is a `melody` (vs metrical), and its `ocp` / `stray_erase` policies. With no `tiers.toml`, none of this runs.
+
+`~` is used (not `@`, which already marks contour positions). See `change_notation_rules.md` §1.8 and §2.12 for the full rules.
 
 ---
 

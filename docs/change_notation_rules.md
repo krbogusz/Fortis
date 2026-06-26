@@ -72,6 +72,14 @@ Rules may specify how they apply when multiple loci match. The `application` TOM
 
 Each rule is a TOML table headed by its id, `[<id>]` (e.g. `[laryngeal_coloring]`, `[backness_harmony]`), with the chronology supplied by a separate required `time` field inside the table. Lower time values are applied earlier. Rules sharing a time are applied in the order of declaration.
 
+### 1.8. Autosegmental tier references
+
+A feature declared on a tier (in `tiers.toml`, e.g. `tone`, `stress`) lives as an *autosegment* linked to its anchor segment. Two notations reference those autosegments (`~` is used rather than `@`, which already marks contour positions, §1.5):
+
+- `[tone: ~1=high]` — Bind the tone autosegment carrying value `high` under reference `1`
+- `[tone: ~1]` — Recall a bound autosegment: link the **same** one (spread, not a copy)
+- `⟨tone: high⟩`, `⟨tone: ~1=high⟩` — A **floating** autosegment (one with no anchor); zero-width, matched and bound for docking
+
 ## 2. Rules
 
 ### 2.1. Structural rules
@@ -195,3 +203,27 @@ Each rule is a TOML table headed by its id, `[<id>]` (e.g. `[laryngeal_coloring]
 5. Alpha binding interacts with contours as follows: `[αF]` against a contour binds α to the full tuple;
    `[αF: @final]` binds α to the scalar at the named edge. `[!αF]` then means "any value other than the bound
    tuple/scalar," respectively.
+
+### 2.12. Autosegmental tier rules
+
+A feature declared on a tier (§1.8) is an *autosegment* linked to its anchor, not a value in the segment
+bundle. Four operations manipulate those associations:
+
+1. **Spread** — `~n=V` in a pattern binds the autosegment carrying value *V*; `~n` in the result links that
+   **same** autosegment onto another anchor, so one autosegment associates to many segments (not a copy).
+   Example: `[+syll, tone: ~1=high] [+syll, tone: none] → [+syll, tone: ~1] [+syll, tone: ~1]` spreads one H
+   across both syllables. A directional application mode (§1.6) spreads iteratively across a longer run.
+2. **Delink** — a result `[tone: none]` removes the segment's association on that tier.
+3. **Dock** — a floating autosegment `⟨tone: ~1=high⟩` (no anchor — e.g. a lexical floating tone, or one
+   stranded by its vowel's deletion) is matched and bound; the result `~1` links it onto an anchor.
+   Example: `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]`. The `⟨...⟩` element is zero-width: it
+   asserts a matching floating autosegment exists but consumes no segment, so it does not count toward
+   cardinality (§2.1.1). The current semantics matches *a* floating autosegment of the given shape, not a
+   position-specific one — under `simultaneous` mode multiple toneless targets would each dock it, so use a
+   directional mode or context to dock once.
+4. **Stability** — *automatic*, no rule needed. When a rule deletes a segment carrying a **melody**-tier
+   autosegment (a tier declared `melody = true`, e.g. tone), the autosegment is carried onto the surviving
+   neighbour and re-docked to that syllable's nucleus, so a tone outlives its vowel (the autosegmental
+   Stability principle). **Metrical** tiers (`melody = false`, e.g. stress) do not follow a deletion — stress
+   stays put. A word-initial deletion (no left neighbour) lets the autosegment float, and a still-floating
+   autosegment is stray-erased at the surface.
