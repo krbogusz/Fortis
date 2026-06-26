@@ -11,6 +11,7 @@ from src.fortis.application.matching import pattern_matches
 from src.fortis.models.autosegment import Autoseg, AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.form import Form
+from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.tier_declaration import TierInventory
 
 
@@ -83,3 +84,39 @@ def _merge_adjacent_identical(tier: AutosegmentalTier, position: dict[int, int])
         else:
             kept.append(autoseg)
     tier.autosegs = kept
+
+
+def split_carried(
+    bundle: FeatureBundle, tiers: TierInventory
+) -> tuple[FeatureBundle, dict[str, FeatureBundle]]:
+    """Split a written bundle into segment-tier and carried (tier) parts.
+
+    Returns the bundle that stays on the segment and a ``{tier name: carried bundle}``
+    map of the features bound for each tier.
+    """
+    owner = {feature: name for name, decl in tiers.items() for feature in decl.carries}
+    segment_specs: dict[str, FeatureSpec] = {}
+    by_tier: dict[str, dict[str, FeatureSpec]] = {}
+    for feature, spec in bundle.items():
+        name = owner.get(feature)
+        if name is None:
+            segment_specs[feature] = spec
+        else:
+            by_tier.setdefault(name, {})[feature] = spec
+    return FeatureBundle(segment_specs), {name: FeatureBundle(s) for name, s in by_tier.items()}
+
+
+def write_to_tier(form: Form, segment_id: int, tier_name: str, carried: FeatureBundle) -> None:
+    """Route a carried-feature write to a segment's tier.
+
+    The segment's current autosegment on that tier is delinked (it floats); if *carried*
+    holds any present value a fresh autosegment is built from it and linked. A write whose
+    value is ``none`` therefore just delinks.
+    """
+    tier = form.tiers.setdefault(tier_name, AutosegmentalTier())
+    tier.links = {(autoseg, anchor) for (autoseg, anchor) in tier.links if anchor != segment_id}
+    present = FeatureBundle({f: s for f, s in carried.items() if s.value is not None})
+    if present:
+        autoseg = Autoseg(present, form.fresh_id())
+        tier.autosegs.append(autoseg)
+        tier.links.add((autoseg.id, segment_id))
