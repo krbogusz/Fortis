@@ -120,3 +120,20 @@ def write_to_tier(form: Form, segment_id: int, tier_name: str, carried: FeatureB
         autoseg = Autoseg(present, form.fresh_id())
         tier.autosegs.append(autoseg)
         tier.links.add((autoseg.id, segment_id))
+
+
+def carried_features(form: Form, segment_id: int) -> FeatureBundle:
+    """The carried (tier) features a segment bears, read back as a bundle.
+
+    Merges the features of every autosegment linked to *segment_id* — the read side of the
+    tiers, mirroring the bundle lookup the matcher and renderer used before the flip. (One
+    autosegment per anchor in the simple case; contours are deferred.)
+    """
+    specs: dict[str, FeatureSpec] = {}
+    for tier in form.tiers.values():
+        linked = {autoseg for (autoseg, anchor) in tier.links if anchor == segment_id}
+        for autoseg in tier.autosegs:
+            if autoseg.id in linked:
+                for feature, spec in autoseg.bundle.items():
+                    specs[feature] = spec
+    return FeatureBundle(specs)
