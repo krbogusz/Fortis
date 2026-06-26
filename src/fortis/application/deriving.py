@@ -390,6 +390,33 @@ def _spliced_segments(
     return new_segments
 
 
+def _carry_stranded_melody(
+    out: Form, source: Form, start: int, end: int, new_segments: list[Segment], tiers: TierInventory
+) -> None:
+    """Carry a deleted segment's melody-tier autosegments onto the surviving left neighbour.
+
+    Tonal stability: a tone outlives its anchor instead of floating away. Only melody tiers
+    (tone) move — metrical tiers (stress) stay put, which keeps the shipped stress data
+    unchanged. A word-initial deletion (no left neighbour) leaves the tone to float (and be
+    stray-erased); ``redock_to_nuclei`` later moves a carried tone onto the neighbour's nucleus.
+    """
+    melody = {name for name, declaration in tiers.items() if declaration.melody}
+    if not melody or start == 0:
+        return
+    kept = {segment.id for segment in new_segments}
+    stranded = {seg.id for seg in source.segments[start:end] if seg.id not in kept}
+    if not stranded:
+        return
+    neighbour = out.segments[start - 1].id
+    for name in melody:
+        tier = out.tiers.get(name)
+        if tier is not None:
+            tier.links = {
+                (autoseg, neighbour if anchor in stranded else anchor)
+                for (autoseg, anchor) in tier.links
+            }
+
+
 def _apply_simultaneous(
     sd: StructuralDescription,
     form: Form,
@@ -407,9 +434,9 @@ def _apply_simultaneous(
     # replacement from the ORIGINAL form (no application sees another's output).
     for match in sorted(selected, key=lambda m: m.start, reverse=True):
         replacement = apply_match(sd, match, bundles, letters, features, syllables)
-        out.segments[match.start : match.end] = _spliced_segments(
-            out, replacement, form, bundles, tiers, match.bindings
-        )
+        new_segments = _spliced_segments(out, replacement, form, bundles, tiers, match.bindings)
+        _carry_stranded_melody(out, form, match.start, match.end, new_segments, tiers)
+        out.segments[match.start : match.end] = new_segments
     return out
 
 
@@ -457,9 +484,9 @@ def _apply_directional(
             match = min(candidates, key=lambda m: m.start)
 
         replacement = apply_match(sd, match, bundles, letters, features, view)
-        work.segments[match.start : match.end] = _spliced_segments(
-            work, replacement, work, bundles, tiers, match.bindings
-        )
+        new_segments = _spliced_segments(work, replacement, work, bundles, tiers, match.bindings)
+        _carry_stranded_melody(work, work, match.start, match.end, new_segments, tiers)
+        work.segments[match.start : match.end] = new_segments
 
         no_op = match.end == match.start and not replacement
         if reverse:
