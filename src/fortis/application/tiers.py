@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from src.fortis.application.matching import pattern_matches
 from src.fortis.models.autosegment import Autoseg, AutosegmentalTier
-from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.form import Form
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.tier_declaration import TierInventory
@@ -137,3 +137,32 @@ def carried_features(form: Form, segment_id: int) -> FeatureBundle:
                 for feature, spec in autoseg.bundle.items():
                     specs[feature] = spec
     return FeatureBundle(specs)
+
+
+def redock_to_nuclei(form: Form, boundaries: frozenset[int], nucleus: PatternBundle | None) -> Form:
+    """Move every suprasegmental link off a non-nucleus segment onto its syllable's nucleus.
+
+    The autosegmental analogue of consolidate's spatial re-pool: when a nucleus shifts (e.g.
+    epenthesis turns a syllabic consonant into a coda), the suprasegmental follows the
+    syllable to its new nucleus. No nucleus definition ⇒ nothing to re-dock.
+    """
+    if nucleus is None:
+        return form
+    edges = sorted(set(boundaries) | {0, len(form.segments)})
+    nucleus_id_for: dict[int, int] = {}
+    for left, right in zip(edges, edges[1:], strict=False):
+        nucleus_pos = next(
+            (i for i in range(left, right) if pattern_matches(nucleus, form.segments[i].bundle)),
+            None,
+        )
+        if nucleus_pos is None:
+            continue
+        for position in range(left, right):
+            nucleus_id_for[position] = form.segments[nucleus_pos].id
+    position_of = {segment.id: index for index, segment in enumerate(form.segments)}
+    for tier in form.tiers.values():
+        tier.links = {
+            (autoseg, nucleus_id_for.get(position_of.get(anchor, -1), anchor))
+            for (autoseg, anchor) in tier.links
+        }
+    return form
