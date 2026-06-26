@@ -12,6 +12,7 @@ from src.fortis.models.inventories import (
     SyllablePartsInventory,
 )
 from src.fortis.models.project import Project
+from src.fortis.models.tier_declaration import TierDeclaration, TierInventory
 from src.fortis.parsing.bundles import parse_pattern_bundle
 
 
@@ -151,3 +152,22 @@ def syllable_parts(features) -> SyllablePartsInventory:
     """Nucleus = any [+syll] segment, defined from time 0."""
     nucleus = SyllablePart("nucleus", 0, parse_pattern_bundle("+syll", features).unwrap())
     return SyllablePartsInventory({0: {"nucleus": nucleus}})
+
+
+@pytest.fixture
+def tiers(features) -> TierInventory:
+    """Tone and stress live on their own tiers, anchored to the syllabic nucleus.
+
+    Mirrors the repo's ``tiers.toml``: tone is a lexical melody (OCP on), stress is
+    rule-placed (OCP off). Used by deriving tests that need the suprasegmentals lifted
+    off the segment bundles so the tier writes and redock behave as in the real engine.
+    """
+    inv = TierInventory()
+    anchor = parse_pattern_bundle("+syll", features).unwrap()
+    inv["tone"] = TierDeclaration(
+        name="tone", carries=("tone",), anchor=anchor, melody=True, ocp=True
+    )
+    inv["stress"] = TierDeclaration(
+        name="stress", carries=("stress",), anchor=anchor, melody=False, ocp=False
+    )
+    return inv

@@ -47,9 +47,15 @@ from src.fortis.application.matching import Match, SyllableView, find_matches
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import (
     SyllabificationError,
-    consolidate_suprasegmentals,
     nuclei_by_position,
     syllabify,
+)
+from src.fortis.application.tiers import (
+    cleanup_tiers,
+    lower_tiers,
+    redock_to_nuclei,
+    split_carried,
+    write_to_tier,
 )
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.derivation import Derivation, DerivationStep
@@ -79,6 +85,7 @@ from src.fortis.models.rules import (
     StructuralDescription,
 )
 from src.fortis.models.segment import Segment
+from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.models.tiers import Tier
 
 
@@ -168,36 +175,31 @@ def resolve_rule_letters(rules: RuleInventory, project: Project) -> RuleInventor
     )
 
 
-def _consolidate(
-    form: list[FeatureBundle],
+def _maintain_tiers(
+    form: Form,
     sonorities: SonoritiesInventory | None,
     syllable_parts: SyllablePartsInventory | None,
     time: int,
     letters: LetterInventory,
-    syllable_features: frozenset[str],
-) -> list[FeatureBundle]:
-    """Resyllabify *form* and move each syllable's suprasegmentals onto its nucleus.
+    tiers: TierInventory,
+) -> Form:
+    """Maintain the tiers after a rule fires.
 
-    Part of resyllabification: keeps suprasegmentals on the current nucleus as the
-    nucleus shifts (e.g. epenthesis). Best-effort — an unsyllabifiable form or
-    unconfigured syllabification leaves the form unchanged.
-
-    Runs after each rule fires. Note the directional modes resyllabify per *step*
-    inside ``apply_rule`` for matching, but consolidation happens here, once per
-    rule — so a directional rule that shifts a nucleus and then tier-matches that
-    same syllable later in the *same* pass would read the pre-consolidation strand.
-    Unreachable with current data (the only directional rule is segment-tier).
+    Prunes links to deleted segments (their autosegments float) and applies the OCP, then
+    re-docks any suprasegmental now on a non-nucleus segment to its syllable's nucleus —
+    the spatial re-pool ``consolidate_suprasegmentals`` used to do, on tier links.
+    Best-effort: an unsyllabifiable form skips the re-dock.
     """
-    if sonorities is None or syllable_parts is None or not syllable_features:
+    form = cleanup_tiers(form, tiers)
+    if sonorities is None or syllable_parts is None:
         return form
     nucleus_part = syllable_parts.get_nucleus(time)
-    if nucleus_part is None or nucleus_part.definition is None:
-        return form
+    nucleus_def = nucleus_part.definition if nucleus_part is not None else None
     try:
-        boundaries = syllabify(form, sonorities, syllable_parts, time, letters)
+        boundaries = syllabify(form.bundles(), sonorities, syllable_parts, time, letters)
     except SyllabificationError:
         return form
-    return consolidate_suprasegmentals(form, boundaries, nucleus_part.definition, syllable_features)
+    return redock_to_nuclei(form, boundaries, nucleus_def)
 
 
 def _syllable_context(
@@ -265,6 +267,7 @@ def apply_rule(
     features: FeatureInventory,
     sonorities: SonoritiesInventory | None = None,
     syllable_parts: SyllablePartsInventory | None = None,
+    tiers: TierInventory | None = None,
 ) -> Form:
     """Apply *rule* to *form* once, per its application mode.
 
@@ -273,24 +276,26 @@ def apply_rule(
     ``$`` and syllable-tier matching always reflect the current form; an
     unsyllabifiable form (under onset/coda constraints) yields no structure rather
     than aborting, and a rule that consults neither ``$`` nor a syllable-tier
-    feature is simply unaffected by it.
+    feature is simply unaffected by it. The syllable view is built over *lowered*
+    bundles, so syllable-tier matching reads suprasegmentals back off the tiers.
     """
+    tiers = tiers if tiers is not None else TierInventory()
     syllable_features = _syllable_features(features)
     match rule.application:
         case ApplicationMode.simultaneous:
             boundaries, view = _syllable_context(
-                form.bundles(), sonorities, syllable_parts, rule.time, letters, syllable_features
+                lower_tiers(form), sonorities, syllable_parts, rule.time, letters, syllable_features
             )
-            return _apply_simultaneous(rule.sd, form, letters, features, boundaries, view)
+            return _apply_simultaneous(rule.sd, form, letters, features, boundaries, view, tiers)
         case ApplicationMode.left_to_right:
             return _apply_directional(
                 rule.sd, form, letters, features, sonorities, syllable_parts, rule.time,
-                syllable_features, False,
+                syllable_features, tiers, False,
             )
         case ApplicationMode.right_to_left:
             return _apply_directional(
                 rule.sd, form, letters, features, sonorities, syllable_parts, rule.time,
-                syllable_features, True,
+                syllable_features, tiers, True,
             )
 
 
@@ -305,6 +310,33 @@ def _select_non_overlapping(matches: list[Match]) -> list[Match]:
     return selected
 
 
+def _spliced_segments(
+    out: Form,
+    replacement: list[tuple[FeatureBundle, int | None]],
+    source: Form,
+    source_bundles: list[FeatureBundle],
+    tiers: TierInventory,
+) -> list[Segment]:
+    """Turn apply_match's (bundle, source-pos) pairs into Segments.
+
+    A merged segment carries its id forward from *source* (so its tier links survive); an
+    insertion gets a fresh id. A carried feature is routed onto *out*'s tiers only when the
+    rule *changed* its value (a write associates, a ``none`` delinks); an unchanged carried
+    feature is left on the tier untouched, so its autosegment keeps its identity.
+    """
+    new_segments: list[Segment] = []
+    for bundle, pos in replacement:
+        seg_bundle, carried = split_carried(bundle, tiers)
+        seg_id = source.segments[pos].id if pos is not None else out.fresh_id()
+        new_segments.append(Segment(seg_bundle, seg_id))
+        prev = split_carried(source_bundles[pos], tiers)[1] if pos is not None else {}
+        for tier_name in set(carried) | set(prev):
+            written = carried.get(tier_name, FeatureBundle())
+            if written != prev.get(tier_name, FeatureBundle()):
+                write_to_tier(out, seg_id, tier_name, written)
+    return new_segments
+
+
 def _apply_simultaneous(
     sd: StructuralDescription,
     form: Form,
@@ -312,20 +344,19 @@ def _apply_simultaneous(
     features: FeatureInventory,
     boundaries: frozenset[int],
     syllables: SyllableView | None,
+    tiers: TierInventory,
 ) -> Form:
     """Find every locus against the original form, then splice all rewrites at once."""
-    bundles = form.bundles()
+    bundles = lower_tiers(form)
     selected = _select_non_overlapping(find_matches(sd, bundles, letters, boundaries, syllables))
     out = form.copy()
-    # Splice right-to-left so each replacement's indices stay valid, and compute every
-    # replacement from the ORIGINAL form (no application sees another's output). Segments
-    # outside the spliced span keep their identity; the replacement gets fresh ids.
+    # Splice right-to-left so each replacement's indices stay valid, computing every
+    # replacement from the ORIGINAL form (no application sees another's output).
     for match in sorted(selected, key=lambda m: m.start, reverse=True):
         replacement = apply_match(sd, match, bundles, letters, features, syllables)
-        out.segments[match.start : match.end] = [
-            Segment(bundle, form.segments[pos].id if pos is not None else out.fresh_id())
-            for (bundle, pos) in replacement
-        ]
+        out.segments[match.start : match.end] = _spliced_segments(
+            out, replacement, form, bundles, tiers
+        )
     return out
 
 
@@ -338,6 +369,7 @@ def _apply_directional(
     syllable_parts: SyllablePartsInventory | None,
     time: int,
     syllable_features: frozenset[str],
+    tiers: TierInventory,
     reverse: bool,
 ) -> Form:
     """Scan and rewrite in place; each output is visible to later loci in the pass.
@@ -348,7 +380,7 @@ def _apply_directional(
     work = form.copy()
     cursor = len(work.segments) if reverse else 0
     while True:
-        bundles = work.bundles()
+        bundles = lower_tiers(work)
         boundaries, view = _syllable_context(
             bundles, sonorities, syllable_parts, time, letters, syllable_features
         )
@@ -371,10 +403,9 @@ def _apply_directional(
             match = min(candidates, key=lambda m: m.start)
 
         replacement = apply_match(sd, match, bundles, letters, features, view)
-        work.segments[match.start : match.end] = [
-            Segment(bundle, work.segments[pos].id if pos is not None else work.fresh_id())
-            for (bundle, pos) in replacement
-        ]
+        work.segments[match.start : match.end] = _spliced_segments(
+            work, replacement, work, bundles, tiers
+        )
 
         no_op = match.end == match.start and not replacement
         if reverse:
@@ -402,6 +433,7 @@ def derive(
     features: FeatureInventory,
     sonorities: SonoritiesInventory | None = None,
     syllable_parts: SyllablePartsInventory | None = None,
+    tiers: TierInventory | None = None,
 ) -> Derivation:
     """Sweep *form* through every rule in time order, recording firing steps.
 
@@ -424,40 +456,38 @@ def derive(
         features: Feature inventory, for the geometry-aware merge.
         sonorities: Sonority scale for syllabification (optional).
         syllable_parts: Syllable-part constraints supplying the nucleus (optional).
+        tiers: Autosegmental tier declarations; empty ⇒ no tiers run (optional).
     """
+    tiers = tiers if tiers is not None else TierInventory()
     current = form
     steps: list[DerivationStep] = []
-    syllable_features = _syllable_features(features)
 
     for time in sorted(rules.keys()):
         for rule in rules[time]:
             before = current  # Form
-            before_bundles = current.bundles()
-            after = apply_rule(rule, current, letters, features, sonorities, syllable_parts)
-            after_bundles = after.bundles()
-            if _fired(before_bundles, after_bundles):
-                # Resyllabify after the rule, keeping each syllable's suprasegmentals
-                # on its (possibly shifted) nucleus. (Task 3c replaces this with the tier
-                # cleanup pass; the bundle round-trip mints fresh ids meanwhile.)
-                after_bundles = _consolidate(
-                    after_bundles, sonorities, syllable_parts, rule.time, letters, syllable_features
+            after = apply_rule(rule, current, letters, features, sonorities, syllable_parts, tiers)
+            if _fired(lower_tiers(before), lower_tiers(after)):
+                # Maintain the tiers: prune dead links + OCP, then re-dock suprasegmentals
+                # onto their syllable's nucleus (the old consolidate's spatial job).
+                after = _maintain_tiers(
+                    after, sonorities, syllable_parts, rule.time, letters, tiers
                 )
-                after = Form.from_bundles(after_bundles)
                 steps.append(
                     DerivationStep(
                         before=before,
                         rule=rule,
                         after=after,
                         before_boundaries=_display_boundaries(
-                            before_bundles, sonorities, syllable_parts, rule.time, letters
+                            before.bundles(), sonorities, syllable_parts, rule.time, letters
                         ),
                         after_boundaries=_display_boundaries(
-                            after_bundles, sonorities, syllable_parts, rule.time, letters
+                            after.bundles(), sonorities, syllable_parts, rule.time, letters
                         ),
                     )
                 )
                 current = after
 
+    current = cleanup_tiers(current, tiers, surface=True)  # stray-erase floating autosegs
     surface_boundaries = _display_boundaries(
         current.bundles(), sonorities, syllable_parts, max(rules, default=0), letters
     )

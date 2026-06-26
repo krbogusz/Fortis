@@ -25,8 +25,11 @@ def test_tier_with_no_carried_feature_is_empty(project):
     assert form.tiers["tone"].autosegs == []
 
 
-def test_in_bundle_copy_is_kept_for_now(project):
-    # 3b is dual representation: stress is on the tier AND still in the segment bundle.
+def test_in_bundle_copy_is_stripped(project):
+    # The dual-representation phase is over: stress now lives only on the tier and is
+    # stripped from the nucleus' segment bundle.
     form = string_to_sequence("ˈta", project)
     nucleus = next(s for s in form.segments if s.bundle["syllabic"].value == 1)
-    assert "stress" in nucleus.bundle
+    assert "stress" not in nucleus.bundle  # no longer kept in the bundle
+    linked = {seg_id for (_autoseg, seg_id) in form.tiers["stress"].links}
+    assert nucleus.id in linked  # stress is on the stress tier, linked to the nucleus

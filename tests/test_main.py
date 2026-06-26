@@ -26,6 +26,7 @@ def _derive(word, rules, project):
         project.features,
         project.sonorities,
         project.syllable_parts,
+        project.tiers,
     )
 
 

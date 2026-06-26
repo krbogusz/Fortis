@@ -4,6 +4,7 @@ import pytest
 
 from src.fortis.application.deriving import apply_rule, derive, resolve_rule_letters
 from src.fortis.application.segmentation import string_to_sequence
+from src.fortis.application.tiers import associate_tiers, lower_tiers
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.elements import LetterBundle
 from src.fortis.models.form import Form
@@ -259,33 +260,40 @@ class TestDerive:
                         letters, features, sonorities, syllable_parts)
         assert _values(result.surface.bundles())[0]["tone"] == 3
 
-    def test_syllable_tier_write_to_nonnucleus_refused(
-        self, features, letters, sonorities, syllable_parts
+    def test_syllable_tier_write_to_nonnucleus_redocks_to_the_nucleus(
+        self, features, letters, sonorities, syllable_parts, tiers
     ):
-        # Writing tone to a consonant (not its syllable's nucleus) is refused.
+        # Writing tone to a consonant (not its syllable's nucleus) no longer refuses:
+        # the write goes to the tier and redocks onto the syllable's nucleus. (Before
+        # the flip this raised; now suprasegmentals are autosegmental.)
         rule = _rule("[+cons] -> [tone: 3]", features)
         rules = RuleInventory({0: (rule,)})
         segs = [_fb(consonantal=1, sonorant=0), _fb(syllabic=1, consonantal=0)]
-        with pytest.raises(NotImplementedError):
-            derive(
-                Word(ipa="CV"), Form.from_bundles(segs), rules, letters, features, sonorities,
-                syllable_parts,
-            )
+        result = derive(
+            Word(ipa="CV"), Form.from_bundles(segs), rules, letters, features, sonorities,
+            syllable_parts, tiers,
+        )
+        surface = lower_tiers(result.surface)
+        assert "tone" not in surface[0]  # the consonant does not bear the tone
+        assert surface[1]["tone"].value == 3  # it redocked onto the syllable's nucleus
 
-    def test_consolidation_follows_an_epenthesis_nucleus_shift(
-        self, features, letters, sonorities, syllable_parts
+    def test_redock_follows_an_epenthesis_nucleus_shift(
+        self, features, letters, sonorities, syllable_parts, tiers
     ):
         # l̩(stress) → V + l (epenthesis inserts a vowel and desyllabifies the
-        # sonorant): the stress strands on l, then resyllabification consolidates it
-        # onto the new vowel nucleus.
+        # sonorant): the stress strands on l, then resyllabification redocks it onto
+        # the new vowel nucleus (the autosegmental analogue of the old consolidate).
         rule = _rule("∅ [+cons, +syll] → [+syll, high: 1] [-syll]", features)
         rules = RuleInventory({0: (rule,)})
         stressed_l = _fb(consonantal=1, sonorant=1, lateral=1, syllabic=1, stress=2)
+        # Lift the lexical stress onto its tier first, so its link pre-exists on l and
+        # redock can relocate it (the rule leaves stress' value unchanged, so the write
+        # path is not what carries it across).
+        form = associate_tiers(Form.from_bundles([stressed_l]), tiers)
         result = derive(
-            Word(ipa="l̩"), Form.from_bundles([stressed_l]), rules, letters, features, sonorities,
-            syllable_parts
+            Word(ipa="l̩"), form, rules, letters, features, sonorities, syllable_parts, tiers,
         )
-        surface = result.surface.bundles()
+        surface = lower_tiers(result.surface)
         nuclei = [s for s in surface if s.get("syllabic") and s["syllabic"].value == 1]
         assert nuclei and nuclei[0]["stress"].value == 2  # stress on the new nucleus u
         others = [s for s in surface if not (s.get("syllabic") and s["syllabic"].value == 1)]

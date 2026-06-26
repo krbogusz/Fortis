@@ -13,6 +13,7 @@ import sys
 from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
+from src.fortis.application.tiers import lower_tiers
 from src.fortis.loaders.project import load_project
 from src.fortis.models.derivation import Derivation
 from src.fortis.models.project import Project
@@ -43,6 +44,7 @@ def main() -> None:
             project.features,
             project.sonorities,
             project.syllable_parts,
+            project.tiers,
         )
         _print_derivation(derivation, project)
         print()
@@ -66,9 +68,9 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
 
     previous_base: str | None = None
     for step in derivation.steps:
-        before = render_syllabified(step.before.bundles(), step.before_boundaries, project)
-        after = render_syllabified(step.after.bundles(), step.after_boundaries, project)
-        change = describe_change(step.before.bundles(), step.after.bundles(), project)
+        before = render_syllabified(lower_tiers(step.before), step.before_boundaries, project)
+        after = render_syllabified(lower_tiers(step.after), step.after_boundaries, project)
+        change = describe_change(lower_tiers(step.before), lower_tiers(step.after), project)
         base = _SUBRULE_SUFFIX.sub("", step.rule.id)
         if base != previous_base:
             print(f"    {step.rule.time}: {step.rule.name or base}")
@@ -76,7 +78,7 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
         print(f"        {before} → {after}   ({change})")
 
     surface = render_syllabified(
-        derivation.surface.bundles(), derivation.surface_boundaries, project
+        lower_tiers(derivation.surface), derivation.surface_boundaries, project
     )
     print(f"    Surface: {surface}")
     print("")

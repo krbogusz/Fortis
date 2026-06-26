@@ -13,3 +13,4 @@ stray_erase = true
 carries = ["stress"]
 anchor = "+syllabic"
 melody = false         # rule-placed, not a lexical melody
+ocp = false            # two stressed syllables are distinct, not an OCP violation

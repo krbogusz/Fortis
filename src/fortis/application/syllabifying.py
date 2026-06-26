@@ -166,7 +166,7 @@ def nuclei_by_position(
     ``None`` (no syllable-tier info).
     """
     nuclei: list[FeatureBundle | None] = [None] * len(segments)
-    edges = sorted(boundaries)
+    edges = sorted(set(boundaries) | {0, len(segments)})
     for left, right in zip(edges, edges[1:], strict=False):
         nucleus: FeatureBundle | None = None
         for i in range(left, right):

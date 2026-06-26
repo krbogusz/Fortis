@@ -47,5 +47,13 @@ class Form:
         return [segment.bundle for segment in self.segments]
 
     def copy(self) -> Form:
-        """A shallow copy safe to splice without disturbing the original."""
-        return Form(list(self.segments), dict(self.tiers), self._next_id)
+        """A copy safe to splice and edit tiers on without disturbing the original.
+
+        Segments and autosegments are frozen, so they are shared; the mutable tier
+        containers (their autoseg lists and link sets) are copied.
+        """
+        tiers = {
+            name: AutosegmentalTier(list(tier.autosegs), set(tier.links))
+            for name, tier in self.tiers.items()
+        }
+        return Form(list(self.segments), tiers, self._next_id)

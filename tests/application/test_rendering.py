@@ -11,6 +11,7 @@ from src.fortis.application.rendering import (
 )
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import syllabify
+from src.fortis.application.tiers import lower_tiers
 
 
 class TestRenderSegment:
@@ -55,8 +56,9 @@ class TestRenderSyllabified:
 
     def test_boundary_marking_stress_replaces_the_dot(self, project):
         # kaˈta: the stress mark ˈ (marks_boundary) sits at the interior boundary and
-        # stands in for the ".", so it is kaˈta, not ka.ˈta.
-        seq = string_to_sequence("kaˈta", project).bundles()
+        # stands in for the ".", so it is kaˈta, not ka.ˈta. Stress now lives on the
+        # tier, so lower it back onto the bundles for the renderer.
+        seq = lower_tiers(string_to_sequence("kaˈta", project))
         boundaries = syllabify(
             seq, project.sonorities, project.syllable_parts, project.time, project.letters
         )
@@ -66,8 +68,9 @@ class TestRenderSyllabified:
 class TestSequenceToString:
     def test_repositions_stress_to_the_syllable_edge(self, project):
         # The flat re-render syllabifies internally, so stress sits at the syllable
-        # onset (koˈta), not before the nucleus (kotˈa).
-        seq = string_to_sequence("koˈta", project).bundles()
+        # onset (koˈta), not before the nucleus (kotˈa). Stress now lives on the tier,
+        # so lower it back onto the bundles for the renderer.
+        seq = lower_tiers(string_to_sequence("koˈta", project))
         assert sequence_to_string(seq, project) == "koˈta"
 
     def test_falls_back_to_flat_when_unsyllabifiable(self, project):

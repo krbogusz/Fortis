@@ -273,32 +273,6 @@ def _render_result_element(
             raise NotImplementedError(f"result element {element!r} is not yet supported")
 
 
-def _refuse_nonnucleus_syllable_write(
-    result_elem: Element,
-    pos: int | None,
-    segments: list[FeatureBundle],
-    syllables: SyllableView | None,
-) -> None:
-    """Refuse a syllable-tier result feature whose target segment is not the nucleus.
-
-    Suprasegmentals live on the syllable's nucleus, so a syllable-tier write that
-    does not land on the nucleus is a cross-syllable edit (unsupported). With no
-    syllable view (syllabification unconfigured) there is no nucleus to check
-    against, so the write proceeds as an ordinary segment merge.
-    """
-    if syllables is None or not isinstance(result_elem, ResultElem):
-        return
-    tier_features = [f for f in result_elem.bundle if f in syllables.features]
-    if not tier_features:
-        return
-    is_nucleus = pos is not None and syllables.at(pos) is segments[pos]
-    if not is_nucleus:
-        raise NotImplementedError(
-            f"writing syllable-tier feature(s) {sorted(tier_features)} to a non-nucleus "
-            "target is not supported (suprasegmentals live on the syllable nucleus)"
-        )
-
-
 def apply_match(
     sd: StructuralDescription,
     match: Match,
@@ -369,7 +343,6 @@ def apply_match(
         else:
             source, pos = segments[cursor], cursor
             cursor += 1
-        _refuse_nonnucleus_syllable_write(result_elem, pos, segments, syllables)
         rendered = _render_result_element(result_elem, source, match.bindings, letters, features)
         if pos is not None and len(rendered) == 1:
             out.append((rendered[0], pos))  # 1:1 feature-merge keeps the target's identity

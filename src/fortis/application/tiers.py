@@ -1,9 +1,12 @@
 """Autosegmental tier operations over a Form.
 
-For now this is just *construction*: lifting the suprasegmental features already sitting
-in the segment bundles onto their declared tiers, as autosegments linked to their anchor.
-The in-bundle copy is left in place (dual representation) — task 3c removes it and flips
-the readers (matcher, rendering) to consult the tier instead.
+Suprasegmental features (tone, stress) live on declared tiers, not in the segment bundles.
+``associate_tiers`` builds a tier at construction (lifting the features off the bundles and
+stripping them); ``cleanup_tiers`` and ``redock_to_nuclei`` maintain it after each rule —
+pruning links to deleted segments (the source of tonal stability), applying the OCP, and
+following a shifted nucleus; ``split_carried``/``write_to_tier`` route a rule's
+suprasegmental writes onto the tier; ``carried_features``/``lower_tiers`` read them back so
+the matcher and renderer keep working on bundles as before.
 """
 from __future__ import annotations
 
@@ -11,6 +14,7 @@ from src.fortis.application.matching import pattern_matches
 from src.fortis.models.autosegment import Autoseg, AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.form import Form
+from src.fortis.models.segment import Segment
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.tier_declaration import TierInventory
 
@@ -38,7 +42,29 @@ def associate_tiers(form: Form, tiers: TierInventory) -> Form:
             tier.autosegs.append(autoseg)
             tier.links.add((autoseg.id, segment.id))
         form.tiers[name] = tier
+    # The carried features now live on the tiers; strip them from the segment bundles.
+    carried_names = {feature for declaration in tiers.values() for feature in declaration.carries}
+    if carried_names:
+        form.segments = [
+            Segment(
+                FeatureBundle({f: s for f, s in segment.bundle.items() if f not in carried_names}),
+                segment.id,
+            )
+            for segment in form.segments
+        ]
     return form
+
+
+def lower_tiers(form: Form) -> list[FeatureBundle]:
+    """Merge each segment's carried features back into its bundle (the inverse of associate).
+
+    Lets the matcher and renderer read suprasegmentals from bundles as before the flip,
+    without threading the tiers into them.
+    """
+    return [
+        FeatureBundle({**segment.bundle, **carried_features(form, segment.id)})
+        for segment in form.segments
+    ]
 
 
 def cleanup_tiers(form: Form, tiers: TierInventory, *, surface: bool = False) -> Form:

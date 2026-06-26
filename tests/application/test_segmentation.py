@@ -8,6 +8,7 @@ import pytest
 from src.fortis.application.combining import matches_exactly
 from src.fortis.application.rendering import sequence_to_string
 from src.fortis.application.segmentation import string_to_sequence
+from src.fortis.application.tiers import lower_tiers
 
 
 def _feature_equal(a, b) -> bool:
@@ -32,24 +33,25 @@ class TestStringToSequence:
     def test_syllable_tier_diacritic_attaches_to_nucleus(self, project):
         # A syllable-tier tone mark written after the coda must land on the syllable's
         # nucleus, not an earlier segment. ("̄" is tone 3.) Guards the last_nucleus_index
-        # path, which no plain lexicon word exercises.
-        seq = string_to_sequence("tan" + "̄", project).bundles()
+        # path, which no plain lexicon word exercises. Tone now lives on the tier, so
+        # read it back per-segment via lower_tiers.
+        seq = lower_tiers(string_to_sequence("tan" + "̄", project))
         assert [("tone" in s) for s in seq] == [False, True, False]  # tone on the a, not t/n
 
     def test_word_initial_nucleus_tier_diacritic(self, project):
         # The nucleus is segment 0 here; the tone must land on it (not index -1).
-        seq = string_to_sequence("an" + "̄", project).bundles()
+        seq = lower_tiers(string_to_sequence("an" + "̄", project))
         assert seq[0]["tone"].value == 3
 
     def test_stress_attaches_to_a_diacritic_made_nucleus(self, project):
         # ˈl̩ : the syllabic diacritic makes l a nucleus *after* the letter is read;
         # the pending stress must still attach to it (not get stranded / skipped).
-        seq = string_to_sequence("ˈl̩", project).bundles()
+        seq = lower_tiers(string_to_sequence("ˈl̩", project))
         assert "stress" in seq[0]
 
     def test_stress_not_stolen_by_a_later_plain_vowel(self, project):
         # ˈl̩a : stress belongs to the syllabic l̩, not the following plain vowel a.
-        seq = string_to_sequence("ˈl̩a", project).bundles()
+        seq = lower_tiers(string_to_sequence("ˈl̩a", project))
         assert "stress" in seq[0] and "stress" not in seq[1]
 
 

@@ -813,11 +813,23 @@ def _word_supply(segments: list[FeatureBundle]) -> Counter:
 
 
 def _cannot_match(
-    sd: StructuralDescription, segments: list[FeatureBundle], letters: LetterInventory
+    sd: StructuralDescription,
+    segments: list[FeatureBundle],
+    letters: LetterInventory,
+    syllable_features: frozenset[str] = frozenset(),
 ) -> bool:
-    """Whether *segments* provably lack the material *sd* needs (so it cannot fire)."""
+    """Whether *segments* provably lack the material *sd* needs (so it cannot fire).
+
+    Syllable-tier demands are skipped: those features are checked against the syllable
+    nucleus (the syllable view), not the segment bundle, so the per-segment supply can't
+    account for them.
+    """
     supply = _word_supply(segments)
-    return any(supply[demand] < count for demand, count in _required_counts(sd, letters).items())
+    return any(
+        supply[demand] < count
+        for demand, count in _required_counts(sd, letters).items()
+        if demand[0] not in syllable_features
+    )
 
 
 def _bound_refs(elements: tuple[Element, ...]) -> set[int]:
@@ -898,7 +910,8 @@ def find_matches(
             (``None`` means every feature is matched against its own segment).
     """
     letters = letters if letters is not None else LetterInventory()
-    if _cannot_match(sd, segments, letters):
+    syllable_features = syllables.features if syllables else frozenset()
+    if _cannot_match(sd, segments, letters, syllable_features):
         return []  # the word lacks material the rule provably needs — skip the search
     matches: list[Match] = []
     case_b = _target_recalls_a_context_binding(sd)
