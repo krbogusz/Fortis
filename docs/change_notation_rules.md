@@ -80,6 +80,10 @@ A feature declared on a tier (in `tiers.toml`, e.g. `tone`, `stress`) lives as a
 - `[tone: ~1]` — Recall a bound autosegment: link the **same** one (spread, not a copy)
 - `⟨tone: high⟩`, `⟨tone: ~1=high⟩` — A **floating** autosegment (one with no anchor); zero-width, matched and bound for docking
 
+### 1.9. Lexical floating tones
+
+A word may carry a **floating tone** — a melody with no host segment (e.g. a grammatical floating H). It is written `⟨◌́⟩`: a tone diacritic on a dotted-circle placeholder (◌, U+25CC), in float brackets. Its **position** is where it sits in the string — `kata⟨◌́⟩` is a floating high *after* the final segment (a suffixal tone that docks leftward); `⟨◌́⟩kata` is one *before* the first. A `⟨⟩` dock rule (§2.12) then binds it where it sits.
+
 ## 2. Rules
 
 ### 2.1. Structural rules
@@ -218,13 +222,15 @@ bundle. Four operations manipulate those associations:
    both vowels in the target instead — `[+syll, tone: ~1=high] [-syll]* [+syll, tone: none] → [+syll, tone:
    ~1] [-syll]* [+syll, tone: ~1]` — the `[-syll]*` must appear, and mirror, on each side.)
 2. **Delink** — a result `[tone: none]` removes the segment's association on that tier.
-3. **Dock** — a floating autosegment `⟨tone: ~1=high⟩` (no anchor — e.g. a lexical floating tone, or one
-   stranded by its vowel's deletion) is matched and bound; the result `~1` links it onto an anchor.
-   Example: `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]`. The `⟨...⟩` element is zero-width: it
-   asserts a matching floating autosegment exists but consumes no segment, so it does not count toward
-   cardinality (§2.1.1). The current semantics matches *a* floating autosegment of the given shape, not a
-   position-specific one — under `simultaneous` mode multiple toneless targets would each dock it, so use a
-   directional mode or context to dock once.
+3. **Dock** — a floating autosegment `⟨tone: ~1=high⟩` (no anchor) is matched and bound; the result `~1`
+   links it onto an anchor. Example: `[+syll, tone: none] ⟨tone: ~1=high⟩ → [+syll, tone: ~1]` docks a
+   floating high leftward onto the syllable it follows. The `⟨...⟩` element is zero-width: it asserts a
+   matching floating autosegment exists but consumes no segment, so it does not count toward cardinality
+   (§2.1.1). A floating tone written in the **lexicon** (`⟨◌́⟩`, §1.9) is *positioned* — a `⟨⟩` element
+   binds it only where it sits, so a suffixal H docks onto its own syllable rather than the first toneless
+   one. A floating tone with **no** position — e.g. one stranded by a deletion — is position-blind and
+   binds at any matching site (under `simultaneous` mode it would dock to every match, so use a directional
+   mode or context to dock once).
 4. **Stability** — *automatic*, no rule needed. When a rule deletes a segment carrying a **melody**-tier
    autosegment (a tier declared `melody = true`, e.g. tone), the autosegment is carried onto the surviving
    neighbour (the tier's `stability` direction — `left` by default, or `right`) and re-docked to that
