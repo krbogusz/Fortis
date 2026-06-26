@@ -9,6 +9,8 @@ from src.fortis.models.specs import FeatureSpec, PatternSpec, ResultSpec
 from src.fortis.models.values import (
     AlphaOp,
     AlphaRef,
+    AutosegBind,
+    AutosegRecall,
     ContourEdge,
     ContourPosition,
     Limb,
@@ -514,6 +516,28 @@ def validate_pattern_spec(
     return Ok(None)
 
 
+def parse_autoseg_ref(
+    raw_value: str, feature: str, features: FeatureInventory
+) -> Result[AutosegBind | AutosegRecall, str]:
+    """Parse a tier-autosegment reference: ``~n=value`` binds, ``~n`` recalls (spread).
+
+    ``~n=value`` binds the autosegment carrying *value* under reference *n*; ``~n`` recalls
+    a bound autosegment, so the applier associates the **same** one (spreading it) rather
+    than minting a copy. The bind's inner value is parsed in pattern context.
+    """
+    ref_str, sep, value_str = raw_value[1:].partition("=")
+    if not ref_str.isdigit():
+        return Err(f"tier reference '{raw_value}' must be ~ followed by a reference number")
+    ref = int(ref_str)
+    if not sep:
+        return Ok(AutosegRecall(ref))
+    match parse_kind_value(value_str, feature, features):
+        case Err(error):
+            return Err(error)
+        case Ok(value):
+            return Ok(AutosegBind(ref, value))
+
+
 def parse_pattern_value(
     raw_value: str, feature: str, features: FeatureInventory
 ) -> Result[Limb, str]:
@@ -524,6 +548,9 @@ def parse_pattern_value(
     """
     if raw_value in config.value_symbols.unspecified:
         return Ok(None)
+
+    if raw_value.startswith("~"):
+        return parse_autoseg_ref(raw_value, feature, features)
 
     # Alpha references — pattern context supports same/opposite/other
     for letter in config.greek_alphabet:
@@ -691,6 +718,9 @@ def parse_result_value(
     """
     if raw_value in config.value_symbols.unspecified:
         return Ok(None)
+
+    if raw_value.startswith("~"):
+        return parse_autoseg_ref(raw_value, feature, features)
 
     # Alpha references — result context supports same/opposite only
     for letter in config.greek_alphabet:

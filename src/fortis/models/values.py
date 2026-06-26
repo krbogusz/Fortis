@@ -28,10 +28,31 @@ class AlphaRef:
     unary: bool = False
 
 
+@dataclass(frozen=True)
+class AutosegBind:
+    """Bind the tier autosegment carrying this value (``tone: ~1=H``).
+
+    The autosegment is matched by its inner ``value`` (e.g. H) and recorded under ``ref``,
+    so a later ``AutosegRecall`` on another anchor can associate the **same** autosegment —
+    the difference between *spreading* a tone (one autosegment, many anchors) and *copying*
+    it (a fresh autosegment).
+    """
+
+    ref: int
+    value: Limb
+
+
+@dataclass(frozen=True)
+class AutosegRecall:
+    """Recall a bound tier autosegment (``tone: ~1``): associate the same one — spread."""
+
+    ref: int
+
+
 type SingleValue = int | None | Literal["any"]  # None == undefined / unspecified
-type Limb = SingleValue | AlphaRef
+type Limb = SingleValue | AlphaRef | AutosegBind | AutosegRecall
 type ContourValue = tuple[Limb, ...]
-type Value = SingleValue | AlphaRef | ContourValue
+type Value = SingleValue | AlphaRef | AutosegBind | AutosegRecall | ContourValue
 
 
 class ContourEdge(StrEnum):
