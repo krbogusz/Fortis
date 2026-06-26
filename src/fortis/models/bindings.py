@@ -42,6 +42,9 @@ class Bindings:
     # Tier-autosegment references (``tone: ~1=H``): the matched *position* a bound
     # autosegment sits on, so the applier can recall the same autosegment for spread.
     autoseg_reference: dict[int, int] = field(default_factory=dict)
+    # Floating-autosegment references (``⟨tone: ~1=H⟩``): the *id* of a matched floating
+    # autosegment, so the applier can dock that same autosegment onto an anchor.
+    floating_reference: dict[int, int] = field(default_factory=dict)
     permissive_alpha: bool = False
     conditions: dict[int, bool] = field(default_factory=dict)
     disjunction_choices: tuple[int, ...] = ()

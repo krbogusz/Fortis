@@ -205,6 +205,15 @@ def _maintain_tiers(
     return redock_to_nuclei(form, boundaries, nucleus_def)
 
 
+def _floating_autosegs(form: Form) -> tuple[tuple[int, FeatureBundle], ...]:
+    """Every unanchored autosegment (id, bundle) across the tiers — candidates for docking."""
+    floating: list[tuple[int, FeatureBundle]] = []
+    for tier in form.tiers.values():
+        linked = {autoseg_id for (autoseg_id, _anchor) in tier.links}
+        floating.extend((a.id, a.bundle) for a in tier.autosegs if a.id not in linked)
+    return tuple(floating)
+
+
 def _syllable_context(
     form: list[FeatureBundle],
     sonorities: SonoritiesInventory | None,
@@ -212,6 +221,7 @@ def _syllable_context(
     time: int,
     letters: LetterInventory,
     syllable_features: frozenset[str],
+    floating: tuple[tuple[int, FeatureBundle], ...] = (),
 ) -> tuple[frozenset[int], SyllableView | None]:
     """Boundaries (for ``$``) and the per-position nucleus view (for tier-aware matching).
 
@@ -229,7 +239,7 @@ def _syllable_context(
     if nucleus_part is None or nucleus_part.definition is None:
         return boundaries, None
     nuclei = nuclei_by_position(form, boundaries, nucleus_part.definition)
-    return boundaries, SyllableView(nuclei=nuclei, features=syllable_features)
+    return boundaries, SyllableView(nuclei=nuclei, features=syllable_features, floating=floating)
 
 
 def _boundaries(
@@ -287,7 +297,8 @@ def apply_rule(
     match rule.application:
         case ApplicationMode.simultaneous:
             boundaries, view = _syllable_context(
-                lower_tiers(form), sonorities, syllable_parts, rule.time, letters, syllable_features
+                lower_tiers(form), sonorities, syllable_parts, rule.time, letters,
+                syllable_features, _floating_autosegs(form),
             )
             return _apply_simultaneous(rule.sd, form, letters, features, boundaries, view, tiers)
         case ApplicationMode.left_to_right:
@@ -324,11 +335,18 @@ def _autoseg_recall(carried: FeatureBundle) -> AutosegRecall | None:
 def _spread_autoseg(
     out: Form, source: Form, bindings: Bindings, recall: AutosegRecall, tier_name: str, seg_id: int
 ) -> None:
-    """Link the autosegment bound under *recall* onto *seg_id* — spread (one autoseg, many anchors).
+    """Link the autosegment bound under *recall* onto *seg_id*.
 
-    The bound autosegment is the one sitting on *source* at the position the matcher recorded;
-    adding a second link to it (rather than minting a copy) is what makes a tone spread.
+    Two binds resolve here. A **floating** bind (``⟨...⟩``) carries the autosegment's id
+    directly: linking it onto the anchor *docks* it. An **on-anchor** bind (``~n=H``) carries
+    the position the autosegment sits on in *source*; adding a second link to that same
+    autosegment is what makes a tone *spread* (one autosegment, many anchors).
     """
+    if recall.ref in bindings.floating_reference:
+        out.tiers.setdefault(tier_name, AutosegmentalTier()).links.add(
+            (bindings.floating_reference[recall.ref], seg_id)
+        )
+        return
     bound_position = bindings.autoseg_reference.get(recall.ref)
     source_tier = source.tiers.get(tier_name)
     if bound_position is None or source_tier is None:
@@ -417,7 +435,8 @@ def _apply_directional(
     while True:
         bundles = lower_tiers(work)
         boundaries, view = _syllable_context(
-            bundles, sonorities, syllable_parts, time, letters, syllable_features
+            bundles, sonorities, syllable_parts, time, letters,
+            syllable_features, _floating_autosegs(work),
         )
         if reverse:
             candidates = [

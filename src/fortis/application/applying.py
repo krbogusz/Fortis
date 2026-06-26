@@ -49,6 +49,7 @@ from src.fortis.models.elements import (
     BundleElem,
     Disjunction,
     Element,
+    FloatingAutoseg,
     Group,
     LetterBundle,
     LetterRef,
@@ -83,7 +84,9 @@ def _content(elements: tuple[Element, ...]) -> list[Element]:
 
     Boundaries are positional markers that never count toward cardinality.
     """
-    return [e for e in elements if not isinstance(e, (WordBoundary, SyllableBoundary))]
+    return [
+        e for e in elements if not isinstance(e, (WordBoundary, SyllableBoundary, FloatingAutoseg))
+    ]
 
 
 def _resolve_disjunctions(content: list[Element], choices: tuple[int, ...]) -> list[Element]:

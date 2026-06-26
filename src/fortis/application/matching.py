@@ -67,6 +67,7 @@ from src.fortis.models.elements import (
     BundleElem,
     Disjunction,
     Element,
+    FloatingAutoseg,
     Group,
     LetterBundle,
     LetterRef,
@@ -396,6 +397,30 @@ def pattern_matches(
     return True
 
 
+def _floating_matches(pattern: PatternBundle, bundle: FeatureBundle) -> bool:
+    """Whether a floating autosegment *bundle* satisfies *pattern* (inner value equality)."""
+    for feature, spec in pattern.items():
+        wanted = spec.value.value if isinstance(spec.value, AutosegBind) else spec.value
+        if feature not in bundle or bundle[feature].value != wanted:
+            return False
+    return True
+
+
+def _bind_floating(
+    pattern: PatternBundle, syllables: SyllableView | None, bindings: Bindings
+) -> bool:
+    """Match a floating autosegment against *pattern*; bind its id under each ``~ref``."""
+    if syllables is None:
+        return False
+    for autoseg_id, bundle in syllables.floating:
+        if _floating_matches(pattern, bundle):
+            for spec in pattern.values():
+                if isinstance(spec.value, AutosegBind):
+                    bindings.floating_reference[spec.value.ref] = autoseg_id
+            return True
+    return False
+
+
 # ---- Sequence matcher -----------------------------------------------------------------
 
 
@@ -406,11 +431,13 @@ class SyllableView:
     ``nuclei[pos]`` is the nucleus bundle of the segment at ``pos``'s syllable (the
     ``Syllable.bundle`` view); ``features`` names the syllable-tier features. A
     syllable-tier spec is then matched against ``nuclei[pos]`` rather than the
-    segment itself.
+    segment itself. ``floating`` lists the unanchored autosegments (id, bundle), which a
+    ``⟨...⟩`` element matches and binds for docking.
     """
 
     nuclei: list[FeatureBundle | None]
     features: frozenset[str]
+    floating: tuple[tuple[int, FeatureBundle], ...] = ()
 
     def at(self, pos: int) -> FeatureBundle | None:
         """The syllable (nucleus) bundle for position *pos*, if any."""
@@ -437,6 +464,7 @@ def _copy(bindings: Bindings) -> Bindings:
         alpha=dict(bindings.alpha),
         reference=dict(bindings.reference),
         autoseg_reference=dict(bindings.autoseg_reference),
+        floating_reference=dict(bindings.floating_reference),
         permissive_alpha=bindings.permissive_alpha,
         conditions=dict(bindings.conditions),
         disjunction_choices=bindings.disjunction_choices,
@@ -476,6 +504,13 @@ def _match_element(
                     position=pos,
                 ):
                     yield pos + 1, branch
+
+        case FloatingAutoseg(pattern):
+            # Zero-width: a floating autosegment must exist (and is bound for docking),
+            # but no segment is consumed.
+            branch = _copy(bindings)
+            if _bind_floating(pattern, syllables, branch):
+                yield pos, branch
 
         case LetterRef(symbol):
             if pos < len(segments) and symbol in letters:
