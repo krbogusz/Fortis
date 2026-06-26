@@ -9,6 +9,7 @@ from src.fortis.loaders.letters import load_letter_inventory
 from src.fortis.loaders.rules import load_rule_inventory
 from src.fortis.loaders.sonorities import load_sonorities_inventory
 from src.fortis.loaders.syllable_parts import load_syllable_parts_inventory
+from src.fortis.loaders.tiers import load_tier_inventory
 from src.fortis.loaders.words import load_word_inventory
 from src.fortis.models.inventories import (
     DiacriticInventory,
@@ -19,6 +20,7 @@ from src.fortis.models.inventories import (
 )
 from src.fortis.models.project import Project
 from src.fortis.models.rules import RuleInventory
+from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.result import Err, Ok, Result
 
 
@@ -92,6 +94,16 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
         case Ok(result):
             rules = result
 
+    # ---- Tiers (optional: an absent tiers.toml ⇒ no autosegmental tiers) -------------------------
+    tiers = TierInventory()
+    tiers_path = inventories_dir / "tiers.toml"
+    if tiers_path.exists():
+        match load_tier_inventory(tiers_path, features):
+            case Err(err):
+                error_list.extend(f"tiers.toml: {e}" for e in err)
+            case Ok(result):
+                tiers = result
+
     if error_list:
         return Err(error_list)
 
@@ -116,5 +128,6 @@ def load_project(inventories_dir: Path | None = None) -> Result[Project, list[st
             words=words,
             rules=rules,
             time=time,
+            tiers=tiers,
         )
     )

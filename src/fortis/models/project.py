@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import (
@@ -11,6 +11,7 @@ from src.fortis.models.inventories import (
     WordInventory,
 )
 from src.fortis.models.rules import RuleInventory
+from src.fortis.models.tier_declaration import TierInventory
 
 
 @dataclass
@@ -25,3 +26,4 @@ class Project:
     words: WordInventory
     rules: RuleInventory  # pre-sorted by (time, file order)
     time: int  # current time
+    tiers: TierInventory = field(default_factory=TierInventory)  # autosegmental tiers; {} = none

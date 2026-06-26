@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from src.fortis.models.autosegment import AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.segment import Segment
 
@@ -22,7 +23,7 @@ class Form:
     """
 
     segments: list[Segment]
-    tiers: dict[str, object] = field(default_factory=dict)  # real Tier type: Phase 1
+    tiers: dict[str, AutosegmentalTier] = field(default_factory=dict)
     _next_id: int = field(default=0, compare=False, repr=False)
 
     def __post_init__(self) -> None:
