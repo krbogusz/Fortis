@@ -230,15 +230,13 @@
                 <span class="word-ipa">{d.ipa}</span>
                 {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
               </header>
-              <div class="diagrams">
-                <div class="diagram-block">
-                  <span class="lbl">Input</span>
-                  <pre class="diagram">{d.diagram_in}</pre>
-                </div>
-                <div class="diagram-block">
-                  <span class="lbl">Surface</span>
-                  <pre class="diagram">{d.diagram_out}</pre>
-                </div>
+              <div class="frames">
+                {#each d.frames as f}
+                  <div class="frame">
+                    <span class="frame-lbl">{f.label}</span>
+                    <pre class="diagram">{f.diagram}</pre>
+                  </div>
+                {/each}
               </div>
             </article>
           {/each}
@@ -427,22 +425,21 @@
     background: var(--panel);
     box-shadow: var(--shadow);
   }
-  .diagrams {
+  .frames {
     display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 14px;
   }
-  .diagram-block {
+  .frame {
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
-  .diagram-block .lbl {
+  .frame-lbl {
     font-family: var(--sans);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
   }
   /* Diagrams must be monospace for the box-drawing association lines to align. */
   .diagram {

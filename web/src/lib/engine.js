@@ -49,14 +49,17 @@ def run_derivations():
         d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
                    project.features, project.sonorities, project.syllable_parts, project.tiers)
         steps, prev = [], None
+        frames = [{"label":"Input","diagram":render_autosegmental(d.input,project)}]
         for s in d.steps:
             base = _SUB.sub("", s.rule.id); heading = (s.rule.name or base) if base!=prev else None; prev = base
             steps.append({"heading":heading,"time":s.rule.time,"name":s.rule.name or base,
                           "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                           "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
-        out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),"steps":steps,
-                    "diagram_in":render_autosegmental(d.input,project),
-                    "diagram_out":render_autosegmental(d.surface,project)})
+            diagram = render_autosegmental(s.after, project)
+            if diagram != frames[-1]["diagram"]:
+                frames.append({"label":str(s.rule.time)+": "+(s.rule.name or base),"diagram":diagram})
+        out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
+                    "steps":steps,"frames":frames})
     return json.dumps({"derivations": out})
 `;
 
