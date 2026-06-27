@@ -6,6 +6,8 @@ as its first argument, keeping presentation separate from identity.
 """
 from __future__ import annotations
 
+from typing import cast
+
 from src.fortis.general.utils import is_combining
 from src.fortis.models.specs import FeatureSpec, PatternSpec, ResultSpec
 from src.fortis.models.values import AlphaOp, AlphaRef, ContourEdge
@@ -70,11 +72,13 @@ def present_spec(spec: FeatureSpec | PatternSpec | ResultSpec) -> str:
         value_str = present_alpha_ref(spec.value)
     elif isinstance(spec.value, tuple):
         value_str = ">".join(
-            present_alpha_ref(v) if isinstance(v, AlphaRef) else present_value(v)
+            present_alpha_ref(v)
+            if isinstance(v, AlphaRef)
+            else present_value(cast("int | str | None", v))
             for v in spec.value
         )
     else:
-        value_str = present_value(spec.value)
+        value_str = present_value(cast("int | str | None", spec.value))
 
     # Build the full string based on spec type
     if isinstance(spec, FeatureSpec):

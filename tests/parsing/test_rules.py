@@ -6,7 +6,7 @@ strings; that job now belongs to ``parse_definition``, which returns a
 ``StructuralDescription`` of parsed elements.
 """
 
-from src.fortis.models.elements import LetterRef
+from src.fortis.models.elements import BundleElem, LetterRef, ResultElem
 from src.fortis.parsing.notation import parse_definition
 
 
@@ -54,5 +54,9 @@ class TestParseDefinition:
     def test_conditional_features_round_trip(self, features):
         # A '<n: F>' conditional in target and result carries its label through.
         sd = parse_definition("[<1: +high>] → [<1: +voice>] / a _", features).unwrap()
-        assert sd.target[0].bundle["high"].condition_label == 1
-        assert sd.result[0].bundle["voice"].condition_label == 1
+        target = sd.target[0]
+        result = sd.result[0]
+        assert isinstance(target, BundleElem)
+        assert isinstance(result, ResultElem)
+        assert target.bundle["high"].condition_label == 1
+        assert result.bundle["voice"].condition_label == 1

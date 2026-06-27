@@ -3,9 +3,10 @@
 from src.fortis.application.combining import combine, differing, matches_exactly, merge
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.specs import FeatureSpec
+from src.fortis.models.values import Value
 
 
-def _fb(**features: object) -> FeatureBundle:
+def _fb(**features: Value) -> FeatureBundle:
     """Build a realized FeatureBundle from feature=value kwargs."""
     return FeatureBundle({f: FeatureSpec(feature=f, value=v) for f, v in features.items()})
 
@@ -52,7 +53,7 @@ class TestMatchesExactlyAndDiffering:
         assert differing(_fb(voice=1), _fb(voice=1)) == []
 
 
-def _delta(**features: object) -> FeatureBundle:
+def _delta(**features: Value) -> FeatureBundle:
     """Build a delta bundle; a value of None marks an unlink."""
     return FeatureBundle({f: FeatureSpec(feature=f, value=v) for f, v in features.items()})
 

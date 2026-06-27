@@ -235,7 +235,7 @@ def _syllable_context(
     time: int,
     letters: LetterInventory,
     syllable_features: frozenset[str],
-    floating: tuple[tuple[int, FeatureBundle], ...] = (),
+    floating: tuple[tuple[int, FeatureBundle, int | None], ...] = (),
 ) -> tuple[frozenset[int], SyllableView | None]:
     """Boundaries (for ``$``) and the per-position nucleus view (for tier-aware matching).
 

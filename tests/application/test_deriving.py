@@ -17,11 +17,12 @@ from src.fortis.models.inventories import (
 )
 from src.fortis.models.rules import ApplicationMode, Rule, RuleInventory
 from src.fortis.models.specs import FeatureSpec
+from src.fortis.models.values import Value
 from src.fortis.parsing.bundles import parse_pattern_bundle
 from src.fortis.parsing.notation import parse_definition, parse_sequence
 
 
-def _fb(**features: object) -> FeatureBundle:
+def _fb(**features: Value) -> FeatureBundle:
     return FeatureBundle({f: FeatureSpec(feature=f, value=v) for f, v in features.items()})
 
 

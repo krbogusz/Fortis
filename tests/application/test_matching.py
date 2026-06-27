@@ -14,12 +14,12 @@ from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.inventories import Letter, LetterInventory
 from src.fortis.models.specs import FeatureSpec, PatternSpec
-from src.fortis.models.values import AlphaOp, AlphaRef, ContourEdge
+from src.fortis.models.values import AlphaOp, AlphaRef, ContourEdge, Value
 from src.fortis.parsing.bundles import parse_pattern_bundle
 from src.fortis.parsing.notation import parse_definition
 
 
-def _fb(**features: object) -> FeatureBundle:
+def _fb(**features: Value) -> FeatureBundle:
     """Build a realized FeatureBundle from feature=value kwargs."""
     return FeatureBundle({f: FeatureSpec(feature=f, value=v) for f, v in features.items()})
 

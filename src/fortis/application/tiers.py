@@ -10,6 +10,8 @@ the matcher and renderer keep working on bundles as before.
 """
 from __future__ import annotations
 
+from typing import cast
+
 from src.fortis.application.matching import pattern_matches
 from src.fortis.models.autosegment import Autoseg, AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
@@ -17,7 +19,7 @@ from src.fortis.models.form import Form
 from src.fortis.models.segment import Segment
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.tier_declaration import TierInventory
-from src.fortis.models.values import make_value
+from src.fortis.models.values import Limb, make_value
 
 
 def associate_tiers(form: Form, tiers: TierInventory) -> Form:
@@ -175,7 +177,9 @@ def carried_features(form: Form, segment_id: int) -> FeatureBundle:
                 for spec in feature_specs
                 for limb in (spec.value if isinstance(spec.value, tuple) else (spec.value,))
             )
-            specs[feature] = FeatureSpec(feature=feature, value=make_value(limbs))
+            specs[feature] = FeatureSpec(
+                feature=feature, value=make_value(cast("tuple[Limb, ...]", limbs))
+            )
     return FeatureBundle(specs)
 
 

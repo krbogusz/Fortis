@@ -1,5 +1,7 @@
 """Tests for the Result type."""
 
+from typing import cast
+
 import pytest
 
 from src.fortis.result import Err, Ok, ResultError, present_errors
@@ -77,13 +79,13 @@ class TestErr:
             Err("bad").expect("expected ok")
 
     def test_map(self):
-        assert Err("bad").map(lambda x: x * 2) == Err("bad")
+        assert Err("bad").map(lambda x: cast(int, x) * 2) == Err("bad")
 
     def test_map_err(self):
         assert Err("bad").map_err(lambda e: e.upper()) == Err("BAD")
 
     def test_and_then(self):
-        assert Err("bad").and_then(lambda x: Ok(x + 1)) == Err("bad")
+        assert Err("bad").and_then(lambda x: Ok(cast(int, x) + 1)) == Err("bad")
 
     def test_or_else(self):
         assert Err("bad").or_else(lambda e: Ok(0)) == Ok(0)

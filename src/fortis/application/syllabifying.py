@@ -40,6 +40,7 @@ from src.fortis.models.inventories import (
     SyllablePart,
     SyllablePartsInventory,
 )
+from src.fortis.models.specs import FeatureSpec
 
 
 class SyllabificationError(Exception):
@@ -83,6 +84,7 @@ def _legal_constituent(
     """Whether a candidate onset/coda fully matches *part*'s pattern (None = unconstrained)."""
     if not _has_pattern(part):
         return True
+    assert part is not None and part.pattern is not None
     return full_match(part.pattern, segments, letters)
 
 
@@ -213,7 +215,7 @@ def consolidate_suprasegmentals(
         if nucleus_pos is None:
             continue
         # Pool the span's syllable-tier features (the nucleus's own values win).
-        pooled: dict[str, object] = {}
+        pooled: dict[str, FeatureSpec] = {}
         for i in range(left, right):
             if i == nucleus_pos:
                 continue

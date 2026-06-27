@@ -8,10 +8,11 @@ from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Letter, LetterInventory
 from src.fortis.models.specs import FeatureSpec
+from src.fortis.models.values import Value
 from src.fortis.parsing.notation import parse_definition
 
 
-def _fb(**features: object) -> FeatureBundle:
+def _fb(**features: Value) -> FeatureBundle:
     """Build a realized FeatureBundle from feature=value kwargs."""
     return FeatureBundle({f: FeatureSpec(feature=f, value=v) for f, v in features.items()})
 

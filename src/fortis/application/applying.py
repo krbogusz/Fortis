@@ -66,7 +66,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec
-from src.fortis.models.values import AlphaRef
+from src.fortis.models.values import AlphaRef, Limb
 
 # Reused verbatim from the validator so the applier's path decision can never
 # disagree with what the parser accepted. ``parsing/rule_validation`` is the
@@ -143,7 +143,11 @@ def _min_width(element: Element) -> int | None:
             return 0
         case Group(inner):
             widths = [_min_width(e) for e in inner]
-            return None if any(w is None for w in widths) else sum(widths)
+            return (
+                None
+                if any(w is None for w in widths)
+                else sum(w for w in widths if w is not None)
+            )
         case Quantified(inner, quant):
             if quant.max is not None and quant.min == quant.max:
                 inner_width = _min_width(inner)
@@ -218,7 +222,7 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
             # A contour: resolve any alpha recall limb by limb, keeping the shape. A
             # limb must be a single value, so an alpha bound to a contour cannot nest
             # into one — refuse loudly rather than build a malformed nested value.
-            limbs: list[object] = []
+            limbs: list[Limb] = []
             for limb in value:
                 if not isinstance(limb, AlphaRef):
                     limbs.append(limb)

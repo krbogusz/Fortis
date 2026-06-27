@@ -20,6 +20,13 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["D101", "D102", "D103"]
 
+[tool.basedpyright]
+# Pyright "standard" semantics: real type errors, without basedpyright's extra-strict checks
+# (reportAny / reportExplicitAny, unknown-type propagation from untyped fixtures, unused-call-
+# result, implicit-string-concatenation) which are noise for this codebase.
+typeCheckingMode = "standard"
+pythonVersion = "3.12"
+
 [dependency-groups]
 dev = [
     "basedpyright>=1.39.6",
