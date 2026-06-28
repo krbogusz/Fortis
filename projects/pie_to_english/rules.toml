@@ -369,6 +369,15 @@ definition = "j → ∅ / 1=[-syll] @1 _"
 # West Germanic → Anglo-Frisian → Old English  (Index Diachronica §17.7.2.1, §17.7.2.1.1)
 # ═══════════════════════════════════════════════════════════════════════════
 
+# §17.7.2.1  i-umlaut (i-mutation): a low/back vowel fronts and raises before */i/ or */j/
+# in the next syllable — the change behind 'guest', 'men', 'feet'. (Here the commonest
+# case, */ɑ a/ > /e/.) It must fire *before* the triggering */i j/ is apocopated below.
+[i_umlaut]
+time = 450
+name = "i-umlaut (i-mutation)  */ɑ/ > */e/ / _Ci"
+description = "*/ɑ a/ > */e/ before */i j/ in the next syllable — *gastiz > *gestiz 'guest'"
+definition = "[+syll, +low] → [front, ATR, back: none, aperture: none, low: none, RTR: none] / _ [-syll]* (j | [+syll, +high, +front])"
+
 # §17.7.2.1  {i,u} → ∅ / _# (! after a light syllable): final high vowels are lost,
 # and with them the worn-down case endings. (Here, broadened to the nominative *-s
 # and a final unstressed short vowel — the apocope that leaves *full, *wurm.)
