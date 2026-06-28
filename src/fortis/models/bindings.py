@@ -45,6 +45,10 @@ class Bindings:
     # Floating-autosegment references (``⟨tone: ~1=H⟩``): the *id* of a matched floating
     # autosegment, so the applier can dock that same autosegment onto an anchor.
     floating_reference: dict[int, int] = field(default_factory=dict)
+    # Node-spread references (``oral: ~1`` on a *segmental* node): the captured subtree — the
+    # trigger's features under that node — so the applier can copy (merge) it onto the target.
+    # Unlike tier ``~n`` (which shares a link), a segmental node spreads by copying its subtree.
+    node_reference: dict[int, FeatureBundle] = field(default_factory=dict)
     permissive_alpha: bool = False
     conditions: dict[int, bool] = field(default_factory=dict)
     disjunction_choices: tuple[int, ...] = ()

@@ -79,7 +79,7 @@ def load_tier(feature: str, feature_def: dict[str, Any]) -> Result[Tier, str]:
     """
     tier = feature_def.get("tier")
     if not tier:
-        return Err(f"Feature '{feature}' is missing the required field 'tier'")
+        return Ok(Tier.segment)  # default: segmental (suprasegmentals live in tiers.toml)
     try:
         tier = Tier(tier.strip().lower())
     except ValueError:
@@ -240,11 +240,43 @@ def load_feature_inventory(path: Path) -> Result[FeatureInventory, list[str]]:
     if error_list:
         return Err(error_list)
 
+    _synthesize_root(feature_inventory)
+
     match validate_feature_inventory(feature_inventory):
         case Err(err):
             return Err(err)
         case Ok(result):
             return Ok(feature_inventory)
+
+
+def _synthesize_root(inventory: FeatureInventory) -> None:
+    """Parent every top-level segmental feature to a single ``root`` node, building it if absent.
+
+    So an inventory needn't declare a root: whatever segmental features are left unparented
+    become children of an auto-built ``root`` — the segment's apex. An explicitly declared
+    ``root`` is honoured and simply absorbs any segmental features still unparented.
+    """
+    tops = [
+        name
+        for name, feature in inventory.data.items()
+        if feature.tier == Tier.segment and feature.parent is None and name != "root"
+    ]
+    if not tops:
+        return
+    if "root" in inventory.data:
+        root = inventory.data["root"]
+        root.children = tuple(root.children or ()) + tuple(tops)
+    else:
+        inventory["root"] = Feature(
+            name="root",
+            tier=Tier.segment,
+            kind=FeatureKind.unary,
+            short_name="root",
+            values={},
+            children=tuple(tops),
+        )
+    for name in tops:
+        inventory.data[name].parent = "root"
 
 
 def validate_feature_inventory(feature_inventory: FeatureInventory) -> Result[None, list[str]]:

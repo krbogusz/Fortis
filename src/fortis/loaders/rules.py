@@ -14,7 +14,7 @@ from src.fortis.result import Err, Ok, Result
 
 
 def load_time(rule_id: str, rule_def: dict[str, Any]) -> Result[int, str]:
-    """Parse and validate the required 'time' field.
+    """Parse the optional 'time' field (defaults to 0).
 
     Args:
         rule_id: Rule slug (for error messages).
@@ -22,10 +22,30 @@ def load_time(rule_id: str, rule_def: dict[str, Any]) -> Result[int, str]:
     """
     value = rule_def.get("time")
     if value is None:
-        return Err(f"Rule '{rule_id}' is missing the required 'time' field")
+        return Ok(0)  # time is optional; an untimed rule sorts at 0
     if not isinstance(value, int):
         return Err(f"Rule '{rule_id}' has non-integer 'time' value: {value!r}")
     return Ok(value)
+
+
+def load_words(rule_id: str, rule_def: dict[str, Any]) -> Result[tuple[str, ...], str]:
+    """Parse the optional 'words' field: which words the rule is restricted to.
+
+    Accepts a single string or a list of strings, each matched against a word's ipa or
+    gloss. Empty (the default) ⇒ the rule applies to every word.
+
+    Args:
+        rule_id: Rule slug (for error messages).
+        rule_def: Raw dictionary from the TOML file.
+    """
+    value = rule_def.get("words")
+    if value is None:
+        return Ok(())
+    if isinstance(value, str):
+        return Ok((value,))
+    if isinstance(value, list) and all(isinstance(item, str) for item in value):
+        return Ok(tuple(value))
+    return Err(f"Rule '{rule_id}' has a 'words' that is not a string or list of strings")
 
 
 def load_application(rule_id: str, rule_def: dict[str, Any]) -> Result[ApplicationMode, str]:
@@ -109,6 +129,13 @@ def load_rule(
         case Ok(result):
             application = result
 
+    words: tuple[str, ...] = ()
+    match load_words(rule_id, rule_def):
+        case Err(err):
+            error_list.append(err)
+        case Ok(result):
+            words = result
+
     name = rule_def.get("name")
     if name is not None and not isinstance(name, str):
         error_list.append(f"Rule '{rule_id}' has non-string 'name' value")
@@ -143,6 +170,7 @@ def load_rule(
             application=application,
             name=name,
             description=description,
+            words=words,
         )
         for index, (definition, sd) in enumerate(zip(definitions, sds, strict=True), start=1)
     ]

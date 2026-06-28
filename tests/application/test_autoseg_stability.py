@@ -58,6 +58,45 @@ def test_stress_does_not_follow_a_deletion(project):
     assert not any(autoseg == s_id for (autoseg, _anchor) in surface.tiers["stress"].links)
 
 
+# Replace the first vowel with a different one — a letter swap, so a fresh segment (not a
+# feature-merge); the nucleus is rewritten in place rather than deleted.
+def _derive_replacing_first_vowel(form, project):
+    sd = parse_definition("a → e / # [-syllabic] _", project.features).unwrap()
+    rule = Rule(id="rep", time=0, raw_definition="rep", sd=sd)
+    return derive(
+        Word(ipa="taka"),
+        form,
+        RuleInventory({0: (rule,)}),
+        project.letters,
+        project.features,
+        project.sonorities,
+        project.syllable_parts,
+        project.tiers,
+    ).surface
+
+
+def test_tone_survives_a_nucleus_replacement(project):
+    # Suprasegmentals are exempt from the merge requirement: a letter swap that REPLACES the
+    # nucleus (a fresh segment) still keeps its tone, re-anchored onto the new vowel.
+    form = string_to_sequence("taka", project)  # t a k a
+    h_id = form.fresh_id()
+    form.tiers["tone"].autosegs.append(_autoseg("tone", 4, h_id))
+    form.tiers["tone"].links.add((h_id, 1))  # H on the first vowel
+    surface = _derive_replacing_first_vowel(form, project)  # a → e in place
+    assert any(autoseg == h_id for (autoseg, _anchor) in surface.tiers["tone"].links)
+    assert 4 in [b["tone"].value for b in lower_tiers(surface) if "tone" in b]
+
+
+def test_stress_survives_a_nucleus_replacement(project):
+    # Unlike a deletion, a nucleus REWRITE keeps the stress too — suprasegmentals are exempt.
+    form = string_to_sequence("taka", project)
+    s_id = form.fresh_id()
+    form.tiers["stress"].autosegs.append(_autoseg("stress", 2, s_id))
+    form.tiers["stress"].links.add((s_id, 1))  # stress on the first vowel
+    surface = _derive_replacing_first_vowel(form, project)
+    assert any(autoseg == s_id for (autoseg, _anchor) in surface.tiers["stress"].links)
+
+
 def test_stability_direction_is_per_tier(project):
     # stability="right" carries a stranded tone to the RIGHT syllable; left (default) to the
     # left. takata, deleting the middle vowel: left lands on vowel 1, right on the last vowel.

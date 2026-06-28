@@ -246,6 +246,10 @@
         {:else if result.derivations.length === 0}
           <p class="muted">No words in the project.</p>
         {:else if mode === "synchronic"}
+          <p class="legend">
+            Each rule as an association change: <code>│</code> kept ·
+            <code>╎</code> added (spread / dock) · <code>╪</code> delinked
+          </p>
           {#each result.derivations as d}
             <article class="card">
               <header class="word-head">
@@ -480,6 +484,17 @@
     font-size: 12px;
     font-weight: 600;
     color: var(--accent);
+  }
+  .legend {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .legend code {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-h);
+    padding: 0 2px;
   }
   /* Diagrams must be monospace for the box-drawing association lines to align. */
   .diagram {

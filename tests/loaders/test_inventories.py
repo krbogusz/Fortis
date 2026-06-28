@@ -1,5 +1,6 @@
 """Tests for the top-level project loader (integration)."""
 
+import pytest
 
 from src.fortis.loaders.project import load_project
 
@@ -47,6 +48,9 @@ def _write_inventory_files(tmp_path):
     (tmp_path / "syllable_parts.toml").write_text(SYLLABLE_PARTS_TOML)
     (tmp_path / "words.toml").write_text(WORDS_TOML)
     (tmp_path / "rules.toml").write_text(RULES_TOML)
+    # This fixture's minimal feature set has no tone/stress, so it declares its own (empty)
+    # tiers rather than inheriting the shipped tone/stress tiers via fall-back.
+    (tmp_path / "tiers.toml").write_text("# no autosegmental tiers\n")
 
 
 class TestLoadProject:
@@ -62,15 +66,18 @@ class TestLoadProject:
         assert -2000 in project.syllable_parts
         assert "xenti" in project.words
 
-    def test_missing_features_file(self, tmp_path):
-        # Don't write features.toml
-        (tmp_path / "letters.csv").write_text(LETTERS_CSV)
-        (tmp_path / "diacritics.toml").write_text(DIACRITICS_TOML)
-        (tmp_path / "sonorities.toml").write_text(SONORITIES_TOML)
-        (tmp_path / "syllable_parts.toml").write_text(SYLLABLE_PARTS_TOML)
+    # Falls back to the (word-scoped) default showcase rules, which don't match these test
+    # words — that "rule will never fire" warning is correct here and not what we're testing.
+    @pytest.mark.filterwarnings("ignore::UserWarning")
+    def test_missing_files_fall_back_to_defaults(self, tmp_path):
+        # A project that omits files (here, all but the lexicon) uses the shipped
+        # defaults — so re-using the default feature system needs no features.toml.
         (tmp_path / "words.toml").write_text(WORDS_TOML)
         result = load_project(tmp_path)
-        assert result.is_err()
+        assert result.is_ok(), result.unwrap_err() if result.is_err() else None
+        project = result.unwrap()
+        assert "consonantal" in project.features  # the default feature system, via fallback
+        assert "xenti" in project.words  # the project's own lexicon
 
     def test_invalid_features(self, tmp_path):
         # Write features with invalid content

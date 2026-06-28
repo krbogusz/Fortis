@@ -1,6 +1,10 @@
 """Tests for the autosegmental text diagram (application/diagram.py)."""
 
-from src.fortis.application.diagram import render_autosegmental
+from src.fortis.application.diagram import (
+    render_autosegmental,
+    render_autosegmental_change,
+    render_place_change,
+)
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.models.autosegment import Autoseg
 from src.fortis.models.bundles import FeatureBundle
@@ -43,3 +47,48 @@ def test_floating_tone_has_no_line(project):
     out = render_autosegmental(form, project)
     assert "˦" in out.split("\n")[0]  # the high appears on the tone row
     assert "│" not in out and "┬" not in out  # ...with no association line — it floats
+
+
+def test_change_added_association_is_dashed(project):
+    # A newly added association (a spread / dock) renders dashed.
+    before = string_to_sequence("taka", project)
+    after = before.copy()
+    h = after.fresh_id()
+    after.tiers["tone"].autosegs.append(_tone(4, h))
+    after.tiers["tone"].links.add((h, 1))  # H newly on the first vowel
+    out = render_autosegmental_change(before, after, project)
+    assert "˦" in out and "╎" in out  # dashed = added
+
+
+def test_change_removed_association_is_delinked(project):
+    # A removed association renders with the delink bar.
+    before = string_to_sequence("taka", project)
+    h = before.fresh_id()
+    before.tiers["tone"].autosegs.append(_tone(4, h))
+    before.tiers["tone"].links.add((h, 1))
+    after = before.copy()
+    after.tiers["tone"].links.discard((h, 1))  # delink the H from the vowel
+    out = render_autosegmental_change(before, after, project)
+    assert "╪" in out  # the delink bar
+
+
+def test_change_kept_association_is_solid(project):
+    # An unchanged association stays a solid bar — neither dashed nor delinked.
+    before = string_to_sequence("taka", project)
+    h = before.fresh_id()
+    before.tiers["tone"].autosegs.append(_tone(4, h))
+    before.tiers["tone"].links.add((h, 1))
+    after = before.copy()
+    out = render_autosegmental_change(before, after, project)
+    assert "│" in out and "╎" not in out and "╪" not in out
+
+
+def test_place_change_shows_spread_and_delink(project):
+    # Nasal place assimilation (n → m before p): the trigger's place spreads (dashed) and
+    # the nasal's old place delinks (╪).
+    n = string_to_sequence("n", project).segments[0].bundle  # coronal nasal
+    m = string_to_sequence("m", project).segments[0].bundle  # its labial outcome
+    p = string_to_sequence("p", project).segments[0].bundle  # the labial trigger
+    out = render_place_change(n, m, p, project)
+    assert "Labial" in out and "Coronal" in out  # the new (shared) place and the old one
+    assert "╎" in out and "╪" in out  # the spread (dashed link) and the delink bar

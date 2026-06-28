@@ -21,9 +21,10 @@ class TestLoadTime:
         assert result.is_ok()
         assert result.unwrap() == 0
 
-    def test_missing(self):
+    def test_missing_defaults_to_zero(self):
+        # time is optional; an untimed rule sorts at 0
         result = load_time("test_rule", {})
-        assert result.is_err()
+        assert result.unwrap() == 0
 
     def test_non_integer(self):
         result = load_time("test_rule", {"time": "not_a_number"})
@@ -120,9 +121,18 @@ class TestLoadRule:
         result = load_rule("bad", {"time": 0, "definition": ["a → b", "→ → →"]}, features)
         assert result.is_err()
 
-    def test_missing_time(self, features):
-        result = load_rule("bad", {"definition": "a → b"}, features)
-        assert result.is_err()
+    def test_missing_time_defaults_to_zero(self, features):
+        result = load_rule("untimed", {"definition": "a → b"}, features)
+        assert result.unwrap()[0].time == 0
+
+    def test_words_restricts_the_rule(self, features):
+        # a 'words' list (string or list) scopes the rule to those words by ipa or gloss
+        single = load_rule("sporadic", {"definition": "a → b", "words": "sun"}, features)
+        assert single.unwrap()[0].words == ("sun",)
+        listed = load_rule("sporadic", {"definition": "a → b", "words": ["sun", "ear"]}, features)
+        assert listed.unwrap()[0].words == ("sun", "ear")
+        bad = load_rule("sporadic", {"definition": "a → b", "words": [1]}, features)
+        assert bad.is_err()
 
     def test_missing_definition(self, features):
         result = load_rule("bad", {"time": 0}, features)

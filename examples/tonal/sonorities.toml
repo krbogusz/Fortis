@@ -1,8 +1,0 @@
-# Levels
-vowel     = { level = 7, bundle = "syllabic: +, consonantal: -"}
-glide     = { level = 6, bundle = "consonantal: -, sonorant: +" }
-rhotic    = { level = 5, bundle = "consonantal: +, sonorant: +, nasal: none, lateral: none" }
-lateral   = { level = 4, bundle = "consonantal: +, sonorant: +, lateral: +" }
-nasal     = { level = 3, bundle = "sonorant: +, nasal: +" }
-fricative = { level = 2, bundle = "sonorant: -, continuant: +" }
-stop      = { level = 1, bundle = "sonorant: -" }

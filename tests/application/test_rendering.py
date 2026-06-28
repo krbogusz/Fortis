@@ -12,6 +12,7 @@ from src.fortis.application.rendering import (
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import syllabify
 from src.fortis.application.tiers import lower_tiers
+from src.fortis.models.specs import FeatureSpec
 
 
 class TestRenderSegment:
@@ -63,6 +64,39 @@ class TestRenderSyllabified:
             seq, project.sonorities, project.syllable_parts, project.time, project.letters
         )
         assert render_syllabified(seq, boundaries, project) == "kaˈta"
+
+    def test_contour_tone_renders_as_tone_letter_sequence(self, project):
+        # A contour tone value has no single diacritic; with contour=true tone
+        # letters it renders as the sequence of its levels: (2,1,4) → ˨˩˦.
+        seq = string_to_sequence("a", project).bundles()
+        seq[0]["tone"] = FeatureSpec("tone", (2, 1, 4))
+        boundaries = syllabify(
+            seq, project.sonorities, project.syllable_parts, project.time, project.letters
+        )
+        assert render_syllabified(seq, boundaries, project) == "a˨˩˦"
+
+    def test_contour_with_its_own_diacritic_is_preferred_over_the_sequence(self, project):
+        # 5>3 has an exact diacritic (combining ̂/᷇), so the tone-letter fallback
+        # (˥˧) is not used — exact match wins.
+        seq = string_to_sequence("a", project).bundles()
+        seq[0]["tone"] = FeatureSpec("tone", (5, 3))
+        boundaries = syllabify(
+            seq, project.sonorities, project.syllable_parts, project.time, project.letters
+        )
+        assert "˥˧" not in render_syllabified(seq, boundaries, project)
+
+    def test_after_kind_tone_renders_at_the_syllable_edge(self, project):
+        # An after-kind mark (a tone letter) on a closed syllable goes after the coda,
+        # not on the nucleus: a toned 'kan' is kan˥, not ka˥n.
+        seq = string_to_sequence("kan", project).bundles()
+        nucleus = next(
+            i for i, b in enumerate(seq) if "syllabic" in b and b["syllabic"].value == 1
+        )
+        seq[nucleus]["tone"] = FeatureSpec("tone", 5)
+        boundaries = syllabify(
+            seq, project.sonorities, project.syllable_parts, project.time, project.letters
+        )
+        assert render_syllabified(seq, boundaries, project) == "kan˥"
 
 
 class TestSequenceToString:

@@ -8,8 +8,13 @@ from typing import Any
 from src.fortis.result import Err, Ok, Result
 
 
-def load_toml_file(path: Path) -> Result[dict[str, Any], str]:
-    """Load a TOML file into a dict. Return an Ok with the dict or Err with description."""
+def load_toml_file(path: Path, *, allow_empty: bool = False) -> Result[dict[str, Any], str]:
+    """Load a TOML file into a dict. Return an Ok with the dict or Err with description.
+
+    With ``allow_empty`` a file that parses to no tables is accepted as an empty dict —
+    used for an optional file (e.g. ``tiers.toml``) where "no tables" means "nothing
+    declared" rather than an error.
+    """
     # Path checks
     if not path.is_file():
         return Err(f"There is no file at '{path}'")
@@ -25,6 +30,8 @@ def load_toml_file(path: Path) -> Result[dict[str, Any], str]:
 
     # Content check
     if not data:
+        if allow_empty:
+            return Ok({})
         return Err(f"File '{path}' is empty")
     if not isinstance(data, dict):
         return Err(f"File '{path}' is not a dict")

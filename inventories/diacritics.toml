@@ -5,6 +5,7 @@
 "ʲ" = { tier = "segment", kind = "after", bundle = "+front, +high" }
 "ⁿ" = { tier = "segment", kind = "before", bundle = "nasal: 1>none" }
 "̃" = { tier = "segment", kind = "combining", bundle = "nasal: 1" }
+"˞" = { tier = "segment", kind = "after", bundle = "+retroflex" }
 "̩" = { tier = "segment", kind = "combining", bundle = "+syll" }
 "̯" = { tier = "segment", kind = "combining", bundle = "-syll" }
 "ː" = { tier = "segment", kind = "after", bundle = "length: long"}

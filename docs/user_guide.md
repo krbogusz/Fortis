@@ -194,10 +194,11 @@ definition  = "∅ [+cons, +syll] → u [-syll]"
 **Fields:**
 
 - `definition` _(required)_ — the rule in Fortis notation (§5).
-- `time` _(required for ordering)_ — an integer giving relative chronology. Lower values apply earlier; the value is a sort key, not a calendar date, and may be negative.
+- `time` _(optional, default `0`)_ — an integer giving relative chronology. Lower values apply earlier; the value is a sort key, not a calendar date, and may be negative. Omit it for an undated rule (it sorts at 0) — useful for a single synchronic derivation where chronology is irrelevant.
 - `name` _(optional)_ — a short human-readable label.
 - `description` _(optional)_ — a one-sentence description.
 - `application` _(optional, default `"simultaneous"`)_ — one of `"simultaneous"`, `"left_to_right"`, `"right_to_left"`. See §6.2.
+- `words` _(optional)_ — a word, or list of words, the rule is restricted to (matched against each word's IPA **or** gloss). With it set, the rule fires only on those words and is skipped for all others — a **sporadic** / lexically-restricted change, or a rule staged to demonstrate a synchronic mechanism on one word. Omit it (the default) and the rule applies to every word. A listed name that matches no word (by IPA or gloss) raises a load-time warning, since the rule could then never fire — a guard against typos.
 
 **Ordering:** rules are sorted by `time` ascending, then by order of appearance in the file for rules that share a time. Leaving gaps between `time` values (e.g. −2000, −1000, 0) lets you insert later rules without renumbering.
 

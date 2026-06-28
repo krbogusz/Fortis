@@ -1,16 +1,20 @@
-# Autosegmental tier declarations. A feature listed here lives on its own tier (off the
-# segment bundle); a feature not listed stays an ordinary segment-tier feature. This file
-# is optional — without it, the engine runs with no autosegmental tiers.
+# Suprasegmental features. Each lives on its own autosegmental tier, off the segment bundle —
+# so each table is both the feature's definition (kind, values, short) and its association
+# policy (anchor, melody, ocp, …). One tier is one feature. An absent/empty file ⇒ no tiers.
 
 [tone]
-carries = ["tone"]
+kind = "scalar"
+short = "tn"
+values = { 1 = "extra-low", 2 = "low", 3 = "mid", 4 = "high", 5 = "extra-high" }
 anchor = "+syllabic"   # tone-bearing unit: any syllabic segment (the nucleus)
 melody = true          # lexical tone is a melody, universally associated L>R, 1:1
 ocp = true
 stray_erase = true
 
 [stress]
-carries = ["stress"]
+kind = "scalar"
+short = "str"
+values = { 1 = "secondary", 2 = "primary" }
 anchor = "+syllabic"
 melody = false         # rule-placed, not a lexical melody
 ocp = false            # two stressed syllables are distinct, not an OCP violation

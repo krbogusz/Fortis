@@ -43,7 +43,7 @@ from dataclasses import replace
 
 from src.fortis.application.applying import apply_match
 from src.fortis.application.combining import matches_exactly
-from src.fortis.application.matching import Match, SyllableView, find_matches
+from src.fortis.application.matching import Match, SyllableView, find_matches, pattern_matches
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import (
     SyllabificationError,
@@ -437,6 +437,48 @@ def _carry_stranded_melody(
         }
 
 
+def _carry_stranded_suprasegmentals(
+    out: Form,
+    source: Form,
+    start: int,
+    end: int,
+    new_segments: list[Segment],
+    tiers: TierInventory,
+    syllable_features: frozenset[str],
+) -> None:
+    """Re-anchor a replaced nucleus's suprasegmentals onto the new nucleus.
+
+    Suprasegmental tiers (tone, stress) are stable across a nucleus *rewrite*, not only a
+    feature-merge: when a span is replaced by new segments that include a valid anchor (a
+    new nucleus), the stranded suprasegmental links move onto it — so a plain letter swap
+    (``a → u``, ``ʐi → ʐ̩``) keeps its tone and stress, no feature-merge required. A pure
+    deletion, with no new anchor in the replacement, falls through to the melody re-docking
+    below (re-dock to a neighbour). A merge strands nothing, so this is a no-op there.
+    """
+    kept = {segment.id for segment in new_segments}
+    stranded = {seg.id for seg in source.segments[start:end] if seg.id not in kept}
+    if not stranded:
+        return
+    for name, declaration in tiers.items():
+        # Only suprasegmental tiers (those carrying a syllable-tier feature) are exempt; a
+        # segment tier is not re-anchored to the nucleus.
+        if not any(feature in syllable_features for feature in declaration.carries):
+            continue
+        tier = out.tiers.get(name)
+        if tier is None:
+            continue
+        new_anchor = next(
+            (seg.id for seg in new_segments if pattern_matches(declaration.anchor, seg.bundle)),
+            None,
+        )
+        if new_anchor is None:
+            continue  # no new nucleus in the replacement → leave to melody re-docking
+        tier.links = {
+            (autoseg, new_anchor if anchor in stranded else anchor)
+            for (autoseg, anchor) in tier.links
+        }
+
+
 def _apply_simultaneous(
     sd: StructuralDescription,
     form: Form,
@@ -448,6 +490,7 @@ def _apply_simultaneous(
 ) -> Form:
     """Find every locus against the original form, then splice all rewrites at once."""
     bundles = lower_tiers(form)
+    syllable_features = _syllable_features(features)
     selected = _select_non_overlapping(find_matches(sd, bundles, letters, boundaries, syllables))
     out = form.copy()
     # Splice right-to-left so each replacement's indices stay valid, computing every
@@ -455,6 +498,9 @@ def _apply_simultaneous(
     for match in sorted(selected, key=lambda m: m.start, reverse=True):
         replacement = apply_match(sd, match, bundles, letters, features, syllables)
         new_segments = _spliced_segments(out, replacement, form, bundles, tiers, match.bindings)
+        _carry_stranded_suprasegmentals(
+            out, form, match.start, match.end, new_segments, tiers, syllable_features
+        )
         _carry_stranded_melody(out, form, match.start, match.end, new_segments, tiers)
         out.segments[match.start : match.end] = new_segments
     return out
@@ -505,6 +551,9 @@ def _apply_directional(
 
         replacement = apply_match(sd, match, bundles, letters, features, view)
         new_segments = _spliced_segments(work, replacement, work, bundles, tiers, match.bindings)
+        _carry_stranded_suprasegmentals(
+            work, work, match.start, match.end, new_segments, tiers, syllable_features
+        )
         _carry_stranded_melody(work, work, match.start, match.end, new_segments, tiers)
         work.segments[match.start : match.end] = new_segments
 
@@ -565,6 +614,8 @@ def derive(
 
     for time in sorted(rules.keys()):
         for rule in rules[time]:
+            if rule.words and word.ipa not in rule.words and word.gloss not in rule.words:
+                continue  # a word-scoped rule that does not list this word
             before = current  # Form
             after = apply_rule(rule, current, letters, features, sonorities, syllable_parts, tiers)
             if _fired(lower_tiers(before), lower_tiers(after)):

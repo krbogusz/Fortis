@@ -1,0 +1,182 @@
+# Old Chinese → Mandarin Chinese sound changes.
+#
+# Tonogenesis, rhyme development, coda loss, and initial development, in that order
+# (the Index Diachronica's Hsueh 1975 layer changes the vowels while the finals are
+# still present, then loses the finals). Tones are Chao pitch contours:
+# 1 = ˥ (55), 2 = ˧˥ (35), 3 = ˨˩˦ (214), 4 = ˥˩ (51).
+
+# ─── Phase 1 · TONOGENESIS ─────────────────────────────────────────────────────
+# Old Chinese was atonal; the four Middle Chinese tone categories arose from the
+# codas (-ʔ → 上, -s → 去, stops → 入, open/nasal → 平), each then split by the
+# voicing of the initial (陰/陽 register) into the modern Mandarin tones.
+
+[rising_tone]
+time        = 10
+name        = "Rising tone (上聲)"
+description = "A glottal-stop coda yields the rising tone → Mandarin tone 3."
+definition  = "[+syllabic] → [+syllabic, tone: 2>1>4] / _ [-syllabic]* ʔ"
+
+[departing_tone]
+time        = 11
+name        = "Departing tone (去聲)"
+description = "An -s coda yields the departing tone → Mandarin tone 4."
+definition  = "[+syllabic] → [+syllabic, tone: 5>1] / _ [-syllabic]* s"
+
+[entering_tone_voiced_obstruent]
+time        = 12
+name        = "Entering tone, voiced obstruent (陽入 全濁)"
+description = "A stop coda after a voiced obstruent → tone 2. (-ʔ is itself a stop, so the entering rules fire only on still-toneless nuclei, after the rising/departing rules.)"
+definition  = "[+syllabic, tone: none] → [+syllabic, tone: 3>5] / # [-sonorant, +voice] [-syllabic]* _ [-syllabic]* [-sonorant, -continuant] #"
+
+[entering_tone_sonorant]
+time        = 13
+name        = "Entering tone, sonorant (陽入 次濁)"
+description = "A stop coda after a sonorant initial → Mandarin tone 4."
+definition  = "[+syllabic, tone: none] → [+syllabic, tone: 5>1] / # [+sonorant] [-syllabic]* _ [-syllabic]* [-sonorant, -continuant] #"
+
+[entering_tone_voiceless]
+time        = 14
+name        = "Entering tone, voiceless (陰入)"
+description = "A stop coda after a voiceless initial → Mandarin tone 1."
+definition  = "[+syllabic, tone: none] → [+syllabic, tone: 5] / # [-voice] [-syllabic]* _ [-syllabic]* [-sonorant, -continuant] #"
+
+[level_tone_voiceless]
+time        = 15
+name        = "Level tone, voiceless (陰平)"
+description = "An open or nasal-coda syllable with a voiceless initial → Mandarin tone 1."
+definition  = "[+syllabic, tone: none] → [+syllabic, tone: 5] / # [-voice] [-syllabic]* _"
+
+[level_tone_voiced]
+time        = 16
+name        = "Level tone, voiced (陽平)"
+description = "An open or nasal-coda syllable with a voiced initial → Mandarin tone 2."
+definition  = "[+syllabic, tone: none] → [+syllabic, tone: 3>5] / # [+voice] [-syllabic]* _"
+
+# ─── Phase 2 · RHYMES ──────────────────────────────────────────────────────────
+# The Late Middle Chinese → Old Mandarin nucleus changes, made while the codas are
+# still present to distinguish the rhymes (Index Diachronica §36.1.1, Hsueh 1975).
+# These are plain letter swaps: the tone is suprasegmental, so it rides along any
+# nucleus rewrite onto the new vowel — no feature-merge needed — which also lets the
+# 三等 medial -j- be absorbed in the same step.
+
+[rhyme_aj_to_o]
+time        = 20
+name        = "歌韻 -aj → ɤ"
+description = "The 歌 rhyme -aj monophthongised to the back vowel ɤ: 我 (regular) ě."
+definition  = "a j → ɤ / _ ʔ"
+
+[rhyme_a_to_u]
+time        = 21
+name        = "魚虞模 -a → -u"
+description = "Open -a (before -ʔ) raised and rounded to -u: 汝, 五, 苦."
+definition  = "a → u / _ ʔ"
+
+[rhyme_um_to_am]
+time        = 22
+name        = "侵覃 -um → -am"
+description = "The -u- of the -m rhymes lowered to -a- (三 *-um > -am)."
+definition  = "u → a / _ m"
+
+[rhyme_ja_to_u_labial]
+time        = 23
+name        = "虞韻 -ja → -u (after labial)"
+description = "After a labial, the open -ja rhyme (medial + vowel) became -u: 無."
+definition  = "j a → u / m _"
+
+[rhyme_jeng_to_ing]
+time        = 24
+name        = "清韻 -jeŋ → -iŋ"
+description = "The -je- of the -ŋ rhyme fronted and raised to -i-: 名 míng."
+definition  = "j e → i / _ ŋ"
+
+# ─── Phase 3 · CODA LOSS ───────────────────────────────────────────────────────
+# Final -m merges into -n (中原音韻, 1324); the departing -s and the entering stop
+# codas (-p -t -k -ʔ) are lost (Index Diachronica §36.1.1.1: m → n / V_; ʔ → ∅).
+
+[final_m_to_n]
+time        = 30
+name        = "Final -m → -n"
+description = "Middle Chinese final -m merged into -n across Mandarin: 三 -am > -an."
+definition  = "m → n / _ #"
+
+[loss_of_departing_s]
+time        = 31
+name        = "Loss of the departing -s"
+description = "The -s that produced the 去聲 is lost once the tone is established."
+definition  = "s → ∅ / _ #"
+
+[loss_of_entering_stops]
+time        = 32
+name        = "Loss of the entering-tone stop codas"
+description = "Final -p -t -k -ʔ (the 入聲 codas) are lost; the syllable becomes open."
+definition  = "[-sonorant, -continuant] → ∅ / _ #"
+
+# ─── Phase 4 · INITIALS ────────────────────────────────────────────────────────
+# 日母 *nj- and 生母 *sr- become retroflex (Handel 1998: s(-)r → ʂ-), the 全濁
+# voiced obstruents devoice, and 疑母 *ŋ- and 微母 *m- are lost (Hsueh 1975:
+# ŋ → ∅ / #_).
+
+[nj_retroflexion]
+time        = 40
+name        = "*nj- → ʐ (日母)"
+description = "The 日母 palatal nasal cluster became the Mandarin retroflex r- [ʐ]."
+definition  = "n j → ʐ / # _"
+
+[sr_retroflexion]
+time        = 41
+name        = "*sr- → ʂ (生母)"
+description = "Handel 1998, s(-)r → ʂ-: the 生母 cluster became the retroflex sh- [ʂ]: 殺 shā."
+definition  = "s r → ʂ / # _"
+
+[voiced_obstruent_devoicing]
+time        = 42
+name        = "Devoicing of *d- (定母)"
+description = "全濁 voiced obstruents devoiced; in the entering tone to plain (unaspirated) t: 毒 dú."
+definition  = "d → t"
+
+[ng_loss]
+time        = 43
+name        = "Loss of *ŋ- (疑母)"
+description = "Hsueh 1975, ŋ → ∅ / #_: 疑母 *ŋ- was lost, leaving a zero initial: 我 ě, 五 wǔ, 魚 yú."
+definition  = "ŋ → ∅ / # _"
+
+[micro_initial_loss]
+time        = 44
+name        = "Loss of *m- before -u (微母)"
+description = "The 微母 labial was lost before the rounded rhyme: 無 → wú [u]."
+definition  = "m → ∅ / # _ u"
+
+# ─── Phase 5 · MEDIAL LOSS, -y-, & ER-FORMATION ────────────────────────────────
+# The -j- medial drops after the new retroflexes; open -ja fuses to -y; and the
+# 日母 + 止/質 syllables become the er rhyme [ə˞] or the apical vowel [ʐ̩]. Plain
+# letter swaps again — the tone rides each rewrite onto the new nucleus.
+
+[medial_loss_after_retroflex]
+time        = 50
+name        = "Loss of -j- after a retroflex"
+description = "The 三等 medial -j- dropped after the new retroflex initials: ʂja > ʂa (殺)."
+definition  = "j → ∅ / [+retroflex] _"
+
+[rhyme_ja_to_y]
+time        = 51
+name        = "魚韻 -ja → -y (zero onset)"
+description = "After the loss of *ŋ-, the open -ja rhyme fused to the front rounded -y: 魚 yú."
+definition  = "j a → y / # _"
+
+[er_formation_two]
+time        = 52
+name        = "Er-formation 日母+止 (二)"
+description = "日母 ʐ before the high front 止攝 rhyme (ʐij) rhotacised to the er rhyme [ə˞]: 二 èr."
+definition  = "ʐ i j → ə˞"
+
+[er_formation_ear]
+time        = 53
+name        = "Er-formation 日母+止 (耳)"
+description = "Likewise 耳 ěr, from ʐə. The schwa is the only nucleus with no aperture, so u (汝) and i (日) are not caught by the bare-vowel match."
+definition  = "ʐ [+syllabic, aperture: none] → ə˞ / # _ #"
+
+[apical_vowel]
+time        = 54
+name        = "Apical vowel 日母+質 (日)"
+description = "After the retroflex, the high front vowel of 日 became the apical (syllabic) vowel [ʐ̩]: rì."
+definition  = "ʐ i → ʐ̩ / _ #"

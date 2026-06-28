@@ -38,8 +38,12 @@ class Rule:
     Attributes:
         id: Slug from the TOML table header.
         time: Sort key for chronology (lower applies earlier; may be negative).
+            Optional in the TOML, defaulting to 0.
         raw_definition: Original definition string, kept for traces and errors.
         sd: Parsed structural description.
+        words: If non-empty, the rule fires only on words whose ipa or gloss is listed
+            — a sporadic / lexically-restricted change, or one staged to show a synchronic
+            mechanism on a particular word. Empty ⇒ applies to every word.
     """
 
     id: str
@@ -49,6 +53,7 @@ class Rule:
     application: ApplicationMode = ApplicationMode.simultaneous
     name: str | None = None
     description: str | None = None
+    words: tuple[str, ...] = ()
 
 
 class RuleInventory(UserDict[int, tuple[Rule, ...]]):

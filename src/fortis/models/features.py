@@ -42,6 +42,12 @@ class Feature:
 class FeatureInventory(UserDict[str, Feature]):
     """Feature definitions keyed by name, loaded from TOML with cross-feature validation."""
 
+    def __setitem__(self, key: str, value: Feature) -> None:
+        """Add a feature, invalidating the cached name lookups (features can be added mid-load)."""
+        super().__setitem__(key, value)
+        for cached in ("names_by_length", "short_names_by_length", "short_to_long_name"):
+            self.__dict__.pop(cached, None)
+
     def is_node(self, feature: str) -> bool:
         """Does this feature have children?"""
         return bool(self.data[feature].children)

@@ -1,39 +1,38 @@
-# Segmental
-consonantal = { tier = "segment", kind = "binary", short = "cons" }
-syllabic = { tier = "segment", kind = "binary", short = "syll" }
-sonorant = { tier = "segment", kind = "binary", short = "son" }
-click = { tier = "segment", kind = "unary", short = "cl" }
-length = { tier = "segment", kind = "scalar", short = "ln", values = { 1 = "short", 2 = "long", 3 = "overlong" } }
-manner = { tier = "segment", kind = "unary", children = ["continuant", "sonorant", "strident", "lateral", "trill", "click"] }
-    continuant = { tier = "segment", kind = "binary", short = "cont" }
-    strident = { tier = "segment", kind = "unary", short = "strid" }
-    lateral = { tier = "segment", kind = "unary", short = "lat" }
-    tap = { tier = "segment", kind = "unary", short = "tap" }
-    trill = { tier = "segment", kind = "unary", short = "tr" }
-nasal = { tier = "segment", kind = "unary", short = "nas" }
-oral = { tier = "segment", kind = "unary", children = ["labial", "dental", "lingual"] }
-    labial = { tier = "segment", kind = "unary", short = "lab", children = ["rounded", "compressed"] }
-        rounded = { tier = "segment", kind = "unary", short = "rnd"}
-        compressed = { tier = "segment", kind = "unary", short = "cmpr"}
-    dental = { tier = "segment", kind = "unary", short = "dnt"}
-    lingual = { tier = "segment", kind = "unary", short = "ling", children = ["front", "back", "aperture", "advancement"] }
-        front = { tier = "segment", kind = "unary", short = "fr", children = ["anterior", "posterior", "apical", "retroflex"] }
-            anterior = { tier = "segment", kind = "unary", short = "ant"}
-            posterior = { tier = "segment", kind = "unary", short = "post"}
-            apical = { tier = "segment", kind = "unary", short = "api"}
-            retroflex = { tier = "segment", kind = "unary", short = "rflx"}
-        back = { tier = "segment", kind = "unary", short = "bk" }
-        aperture = { tier = "segment", kind = "unary", short = "aper", children = ["high", "low"]}
-            high = { tier = "segment", kind = "unary", short = "hi"}
-            low = { tier = "segment", kind = "unary", short = "lo"}
-        advancement = { tier = "segment", kind = "unary", short = "adv", children = ["ATR", "RTR"] }
-            ATR = { tier = "segment", kind = "unary", short = "ATR"}
-            RTR = { tier = "segment", kind = "unary", short = "RTR"}
-glottal = { tier = "segment", kind = "unary", short = "glt", children = ["voice", "glottal_aperture", "tension", "larynx_height"] }
-    voice = { tier = "segment", kind = "binary", short = "vc"}
-    glottal_aperture = { tier = "segment", kind = "scalar", short = "glap", values = { -1 = "constricted", 0 = "neutral", 1 = "spread" } }
-    tension = { tier = "segment", kind = "scalar", short = "tns", values = { -1 = "slack", 0 = "neutral", 1 = "stiff" } }
-    larynx_height = { tier = "segment", kind = "scalar", short = "lhgt", values = { -1 = "lowered", 0 = "neutral", 1 = "raised" } }
-# Syllable
-stress = { tier = "syllable", kind = "scalar", short = "str", values = { 1 = "secondary", 2 = "primary" } }
-tone = { tier = "syllable", kind = "scalar", short = "tn", values = { 1 = "extra-low", 2 = "low", 3 = "mid", 4 = "high", 5 = "extra-high" } }
+# Segmental features — every feature here lives on the segment (no `tier` field needed).
+# Suprasegmental features (tone, stress) live in tiers.toml. A `root` node parenting the
+# top-level features is synthesised automatically; no need to declare it.
+consonantal = { kind = "binary", short = "cons" }
+syllabic = { kind = "binary", short = "syll" }
+sonorant = { kind = "binary", short = "son" }
+click = { kind = "unary", short = "cl" }
+length = { kind = "scalar", short = "ln", values = { 1 = "short", 2 = "long", 3 = "overlong" } }
+manner = { kind = "unary", children = ["continuant", "strident", "lateral", "tap", "trill"] }
+    continuant = { kind = "binary", short = "cont" }
+    strident = { kind = "unary", short = "strid" }
+    lateral = { kind = "unary", short = "lat" }
+    tap = { kind = "unary", short = "tap" }
+    trill = { kind = "unary", short = "tr" }
+nasal = { kind = "unary", short = "nas" }
+oral = { kind = "unary", children = ["labial", "dental", "lingual"] }
+    labial = { kind = "unary", short = "lab", children = ["rounded", "compressed"] }
+        rounded = { kind = "unary", short = "rnd"}
+        compressed = { kind = "unary", short = "cmpr"}
+    dental = { kind = "unary", short = "dnt"}
+    lingual = { kind = "unary", short = "ling", children = ["front", "back", "aperture", "advancement"] }
+        front = { kind = "unary", short = "fr", children = ["anterior", "posterior", "apical", "retroflex"] }
+            anterior = { kind = "unary", short = "ant"}
+            posterior = { kind = "unary", short = "post"}
+            apical = { kind = "unary", short = "api"}
+            retroflex = { kind = "unary", short = "rflx"}
+        back = { kind = "unary", short = "bk" }
+        aperture = { kind = "unary", short = "aper", children = ["high", "low"]}
+            high = { kind = "unary", short = "hi"}
+            low = { kind = "unary", short = "lo"}
+        advancement = { kind = "unary", short = "adv", children = ["ATR", "RTR"] }
+            ATR = { kind = "unary", short = "ATR"}
+            RTR = { kind = "unary", short = "RTR"}
+glottal = { kind = "unary", short = "glt", children = ["voice", "glottal_aperture", "tension", "larynx_height"] }
+    voice = { kind = "binary", short = "vc"}
+    glottal_aperture = { kind = "scalar", short = "glap", values = { -1 = "constricted", 0 = "neutral", 1 = "spread" } }
+    tension = { kind = "scalar", short = "tns", values = { -1 = "slack", 0 = "neutral", 1 = "stiff" } }
+    larynx_height = { kind = "scalar", short = "lhgt", values = { -1 = "lowered", 0 = "neutral", 1 = "raised" } }

@@ -33,7 +33,7 @@ from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
-from src.fortis.application.diagram import render_autosegmental
+from src.fortis.application.diagram import render_autosegmental, render_autosegmental_change, render_place_changes
 _SUB = re.compile(r"#\\d+$")
 INV = "/work/inventories"
 def read_file(name): return (Path(INV)/name).read_text(encoding="utf-8")
@@ -55,9 +55,11 @@ def run_derivations():
             steps.append({"heading":heading,"time":s.rule.time,"name":s.rule.name or base,
                           "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                           "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
-            diagram = render_autosegmental(s.after, project)
-            if diagram != frames[-1]["diagram"]:
-                frames.append({"label":str(s.rule.time)+": "+(s.rule.name or base),"diagram":diagram})
+            change = render_autosegmental_change(s.before, s.after, project)
+            if "╎" in change or "╪" in change:  # an added (dashed) or delinked association
+                frames.append({"label":str(s.rule.time)+": "+(s.rule.name or base),"diagram":change})
+            for place in render_place_changes(s.before, s.after, project):  # place assimilation
+                frames.append({"label":str(s.rule.time)+": "+(s.rule.name or base),"diagram":place})
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
                     "steps":steps,"frames":frames})
     return json.dumps({"derivations": out})

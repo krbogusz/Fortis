@@ -88,10 +88,12 @@ def render_syllabified(
     """Render *sequence* as IPA with ``.`` at each interior syllable boundary.
 
     Segments render through ``render_segment`` *without* their syllable-tier
-    features; those (tone, stress) are positioned per syllable instead: before-kind
-    marks (e.g. stress ``ˈ``) at the syllable's left edge, combining/after-kind
-    (e.g. tone) on the nucleus that carries them. So ``ˈxenti`` surfaces as
-    ``ˈxen.ti`` (stress at the syllable onset), not ``xˈen.ti``.
+    features; those (tone, stress) are positioned per syllable instead by attachment
+    kind: before-kind marks (e.g. stress ``ˈ``) at the syllable's left edge,
+    combining marks on the nucleus that carries them, and after-kind marks (e.g.
+    tone letters) at the syllable's right edge. So ``ˈxenti`` surfaces as ``ˈxen.ti``
+    (stress at the syllable onset), and a toned ``san`` as ``san˥`` (tone after the
+    coda), not ``sa˥n``.
 
     A before-mark whose diacritic ``marks_boundary`` (e.g. stress ``ˈ``) *is* the
     syllable boundary, so it replaces the ``.`` there: ``kumˈtom``, not ``kum.ˈtom``.
@@ -128,7 +130,8 @@ def render_syllabified(
         for i in range(left, right):
             parts.append(render_segment(sequence[i], inventories, syllable_features))
             if i == carrier:
-                parts.append("".join(combining) + "".join(after))  # nucleus marks (e.g. tone)
+                parts.append("".join(combining))  # combining marks sit on the nucleus
+        parts.append("".join(after))  # syllable-final marks (e.g. tone letters): san˥, not sa˥n
     return "".join(parts)
 
 
@@ -240,7 +243,12 @@ def _find_diacritics(
                 best_coverage = coverage
 
         if best_def is None or best_symbol is None:
-            # No diacritic can fill any remaining gap — stop
+            # No exact diacritic — but a contour (tuple) value can still render as a
+            # sequence of its levels' contour diacritics (e.g. tone (2,1,4) → ˨˩˦).
+            if _render_contour(
+                target_bundle, remaining_diffs, diacritics, before, combining, after
+            ):
+                continue
             break
 
         remaining_diffs -= set(best_def.bundle.keys())
@@ -250,3 +258,55 @@ def _find_diacritics(
             combining.append(best_symbol)
         else:
             after.append(best_symbol)
+
+
+def _render_contour(
+    target_bundle: FeatureBundle,
+    remaining_diffs: set[str],
+    diacritics: dict[str, Diacritic],
+    before: list[str],
+    combining: list[str],
+    after: list[str],
+) -> bool:
+    """Render one remaining contour-valued feature as a sequence of its levels.
+
+    A feature whose value is a contour (a tuple, e.g. a tone ``(2, 1, 4)``) usually
+    has no single diacritic. Instead each level is written with the ``contour=true``
+    diacritic carrying that single value, in order (˨ ˩ ˦ → ``˨˩˦``) — the output
+    counterpart of combining tone letters into a contour on input. Returns ``True``
+    if a contour feature was rendered (and removed from *remaining_diffs*); ``False``
+    if none could be (so the caller stops). Tried only after exact-match diacritics,
+    so a contour with its own single diacritic still uses that.
+    """
+    for feature in list(remaining_diffs):
+        spec = target_bundle.get(feature)
+        if spec is None or not isinstance(spec.value, tuple):
+            continue
+        sequence: list[tuple[str, Diacritic]] = []
+        for level in spec.value:
+            match = next(
+                (
+                    (symbol, dia)
+                    for symbol, dia in diacritics.items()
+                    if dia.contour
+                    and set(dia.bundle.keys()) == {feature}
+                    and dia.bundle[feature].value == level
+                ),
+                None,
+            )
+            if match is None:
+                break
+            sequence.append(match)
+        else:  # every level found a contour diacritic
+            for symbol, dia in sequence:
+                bucket = (
+                    before
+                    if dia.kind == DiacriticKind.before
+                    else combining
+                    if dia.kind == DiacriticKind.combining
+                    else after
+                )
+                bucket.append(symbol)
+            remaining_diffs.discard(feature)
+            return True
+    return False

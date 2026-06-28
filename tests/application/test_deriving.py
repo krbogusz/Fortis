@@ -355,3 +355,27 @@ class TestResolveRuleLetters:
         assert [step.rule.id for step in d.steps] == ["r"]
         assert len(d.surface.bundles()) == 3  # k a u t (4) → k o t (3)
         assert d.surface.bundles()[1] == project.letters["o"].bundle
+
+
+def test_word_scoped_rule_fires_only_on_named_words(project):
+    # A rule with a non-empty `words` list fires only on words it names — by ipa or gloss.
+    sd = parse_definition("a → e", project.features).unwrap()
+    scoped = Rule(id="r", time=0, raw_definition="a → e", sd=sd, words=("kata",))
+    inv = RuleInventory({0: (scoped,)})
+
+    def fired(ipa, gloss=None):
+        d = derive(
+            Word(ipa=ipa, gloss=gloss),
+            string_to_sequence(ipa, project),
+            inv,
+            project.letters,
+            project.features,
+            project.sonorities,
+            project.syllable_parts,
+            project.tiers,
+        )
+        return [step.rule.id for step in d.steps] == ["r"]
+
+    assert fired("kata")  # named by ipa → fires
+    assert not fired("taka")  # neither ipa nor gloss named → skipped
+    assert fired("taka", gloss="kata")  # named by gloss → fires

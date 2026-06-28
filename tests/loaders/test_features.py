@@ -3,6 +3,7 @@
 from src.fortis.loaders.features import (
     load_children,
     load_feature,
+    load_feature_inventory,
     load_kind,
     load_short,
     load_tier,
@@ -23,9 +24,10 @@ class TestLoadTier:
         assert result.is_ok()
         assert result.unwrap() == Tier.syllable
 
-    def test_missing(self):
+    def test_missing_defaults_to_segment(self):
+        # No tier ⇒ segmental: features.toml is segment-only; suprasegmentals live in tiers.toml.
         result = load_tier("voice", {})
-        assert result.is_err()
+        assert result.unwrap() == Tier.segment
 
     def test_invalid(self):
         result = load_tier("voice", {"tier": "prosodic"})
@@ -154,19 +156,19 @@ class TestLoadFeature:
         feature = result.unwrap()
         assert feature.children == ("continuant", "sonorant")
 
-    def test_missing_tier(self):
+    def test_no_tier_defaults_to_segment(self):
         result = load_feature("voice", {"kind": "binary"})
-        assert result.is_err()
+        assert result.unwrap().tier == Tier.segment  # tier optional; defaults to segmental
 
     def test_missing_kind(self):
-        result = load_feature("voice", {"tier": "segment"})
+        result = load_feature("voice", {})
         assert result.is_err()
 
     def test_multiple_errors_collected(self):
-        result = load_feature("voice", {})
+        result = load_feature("voice", {"tier": "prosodic", "kind": "bad"})  # invalid tier + kind
         assert result.is_err()
         errors = result.unwrap_err()
-        assert len(errors) >= 2  # missing tier + missing kind
+        assert len(errors) >= 2  # both errors collected, not just the first
 
 
 class TestLoadFeatureInventory:
@@ -184,3 +186,24 @@ class TestLoadFeatureInventory:
     def test_scalar_values(self, features):
         assert features["tone"].values[1] == "low"
         assert features["tone"].values[5] == "super_high"
+
+    def test_root_is_synthesized_as_the_segmental_apex(self, features):
+        # The MINIMAL fixture declares no root; the loader builds one over the top-level
+        # segmental features. Suprasegmentals (tone, stress) stay outside it.
+        assert "root" in features  # synthesized, not declared
+        assert features.parent("root") is None  # the apex
+        assert features.parent("consonantal") == "root"
+        assert features.parent("manner") == "root"
+        assert features.parent("tone") is None  # suprasegmental — not under the root
+
+    def test_two_segmental_tops_share_a_synthesized_root(self, tmp_path):
+        # No declared root: the loader parents both top-level segmental features to one.
+        path = tmp_path / "f.toml"
+        path.write_text(
+            'a = { tier = "segment", kind = "binary", short = "a" }\n'
+            'b = { tier = "segment", kind = "binary", short = "b" }\n'
+        )
+        result = load_feature_inventory(path)
+        assert result.is_ok()
+        features = result.unwrap()
+        assert features.parent("a") == "root" and features.parent("b") == "root"

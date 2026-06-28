@@ -9,7 +9,8 @@ stress) live on autosegmental tiers, so rules can spread, dock, and delink them,
 and a tone survives its vowel's deletion. The reference data models the
 development from Proto-Indo-European to Proto-Germanic.
 
-Run the derivations — every shipped rule over every shipped word:
+Run the derivations — the shipped default is a **feature showcase**, one word-scoped rule per
+feature (voicing assimilation, i-umlaut, devoicing, deletion, epenthesis, degemination, tone spread):
 
 ```
 python -m src.fortis.main
@@ -17,11 +18,20 @@ python -m src.fortis.main
 
 Or point it at your own data. `--words FILE` and `--rules FILE` override just the lexicon and
 the sound changes (the feature system, letters, sonority, tiers, etc. stay the shipped
-defaults); `--inventories DIR` swaps the whole set:
+defaults); `--project DIR` runs a **project** — a directory whose own files override the
+defaults, with any it omits falling back to them, so a project holds only what differs:
 
 ```
 python -m src.fortis.main --words my_words.toml --rules my_rules.toml
-python -m src.fortis.main --inventories examples/tonal
+python -m src.fortis.main --project projects/pie_to_pger   # PIE → Proto-Germanic
+```
+
+`--output` writes the run to a Markdown file instead of printing it — the firing-rule trace
+plus, for tier operations, an association-change diagram (`│` kept · `╎` added · `╪` delinked).
+With no path it lands at `<project>/output.md`:
+
+```
+python -m src.fortis.main --project projects/old_chinese --output
 ```
 
 ## How rule matching works

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from pathlib import Path
 
 from src.fortis.config import config
@@ -24,43 +25,83 @@ from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.result import Err, Ok, Result
 
 
+def _warn_unknown_scoped_words(rules: RuleInventory, words: WordInventory) -> None:
+    """Warn when a word-scoped rule names a word absent from the lexicon (a likely typo).
+
+    A ``words`` entry matches a word by ipa or gloss; one that matches neither makes the
+    rule silently never fire, which is almost always a mistake. Non-fatal — the project
+    still loads — so it is a warning, surfaced on stderr by the CLI.
+    """
+    known = set(words.keys()) | {word.gloss for word in words.values() if word.gloss is not None}
+    for rules_at_time in rules.values():
+        for rule in rules_at_time:
+            for name in rule.words:
+                if name not in known:
+                    warnings.warn(
+                        f"rule '{rule.id}': word-scope '{name}' matches no word "
+                        "(by ipa or gloss) in words.toml — this rule will never fire",
+                        stacklevel=2,
+                    )
+
+
 def load_project(
-    inventories_dir: Path | None = None,
+    project_dir: Path | None = None,
     *,
     words_path: Path | None = None,
     rules_path: Path | None = None,
 ) -> Result[Project, list[str]]:
     """Load every inventory and assemble a Project.
 
-    Features are loaded first since all other inventories depend on them.
-    Words are loaded independently (no feature dependency).
+    A *project_dir* supplies only the files that differ from the shipped defaults
+    (``config.paths.inventories``); any inventory file it omits falls back to the default.
+    So a project that re-uses the default feature system needs no ``features.toml`` of its
+    own. Features are loaded first since all other inventories depend on them.
 
     Args:
-        inventories_dir: Directory containing the TOML/CSV data files.
-            Defaults to ``config.paths.inventories``.
-        words_path: The lexicon file. Defaults to ``inventories_dir/words.toml`` — so the
-            words can be overridden while the rest of the inventories stay the defaults.
-        rules_path: The sound-change file. Defaults to ``inventories_dir/rules.toml``.
+        project_dir: The project's directory — its files override the shipped defaults, and
+            any it omits fall back to them. Defaults to the shipped inventories themselves.
+        words_path: The lexicon file. Defaults to the project's ``words.toml`` (or the
+            default's, if the project has none).
+        rules_path: The sound-change file. Defaults likewise to ``rules.toml``.
     """
-    if inventories_dir is None:
-        inventories_dir = config.paths.inventories
+    defaults = config.paths.inventories
+    if project_dir is None:
+        project_dir = defaults
+
+    def pick(filename: str) -> Path:
+        """The project's copy of *filename* if it has one, else the shipped default."""
+        candidate = project_dir / filename
+        return candidate if candidate.exists() else defaults / filename
+
     if words_path is None:
-        words_path = inventories_dir / "words.toml"
+        words_path = pick("words.toml")
     if rules_path is None:
-        rules_path = inventories_dir / "rules.toml"
+        rules_path = pick("rules.toml")
 
     error_list: list[str] = []
 
     # ---- Features (no dependency) — required to proceed ------------------------------------------
-    match load_feature_inventory(inventories_dir / "features.toml"):
+    match load_feature_inventory(pick("features.toml")):
         case Err(err):
             return Err([f"features.toml: {e}" for e in err] if len(err) > 1 else err)
         case Ok(result):
             features = result
 
+    # ---- Tiers (suprasegmental features + their policy) ------------------------------------------
+    # Loaded before anything that references tone/stress: each tier registers its feature onto
+    # `features`, so letters/diacritics/rules that mention them resolve. Absent ⇒ no tiers.
+    tiers = TierInventory()
+    tiers_path = pick("tiers.toml")
+    if tiers_path.exists():
+        match load_tier_inventory(tiers_path, features):
+            case Err(err):
+                error_list.extend(f"tiers.toml: {e}" for e in err)
+            case Ok(result):
+                tiers = result
+
     # ---- Letters ---------------------------------------------------------------------------------
     letters: LetterInventory | None = None
-    match load_letter_inventory(inventories_dir / "letters.csv", features):
+    match load_letter_inventory(pick("letters.csv"), features):
         case Err(err):
             error_list.extend(f"letters.csv: {e}" for e in err)
         case Ok(result):
@@ -68,7 +109,7 @@ def load_project(
 
     # ---- Diacritics ------------------------------------------------------------------------------
     diacritics: DiacriticInventory | None = None
-    match load_diacritic_inventory(inventories_dir / "diacritics.toml", features):
+    match load_diacritic_inventory(pick("diacritics.toml"), features):
         case Err(err):
             error_list.extend(f"diacritics.toml: {e}" for e in err)
         case Ok(result):
@@ -76,7 +117,7 @@ def load_project(
 
     # ---- Sonorities ------------------------------------------------------------------------------
     sonorities: SonoritiesInventory | None = None
-    match load_sonorities_inventory(inventories_dir / "sonorities.toml", features):
+    match load_sonorities_inventory(pick("sonorities.toml"), features):
         case Err(err):
             error_list.extend(f"sonorities.toml: {e}" for e in err)
         case Ok(result):
@@ -84,7 +125,7 @@ def load_project(
 
     # ---- Syllable parts --------------------------------------------------------------------------
     syllable_parts: SyllablePartsInventory | None = None
-    match load_syllable_parts_inventory(inventories_dir / "syllable_parts.toml", features):
+    match load_syllable_parts_inventory(pick("syllable_parts.toml"), features):
         case Err(err):
             error_list.extend(f"syllable_parts.toml: {e}" for e in err)
         case Ok(result):
@@ -106,16 +147,6 @@ def load_project(
         case Ok(result):
             rules = result
 
-    # ---- Tiers (optional: an absent tiers.toml ⇒ no autosegmental tiers) -------------------------
-    tiers = TierInventory()
-    tiers_path = inventories_dir / "tiers.toml"
-    if tiers_path.exists():
-        match load_tier_inventory(tiers_path, features):
-            case Err(err):
-                error_list.extend(f"tiers.toml: {e}" for e in err)
-            case Ok(result):
-                tiers = result
-
     if error_list:
         return Err(error_list)
 
@@ -125,6 +156,8 @@ def load_project(
     assert syllable_parts is not None
     assert words is not None
     assert rules is not None
+
+    _warn_unknown_scoped_words(rules, words)
 
     # The derivation starts at the earliest time defined by any time-keyed
     # inventory (rules, syllable parts). Falls back to 0 if none define a time.

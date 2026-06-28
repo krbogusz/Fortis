@@ -3,6 +3,7 @@
 "ʱ" = { tier = "segment", kind = "after", bundle = "+vc, 1 glap, -1 tns" }
 "ʷ" = { tier = "segment", kind = "after", bundle = "+labial, +rounded" }
 "ʲ" = { tier = "segment", kind = "after", bundle = "+front, +high" }
+"˞" = { tier = "segment", kind = "after", bundle = "+retroflex" }
 "ⁿ" = { tier = "segment", kind = "before", bundle = "nasal: 1>none" }
 "̃" = { tier = "segment", kind = "combining", bundle = "nasal: 1" }
 "̩" = { tier = "segment", kind = "combining", bundle = "+syll" }
@@ -18,14 +19,8 @@
 "̄" = { tier = "syllable", kind = "combining", bundle = "tone: 3" }
 "̀" = { tier = "syllable", kind = "combining", bundle = "tone: 2" }
 "̏" = { tier = "syllable", kind = "combining", bundle = "tone: 1" }
-"̂" = { tier = "syllable", kind = "combining", bundle = "tone: 5>3" }
-"̌" = { tier = "syllable", kind = "combining", bundle = "tone: 3>5" }
-"᷇" = { tier = "syllable", kind = "combining", bundle = "tone: 5>3" }
-"᷆" = { tier = "syllable", kind = "combining", bundle = "tone: 3>1" }
-"᷄" = { tier = "syllable", kind = "combining", bundle = "tone: 3>5" }
-"᷅" = { tier = "syllable", kind = "combining", bundle = "tone: 1>3" }
-"᷈" = { tier = "syllable", kind = "combining", bundle = "tone: 5>3>5" }
-"᷉" = { tier = "syllable", kind = "combining", bundle = "tone: 3>1>3" }
+# Contour combining marks are omitted on purpose: Mandarin tones render as Chao
+# tone-letter sequences (˧˥, ˨˩˦, ˥˩) via the contour=true letters below.
 ## Tone letters
 "˥" = { tier = "syllable", kind = "after", bundle = "tone: 5", default = true, contour = true}
 "˦" = { tier = "syllable", kind = "after", bundle = "tone: 4", default = true, contour = true}

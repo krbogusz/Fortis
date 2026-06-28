@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from src.fortis.general.file_handling import load_toml_file
+from src.fortis.loaders.features import load_feature
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.tier_declaration import TierDeclaration, TierInventory
 from src.fortis.parsing.bundles import parse_pattern_bundle
@@ -28,15 +29,13 @@ def load_tier(
     """
     error_list: list[str] = []
 
-    carries_raw = tier_def.get("carries")
-    carries: tuple[str, ...] = ()
-    if not isinstance(carries_raw, list) or not carries_raw:
-        error_list.append(f"Tier '{name}' needs a non-empty 'carries' list of feature names")
-    else:
-        carries = tuple(str(feature).strip() for feature in carries_raw)
-        for feature in carries:
-            if feature not in features:
-                error_list.append(f"Tier '{name}' carries unknown feature '{feature}'")
+    # The tier IS a suprasegmental feature: build its definition (kind/values/short) and
+    # register it on the inventory as a syllable-tier feature.
+    match load_feature(name, {**tier_def, "tier": "syllable"}):
+        case Err(err):
+            error_list.extend(err)
+        case Ok(feature):
+            features[name] = feature
 
     anchor = None
     anchor_raw = tier_def.get("anchor")
@@ -70,7 +69,7 @@ def load_tier(
     return Ok(
         TierDeclaration(
             name=name,
-            carries=carries,
+            carries=(name,),
             anchor=anchor,
             melody=melody,
             ocp=bool(ocp),
@@ -87,7 +86,7 @@ def load_tier_inventory(path: Path, features: FeatureInventory) -> Result[TierIn
         path: Path to ``tiers.toml``.
         features: Feature inventory for validation and anchor parsing.
     """
-    match load_toml_file(path):
+    match load_toml_file(path, allow_empty=True):  # an empty tiers.toml ⇒ no tiers, not an error
         case Err(err):
             return Err([err])
         case Ok(result):

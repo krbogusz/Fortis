@@ -70,7 +70,17 @@ Rules may specify how they apply when multiple loci match. The `application` TOM
 
 ### 1.7. Time ordering
 
-Each rule is a TOML table headed by its id, `[<id>]` (e.g. `[laryngeal_coloring]`, `[backness_harmony]`), with the chronology supplied by a separate required `time` field inside the table. Lower time values are applied earlier. Rules sharing a time are applied in the order of declaration.
+Each rule is a TOML table headed by its id, `[<id>]` (e.g. `[laryngeal_coloring]`, `[backness_harmony]`), with the chronology supplied by a separate optional `time` field inside the table (default `0`). Lower time values are applied earlier. Rules sharing a time are applied in the order of declaration. Omit `time` for an undated rule — it sorts at 0, which suits a single synchronic derivation where chronology is irrelevant.
+
+### 1.7.1. Word scope
+
+A rule may carry a `words` field — a word, or a list of words — restricting it to those words only (matched against each word's IPA or gloss); it is skipped for every other word. This models a **sporadic** or lexically-restricted change, or a rule staged to show a synchronic mechanism on a particular word.
+
+```toml
+[sporadic_voicing]
+words      = ["sun", "ˈnjit"]   # by gloss or by IPA; either matches
+definition = "t → d / [+syllabic] _ [+syllabic]"
+```
 
 ### 1.8. Autosegmental tier references
 

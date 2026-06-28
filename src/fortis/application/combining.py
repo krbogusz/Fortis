@@ -85,7 +85,11 @@ def merge(
     for feature in delta:
         if feature in merged:  # the delta set a value here (not delinked away)
             for ancestor in features.ancestors(feature):
-                if ancestor not in merged and features[ancestor].kind == FeatureKind.unary:
+                if (
+                    ancestor not in merged
+                    and features[ancestor].kind == FeatureKind.unary
+                    and features.parent(ancestor) is not None  # never the root (always implied)
+                ):
                     merged[ancestor] = FeatureSpec(feature=ancestor, value=1)
     return merged
 
