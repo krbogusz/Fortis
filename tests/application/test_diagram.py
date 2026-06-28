@@ -3,6 +3,7 @@
 from src.fortis.application.diagram import (
     render_autosegmental,
     render_autosegmental_change,
+    render_geometry_tree,
     render_place_change,
 )
 from src.fortis.application.segmentation import string_to_sequence
@@ -92,3 +93,19 @@ def test_place_change_shows_spread_and_delink(project):
     out = render_place_change(n, m, p, project)
     assert "labial" in out and "lingual" in out  # new (shared) + old place, by their real nodes
     assert "╎" in out and "╪" in out  # the spread (dashed link) and the delink bar
+
+
+def test_geometry_tree_nests_real_nodes_for_one_segment(project):
+    # Single-segment inspection: the segment is the implicit root; present features hang
+    # beneath it, nested by the real feature geometry and named by its own nodes.
+    out = render_geometry_tree(string_to_sequence("k", project).segments[0].bundle, project)
+    lines = out.splitlines()
+    assert lines[0] == "k"  # the segment itself is the (implicit) root
+    assert "+consonantal" in out  # a binary feature shows its sign
+    assert "glottal_aperture: neutral" in out  # a scalar shows its value label
+    # the velar place nests faithfully: oral → lingual → back, each indented deeper than the last
+    oral = next(i for i, line in enumerate(lines) if line.endswith("oral"))
+    lingual = next(i for i, line in enumerate(lines) if line.endswith("lingual"))
+    back = next(i for i, line in enumerate(lines) if line.endswith("back"))
+    assert oral < lingual < back
+    assert lines[oral].index("oral") < lines[lingual].index("lingual") < lines[back].index("back")

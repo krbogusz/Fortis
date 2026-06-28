@@ -9,8 +9,11 @@ box-drawing characters so it stays readable in any monospace IPA font.
 from __future__ import annotations
 
 from src.fortis.application.rendering import render_segment
+from src.fortis.general.presenting import present_value
 from src.fortis.general.utils import is_combining
 from src.fortis.models.autosegment import AutosegmentalTier
+from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.features import FeatureKind
 from src.fortis.models.form import Form
 from src.fortis.models.project import Project
 
@@ -280,6 +283,43 @@ def render_place_change(nasal_before, nasal_after, trigger, project: Project) ->
     rows[4][nasal_col] = "╪"  # the old place, delinked
     _put(rows[5], max(0, nasal_col - _dwidth(old_place) // 2), old_place)
     return "\n".join("".join(row).rstrip() for row in rows)
+
+
+def render_geometry_tree(bundle: FeatureBundle, project: Project) -> str:
+    """One segment's feature geometry as an indented tree — for single-segment inspection.
+
+    The (implicit) ROOT is the segment itself; each top-level feature present in the bundle
+    hangs beneath it, with its own present children nested in turn — so the picture is the
+    feature geometry pruned to what this segment specifies. Binary features show their sign
+    (``+voice``), scalars their value label (``length: short``), unary nodes their bare name.
+    """
+    lines = [render_segment(bundle, project) or "?"]
+    tops = [f for f in project.features.children("root") if f in bundle]
+    for i, top in enumerate(tops):
+        _geometry_branch(top, bundle, project, "", i == len(tops) - 1, lines)
+    return "\n".join(lines)
+
+
+def _geometry_branch(
+    feature: str, bundle: FeatureBundle, project: Project, prefix: str, last: bool, lines: list[str]
+) -> None:
+    """Append *feature*'s line and its present descendants to *lines*, with tree glyphs."""
+    lines.append(prefix + ("└─ " if last else "├─ ") + _feature_label(feature, bundle, project))
+    children = [c for c in project.features.children(feature) if c in bundle]
+    child_prefix = prefix + ("   " if last else "│  ")
+    for i, child in enumerate(children):
+        _geometry_branch(child, bundle, project, child_prefix, i == len(children) - 1, lines)
+
+
+def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str:
+    """A feature's label: sign for binary (``+voice``), value for scalar, bare name for unary."""
+    definition = project.features[feature]
+    value = bundle[feature].value  # a realized segment carries a single int, not a contour
+    if definition.kind == FeatureKind.binary and isinstance(value, int):
+        return f"{present_value(value)}{feature}"
+    if definition.kind == FeatureKind.scalar and isinstance(value, int):
+        return f"{feature}: {definition.values.get(value, str(value))}"
+    return feature
 
 
 def render_place_changes(before: Form, after: Form, project: Project) -> list[str]:
