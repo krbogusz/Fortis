@@ -515,6 +515,24 @@ name = "*/a/ > */æ/"
 description = "Short */a/ > */æ/ — *appl > *æppl 'apple'"
 definition = "[+syll, +low, +front, length: short] → [ATR, RTR: none]"
 
+# §17.7.2.1.5  In a rhotic (e.g. General American) accent, an unstressed */ə/ + */r/
+# coalesces into the r-coloured vowel */ɚ/ — *faðər > *faðɚ ('father', 'mother', 'over').
+[r_colouring]
+time = 1900
+name = "Unstressed */ər/ > /ɚ/"
+description = "*faðer > *faðɚ 'father'"
+definition = "[+syll, stress: none] r → ɚ ∅"
+
+# The Proto-Germanic apico-dental fricatives surface as the plain dental */θ ð/ of English.
+[dental_fricatives_plain]
+time = 1950
+name = "*/θ̠ ð̠/ > */θ ð/"
+description = "The dental fricatives lose their retraction — *tuːθ̠ > tuːθ, *fɑð̠ɚ > fɑðɚ"
+definition = [
+    "[-son, +cont, +voice, +anterior, !+strident] → ð",  # ð̠ > ð (not strident z)
+    "[-son, +cont, -voice, +anterior, !+strident] → θ",  # θ̠ > θ (not strident s)
+]
+
 # A nasal before a velar fricative assimilates to */ŋ/, the fricative dropping — *juŋɣ > *juŋ.
 [velar_nasal]
 time = 1450
@@ -648,3 +666,12 @@ words = ["am"]
 name = "Full vowel + degemination in 'am'"
 description = "*emm > *æm 'am'"
 definition = ["[+syll] → æ", "1=m @1 → m ∅"]
+
+# §17.7.2.1.4  a → ɑ "in a few words, like father": the special backing of */æ/ in 'father'
+# (and 'rather', 'lather'), before the r-colouring of the ending.
+[father_lowering]
+time = 1800
+words = ["father"]
+name = "*/æ/ > */ɑ/ in 'father'"
+description = "*fæðer > *fɑðer 'father'"
+definition = "[+syll, +low] → [back, front: none, RTR, ATR: none]"
