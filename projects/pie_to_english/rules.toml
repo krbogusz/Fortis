@@ -294,7 +294,7 @@ time = 200
 name = "West Germanic hardening / labiodentalisation of the fricatives"
 description = "*/ð/ > */d/ after a vowel; initial */β ɣ/ > */b ɡ/, medial > */v w/; */ɸ/ > */f/"
 definition = [
-    "[-son, +cont, +voice, +anterior, !+strident] → [-cont] / [+syll] _",  # ð̠ > d (not strident z)
+    "[-son, +cont, +voice, +anterior, !+strident] → [-cont] / [+son] _",  # ð̠ > d after a sonorant (not strident z)
     "β → b / # _",
     "ɣ → g / # _",
     "[-son, +cont, -voice, +labial, !+back] → f",                          # ɸ > f (not labiovelar xʷ)
@@ -348,7 +348,7 @@ definition = "1=[-syll, !+trill] → @1 @1 / _ j"
 time = 300
 name = "a-mutation */i u/ > */e o/"
 description = "*/i u/ lower to */e o/ before a non-high back vowel in the next syllable, but not before a geminate (so *fullaz keeps its /u/ — Modern 'full')"
-definition = "[+syll, +high] → [aperture: none, high: none] / _ [-syll]* [+syll, !high, +back] // _ 1=[-syll] @1"
+definition = "[+syll, +high, +back] → [aperture: none, high: none] / _ [-syll]* [+syll, !high, +back] // _ 1=[-syll] @1"
 
 # §17.7.2  oː → uː / _#: word-final */oː/ raises to */uː/.
 [final_long_o_raising]
@@ -453,9 +453,9 @@ definition = [
     "[+syll, +high, +front, length: long] → ə j",                                  # iː → əɪ
     "[+syll, +high, +back, +rounded, length: long] → ə w",                         # uː → əʊ
     "[+syll, +front, ATR, !high, !low, length: long] → [aperture, high]",          # eː → iː
+    "[+syll, +back, +rounded, RTR, length: long] → [ATR, RTR: none]",              # ɔː → oː (before oː→uː: ME long ō reaches uː)
     "[+syll, +back, +rounded, ATR, !high, !low, length: long] → [aperture, high]", # oː → uː
     "[+syll, +low, length: long] → [front, ATR, aperture: none, low: none, back: none, RTR: none]", # aː → (ɛː >) eː
-    "[+syll, +back, +rounded, RTR, length: long] → [ATR, RTR: none]",              # ɔː → oː
     "ə j → a j",                                                                    # əɪ → aɪ
     "ə w → a w",                                                                    # əʊ → aʊ
 ]
