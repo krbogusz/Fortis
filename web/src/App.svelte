@@ -264,6 +264,16 @@
                   </div>
                 {/each}
               </div>
+              {#if d.geometry?.length}
+                <details class="geometry">
+                  <summary>Input geometry — one tree per segment</summary>
+                  <div class="frames">
+                    {#each d.geometry as tree}
+                      <pre class="diagram">{tree}</pre>
+                    {/each}
+                  </div>
+                </details>
+              {/if}
             </article>
           {/each}
         {:else}
@@ -473,6 +483,21 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+  }
+  .geometry {
+    margin-top: 12px;
+  }
+  .geometry summary {
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .geometry .frames {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 10px;
   }
   .frame {
     display: flex;
