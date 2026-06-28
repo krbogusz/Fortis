@@ -438,6 +438,13 @@ name = "Reduction of unstressed vowels to */ə/"
 description = "Every unstressed vowel reduces to */ə/ — *fadeːr > *fadər 'father'"
 definition = "[+syll, stress: none] → [front: none, back: none, aperture: none, high: none, low: none, rounded: none, labial: none, ATR: none, RTR: none, nasal: none, length: short]"
 
+# A schwa in hiatus — directly after the stressed vowel — is absorbed: *teən > *ten 'ten'.
+[hiatus_schwa_loss]
+time = 1150
+name = "Loss of */ə/ in hiatus"
+description = "*teən > *ten 'ten'"
+definition = "ə → ∅ / [+syll] _ [-syll]"
+
 [final_schwa_loss]
 time = 1400
 name = "Loss of final */ə/"
