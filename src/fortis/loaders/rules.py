@@ -148,7 +148,7 @@ def load_rule(
     for definition in definitions:
         match parse_definition(definition, features):
             case Ok(sd):
-                match validate_structural_description(sd):
+                match validate_structural_description(sd, features):
                     case Err(errs):
                         error_list.extend(errs)
                     case Ok():

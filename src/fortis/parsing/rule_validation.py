@@ -53,6 +53,7 @@ from src.fortis.models.elements import (
     Wildcard,
     WordBoundary,
 )
+from src.fortis.models.features import FeatureInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.values import AlphaRef, AutosegBind, AutosegRecall
 from src.fortis.result import Err, Ok, Result
@@ -68,6 +69,7 @@ class _Markers:
     labels: list[int] = field(default_factory=list)
     autoseg_binds: set[int] = field(default_factory=set)
     autoseg_recalls: set[int] = field(default_factory=set)
+    node_refs: set[int] = field(default_factory=set)
 
 
 def _alphas_in_value(value: object) -> set[str]:
@@ -84,16 +86,24 @@ def _autoseg_refs_in_value(value: object) -> tuple[set[int], set[int]]:
     return binds, recalls
 
 
-def _collect(elements: tuple[Element, ...], markers: _Markers) -> None:
+def _collect(
+    elements: tuple[Element, ...], markers: _Markers, features: FeatureInventory | None = None
+) -> None:
     """Recursively gather reference/alpha/label markers, descending into nesting."""
     for element in elements:
         match element:
             case BundleElem(bundle) | ResultElem(bundle):
-                for spec in bundle.values():
+                for feature, spec in bundle.items():
                     markers.alphas |= _alphas_in_value(spec.value)
                     binds, recalls = _autoseg_refs_in_value(spec.value)
-                    markers.autoseg_binds |= binds
-                    markers.autoseg_recalls |= recalls
+                    if features is not None and feature in features and features.is_node(feature):
+                        # A `~n` on a segmental node is a node-spread reference (positional
+                        # bind in target/context, recall in result) — not a tier autosegment,
+                        # so it is exempt from the tier `~n=`/`~n` reconciliation below.
+                        markers.node_refs |= binds | recalls
+                    else:
+                        markers.autoseg_binds |= binds
+                        markers.autoseg_recalls |= recalls
                     if spec.condition_label is not None:
                         markers.labels.append(spec.condition_label)
             case FloatingAutoseg(pattern):
@@ -103,25 +113,25 @@ def _collect(elements: tuple[Element, ...], markers: _Markers) -> None:
                     markers.autoseg_recalls |= recalls
             case Bound(ref, inner):
                 markers.binds.append(ref)
-                _collect((inner,), markers)
+                _collect((inner,), markers, features)
             case RecallRef(ref):
                 markers.recalls.add(ref)
             case Group(inner):
-                _collect(inner, markers)
+                _collect(inner, markers, features)
             case Quantified(inner, _):
-                _collect((inner,), markers)
+                _collect((inner,), markers, features)
             case Negated(inner):
-                _collect((inner,), markers)
+                _collect((inner,), markers, features)
             case Disjunction(branches):
                 for branch in branches:
-                    _collect(branch, markers)
+                    _collect(branch, markers, features)
             case _:
                 pass
 
 
-def _markers(elements: tuple[Element, ...]) -> _Markers:
+def _markers(elements: tuple[Element, ...], features: FeatureInventory | None = None) -> _Markers:
     markers = _Markers()
-    _collect(elements, markers)
+    _collect(elements, markers, features)
     return markers
 
 
@@ -177,20 +187,24 @@ def _quant(element: Element) -> Quantifier | None:
     return element.quant if isinstance(element, Quantified) else None
 
 
-def validate_structural_description(sd: StructuralDescription) -> Result[None, list[str]]:
+def validate_structural_description(
+    sd: StructuralDescription, features: FeatureInventory | None = None
+) -> Result[None, list[str]]:
     """Validate a parsed rule against the structural well-formedness rules.
 
     Args:
         sd: The parsed structural description to check.
+        features: Feature inventory, so a ``~n`` on a segmental node is recognised as a
+            node-spread reference (exempt from the tier-autosegment bind/recall check).
     """
     errors: list[str] = []
 
-    target = _markers(sd.target)
-    result = _markers(sd.result)
-    left_ctx = _markers(sd.left_context)
-    right_ctx = _markers(sd.right_context)
-    left_exc = _markers(sd.left_exception)
-    right_exc = _markers(sd.right_exception)
+    target = _markers(sd.target, features)
+    result = _markers(sd.result, features)
+    left_ctx = _markers(sd.left_context, features)
+    right_ctx = _markers(sd.right_context, features)
+    left_exc = _markers(sd.left_exception, features)
+    right_exc = _markers(sd.right_exception, features)
 
     # §2.1.1 — a result feature-bundle merges into its corresponding target
     # (preserving the target's other features), so a bundle result requires

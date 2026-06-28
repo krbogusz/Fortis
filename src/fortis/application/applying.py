@@ -66,7 +66,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec
-from src.fortis.models.values import AlphaRef, Limb
+from src.fortis.models.values import AlphaRef, AutosegRecall, Limb
 
 # Reused verbatim from the validator so the applier's path decision can never
 # disagree with what the parser accepted. ``parsing/rule_validation`` is the
@@ -254,8 +254,21 @@ def _render_result_element(
     """
     match element:
         case ResultElem(bundle):
-            delta = _resolve_result_bundle(bundle, bindings)
             base = source if source is not None else FeatureBundle()
+            # Node-spread recall (`oral: ~n` on a segmental node): replace that node's whole
+            # subtree on the target with the captured one — clear the old subtree (a `none`
+            # delta delinks the node and its descendants), then merge the captured subtree.
+            node_recalls = {
+                f: s.value.ref
+                for f, s in bundle.items()
+                if isinstance(s.value, AutosegRecall) and features.is_node(f)
+            }
+            for node, ref in node_recalls.items():
+                cleared = FeatureBundle({node: FeatureSpec(feature=node, value=None)})
+                base = merge(base, cleared, features)  # drop the target's old subtree for this node
+                base = merge(base, bindings.node_reference.get(ref, FeatureBundle()), features)
+            rest = ResultBundle({f: s for f, s in bundle.items() if f not in node_recalls})
+            delta = _resolve_result_bundle(rest, bindings)
             return [merge(base, delta, features)]
 
         case LetterRef(symbol):
