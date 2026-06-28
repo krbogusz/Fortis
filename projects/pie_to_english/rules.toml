@@ -378,6 +378,14 @@ name = "i-umlaut (i-mutation)  */ɑ/ > */e/ / _Ci"
 description = "*/ɑ a/ > */e/ before */i j/ in the next syllable — *gastiz > *gestiz 'guest'"
 definition = "[+syll, +low] → [front, ATR, back: none, aperture: none, low: none, RTR: none] / _ [-syll]* (j | [+syll, +high, +front])"
 
+# §17.7.2.1  h → ∅ / V_V: intervocalic */h/ (the voiceless velar fricative *x) is lost —
+# *tehun > *teun 'ten', *slahan > *slean 'slay'.
+[intervocalic_h_loss]
+time = 470
+name = "Loss of intervocalic */h/  (h > ∅ / V_V)"
+description = "*tehun > *teun 'ten'"
+definition = "[-son, +cont, -voice, +back, +high] → ∅ / [+syll] _ [+syll]"
+
 # §17.7.2.1  {i,u} → ∅ / _# (! after a light syllable): final high vowels are lost,
 # and with them the worn-down case endings. (Here, broadened to the nominative *-s
 # and a final unstressed short vowel — the apocope that leaves *full, *wurm.)
