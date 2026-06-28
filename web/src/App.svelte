@@ -18,7 +18,7 @@
   let content = $state(""); // textarea content for the active file
   let busy = $state(false); // a derivation run is in flight
 
-  let mode = $state("diachronic"); // "diachronic" | "synchronic"
+  let mode = $state("historical"); // "historical" | "autosegmental"
   let result = $state(null); // { derivations } | { error }
   let csvMode = $state("table"); // letters.csv view: "table" | "raw"
 
@@ -218,14 +218,14 @@
         <h2>Results</h2>
         <div class="actions">
           <button
-            class:active={mode === "diachronic"}
+            class:active={mode === "historical"}
             disabled={!ready}
-            onclick={() => (mode = "diachronic")}>Diachronic</button
+            onclick={() => (mode = "historical")}>Historical</button
           >
           <button
-            class:active={mode === "synchronic"}
+            class:active={mode === "autosegmental"}
             disabled={!ready}
-            onclick={() => (mode = "synchronic")}>Synchronic</button
+            onclick={() => (mode = "autosegmental")}>Autosegmental</button
           >
           {#if busy}<span class="running"
               ><span class="spinner small"></span> running…</span
@@ -245,7 +245,7 @@
           </div>
         {:else if result.derivations.length === 0}
           <p class="muted">No words in the project.</p>
-        {:else if mode === "synchronic"}
+        {:else if mode === "autosegmental"}
           <p class="legend">
             Each rule as an association change: <code>│</code> kept ·
             <code>╎</code> added (spread / dock) · <code>╪</code> delinked
