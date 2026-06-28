@@ -280,9 +280,135 @@ definition = [
     "[+syll, +high, stress: none] → [-syll] / [+syll] _",       # Vi, Vu > diphthong  (offglide)
 ]
 
-# [backness_harmony]
-# time = 1300
-# name = "Backness harmony"
-# description = "Backness spreads rightward from a vowel onto following vowels."
-# definition = "[+syll] → [α fr, β bk] / [+syll, α fr, β bk] [-syll]* _"
-# application = "left_to_right"
+# ═══════════════════════════════════════════════════════════════════════════
+# Northwest & West Germanic (≈ AD 1–500): out of Proto-Germanic.
+# ═══════════════════════════════════════════════════════════════════════════
+
+[bilabial_to_labiodental]
+time = 200
+name = "*/ɸ β/ > */f v/"
+description = "The Proto-Germanic bilabial fricatives become labiodental — *ɸader > *fader 'father'"
+definition = ["ɸ → f", "β → v"]
+
+# A nasal drops before a voiceless fricative; the vowel lengthens and nasalises (*Vns/Vnθ
+# > *Ṽːs/Ṽːθ). This is what gives English its long vowel in *tooth* and *goose*.
+[nasal_spirant_law]
+time = 200
+name = "Ingvaeonic nasal spirant law"
+description = "*ɑnθ > *ɑ̃ːθ ('tooth'), *gans > *gɑ̃ːs ('goose'), *xunθ > *xũːθ"
+definition = "[+syll] [+nasal, -syll] [-son, +cont, -voice] → [length: long, +nasal] ∅ [-son, +cont, -voice]"
+
+# The long nasal vowels then surface: nasal */ɑ̃ː/ rounds to */õː/ (> later */oː/),
+# and all the long nasal vowels denasalise.
+[nasal_long_vowel_development]
+time = 200
+name = "Development of the long nasal vowels"
+description = "*/ɑ̃ː/ > */õː/ > */oː/; the long nasal vowels denasalise"
+definition = [
+    "[+syll, +low, +nasal, !length: short] → [back, rounded, labial, ATR, front: none, aperture: none, low: none, RTR: none]",
+    "[+syll, +nasal] → [nasal: none]",
+]
+
+[final_z_loss]
+time = 300
+name = "Loss of word-final */z/"
+description = "Word-final */z/ is lost — *wurmiz > *wurmi, *dɔːmaz > *dɔːma"
+definition = "z → ∅ / _ #"
+
+[rhotacism]
+time = 300
+name = "Rhotacism */z/ > */r/"
+description = "Any remaining (medial) */z/ becomes */r/"
+definition = "z → r"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Old English (≈ AD 500–900).
+# ═══════════════════════════════════════════════════════════════════════════
+
+# The Proto-Germanic case endings wear away: the nominative *-s goes after an
+# unstressed vowel, then a final unstressed short vowel is apocopated.
+[final_s_loss]
+time = 500
+name = "Loss of the final nominative */-s/"
+description = "Word-final */s/ is lost after an unstressed vowel — *fullas > *fulla"
+definition = "s → ∅ / [+syll, stress: none] _ #"
+
+[final_short_vowel_apocope]
+time = 500
+name = "Apocope of final unstressed short vowels"
+description = "A word-final unstressed short vowel is lost after another syllable — *fulla > *full, *wurmi > *wurm, *toːθu > *toːθ"
+definition = "[+syll, stress: none, length: short] → ∅ / [+syll] [-syll]* _ #"
+
+# Anglo-Frisian brightening: the short low vowel fronts to */æ/, except when a
+# back vowel follows in the next syllable (which keeps it back — a-restoration).
+[anglo_frisian_brightening]
+time = 600
+name = "Anglo-Frisian brightening */ɑ/ > */æ/"
+description = "*/ɑ a/ > */æ/ except before a back vowel in the next syllable — *θɑt > *θæt 'that', *sand > *sænd"
+definition = "[+syll, +low, length: short] → [front, ATR, back: none, RTR: none] // _ [-syll]* [+syll, +back]"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Middle English (≈ 1100–1450).
+# ═══════════════════════════════════════════════════════════════════════════
+
+# The hallmark of Middle English: every unstressed vowel collapses to */ə/
+# (leaving only a bare lingual vowel), and a word-final */ə/ is then lost.
+[unstressed_to_schwa]
+time = 1100
+name = "Reduction of unstressed vowels to */ə/"
+description = "Every unstressed vowel reduces to */ə/ — *fadeːr > *fadər 'father'"
+definition = "[+syll, stress: none] → [front: none, back: none, aperture: none, high: none, low: none, rounded: none, labial: none, ATR: none, RTR: none, nasal: none, length: short]"
+
+[final_schwa_loss]
+time = 1400
+name = "Loss of final */ə/"
+description = "Word-final */ə/ is lost — the silent final -e of English spelling"
+definition = "ə → ∅ / _ #"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Early Modern English (≈ 1450–1700).
+# ═══════════════════════════════════════════════════════════════════════════
+
+# One chain shift, its steps ordered top-down so each feeds the next without
+# merging (counterbleeding): the high long vowels diphthongise *first*, so the
+# mid vowels that raise into their place do not follow them up — *toːθ > *tuːθ
+# 'tooth', *goːs > *guːs 'goose', while an old */iː/ would go to */aj/.
+[great_vowel_shift]
+time = 1500
+name = "The Great Vowel Shift"
+description = "The long vowels raise by one step; the two high ones diphthongise"
+definition = [
+    "[+syll, +high, +front, length: long] → a j",                                  # iː → aj
+    "[+syll, +high, +back, +rounded, length: long] → a w",                         # uː → aw
+    "[+syll, +front, ATR, !high, !low, length: long] → [aperture, high]",          # eː → iː
+    "[+syll, +back, +rounded, ATR, !high, !low, length: long] → [aperture, high]", # oː → uː
+    "[+syll, +low, length: long] → [front, ATR, aperture: none, low: none, back: none, RTR: none]", # aː → eː
+    "[+syll, +back, +rounded, RTR, length: long] → [ATR, RTR: none]",              # ɔː → oː
+]
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Leveling and sporadic changes — word-scoped, one word at a time.
+# ═══════════════════════════════════════════════════════════════════════════
+
+[wolf_irregular_f]
+time = 250
+words = ["wolf"]
+name = "*/xʷ/ > */f/ in 'wolf'"
+description = "Sporadic: *wulxʷaz irregularly shows *f, not the regular labiovelar reflex — *wulfaz"
+definition = "xʷ → f"
+
+# Analogical: the masculine *þrīz takes the front vowel of the neuter *þrijô, so the
+# Great Vowel Shift later raises it to /iː/ ('three') rather than diphthongising to /θraj/.
+[three_leveling]
+time = 550
+words = ["three"]
+name = "Leveling of 'three' to the *þrij- stem"
+description = "*/iː/ > */eː/ in *þrīz, feeding the eː→iː step of the shift"
+definition = "[+syll, +high, +front, length: long] → [aperture: none, high: none]"
+
+[that_initial_voicing]
+time = 1300
+words = ["that"]
+name = "Voicing of initial */θ̠/ in 'that'"
+description = "Sporadic: the unstressed demonstrative voices its initial fricative — *θæt > ðæt"
+definition = "θ̠ → ð̠ / # _"

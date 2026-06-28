@@ -7,7 +7,7 @@ into feature bundles, runs it through the rules in chronological order, and prin
 a step-by-step derivation with syllable structure. Suprasegmental features (tone,
 stress) live on autosegmental tiers, so rules can spread, dock, and delink them,
 and a tone survives its vowel's deletion. The reference data models the
-development from Proto-Indo-European to Proto-Germanic.
+development from Proto-Indo-European to Modern English.
 
 Run the derivations — the shipped default is a **feature showcase**, one word-scoped rule per
 feature (voicing assimilation, i-umlaut, devoicing, deletion, epenthesis, degemination, tone spread):
@@ -23,7 +23,7 @@ defaults, with any it omits falling back to them, so a project holds only what d
 
 ```
 python -m src.fortis.main --words my_words.toml --rules my_rules.toml
-python -m src.fortis.main --project projects/pie_to_pger   # PIE → Proto-Germanic
+python -m src.fortis.main --project projects/pie_to_english   # PIE → Modern English
 ```
 
 `--output` writes the run to a Markdown file instead of printing it — the firing-rule trace
