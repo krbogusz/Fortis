@@ -35,3 +35,8 @@ words      = ["tone spread"]
 name       = "Tone spread"
 definition = "[+syllabic, tone: none] -> [+syllabic, tone: ~1] / [+syllabic, tone: ~1=high] [-syllabic]* _"
 application = "left_to_right"
+
+[place_assimilation]                # autosegmental node spread: a nasal copies the next place node
+words      = ["place assimilation"]
+name       = "Place assimilation"
+definition = "[+nasal] -> [oral: ~1] / _ [+consonantal, oral: ~1]"

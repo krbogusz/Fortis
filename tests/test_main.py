@@ -15,6 +15,7 @@ def test_main_derives_every_word(project, capsys):
     assert out.count("Surface:") == len(project.words)
     assert "ag.ba" in out  # voicing assimilation: k → g before b
     assert "tak" in out  # final devoicing: g → k word-finally
+    assert "aŋ.ka" in out  # place assimilation: n → ŋ (node spread copies the velar's place)
 
 
 def _derive(word, rules, project):
