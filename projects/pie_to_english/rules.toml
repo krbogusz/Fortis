@@ -285,6 +285,14 @@ definition = [
 # Changes below are cited by Index Diachronica section number — one source of several.
 # ═══════════════════════════════════════════════════════════════════════════
 
+# §17.7  aː → oː: the long low vowel (older *ā/*ǣ) rounds and backs to */oː/ — the
+# Proto-Germanic change that gives *mōdēr 'mother' its /oː/ (> Modern /ʌ/).
+[long_a_to_long_o]
+time = 160
+name = "*/aː/ > */oː/"
+description = "*maːder > *moːder 'mother'"
+definition = "[+syll, +low, length: long] → [back, rounded, labial, ATR, front: none, aperture: none, low: none, RTR: none]"
+
 # Index Diachronica §17.7.2  β ð ɣ → b d ɡ / {#, ˈV}_ : the voiced fricatives harden
 # to stops word-initially (and *ð broadly, after a vowel); the bilabial/velar fricatives
 # stay fricative medially, surfacing as /v w/. OE *fæder already has /d/ — the /ð/ of
@@ -507,6 +515,22 @@ name = "*/a/ > */æ/"
 description = "Short */a/ > */æ/ — *appl > *æppl 'apple'"
 definition = "[+syll, +low, +front, length: short] → [ATR, RTR: none]"
 
+# A nasal before a velar fricative assimilates to */ŋ/, the fricative dropping — *juŋɣ > *juŋ.
+[velar_nasal]
+time = 1450
+name = "*/nɣ/ > */ŋ/"
+description = "*juŋɣ > *juŋ 'young'"
+definition = "[+nasal, -syll] [-son, +cont, +back, +high] → ŋ ∅"
+
+# §17.7.2.1.4  ʊ → ʌ (! _l): the FOOT–STRUT split. A short back-rounded vowel in a closed
+# syllable unrounds to */ʌ/, except before /l/ — *us > *ʌs, *juŋ > *jʌŋ ('full', 'over' keep
+# their rounding: 'full' is before /l/, 'over' has its vowel in an open syllable).
+[foot_strut_split]
+time = 1650
+name = "FOOT–STRUT split  ʊ > ʌ"
+description = "Short */u o/ > */ʌ/ in a closed syllable, except before /l/"
+definition = "[+syll, +back, +rounded, length: short] → [rounded: none, labial: none, high: none, aperture: none, ATR: none, RTR] / _ [-syll] ([-syll] | #) // _ [+lateral]"
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Leveling and sporadic changes — word-scoped, one word at a time.
 # ═══════════════════════════════════════════════════════════════════════════
@@ -540,3 +564,28 @@ words = ["is"]
 name = "Loss of final */t/ in 'is'"
 description = "Sporadic: the high-frequency copula sheds its final */t/ — *ist > is"
 definition = "t → ∅ / _ #"
+
+# The vowel of 'us' shortens (it is usually an unstressed clitic) before the Vowel Shift can
+# diphthongise it; FOOT–STRUT then unrounds it. *ūs > *us > /ʌs/.
+[us_clitic_shortening]
+time = 1000
+words = ["us"]
+name = "Clitic shortening in 'us'"
+description = "*ūs > *us"
+definition = "[+syll] → [length: short]"
+
+# 'mother' shortens its */oː/ early (trisyllabic shortening) and so escapes the Vowel Shift,
+# joining the FOOT–STRUT class. *mōðer > /ˈmʌðər/.
+[mother_trisyllabic_shortening]
+time = 1000
+words = ["mother"]
+name = "Trisyllabic shortening + unrounding in 'mother'"
+description = "*mōðer > *mʌðer"
+definition = "[+syll, +back, +rounded, length: long] → [length: short, rounded: none, labial: none, high: none, aperture: none, ATR: none, RTR]"
+
+[young_shortening]
+time = 1000
+words = ["young"]
+name = "Vowel shortening in 'young'"
+description = "*jūŋ > *juŋ (> FOOT–STRUT /jʌŋ/)"
+definition = "[+syll] → [length: short]"
