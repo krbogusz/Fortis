@@ -97,6 +97,13 @@ def _syllable_features(features: FeatureInventory) -> frozenset[str]:
     return frozenset(name for name, feature in features.items() if feature.tier == Tier.syllable)
 
 
+def _node_descendants(features: FeatureInventory) -> dict[str, frozenset[str]]:
+    """Each segmental node → its descendant feature names, for node-spread capture (`oral: ~n`)."""
+    return {
+        name: frozenset(features.descendants(name)) for name in features if features.is_node(name)
+    }
+
+
 def _resolve_elements(
     elements: tuple[Element, ...], project: Project, rule_id: str
 ) -> tuple[Element, ...]:
@@ -235,6 +242,7 @@ def _syllable_context(
     time: int,
     letters: LetterInventory,
     syllable_features: frozenset[str],
+    node_descendants: dict[str, frozenset[str]],
     floating: tuple[tuple[int, FeatureBundle, int | None], ...] = (),
 ) -> tuple[frozenset[int], SyllableView | None]:
     """Boundaries (for ``$``) and the per-position nucleus view (for tier-aware matching).
@@ -253,7 +261,10 @@ def _syllable_context(
     if nucleus_part is None or nucleus_part.definition is None:
         return boundaries, None
     nuclei = nuclei_by_position(form, boundaries, nucleus_part.definition)
-    return boundaries, SyllableView(nuclei=nuclei, features=syllable_features, floating=floating)
+    return boundaries, SyllableView(
+        nuclei=nuclei, features=syllable_features, floating=floating,
+        node_descendants=node_descendants,
+    )
 
 
 def _boundaries(
@@ -312,7 +323,7 @@ def apply_rule(
         case ApplicationMode.simultaneous:
             boundaries, view = _syllable_context(
                 lower_tiers(form), sonorities, syllable_parts, rule.time, letters,
-                syllable_features, _floating_autosegs(form),
+                syllable_features, _node_descendants(features), _floating_autosegs(form),
             )
             return _apply_simultaneous(rule.sd, form, letters, features, boundaries, view, tiers)
         case ApplicationMode.left_to_right:
@@ -529,7 +540,7 @@ def _apply_directional(
         bundles = lower_tiers(work)
         boundaries, view = _syllable_context(
             bundles, sonorities, syllable_parts, time, letters,
-            syllable_features, _floating_autosegs(work),
+            syllable_features, _node_descendants(features), _floating_autosegs(work),
         )
         if reverse:
             candidates = [

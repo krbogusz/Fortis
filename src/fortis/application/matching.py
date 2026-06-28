@@ -56,7 +56,7 @@ resolve correctly. (``!α`` is the alpha-*other* value marker, not a negation.)
 from __future__ import annotations
 
 from collections import Counter
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Mapping
 from dataclasses import dataclass, field, replace
 
 from src.fortis.application.combining import matches_exactly
@@ -319,6 +319,9 @@ def _condition_holds(spec: PatternSpec, segment: FeatureBundle, bindings: Bindin
     return (not base) if spec.negated else base
 
 
+_NO_NODES: Mapping[str, frozenset[str]] = {}  # pattern_matches default when no geometry is supplied
+
+
 def pattern_matches(
     pattern: PatternBundle,
     segment: FeatureBundle,
@@ -326,6 +329,7 @@ def pattern_matches(
     *,
     syllable: FeatureBundle | None = None,
     syllable_features: frozenset[str] = frozenset(),
+    node_descendants: Mapping[str, frozenset[str]] = _NO_NODES,
     position: int | None = None,
 ) -> bool:
     """Whether *pattern* matches realized *segment*.
@@ -356,6 +360,8 @@ def pattern_matches(
         bindings: Alpha-variable environment, threaded for binding/recall.
         syllable: The segment's syllable nucleus bundle (for syllable-tier specs).
         syllable_features: Names of the features that live on the syllable tier.
+        node_descendants: Each segmental node → its descendant feature names; a ``node: ~n`` spec
+            then captures that node's subtree onto ``bindings.node_reference`` for the applier.
         position: The segment's index, recorded under a tier-autosegment bind (``~ref``)
             so the applier can recall the same autosegment.
     """
@@ -384,6 +390,17 @@ def pattern_matches(
             if spec.negated:
                 continue  # "F: !val" is satisfied by absence
             return False
+        if feature in node_descendants and isinstance(spec.value, AutosegBind | AutosegRecall):
+            # Node-spread reference (`oral: ~n`): the node is present (checked above), so capture
+            # this segment's subtree — the node plus its descendants here — for the applier to
+            # copy onto the target. A *segmental* node spreads by copying its subtree (unlike a
+            # tier autosegment, which shares a link); the capture matches unconditionally.
+            if bindings is not None:
+                names = set(node_descendants[feature]) | {feature}
+                bindings.node_reference[spec.value.ref] = FeatureBundle(
+                    {f: target[f] for f in names if f in target}
+                )
+            continue
         if isinstance(spec.value, AutosegBind):
             # Match the bound autosegment's value, then record the position it sits on, so
             # the applier can recall the *same* autosegment (spread it) via `~ref`.
@@ -444,6 +461,10 @@ class SyllableView:
     nuclei: list[FeatureBundle | None]
     features: frozenset[str]
     floating: tuple[tuple[int, FeatureBundle, int | None], ...] = ()
+    # node → its descendant feature names, for node-spread capture (``oral: ~n``): a
+    # segmental node spreads by *copying its subtree*, so the matcher records which
+    # features sit under it. Empty unless a feature inventory with geometry is supplied.
+    node_descendants: Mapping[str, frozenset[str]] = field(default_factory=dict)
 
     def at(self, pos: int) -> FeatureBundle | None:
         """The syllable (nucleus) bundle for position *pos*, if any."""
@@ -505,9 +526,10 @@ def _match_element(
                 branch = _copy(bindings)
                 syllable = syllables.at(pos) if syllables else None
                 feats = syllables.features if syllables else frozenset()
+                nodes = syllables.node_descendants if syllables else _NO_NODES
                 if pattern_matches(
                     bundle, segments[pos], branch, syllable=syllable, syllable_features=feats,
-                    position=pos,
+                    node_descendants=nodes, position=pos,
                 ):
                     yield pos + 1, branch
 
