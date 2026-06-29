@@ -355,8 +355,8 @@ definition = "1=[-syll, -sonorant] → @1 @1 / _ j"
 [a_mutation]
 time = 300
 name = "a-mutation */i u/ > */e o/"
-description = "*/i u/ lower to */e o/ before a non-high back vowel in the next syllable, but not before a geminate (so *fullaz keeps its /u/ — Modern 'full')"
-definition = "[+syll, +high, +back] → [aperture: none, high: none] / _ [-syll]* [+syll, !high, +back] // _ 1=[-syll] @1"
+description = "*/i u/ lower to */e o/ before a non-high back vowel in the next syllable, but not before a consonant cluster (so *fullaz and *wulfaz keep their /u/ — 'full', 'wolf')"
+definition = "[+syll, +high, +back] → [aperture: none, high: none] / _ [-syll]* [+syll, !high, +back] // _ [-syll] [-syll]"
 
 # §17.7.2  oː → uː / _#: word-final */oː/ raises to */uː/.
 [final_long_o_raising]
@@ -555,6 +555,14 @@ name = "FOOT–STRUT split  ʊ > ʌ"
 description = "Short */u o/ > */ʌ/ in a closed syllable, except before /l/"
 definition = "[+syll, +back, +rounded, length: short] → [rounded: none, labial: none, high: none, aperture: none, ATR: none, RTR] / _ [-syll] ([-syll] | #) // _ [+lateral]"
 
+# The surviving short high vowels lax — ME */i u/ > /ɪ ʊ/ (KIT, FOOT). The long high vowels
+# have already diphthongised in the Vowel Shift, so only short */i u/ remain to lax.
+[short_high_laxing]
+time = 1700
+name = "Short */i u/ > /ɪ ʊ/"
+description = "*kwik > *kwɪk 'quick', *full > *fʊll 'full', *is > ɪs, *in > ɪn"
+definition = "[+syll, +high, length: short] → [RTR, ATR: none]"
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Leveling and sporadic changes — word-scoped, one word at a time.
 # ═══════════════════════════════════════════════════════════════════════════
@@ -681,3 +689,12 @@ words = ["father"]
 name = "*/æ/ > */ɑ/ in 'father'"
 description = "*fæðer > *fɑðer 'father'"
 definition = "[+syll, +low] → [back, front: none, RTR, ATR: none]"
+
+# 'over': OE *ofer had a short /o/ that open-syllable lengthening and the Vowel Shift carry
+# to the GOAT diphthong /oʊ/ (the OE-ā/ō outcome the general chain here collapses to /uː/).
+[over_development]
+time = 1850
+words = ["over"]
+name = "GOAT diphthong in 'over'"
+description = "*ʊvər > *owvər 'over'"
+definition = "[+syll, stress: primary] → o w"
