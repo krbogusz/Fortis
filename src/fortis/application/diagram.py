@@ -8,6 +8,8 @@ box-drawing characters so it stays readable in any monospace IPA font.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from src.fortis.application.rendering import render_segment
 from src.fortis.general.presenting import present_value
 from src.fortis.general.utils import is_combining
@@ -21,6 +23,21 @@ from src.fortis.models.project import Project
 _TONE = {5: "˥", 4: "˦", 3: "˧", 2: "˨", 1: "˩"}
 _STRESS = {2: "ˈ", 1: "ˌ"}
 _SEP = 3  # blank display columns between segment slots
+
+
+@dataclass(frozen=True)
+class _Spread:
+    """One autosegment fanning to its anchors — the common shape both change diagrams draw.
+
+    ``label`` is the spreading thing (a tone like ``˦`` or a place node like ``lingual·back``);
+    ``links`` pairs each anchor's index in the ``after`` segment row with its association glyph
+    (``│`` kept · ``╎`` added · ``╪`` delinked); ``replaced`` is an optional ``(index, old_label)``
+    drawn *below* that anchor — the delinked old value a node spread overwrote (``None`` for tiers).
+    """
+
+    label: str
+    links: tuple[tuple[int, str], ...]
+    replaced: tuple[int, str] | None = None
 
 
 def _dwidth(text: str) -> int:
@@ -143,94 +160,113 @@ def _float_col(tier, autoseg_id, center, pos, segs) -> int:
 
 
 def render_autosegmental_change(before: Form, after: Form, project: Project) -> str:
-    """Render one rule's autosegmental change as a single overlay diagram.
+    """Render one rule's autosegmental *tier* change as a single overlay diagram.
 
     Association lines are styled by what the rule did to them, the classic
     rule-as-diagram notation: ``│`` an association kept, ``╎`` (dashed) one newly added
     — a spread or a dock — and ``╪`` (the delink bar) one removed. The anchor row is the
     rule's *result* (``after``) segments; each autosegment keeps its label.
     """
-    segs = after.segments
-    if not segs:
+    if not after.segments:
         return render_autosegmental(after, project)
-    rendered = [render_segment(s.bundle, project) or "∅" for s in segs]
-    slot = max(max((_dwidth(r) for r in rendered), default=1), 3)
+    return _draw(after.segments, _tier_spreads(before, after), project)
+
+
+def _tier_spreads(before: Form, after: Form) -> list[_Spread]:
+    """The tier (tone/stress) association changes, one ``_Spread`` per autosegment that moved.
+
+    Anchors are restricted to segments present in ``after`` (a link to a deleted segment is
+    dropped) and indexed by their position in ``after.segments`` so ``_draw`` can place them.
+    """
+    after_index = {segment.id: i for i, segment in enumerate(after.segments)}
+    spreads: list[_Spread] = []
+    for name in dict.fromkeys([*before.tiers, *after.tiers]):
+        before_tier = before.tiers.get(name)
+        after_tier = after.tiers.get(name)
+        before_links = before_tier.links if before_tier is not None else set()
+        after_links = after_tier.links if after_tier is not None else set()
+        # Autoseg id → bundle (prefer the after-state bundle; fall back to before for a removed).
+        bundles: dict[int, object] = {}
+        for tier in (after_tier, before_tier):
+            if tier is not None:
+                for autoseg in tier.autosegs:
+                    bundles.setdefault(autoseg.id, autoseg.bundle)
+        for autoseg_id, bundle in bundles.items():
+            before_anchors = {s for (a, s) in before_links if a == autoseg_id and s in after_index}
+            after_anchors = {s for (a, s) in after_links if a == autoseg_id and s in after_index}
+            all_anchors = before_anchors | after_anchors
+            if not all_anchors:
+                continue
+            links = tuple(
+                (after_index[sid], _change_glyph(sid, before_anchors, after_anchors))
+                for sid in all_anchors
+            )
+            spreads.append(_Spread(_label_from_bundle(bundle, name), links))
+    return spreads
+
+
+def _draw(segments, spreads: list[_Spread], project: Project) -> str:
+    """The shared rendering core: an ``after`` segment row with each ``_Spread`` drawn over it.
+
+    Above the segments: a fork (label / ``┌─┴─┐`` / styled descenders) for a multi-anchor spread,
+    a single styled vertical for a one-anchor spread, and several one-anchor spreads sharing a
+    column fanned out as a contour. Below: a ``╪`` and old-label row for each spread's ``replaced``.
+    """
+    rendered = [render_segment(s.bundle, project) or "∅" for s in segments]
+    slot = max(max((_dwidth(r) for r in rendered), default=1), 3)  # ≥3 leaves room for a contour
     step = slot + _SEP
     margin = 4
-    total = margin + len(segs) * step - _SEP + margin
-    center = {s.id: margin + i * step + slot // 2 for i, s in enumerate(segs)}
-    seg_ids = {s.id for s in segs}
+    total = margin + len(segments) * step - _SEP + margin
+    centers = [margin + i * step + slot // 2 for i in range(len(segments))]
 
-    lines: list[str] = []
-    for name in dict.fromkeys([*before.tiers, *after.tiers]):
-        lines.extend(
-            _change_tier_band(
-                before.tiers.get(name), after.tiers.get(name), name, center, seg_ids, total
-            )
-        )
+    above: list[list[str]] = []
+    if spreads:
+        label_row = [" "] * total
+        conn_row = [" "] * total
+        fork_row = [" "] * total  # the branch row (label above, descenders below)
+        multi = [s for s in spreads if len(s.links) > 1]
+        singles: dict[int, list[tuple[str, str]]] = {}  # col → [(label, glyph)] — one anchor each
+        for s in spreads:
+            if len(s.links) == 1:
+                idx, glyph = s.links[0]
+                singles.setdefault(centers[idx], []).append((s.label, glyph))
+        for s in multi:  # one autoseg, several anchors
+            cols_glyphs = [(centers[idx], glyph) for idx, glyph in s.links]
+            cols = sorted(col for col, _ in cols_glyphs)
+            mid = (cols[0] + cols[-1]) // 2
+            _put(label_row, mid - (_dwidth(s.label) - 1) // 2, s.label)  # the label, above the fork
+            for x in range(cols[0], cols[-1] + 1):  # the branch line spanning the anchors
+                fork_row[x] = "─"
+            for c in cols:
+                fork_row[c] = "┬"
+            fork_row[cols[0]], fork_row[cols[-1]] = "┌", "┐"
+            fork_row[mid] = "┼" if mid in cols else "┴"  # the join, under the label
+            for col, glyph in cols_glyphs:  # styled descender: │ kept · ╎ added · ╪ delinked
+                conn_row[col] = glyph
+        for col, items in singles.items():  # several autosegs on one anchor ⇒ a contour, fanned out
+            spread_out = range(-(len(items) - 1), len(items), 2)  # 1→[0], 2→[-1,1], 3→[-2,0,2], …
+            for (label, glyph), offset in zip(items, spread_out, strict=True):
+                _put(label_row, col + offset - (_dwidth(label) - 1) // 2, label)
+                conn_row[col + offset] = glyph
+        above = [label_row, fork_row, conn_row] if multi else [label_row, conn_row]
 
     seg_row = [" "] * total
     for i, r in enumerate(rendered):
         col = margin + i * step + (slot - _dwidth(r)) // 2
         _put(seg_row, col, r)
-    lines.append("".join(seg_row))
-    return "\n".join(line.rstrip() for line in lines)
 
+    below: list[list[str]] = []
+    for s in spreads:  # the delinked old value a node spread overwrote, under its anchor
+        if s.replaced is not None:
+            idx, old_label = s.replaced
+            delink_row = [" "] * total
+            delink_row[centers[idx]] = "╪"
+            old_row = [" "] * total
+            _put(old_row, max(0, centers[idx] - _dwidth(old_label) // 2), old_label)
+            below += [delink_row, old_row]
 
-def _change_tier_band(before_tier, after_tier, name: str, center, seg_ids, total: int) -> list[str]:
-    """The label + connector rows for one tier's before→after association change."""
-    before_links = before_tier.links if before_tier is not None else set()
-    after_links = after_tier.links if after_tier is not None else set()
-    # Autoseg id → bundle (prefer the after-state bundle; fall back to before for a removed one).
-    bundles: dict[int, object] = {}
-    for tier in (after_tier, before_tier):
-        if tier is not None:
-            for autoseg in tier.autosegs:
-                bundles.setdefault(autoseg.id, autoseg.bundle)
-
-    label_row = [" "] * total
-    conn_row = [" "] * total
-    spreads: list[tuple[str, list[tuple[int, str]]]] = []  # (label, [(col, glyph)]) — many anchors
-    singles: dict[int, list[tuple[str, str]]] = {}  # col → [(label, glyph)] — one anchor each
-    for autoseg_id, bundle in bundles.items():
-        before_anchors = {sid for (a, sid) in before_links if a == autoseg_id and sid in seg_ids}
-        after_anchors = {sid for (a, sid) in after_links if a == autoseg_id and sid in seg_ids}
-        all_anchors = before_anchors | after_anchors
-        if not all_anchors:
-            continue
-        label = _label_from_bundle(bundle, name)
-        cols_glyphs = [
-            (center[sid], _change_glyph(sid, before_anchors, after_anchors)) for sid in all_anchors
-        ]
-        if len(all_anchors) > 1:
-            spreads.append((label, cols_glyphs))
-        else:
-            singles.setdefault(cols_glyphs[0][0], []).append((label, cols_glyphs[0][1]))
-
-    if not spreads and not singles:
-        return []
-
-    fork_row = [" "] * total  # the branch row (label above, descenders below)
-    for label, cols_glyphs in spreads:  # one autoseg, several anchors
-        cols = sorted(col for col, _ in cols_glyphs)
-        mid = (cols[0] + cols[-1]) // 2
-        _put(label_row, mid - (_dwidth(label) - 1) // 2, label)  # the autoseg label, above the fork
-        for x in range(cols[0], cols[-1] + 1):  # the branch line spanning the anchors
-            fork_row[x] = "─"
-        for c in cols:
-            fork_row[c] = "┬"
-        fork_row[cols[0]], fork_row[cols[-1]] = "┌", "┐"
-        fork_row[mid] = "┼" if mid in cols else "┴"  # the join, under the label
-        for col, glyph in cols_glyphs:  # styled descender per anchor: │ kept · ╎ added · ╪ delinked
-            conn_row[col] = glyph
-    for col, items in singles.items():  # one anchor; several autosegs here ⇒ a contour, fanned out
-        spread_out = range(-(len(items) - 1), len(items), 2)  # 1→[0], 2→[-1,1], 3→[-2,0,2], …
-        for (label, glyph), offset in zip(items, spread_out, strict=True):
-            _put(label_row, col + offset - (_dwidth(label) - 1) // 2, label)
-            conn_row[col + offset] = glyph
-
-    rows = [label_row, fork_row, conn_row] if spreads else [label_row, conn_row]
-    return ["".join(r) for r in rows]
+    lines = [*above, seg_row, *below]
+    return "\n".join("".join(row).rstrip() for row in lines)
 
 
 def _change_glyph(sid: int, before_anchors: set[int], after_anchors: set[int]) -> str:
@@ -267,30 +303,36 @@ def _is_consonant(bundle) -> bool:
     return spec is not None and spec.value == 1
 
 
-def render_place_change(nasal_before, nasal_after, trigger, project: Project) -> str:
-    """Place assimilation as an autosegmental diagram over the real ``oral`` node.
+def _node_spreads(before: Form, after: Form, project: Project) -> list[_Spread]:
+    """Place assimilations as ``_Spread``s over the real ``oral`` node — one per assimilated seg.
 
-    The trigger's ``oral`` (place) node forks to both segments with the assimilating
-    segment's link **dashed** (the spread, a new link), while that segment's old place is
-    **delinked** (``╪``) below — the tone-change notation applied to the oral node.
+    A consonant whose ``_place_label`` changed assimilated to a consonant neighbour (right
+    ``i+1`` first — regressive — then left ``i-1``) carrying the new place: that trigger keeps
+    its link (``│``), the assimilated segment's link is the new spread (``╎``), and its old
+    place is delinked (``replaced``, drawn as ``╪`` below) — the tone-change notation on a node.
     """
-    new_place = _place_label(nasal_after) or "?"
-    old_place = _place_label(nasal_before) or "?"
-    nasal_sym = render_segment(nasal_before, project) or "?"
-    trigger_sym = render_segment(trigger, project) or "?"
-    nasal_col, trigger_col = 5, 15
-    mid = (nasal_col + trigger_col) // 2
-    width = trigger_col + 8
-    rows = [[" "] * width for _ in range(6)]
-    _put(rows[0], mid - _dwidth(new_place) // 2, new_place)  # the shared place node
-    for x in range(nasal_col, trigger_col + 1):
-        rows[1][x] = "─"
-    rows[1][nasal_col], rows[1][trigger_col], rows[1][mid] = "┌", "┐", "┴"
-    rows[2][nasal_col], rows[2][trigger_col] = "╎", "│"  # nasal link dashed (new); trigger solid
-    rows[3][nasal_col], rows[3][trigger_col] = nasal_sym, trigger_sym
-    rows[4][nasal_col] = "╪"  # the old place, delinked
-    _put(rows[5], max(0, nasal_col - _dwidth(old_place) // 2), old_place)
-    return "\n".join("".join(row).rstrip() for row in rows)
+    _ = project  # rendering happens in _draw; detection needs only the place labels
+    before_by_id = {segment.id: segment.bundle for segment in before.segments}
+    segments = after.segments
+    spreads: list[_Spread] = []
+    for i, segment in enumerate(segments):
+        old_bundle = before_by_id.get(segment.id)
+        # Place assimilation is a consonant phenomenon: only a consonant whose place changed
+        # is a candidate — a vowel that merely matches a neighbour's place by accident is not.
+        if old_bundle is None or not _is_consonant(segment.bundle):
+            continue
+        old, new = _place_label(old_bundle), _place_label(segment.bundle)
+        if old is None or new is None or old == new:
+            continue
+        for j in (i + 1, i - 1):  # the consonant neighbour it matches (right first, then left)
+            if (
+                0 <= j < len(segments)
+                and _is_consonant(segments[j].bundle)
+                and _place_label(segments[j].bundle) == new
+            ):
+                spreads.append(_Spread(new, ((j, "│"), (i, "╎")), replaced=(i, old)))
+                break
+    return spreads
 
 
 def render_geometry_tree(bundle: FeatureBundle, project: Project) -> str:
@@ -332,30 +374,7 @@ def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str
 
 def render_place_changes(before: Form, after: Form, project: Project) -> list[str]:
     """A place-change diagram for each segment whose place assimilated to a neighbour's."""
-    before_by_id = {segment.id: segment.bundle for segment in before.segments}
-    segments = after.segments
-    diagrams: list[str] = []
-    for i, segment in enumerate(segments):
-        old_bundle = before_by_id.get(segment.id)
-        # Place assimilation is a consonant phenomenon: only a consonant whose place changed
-        # is a candidate — a vowel that merely matches a neighbour's place by accident is not.
-        if old_bundle is None or not _is_consonant(segment.bundle):
-            continue
-        old, new = _place_label(old_bundle), _place_label(segment.bundle)
-        if old is None or new is None or old == new:
-            continue
-        # The trigger is the consonant neighbour (right first — regressive — then left) it matches.
-        for j in (i + 1, i - 1):
-            if (
-                0 <= j < len(segments)
-                and _is_consonant(segments[j].bundle)
-                and _place_label(segments[j].bundle) == new
-            ):
-                diagrams.append(
-                    render_place_change(old_bundle, segment.bundle, segments[j].bundle, project)
-                )
-                break
-    return diagrams
+    return [_draw(after.segments, [s], project) for s in _node_spreads(before, after, project)]
 
 
 def render_change(before: Form, after: Form, project: Project) -> list[str]:

@@ -1,11 +1,13 @@
 """Tests for the autosegmental text diagram (application/diagram.py)."""
 
+from dataclasses import replace
+
 from src.fortis.application.diagram import (
     render_autosegmental,
     render_autosegmental_change,
     render_change,
     render_geometry_tree,
-    render_place_change,
+    render_place_changes,
 )
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.models.autosegment import Autoseg
@@ -115,11 +117,14 @@ def test_change_kept_association_is_solid(project):
 
 def test_place_change_shows_spread_and_delink(project):
     # Nasal place assimilation (n → m before p): the trigger's place spreads (dashed) and
-    # the nasal's old place delinks (╪).
-    n = string_to_sequence("n", project).segments[0].bundle  # coronal nasal
-    m = string_to_sequence("m", project).segments[0].bundle  # its labial outcome
-    p = string_to_sequence("p", project).segments[0].bundle  # the labial trigger
-    out = render_place_change(n, m, p, project)
+    # the nasal's old place delinks (╪). Drive it through the public renderer over real forms.
+    before = string_to_sequence("anpa", project)  # a-n-p-a; coronal n at idx 1, labial p at idx 2
+    m = string_to_sequence("m", project).segments[0].bundle  # n's labial assimilation outcome
+    after = before.copy()
+    after.segments[1] = replace(after.segments[1], bundle=m)  # n keeps its id, gains labial place
+    diagrams = render_place_changes(before, after, project)
+    assert len(diagrams) == 1  # exactly the one assimilated consonant — fail loud if mis-built
+    out = diagrams[0]
     assert "labial" in out and "lingual" in out  # new (shared) + old place, by their real nodes
     assert "╎" in out and "╪" in out  # the spread (dashed link) and the delink bar
 
