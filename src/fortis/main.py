@@ -206,7 +206,7 @@ def _render_derivation_md(derivation: Derivation, project: Project) -> list[str]
         lines += ["```", *trace, "```", ""]
 
     for step in derivation.steps:
-        for diagram in render_change(step.before, step.after, project):  # unified: tier + place
+        for diagram in render_change(step.before, step.after, step.rule, project):  # tier + spreads
             label = step.rule.name or _SUBRULE_SUFFIX.sub("", step.rule.id)
             lines += [f"{label} — association change", "", "```", diagram, "```", ""]
     return lines

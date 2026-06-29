@@ -1,14 +1,11 @@
 """Tests for the autosegmental text diagram (application/diagram.py)."""
 
-from dataclasses import replace
-
+from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.diagram import (
     render_autosegmental,
     render_autosegmental_change,
     render_change,
     render_geometry_tree,
-    render_harmony_changes,
-    render_place_changes,
 )
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.models.autosegment import Autoseg
@@ -81,14 +78,15 @@ def test_spread_change_renders_as_a_fork(project):
 
 def test_render_change_is_the_unified_entry_point(project):
     # render_change returns every autosegmental change for a rule; a tier spread comes back as
-    # one fork diagram (place assimilations would each add their own).
+    # one fork diagram (segmental spreads, driven by the rule, would each add their own). A
+    # tier change needs no rule, so None is passed here.
     before = string_to_sequence("taka", project)
     t = before.fresh_id()
     before.tiers["tone"].autosegs.append(_tone(4, t))
     before.tiers["tone"].links.add((t, 1))
     after = before.copy()
     after.tiers["tone"].links.add((t, 3))  # the tone spreads
-    diagrams = render_change(before, after, project)
+    diagrams = render_change(before, after, None, project)
     assert len(diagrams) == 1
     assert "┌" in diagrams[0] and "╎" in diagrams[0]  # the spread fork, dashed new link
 
@@ -116,33 +114,38 @@ def test_change_kept_association_is_solid(project):
     assert "│" in out and "╎" not in out and "╪" not in out
 
 
-def test_place_change_shows_spread_and_delink(project):
-    # Nasal place assimilation (n → m before p): the trigger's place spreads (dashed) and
-    # the nasal's old place delinks (╪). Drive it through the public renderer over real forms.
-    before = string_to_sequence("anpa", project)  # a-n-p-a; coronal n at idx 1, labial p at idx 2
-    m = string_to_sequence("m", project).segments[0].bundle  # n's labial assimilation outcome
-    after = before.copy()
-    after.segments[1] = replace(after.segments[1], bundle=m)  # n keeps its id, gains labial place
-    diagrams = render_place_changes(before, after, project)
-    assert len(diagrams) == 1  # exactly the one assimilated consonant — fail loud if mis-built
-    out = diagrams[0]
-    assert "labial" in out and "lingual" in out  # new (shared) + old place, by their real nodes
-    assert "╎" in out and "╪" in out  # the spread (dashed link) and the delink bar
+def _change_diagrams(project, ipa):
+    """Every render_change diagram across a word's derivation — the rule of each step drives it."""
+    rules = resolve_rule_letters(project.rules, project)
+    word = project.words[ipa]
+    derivation = derive(
+        word, string_to_sequence(ipa, project), rules, project.letters, project.features,
+        project.sonorities, project.syllable_parts, project.tiers,
+    )
+    return [
+        d
+        for step in derivation.steps
+        for d in render_change(step.before, step.after, step.rule, project)
+    ]
 
 
-def test_harmony_change_renders_backness_as_a_fork(project):
-    # Vowel harmony: a vowel taking the preceding vowel's backness renders as one [back]
-    # autosegment fanning from the source (│) to the harmonised vowel (╎) — the autosegmental
-    # reading of the harmony, the vowel analogue of place assimilation's node spread.
-    before = string_to_sequence("uti", project)  # u (back) · t · i (front)
-    back_i = string_to_sequence("ɯ", project).segments[0].bundle  # i's backness-harmonised form
-    after = before.copy()
-    after.segments[2] = replace(after.segments[2], bundle=back_i)  # i → ɯ (keeps its id)
-    diagrams = render_harmony_changes(before, after, project)
-    assert len(diagrams) == 1  # one fork: the backness spread
-    out = diagrams[0]
-    assert "back" in out  # labelled by the harmonic feature
-    assert "│" in out and "╎" in out  # source kept solid, harmonised vowel dashed
+def test_render_change_reads_segmental_spreads_from_the_rule(project):
+    # Rule-driven: a segmental spread is detected from the rule's ~n operations, not guessed from
+    # which features changed. Place assimilation (anka) spreads the oral node — one fork carrying
+    # the new place (╎) with the nasal's old place delinked (╪) below.
+    place = _change_diagrams(project, "anka")
+    assert len(place) == 1  # exactly the one assimilated consonant
+    assert "lingual" in place[0]  # new (shared) + delinked old place both name the lingual node
+    assert "╎" in place[0] and "╪" in place[0]  # the spread (dashed) and the delink bar
+
+
+def test_harmony_spread_is_read_from_the_rule_but_agreement_is_not(project):
+    # The two harmony rules reach the same surface, but only the *spreading* one (utine) performs
+    # a ~n operation, so only it draws forks; the *agreement* one (otine) draws nothing — the
+    # honest autosegmental difference between the two formulations.
+    harmony = _change_diagrams(project, "utine")
+    assert any("back" in d and "┌" in d and "╎" in d for d in harmony)  # the [back] spread fork
+    assert _change_diagrams(project, "otine") == []  # α-agreement performs no ~n spread
 
 
 def test_geometry_tree_nests_real_nodes_for_one_segment(project):

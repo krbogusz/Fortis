@@ -8,16 +8,20 @@ box-drawing characters so it stays readable in any monospace IPA font.
 """
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 from src.fortis.application.rendering import render_segment
 from src.fortis.general.presenting import present_value
 from src.fortis.general.utils import is_combining
 from src.fortis.models.autosegment import AutosegmentalTier
-from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.bundles import FeatureBundle, ResultBundle
+from src.fortis.models.elements import Bound, Disjunction, Group, Negated, Quantified, ResultElem
 from src.fortis.models.features import FeatureKind
 from src.fortis.models.form import Form
 from src.fortis.models.project import Project
+from src.fortis.models.rules import Rule
+from src.fortis.models.values import AutosegRecall
 
 # Tone scalar (1=extra-low … 5=extra-high) → Chao tone letter.
 _TONE = {5: "˥", 4: "˦", 3: "˧", 2: "˨", 1: "˩"}
@@ -298,77 +302,89 @@ def _place_label(bundle) -> str | None:
     return None
 
 
-def _is_consonant(bundle) -> bool:
-    spec = bundle.get("consonantal")
-    return spec is not None and spec.value == 1
+def _result_bundles(elements: tuple) -> Iterator[ResultBundle]:
+    """Yield each ``ResultElem``'s bundle in a result element sequence, descending into nesting."""
+    for element in elements:
+        match element:
+            case ResultElem(bundle):
+                yield bundle
+            case Quantified(inner, _) | Negated(inner) | Bound(_, inner):
+                yield from _result_bundles((inner,))
+            case Group(inner):
+                yield from _result_bundles(inner)
+            case Disjunction(branches):
+                for branch in branches:
+                    yield from _result_bundles(branch)
+            case _:
+                pass
 
 
-def _is_vowel(bundle) -> bool:
-    spec = bundle.get("syllabic")
-    return spec is not None and spec.value == 1
+def _spread_features(rule: Rule | None, project: Project) -> set[str]:
+    """The segmental features the rule SPREADS — its result's ``~n`` node-recalls.
 
-
-# Vowel-harmony features that spread vowel-to-vowel, each → a fork labelled by its name.
-_HARMONY_FEATURES = (("back", "back"), ("front", "front"), ("rounded", "round"))
-
-
-def _harmony_spreads(before: Form, after: Form, project: Project) -> list[_Spread]:
-    """Vowel harmony as ``_Spread``s — one fork per harmonic feature that spread across vowels.
-
-    For each feature (backness, rounding), the vowels carrying it in *after* are the fork's
-    anchors; those that newly gained it are the spread targets (``╎``), the rest the source(s)
-    that already had it (``│``). So one ``[back]`` autosegment fans from the trigger vowel to the
-    vowels that harmonised to it — the autosegmental reading of either harmony rule's output.
+    Reduced to the highest node (a recalled ancestor subsumes its descendants — ``oral`` over
+    its place leaves, ``labial`` over ``rounded``). Empty with no rule (e.g. a tier-only change).
     """
-    _ = project  # rendering happens in _draw; detection needs only the bundles
+    if rule is None:
+        return set()
+    feats = {
+        feature
+        for bundle in _result_bundles(rule.sd.result)
+        for feature, spec in bundle.items()
+        if isinstance(spec.value, AutosegRecall) and project.features.is_segmental(feature)
+    }
+    return {f for f in feats if not any(f in project.features.descendants(a) for a in feats)}
+
+
+def _subtree(bundle: FeatureBundle, feature: str, project: Project) -> frozenset:
+    """*feature* and its present descendants in *bundle* as a frozen ``(name, value)`` set.
+
+    The unit a node-spread copies, so two equal snapshots are one shared autosegment (∅ if absent).
+    """
+    names = (feature, *project.features.descendants(feature))
+    return frozenset((n, bundle[n].value) for n in names if n in bundle)
+
+
+def _subtree_bundle(bundle: FeatureBundle, feature: str, project: Project) -> FeatureBundle:
+    """*feature*'s subtree as a bundle, for labelling (e.g. the place a spread ``oral`` carries)."""
+    names = (feature, *project.features.descendants(feature))
+    return FeatureBundle({n: bundle[n] for n in names if n in bundle})
+
+
+def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project) -> list[_Spread]:
+    """Every segmental spread the rule performed, as ``_Spread`` forks.
+
+    The autosegmental reading of its ``~n`` operations, irrespective of which feature spread
+    (place assimilation and vowel harmony are the same operation through different features).
+    For each spread feature, the *after* segments carrying it are grouped by their subtree value
+    (one value = one shared autosegment); a group with both a changed anchor (the link the rule
+    added → ``╎``) and an unchanged source (``│``) is a spread. A lone changed anchor that
+    replaced a non-empty old subtree also shows that old value delinked (``╪``), as place does.
+    """
     before_by_id = {segment.id: segment.bundle for segment in before.segments}
     segments = after.segments
     spreads: list[_Spread] = []
-    for feature, label in _HARMONY_FEATURES:
-        carriers, gained = [], []
+    for feature in sorted(_spread_features(rule, project)):
+        groups: dict[frozenset, list[int]] = {}
         for i, segment in enumerate(segments):
-            if not _is_vowel(segment.bundle) or feature not in segment.bundle:
+            if feature in segment.bundle:
+                groups.setdefault(_subtree(segment.bundle, feature, project), []).append(i)
+        for value, indices in groups.items():
+            old = {
+                i: _subtree(before_by_id.get(segments[i].id, FeatureBundle()), feature, project)
+                for i in indices
+            }
+            changed = [i for i in indices if old[i] != value]
+            if not changed or len(changed) == len(indices):  # need a stable source to spread from
                 continue
-            carriers.append(i)
-            old = before_by_id.get(segment.id)
-            if old is not None and feature not in old:
-                gained.append(i)
-        # A spread needs ≥1 newly-harmonised anchor and ≥1 source that already carried it.
-        if gained and len(carriers) > len(gained):
-            links = tuple((i, "╎" if i in gained else "│") for i in carriers)
-            spreads.append(_Spread(label, links))
-    return spreads
-
-
-def _node_spreads(before: Form, after: Form, project: Project) -> list[_Spread]:
-    """Place assimilations as ``_Spread``s over the real ``oral`` node — one per assimilated seg.
-
-    A consonant whose ``_place_label`` changed assimilated to a consonant neighbour (right
-    ``i+1`` first — regressive — then left ``i-1``) carrying the new place: that trigger keeps
-    its link (``│``), the assimilated segment's link is the new spread (``╎``), and its old
-    place is delinked (``replaced``, drawn as ``╪`` below) — the tone-change notation on a node.
-    """
-    _ = project  # rendering happens in _draw; detection needs only the place labels
-    before_by_id = {segment.id: segment.bundle for segment in before.segments}
-    segments = after.segments
-    spreads: list[_Spread] = []
-    for i, segment in enumerate(segments):
-        old_bundle = before_by_id.get(segment.id)
-        # Place assimilation is a consonant phenomenon: only a consonant whose place changed
-        # is a candidate — a vowel that merely matches a neighbour's place by accident is not.
-        if old_bundle is None or not _is_consonant(segment.bundle):
-            continue
-        old, new = _place_label(old_bundle), _place_label(segment.bundle)
-        if old is None or new is None or old == new:
-            continue
-        for j in (i + 1, i - 1):  # the consonant neighbour it matches (right first, then left)
-            if (
-                0 <= j < len(segments)
-                and _is_consonant(segments[j].bundle)
-                and _place_label(segments[j].bundle) == new
-            ):
-                spreads.append(_Spread(new, ((j, "│"), (i, "╎")), replaced=(i, old)))
-                break
+            shared = _subtree_bundle(segments[indices[0]].bundle, feature, project)
+            label = _place_label(shared) or feature
+            links = tuple((i, "╎" if i in changed else "│") for i in indices)
+            replaced = None
+            if len(changed) == 1 and old[changed[0]]:  # one anchor over a non-empty old value
+                was = _subtree_bundle(before_by_id[segments[changed[0]].id], feature, project)
+                replaced = (changed[0], _place_label(was) or feature)
+            spreads.append(_Spread(label, links, replaced))
     return spreads
 
 
@@ -409,29 +425,27 @@ def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str
     return feature
 
 
-def render_place_changes(before: Form, after: Form, project: Project) -> list[str]:
-    """A place-change diagram for each segment whose place assimilated to a neighbour's."""
-    return [_draw(after.segments, [s], project) for s in _node_spreads(before, after, project)]
+def render_segmental_spreads(
+    before: Form, after: Form, rule: Rule | None, project: Project
+) -> list[str]:
+    """A fork diagram for each segmental spread *rule* performed (place, harmony, any ``~n``)."""
+    spreads = _rule_spreads(before, after, rule, project)
+    return [_draw(after.segments, [s], project) for s in spreads]
 
 
-def render_harmony_changes(before: Form, after: Form, project: Project) -> list[str]:
-    """A fork diagram for each vowel-harmony feature (backness, rounding) that spread."""
-    return [_draw(after.segments, [s], project) for s in _harmony_spreads(before, after, project)]
-
-
-def render_change(before: Form, after: Form, project: Project) -> list[str]:
+def render_change(before: Form, after: Form, rule: Rule | None, project: Project) -> list[str]:
     """Every autosegmental change for one rule, as fork diagrams — the single renderer to call.
 
-    One entry point for every kind of spread, which share the label/fork/descender notation
-    (``│`` kept · ``╎`` added · ``╪`` delinked): a *tier* autosegment (tone, stress) whose links
-    changed yields one diagram (all tiers together); each *segmental-node* (place) assimilation
-    yields its own; and each *vowel-harmony* feature (backness, rounding) that spread across the
-    vowels yields a fork. Returned in display order — tier change, then place, then harmony.
+    One entry point for every autosegmental process, all sharing the label/fork/descender
+    notation (``│`` kept · ``╎`` added · ``╪`` delinked). A *tier* autosegment (tone, stress)
+    whose links changed yields one diagram (all tiers together); each *segmental* spread the
+    rule performed via ``~n`` — place assimilation, vowel harmony, or any other — yields a fork,
+    detected from the rule's operations rather than guessed from which features changed. Returned
+    in display order: tier change, then the segmental spreads.
     """
     diagrams: list[str] = []
     tier = render_autosegmental_change(before, after, project)
     if "╎" in tier or "╪" in tier:  # the tier diagram is meaningful only when a link changed
         diagrams.append(tier)
-    diagrams.extend(render_place_changes(before, after, project))
-    diagrams.extend(render_harmony_changes(before, after, project))
+    diagrams.extend(render_segmental_spreads(before, after, rule, project))
     return diagrams

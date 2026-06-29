@@ -60,7 +60,7 @@ def run_derivations():
                           "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                           "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
             lbl = (str(s.rule.time)+": " if s.rule.time is not None else "")+(s.rule.name or base)
-            for diagram in render_change(s.before, s.after, project):  # unified: tier + place changes
+            for diagram in render_change(s.before, s.after, s.rule, project):  # tier + segmental spreads
                 frames.append({"label":lbl,"diagram":diagram})
         geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
