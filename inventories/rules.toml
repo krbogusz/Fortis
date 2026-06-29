@@ -108,3 +108,9 @@ words      = ["sound change over time"]
 time       = 300
 name       = "Hiatus coalescence"
 definition = "[+syllabic] [+syllabic] -> [length: long] ∅"
+
+[vowel_harmony]                     # Turkish-style backness harmony: vowels agree with the stem
+words       = ["vowel harmony"]
+name        = "Backness harmony"
+definition  = "[+syllabic] -> [α front, β back] / [+syllabic, α front, β back] [-syllabic]* _"
+application = "left_to_right"
