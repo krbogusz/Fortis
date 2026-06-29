@@ -698,3 +698,11 @@ words = ["over"]
 name = "GOAT diphthong in 'over'"
 description = "*ʊvər > *owvər 'over'"
 definition = "[+syll, stress: primary] → o w"
+
+# Modern English has no phonemic geminates: a doubled consonant simplifies. *midd > mid,
+# *full > ful.
+[degemination]
+time = 1960
+name = "Degemination"
+description = "*midd > mid, *full > ful"
+definition = "1=[-syll] @1 → @1 ∅"
