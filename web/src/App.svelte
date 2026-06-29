@@ -19,7 +19,7 @@
   let busy = $state(false); // a derivation run is in flight
 
   let mode = $state("historical"); // "historical" | "autosegmental"
-  let showDef = $state(true); // show each rule's definition under its name
+  let showDef = $state(false); // off by default: hide rule definitions to keep results uncluttered
   let result = $state(null); // { derivations } | { error }
   let csvMode = $state("table"); // letters.csv view: "table" | "raw"
 
