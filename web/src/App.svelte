@@ -285,10 +285,12 @@
               </header>
               <div class="steps">
                 {#each d.steps as s}
+                  {#if s.timeHeader != null}
+                    <div class="time-header">{s.timeHeader}</div>
+                  {/if}
                   {#if s.heading}
                     <div class="rule-heading">
-                      {#if s.time !== null}<span class="time">{s.time}</span>: {/if}{s.heading}
-                      {#if s.definition}<span class="def">{s.definition}</span>{/if}
+                      {s.heading}{#if s.definition}<span class="def">{s.definition}</span>{/if}
                     </div>
                   {/if}
                   <div class="step">
@@ -582,9 +584,12 @@
     font-weight: 600;
     color: var(--text-h);
   }
-  .rule-heading .time {
+  .time-header {
+    margin: 18px 0 6px;
     font-family: var(--mono);
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-h);
   }
   .rule-heading .def {
     margin-left: 8px;
@@ -597,6 +602,7 @@
     align-items: baseline;
     flex-wrap: wrap;
     gap: 8px;
+    padding-left: 16px;
     font-size: 15px;
     color: var(--text-h);
   }

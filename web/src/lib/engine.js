@@ -48,11 +48,14 @@ def run_derivations():
     for ipa, word in project.words.items():
         d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
                    project.features, project.sonorities, project.syllable_parts, project.tiers)
-        steps, prev = [], None
+        steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
         frames = [{"label":"Input","diagram":render_autosegmental(d.input,project)}]
         for s in d.steps:
-            base = _SUB.sub("", s.rule.id); heading = (s.rule.name or base) if base!=prev else None; prev = base
-            steps.append({"heading":heading,"definition":s.rule.raw_definition,
+            base = _SUB.sub("", s.rule.id)
+            heading = (s.rule.name or base) if base!=prev else None
+            time_header = s.rule.time if (s.rule.time is not None and s.rule.time != prev_time) else None
+            prev, prev_time = base, s.rule.time
+            steps.append({"timeHeader":time_header,"heading":heading,"definition":s.rule.raw_definition,
                           "time":s.rule.time,"name":s.rule.name or base,
                           "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                           "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
