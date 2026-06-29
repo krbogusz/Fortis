@@ -210,15 +210,17 @@ def _change_tier_band(before_tier, after_tier, name: str, center, seg_ids, total
     if not spreads and not singles:
         return []
 
-    for label, cols_glyphs in spreads:  # one autoseg, several anchors — draw the fork explicitly
+    fork_row = [" "] * total  # the branch row, between the label and the descenders (as in render_place_change)
+    for label, cols_glyphs in spreads:  # one autoseg, several anchors — label, fork, styled descenders
         cols = sorted(col for col, _ in cols_glyphs)
         mid = (cols[0] + cols[-1]) // 2
+        _put(label_row, mid - (_dwidth(label) - 1) // 2, label)  # the autoseg label, above the fork
         for x in range(cols[0], cols[-1] + 1):  # the branch line spanning the anchors
-            label_row[x] = "─"
+            fork_row[x] = "─"
         for c in cols:
-            label_row[c] = "┬"
-        label_row[cols[0]], label_row[cols[-1]] = "┌", "┐"
-        _put(label_row, mid - (_dwidth(label) - 1) // 2, label)  # autoseg at the branch point
+            fork_row[c] = "┬"
+        fork_row[cols[0]], fork_row[cols[-1]] = "┌", "┐"
+        fork_row[mid] = "┼" if mid in cols else "┴"  # the join, under the label
         for col, glyph in cols_glyphs:  # styled descender per anchor: │ kept · ╎ added · ╪ delinked
             conn_row[col] = glyph
     for col, items in singles.items():  # one anchor; several autosegs here ⇒ a contour, fanned out
@@ -227,7 +229,8 @@ def _change_tier_band(before_tier, after_tier, name: str, center, seg_ids, total
             _put(label_row, col + offset - (_dwidth(label) - 1) // 2, label)
             conn_row[col + offset] = glyph
 
-    return ["".join(label_row), "".join(conn_row)]
+    rows = [label_row, fork_row, conn_row] if spreads else [label_row, conn_row]
+    return ["".join(r) for r in rows]
 
 
 def _change_glyph(sid: int, before_anchors: set[int], after_anchors: set[int]) -> str:
