@@ -581,11 +581,12 @@
   .rule-heading {
     margin: 10px 0 2px;
     font-size: 16px;
-    font-weight: 600;
     color: var(--text-h);
   }
   .time-header {
-    margin: 18px 0 6px;
+    margin: 18px 0 3px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--border);
     font-family: var(--mono);
     font-size: 13px;
     font-weight: 700;
