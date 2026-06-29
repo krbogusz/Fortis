@@ -394,7 +394,7 @@
   }
   .panel-head h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--text-h);
   }
@@ -429,7 +429,7 @@
     flex: none;
   }
   .view-lbl {
-    font-size: 11px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--muted);
@@ -447,7 +447,7 @@
     border-radius: 6px;
     background: var(--code-bg);
     color: var(--text-h);
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.55;
     resize: none;
     tab-size: 4;
@@ -491,7 +491,7 @@
   .geometry summary {
     cursor: pointer;
     font-family: var(--sans);
-    font-size: 0.82rem;
+    font-size: 13px;
     color: var(--muted);
   }
   .geometry .frames {
@@ -518,7 +518,7 @@
   }
   .legend code {
     font-family: var(--mono);
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-h);
     padding: 0 2px;
   }
@@ -563,7 +563,7 @@
     border-bottom: 1px dashed var(--border);
   }
   .word-ipa {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--text-h);
   }
   .gloss {
@@ -597,7 +597,7 @@
     align-items: baseline;
     flex-wrap: wrap;
     gap: 8px;
-    font-size: 16px;
+    font-size: 15px;
     color: var(--text-h);
   }
   .arrow {
@@ -616,7 +616,7 @@
     margin-top: 12px;
     padding-top: 8px;
     border-top: 1px solid var(--border);
-    font-size: 18px;
+    font-size: 15px;
   }
   .surface .lbl {
     font-family: var(--sans);
