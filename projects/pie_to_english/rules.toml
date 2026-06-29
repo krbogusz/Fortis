@@ -517,6 +517,15 @@ definition = "[+syll, +low, +front, length: short] → [ATR, RTR: none]"
 
 # §17.7.2.1.5  In a rhotic (e.g. General American) accent, an unstressed */ə/ + */r/
 # coalesces into the r-coloured vowel */ɚ/ — *faðər > *faðɚ ('father', 'mother', 'over').
+# §17.7.2.1.4  A stressed vowel before */r/ + a consonant (or word-end) loses its quality
+# and r-colours to the NURSE vowel /ɝ/ — *werk > *wɝk 'work', *wʌrm > *wɝm 'worm'. (Same
+# r-coloured central vowel as unstressed /ɚ/ below, written ə˞; only the stress differs.)
+[nurse_merger]
+time = 1850
+name = "Pre-/r/ NURSE merger > /ɝ/"
+description = "*werk > *wɝk 'work', *wʌrm > *wɝm 'worm'"
+definition = "[+syll, stress: primary] r → [front: none, back: none, aperture: none, labial: none, advancement: none, +retroflex] ∅ / _ ([-syll] | #)"
+
 [r_colouring]
 time = 1900
 name = "Unstressed */ər/ > /ɚ/"
