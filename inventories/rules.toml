@@ -81,3 +81,30 @@ words       = ["right-to-left"]
 name        = "Right-to-left raising"
 definition  = "[+syllabic, +front, !+high, !+low] -> [aperture, high] / _ [-syllabic]* [+syllabic, +high]"
 application = "right_to_left"
+
+# A timed chain: the medial consonant of *pata* lenites step by step through the centuries
+# (t > d > ð > ∅), so one word's history shows across several timesteps. Rules sharing a
+# time (300) are grouped under that time.
+[lenition_voicing]
+words      = ["sound change over time"]
+time       = 100
+name       = "Intervocalic voicing"
+definition = "[-sonorant, -continuant] -> [+voice] / [+syllabic] _ [+syllabic]"
+
+[lenition_spirantization]
+words      = ["sound change over time"]
+time       = 200
+name       = "Spirantisation"
+definition = "[-sonorant, -continuant, +voice] -> [+continuant] / [+syllabic] _ [+syllabic]"
+
+[lenition_loss]
+words      = ["sound change over time"]
+time       = 300
+name       = "Debuccalisation"
+definition = "[-sonorant, +continuant, +voice] -> ∅ / [+syllabic] _ [+syllabic]"
+
+[lenition_hiatus]
+words      = ["sound change over time"]
+time       = 300
+name       = "Hiatus coalescence"
+definition = "[+syllabic] [+syllabic] -> [length: long] ∅"
