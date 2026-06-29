@@ -356,3 +356,19 @@ def render_place_changes(before: Form, after: Form, project: Project) -> list[st
                 )
                 break
     return diagrams
+
+
+def render_change(before: Form, after: Form, project: Project) -> list[str]:
+    """Every autosegmental change for one rule, as fork diagrams — the single renderer to call.
+
+    One entry point for both kinds of spread, which share the label/fork/descender notation
+    (``│`` kept · ``╎`` added · ``╪`` delinked): a *tier* autosegment (tone, stress) whose links
+    changed yields one diagram (all tiers together); each *segmental-node* (place) assimilation
+    yields its own. Returns them in display order — tier change first, then place assimilations.
+    """
+    diagrams: list[str] = []
+    tier = render_autosegmental_change(before, after, project)
+    if "╎" in tier or "╪" in tier:  # the tier diagram is meaningful only when a link changed
+        diagrams.append(tier)
+    diagrams.extend(render_place_changes(before, after, project))
+    return diagrams

@@ -15,8 +15,7 @@ from pathlib import Path
 from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.diagram import (
     render_autosegmental,
-    render_autosegmental_change,
-    render_place_changes,
+    render_change,
 )
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
@@ -207,13 +206,9 @@ def _render_derivation_md(derivation: Derivation, project: Project) -> list[str]
         lines += ["```", *trace, "```", ""]
 
     for step in derivation.steps:
-        diagram = render_autosegmental_change(step.before, step.after, project)
-        if "╎" in diagram or "╪" in diagram:  # an added or delinked association
+        for diagram in render_change(step.before, step.after, project):  # unified: tier + place
             label = step.rule.name or _SUBRULE_SUFFIX.sub("", step.rule.id)
             lines += [f"{label} — association change", "", "```", diagram, "```", ""]
-        for diagram in render_place_changes(step.before, step.after, project):
-            label = step.rule.name or _SUBRULE_SUFFIX.sub("", step.rule.id)
-            lines += [f"{label} — place assimilation", "", "```", diagram, "```", ""]
     return lines
 
 

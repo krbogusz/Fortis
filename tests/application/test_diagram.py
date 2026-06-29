@@ -3,6 +3,7 @@
 from src.fortis.application.diagram import (
     render_autosegmental,
     render_autosegmental_change,
+    render_change,
     render_geometry_tree,
     render_place_change,
 )
@@ -73,6 +74,20 @@ def test_spread_change_renders_as_a_fork(project):
     out = render_autosegmental_change(before, after, project)
     assert "┌" in out and "┐" in out  # the fork ties the one tone to both anchors
     assert "│" in out and "╎" in out  # first link kept (solid), the new one dashed
+
+
+def test_render_change_is_the_unified_entry_point(project):
+    # render_change returns every autosegmental change for a rule; a tier spread comes back as
+    # one fork diagram (place assimilations would each add their own).
+    before = string_to_sequence("taka", project)
+    t = before.fresh_id()
+    before.tiers["tone"].autosegs.append(_tone(4, t))
+    before.tiers["tone"].links.add((t, 1))
+    after = before.copy()
+    after.tiers["tone"].links.add((t, 3))  # the tone spreads
+    diagrams = render_change(before, after, project)
+    assert len(diagrams) == 1
+    assert "┌" in diagrams[0] and "╎" in diagrams[0]  # the spread fork, dashed new link
 
 
 def test_change_removed_association_is_delinked(project):

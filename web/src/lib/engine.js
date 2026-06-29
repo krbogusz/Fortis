@@ -33,7 +33,7 @@ from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
-from src.fortis.application.diagram import render_autosegmental, render_autosegmental_change, render_place_changes, render_geometry_tree
+from src.fortis.application.diagram import render_autosegmental, render_change, render_geometry_tree
 _SUB = re.compile(r"#\\d+$")
 INV = "/work/inventories"
 def read_file(name): return (Path(INV)/name).read_text(encoding="utf-8")
@@ -56,11 +56,8 @@ def run_derivations():
                           "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                           "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
             lbl = (str(s.rule.time)+": " if s.rule.time is not None else "")+(s.rule.name or base)
-            change = render_autosegmental_change(s.before, s.after, project)
-            if "╎" in change or "╪" in change:  # an added (dashed) or delinked association
-                frames.append({"label":lbl,"diagram":change})
-            for place in render_place_changes(s.before, s.after, project):  # place assimilation
-                frames.append({"label":lbl,"diagram":place})
+            for diagram in render_change(s.before, s.after, project):  # unified: tier + place changes
+                frames.append({"label":lbl,"diagram":diagram})
         geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
                     "steps":steps,"frames":frames,"geometry":geometry})
