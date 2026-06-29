@@ -257,11 +257,12 @@
             <code>╎</code> added (spread / dock) · <code>╪</code> delinked
           </p>
           {#each result.derivations as d}
-            <article class="card">
-              <header class="word-head">
+            <details class="card auto-card" open={d.autosegmental}>
+              <summary>
                 <span class="word-ipa">{d.ipa}</span>
                 {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
-              </header>
+                {#if !d.autosegmental}<span class="flat-note">no autosegmental process</span>{/if}
+              </summary>
               <div class="frames">
                 {#each d.frames as f, i}
                   <div class="frame">
@@ -280,7 +281,7 @@
                   {/if}
                 {/each}
               </div>
-            </article>
+            </details>
           {/each}
         {:else}
           {#each result.derivations as d}
@@ -487,6 +488,34 @@
     margin-bottom: 14px;
     background: var(--panel);
     box-shadow: var(--shadow);
+  }
+  .auto-card > summary {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .auto-card > summary::-webkit-details-marker {
+    display: none;
+  }
+  .auto-card > summary::before {
+    content: "▾";
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .auto-card:not([open]) > summary::before {
+    content: "▸";
+  }
+  .auto-card[open] > summary {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--muted);
+  }
+  .flat-note {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 13px;
   }
   .frames {
     display: flex;

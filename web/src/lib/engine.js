@@ -62,9 +62,18 @@ def run_derivations():
             lbl = (str(s.rule.time)+": " if s.rule.time is not None else "")+(s.rule.name or base)
             for diagram in render_change(s.before, s.after, s.rule, project):  # tier + segmental spreads
                 frames.append({"label":lbl,"diagram":diagram})
+        # A word has an autosegmental representation if its input carries tier autosegs OR a rule
+        # performed a spread/dock/delink (a change frame). Compute this BEFORE the Surface frame —
+        # the surface diagram differs from the input for any rule at all, so it must not count.
+        has_tiers = any(t.autosegs for t in d.input.tiers.values())
+        autoseg = has_tiers or len(frames) > 1
+        if autoseg:  # pair the Input "before" with a Surface "after", only where one is meaningful
+            after_diagram = render_autosegmental(d.surface, project)
+            if after_diagram != frames[0]["diagram"]:
+                frames.append({"label":"Surface","diagram":after_diagram})
         geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
-                    "steps":steps,"frames":frames,"geometry":geometry})
+                    "steps":steps,"frames":frames,"geometry":geometry,"autosegmental":autoseg})
     return json.dumps({"derivations": out})
 `;
 
