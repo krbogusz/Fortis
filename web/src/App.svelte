@@ -19,6 +19,7 @@
   let busy = $state(false); // a derivation run is in flight
 
   let mode = $state("historical"); // "historical" | "autosegmental"
+  let showDef = $state(true); // show each rule's definition under its name
   let result = $state(null); // { derivations } | { error }
   let csvMode = $state("table"); // letters.csv view: "table" | "raw"
 
@@ -218,6 +219,11 @@
         <h2>Results</h2>
         <div class="actions">
           <button
+            class:active={showDef}
+            disabled={!ready}
+            onclick={() => (showDef = !showDef)}>Definition</button
+          >
+          <button
             class:active={mode === "historical"}
             disabled={!ready}
             onclick={() => (mode = "historical")}>Historical</button
@@ -290,7 +296,7 @@
                   {/if}
                   {#if s.heading}
                     <div class="rule-heading">
-                      {s.heading}{#if s.definition}<span class="def">{s.definition}</span>{/if}
+                      {s.heading}{#if s.definition && showDef}<span class="def">{s.definition}</span>{/if}
                     </div>
                   {/if}
                   <div class="step">
@@ -566,6 +572,7 @@
   }
   .word-ipa {
     font-size: 20px;
+    font-weight: 700;
     color: var(--text-h);
   }
   .gloss {
