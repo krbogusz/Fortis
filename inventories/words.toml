@@ -7,6 +7,8 @@
 "akba"   = "voicing assimilation"
 "taki"   = "i-umlaut"
 "tag"    = "final devoicing"
+"asta"   = "coda lenition, early"
+"aspa"   = "coda lenition, late"
 "maha"   = "intervocalic loss"
 "katr"   = "epenthesis"
 "atta"   = "degemination"

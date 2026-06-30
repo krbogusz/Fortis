@@ -15,6 +15,23 @@ words      = ["final devoicing"]
 name       = "Final devoicing"
 definition = "[-sonorant] -> [-voice] / _ #"
 
+# Syllabification is TIME-KEYED (see syllable_parts.toml): the onset/coda patterns switch on at
+# t=500. The same coda rule (s → h before a syllable boundary $) fires on two s+stop words at
+# different times — EARLY (t=0), before the patterns, when sonority puts s in the coda (asta →
+# as.ta → ah.ta); and LATE (t=500), after the patterns resyllabify s into the onset (aspa → a.spa),
+# where the coda rule no longer reaches it. The boundary moved because the syllable RULE changed.
+[coda_lenition_early]
+words      = ["coda lenition, early"]
+time       = 0
+name       = "Coda s-lenition (early, t=0)"
+definition = "s -> h / _ $"
+
+[coda_lenition_late]
+words      = ["coda lenition, late"]
+time       = 500
+name       = "Coda s-lenition (late, t=500)"
+definition = "s -> h / _ $"
+
 [intervocalic_loss]                 # deletion (-> the empty string)
 words      = ["intervocalic loss"]
 name       = "Intervocalic loss"

@@ -1,20 +1,25 @@
-# Syllable structure: the nucleus, plus example onset/coda CONSTRAINTS.
+# Syllable structure is TIME-KEYED, like rules — the constraints in force evolve through a run.
+# The nucleus is defined from the start, but the onset/coda CONSTRAINTS only switch on at time 500.
+# So a rule firing before 500 syllabifies by sonority + the Maximal Onset Principle (the fallback
+# when no onset/coda is defined), while a rule at/after 500 uses the patterns. See the
+# `coda lenition, early`/`late` words: asta at t=0 → as.ta (s in coda) but aspa at t=500 → a.spa
+# (s resyllabified into the onset), so the coda s-rule bites the early one and not the late one.
 #
-# When an onset/coda `definition` is given it DEFINES legality (sonority is not consulted): every
-# split point is a candidate, the longest pattern-legal onset wins, and the rest of an intervocalic
-# cluster falls to the coda. Word-edge onsets/codas are forced (unchecked). With no onset/coda
-# defined, syllabification falls back to sonority + the Maximal Onset Principle.
-#
-# The onset below is a Latin-style grammar — four legal shapes plus an empty onset:
+# When defined, an onset/coda pattern DEFINES legality (sonority is not consulted): every split
+# point is a candidate, the longest pattern-legal onset wins, the rest of an intervocalic cluster
+# is the coda, and word-edge constituents are forced (unchecked). The onset below is a Latin-style
+# grammar — four legal shapes plus an empty onset:
 #   s + stop + liquid    (str, spr, skr)
 #   s + stop             (st, sp, sk)
 #   obstruent + liquid   (tr, kr, pl, fr — "muta cum liquida")
 #   any single consonant (covers nasals, lone liquids, lone obstruents)
 # so intelleːksit → in.tel.leːk.sit and kastra → ka.stra, while geminates and obstruent+obstruent
-# clusters (ll, kt, ks) split. A single-consonant coda takes whatever the onset leaves; here
-# [-sonorant, -continuant] is a stop and [+consonantal, +sonorant, nasal: none] a liquid (l, r).
+# clusters (ll, kt, ks) split. Here [-sonorant, -continuant] is a stop, [+consonantal, +sonorant,
+# nasal: none] a liquid (l, r), and a single-consonant coda takes whatever the onset leaves.
 
 [-2000]
 nucleus = { definition = "+syll" }
+
+[500]
 onset = { definition = "( s [-sonorant, -continuant] [+consonantal, +sonorant, nasal: none] | s [-sonorant, -continuant] | [-sonorant] [+consonantal, +sonorant, nasal: none] | [-syllabic] )?" }
 coda = { definition = "[-syllabic]?" }
