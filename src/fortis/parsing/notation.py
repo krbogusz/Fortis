@@ -25,7 +25,7 @@ The grammar::
     sequence    := element*
     element     := (INT EQ)? unit                            # Bound
     unit        := BANG? atom quantifier?
-    atom        := BUNDLE | null | recall | NAME | group | BOUNDARY
+    atom        := BUNDLE | null | recall | NAME | group | BOUNDARY | FLOATING
     recall      := AT INT                                    # RecallRef
     null        := "∅" | "0"
     group       := LPAREN sequence (PIPE sequence)* RPAREN   # 1 alt -> Group, >1 -> Disjunction
@@ -276,7 +276,7 @@ class _Parser:
         return atom
 
     def _atom(self, bundle: BundleParser) -> Element:
-        """Parse one atom: bundle, wildcard, null, recall, name, boundary, group."""
+        """Parse one atom: bundle, wildcard, null, recall, name, boundary, group, floating autoseg."""
         tok = self._peek()
         if tok is None:
             self._fail("expected an element, found end of input")

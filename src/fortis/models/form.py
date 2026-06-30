@@ -1,8 +1,9 @@
-"""A word form: the segmental tier, plus (later) autosegmental tiers.
+"""A word form: the segmental tier, plus its autosegmental tiers.
 
-In Phase 0 ``tiers`` is always empty and a ``Form`` behaves exactly as the bare
-``list[FeatureBundle]`` it replaces — it just carries each segment's stable identity
-alongside the bundle. The autosegmental ``Tier``/``Autoseg`` types arrive in Phase 1.
+``segments`` is the segmental tier — each a feature bundle carrying a stable identity.
+``tiers`` maps a tier name (e.g. ``tone``, ``stress``) to its ``AutosegmentalTier`` of
+autosegments and association links; it is empty for a project that declares no tiers, in
+which case a ``Form`` behaves exactly as the bare ``list[FeatureBundle]`` it replaces.
 """
 from __future__ import annotations
 

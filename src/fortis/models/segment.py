@@ -10,10 +10,11 @@ from src.fortis.models.bundles import FeatureBundle
 class Segment:
     """One position on the segmental tier: a bundle plus a stable ``id``.
 
-    The id survives the splicing the applier does to the segment list, so a later
+    The id survives the splicing the applier does to the segment list, so an
     autosegmental association line can point at a segment that keeps its identity even
-    as neighbours are inserted or deleted around it. In Phase 0 nothing reads the id —
-    it is inert scaffolding.
+    as neighbours are inserted or deleted around it: a tier link pairs an autoseg id
+    with one of these segment ids, and a deleted anchor's id simply leaves the live
+    set, stranding its autoseg as floating.
     """
 
     bundle: FeatureBundle

@@ -487,7 +487,7 @@ Syllabification places syllable boundaries on a form without inserting or deleti
 
 Onset/coda patterns constrain only the interior division where there is a choice; word-edge onsets and codas are forced and not checked.
 
-The `$` assertion matches at any syllable boundary (interior or word edge). Syllable-tier diacritics (tone, stress) attach to the nucleus of their syllable during segmentation; rendering them back to IPA is not yet implemented.
+The `$` assertion matches at any syllable boundary (interior or word edge). Syllable-tier diacritics (tone, stress) attach to the nucleus of their syllable during segmentation, and render back to IPA in `render_syllabified`: stress at the syllable's left edge (`ˈ`, `ˌ`) and tone as Chao tone letters at the right edge (a contour as a tone-letter sequence).
 
 ---
 
@@ -499,13 +499,18 @@ For each word, Fortis records the sequence of forms from the input through every
 
 ### 8.2 Output format
 
-Each word prints its verbatim headword and gloss, then one line per rule that fired — `[rule_id]`, the resulting form (with `.` between syllables), and a parenthesised summary of what changed — and finally the surface form. Rules that did not fire are omitted.
+Each word prints its headword and gloss (`ipa – "gloss"`), then a block for each rule that fired: a heading line with the rule's `time:` and name, and beneath it one indented `before → after   (change)` line per locus the rule changed (with `.` between syllables). A final `Surface:` line gives the surface form. Rules that did not fire are omitted.
 
 ```
-kʲm̩tom  "hundred"
-  →  [centumization]  km̩.tom   (kʲ→k)
-  →  [u_epenthesis]   kum.tom   (m̩→um)
-Surface: kum.tom
+meħˈteːr – "mother"
+    -2000: Laryngeal colouring before a laryngeal
+        meħˈteːr → maħˈteːr   (e→a)
+    -2000: Loss of laryngeals after vowels
+        maħˈteːr → maːˈteːr   (aħ→aː)
+    …
+    1950: */θ̠ ð̠/ > */θ ð/
+        ˈmʌ.ð̠ə˞ → ˈmʌ.ðə˞   (ð̠→ð)
+    Surface: ˈmʌ.ðə˞
 ```
 
 The change summary shows the segments that changed as `old→new` (e.g. `kʲ→k`); for a length change it trims the shared prefix/suffix and shows just the differing region (`m̩→um`, with `∅` for a fully inserted or deleted side).

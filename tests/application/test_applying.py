@@ -63,6 +63,13 @@ class TestMergePath:
         out = _apply("[+high] -> [αfront] / [αfront] _", segs, features, letters)
         assert _values(out) == [{"front": 1, "high": 1}]
 
+    def test_opposite_alpha_in_result_dissimilates(self, features, letters):
+        # α binds the left neighbour's voicing (=1); a result `-α` must write the
+        # OPPOSITE pole (voice 0), i.e. dissimilation — not recall α unchanged.
+        segs = [_fb(voice=1), _fb(high=1)]
+        out = _apply("[+high] -> [-αvoice] / [αvoice] _", segs, features, letters)
+        assert _values(out) == [{"voice": 0, "high": 1}]
+
     def test_alpha_recall_into_a_contour_limb(self, features, letters):
         # α binds the left neighbour's length; the result recalls it as the first
         # limb of a contour, [length: α>3] → the contour (2, 3).

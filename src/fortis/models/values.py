@@ -67,6 +67,25 @@ class ContourEdge(StrEnum):
 type ContourPosition = ContourEdge | int | tuple[int, ...]  # tuple for @2, @2;3
 
 
+def opposite_pole(atom: Limb, unary: bool) -> Limb:
+    """The opposite pole of a value — what ``-α`` resolves to.
+
+    A **unary** (privative) feature flips present (1) ↔ absent (``None``); a
+    **binary** feature flips 0 ↔ 1. Alpha-opposite is validation-restricted to
+    these two kinds (scalar is rejected), so any other atom is left unchanged
+    (defensive, unreachable). Shared by the matcher (binding ``-α``) and the
+    applier (recalling ``-α`` in a result), so the two never diverge on what the
+    opposite pole is.
+    """
+    if unary:
+        return None if atom == 1 else 1
+    if atom == 0:
+        return 1
+    if atom == 1:
+        return 0
+    return atom
+
+
 def make_value(limbs: tuple[Limb, ...]) -> Value:
     """Build a feature value, collapsing a length-1 contour to a scalar."""
     return limbs[0] if len(limbs) == 1 else limbs

@@ -222,6 +222,7 @@ fortis/
         ├── syllabifying.py      #   syllabify: sonority + onset/coda-pattern boundaries
         ├── segmentation.py      #   string_to_sequence: IPA → feature bundles
         ├── rendering.py         #   sequence_to_string, render_syllabified, describe_change
+        ├── diagram.py           #   render_change/render_autosegmental: tier association diagrams
         ├── tiers.py             #   autosegmental tier ops: associate, cleanup/OCP, redock, spread/dock
         └── deriving.py          #   apply_rule per mode; derive a word → Derivation
 ```

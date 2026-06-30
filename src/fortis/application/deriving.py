@@ -24,9 +24,9 @@ which inserts past its own advancing cursor without bound; such rules are outsid
 the realistic diachronic rule set and carry no iteration cap.
 
 The form is threaded through every rule whether or not it fires; only rules that
-change the form contribute a ``DerivationStep``. The step's ``change`` summary is
-a provisional feature-level diff — IPA rendering is a later milestone — and is
-cosmetic: derivation correctness never depends on it.
+change the form contribute a ``DerivationStep`` (its before/after forms and boundaries).
+The human-readable change summary shown per step is formatted in the presentation layer
+and is cosmetic: derivation correctness never depends on it.
 
 Syllabification (§7): each rule (re)syllabifies the current form for its match
 pass, using the ``SyllablePartsInventory`` constraints in force at the rule's

@@ -4,7 +4,7 @@ import unicodedata
 
 
 def safe_int(input: str) -> int | None:
-    """Check if a string can be safely converted to a string.
+    """Convert a string to an int if it can be parsed as one.
 
     Returns an int on success or None if it cannot.
     """

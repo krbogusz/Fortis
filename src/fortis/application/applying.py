@@ -66,7 +66,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec
-from src.fortis.models.values import AlphaRef, AutosegRecall, Limb
+from src.fortis.models.values import AlphaOp, AlphaRef, AutosegRecall, Limb, opposite_pole
 
 # Reused verbatim from the validator so the applier's path decision can never
 # disagree with what the parser accepted. ``parsing/rule_validation`` is the
@@ -196,8 +196,10 @@ def _variable_count(flat_target: list[Element], span_width: int) -> int | None:
 def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureBundle:
     """Turn a result bundle into a realized delta, resolving alpha recalls.
 
-    A spec value of ``None`` is kept (it instructs ``merge`` to delink). A bare
-    ``AlphaRef`` is replaced by its bound value. A **conditional** feature
+    A spec value of ``None`` is kept (it instructs ``merge`` to delink). An
+    ``AlphaRef`` is replaced by its bound value — a ``same`` (``α``) recall by α
+    itself, an ``opposite`` (``-α``) recall by α's opposite pole (so a result
+    ``-α`` dissimilates, mirroring how the matcher bound it). A **conditional** feature
     (``[<n: F>]``) is applied only when its label's condition held during matching
     (recorded in ``bindings.conditions``); when the condition was false the feature
     is skipped. A missing label means the condition was never evaluated (e.g. the
@@ -217,7 +219,8 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
                 continue  # condition was false → do not apply this feature
         value = spec.value
         if isinstance(value, AlphaRef):
-            value = bindings.alpha[value.var]
+            bound = bindings.alpha[value.var]
+            value = opposite_pole(bound, value.unary) if value.op is AlphaOp.opposite else bound
         elif isinstance(value, tuple):
             # A contour: resolve any alpha recall limb by limb, keeping the shape. A
             # limb must be a single value, so an alpha bound to a contour cannot nest
@@ -233,7 +236,9 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
                         f"alpha '{limb.var}' is bound to a contour and cannot be recalled "
                         f"into a single contour limb of '{feature}'"
                     )
-                limbs.append(bound)
+                limbs.append(
+                    opposite_pole(bound, limb.unary) if limb.op is AlphaOp.opposite else bound
+                )
             value = tuple(limbs)
         delta[feature] = FeatureSpec(feature=feature, value=value)
     return delta

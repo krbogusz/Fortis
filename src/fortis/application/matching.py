@@ -91,29 +91,13 @@ from src.fortis.models.values import (
     ContourPosition,
     Limb,
     Value,
+    opposite_pole,
 )
 
 
 def _limbs(value: Value) -> tuple[Limb, ...]:
     """Decompose a value into its contour limbs (a scalar becomes one limb)."""
     return value if isinstance(value, tuple) else (value,)
-
-
-def _opposite(atom: Limb, unary: bool) -> Limb:
-    """The opposite pole of a value.
-
-    A **unary** (privative) feature flips present (1) ↔ absent (``None``); a
-    **binary** feature flips 0 ↔ 1. Alpha-opposite is validation-restricted to
-    these two kinds (scalar is rejected), so any other atom is left unchanged
-    (defensive, unreachable).
-    """
-    if unary:
-        return None if atom == 1 else 1
-    if atom == 0:
-        return 1
-    if atom == 1:
-        return 0
-    return atom
 
 
 def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool:
@@ -140,7 +124,7 @@ def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool
             case AlphaOp.same:
                 bindings.alpha[ref.var] = atom
             case AlphaOp.opposite:
-                bindings.alpha[ref.var] = _opposite(atom, ref.unary)
+                bindings.alpha[ref.var] = opposite_pole(atom, ref.unary)
             case AlphaOp.other:
                 bindings.pending_other.append((ref.var, atom))  # ≠ α, checked later
         return True
@@ -454,7 +438,8 @@ class SyllableView:
     ``nuclei[pos]`` is the nucleus bundle of the segment at ``pos``'s syllable (the
     ``Syllable.bundle`` view); ``features`` names the syllable-tier features. A
     syllable-tier spec is then matched against ``nuclei[pos]`` rather than the
-    segment itself. ``floating`` lists the unanchored autosegments (id, bundle), which a
+    segment itself. ``floating`` lists the unanchored autosegments as ``(id, bundle, gap)``
+    — ``gap`` being the segment position it floats beside, or ``None`` — which a
     ``⟨...⟩`` element matches and binds for docking.
     """
 

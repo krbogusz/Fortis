@@ -697,7 +697,7 @@ def validate_result_spec(
     result position. The remaining spec-level invariant is that alpha-opposite
     (``-α``) is binary/unary only — a scalar feature has no single opposite.
     Cross-position rules (conditional-label pairing with the target, alpha
-    binding) belong to the not-yet-built rule-level validation layer.
+    binding) are checked in the rule-level validation layer (``rule_validation.py``).
     """
     error_list: list[str] = []
     message = opposite_alpha_on_scalar(result_spec.feature, result_spec.value, features)

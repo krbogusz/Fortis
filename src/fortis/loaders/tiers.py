@@ -1,8 +1,9 @@
 """Load autosegmental tier declarations from ``tiers.toml``.
 
 The file is optional: a project that declares no tiers runs the engine exactly as it
-did before. Each top-level table is one tier, naming the features it carries, its anchor
-predicate, and its association policy.
+did before. Each top-level table is one tier — a suprasegmental feature that carries
+itself — declaring that feature (kind/values/short), its anchor predicate, and its
+association policy.
 """
 from __future__ import annotations
 
@@ -25,7 +26,7 @@ def load_tier(
     Args:
         name: The tier's name (the TOML table key).
         tier_def: Raw dictionary from the TOML file.
-        features: Feature inventory, for validating ``carries`` and parsing ``anchor``.
+        features: Feature inventory — the tier registers itself on it and parses ``anchor`` against it.
     """
     error_list: list[str] = []
 

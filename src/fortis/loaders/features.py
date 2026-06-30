@@ -97,7 +97,7 @@ def load_kind(feature: str, feature_def: dict[str, Any]) -> Result[FeatureKind, 
     """
     kind = feature_def.get("kind")
     if not kind:
-        return Err(f"Feature '{feature}' is missing the required field 'type'")
+        return Err(f"Feature '{feature}' is missing the required field 'kind'")
     try:
         kind = FeatureKind(kind.strip().lower())
     except ValueError:
