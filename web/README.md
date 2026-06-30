@@ -1,43 +1,44 @@
-# Svelte + Vite
+# Fortis — web app
 
-This template should help get you started developing with Svelte in Vite.
+A browser front-end for the Fortis phonology engine. It runs the **real Python
+engine** (`../src/fortis`) in the browser via [Pyodide](https://pyodide.org) — no
+server, no reimplementation. Edit the inventories on the left, and the derivations
+re-run on the right.
 
-## Recommended IDE Setup
+## How it reflects the engine
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+There is no JavaScript copy of the engine to keep in sync. At `predev`/`prebuild`,
+`scripts/build-engine.mjs` tars the repo's live `src/` and `inventories/` into
+`public/engine.tgz` and copies the version-locked Pyodide runtime into
+`public/pyodide/` (both are gitignored — built fresh). The browser unpacks that
+bundle, puts it on `sys.path`, imports `src.fortis`, and calls the engine directly
+(`src/lib/engine.js`). So any change to the engine or the shipped inventories is
+reflected on the next build — the glue only calls stable public functions
+(`derive`, `render_syllabified`, `describe_change`, `render_autosegmental`,
+`render_change`, `render_geometry_tree`).
 
-## Need an official Svelte framework?
+## Using it
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+- **Inventories** (left): the eight editable files — `features.toml`, `letters.csv`,
+  `diacritics.toml`, `sonorities.toml`, `syllable_parts.toml`, `tiers.toml`,
+  `words.toml`, `rules.toml`. Edit in place, or **Load file** / **Load project** to
+  swap in your own. `letters.csv` has a table view.
+- **Results** (right), two views:
+  - **Historical** — the sound-change trace: each firing rule grouped under its
+    `time:` heading, with `before → after (change)` per step and the surface form.
+    **Definition** toggles the rule bodies.
+  - **Autosegmental** — the tier/geometry picture: each rule as an association
+    change (`│` kept · `╎` added — spread/dock · `╪` delinked), plus a per-segment
+    feature-geometry tree for the input.
 
-## Technical considerations
+## Develop
 
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
 ```
+npm install
+npm run dev        # predev rebuilds the engine bundle, then starts Vite
+npm run build      # prebuild rebuilds the bundle, then builds to dist/
+npm run smoke      # headless check that the engine loads and derives
+```
+
+`npm run build-engine` rebuilds `public/engine.tgz` on its own — run it after
+changing `../src` or `../inventories` if the dev server is already up.
