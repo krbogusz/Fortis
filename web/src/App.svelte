@@ -215,28 +215,36 @@
 
     <!-- RIGHT: results -->
     <section class="panel right">
-      <div class="panel-head">
-        <h2>Results</h2>
-        <div class="actions">
-          <button
-            class:active={showDef}
-            disabled={!ready}
-            onclick={() => (showDef = !showDef)}>Definition</button
-          >
-          <button
-            class:active={mode === "historical"}
-            disabled={!ready}
-            onclick={() => (mode = "historical")}>Historical</button
-          >
-          <button
-            class:active={mode === "autosegmental"}
-            disabled={!ready}
-            onclick={() => (mode = "autosegmental")}>Autosegmental</button
-          >
-          {#if busy}<span class="running"
-              ><span class="spinner small"></span> running…</span
-            >{/if}
+      <div class="panel-head results-head">
+        <div class="head-row">
+          <h2>Results</h2>
+          <div class="actions">
+            <button
+              class:active={showDef}
+              disabled={!ready}
+              onclick={() => (showDef = !showDef)}>Definition</button
+            >
+            <button
+              class:active={mode === "historical"}
+              disabled={!ready}
+              onclick={() => (mode = "historical")}>Historical</button
+            >
+            <button
+              class:active={mode === "autosegmental"}
+              disabled={!ready}
+              onclick={() => (mode = "autosegmental")}>Autosegmental</button
+            >
+            {#if busy}<span class="running"
+                ><span class="spinner small"></span> running…</span
+              >{/if}
+          </div>
         </div>
+        {#if mode === "autosegmental"}
+          <p class="legend">
+            Each rule as an association change: <code>│</code> kept ·
+            <code>╎</code> added (spread / dock) · <code>╪</code> delinked
+          </p>
+        {/if}
       </div>
 
       <div class="results ipa">
@@ -252,10 +260,6 @@
         {:else if result.derivations.length === 0}
           <p class="muted">No words in the project.</p>
         {:else if mode === "autosegmental"}
-          <p class="legend">
-            Each rule as an association change: <code>│</code> kept ·
-            <code>╎</code> added (spread / dock) · <code>╪</code> delinked
-          </p>
           {#each result.derivations as d}
             <details class="card auto-card" open={d.autosegmental}>
               <summary>
@@ -411,6 +415,17 @@
     padding: 12px 16px 8px;
     flex: none;
   }
+  .results-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
   .panel-head h2 {
     margin: 0;
     font-size: 15px;
@@ -520,7 +535,7 @@
   .auto-card[open] > summary {
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
   }
   .flat-note {
     color: var(--muted);
@@ -561,7 +576,7 @@
   .legend {
     font-size: 13px;
     color: var(--muted);
-    margin: 0 0 14px;
+    margin: 0;
   }
   .legend code {
     font-family: var(--mono);
