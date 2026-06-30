@@ -12,7 +12,7 @@ from src.fortis.application.diagram import (
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.models.autosegment import Autoseg
 from src.fortis.models.bundles import FeatureBundle
-from src.fortis.models.inventories import DiacriticInventory
+from src.fortis.models.features import FeatureInventory
 from src.fortis.models.specs import FeatureSpec
 
 
@@ -26,7 +26,7 @@ def test_single_link_is_a_vertical_bar(project):
     form.tiers["tone"].autosegs.append(_tone(4, h))
     form.tiers["tone"].links.add((h, 1))  # high on the vowel
     out = render_autosegmental(form, project)
-    assert "˦" in out and "│" in out  # the tone letter + one association line
+    assert "tone: high" in out and "│" in out  # the feature label + one association line
 
 
 def test_spread_is_a_fork(project):
@@ -44,13 +44,14 @@ def test_contour_converges(project):
     form.tiers["tone"].autosegs += [_tone(5, hi), _tone(3, mid)]
     form.tiers["tone"].links |= {(hi, 1), (mid, 1)}  # two tones on one vowel
     out = render_autosegmental(form, project)
-    assert "└┬┘" in out and "˥" in out and "˧" in out  # converging contour
+    # converging contour: the join glyph plus both levels' feature labels (spaced, not overlapping)
+    assert "└┬┘" in out and "tone: extra-high" in out and "tone: mid" in out
 
 
 def test_floating_tone_has_no_line(project):
     form = string_to_sequence("kata⟨◌́⟩", project)  # a floating high suffix, unanchored
     out = render_autosegmental(form, project)
-    assert "˦" in out.split("\n")[0]  # the high appears on the tone row
+    assert "tone: high" in out.split("\n")[0]  # the high appears on the tone row
     assert "│" not in out and "┬" not in out  # ...with no association line — it floats
 
 
@@ -62,7 +63,7 @@ def test_change_added_association_is_dashed(project):
     after.tiers["tone"].autosegs.append(_tone(4, h))
     after.tiers["tone"].links.add((h, 1))  # H newly on the first vowel
     out = render_autosegmental_change(before, after, project)
-    assert "˦" in out and "╎" in out  # dashed = added
+    assert "tone: high" in out and "╎" in out  # dashed = added
 
 
 def test_spread_change_renders_as_a_fork(project):
@@ -138,7 +139,7 @@ def test_render_change_reads_segmental_spreads_from_the_rule(project):
     # the new place (╎) with the nasal's old place delinked (╪) below.
     place = _change_diagrams(project, "anka")
     assert len(place) == 1  # exactly the one assimilated consonant
-    assert "lingual" in place[0]  # new (shared) + delinked old place both name the lingual node
+    assert "oral" in place[0]  # labelled by the spread node itself, not its whole subtree
     assert "╎" in place[0] and "╪" in place[0]  # the spread (dashed) and the delink bar
 
 
@@ -167,24 +168,21 @@ def test_geometry_tree_nests_real_nodes_for_one_segment(project):
     assert lines[oral].index("oral") < lines[lingual].index("lingual") < lines[back].index("back")
 
 
-def _with_tone4_as(project, symbol):
-    """A copy of *project* whose standalone tone-4 diacritic is *symbol* instead of ˦."""
-    kept = {
-        s: d
-        for s, d in project.diacritics.items()
-        if not (d.contour and set(d.bundle.keys()) == {"tone"} and d.bundle["tone"].value == 4)
-    }
-    kept[symbol] = replace(project.diacritics["˦"], symbol=symbol)
-    return replace(project, diacritics=DiacriticInventory(kept))
+def _with_tone4_label_as(project, label):
+    """A copy of *project* whose tone value 4 is labelled *label* instead of 'high'."""
+    tone = project.features["tone"]
+    features = FeatureInventory(dict(project.features))
+    features["tone"] = replace(tone, values={**tone.values, 4: label})
+    return replace(project, features=features)
 
 
-def test_label_follows_a_redefined_tone_glyph(project):
-    # The diagram reads tone labels from the diacritics inventory, not a hardcoded map:
-    # remap the standalone tone-4 glyph and the diagram label follows it.
-    custom = _with_tone4_as(project, "H")
+def test_label_follows_a_redefined_feature_value(project):
+    # The diagram labels autosegs by feature, read from the inventory — not a hardcoded map:
+    # relabel tone value 4 and the diagram's tone label follows it.
+    custom = _with_tone4_label_as(project, "HIGH!")
     form = string_to_sequence("ta", custom)
     h = form.fresh_id()
     form.tiers["tone"].autosegs.append(_tone(4, h))
     form.tiers["tone"].links.add((h, 1))
     out = render_autosegmental(form, custom)
-    assert "H" in out and "˦" not in out
+    assert "tone: HIGH!" in out

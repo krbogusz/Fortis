@@ -8,7 +8,6 @@ from src.fortis.application.rendering import (
     render_segment,
     render_syllabified,
     sequence_to_string,
-    tier_glyph,
 )
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import syllabify
@@ -125,22 +124,11 @@ class TestSequenceToString:
                 )
 
 
-class TestTierGlyph:
-    """``tier_glyph`` reads suprasegmental labels from the diacritics inventory."""
+class TestSecondaryStress:
+    """The ``ˌ`` diacritic renders secondary stress through the IPA path."""
 
-    def test_scalar_tone_is_the_tone_letter(self, project):
-        assert tier_glyph("tone", 4, project.diacritics) == "˦"
-
-    def test_contour_tone_joins_standalone_levels(self, project):
-        # A contour takes the standalone tone letters (˥˧), never the combining accent ̂.
-        assert tier_glyph("tone", (5, 3), project.diacritics) == "˥˧"
-
-    def test_primary_stress_is_its_mark(self, project):
-        assert tier_glyph("stress", 2, project.diacritics) == "ˈ"
-
-    def test_secondary_stress_is_its_mark(self, project):
-        assert tier_glyph("stress", 1, project.diacritics) == "ˌ"
-
-    def test_undefined_value_is_none(self, project):
-        # A value the inventory defines no diacritic for falls back (None); there is no tone 9.
-        assert tier_glyph("tone", 9, project.diacritics) is None
+    def test_secondary_stress_renders_at_the_syllable_edge(self, project):
+        # ˌka.ˈta: secondary stress ˌ on the first syllable, primary ˈ on the second —
+        # both before-kind marks that stand at the syllable onset and replace the dot.
+        seq = lower_tiers(string_to_sequence("ˌkaˈta", project))
+        assert sequence_to_string(seq, project) == "ˌkaˈta"

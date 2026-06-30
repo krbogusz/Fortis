@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 from dataclasses import dataclass
 
-from src.fortis.application.rendering import render_segment, tier_glyph
+from src.fortis.application.rendering import render_segment
 from src.fortis.general.presenting import present_value
 from src.fortis.general.utils import is_combining
 from src.fortis.models.autosegment import AutosegmentalTier
@@ -46,23 +46,31 @@ def _dwidth(text: str) -> int:
     return sum(0 if is_combining(ch) else 1 for ch in text)
 
 
+def _margin(labels: list[str], floor: int = 4) -> int:
+    """Side padding wide enough that a label centred over the first/last anchor never clips.
+
+    A centred label overhangs its anchor by half its width on each side, so the side margins must
+    cover that overhang — feature labels (``oral·lingual·back…``) are far wider than the old
+    glyphs. ``floor`` (≥4) keeps room for a floating autoseg even when there are no labels.
+    """
+    widest = max((_dwidth(label) for label in labels), default=0)
+    return max(floor, widest // 2 + 1)
+
+
 def _label(autoseg, project: Project) -> str:
-    """A short label for one autosegment (a tone letter, a stress mark, …)."""
+    """A short label for one autosegment (``tone: high``, a place subtree, …)."""
     return _label_from_bundle(autoseg.bundle, project)
 
 
 def _label_from_bundle(bundle, project: Project) -> str:
-    # A segmental geometry node (e.g. place) labels by its node value; its autoseg carries the
-    # node's features, so a place autoseg renders as its major place (labial / lingual·back / …).
-    place = _place_label(bundle)
-    if place is not None:
-        return place
-    # A suprasegmental autoseg (tone, stress, …) labels by its inventory diacritic — the same
-    # source the IPA renderer reads — falling back to the raw value if none is defined.
-    for feature, spec in bundle.items():
-        glyph = tier_glyph(feature, spec.value, project.diacritics)
-        return glyph if glyph is not None else str(spec.value)
-    return "?"
+    """Label an autoseg by its features, not a glyph — an autosegmental tier carries features.
+
+    Each present feature is shown with the geometry tree's ``_feature_label`` (``tone: high``,
+    ``+back``, a unary node's bare name), joined by ``·``. A suprasegmental autoseg is one
+    feature (``tone: high``, ``stress: primary``); a place-node spread is its whole present
+    subtree (``oral·lingual·back``). Derived from the feature inventory, so any geometry works.
+    """
+    return "·".join(_feature_label(f, bundle, project) for f in bundle) or "?"
 
 
 def _put(row: list[str], col: int, text: str) -> None:
@@ -78,8 +86,11 @@ def render_autosegmental(form: Form, project: Project) -> str:
         return "(empty)"
     rendered = [render_segment(s.bundle, project) or "∅" for s in segs]
     slot = max(max((_dwidth(r) for r in rendered), default=1), 3)  # ≥3 leaves room for a contour
+    labels = [_label(a, project) for tier in form.tiers.values() for a in tier.autosegs]
     step = slot + _SEP
-    margin = 4  # room for a floating autosegment before the first / after the last segment
+    if len(labels) >= 2:  # two labels on neighbouring anchors must not collide on the tier row
+        step = max(step, max(_dwidth(label) for label in labels) + 2)
+    margin = _margin(labels)  # wide enough that a centered feature label never clips at the edges
     total = margin + len(segs) * step - _SEP + margin
     center = {s.id: margin + i * step + slot // 2 for i, s in enumerate(segs)}
     pos = {s.id: i for i, s in enumerate(segs)}
@@ -136,8 +147,9 @@ def _tier_band(
             conn_row[col] = "│"
         else:  # several tones converging on one anchor — a contour
             labels = [_label(a, project) for a in group]
-            _put(label_row, col - 1, labels[0])
-            _put(label_row, col + 1, labels[-1])
+            left, right = labels[0], labels[-1]
+            _put(label_row, col - 1 - (_dwidth(left) - 1), left)  # left label's right edge at col-1
+            _put(label_row, col + 1, right)  # right label starts just past the join
             conn_row[col - 1], conn_row[col], conn_row[col + 1] = "└", "┬", "┘"
 
     for autoseg in floats:  # unlinked: shown at its lexical gap, no line
@@ -212,7 +224,15 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
     rendered = [render_segment(s.bundle, project) or "∅" for s in segments]
     slot = max(max((_dwidth(r) for r in rendered), default=1), 3)  # ≥3 leaves room for a contour
     step = slot + _SEP
-    margin = 4
+    labels = [s.label for s in spreads] + [s.replaced[1] for s in spreads if s.replaced]
+    # A contour change lays several labels side by side on one anchor — size the margin to that
+    # group's width, not just a single label, so the group doesn't overflow the row edge.
+    groups: dict[int, int] = {}
+    for s in spreads:
+        if len(s.links) == 1:
+            groups[s.links[0][0]] = groups.get(s.links[0][0], -1) + _dwidth(s.label) + 1
+    widest = max([_dwidth(label) for label in labels] + list(groups.values()), default=0)
+    margin = max(4, widest // 2 + 1)  # fit the labels, single or grouped, without clipping
     total = margin + len(segments) * step - _SEP + margin
     centers = [margin + i * step + slot // 2 for i in range(len(segments))]
 
@@ -240,11 +260,18 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
             fork_row[mid] = "┼" if mid in cols else "┴"  # the join, under the label
             for col, glyph in cols_glyphs:  # styled descender: │ kept · ╎ added · ╪ delinked
                 conn_row[col] = glyph
-        for col, items in singles.items():  # several autosegs on one anchor ⇒ a contour, fanned out
-            spread_out = range(-(len(items) - 1), len(items), 2)  # 1→[0], 2→[-1,1], 3→[-2,0,2], …
-            for (label, glyph), offset in zip(items, spread_out, strict=True):
-                _put(label_row, col + offset - (_dwidth(label) - 1) // 2, label)
-                conn_row[col + offset] = glyph
+        for col, items in singles.items():  # autosegs sharing one anchor
+            if len(items) == 1:  # the common case: one spread on one anchor, centred
+                label, glyph = items[0]
+                _put(label_row, col - (_dwidth(label) - 1) // 2, label)
+                conn_row[col] = glyph
+            else:  # a contour change ⇒ lay the (wide feature) labels side by side, no overlap
+                widths = [_dwidth(label) for label, _ in items]
+                x = col - (sum(widths) + (len(items) - 1)) // 2  # centre the group on the anchor
+                for (label, glyph), w in zip(items, widths, strict=True):
+                    _put(label_row, x, label)
+                    conn_row[x + (w - 1) // 2] = glyph  # descender under each label's centre
+                    x += w + 1
         above = [label_row, fork_row, conn_row] if multi else [label_row, conn_row]
 
     seg_row = [" "] * total
@@ -273,26 +300,6 @@ def _change_glyph(sid: int, before_anchors: set[int], after_anchors: set[int]) -
     if sid in after_anchors:
         return "╎"  # association added (a spread / dock) — dashed
     return "╪"  # association removed — the delink bar
-
-
-def _place_label(bundle) -> str | None:
-    """The segment's oral place, named by its real geometry features (not an invented label).
-
-    Faithful to the feature inventory's own nodes — ``labial``, ``dental``, ``lingual`` with
-    its ``front``/``back`` daughter — rather than the idealized Labial/Coronal/Dorsal. The
-    front/back split keeps two lingual places (coronal vs velar) distinct for change detection.
-    """
-    if "labial" in bundle:
-        return "labial"
-    if "lingual" in bundle:
-        if "front" in bundle:
-            return "lingual·front"
-        if "back" in bundle:
-            return "lingual·back"
-        return "lingual"
-    if "dental" in bundle:
-        return "dental"
-    return None
 
 
 def _result_bundles(elements: tuple) -> Iterator[ResultBundle]:
@@ -338,12 +345,6 @@ def _subtree(bundle: FeatureBundle, feature: str, project: Project) -> frozenset
     return frozenset((n, bundle[n].value) for n in names if n in bundle)
 
 
-def _subtree_bundle(bundle: FeatureBundle, feature: str, project: Project) -> FeatureBundle:
-    """*feature*'s subtree as a bundle, for labelling (e.g. the place a spread ``oral`` carries)."""
-    names = (feature, *project.features.descendants(feature))
-    return FeatureBundle({n: bundle[n] for n in names if n in bundle})
-
-
 def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project) -> list[_Spread]:
     """Every segmental spread the rule performed, as ``_Spread`` forks.
 
@@ -370,13 +371,14 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
             changed = [i for i in indices if old[i] != value]
             if not changed or len(changed) == len(indices):  # need a stable source to spread from
                 continue
-            shared = _subtree_bundle(segments[indices[0]].bundle, feature, project)
-            label = _place_label(shared) or feature
+            # Label by the spread node itself (``oral``), not its whole subtree — a unary node's
+            # bare name, a binary feature's sign, a scalar's value (the geometry tree's labeller).
+            label = _feature_label(feature, segments[indices[0]].bundle, project)
             links = tuple((i, "╎" if i in changed else "│") for i in indices)
             replaced = None
             if len(changed) == 1 and old[changed[0]]:  # one anchor over a non-empty old value
-                was = _subtree_bundle(before_by_id[segments[changed[0]].id], feature, project)
-                replaced = (changed[0], _place_label(was) or feature)
+                was = before_by_id[segments[changed[0]].id]
+                replaced = (changed[0], _feature_label(feature, was, project))
             spreads.append(_Spread(label, links, replaced))
     return spreads
 
@@ -408,13 +410,21 @@ def _geometry_branch(
 
 
 def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str:
-    """A feature's label: sign for binary (``+voice``), value for scalar, bare name for unary."""
+    """A feature's label: sign for binary (``+voice``), value for scalar, bare name for unary.
+
+    A scalar may carry a contour (a tuple, e.g. a tone on its tier): each level shows its own
+    value label, joined with ``>`` (``tone: low>extra-low>high``). A geometry-tree segment only
+    ever has a single int, so this matters only for a tier autoseg's label.
+    """
     definition = project.features[feature]
-    value = bundle[feature].value  # a realized segment carries a single int, not a contour
+    value = bundle[feature].value
     if definition.kind == FeatureKind.binary and isinstance(value, int):
         return f"{present_value(value)}{feature}"
-    if definition.kind == FeatureKind.scalar and isinstance(value, int):
-        return f"{feature}: {definition.values.get(value, str(value))}"
+    if definition.kind == FeatureKind.scalar:
+        if isinstance(value, tuple):
+            return f"{feature}: " + ">".join(definition.values.get(v, str(v)) for v in value)
+        if isinstance(value, int):
+            return f"{feature}: {definition.values.get(value, str(value))}"
     return feature
 
 
