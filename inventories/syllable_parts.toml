@@ -1,2 +1,20 @@
+# Syllable structure: the nucleus, plus example onset/coda CONSTRAINTS.
+#
+# When an onset/coda `definition` is given it DEFINES legality (sonority is not consulted): every
+# split point is a candidate, the longest pattern-legal onset wins, and the rest of an intervocalic
+# cluster falls to the coda. Word-edge onsets/codas are forced (unchecked). With no onset/coda
+# defined, syllabification falls back to sonority + the Maximal Onset Principle.
+#
+# The onset below is a Latin-style grammar — four legal shapes plus an empty onset:
+#   s + stop + liquid    (str, spr, skr)
+#   s + stop             (st, sp, sk)
+#   obstruent + liquid   (tr, kr, pl, fr — "muta cum liquida")
+#   any single consonant (covers nasals, lone liquids, lone obstruents)
+# so intelleːksit → in.tel.leːk.sit and kastra → ka.stra, while geminates and obstruent+obstruent
+# clusters (ll, kt, ks) split. A single-consonant coda takes whatever the onset leaves; here
+# [-sonorant, -continuant] is a stop and [+consonantal, +sonorant, nasal: none] a liquid (l, r).
+
 [-2000]
 nucleus = { definition = "+syll" }
+onset = { definition = "( s [-sonorant, -continuant] [+consonantal, +sonorant, nasal: none] | s [-sonorant, -continuant] | [-sonorant] [+consonantal, +sonorant, nasal: none] | [-syllabic] )?" }
+coda = { definition = "[-syllabic]?" }
