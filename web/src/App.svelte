@@ -607,7 +607,7 @@
     gap: 10px;
     margin-bottom: 10px;
     padding-bottom: 8px;
-    border-bottom: 2px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
   }
   .word-ipa {
     font-size: 20px;
