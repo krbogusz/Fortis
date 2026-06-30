@@ -33,26 +33,27 @@ def test_spread_is_a_fork(project):
     form = string_to_sequence("taka", project)
     h = form.fresh_id()
     form.tiers["tone"].autosegs.append(_tone(4, h))
-    form.tiers["tone"].links |= {(h, 1), (h, 3)}  # one tone, two anchors
+    form.tiers["tone"].links |= {(h, 1), (h, 3)}  # one tone, two syllables
     out = render_autosegmental(form, project)
-    assert "┌" in out and "┐" in out and "┴" in out  # the fork
+    assert "└" in out and "┘" in out and "┬" in out  # the fork (tier below, opening up)
 
 
-def test_contour_converges(project):
+def test_contour_stacks_its_levels(project):
     form = string_to_sequence("ta", project)
     hi, mid = form.fresh_id(), form.fresh_id()
     form.tiers["tone"].autosegs += [_tone(5, hi), _tone(3, mid)]
-    form.tiers["tone"].links |= {(hi, 1), (mid, 1)}  # two tones on one vowel
+    form.tiers["tone"].links |= {(hi, 1), (mid, 1)}  # two tones on one syllable
     out = render_autosegmental(form, project)
-    # converging contour: the join glyph plus both levels' feature labels (spaced, not overlapping)
-    assert "└┬┘" in out and "tone: extra-high" in out and "tone: mid" in out
+    # two tones on one TBU stack below it, each with its own label and association line
+    assert "tone: extra-high" in out and "tone: mid" in out and "│" in out
 
 
-def test_floating_tone_has_no_line(project):
+def test_floating_tone_is_drawn_without_a_line(project):
+    # A floating (unlinked) tone is shown at its lexical position, parenthesised, with no line.
     form = string_to_sequence("kata⟨◌́⟩", project)  # a floating high suffix, unanchored
     out = render_autosegmental(form, project)
-    assert "tone: high" in out.split("\n")[0]  # the high appears on the tone row
-    assert "│" not in out and "┬" not in out  # ...with no association line — it floats
+    assert "(tone: high)" in out  # the float is drawn…
+    assert "│" not in out and "┬" not in out  # …but with no association line — nothing anchors it
 
 
 def test_change_added_association_is_dashed(project):
@@ -76,7 +77,7 @@ def test_spread_change_renders_as_a_fork(project):
     after = before.copy()
     after.tiers["tone"].links.add((t, 3))  # spreads to the second vowel
     out = render_autosegmental_change(before, after, project)
-    assert "┌" in out and "┐" in out  # the fork ties the one tone to both anchors
+    assert "└" in out and "┘" in out  # the fork ties the one tone to both syllables
     assert "│" in out and "╎" in out  # first link kept (solid), the new one dashed
 
 
@@ -92,7 +93,7 @@ def test_render_change_is_the_unified_entry_point(project):
     after.tiers["tone"].links.add((t, 3))  # the tone spreads
     diagrams = render_change(before, after, None, project)
     assert len(diagrams) == 1
-    assert "┌" in diagrams[0] and "╎" in diagrams[0]  # the spread fork, dashed new link
+    assert "└" in diagrams[0] and "╎" in diagrams[0]  # the spread fork, dashed new link
 
 
 def test_change_removed_association_is_delinked(project):

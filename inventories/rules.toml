@@ -51,10 +51,10 @@ words      = ["tone delinking"]
 name       = "Tone delinking"
 definition = "[+syllabic, tone: high] -> [tone: none] / _ #"
 
-[contour_tone]                      # autosegmental: a level tone becomes a contour (a > b)
+[contour_tone]                      # autosegmental: a high spreads onto a low, BUILDING a contour
 words      = ["contour tone"]
-name       = "Contour tone"
-definition = "[+syllabic, tone: high] -> [tone: 5>3] / _ #"
+name       = "Contour tone (by spreading)"
+definition = "[+syllabic, tone: low] -> [+syllabic, tone: ~1] / [+syllabic, tone: ~1=high] [-syllabic]* _"
 
 [stress]                            # the metrical tier: assign primary stress to the first vowel
 words      = ["stress"]

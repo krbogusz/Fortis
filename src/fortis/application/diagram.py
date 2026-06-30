@@ -1,20 +1,23 @@
-"""Autosegmental tier diagrams as monospace Unicode text.
+"""Autosegmental diagrams as monospace Unicode text.
 
-The classic autosegmental picture, in text: autosegments sit on tier rows above the
-segments, joined to their anchors by association lines. One autosegment forking to
-several anchors is **spread**; several converging on one anchor is a **contour**; an
-unlinked autosegment **floats** at its lexical position with no line. Rendered with
-box-drawing characters so it stays readable in any monospace IPA font.
+The classic autosegmental picture, in text. A **suprasegmental** change (tone, stress) is drawn
+as a *before* → *after* pair, one column per syllable (the tone-bearing units), with the tones on
+a tier **below** the segments joined by association lines: a tone forking up to several syllables
+is a **spread**, several tones stacked under one syllable a **contour**. A **segmental** node
+spread (place assimilation, vowel harmony) is drawn per segment with the spread node *above* the
+row. Association lines are styled ``│`` kept · ``╎`` added · ``╪`` delinked. Box-drawing characters
+keep it readable in any monospace IPA font.
 """
 from __future__ import annotations
 
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
-from src.fortis.application.rendering import render_segment
+from src.fortis.application.rendering import render_segment, render_syllabified
+from src.fortis.application.syllabifying import SyllabificationError, syllabify
+from src.fortis.application.tiers import lower_tiers
 from src.fortis.general.presenting import present_value
 from src.fortis.general.utils import is_combining
-from src.fortis.models.autosegment import AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle, ResultBundle
 from src.fortis.models.elements import Bound, Disjunction, Group, Negated, Quantified, ResultElem
 from src.fortis.models.features import FeatureKind
@@ -56,11 +59,6 @@ def _margin(widths: Iterable[int], floor: int = 4) -> int:
     return max(floor, max(widths, default=0) // 2 + 1)
 
 
-def _label(autoseg, project: Project) -> str:
-    """A short label for one autosegment (``tone: high``, a place subtree, …)."""
-    return _label_from_bundle(autoseg.bundle, project)
-
-
 def _label_from_bundle(bundle, project: Project) -> str:
     """Label an autoseg by its features, not a glyph — an autosegmental tier carries features.
 
@@ -96,133 +94,228 @@ def _segment_row(rendered: list[str], slot: int, step: int, margin: int, total: 
     return row
 
 
-def render_autosegmental(form: Form, project: Project) -> str:
-    """Render *form*'s tiers as a monospace autosegmental diagram."""
-    segs = form.segments
-    if not segs:
-        return "(empty)"
-    rendered = [render_segment(s.bundle, project) or "∅" for s in segs]
-    labels = {a.id: _label(a, project) for tier in form.tiers.values() for a in tier.autosegs}
-    widths = [_dwidth(label) for label in labels.values()]
-    slot = max(max((_dwidth(r) for r in rendered), default=1), 3)  # ≥3 leaves room for a contour
-    step = slot + _SEP
-    if len(labels) >= 2:  # two labels on neighbouring anchors must not collide on the tier row
-        step = max(step, max(widths) + 2)
-    margin = _margin(widths)
-    total, centers = _geometry(slot, step, margin, len(segs))
-    center = {s.id: centers[i] for i, s in enumerate(segs)}
-
-    lines: list[str] = []
-    for tier in form.tiers.values():
-        if tier.autosegs:
-            lines.extend(_tier_band(tier, center, segs, total, labels))
-    lines.append("".join(_segment_row(rendered, slot, step, margin, total)))
-    return "\n".join(line.rstrip() for line in lines)
+def _is_nucleus(bundle: FeatureBundle) -> bool:
+    """A syllabic segment — the tone-bearing unit's head."""
+    spec = bundle.get("syllabic")
+    return spec is not None and spec.value == 1
 
 
-def _tier_band(
-    tier: AutosegmentalTier, center, segs, total: int, labels: dict[int, str]
-) -> list[str]:
-    """The label row + connector row for one tier (labels precomputed by id)."""
-    seg_ids = {s.id for s in segs}
-    label_row = [" "] * total
-    conn_row = [" "] * total
+def _syllables(form: Form, project: Project) -> list[tuple[str, int | None]]:
+    """One entry per syllable (the tone-bearing units): rendered surface text and nucleus id.
 
-    spreads, singles, floats = [], {}, []
-    for autoseg in tier.autosegs:
-        anchors = sorted(
-            center[sid] for (a, sid) in tier.links if a == autoseg.id and sid in seg_ids
+    The tier anchors a ``+syllabic`` segment and each syllable has exactly one nucleus, so a
+    syllable column and its nucleus anchor are the same TBU — the column is a display grouping.
+    """
+    lowered = lower_tiers(form)
+    try:
+        boundaries = syllabify(
+            lowered, project.sonorities, project.syllable_parts, project.time, project.letters
         )
-        if not anchors:
-            floats.append(autoseg)
-        elif len(anchors) > 1:
-            spreads.append((autoseg, anchors))
+    except SyllabificationError:
+        boundaries = frozenset()
+    edges = sorted({0, len(form.segments)} | set(boundaries))
+    columns: list[tuple[str, int | None]] = []
+    for left, right in zip(edges, edges[1:], strict=False):
+        chunk = lowered[left:right]
+        # render the whole syllable so an after-mark (tone letter) lands at its edge: kat˦, not ka˦t
+        text = render_syllabified(chunk, frozenset({0, len(chunk)}), project, dots=False) or "∅"
+        nucleus = next(
+            (s.id for s in form.segments[left:right] if _is_nucleus(s.bundle)),
+            None,
+        )
+        columns.append((text, nucleus))
+    return columns
+
+
+@dataclass(frozen=True)
+class _Tone:
+    """One autosegment drawn below the syllable row.
+
+    Its ``label``, the syllable ``cols`` it links to, and the association ``glyph`` per column
+    (``│`` kept · ``╎`` added · ``╪`` delinked).
+    """
+
+    label: str
+    cols: tuple[int, ...]
+    glyph: dict[int, str]
+
+
+def _tones(
+    form: Form, project: Project, before: Form | None
+) -> tuple[list[tuple[str, int | None]], list[_Tone], list[tuple[int, str, str]]]:
+    """The tier autosegs to draw, styled vs *before* (``None`` ⇒ a plain snapshot: all ``│``).
+
+    Returns the syllables, the linked tones, and the **floating** tones as ``(column, side, label)``
+    — an unlinked autoseg positioned beside the syllable of its ``float_hosts`` segment, drawn with
+    no association line.
+    """
+    syllables = _syllables(form, project)
+    col_of = {nucleus: i for i, (_text, nucleus) in enumerate(syllables)}
+    tones: list[_Tone] = []
+    floats: list[tuple[int, str, str]] = []
+    drawn: set[int] = set()
+    for name, tier in form.tiers.items():
+        before_links = before.tiers[name].links if before and name in before.tiers else set()
+        for autoseg in tier.autosegs:
+            cols = tuple(
+                sorted({col_of[s] for (a, s) in tier.links if a == autoseg.id and s in col_of})
+            )
+            if not cols:  # unlinked ⇒ floating; place beside its lexical host, no line
+                host = tier.float_hosts.get(autoseg.id)
+                if host is not None and host[0] in col_of:
+                    label = _label_from_bundle(autoseg.bundle, project)
+                    floats.append((col_of[host[0]], host[1], label))
+                continue
+            drawn.add(autoseg.id)
+            was = {col_of[s] for (a, s) in before_links if a == autoseg.id and s in col_of}
+            glyph = {c: ("│" if before is None or c in was else "╎") for c in cols}
+            tones.append(_Tone(_label_from_bundle(autoseg.bundle, project), cols, glyph))
+    if before is not None:  # autosegs the rule delinked: draw at their old syllable with ╪
+        for btier in before.tiers.values():
+            for autoseg in btier.autosegs:
+                if autoseg.id in drawn:
+                    continue
+                cols = tuple(
+                    sorted({col_of[s] for (a, s) in btier.links if a == autoseg.id and s in col_of})
+                )
+                if cols:
+                    label = _label_from_bundle(autoseg.bundle, project)
+                    tones.append(_Tone(label, cols, dict.fromkeys(cols, "╪")))
+    return syllables, tones, floats
+
+
+def _tonal_block(form: Form, project: Project, before: Form | None = None) -> list[str]:
+    """A tier-below per-syllable diagram as rows: the syllables, then their tones below them.
+
+    Single-anchor tones stack under their syllable; a spread is a fork opening *up* to the
+    syllables it reaches; the tone is styled against *before* when given (the after side of a
+    change). Tier below the segments, one column per syllable — the classic tonal notation.
+    """
+    syllables, tones, floats = _tones(form, project, before)
+    n = len(syllables)
+    stacked: list[list[_Tone]] = [[] for _ in range(n)]  # column → single-anchor tones
+    forks: list[_Tone] = []
+    for tone in tones:
+        if len(tone.cols) == 1:
+            stacked[tone.cols[0]].append(tone)
         else:
-            singles.setdefault(anchors[0], []).append(autoseg)
+            forks.append(tone)
+    widths = [
+        max([_dwidth(text), *(_dwidth(t.label) for t in stacked[i]), 1])
+        for i, (text, _n) in enumerate(syllables)
+    ]
+    gap = 3
+    centers: list[int] = []
+    x = 0
+    for w in widths:
+        centers.append(x + (w - 1) // 2)  # middle of the column [x, x+w) — content fills it exactly
+        x += w + gap
+    total = max(x - gap, 1)
 
-    for autoseg, anchors in spreads:  # one autoseg → many anchors (the fork)
-        label = labels[autoseg.id]
-        mid = (anchors[0] + anchors[-1]) // 2
-        _put(label_row, mid - (_dwidth(label) - 1) // 2, label)
-        for x in range(anchors[0], anchors[-1] + 1):
-            conn_row[x] = "─"
-        for a in anchors:
-            conn_row[a] = "┬"
-        conn_row[anchors[0]] = "┌"
-        conn_row[anchors[-1]] = "┐"
-        conn_row[mid] = "┼" if mid in anchors else "┴"
+    def _float_start(col: int, side: str, text: str) -> int:
+        """Where a floating label starts: just past its host syllable, on *side*."""
+        if side == "after":
+            return centers[col] + widths[col] // 2 + 1
+        return centers[col] - (widths[col] - 1) // 2 - 1 - _dwidth(text)
 
-    for col, group in singles.items():
-        if len(group) == 1:  # one tone on one anchor
-            label = labels[group[0].id]
-            _put(label_row, col - (_dwidth(label) - 1) // 2, label)
-            conn_row[col] = "│"
-        else:  # several tones converging on one anchor — a contour
-            left, right = labels[group[0].id], labels[group[-1].id]
-            _put(label_row, col - 1 - (_dwidth(left) - 1), left)  # left label's right edge at col-1
-            _put(label_row, col + 1, right)  # right label starts just past the join
-            conn_row[col - 1], conn_row[col], conn_row[col + 1] = "└", "┬", "┘"
+    # A spread's label sits below the fork (and a float beside its host) and can be wider than the
+    # span — pad the canvas so nothing clips at either edge.
+    pad_left = pad_right = 0
+    for tone in forks:
+        leg_cols = [centers[c] for c in tone.cols]
+        mid = (min(leg_cols) + max(leg_cols)) // 2
+        start = mid - (_dwidth(tone.label) - 1) // 2
+        pad_left = max(pad_left, -start)
+        pad_right = max(pad_right, start + _dwidth(tone.label) - total)
+    for col, side, label in floats:
+        text = f"({label})"
+        start = _float_start(col, side, text)
+        pad_left = max(pad_left, -start)
+        pad_right = max(pad_right, start + _dwidth(text) - total)
+    centers = [c + pad_left for c in centers]
+    total += pad_left + max(0, pad_right)
 
-    for autoseg in floats:  # unlinked: shown at its lexical gap, no line
-        label = labels[autoseg.id]
-        col = _float_col(tier, autoseg.id, center, segs)
-        _put(label_row, col - (_dwidth(label) - 1) // 2, label)
+    def blank() -> list[str]:
+        return [" "] * total
 
-    return ["".join(label_row), "".join(conn_row)]
+    seg = blank()
+    for i, (text, _n) in enumerate(syllables):
+        _put(seg, centers[i] - (_dwidth(text) - 1) // 2, text)
+        if i:
+            _put(seg, (centers[i - 1] + centers[i]) // 2, "-")
+    rows = [seg]
+    for k in range(max((len(s) for s in stacked), default=0)):  # stacked single-anchor tones
+        line, label = blank(), blank()
+        for i in range(n):
+            if k < len(stacked[i]):
+                tone = stacked[i][k]
+                line[centers[i]] = tone.glyph[i]
+                _put(label, centers[i] - (_dwidth(tone.label) - 1) // 2, tone.label)
+        rows += [line, label]
+    for tone in forks:  # a spread: styled legs up to each syllable, a bar joining down to the label
+        legs, bar, label = blank(), blank(), blank()
+        leg_cols = [centers[c] for c in tone.cols]
+        for c in tone.cols:
+            legs[centers[c]] = tone.glyph[c]
+        lo, hi = min(leg_cols), max(leg_cols)
+        for column in range(lo, hi + 1):
+            bar[column] = "─"
+        bar[lo], bar[hi] = "└", "┘"
+        mid = (lo + hi) // 2
+        bar[mid] = "┼" if mid in leg_cols else "┬"
+        _put(label, mid - (_dwidth(tone.label) - 1) // 2, tone.label)
+        rows += [legs, bar, label]
+    if floats:  # floating (unlinked) tones at their lexical position, parenthesised, no line
+        row = blank()
+        for col, side, label in floats:
+            text = f"({label})"
+            _put(row, _float_start(col, side, text), text)
+        rows.append(row)
+    return ["".join(r).rstrip() for r in rows]
 
 
-def _float_col(tier, autoseg_id, center, segs) -> int:
-    host = tier.float_hosts.get(autoseg_id)
-    if host is None or host[0] not in center:
-        return center[segs[0].id]
-    sid, side = host
-    return center[sid] + (2 if side == "after" else -2)
+def _join_pair(left: list[str], right: list[str]) -> str:
+    """Two blocks side by side, joined by ``→`` on the segment row."""
+    width = max((_dwidth(r) for r in left), default=0)
+    height = max(len(left), len(right))
+    left = left + [""] * (height - len(left))
+    right = right + [""] * (height - len(right))
+    rows = []
+    for i in range(height):
+        padded = left[i] + " " * (width - _dwidth(left[i]))
+        rows.append((padded + ("  →  " if i == 0 else "     ") + right[i]).rstrip())
+    return "\n".join(rows)
+
+
+def render_autosegmental(form: Form, project: Project) -> str:
+    """A form's suprasegmental tiers as a per-syllable diagram (syllables over their tones)."""
+    if not form.segments:
+        return "(empty)"
+    return "\n".join(_tonal_block(form, project))
 
 
 def render_autosegmental_change(before: Form, after: Form, project: Project) -> str:
-    """Render one rule's autosegmental *tier* change as a single overlay diagram.
+    """One rule's tier change as a *before* → *after* pair of per-syllable diagrams.
 
-    Association lines are styled by what the rule did to them, the classic
-    rule-as-diagram notation: ``│`` an association kept, ``╎`` (dashed) one newly added
-    — a spread or a dock — and ``╪`` (the delink bar) one removed. The anchor row is the
-    rule's *result* (``after``) segments; each autosegment keeps its label.
+    Each association is styled on the after side, the classic rule-as-diagram notation: ``│`` kept ·
+    ``╎`` added (a spread/dock) · ``╪`` delinked — read off the before/after tiers.
     """
     if not after.segments:
         return render_autosegmental(after, project)
-    return _draw(after.segments, _tier_spreads(before, after, project), project)
+    return _join_pair(_tonal_block(before, project), _tonal_block(after, project, before=before))
 
 
-def _tier_spreads(before: Form, after: Form, project: Project) -> list[_Spread]:
-    """The tier (tone/stress) association changes, one ``_Spread`` per autosegment that moved.
-
-    Anchors are restricted to segments present in ``after`` (a link to a deleted segment is
-    dropped) and indexed by their position in ``after.segments`` so ``_draw`` can place them.
-    """
-    after_index = {segment.id: i for i, segment in enumerate(after.segments)}
-    spreads: list[_Spread] = []
-    for name in dict.fromkeys([*before.tiers, *after.tiers]):
-        before_tier = before.tiers.get(name)
-        after_tier = after.tiers.get(name)
-        before_links = before_tier.links if before_tier is not None else set()
-        after_links = after_tier.links if after_tier is not None else set()
-        # Autoseg id → bundle (prefer the after-state bundle; fall back to before for a removed).
-        bundles: dict[int, object] = {}
-        for tier in (after_tier, before_tier):
-            if tier is not None:
-                for autoseg in tier.autosegs:
-                    bundles.setdefault(autoseg.id, autoseg.bundle)
-        for autoseg_id, bundle in bundles.items():
-            before_anchors = {s for (a, s) in before_links if a == autoseg_id and s in after_index}
-            after_anchors = {s for (a, s) in after_links if a == autoseg_id and s in after_index}
-            all_anchors = before_anchors | after_anchors
-            if not all_anchors:
-                continue
-            links = tuple(
-                (after_index[sid], _change_glyph(sid, before_anchors, after_anchors))
-                for sid in all_anchors
-            )
-            spreads.append(_Spread(_label_from_bundle(bundle, project), links))
-    return spreads
+def _tier_changed(before: Form, after: Form) -> bool:
+    """Whether any suprasegmental tier's autosegments or associations differ (a tonal change)."""
+    for name in {*before.tiers, *after.tiers}:
+        b, a = before.tiers.get(name), after.tiers.get(name)
+        if (b.links if b else set()) != (a.links if a else set()):
+            return True
+        if {x.id: dict(x.bundle) for x in (b.autosegs if b else [])} != {
+            x.id: dict(x.bundle) for x in (a.autosegs if a else [])
+        }:
+            return True
+    return False
 
 
 def _draw(segments, spreads: list[_Spread], project: Project) -> str:
@@ -298,15 +391,6 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
 
     lines = [*above, seg_row, *below]
     return "\n".join("".join(row).rstrip() for row in lines)
-
-
-def _change_glyph(sid: int, before_anchors: set[int], after_anchors: set[int]) -> str:
-    """The association glyph for one anchor: kept, newly added (dashed), or delinked."""
-    if sid in before_anchors and sid in after_anchors:
-        return "│"  # association kept
-    if sid in after_anchors:
-        return "╎"  # association added (a spread / dock) — dashed
-    return "╪"  # association removed — the delink bar
 
 
 def _result_bundles(elements: tuple) -> Iterator[ResultBundle]:
@@ -449,16 +533,14 @@ def render_segmental_spreads(
 def render_change(before: Form, after: Form, rule: Rule | None, project: Project) -> list[str]:
     """Every autosegmental change for one rule, as fork diagrams — the single renderer to call.
 
-    One entry point for every autosegmental process, all sharing the label/fork/descender
-    notation (``│`` kept · ``╎`` added · ``╪`` delinked). A *tier* autosegment (tone, stress)
-    whose links changed yields one diagram (all tiers together); each *segmental* spread the
-    rule performed via ``~n`` — place assimilation, vowel harmony, or any other — yields a fork,
-    detected from the rule's operations rather than guessed from which features changed. Returned
-    in display order: tier change, then the segmental spreads.
+    A *tier* change (tone, stress) yields a *before* → *after* pair of per-syllable diagrams (all
+    tiers together); each *segmental* spread the rule performed via ``~n`` — place assimilation,
+    vowel harmony, or any other — yields a fork, detected from the rule's operations rather than
+    guessed from which features changed. Returned in display order: tier change, then the
+    segmental spreads. All share the ``│`` kept · ``╎`` added · ``╪`` delinked notation.
     """
     diagrams: list[str] = []
-    tier = render_autosegmental_change(before, after, project)
-    if "╎" in tier or "╪" in tier:  # the tier diagram is meaningful only when a link changed
-        diagrams.append(tier)
+    if _tier_changed(before, after):
+        diagrams.append(render_autosegmental_change(before, after, project))
     diagrams.extend(render_segmental_spreads(before, after, rule, project))
     return diagrams

@@ -49,7 +49,10 @@ def run_derivations():
         d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
                    project.features, project.sonorities, project.syllable_parts, project.tiers)
         steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
-        frames = [{"label":"Input","diagram":render_autosegmental(d.input,project)}]
+        has_tiers = any(t.autosegs for t in d.input.tiers.values())
+        # The per-syllable melody snapshot (Input/Surface) is meaningful only for a tier (tone /
+        # stress); a segmental change (place, harmony) shows its own per-segment forks instead.
+        frames = [{"label":"Input","diagram":render_autosegmental(d.input,project)}] if has_tiers else []
         for s in d.steps:
             base = _SUB.sub("", s.rule.id)
             heading = (s.rule.name or base) if base!=prev else None
@@ -62,15 +65,11 @@ def run_derivations():
             lbl = (str(s.rule.time)+": " if s.rule.time is not None else "")+(s.rule.name or base)
             for diagram in render_change(s.before, s.after, s.rule, project):  # tier + segmental spreads
                 frames.append({"label":lbl,"diagram":diagram})
-        # A word has an autosegmental representation if its input carries tier autosegs OR a rule
-        # performed a spread/dock/delink (a change frame). Compute this BEFORE the Surface frame —
-        # the surface diagram differs from the input for any rule at all, so it must not count.
-        has_tiers = any(t.autosegs for t in d.input.tiers.values())
-        autoseg = has_tiers or len(frames) > 1
-        if autoseg:  # pair the Input "before" with a Surface "after", only where one is meaningful
+        if has_tiers:  # a Surface melody bookend, only when it differs from the Input
             after_diagram = render_autosegmental(d.surface, project)
             if after_diagram != frames[0]["diagram"]:
                 frames.append({"label":"Surface","diagram":after_diagram})
+        autoseg = bool(frames)  # any autosegmental content: a melody snapshot or a change diagram
         geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
                     "steps":steps,"frames":frames,"geometry":geometry,"autosegmental":autoseg})
