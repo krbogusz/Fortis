@@ -264,22 +264,32 @@
                 {#if !d.autosegmental}<span class="flat-note">no autosegmental process</span>{/if}
               </summary>
               <div class="frames">
-                {#each d.frames as f, i}
+                {#if d.inputGeometry?.length}
+                  <details class="geometry">
+                    <summary>Input geometry — one tree per segment</summary>
+                    <div class="frames">
+                      {#each d.inputGeometry as tree}
+                        <pre class="diagram">{tree}</pre>
+                      {/each}
+                    </div>
+                  </details>
+                {/if}
+                {#each d.frames as f}
                   <div class="frame">
                     <span class="frame-lbl">{f.label}</span>
                     <pre class="diagram">{f.diagram}</pre>
                   </div>
-                  {#if i === 0 && d.geometry?.length}
-                    <details class="geometry">
-                      <summary>Input geometry — one tree per segment</summary>
-                      <div class="frames">
-                        {#each d.geometry as tree}
-                          <pre class="diagram">{tree}</pre>
-                        {/each}
-                      </div>
-                    </details>
-                  {/if}
                 {/each}
+                {#if d.outputGeometry?.length}
+                  <details class="geometry">
+                    <summary>Output geometry — one tree per segment</summary>
+                    <div class="frames">
+                      {#each d.outputGeometry as tree}
+                        <pre class="diagram">{tree}</pre>
+                      {/each}
+                    </div>
+                  </details>
+                {/if}
               </div>
             </details>
           {/each}

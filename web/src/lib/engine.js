@@ -50,9 +50,7 @@ def run_derivations():
                    project.features, project.sonorities, project.syllable_parts, project.tiers)
         steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
         has_tiers = any(t.autosegs for t in d.input.tiers.values())
-        # The per-syllable melody snapshot (Input/Surface) is meaningful only for a tier (tone /
-        # stress); a segmental change (place, harmony) shows its own per-segment forks instead.
-        frames = [{"label":"Input","diagram":render_autosegmental(d.input,project)}] if has_tiers else []
+        frames = []
         for s in d.steps:
             base = _SUB.sub("", s.rule.id)
             heading = (s.rule.name or base) if base!=prev else None
@@ -65,14 +63,16 @@ def run_derivations():
             lbl = (str(s.rule.time)+": " if s.rule.time is not None else "")+(s.rule.name or base)
             for diagram in render_change(s.before, s.after, s.rule, project):  # tier + segmental spreads
                 frames.append({"label":lbl,"diagram":diagram})
-        if has_tiers:  # a Surface melody bookend, only when it differs from the Input
-            after_diagram = render_autosegmental(d.surface, project)
-            if after_diagram != frames[0]["diagram"]:
-                frames.append({"label":"Surface","diagram":after_diagram})
-        autoseg = bool(frames)  # any autosegmental content: a melody snapshot or a change diagram
-        geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
+        # The change diagrams already show before→after, so separate Input/Surface melody snapshots
+        # are redundant. Keep an Input melody only for a tier word with no change (else it'd be blank).
+        if not frames and has_tiers:
+            frames.append({"label":"Input","diagram":render_autosegmental(d.input,project)})
+        autoseg = bool(frames)  # any autosegmental content: a change diagram or the lone-melody snapshot
+        input_geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
+        output_geometry = [render_geometry_tree(seg.bundle, project) for seg in d.surface.segments]
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
-                    "steps":steps,"frames":frames,"geometry":geometry,"autosegmental":autoseg})
+                    "steps":steps,"frames":frames,"autosegmental":autoseg,
+                    "inputGeometry":input_geometry,"outputGeometry":output_geometry})
     return json.dumps({"derivations": out})
 `;
 
