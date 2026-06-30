@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from enum import StrEnum, auto
 from functools import cached_property
 
+from src.fortis.general.utils import by_length
 from src.fortis.models.tiers import Tier
 
 
@@ -45,8 +46,9 @@ class FeatureInventory(UserDict[str, Feature]):
     def __setitem__(self, key: str, value: Feature) -> None:
         """Add a feature, invalidating the cached name lookups (features can be added mid-load)."""
         super().__setitem__(key, value)
-        for cached in ("names_by_length", "short_names_by_length", "short_to_long_name"):
-            self.__dict__.pop(cached, None)
+        for name, attr in type(self).__dict__.items():  # drop every cached_property, no hand-list
+            if isinstance(attr, cached_property):
+                self.__dict__.pop(name, None)
 
     def is_node(self, feature: str) -> bool:
         """Does this feature have children?"""
@@ -88,18 +90,12 @@ class FeatureInventory(UserDict[str, Feature]):
     @cached_property
     def names_by_length(self) -> tuple[str, ...]:
         """Feature names sorted longest-first (for greedy matching)."""
-        return tuple(sorted(self.data.keys(), key=len, reverse=True))
+        return tuple(by_length(self.data))
 
     @cached_property
     def short_names_by_length(self) -> tuple[str, ...]:
         """Short names sorted longest-first (for greedy matching)."""
-        return tuple(
-            sorted(
-                (f.short_name for f in self.data.values()),
-                key=len,
-                reverse=True,
-            )
-        )
+        return tuple(by_length(f.short_name for f in self.data.values()))
 
     @cached_property
     def short_to_long_name(self) -> dict[str, str]:

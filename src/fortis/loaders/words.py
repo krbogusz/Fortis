@@ -40,11 +40,7 @@ def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
     if error_list:
         return Err(error_list)
 
-    match validate_word_inventory(inventory):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(inventory)
+    return validate_word_inventory(inventory).map(lambda _: inventory)
 
 
 def validate_word_inventory(inventory: WordInventory) -> Result[None, list[str]]:

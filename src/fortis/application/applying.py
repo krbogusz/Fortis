@@ -220,7 +220,13 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
         value = spec.value
         if isinstance(value, AlphaRef):
             bound = bindings.alpha[value.var]
-            value = opposite_pole(bound, value.unary) if value.op is AlphaOp.opposite else bound
+            # ``-α`` is validation-restricted to binary/unary, so the bound value is never a
+            # contour here; the tuple guard both proves that to the type checker and is a no-op.
+            value = (
+                opposite_pole(bound, value.unary)
+                if value.op is AlphaOp.opposite and not isinstance(bound, tuple)
+                else bound
+            )
         elif isinstance(value, tuple):
             # A contour: resolve any alpha recall limb by limb, keeping the shape. A
             # limb must be a single value, so an alpha bound to a contour cannot nest

@@ -109,11 +109,7 @@ def load_tier_inventory(path: Path, features: FeatureInventory) -> Result[TierIn
     if error_list:
         return Err(error_list)
 
-    match validate_tier_inventory(inventory):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(inventory)
+    return validate_tier_inventory(inventory).map(lambda _: inventory)
 
 
 def validate_tier_inventory(inventory: TierInventory) -> Result[None, list[str]]:

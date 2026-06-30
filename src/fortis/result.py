@@ -259,6 +259,20 @@ class Err[E]:
 type Result[T, E] = Ok[T] | Err[E]
 
 
+def collect[T](errors: list[str], result: Result[T, str], default: T) -> T:
+    """Loader helper: unwrap *result*, or append its error to *errors* and return *default*.
+
+    Captures the per-item loaders' "collect every field's error, then keep going with a
+    placeholder for the type checker" pattern — one call instead of a four-line ``match``.
+    """
+    match result:
+        case Ok(value):
+            return value
+        case Err(err):
+            errors.append(err)
+            return default
+
+
 def present_errors(errors: list[str] | str) -> str:
     """Format error strings into a single human-readable message.
 

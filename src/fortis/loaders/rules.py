@@ -8,7 +8,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.rules import ApplicationMode, Rule, RuleInventory, StructuralDescription
 from src.fortis.parsing.notation import parse_definition
 from src.fortis.parsing.rule_validation import validate_structural_description
-from src.fortis.result import Err, Ok, Result
+from src.fortis.result import Err, Ok, Result, collect
 
 # ---- Per-field helpers ----------------------------------------------------------------
 
@@ -111,33 +111,12 @@ def load_rule(
     """
     error_list: list[str] = []
 
-    match load_time(rule_id, rule_def):
-        case Err(err):
-            error_list.append(err)
-            time = 0  # dummy
-        case Ok(result):
-            time = result
-
-    definitions: list[str] = []
-    match _read_definitions(rule_id, rule_def):
-        case Err(err):
-            error_list.append(err)
-        case Ok(result):
-            definitions = result
-
-    match load_application(rule_id, rule_def):
-        case Err(err):
-            error_list.append(err)
-            application = ApplicationMode.simultaneous
-        case Ok(result):
-            application = result
-
-    words: tuple[str, ...] = ()
-    match load_words(rule_id, rule_def):
-        case Err(err):
-            error_list.append(err)
-        case Ok(result):
-            words = result
+    time = collect(error_list, load_time(rule_id, rule_def), 0)
+    definitions = collect(error_list, _read_definitions(rule_id, rule_def), [])
+    application = collect(
+        error_list, load_application(rule_id, rule_def), ApplicationMode.simultaneous
+    )
+    words = collect(error_list, load_words(rule_id, rule_def), ())
 
     name = rule_def.get("name")
     if name is not None and not isinstance(name, str):
@@ -221,11 +200,7 @@ def load_rule_inventory(path: Path, features: FeatureInventory) -> Result[RuleIn
     for time, rules in rules_by_time.items():
         inventory[time] = tuple(rules)
 
-    match validate_rule_inventory(inventory):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(inventory)
+    return validate_rule_inventory(inventory).map(lambda _: inventory)
 
 
 # ---- Validation ------------------------------------------------------------------------

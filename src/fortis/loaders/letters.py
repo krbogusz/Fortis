@@ -81,11 +81,7 @@ def load_letter_inventory(
     if error_list:
         return Err(error_list)
 
-    match validate_letter_inventory(letter_inventory):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(letter_inventory)
+    return validate_letter_inventory(letter_inventory).map(lambda _: letter_inventory)
 
 
 def validate_letter_inventory(letter_inventory: LetterInventory) -> Result[None, list[str]]:

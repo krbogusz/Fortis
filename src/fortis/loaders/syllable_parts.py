@@ -110,28 +110,14 @@ def load_syllable_parts_inventory(
     if error_list:
         return Err(error_list)
 
-    match validate_syllable_parts_inventory(inventory):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(inventory)
+    return validate_syllable_parts_inventory(inventory).map(lambda _: inventory)
 
 
 def validate_syllable_parts_inventory(inventory: SyllablePartsInventory) -> Result[None, list[str]]:
-    """Check for cross-part consistency issues.
+    """Cross-part consistency hook — an extension point.
 
-    Args:
-        inventory: The loaded syllable parts inventory.
+    Each part's type is already validated against ``VALID_PART_TYPES`` at load (before the part is
+    constructed), so there is nothing to check here yet; kept as the place a future cross-part
+    invariant would live.
     """
-    error_list: list[str] = []
-
-    for time, parts in inventory.data.items():
-        for part in parts.values():
-            if part.part_type not in VALID_PART_TYPES:
-                error_list.append(
-                    f"Invalid syllable part type '{part.part_type}' at time {time}"
-                )
-
-    if error_list:
-        return Err(error_list)
     return Ok(None)

@@ -10,7 +10,7 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import Diacritic, DiacriticInventory, DiacriticKind
 from src.fortis.models.tiers import Tier
 from src.fortis.parsing.bundles import parse_feature_bundle
-from src.fortis.result import Err, Ok, Result
+from src.fortis.result import Err, Ok, Result, collect
 
 # ---- Diacritic -----------------------------------------------------------------------------------
 
@@ -27,47 +27,19 @@ def load_diacritic(
     """
     error_list: list[str] = []
 
-    match load_tier(symbol, diacritic_def):
-        case Err(err):
-            error_list.append(err)
-            tier = Tier.segment  # Dummy value for the type checker
-        case Ok(result):
-            tier = result
-
-    match load_kind(symbol, diacritic_def):
-        case Err(err):
-            error_list.append(err)
-            kind = DiacriticKind.combining  # Dummy value for the type checker
-        case Ok(result):
-            kind = result
-
-    match load_bundle(symbol, diacritic_def, features):
+    tier = collect(error_list, load_tier(symbol, diacritic_def), Tier.segment)
+    kind = collect(error_list, load_kind(symbol, diacritic_def), DiacriticKind.combining)
+    match load_bundle(symbol, diacritic_def, features):  # a list of errors → extend, not append
         case Err(err):
             error_list.extend(err)
-            bundle = FeatureBundle()  # Dummy value for the type checker
+            bundle = FeatureBundle()
         case Ok(result):
             bundle = result
-
-    match load_default(symbol, diacritic_def):
-        case Err(err):
-            error_list.append(err)
-            default = False  # Dummy value for the type checker
-        case Ok(result):
-            default = result
-
-    match load_contour(symbol, diacritic_def):
-        case Err(err):
-            error_list.append(err)
-            contour = False  # Dummy value for the type checker
-        case Ok(result):
-            contour = result
-
-    match load_marks_boundary(symbol, diacritic_def):
-        case Err(err):
-            error_list.append(err)
-            marks_boundary = False  # Dummy value for the type checker
-        case Ok(result):
-            marks_boundary = result
+    default = collect(error_list, load_bool_field(symbol, diacritic_def, "default"), False)
+    contour = collect(error_list, load_bool_field(symbol, diacritic_def, "contour"), False)
+    marks_boundary = collect(
+        error_list, load_bool_field(symbol, diacritic_def, "marks_boundary"), False
+    )
 
     if error_list:
         return Err(error_list)
@@ -147,50 +119,21 @@ def load_bundle(
             return Ok(result)
 
 
-def load_default(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str]:
-    """Parse the optional 'default' field (defaults to False).
+def load_bool_field(symbol: str, diacritic_def: dict[str, Any], field: str) -> Result[bool, str]:
+    """Parse an optional boolean diacritic field (``default``/``contour``/``marks_boundary``).
+
+    Absent ⇒ False.
 
     Args:
         symbol: Diacritic symbol (for error messages).
         diacritic_def: Raw dictionary from the TOML file.
+        field: The boolean field name to read.
     """
-    value = diacritic_def.get("default")
+    value = diacritic_def.get(field)
     if value is None:
         return Ok(False)
     if not isinstance(value, bool):
-        return Err(f"Diacritic '{present_symbol(symbol)}' 'default' must be 'true' or 'false'")
-    return Ok(value)
-
-
-def load_contour(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str]:
-    """Parse the optional 'contour' field (defaults to False).
-
-    Args:
-        symbol: Diacritic symbol (for error messages).
-        diacritic_def: Raw dictionary from the TOML file.
-    """
-    value = diacritic_def.get("contour")
-    if value is None:
-        return Ok(False)
-    if not isinstance(value, bool):
-        return Err(f"Diacritic '{present_symbol(symbol)}' 'contour' must be 'true' or 'false'")
-    return Ok(value)
-
-
-def load_marks_boundary(symbol: str, diacritic_def: dict[str, Any]) -> Result[bool, str]:
-    """Parse the optional 'marks_boundary' field (defaults to False).
-
-    Args:
-        symbol: Diacritic symbol (for error messages).
-        diacritic_def: Raw dictionary from the TOML file.
-    """
-    value = diacritic_def.get("marks_boundary")
-    if value is None:
-        return Ok(False)
-    if not isinstance(value, bool):
-        return Err(
-            f"Diacritic '{present_symbol(symbol)}' 'marks_boundary' must be 'true' or 'false'"
-        )
+        return Err(f"Diacritic '{present_symbol(symbol)}' '{field}' must be 'true' or 'false'")
     return Ok(value)
 
 
@@ -233,11 +176,7 @@ def load_diacritic_inventory(
     if error_list:
         return Err(error_list)
 
-    match validate_diacritic_inventory(inventory, features):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(inventory)
+    return validate_diacritic_inventory(inventory, features).map(lambda _: inventory)
 
 
 def validate_diacritic_inventory(

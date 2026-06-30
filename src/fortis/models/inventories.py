@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from enum import StrEnum, auto
 from functools import cached_property
 
+from src.fortis.general.utils import by_length
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.elements import Element
 from src.fortis.models.tiers import Tier
@@ -29,7 +30,7 @@ class LetterInventory(UserDict[str, Letter]):
     @cached_property
     def sorted_keys(self) -> list[str]:
         """All symbol keys sorted longest-first."""
-        return sorted(self.data.keys(), key=len, reverse=True)
+        return by_length(self.data)
 
 
 class DiacriticKind(StrEnum):
@@ -76,11 +77,7 @@ class DiacriticInventory(UserDict[str, Diacritic]):
     @cached_property
     def segment_keys(self) -> list[str]:
         """Segment-tier diacritic symbols sorted longest-first."""
-        return sorted(
-            (s for s, d in self.data.items() if d.tier == Tier.segment),
-            key=len,
-            reverse=True,
-        )
+        return by_length(self.segment_dict)
 
     @cached_property
     def segment_dict(self) -> dict[str, Diacritic]:
@@ -90,29 +87,17 @@ class DiacriticInventory(UserDict[str, Diacritic]):
     @cached_property
     def syllable_keys(self) -> list[str]:
         """Syllable-tier diacritic symbols sorted longest-first."""
-        return sorted(
-            (s for s, d in self.data.items() if d.tier == Tier.syllable),
-            key=len,
-            reverse=True,
-        )
+        return by_length(s for s, d in self.data.items() if d.tier == Tier.syllable)
 
     @cached_property
     def before_keys(self) -> list[str]:
         """Before-type diacritic symbols sorted longest-first."""
-        return sorted(
-            (s for s, d in self.data.items() if d.kind == DiacriticKind.before),
-            key=len,
-            reverse=True,
-        )
+        return by_length(s for s, d in self.data.items() if d.kind == DiacriticKind.before)
 
     @cached_property
     def attaching_keys(self) -> list[str]:
         """Combining/after-type diacritic symbols sorted longest-first."""
-        return sorted(
-            (s for s, d in self.data.items() if d.kind != DiacriticKind.before),
-            key=len,
-            reverse=True,
-        )
+        return by_length(s for s, d in self.data.items() if d.kind != DiacriticKind.before)
 
 
 @dataclass

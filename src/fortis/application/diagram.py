@@ -8,7 +8,7 @@ box-drawing characters so it stays readable in any monospace IPA font.
 """
 from __future__ import annotations
 
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
 from src.fortis.application.rendering import render_segment
@@ -46,15 +46,14 @@ def _dwidth(text: str) -> int:
     return sum(0 if is_combining(ch) else 1 for ch in text)
 
 
-def _margin(labels: list[str], floor: int = 4) -> int:
+def _margin(widths: Iterable[int], floor: int = 4) -> int:
     """Side padding wide enough that a label centred over the first/last anchor never clips.
 
     A centred label overhangs its anchor by half its width on each side, so the side margins must
     cover that overhang — feature labels (``oral·lingual·back…``) are far wider than the old
     glyphs. ``floor`` (≥4) keeps room for a floating autoseg even when there are no labels.
     """
-    widest = max((_dwidth(label) for label in labels), default=0)
-    return max(floor, widest // 2 + 1)
+    return max(floor, max(widths, default=0) // 2 + 1)
 
 
 def _label(autoseg, project: Project) -> str:
@@ -79,39 +78,52 @@ def _put(row: list[str], col: int, text: str) -> None:
             row[col + offset] = ch
 
 
+def _geometry(slot: int, step: int, margin: int, count: int) -> tuple[int, list[int]]:
+    """The row width and each segment's centre column — the shared coordinate system.
+
+    Both diagram paths (snapshot and change) derive their canvas here, so the geometry
+    can't drift between them.
+    """
+    total = margin + count * step - _SEP + margin
+    return total, [margin + i * step + slot // 2 for i in range(count)]
+
+
+def _segment_row(rendered: list[str], slot: int, step: int, margin: int, total: int) -> list[str]:
+    """The segment row: each rendered segment centred in its slot."""
+    row = [" "] * total
+    for i, text in enumerate(rendered):
+        _put(row, margin + i * step + (slot - _dwidth(text)) // 2, text)
+    return row
+
+
 def render_autosegmental(form: Form, project: Project) -> str:
     """Render *form*'s tiers as a monospace autosegmental diagram."""
     segs = form.segments
     if not segs:
         return "(empty)"
     rendered = [render_segment(s.bundle, project) or "∅" for s in segs]
+    labels = {a.id: _label(a, project) for tier in form.tiers.values() for a in tier.autosegs}
+    widths = [_dwidth(label) for label in labels.values()]
     slot = max(max((_dwidth(r) for r in rendered), default=1), 3)  # ≥3 leaves room for a contour
-    labels = [_label(a, project) for tier in form.tiers.values() for a in tier.autosegs]
     step = slot + _SEP
     if len(labels) >= 2:  # two labels on neighbouring anchors must not collide on the tier row
-        step = max(step, max(_dwidth(label) for label in labels) + 2)
-    margin = _margin(labels)  # wide enough that a centered feature label never clips at the edges
-    total = margin + len(segs) * step - _SEP + margin
-    center = {s.id: margin + i * step + slot // 2 for i, s in enumerate(segs)}
-    pos = {s.id: i for i, s in enumerate(segs)}
+        step = max(step, max(widths) + 2)
+    margin = _margin(widths)
+    total, centers = _geometry(slot, step, margin, len(segs))
+    center = {s.id: centers[i] for i, s in enumerate(segs)}
 
     lines: list[str] = []
     for tier in form.tiers.values():
         if tier.autosegs:
-            lines.extend(_tier_band(tier, center, pos, segs, total, project))
-
-    seg_row = [" "] * total
-    for i, r in enumerate(rendered):
-        col = margin + i * step + (slot - _dwidth(r)) // 2
-        _put(seg_row, col, r)
-    lines.append("".join(seg_row))
+            lines.extend(_tier_band(tier, center, segs, total, labels))
+    lines.append("".join(_segment_row(rendered, slot, step, margin, total)))
     return "\n".join(line.rstrip() for line in lines)
 
 
 def _tier_band(
-    tier: AutosegmentalTier, center, pos, segs, total: int, project: Project
+    tier: AutosegmentalTier, center, segs, total: int, labels: dict[int, str]
 ) -> list[str]:
-    """The label row + connector row for one tier."""
+    """The label row + connector row for one tier (labels precomputed by id)."""
     seg_ids = {s.id for s in segs}
     label_row = [" "] * total
     conn_row = [" "] * total
@@ -129,7 +141,7 @@ def _tier_band(
             singles.setdefault(anchors[0], []).append(autoseg)
 
     for autoseg, anchors in spreads:  # one autoseg → many anchors (the fork)
-        label = _label(autoseg, project)
+        label = labels[autoseg.id]
         mid = (anchors[0] + anchors[-1]) // 2
         _put(label_row, mid - (_dwidth(label) - 1) // 2, label)
         for x in range(anchors[0], anchors[-1] + 1):
@@ -142,25 +154,24 @@ def _tier_band(
 
     for col, group in singles.items():
         if len(group) == 1:  # one tone on one anchor
-            label = _label(group[0], project)
+            label = labels[group[0].id]
             _put(label_row, col - (_dwidth(label) - 1) // 2, label)
             conn_row[col] = "│"
         else:  # several tones converging on one anchor — a contour
-            labels = [_label(a, project) for a in group]
-            left, right = labels[0], labels[-1]
+            left, right = labels[group[0].id], labels[group[-1].id]
             _put(label_row, col - 1 - (_dwidth(left) - 1), left)  # left label's right edge at col-1
             _put(label_row, col + 1, right)  # right label starts just past the join
             conn_row[col - 1], conn_row[col], conn_row[col + 1] = "└", "┬", "┘"
 
     for autoseg in floats:  # unlinked: shown at its lexical gap, no line
-        label = _label(autoseg, project)
-        col = _float_col(tier, autoseg.id, center, pos, segs)
+        label = labels[autoseg.id]
+        col = _float_col(tier, autoseg.id, center, segs)
         _put(label_row, col - (_dwidth(label) - 1) // 2, label)
 
     return ["".join(label_row), "".join(conn_row)]
 
 
-def _float_col(tier, autoseg_id, center, pos, segs) -> int:
+def _float_col(tier, autoseg_id, center, segs) -> int:
     host = tier.float_hosts.get(autoseg_id)
     if host is None or host[0] not in center:
         return center[segs[0].id]
@@ -226,15 +237,14 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
     step = slot + _SEP
     labels = [s.label for s in spreads] + [s.replaced[1] for s in spreads if s.replaced]
     # A contour change lays several labels side by side on one anchor — size the margin to that
-    # group's width, not just a single label, so the group doesn't overflow the row edge.
-    groups: dict[int, int] = {}
+    # group's width (sum of labels + the gaps), not just a single label, so it doesn't overflow.
+    anchor_widths: dict[int, list[int]] = {}
     for s in spreads:
         if len(s.links) == 1:
-            groups[s.links[0][0]] = groups.get(s.links[0][0], -1) + _dwidth(s.label) + 1
-    widest = max([_dwidth(label) for label in labels] + list(groups.values()), default=0)
-    margin = max(4, widest // 2 + 1)  # fit the labels, single or grouped, without clipping
-    total = margin + len(segments) * step - _SEP + margin
-    centers = [margin + i * step + slot // 2 for i in range(len(segments))]
+            anchor_widths.setdefault(s.links[0][0], []).append(_dwidth(s.label))
+    group_widths = [sum(ws) + len(ws) - 1 for ws in anchor_widths.values()]
+    margin = _margin([_dwidth(label) for label in labels] + group_widths)
+    total, centers = _geometry(slot, step, margin, len(segments))
 
     above: list[list[str]] = []
     if spreads:
@@ -274,10 +284,7 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
                     x += w + 1
         above = [label_row, fork_row, conn_row] if multi else [label_row, conn_row]
 
-    seg_row = [" "] * total
-    for i, r in enumerate(rendered):
-        col = margin + i * step + (slot - _dwidth(r)) // 2
-        _put(seg_row, col, r)
+    seg_row = _segment_row(rendered, slot, step, margin, total)
 
     below: list[list[str]] = []
     for s in spreads:  # the delinked old value a node spread overwrote, under its anchor
@@ -422,7 +429,10 @@ def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str
         return f"{present_value(value)}{feature}"
     if definition.kind == FeatureKind.scalar:
         if isinstance(value, tuple):
-            return f"{feature}: " + ">".join(definition.values.get(v, str(v)) for v in value)
+            levels = (
+                definition.values.get(v, str(v)) if isinstance(v, int) else str(v) for v in value
+            )
+            return f"{feature}: " + ">".join(levels)
         if isinstance(value, int):
             return f"{feature}: {definition.values.get(value, str(value))}"
     return feature

@@ -1,6 +1,10 @@
 """Bundle and value parsing — concrete and pattern material from strings."""
 from __future__ import annotations
 
+from collections import UserDict
+from collections.abc import Callable
+from typing import Protocol
+
 from src.fortis.config import config
 from src.fortis.general.utils import safe_int
 from src.fortis.models.bundles import FeatureBundle, PatternBundle, ResultBundle
@@ -159,32 +163,39 @@ def parse_kind_value(raw_value: str, feature: str, features: FeatureInventory) -
 # --------------------------------------------------------------------------------------------------
 
 
+class _HasFeature(Protocol):
+    feature: str
+
+
+def _parse_bundle[S: _HasFeature, B: UserDict](
+    raw_string: str,
+    features: FeatureInventory,
+    factory: Callable[[], B],
+    parse_spec: Callable[[str, FeatureInventory], Result[S, str]],
+) -> Result[B, list[str]]:
+    """Shared core for the three bundle parsers: comma-split, parse each spec, collect errors.
+
+    ``;`` is reserved for contour-position index lists and does not separate features. *factory*
+    fixes the bundle type and *parse_spec* the spec type (realized / pattern / result).
+    """
+    error_list: list[str] = []
+    bundle = factory()
+    for raw_spec in (t.strip() for t in raw_string.split(",") if t.strip()):
+        match parse_spec(raw_spec, features):
+            case Err(err):
+                error_list.append(err)
+            case Ok(result):
+                bundle[result.feature] = result
+    if error_list:
+        return Err(error_list)
+    return Ok(bundle)
+
+
 def parse_feature_bundle(
     raw_string: str, features: FeatureInventory
 ) -> Result[FeatureBundle, list[str]]:
-    """Parse a comma-separated pattern bundle string.
-
-    Args:
-        raw_string: Comma-separated feature specs (``;`` is reserved for
-            contour-position index lists and does not separate features).
-        features: Feature inventory for name/value resolution.
-    """
-    error_list = []
-    raw_features = [t.strip() for t in raw_string.split(",") if t.strip()]
-
-    bundle = FeatureBundle()
-    for raw_spec in raw_features:
-        match parse_feature_spec(raw_spec, features):
-            case Err(err):
-                error_list.append(err)
-                continue
-            case Ok(result):
-                bundle[result.feature] = result
-
-    if error_list:
-        return Err(error_list)
-
-    return Ok(bundle)
+    """Parse a comma-separated realized feature bundle string."""
+    return _parse_bundle(raw_string, features, FeatureBundle, parse_feature_spec)
 
 
 def parse_feature_spec(
@@ -326,29 +337,8 @@ def parse_feature_value(
 def parse_pattern_bundle(
     raw_string: str, features: FeatureInventory
 ) -> Result[PatternBundle, list[str]]:
-    """Parse a comma-separated pattern bundle string.
-
-    Args:
-        raw_string: Comma-separated feature specs (``;`` is reserved for
-            contour-position index lists and does not separate features).
-        features: Feature inventory for name/value resolution.
-    """
-    error_list = []
-    raw_features = [t.strip() for t in raw_string.split(",") if t.strip()]
-
-    bundle = PatternBundle()
-    for raw_spec in raw_features:
-        match parse_pattern_spec(raw_spec, features):
-            case Err(err):
-                error_list.append(err)
-                continue
-            case Ok(result):
-                bundle[result.feature] = result
-
-    if error_list:
-        return Err(error_list)
-
-    return Ok(bundle)
+    """Parse a comma-separated pattern bundle string."""
+    return _parse_bundle(raw_string, features, PatternBundle, parse_pattern_spec)
 
 
 def parse_pattern_spec(raw_spec: str, features: FeatureInventory) -> Result[PatternSpec, str]:
@@ -576,29 +566,8 @@ def parse_pattern_value(
 def parse_result_bundle(
     raw_string: str, features: FeatureInventory
 ) -> Result[ResultBundle, list[str]]:
-    """Parse a comma-separated result bundle string.
-
-    Args:
-        raw_string: Comma-separated feature specs (``;`` is reserved for
-            contour-position index lists and does not separate features).
-        features: Feature inventory for name/value resolution.
-    """
-    error_list = []
-    raw_features = [t.strip() for t in raw_string.split(",") if t.strip()]
-
-    bundle = ResultBundle()
-    for raw_spec in raw_features:
-        match parse_result_spec(raw_spec, features):
-            case Err(err):
-                error_list.append(err)
-                continue
-            case Ok(result):
-                bundle[result.feature] = result
-
-    if error_list:
-        return Err(error_list)
-
-    return Ok(bundle)
+    """Parse a comma-separated result bundle string."""
+    return _parse_bundle(raw_string, features, ResultBundle, parse_result_spec)
 
 
 def parse_result_spec(raw_spec: str, features: FeatureInventory) -> Result[ResultSpec, str]:

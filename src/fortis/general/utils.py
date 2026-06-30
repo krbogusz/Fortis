@@ -1,6 +1,12 @@
 from __future__ import annotations
 
 import unicodedata
+from collections.abc import Iterable
+
+
+def by_length(strings: Iterable[str]) -> list[str]:
+    """Sort longest-first — the order greedy longest-match tokenisation needs."""
+    return sorted(strings, key=len, reverse=True)
 
 
 def safe_int(input: str) -> int | None:

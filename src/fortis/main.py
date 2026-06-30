@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from collections.abc import Sequence
 from pathlib import Path
 
 from src.fortis.application.deriving import derive, resolve_rule_letters
@@ -21,7 +22,7 @@ from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.loaders.project import load_project
-from src.fortis.models.derivation import Derivation
+from src.fortis.models.derivation import Derivation, DerivationStep
 from src.fortis.models.project import Project
 
 # Sentinel: ``--output`` given with no path ⇒ write to ``<project>/output.md``.
@@ -129,6 +130,28 @@ def main(argv: list[str] | None = None) -> None:
 _SUBRULE_SUFFIX = re.compile(r"#\d+$")
 
 
+def _trace_lines(steps: Sequence[DerivationStep], project: Project) -> list[str]:
+    """The firing-rule trace, shared by the CLI and Markdown renders.
+
+    A ``<time>: <name>`` head per rule group — consecutive sub-rules of one list-``definition``
+    rule (``name#1``/``#2``) share a head — then an indented ``<before> → <after>   (<change>)``
+    line per step. The CLI render prefixes each line with four more spaces.
+    """
+    lines: list[str] = []
+    previous_base: str | None = None
+    for step in steps:
+        before = render_syllabified(lower_tiers(step.before), step.before_boundaries, project)
+        after = render_syllabified(lower_tiers(step.after), step.after_boundaries, project)
+        change = describe_change(lower_tiers(step.before), lower_tiers(step.after), project)
+        base = _SUBRULE_SUFFIX.sub("", step.rule.id)
+        if base != previous_base:
+            label = step.rule.name or base
+            lines.append(f"{step.rule.time}: {label}" if step.rule.time is not None else label)
+            previous_base = base
+        lines.append(f"    {before} → {after}   ({change})")
+    return lines
+
+
 def _print_derivation(derivation: Derivation, project: Project) -> None:
     """Print one word's derivation: headword, each firing rule, then the surface.
 
@@ -142,18 +165,8 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
     print("")
     print(f"{word.ipa}{gloss}")  # echo the input verbatim (no render round-trip)
 
-    previous_base: str | None = None
-    for step in derivation.steps:
-        before = render_syllabified(lower_tiers(step.before), step.before_boundaries, project)
-        after = render_syllabified(lower_tiers(step.after), step.after_boundaries, project)
-        change = describe_change(lower_tiers(step.before), lower_tiers(step.after), project)
-        base = _SUBRULE_SUFFIX.sub("", step.rule.id)
-        if base != previous_base:
-            label = step.rule.name or base
-            head = f"{step.rule.time}: {label}" if step.rule.time is not None else label
-            print(f"    {head}")
-            previous_base = base
-        print(f"        {before} → {after}   ({change})")
+    for line in _trace_lines(derivation.steps, project):
+        print(f"    {line}")
 
     surface = render_syllabified(
         lower_tiers(derivation.surface), derivation.surface_boundaries, project
@@ -189,19 +202,7 @@ def _render_derivation_md(derivation: Derivation, project: Project) -> list[str]
         melody = render_autosegmental(derivation.input, project)
         lines += ["Input melody", "", "```", melody, "```", ""]
 
-    trace: list[str] = []
-    previous_base: str | None = None
-    for step in derivation.steps:
-        before = render_syllabified(lower_tiers(step.before), step.before_boundaries, project)
-        after = render_syllabified(lower_tiers(step.after), step.after_boundaries, project)
-        change = describe_change(lower_tiers(step.before), lower_tiers(step.after), project)
-        base = _SUBRULE_SUFFIX.sub("", step.rule.id)
-        if base != previous_base:
-            label = step.rule.name or base
-            head = f"{step.rule.time}: {label}" if step.rule.time is not None else label
-            trace.append(head)
-            previous_base = base
-        trace.append(f"    {before} → {after}   ({change})")
+    trace = _trace_lines(derivation.steps, project)
     if trace:
         lines += ["```", *trace, "```", ""]
 

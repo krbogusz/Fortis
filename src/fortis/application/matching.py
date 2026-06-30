@@ -100,6 +100,11 @@ def _limbs(value: Value) -> tuple[Limb, ...]:
     return value if isinstance(value, tuple) else (value,)
 
 
+def _scalar(value: Value) -> Value:
+    """A length-1 contour collapsed to its single atom; anything else unchanged."""
+    return value[0] if isinstance(value, tuple) and len(value) == 1 else value
+
+
 def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool:
     """Resolve one alpha limb against a realized atom — order-independently.
 
@@ -129,7 +134,7 @@ def _alpha_matches(ref: AlphaRef, atom: Limb, bindings: Bindings | None) -> bool
                 bindings.pending_other.append((ref.var, atom))  # ≠ α, checked later
         return True
     bound = bindings.alpha[ref.var]
-    bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
+    bound_atom = _scalar(bound)
     match ref.op:
         case AlphaOp.same:
             return atom == bound_atom
@@ -153,7 +158,7 @@ def _limb_match_readonly(p_limb: Limb, s_limb: Limb, bindings: Bindings | None) 
         if bindings is None or p_limb.var not in bindings.alpha:
             return False
         bound = bindings.alpha[p_limb.var]
-        bound_atom = bound[0] if isinstance(bound, tuple) and len(bound) == 1 else bound
+        bound_atom = _scalar(bound)
         return s_limb == bound_atom if p_limb.op == AlphaOp.same else s_limb != bound_atom
     if p_limb == "any":
         return s_limb is not None  # bare feature `[F]`: present with any value

@@ -6,7 +6,7 @@ from typing import Any
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.models.features import Feature, FeatureInventory, FeatureKind
 from src.fortis.models.tiers import Tier
-from src.fortis.result import Err, Ok, Result
+from src.fortis.result import Err, Ok, Result, collect
 
 # ---- Feature ------------------------------------------------------------------------------------
 
@@ -20,40 +20,11 @@ def load_feature(feature: str, feature_def: dict[str, Any]) -> Result[Feature, l
     """
     error_list: list[str] = []
 
-    match load_tier(feature, feature_def):
-        case Err(err):
-            error_list.append(err)
-            tier = Tier.segment  # Dummy value for the type checker
-        case Ok(result):
-            tier = result
-
-    match load_kind(feature, feature_def):
-        case Err(err):
-            error_list.append(err)
-            kind = FeatureKind.unary  # Dummy value for the type checker
-        case Ok(result):
-            kind = result
-
-    match load_short(feature, feature_def):
-        case Err(err):
-            error_list.append(err)
-            short_name = feature  # Dummy value for the type checker
-        case Ok(result):
-            short_name = result
-
-    match load_values(feature, feature_def, kind):
-        case Err(err):
-            error_list.append(err)
-            values = {}  # Dummy value for the type checker
-        case Ok(result):
-            values = result
-
-    match load_children(feature, feature_def):
-        case Err(err):
-            error_list.append(err)
-            children = ()  # Dummy value for the type checker
-        case Ok(result):
-            children = result
+    tier = collect(error_list, load_tier(feature, feature_def), Tier.segment)
+    kind = collect(error_list, load_kind(feature, feature_def), FeatureKind.unary)
+    short_name = collect(error_list, load_short(feature, feature_def), feature)
+    values = collect(error_list, load_values(feature, feature_def, kind), {})
+    children = collect(error_list, load_children(feature, feature_def), ())
 
     if error_list:
         return Err(error_list)
@@ -242,11 +213,7 @@ def load_feature_inventory(path: Path) -> Result[FeatureInventory, list[str]]:
 
     _synthesize_root(feature_inventory)
 
-    match validate_feature_inventory(feature_inventory):
-        case Err(err):
-            return Err(err)
-        case Ok(result):
-            return Ok(feature_inventory)
+    return validate_feature_inventory(feature_inventory).map(lambda _: feature_inventory)
 
 
 def _synthesize_root(inventory: FeatureInventory) -> None:
@@ -283,17 +250,10 @@ def validate_feature_inventory(feature_inventory: FeatureInventory) -> Result[No
     """Validate unique names/shorts, tier consistency, and no circular parent chains."""
     error_list = []
 
-    seen_names: dict[str, str] = {}
+    # Long names are dict keys, unique by construction — only short names need a check.
     seen_shorts: dict[str, str] = {}
 
     for feature, ft_def in feature_inventory.data.items():
-        # Unique long names
-        if feature in seen_names:
-            error_list.append(
-                f"Feature name '{feature}' is already used by feature '{seen_names[feature]}'"
-            )
-        seen_names[feature] = feature
-
         # Unique short names — a feature's own long name matching its short is fine
         if ft_def.short_name in seen_shorts:
             other = seen_shorts[ft_def.short_name]

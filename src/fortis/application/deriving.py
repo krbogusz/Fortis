@@ -331,7 +331,9 @@ def apply_rule(
                 lower_tiers(form), sonorities, syllable_parts, rule.time, letters,
                 syllable_features, _node_descendants(features), _floating_autosegs(form),
             )
-            return _apply_simultaneous(rule.sd, form, letters, features, boundaries, view, tiers)
+            return _apply_simultaneous(
+                rule.sd, form, letters, features, boundaries, view, tiers, syllable_features
+            )
         case ApplicationMode.left_to_right:
             return _apply_directional(
                 rule.sd, form, letters, features, sonorities, syllable_parts, rule.time,
@@ -504,10 +506,10 @@ def _apply_simultaneous(
     boundaries: frozenset[int],
     syllables: SyllableView | None,
     tiers: TierInventory,
+    syllable_features: frozenset[str],
 ) -> Form:
     """Find every locus against the original form, then splice all rewrites at once."""
     bundles = lower_tiers(form)
-    syllable_features = _syllable_features(features)
     selected = _select_non_overlapping(find_matches(sd, bundles, letters, boundaries, syllables))
     out = form.copy()
     # Splice right-to-left so each replacement's indices stay valid, computing every
@@ -541,12 +543,13 @@ def _apply_directional(
     scan so the ``$`` assertion and syllable-tier matching reflect the current form.
     """
     work = form.copy()
+    node_descendants = _node_descendants(features)  # invariant for the rule; not per-locus
     cursor = len(work.segments) if reverse else 0
     while True:
         bundles = lower_tiers(work)
         boundaries, view = _syllable_context(
             bundles, sonorities, syllable_parts, time, letters,
-            syllable_features, _node_descendants(features), _floating_autosegs(work),
+            syllable_features, node_descendants, _floating_autosegs(work),
         )
         if reverse:
             candidates = [

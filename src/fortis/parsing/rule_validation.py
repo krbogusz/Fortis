@@ -147,7 +147,7 @@ _ZERO_WIDTH = (WordBoundary, SyllableBoundary, FloatingAutoseg)
 
 def _cardinality(elements: tuple[Element, ...]) -> int:
     """Top-level element count, excluding zero-width assertions."""
-    return sum(1 for e in elements if not isinstance(e, _ZERO_WIDTH))
+    return len(_without_boundaries(elements))
 
 
 def _is_merge_bundle(element: Element) -> bool:

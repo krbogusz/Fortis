@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from src.fortis.application.combining import differing, matches_exactly
 from src.fortis.application.syllabifying import SyllabificationError, syllabify
 from src.fortis.models.bundles import FeatureBundle
@@ -105,7 +107,7 @@ def render_syllabified(
     syllable_features = frozenset(
         name for name, feature in inventories.features.items() if feature.tier == Tier.syllable
     )
-    all_diacritics = dict(inventories.diacritics)
+    all_diacritics = inventories.diacritics
     interior = boundaries - {0, len(sequence)}
     edges = sorted(boundaries | {0, len(sequence)})
     parts: list[str] = []
@@ -161,7 +163,7 @@ def render_segment(
     # All diacritics, segment- and syllable-tier: a segment carrying syllable-tier
     # features (a nucleus, where suprasegmentals live) gets its tone/stress marks;
     # non-nuclei have no syllable-tier features, so syllable-tier diacritics never fit.
-    all_diacritics = dict(inventories.diacritics)
+    all_diacritics = inventories.diacritics
 
     for letter_symbol, letter_def in inventories.letters.items():
         total_diffs = differing(segment, letter_def.bundle)
@@ -189,10 +191,21 @@ def render_segment(
     return "".join(before) + best_symbol + "".join(combining) + "".join(after)
 
 
+def _bucket_for(
+    kind: DiacriticKind, before: list[str], combining: list[str], after: list[str]
+) -> list[str]:
+    """The output list a diacritic of *kind* appends to (before / combining / after)."""
+    if kind == DiacriticKind.before:
+        return before
+    if kind == DiacriticKind.combining:
+        return combining
+    return after
+
+
 def _find_diacritics(
     target_bundle: FeatureBundle,
     remaining_diffs: set[str],
-    diacritics: dict[str, Diacritic],
+    diacritics: Mapping[str, Diacritic],
     before: list[str],
     combining: list[str],
     after: list[str],
@@ -252,18 +265,13 @@ def _find_diacritics(
             break
 
         remaining_diffs -= set(best_def.bundle.keys())
-        if best_def.kind == DiacriticKind.before:
-            before.append(best_symbol)
-        elif best_def.kind == DiacriticKind.combining:
-            combining.append(best_symbol)
-        else:
-            after.append(best_symbol)
+        _bucket_for(best_def.kind, before, combining, after).append(best_symbol)
 
 
 def _render_contour(
     target_bundle: FeatureBundle,
     remaining_diffs: set[str],
-    diacritics: dict[str, Diacritic],
+    diacritics: Mapping[str, Diacritic],
     before: list[str],
     combining: list[str],
     after: list[str],
@@ -299,14 +307,7 @@ def _render_contour(
             sequence.append(match)
         else:  # every level found a contour diacritic
             for symbol, dia in sequence:
-                bucket = (
-                    before
-                    if dia.kind == DiacriticKind.before
-                    else combining
-                    if dia.kind == DiacriticKind.combining
-                    else after
-                )
-                bucket.append(symbol)
+                _bucket_for(dia.kind, before, combining, after).append(symbol)
             remaining_diffs.discard(feature)
             return True
     return False

@@ -126,11 +126,7 @@ def load_sonorities_inventory(
     if error_list:
         return Err(error_list)
 
-    match validate_sonorities_inventory(inventory):
-        case Err(err):
-            return Err(err)
-        case Ok():
-            return Ok(inventory)
+    return validate_sonorities_inventory(inventory).map(lambda _: inventory)
 
 
 def validate_sonorities_inventory(inventory: SonoritiesInventory) -> Result[None, list[str]]:

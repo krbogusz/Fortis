@@ -1,9 +1,8 @@
 """Tests for the diacritics loader."""
 
 from src.fortis.loaders.diacritics import (
+    load_bool_field,
     load_bundle,
-    load_contour,
-    load_default,
     load_diacritic,
     load_diacritic_inventory,
     load_kind,
@@ -54,40 +53,24 @@ class TestLoadKind:
         assert result.is_err()
 
 
-class TestLoadDefault:
+class TestLoadBoolField:
     def test_true(self):
-        result = load_default("ˈ", {"default": True})
+        result = load_bool_field("ˈ", {"default": True}, "default")
         assert result.is_ok()
         assert result.unwrap() is True
 
     def test_false_explicit(self):
-        result = load_default("ˈ", {"default": False})
+        result = load_bool_field("ˈ", {"default": False}, "default")
         assert result.is_ok()
         assert result.unwrap() is False
 
     def test_absent_defaults_to_false(self):
-        result = load_default("ˈ", {})
+        result = load_bool_field("˥", {}, "contour")
         assert result.is_ok()
         assert result.unwrap() is False
 
     def test_non_bool(self):
-        result = load_default("ˈ", {"default": "yes"})
-        assert result.is_err()
-
-
-class TestLoadContour:
-    def test_true(self):
-        result = load_contour("˥", {"contour": True})
-        assert result.is_ok()
-        assert result.unwrap() is True
-
-    def test_absent_defaults_to_false(self):
-        result = load_contour("˥", {})
-        assert result.is_ok()
-        assert result.unwrap() is False
-
-    def test_non_bool(self):
-        result = load_contour("˥", {"contour": "yes"})
+        result = load_bool_field("˥", {"contour": "yes"}, "contour")
         assert result.is_err()
 
 
