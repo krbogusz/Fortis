@@ -260,6 +260,35 @@ def _find_diacritics(
             after.append(best_symbol)
 
 
+def tier_glyph(feature: str, value: object, diacritics: dict[str, Diacritic]) -> str | None:
+    """A suprasegmental value's standalone diacritic label, from the diacritics inventory.
+
+    For an autosegmental tier-row label, where a mark must stand on its own — a tone
+    letter ``˦``, a stress mark ``ˈ`` — rather than combine onto a base segment. A
+    contour (tuple) renders level by level (tone ``(2, 1, 4)`` → ``˨˩˦``); a scalar
+    renders as the single diacritic carrying that value, preferring a standalone
+    (``contour``) one, so tone takes the tone letter ``˦`` over the combining accent.
+    Reads the same inventory as the IPA renderer, so the two never diverge on a value's
+    glyph. Returns ``None`` if the inventory defines no diacritic for some level (the
+    caller falls back to the raw value).
+    """
+    levels = value if isinstance(value, tuple) else (value,)
+    glyphs: list[str] = []
+    for level in levels:
+        candidates = [
+            (symbol, dia)
+            for symbol, dia in diacritics.items()
+            if set(dia.bundle.keys()) == {feature} and dia.bundle[feature].value == level
+        ]
+        if not candidates:
+            return None
+        # A tier-row label can't combine onto a base, so prefer a standalone (contour)
+        # diacritic, then the default one.
+        symbol, _ = min(candidates, key=lambda pair: (not pair[1].contour, not pair[1].default))
+        glyphs.append(symbol)
+    return "".join(glyphs)
+
+
 def _render_contour(
     target_bundle: FeatureBundle,
     remaining_diffs: set[str],

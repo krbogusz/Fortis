@@ -8,6 +8,7 @@ from src.fortis.application.rendering import (
     render_segment,
     render_syllabified,
     sequence_to_string,
+    tier_glyph,
 )
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import syllabify
@@ -122,3 +123,21 @@ class TestSequenceToString:
                 assert len(string_to_sequence(rendered, project).bundles()) == len(
                     string_to_sequence(word, project).bundles()
                 )
+
+
+class TestTierGlyph:
+    """``tier_glyph`` reads suprasegmental labels from the diacritics inventory."""
+
+    def test_scalar_tone_is_the_tone_letter(self, project):
+        assert tier_glyph("tone", 4, project.diacritics) == "˦"
+
+    def test_contour_tone_joins_standalone_levels(self, project):
+        # A contour takes the standalone tone letters (˥˧), never the combining accent ̂.
+        assert tier_glyph("tone", (5, 3), project.diacritics) == "˥˧"
+
+    def test_primary_stress_is_its_mark(self, project):
+        assert tier_glyph("stress", 2, project.diacritics) == "ˈ"
+
+    def test_undefined_value_is_none(self, project):
+        # The shipped inventory has no secondary-stress glyph, so it falls back (None).
+        assert tier_glyph("stress", 1, project.diacritics) is None

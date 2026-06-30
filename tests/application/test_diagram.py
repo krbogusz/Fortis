@@ -1,5 +1,7 @@
 """Tests for the autosegmental text diagram (application/diagram.py)."""
 
+from dataclasses import replace
+
 from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.diagram import (
     render_autosegmental,
@@ -10,6 +12,7 @@ from src.fortis.application.diagram import (
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.models.autosegment import Autoseg
 from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.inventories import DiacriticInventory
 from src.fortis.models.specs import FeatureSpec
 
 
@@ -162,3 +165,26 @@ def test_geometry_tree_nests_real_nodes_for_one_segment(project):
     back = next(i for i, line in enumerate(lines) if line.endswith("back"))
     assert oral < lingual < back
     assert lines[oral].index("oral") < lines[lingual].index("lingual") < lines[back].index("back")
+
+
+def _with_tone4_as(project, symbol):
+    """A copy of *project* whose standalone tone-4 diacritic is *symbol* instead of ˦."""
+    kept = {
+        s: d
+        for s, d in project.diacritics.items()
+        if not (d.contour and set(d.bundle.keys()) == {"tone"} and d.bundle["tone"].value == 4)
+    }
+    kept[symbol] = replace(project.diacritics["˦"], symbol=symbol)
+    return replace(project, diacritics=DiacriticInventory(kept))
+
+
+def test_label_follows_a_redefined_tone_glyph(project):
+    # The diagram reads tone labels from the diacritics inventory, not a hardcoded map:
+    # remap the standalone tone-4 glyph and the diagram label follows it.
+    custom = _with_tone4_as(project, "H")
+    form = string_to_sequence("ta", custom)
+    h = form.fresh_id()
+    form.tiers["tone"].autosegs.append(_tone(4, h))
+    form.tiers["tone"].links.add((h, 1))
+    out = render_autosegmental(form, custom)
+    assert "H" in out and "˦" not in out

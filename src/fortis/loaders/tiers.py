@@ -26,7 +26,7 @@ def load_tier(
     Args:
         name: The tier's name (the TOML table key).
         tier_def: Raw dictionary from the TOML file.
-        features: Feature inventory — the tier registers itself on it and parses ``anchor`` against it.
+        features: Feature inventory — the tier registers itself on it, and parses ``anchor``.
     """
     error_list: list[str] = []
 

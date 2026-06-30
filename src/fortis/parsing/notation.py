@@ -276,7 +276,7 @@ class _Parser:
         return atom
 
     def _atom(self, bundle: BundleParser) -> Element:
-        """Parse one atom: bundle, wildcard, null, recall, name, boundary, group, floating autoseg."""
+        """Parse one atom: bundle, wildcard, null, recall, name, boundary, group, or floating."""
         tok = self._peek()
         if tok is None:
             self._fail("expected an element, found end of input")

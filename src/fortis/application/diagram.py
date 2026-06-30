@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 from dataclasses import dataclass
 
-from src.fortis.application.rendering import render_segment
+from src.fortis.application.rendering import render_segment, tier_glyph
 from src.fortis.general.presenting import present_value
 from src.fortis.general.utils import is_combining
 from src.fortis.models.autosegment import AutosegmentalTier
@@ -23,9 +23,6 @@ from src.fortis.models.project import Project
 from src.fortis.models.rules import Rule
 from src.fortis.models.values import AutosegRecall
 
-# Tone scalar (1=extra-low … 5=extra-high) → Chao tone letter.
-_TONE = {5: "˥", 4: "˦", 3: "˧", 2: "˨", 1: "˩"}
-_STRESS = {2: "ˈ", 1: "ˌ"}
 _SEP = 3  # blank display columns between segment slots
 
 
@@ -49,26 +46,22 @@ def _dwidth(text: str) -> int:
     return sum(0 if is_combining(ch) else 1 for ch in text)
 
 
-def _label(autoseg, tier_name: str) -> str:
+def _label(autoseg, project: Project) -> str:
     """A short label for one autosegment (a tone letter, a stress mark, …)."""
-    return _label_from_bundle(autoseg.bundle, tier_name)
+    return _label_from_bundle(autoseg.bundle, project)
 
 
-def _label_from_bundle(bundle, tier_name: str) -> str:
-    # A segmental geometry node (e.g. Place) labels by its node value; its autoseg carries the
-    # node's features, so a place autoseg renders as its major place (Labial / Coronal / Dorsal).
+def _label_from_bundle(bundle, project: Project) -> str:
+    # A segmental geometry node (e.g. place) labels by its node value; its autoseg carries the
+    # node's features, so a place autoseg renders as its major place (labial / lingual·back / …).
     place = _place_label(bundle)
     if place is not None:
         return place
+    # A suprasegmental autoseg (tone, stress, …) labels by its inventory diacritic — the same
+    # source the IPA renderer reads — falling back to the raw value if none is defined.
     for feature, spec in bundle.items():
-        value = spec.value
-        if feature == "tone":
-            if isinstance(value, tuple):
-                return "".join(_TONE.get(v, "?") for v in value)
-            return _TONE.get(value, str(value))
-        if feature == "stress":
-            return _STRESS.get(value, str(value))
-        return str(value)
+        glyph = tier_glyph(feature, spec.value, project.diacritics)
+        return glyph if glyph is not None else str(spec.value)
     return "?"
 
 
@@ -92,9 +85,9 @@ def render_autosegmental(form: Form, project: Project) -> str:
     pos = {s.id: i for i, s in enumerate(segs)}
 
     lines: list[str] = []
-    for name, tier in form.tiers.items():
+    for tier in form.tiers.values():
         if tier.autosegs:
-            lines.extend(_tier_band(tier, name, center, pos, segs, total))
+            lines.extend(_tier_band(tier, center, pos, segs, total, project))
 
     seg_row = [" "] * total
     for i, r in enumerate(rendered):
@@ -105,7 +98,7 @@ def render_autosegmental(form: Form, project: Project) -> str:
 
 
 def _tier_band(
-    tier: AutosegmentalTier, name: str, center, pos, segs, total: int
+    tier: AutosegmentalTier, center, pos, segs, total: int, project: Project
 ) -> list[str]:
     """The label row + connector row for one tier."""
     seg_ids = {s.id for s in segs}
@@ -125,7 +118,7 @@ def _tier_band(
             singles.setdefault(anchors[0], []).append(autoseg)
 
     for autoseg, anchors in spreads:  # one autoseg → many anchors (the fork)
-        label = _label(autoseg, name)
+        label = _label(autoseg, project)
         mid = (anchors[0] + anchors[-1]) // 2
         _put(label_row, mid - (_dwidth(label) - 1) // 2, label)
         for x in range(anchors[0], anchors[-1] + 1):
@@ -138,17 +131,17 @@ def _tier_band(
 
     for col, group in singles.items():
         if len(group) == 1:  # one tone on one anchor
-            label = _label(group[0], name)
+            label = _label(group[0], project)
             _put(label_row, col - (_dwidth(label) - 1) // 2, label)
             conn_row[col] = "│"
         else:  # several tones converging on one anchor — a contour
-            labels = [_label(a, name) for a in group]
+            labels = [_label(a, project) for a in group]
             _put(label_row, col - 1, labels[0])
             _put(label_row, col + 1, labels[-1])
             conn_row[col - 1], conn_row[col], conn_row[col + 1] = "└", "┬", "┘"
 
     for autoseg in floats:  # unlinked: shown at its lexical gap, no line
-        label = _label(autoseg, name)
+        label = _label(autoseg, project)
         col = _float_col(tier, autoseg.id, center, pos, segs)
         _put(label_row, col - (_dwidth(label) - 1) // 2, label)
 
@@ -173,10 +166,10 @@ def render_autosegmental_change(before: Form, after: Form, project: Project) -> 
     """
     if not after.segments:
         return render_autosegmental(after, project)
-    return _draw(after.segments, _tier_spreads(before, after), project)
+    return _draw(after.segments, _tier_spreads(before, after, project), project)
 
 
-def _tier_spreads(before: Form, after: Form) -> list[_Spread]:
+def _tier_spreads(before: Form, after: Form, project: Project) -> list[_Spread]:
     """The tier (tone/stress) association changes, one ``_Spread`` per autosegment that moved.
 
     Anchors are restricted to segments present in ``after`` (a link to a deleted segment is
@@ -205,7 +198,7 @@ def _tier_spreads(before: Form, after: Form) -> list[_Spread]:
                 (after_index[sid], _change_glyph(sid, before_anchors, after_anchors))
                 for sid in all_anchors
             )
-            spreads.append(_Spread(_label_from_bundle(bundle, name), links))
+            spreads.append(_Spread(_label_from_bundle(bundle, project), links))
     return spreads
 
 
