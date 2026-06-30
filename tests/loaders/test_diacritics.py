@@ -98,7 +98,7 @@ class TestLoadDiacritic:
         assert d.symbol == "̩"
         assert d.tier == Tier.segment
         assert d.kind == DiacriticKind.combining
-        assert d.default is False
+        assert d.read_only is False
 
     def test_missing_required_fields(self, features):
         result = load_diacritic("̩", {}, features)

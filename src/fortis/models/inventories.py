@@ -50,8 +50,9 @@ class Diacritic:
         tier: Phonological tier this diacritic belongs to.
         kind: Where the diacritic attaches relative to its base.
         bundle: Feature bundle the diacritic contributes.
-        default: Whether this is the default diacritic for its features.
         contour: Whether this diacritic forms contours when combined.
+        read_only: An input-only alias — accepted when reading the lexicon, but never emitted on
+            output (rendering uses the non-``read_only`` diacritic for each value).
         marks_boundary: Whether this diacritic, placed at a syllable edge, is
             itself the boundary marker — so rendering omits the separate ``.``.
     """
@@ -60,8 +61,8 @@ class Diacritic:
     tier: Tier
     kind: DiacriticKind
     bundle: FeatureBundle
-    default: bool
     contour: bool
+    read_only: bool = False
     marks_boundary: bool = False
 
 

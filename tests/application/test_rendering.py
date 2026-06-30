@@ -75,15 +75,15 @@ class TestRenderSyllabified:
         )
         assert render_syllabified(seq, boundaries, project) == "a˨˩˦"
 
-    def test_contour_with_its_own_diacritic_is_preferred_over_the_sequence(self, project):
-        # 5>3 has an exact diacritic (combining ̂/᷇), so the tone-letter fallback
-        # (˥˧) is not used — exact match wins.
+    def test_contour_renders_as_tone_letters_not_the_read_only_combining_mark(self, project):
+        # 5>3 has a combining mark (̂/᷇), but those are read_only (input-only), so output uses
+        # the tone-letter sequence ˥˧ instead.
         seq = string_to_sequence("a", project).bundles()
         seq[0]["tone"] = FeatureSpec("tone", (5, 3))
         boundaries = syllabify(
             seq, project.sonorities, project.syllable_parts, project.time, project.letters
         )
-        assert "˥˧" not in render_syllabified(seq, boundaries, project)
+        assert "˥˧" in render_syllabified(seq, boundaries, project)
 
     def test_after_kind_tone_renders_at_the_syllable_edge(self, project):
         # An after-kind mark (a tone letter) on a closed syllable goes after the coda,

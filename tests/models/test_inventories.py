@@ -38,7 +38,6 @@ class TestDiacriticInventory:
             tier=Tier.segment,
             kind=DiacriticKind.after,
             bundle=FeatureBundle(),
-            default=False,
             contour=False,
         )
         inv["ˈ"] = Diacritic(
@@ -46,7 +45,6 @@ class TestDiacriticInventory:
             tier=Tier.syllable,
             kind=DiacriticKind.before,
             bundle=FeatureBundle(),
-            default=True,
             contour=False,
         )
         inv["̩"] = Diacritic(
@@ -54,7 +52,6 @@ class TestDiacriticInventory:
             tier=Tier.segment,
             kind=DiacriticKind.combining,
             bundle=FeatureBundle(),
-            default=False,
             contour=False,
         )
         return inv
@@ -93,7 +90,6 @@ class TestDiacriticInventory:
             tier=Tier.segment,
             kind=DiacriticKind.after,
             bundle=FeatureBundle(),
-            default=False,
             contour=False,
         )
         inv["abc"] = Diacritic(
@@ -101,7 +97,6 @@ class TestDiacriticInventory:
             tier=Tier.segment,
             kind=DiacriticKind.after,
             bundle=FeatureBundle(),
-            default=False,
             contour=False,
         )
         inv["ab"] = Diacritic(
@@ -109,7 +104,6 @@ class TestDiacriticInventory:
             tier=Tier.segment,
             kind=DiacriticKind.after,
             bundle=FeatureBundle(),
-            default=False,
             contour=False,
         )
         assert inv.segment_keys == ["abc", "ab", "a"]

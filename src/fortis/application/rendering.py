@@ -223,6 +223,8 @@ def _find_diacritics(
         best_coverage = 0
 
         for dia_symbol, dia_def in diacritics.items():
+            if dia_def.read_only:  # input-only alias — never emitted on output
+                continue
             dia_features = set(dia_def.bundle.keys())
             if not dia_features:
                 continue
@@ -238,19 +240,9 @@ def _find_diacritics(
             if not fits:
                 continue
 
-            # At least one feature must still be needed
+            # At least one feature must still be needed; prefer the diacritic covering the most.
             coverage = len(dia_features & remaining_diffs)
-            if coverage == 0:
-                continue
-
-            # Prefer diacritics that cover more remaining differences;
-            # break ties by preferring default diacritics
-            if coverage > best_coverage or (
-                coverage == best_coverage
-                and best_def is not None
-                and dia_def.default
-                and not best_def.default
-            ):
+            if coverage > best_coverage:
                 best_symbol = dia_symbol
                 best_def = dia_def
                 best_coverage = coverage
@@ -297,6 +289,7 @@ def _render_contour(
                     (symbol, dia)
                     for symbol, dia in diacritics.items()
                     if dia.contour
+                    and not dia.read_only
                     and set(dia.bundle.keys()) == {feature}
                     and dia.bundle[feature].value == level
                 ),

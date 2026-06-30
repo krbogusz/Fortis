@@ -35,8 +35,8 @@ def load_diacritic(
             bundle = FeatureBundle()
         case Ok(result):
             bundle = result
-    default = collect(error_list, load_bool_field(symbol, diacritic_def, "default"), False)
     contour = collect(error_list, load_bool_field(symbol, diacritic_def, "contour"), False)
+    read_only = collect(error_list, load_bool_field(symbol, diacritic_def, "read_only"), False)
     marks_boundary = collect(
         error_list, load_bool_field(symbol, diacritic_def, "marks_boundary"), False
     )
@@ -49,8 +49,8 @@ def load_diacritic(
             tier=tier,
             kind=kind,
             bundle=bundle,
-            default=default,
             contour=contour,
+            read_only=read_only,
             marks_boundary=marks_boundary,
         )
     )
