@@ -1,4 +1,4 @@
-// Generates public/engine.tgz from ../src + ../inventories,
+// Generates public/engine.tgz from ../src + ../projects/default,
 // and copies the verified Pyodide runtime assets into public/pyodide/.
 // Wired as npm predev / prebuild.
 import { execSync } from "node:child_process";
@@ -12,7 +12,7 @@ const web = resolve(here, "..");
 // 1. Engine bundle (exact command from the task spec).
 mkdirSync(resolve(web, "public"), { recursive: true });
 execSync(
-  "COPYFILE_DISABLE=1 tar czf public/engine.tgz --exclude='__pycache__' --exclude='._*' -C .. src inventories",
+  "COPYFILE_DISABLE=1 tar czf public/engine.tgz --exclude='__pycache__' --exclude='._*' -C .. src -C projects default",
   { cwd: web, stdio: "inherit", shell: "/bin/bash" }
 );
 console.log("built public/engine.tgz");

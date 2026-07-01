@@ -50,7 +50,7 @@ def test_load_tier_inventory_from_file(tmp_path, project):
 
 
 def test_shipped_tiers_loaded_into_project(project):
-    # load_project picks up the shipped inventories/tiers.toml.
+    # load_project picks up the shipped projects/default/tiers.toml.
     assert set(project.tiers.keys()) == {"tone", "stress"}
     assert project.tiers["tone"].melody is True
     assert project.tiers["stress"].melody is False

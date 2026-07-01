@@ -35,7 +35,7 @@ from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.application.diagram import render_autosegmental, render_change, render_geometry_tree
 _SUB = re.compile(r"#\\d+$")
-INV = "/work/inventories"
+INV = "/work/default"
 def read_file(name): return (Path(INV)/name).read_text(encoding="utf-8")
 def write_file(name, text): (Path(INV)/name).write_text(text, encoding="utf-8")
 def run_derivations():

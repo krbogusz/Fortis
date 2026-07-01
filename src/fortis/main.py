@@ -45,7 +45,7 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         metavar="DIR",
         help=(
             "a project directory; its files override the shipped defaults and any it omits "
-            "fall back to them (default: the shipped inventories/)"
+            "fall back to them (default: the shipped projects/default/)"
         ),
     )
     parser.add_argument(
@@ -177,7 +177,7 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
 
 def _build_report(derivations: list[Derivation], project: Project, project_dir: Path | None) -> str:
     """The whole run as one Markdown document (the ``--output`` target)."""
-    where = f"`{project_dir}`" if project_dir is not None else "the shipped inventories"
+    where = f"`{project_dir}`" if project_dir is not None else "the shipped `projects/default`"
     lines = [
         f"# Output — {where}",
         "",

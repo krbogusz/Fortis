@@ -8,7 +8,7 @@ re-run on the right.
 ## How it reflects the engine
 
 There is no JavaScript copy of the engine to keep in sync. At `predev`/`prebuild`,
-`scripts/build-engine.mjs` tars the repo's live `src/` and `inventories/` into
+`scripts/build-engine.mjs` tars the repo's live `src/` and `projects/default/` into
 `public/engine.tgz` and copies the version-locked Pyodide runtime into
 `public/pyodide/` (both are gitignored — built fresh). The browser unpacks that
 bundle, puts it on `sys.path`, imports `src.fortis`, and calls the engine directly
@@ -41,4 +41,4 @@ npm run smoke      # headless check that the engine loads and derives
 ```
 
 `npm run build-engine` rebuilds `public/engine.tgz` on its own — run it after
-changing `../src` or `../inventories` if the dev server is already up.
+changing `../src` or `../projects/default` if the dev server is already up.

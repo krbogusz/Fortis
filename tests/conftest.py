@@ -18,7 +18,7 @@ from src.fortis.parsing.bundles import parse_pattern_bundle
 
 @pytest.fixture(scope="session")
 def project() -> Project:
-    """The real project loaded from the repo's ``inventories/`` directory."""
+    """The real project loaded from the repo's ``projects/default/`` directory."""
     result = load_project()
     assert result.is_ok(), f"Failed to load project: {result.unwrap_err()}"
     return result.unwrap()

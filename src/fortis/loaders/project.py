@@ -53,18 +53,19 @@ def load_project(
     """Load every inventory and assemble a Project.
 
     A *project_dir* supplies only the files that differ from the shipped defaults
-    (``config.paths.inventories``); any inventory file it omits falls back to the default.
-    So a project that re-uses the default feature system needs no ``features.toml`` of its
-    own. Features are loaded first since all other inventories depend on them.
+    (``config.paths.default``, i.e. ``projects/default``); any inventory file it omits
+    falls back to the default. So a project that re-uses the default feature system
+    needs no ``features.toml`` of its own. Features are loaded first since all other
+    inventories depend on them.
 
     Args:
         project_dir: The project's directory — its files override the shipped defaults, and
-            any it omits fall back to them. Defaults to the shipped inventories themselves.
+            any it omits fall back to them. Defaults to ``projects/default`` itself.
         words_path: The lexicon file. Defaults to the project's ``words.toml`` (or the
             default's, if the project has none).
         rules_path: The sound-change file. Defaults likewise to ``rules.toml``.
     """
-    defaults = config.paths.inventories
+    defaults = config.paths.default
     if project_dir is None:
         project_dir = defaults
 

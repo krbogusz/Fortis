@@ -1,6 +1,6 @@
 # Fortis
 
-A diachronic phonology engine. Everything is user-supplied in `inventories/`
+A diachronic phonology engine. Everything is user-supplied in `projects/default/`
 (feature system, letters, diacritics, sonority scale, syllable parameters,
 autosegmental tiers, lexicon, sound-change rules); the engine segments each word
 into feature bundles, runs it through the rules in chronological order, and prints
@@ -142,7 +142,7 @@ just that span; `deriving.py` splices the result back and moves to the next rule
 
 ## Autosegmental tiers
 
-A feature declared on a tier (`inventories/tiers.toml`) — e.g. `tone` or `stress` — lives
+A feature declared on a tier (`projects/default/tiers.toml`) — e.g. `tone` or `stress` — lives
 not in the segment's feature bundle but as an **autosegment** on a separate tier, linked to
 its anchor segment by identity. That identity link is what makes classic autosegmental
 behaviour fall out:
@@ -170,10 +170,12 @@ A strict downward dependency DAG — each layer imports only from those above it
 
 ```
 fortis/
-├── inventories/                 # user-authored data
-│   ├── features.toml  letters.csv  diacritics.toml
-│   ├── sonorities.toml  syllable_parts.toml  tiers.toml
-│   └── words.toml  rules.toml
+├── projects/
+│   ├── default/                 # shipped project — user-authored data, fallback base for all others
+│   │   ├── features.toml  letters.csv  diacritics.toml
+│   │   ├── sonorities.toml  syllable_parts.toml  tiers.toml
+│   │   └── words.toml  rules.toml
+│   └── ...                      # other projects, e.g. old_chinese, pie_to_english
 ├── docs/                        # user_guide, notation reference, feature/rule docs
 ├── tests/
 └── src/fortis/

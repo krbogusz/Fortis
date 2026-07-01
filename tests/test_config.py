@@ -8,13 +8,13 @@ class TestPaths:
         paths = Paths()
         assert paths.root.exists()
 
-    def test_inventories_dir(self):
+    def test_default_dir(self):
         paths = Paths()
-        assert paths.inventories == paths.root / "inventories"
+        assert paths.default == paths.root / "projects" / "default"
 
     def test_letters_path(self):
         paths = Paths()
-        assert paths.letters == paths.inventories / "letters.csv"
+        assert paths.letters == paths.default / "letters.csv"
 
 
 class TestValueSymbols:
@@ -40,7 +40,7 @@ class TestValueSymbols:
 class TestConfig:
     def test_singleton(self):
         assert isinstance(config, Config)
-        assert config.paths.inventories.exists()
+        assert config.paths.default.exists()
 
     def test_greek_alphabet(self):
         assert "α" in config.greek_alphabet

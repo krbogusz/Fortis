@@ -9,10 +9,10 @@ class Paths:
     """Paths to various directories."""
 
     root: Path = Path(__file__).parent.parent.parent
-    inventories: Path = root / "inventories"
-    letters: Path = inventories / "letters.csv"
-    rules: Path = inventories / "rules.toml"
-    words: Path = inventories / "words.toml"
+    default: Path = root / "projects" / "default"
+    letters: Path = default / "letters.csv"
+    rules: Path = default / "rules.toml"
+    words: Path = default / "words.toml"
 
 
 @dataclass

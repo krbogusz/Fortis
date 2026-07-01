@@ -1,4 +1,4 @@
-# Default inventories — a showcase of the engine's rule features. Each word is the sole
+# Default project — a showcase of the engine's rule features. Each word is the sole
 # target of one rule (scoped by gloss), so each feature shows in isolation.
 #
 #   python -m src.fortis.main          # run this showcase

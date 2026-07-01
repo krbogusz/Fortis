@@ -6,7 +6,7 @@ import pytest
 
 from src.fortis.loaders.project import load_project
 
-# An inventories dir with a lexicon: the Old Chinese example has 'sun' (gloss) / 'ˈnjit' (ipa).
+# A project dir with a lexicon: the Old Chinese example has 'sun' (gloss) / 'ˈnjit' (ipa).
 _OC = Path(__file__).resolve().parent.parent.parent / "projects" / "old_chinese"
 
 
