@@ -1,13 +1,73 @@
 # Fortis
 
-A diachronic phonology engine. Everything is user-supplied in `projects/default/`
-(feature system, letters, diacritics, sonority scale, syllable parameters,
-autosegmental tiers, lexicon, sound-change rules); the engine segments each word
-into feature bundles, runs it through the rules in chronological order, and prints
-a step-by-step derivation with syllable structure. Suprasegmental features (tone,
-stress) live on autosegmental tiers, so rules can spread, dock, and delink them,
-and a tone survives its vowel's deletion. The reference data models the
-development from Proto-Indo-European to Modern English.
+A featural, autosegmental phonology engine for diachronic and synchronic use.
+
+## What it is
+
+Fortis takes a lexicon and an ordered set of phonological rules and derives,
+word by word, every intermediate form from input to surface — recording
+exactly which rule fired, what it changed, and why. Words aren't strings that
+get pattern-matched character by character; they're sequences of **feature
+bundles**, so a rule like "voiceless stops become voiced between vowels" is
+written once, over features, and fires on every segment it describes,
+regardless of how any particular inventory happens to spell it.
+
+Suprasegmental features (tone, stress) live on **autosegmental tiers**,
+linked to their anchor segment by identity rather than baked into it — so a
+tone can spread across several vowels, dock onto one after floating free, or
+survive the deletion of the vowel that used to carry it, the same way these
+processes are described in the phonological literature. Syllable structure is
+computed too, not annotated by hand: a sonority scale and (optionally)
+onset/coda constraints decide where the boundaries fall, and rules can refer
+to them directly.
+
+Fortis makes no distinction between "historical sound change" and
+"synchronic phonology" — both are an ordered set of rules applied over
+time; whether that time span is three millennia or a single derivation is
+determined entirely by what you put in `rules.toml`. The repository
+includes three example projects: a **feature showcase** (one rule per
+mechanism), **Proto-Indo-European → Modern English**, and **Old Chinese →
+Middle Mandarin**.
+
+## Design philosophy
+
+- Every inventory — the feature vocabulary and its geometry, the IPA letters,
+  the diacritics, the sonority scale, the syllable structure, the
+  autosegmental tiers, the lexicon, and the rules — is user-authored data
+  loaded at run time; none of it is hardcoded. The engine itself only
+  implements the general mechanisms (feature bundles, structural rule
+  matching, autosegmental association, syllabification) that such a system
+  needs, not a specific language or phonological theory.
+
+- `projects/default` (the shipped feature showcase) is treated as an
+  ordinary project rather than a special case, which is why it lives under
+  `projects/` instead of at the repo root. A project supplies only the
+  files that differ from the default; whatever it omits falls back, so the
+  same mechanism that runs the shipped showcase runs a project that
+  overrides one file or a project that overrides all of them. That default
+  project does ship with its own feature system, letter inventory,
+  diacritics, sonority scale, and syllable structure, described in detail
+  in [`docs/default_system.md`](docs/default_system.md) — a starting point
+  to build from or override, not a fixed part of the engine.
+
+- The codebase is organized as a one-way dependency DAG — `models` (inert
+  data) ← `parsing` ← `loaders` ← `application` (the engine) — and each
+  layer may only import from those before it. That constraint is enforced
+  by what's importable, not just documented (see [Layout](#layout)).
+
+- Rule notation is validated at load time, and every problem in a file is
+  collected and reported together rather than stopping at the first one
+  found. An unsyllabifiable cluster or an ambiguous rule interaction (§6.3
+  of the user guide) is surfaced as an error rather than resolved silently.
+
+- Autosegmental tiers, onset/coda constraints, and a custom sonority scale
+  are all optional. Without a `tiers.toml`, the tier machinery doesn't run
+  at all, so a project with no tone or stress carries no runtime cost from
+  the mechanism that would support them.
+
+## Using it
+
+### Command line
 
 Run the derivations — the shipped default is a **feature showcase**, one word-scoped rule per
 feature (voicing assimilation, i-umlaut, devoicing, deletion, epenthesis, degemination, tone spread):
@@ -38,13 +98,31 @@ name, `.csv`):
 python -m src.fortis.main --project projects/old_chinese --output
 ```
 
-## How rule matching works
+### Web app
 
-The heart of the engine is deciding _where_ a rule applies in a word. This lives
-in `application/matching.py`; `find_matches(rule, segments)` returns one
+`web/` is a browser front end that runs the same Python engine used by the CLI —
+compiled to WebAssembly and executed in-browser via [Pyodide](https://pyodide.org),
+rather than a separate JavaScript reimplementation. Edit any of the 8 inventory
+files (or load your own project) and the derivations re-run, in both a historical
+trace view and an autosegmental association-diagram view; see
+[`web/README.md`](web/README.md) for the full picture, including the type scale
+and theming. To run it locally:
+
+```
+cd web
+npm install
+npm run dev
+```
+
+## How it works
+
+### Rule matching
+
+The central problem the engine solves is deciding _where_ a rule applies in a
+word. This lives in `application/matching.py`; `find_matches(rule, segments)` returns one
 `Match(start, end, bindings)` for every place the rule fires.
 
-### What a rule looks like, and what a "match" is
+#### What a rule looks like, and what a "match" is
 
 A parsed rule (`StructuralDescription`) is `A → B / C _ D // E _ F`:
 
@@ -56,13 +134,14 @@ A parsed rule (`StructuralDescription`) is `A → B / C _ D // E _ F`:
 Each part is a sequence of **elements** (`models/elements.py`): a feature bundle
 `[+syll]`, a letter, a disjunction `(X|Y)`, a quantified element `X{2}` / `X*`, a
 group `(X Y)`, a word/syllable boundary `#` / `$`, a binding `1=X`, a recall `@1`,
-a negation `!X`, the wildcard `[]`, or the null segment `∅`.
+a negation `!X`, the wildcard `[]`, or the null segment `∅`. The full notation
+reference lives in [`docs/user_guide.md`](docs/user_guide.md) §5.
 
 A **locus** (a match) is a target span where the left context matches _immediately
 to its left_, the right context _immediately to its right_, and the exception
 environment does _not_ hold around it.
 
-### Three layers
+#### Three layers
 
 **1. The leaf — does one pattern match one segment?** `pattern_matches(pattern,
 segment)` walks the pattern's features. Each feature the pattern names must be
@@ -114,7 +193,7 @@ left edge is anchored at `end` (`_match_starting_at`). The exception uses the sa
 two anchored matches — if an exception-left _and_ an exception-right both match, the
 locus is **blocked**.
 
-### The bindings environment
+#### The bindings environment
 
 A `Bindings` (`models/bindings.py`) is threaded through the whole search:
 
@@ -128,7 +207,7 @@ A `Bindings` (`models/bindings.py`) is threaded through the whole search:
 - **conditions** — per-label truth of conditional features, AND-accumulated.
 - plus the disjunction branch taken and any deferred `!α` constraints.
 
-### A worked example
+#### A worked example
 
 Rule `[+syll] → [+nasal] / [+nasal] _` ("a vowel nasalises after a nasal"), word
 `ana` = `[a, n, a]`:
@@ -144,7 +223,7 @@ Rule `[+syll] → [+nasal] / [+nasal] _` ("a vowel nasalises after a nasal"), wo
 So `find_matches` returns one match, on the final `a`. The applier then rewrites
 just that span; `deriving.py` splices the result back and moves to the next rule.
 
-## Autosegmental tiers
+### Autosegmental tiers
 
 A feature declared on a tier (`projects/default/tiers.toml`) — e.g. `tone` or `stress` — lives
 not in the segment's feature bundle but as an **autosegment** on a separate tier, linked to
@@ -157,7 +236,7 @@ behaviour fall out:
   tier (`melody = false`, e.g. stress) stays put.
 - **Spread / dock / delink** — rules link one autosegment to many anchors (`~n`), dock a
   floating autosegment (`⟨…⟩`) onto an anchor, or remove an association (`tone: none`). See
-  `docs/change_notation_rules.md` §1.8 and §2.12.
+  `docs/user_guide.md` §5.12.
 - **Optional** — with no `tiers.toml` the tier machinery never runs; the engine behaves
   exactly as before, so a project that doesn't need tones pays nothing.
 
@@ -166,6 +245,16 @@ a stable id) alongside the tiers. The matcher and renderer read suprasegmentals 
 transient "lowered" view, so they keep working on plain bundles; `application/tiers.py` holds
 the tier operations (associate at construction, prune/OCP cleanup, redock, and the
 spread/dock/delink writes).
+
+### Syllabification
+
+Syllable boundaries are computed, not annotated — run on the input and refreshed before every
+rule that uses the `$` assertion, so `$` always reflects the current structure. Nuclei are
+identified from `syllable_parts.toml`; between each adjacent pair, the intervening consonants
+default to a sonority-driven Maximal Onset division, or — if `syllable_parts.toml` defines
+onset/coda patterns — the longest pattern-legal split wins instead, which can license clusters
+sonority alone wouldn't (e.g. _s_+stop onsets). See §7 of
+[`docs/user_guide.md`](docs/user_guide.md) for the full account.
 
 ## Layout
 
@@ -180,7 +269,8 @@ fortis/
 │   │   ├── sonorities.toml  syllable_parts.toml  tiers.toml
 │   │   └── words.toml  rules.toml
 │   └── ...                      # other projects, e.g. old_chinese, pie_to_english
-├── docs/                        # user_guide, notation reference, feature/rule docs
+├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
+├── web/                         # browser playground (Pyodide) — see web/README.md
 ├── tests/
 └── src/fortis/
     ├── config.py                # paths, value symbols, greek alphabet, special symbols
@@ -233,7 +323,53 @@ fortis/
         └── deriving.py          #   apply_rule per mode; derive a word → Derivation
 ```
 
+## Current limitations and future directions
+
+- **Deterministic only.** A rule either fires everywhere its structural
+  description matches, or is restricted to specific words via `words`;
+  there's no notion of a rule applying only some of the time (sporadic or
+  gradient change beyond that word-level restriction).
+- **No morphological structure.** The lexicon is a flat list of IPA/gloss
+  pairs — there's no morpheme boundary, affixation, or reduplication, so a
+  process conditioned on morphological structure (or a reduplicative copy)
+  isn't expressible.
+- **Some rule interactions are undefined by design.** Two rules sharing
+  both a `time` and an adjacent file position, with overlapping loci, have
+  an undefined interaction (§6.3 of the user guide); the rule author is
+  responsible for distinct `time` values or an explicit order where it
+  matters.
+- **Round-trip identity isn't guaranteed.** Only round-trip _stability_ is
+  (parsing and re-rendering a form twice yields the same string both
+  times) — an inventory's letters and diacritics may not spell a derived
+  form back exactly as it was first typed.
+- **No cross-project or typological validation.** Nothing checks a
+  project's feature system against an external phonological inventory
+  database, or against another project's; consistency across projects is
+  the author's responsibility.
+- **Rule-based, not constraint-based.** Fortis models sound change as
+  ordered rewrite rules (SPE/autosegmental style); there's no
+  Optimality-Theoretic ranking or violation-tableau mode.
+- **The browser engine is slow relative to the CLI.** Pyodide runs real
+  CPython compiled to WASM, which is meaningfully slower than native
+  CPython — deriving a few dozen words can take tens of seconds in the
+  browser versus a fraction of a second from the command line.
+- **The web app has no persistence layer.** A loaded project lives only in
+  that browser tab's memory; there's no save-to-cloud, sharing, or
+  multi-user collaboration, only per-file download.
+
+None of these are commitments, but plausible directions if the project
+grows: richer (weighted or optional) rule application for gradient change,
+some notion of morphological structure to support reduplication and
+affix-conditioned rules, metrical foot structure alongside the existing
+tone/stress tiers, and performance work on the browser build if it becomes
+more than a demo/playground.
+
 ## License
 
 Licensed under [CC BY-NC 4.0](LICENSE) — free for private and scientific/research
 use with attribution; commercial use is not permitted.
+
+## A note on generative AI
+
+This project was developed with use of generative AI (Claude Code) as a coding assistant,
+under the direction and review of the author.

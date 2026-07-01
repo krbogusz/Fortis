@@ -1,9 +1,10 @@
 # Fortis — web app
 
-A browser front-end for the Fortis phonology engine. It runs the **real Python
-engine** (`../src/fortis`) in the browser via [Pyodide](https://pyodide.org) — no
-server, no reimplementation. Edit the inventories on the left, and the derivations
-re-run on the right.
+A browser front-end for the Fortis phonology engine. It runs the same Python
+engine as the CLI (`../src/fortis`), compiled to WebAssembly and executed
+in-browser via [Pyodide](https://pyodide.org), rather than a separate
+JavaScript reimplementation. Edit the inventories on the left, and the
+derivations re-run on the right.
 
 ## How it reflects the engine
 

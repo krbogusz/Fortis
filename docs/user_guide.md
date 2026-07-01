@@ -130,15 +130,15 @@ but the number of levels, their ordering, and the predicates are all yours to de
 
 Every inventory Fortis uses is loaded from a file. All of them are user-authored.
 
-| File                   | Contents                                                |
-| ---------------------- | ------------------------------------------------------- |
-| `features.toml`        | The feature vocabulary and geometry                     |
-| `letters.csv`          | IPA symbol → feature bundle mappings                    |
-| `diacritics.toml`      | Diacritic modifications to base segment bundles         |
-| `sonorities.toml`      | Sonority levels and the predicates that assign them     |
-| `syllable_parts.toml`  | Onset/nucleus/coda constraints, keyed by time           |
-| `words.toml`           | The lexicon                                             |
-| `rules.toml`           | Phonological rules                                      |
+| File                  | Contents                                            |
+| --------------------- | --------------------------------------------------- |
+| `features.toml`       | The feature vocabulary and geometry                 |
+| `letters.csv`         | IPA symbol → feature bundle mappings                |
+| `diacritics.toml`     | Diacritic modifications to base segment bundles     |
+| `sonorities.toml`     | Sonority levels and the predicates that assign them |
+| `syllable_parts.toml` | Onset/nucleus/coda constraints, keyed by time       |
+| `words.toml`          | The lexicon                                         |
+| `rules.toml`          | Phonological rules                                  |
 
 `syllable_parts.toml` supplies the **nucleus** definition (a feature pattern that
 identifies syllable peaks) and, optionally, **onset**/**coda** patterns that
@@ -166,6 +166,13 @@ Each entry maps an IPA string directly to a gloss. The IPA string is the key; th
 "gʲʱhjeti"   = "go"
 "ketus"     = "fight"
 ```
+
+A word may also carry a **floating lexical tone** — a melody with no host segment
+of its own (e.g. a grammatical floating H) — written `⟨◌́⟩`: a tone diacritic on a
+dotted-circle placeholder (◌, U+25CC), in float brackets. Its position in the
+string matters: `kata⟨◌́⟩` places a floating high *after* the final segment (a
+suffixal tone that docks leftward onto it); `⟨◌́⟩kata` places one *before* the
+first. A dock rule (§5.12) then binds it wherever it sits.
 
 ### 4.2 rules.toml
 
@@ -259,7 +266,15 @@ p                letter shorthand
 [height: 3]      scalar value
 [hgt: high]      named scalar value
 [cor: none]      explicitly absent / unspecified
+[nasal]          bare feature name — see below
 ```
+
+A **bare feature name** with no sign or value (`[nasal]`, `[place]`) resolves
+differently by kind: for a **unary** feature it means present, same as
+`[+nasal]`; for a **binary** or **scalar** feature it means the feature is
+specified with *any* value, which is a pattern-only wildcard — it is a
+validation error to write a bare non-unary feature in a **result**, since a
+concrete output segment needs an explicit value.
 
 In **target** position, letters and feature bundles both match by features. In **result** position they differ:
 
@@ -275,7 +290,7 @@ $      syllable boundary                (target, context, exception)
 ∅      null segment                     (target, result only)
 ```
 
-Boundaries (`#`, `$`) are positional assertions and do not count toward cardinality on either side. A boundary may not be the sole element in the target. `∅` is **not** valid in context or exception positions.
+Boundaries (`#`, `$`) are positional assertions and do not count toward cardinality on either side. A boundary may not be the sole element on either side of a rule (`# → x` and `x → #` are both errors), but is otherwise valid in result position too, where it is a redundant marker, and inside a disjunction in any position. `∅` is **not** valid in context or exception positions.
 
 ### 5.3 Quantifiers
 
@@ -308,6 +323,8 @@ Corresponding target and result elements must carry **identical quantifiers** (t
 
 `!` is **not** valid in result position, and may not be applied to `∅` or `[]`. It applies to whatever immediately follows it.
 
+At the feature level, negation is a complement over the whole value space **including** `none`: `!feature` matches `none` (equivalent to `[feature: none]`); `![+F]` matches `−F` or `none`; `[feature: !1]` matches every other value or `none`. This is why `!F` is never redundant with a specific negative value — it also covers the segment simply not having that feature specified at all.
+
 ### 5.5 Groups and disjunctions
 
 _Valid in all positions._
@@ -335,6 +352,8 @@ Position rules:
 - **Recall** is valid in all positions. In result position, `[αF]` assigns the bound value to the output segment; result position is recall-only and never binds.
 - A variable that appears only in result position, with no binding occurrence anywhere, is a validation error.
 - `[−α F]` is valid only for binary and unary features.
+
+`[!α F]` — "any value other than the bound one" — depends on the feature's kind: for a **unary** feature the only other value is `none` (so `!α` is exactly `none`, the sole reason it's never redundant with `−α`); for a **binary** feature it's `{−α, none}`; for a **scalar** feature it's any other level or `none`.
 
 Binding a variable to a parent node binds all of its child features simultaneously. Against a contour, `[αF]` binds α to the full contour tuple, while `[αF: @final]` binds α to the scalar at the named edge.
 
@@ -371,7 +390,7 @@ _Valid in target, result, and context positions._
 [<1: α high>]   condition references an alpha variable
 ```
 
-A conditional feature applies its result feature(s) only when its condition holds. Each label must be a condition **somewhere** — in the target *or* the context — and must drive at least one feature in the result; a result label with no condition, or a condition that drives nothing, is a validation error. A label may repeat: several result features can share a label (one condition driving a multi-feature change, e.g. colouring *e* to *a*), and a condition may sit purely in the context (assimilation from a neighbour — this is how laryngeal colouring works) or in the target itself. When a label has conditions in more than one position, **all** of them must hold. An alpha variable referenced in a condition must be bound in the target or context of the same rule.
+A conditional feature applies its result feature(s) only when its condition holds. Each label must be a condition **somewhere** — in the target _or_ the context — and must drive at least one feature in the result; a result label with no condition, or a condition that drives nothing, is a validation error. A label may repeat: several result features can share a label (one condition driving a multi-feature change, e.g. colouring _e_ to _a_), and a condition may sit purely in the context (assimilation from a neighbour — this is how laryngeal colouring works) or in the target itself. When a label has conditions in more than one position, **all** of them must hold. An alpha variable referenced in a condition must be bound in the target or context of the same rule.
 
 Example — ATR harmony conditioned on height:
 
@@ -394,6 +413,16 @@ The target gains ATR only if it is high.
 ```
 
 By default `[+F]` matches if F is `+` at any position in its contour. That `@any` default holds for a single value or single limb. A multi-limb contour pattern (e.g. [tone: 1>2]) instead defaults to @all — it matches only a target contour of the same arity, limb for limb — so to match it as a sub-sequence of a longer contour you must give `@initial`, `@final`, `@any` (the contour anywhere), or per-limb positions (`@2;3`, one index per limb) explicitly. A bare `@n` is for single values only; on a multi-limb contour the positions must be an edge or a same-length list. The positional modifiers (`@initial`, `@final`, `@any`, `@all`, `@n`, `@n;m`) override the default and are **valid in target and context positions only**. In **result** position, a contour must be given with explicit concrete values.
+
+The default position depends on the shape of the value, not on any per-rule setting:
+
+| Value | Default position | Effect |
+| --- | --- | --- |
+| single value (`tone: 1`) | `@any` | matches at some limb |
+| multi-limb contour (`tone: 1>2`) | `@all` | must be the whole contour, exact arity |
+| whole-contour alpha (`tone: α`) | — | binds the entire contour, any length; a position suffix narrows it to the limb(s) there (`tone: α@initial` binds α to just the first limb) |
+
+An alpha variable can bind **per limb** or to the **whole contour**, and the two read differently: `tone: α>β` binds one variable to each of exactly two limbs (the multi-limb default `@all` applies, so the target contour must have exactly that arity), while `tone: α` (no `>`) binds a single variable to the entire contour regardless of its length. `tone: α>α` additionally constrains the two limbs to be equal.
 
 Contour reduction is 1:1:
 
@@ -426,7 +455,7 @@ This is a feature value, distinct from the null segment `∅`. All children of t
 
 ### 5.12 Autosegmental tier operations
 
-A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an *autosegment* linked to its anchor segment, not a value in the segment's bundle. Rules manipulate those links:
+A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an _autosegment_ linked to its anchor segment, not a value in the segment's bundle. Rules manipulate those links:
 
 ```
 [tone: ~1=high]    bind: record the tone autosegment (value high) under reference 1
@@ -435,14 +464,14 @@ A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an *auto
 ⟨tone: ~1=high⟩    a floating autosegment (no anchor); zero-width, bound for docking
 ```
 
-- **Spread** — `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _` gives a toneless vowel the tone of a preceding high vowel (one autosegment, now two anchors — not a copy). Adjacent elements match adjacent *segments*, so the `[-syll]*` is what spans the consonants between the two syllables — without it the two `[+syll]` would have to be a vowel hiatus. Under a directional mode (§6.2) the H spreads across a whole toneless run.
-- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality).
+- **Spread** — `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _` gives a toneless vowel the tone of a preceding high vowel (one autosegment, now two anchors — not a copy). Adjacent elements match adjacent _segments_, so the `[-syll]*` is what spans the consonants between the two syllables — without it the two `[+syll]` would have to be a vowel hiatus. Under a directional mode (§6.2) the H spreads across a whole toneless run.
+- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality). A lexical floating tone (§4.1) is *positioned* — it docks only where it sits in the string — while one stranded by a deletion (below) is position-blind and docks at any matching site, so a directional application mode or a narrowing context is usually needed to dock it exactly once.
 - **Delink** — `[+syll] → [tone: none]` removes the association.
-- **Stability** — *automatic*: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour (the tier's `stability` direction — `"left"` by default, or `"right"`) and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put.
+- **Stability** — _automatic_: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour (the tier's `stability` direction — `"left"` by default, or `"right"`) and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put. A word-initial deletion with no left neighbour leaves the autosegment floating; a still-floating autosegment is stray-erased at the surface.
 
 A `tiers.toml` entry declares which features a tier `carries`, the `anchor` it links to, whether it is a `melody` (vs metrical), and its `ocp` / `stray_erase` policies. With no `tiers.toml`, none of this runs.
 
-`~` is used (not `@`, which already marks contour positions). See `change_notation_rules.md` §1.8 and §2.12 for the full rules.
+`~` is used (not `@`, which already marks contour positions). A `~n=` binding and `~n` recall follow the same validation as ordinary references (§5.7): every recall needs a binding and every binding must be recalled. A floating element `⟨…⟩` is pattern-only — valid in target and context positions, but a validation error in the result.
 
 ---
 
@@ -483,7 +512,7 @@ Syllabification places syllable boundaries on a form without inserting or deleti
 **Nuclei** are the segments matching the `nucleus` definition (§4). Between each adjacent pair of nuclei, the intervening consonants are divided into the preceding syllable's coda and the following syllable's onset:
 
 - By default the division follows the **Maximal Onset Principle** under sonority sequencing (§3.4): the onset is the longest run whose sonority rises toward the nucleus; the rest is coda.
-- If an `onset` and/or `coda` **pattern** is defined in `syllable_parts.toml`, that pattern *defines* legality instead: every split point is considered and the longest onset whose onset and coda each fully match their patterns wins — so a pattern may license a non-sonority-rising onset (e.g. *s*+stop). The patterns are ordinary element sequences (`[nasal]` is a mandatory single-nasal coda; `[nasal]?` an optional one; `[+cons][-syll, -cons]?` a consonant plus optional glide). A cluster with no pattern-legal division is reported as unsyllabifiable.
+- If an `onset` and/or `coda` **pattern** is defined in `syllable_parts.toml`, that pattern _defines_ legality instead: every split point is considered and the longest onset whose onset and coda each fully match their patterns wins — so a pattern may license a non-sonority-rising onset (e.g. _s_+stop). The patterns are ordinary element sequences (`[nasal]` is a mandatory single-nasal coda; `[nasal]?` an optional one; `[+cons][-syll, -cons]?` a consonant plus optional glide). A cluster with no pattern-legal division is reported as unsyllabifiable.
 
 Onset/coda patterns constrain only the interior division where there is a choice; word-edge onsets and codas are forced and not checked.
 
@@ -525,8 +554,9 @@ Rule definitions are validated at load time. Errors are collected rather than fa
 
 - Target and result have different numbers of elements **when the result contains a feature bundle** (`∅` counts; a full-replacement letter/recall result may collapse or expand the span, so it need not match — see §5.1).
 - A result **bundle** carries a different quantifier from its corresponding target (a full-replacement letter result is unconstrained by the target's quantifier; `∅` carries none).
-- A boundary (`#`, `$`) is the sole element in the target.
+- A boundary (`#`, `$`) is the sole element on either side of a rule (`# → x`, `x → #`).
 - A feature specified more than once within a single bundle (e.g. [+high, −high]).
+- A bare non-unary feature name (`value == "any"`, §5.1) in result position — it's pattern-only, and a concrete output segment needs an explicit value.
 
 **Null segment**
 
@@ -563,6 +593,11 @@ Rule definitions are validated at load time. Errors are collected rather than fa
 **Contours**
 
 - A positional modifier (`@initial`, etc.) in result position (result contours must use explicit values).
+
+**Autosegmental tiers**
+
+- A `~n` recall with no corresponding `~n=` binding, or a `~n=` binding never recalled (same rule as ordinary references, §5.7).
+- A floating element `⟨…⟩` in result position (pattern-only — valid in target and context).
 
 ---
 
