@@ -810,10 +810,9 @@
     margin: 18px 0 3px;
     padding-bottom: 3px;
     border-bottom: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: var(--fs-body);
-    font-weight: 700;
-    color: var(--muted);
+    font-size: var(--fs-header);
+    font-weight: 600;
+    color: var(--text-h);
   }
   .rule-heading .def {
     display: block;
@@ -836,8 +835,6 @@
     color: var(--muted);
   }
   .change {
-    font-family: var(--sans);
-    font-size: var(--fs-emphasis);
     color: var(--muted);
   }
 
