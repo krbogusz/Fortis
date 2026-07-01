@@ -26,9 +26,13 @@ python -m src.fortis.main --words my_words.toml --rules my_rules.toml
 python -m src.fortis.main --project projects/pie_to_english   # PIE → Modern English
 ```
 
-`--output` writes the run to a Markdown file instead of printing it — the firing-rule trace
-plus, for tier operations, an association-change diagram (`│` kept · `╎` added · `╪` delinked).
-With no path it lands at `<project>/output.md`:
+Every run also writes two reports, alongside the printed trace: a Markdown report —
+the firing-rule trace plus, for tier operations, an association-change diagram
+(`│` kept · `╎` added · `╪` delinked) — and a CSV report, one row per word and one
+column per rule, holding the word's resulting form wherever that rule fired (empty
+otherwise). By default both land in `<project>/output.md` / `<project>/output.csv`;
+`--output` overrides the Markdown path (the CSV then follows alongside it, same
+name, `.csv`):
 
 ```
 python -m src.fortis.main --project projects/old_chinese --output

@@ -3,11 +3,16 @@
 Loads every inventory, then for each word: segments the IPA into feature
 bundles, runs it through all rules in time order, and prints a step-by-step
 derivation showing only the rules that changed the form, with syllable
-structure (``.`` between syllables) on the surface.
+structure (``.`` between syllables) on the surface. Every run also writes a
+Markdown report (``<project>/output.md`` by default; ``--output`` overrides
+the path) and a CSV report alongside it (one row per word, one column per
+rule, holding the word's resulting form wherever that rule fired).
 """
 from __future__ import annotations
 
 import argparse
+import csv
+import io
 import re
 import sys
 from collections.abc import Sequence
@@ -21,11 +26,13 @@ from src.fortis.application.diagram import (
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
+from src.fortis.config import config
 from src.fortis.loaders.project import load_project
 from src.fortis.models.derivation import Derivation, DerivationStep
 from src.fortis.models.project import Project
+from src.fortis.models.rules import RuleInventory
 
-# Sentinel: ``--output`` given with no path ⇒ write to ``<project>/output.md``.
+# Sentinel: no ``--output`` path given (the default) ⇒ write to ``<project>/output.md``.
 _AUTO_OUTPUT = object()
 
 
@@ -64,25 +71,28 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         "--output",
         nargs="?",
         const=_AUTO_OUTPUT,
-        default=None,
+        default=_AUTO_OUTPUT,
         type=Path,
         metavar="FILE",
         help=(
-            "write the run to a Markdown file instead of printing it — the firing-rule "
-            "trace plus an association-change diagram for each tier operation "
-            "(default path: <project>/output.md)"
+            "path for the Markdown report — the firing-rule trace plus an "
+            "association-change diagram for each tier operation. Always written, "
+            "alongside the printed trace and a same-named .csv report (one row per "
+            "word, one column per rule) (default path: <project>/output.md)"
         ),
     )
     return parser.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> None:
-    """Load inventories, derive every word, and print the traces.
+    """Load inventories, derive every word, print the traces, and write the reports.
 
     With no arguments, runs every shipped rule over every shipped word. ``--words`` and
     ``--rules`` override just the lexicon and the sound-change file; the feature system,
     letters, sonority, tiers, etc. stay the shipped defaults unless ``--project`` points to
     a project directory (whose own files override the defaults, the rest falling back).
+    Every run writes ``output.md`` (the trace, ``--output`` overrides the path) and
+    ``output.csv`` (one row per word, one column per rule) into the same directory.
     """
     args = _parse_args(argv)
     result = load_project(args.project, words_path=args.words, rules_path=args.rules)
@@ -112,15 +122,14 @@ def main(argv: list[str] | None = None) -> None:
         for ipa, word in project.words.items()
     ]
 
-    if args.output is not None:
-        path = (
-            (args.project or Path(".")) / "output.md"
-            if args.output is _AUTO_OUTPUT
-            else args.output
-        )
-        path.write_text(_build_report(derivations, project, args.project), encoding="utf-8")
-        print(f"wrote {path}", file=sys.stderr)
-        return
+    output_dir = args.project or config.paths.default
+    path = output_dir / "output.md" if args.output is _AUTO_OUTPUT else args.output
+    path.write_text(_build_report(derivations, project, args.project), encoding="utf-8")
+    print(f"wrote {path}", file=sys.stderr)
+
+    csv_path = path.with_suffix(".csv")
+    csv_path.write_text(_build_csv_report(derivations, rules, project), encoding="utf-8")
+    print(f"wrote {csv_path}", file=sys.stderr)
 
     for derivation in derivations:
         _print_derivation(derivation, project)
@@ -176,12 +185,12 @@ def _print_derivation(derivation: Derivation, project: Project) -> None:
 
 
 def _build_report(derivations: list[Derivation], project: Project, project_dir: Path | None) -> str:
-    """The whole run as one Markdown document (the ``--output`` target)."""
+    """The whole run as one Markdown document (the ``output.md`` report)."""
     where = f"`{project_dir}`" if project_dir is not None else "the shipped `projects/default`"
     lines = [
         f"# Output — {where}",
         "",
-        "Engine-generated run output (`--output`). For each word: the firing-rule trace and,",
+        "Engine-generated run output. For each word: the firing-rule trace and,",
         "for tier operations, the association-change diagram — `│` kept · `╎` added ·",
         "`╪` delinked.",
         "",
@@ -212,6 +221,46 @@ def _render_derivation_md(derivation: Derivation, project: Project) -> list[str]
             label = f"{base} · {sublabel}" if sublabel else base
             lines += [f"{label} — association change", "", "```", diagram, "```", ""]
     return lines
+
+
+def _rule_columns(rules: RuleInventory) -> list[tuple[str, str]]:
+    """Ordered ``(base_id, label)`` pairs, one per rule, in firing order.
+
+    A list-``definition`` rule's sub-rules (``name#1``, ``name#2``, ...) share one
+    column, matching how the Markdown report groups them under one heading.
+    """
+    columns: dict[str, str] = {}
+    for time in sorted(rules.keys(), key=lambda t: (t is None, t)):
+        for rule in rules[time]:
+            base = _SUBRULE_SUFFIX.sub("", rule.id)
+            if base not in columns:
+                columns[base] = rule.name or base
+    return list(columns.items())
+
+
+def _build_csv_report(derivations: list[Derivation], rules: RuleInventory, project: Project) -> str:
+    """One row per word, one column per rule.
+
+    A cell holds the word's resulting form right after that rule fired (its last
+    step, if it fired more than once), or stays empty if the rule never fired on
+    that word.
+    """
+    columns = _rule_columns(rules)
+    buffer = io.StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(["ipa", "gloss", *(label for _base, label in columns)])
+    for derivation in derivations:
+        word = derivation.word
+        after_by_base: dict[str, str] = {}
+        for step in derivation.steps:
+            base = _SUBRULE_SUFFIX.sub("", step.rule.id)
+            after_by_base[base] = render_syllabified(
+                lower_tiers(step.after), step.after_boundaries, project
+            )
+        writer.writerow(
+            [word.ipa, word.gloss or "", *(after_by_base.get(base, "") for base, _label in columns)]
+        )
+    return buffer.getvalue()
 
 
 if __name__ == "__main__":

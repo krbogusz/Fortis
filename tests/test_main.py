@@ -8,8 +8,8 @@ from src.fortis.models.inventories import Word
 from src.fortis.models.rules import RuleInventory
 
 
-def test_main_derives_every_word(project, capsys):
-    main([])  # no CLI args → the shipped feature showcase
+def test_main_derives_every_word(project, capsys, tmp_path):
+    main(["--output", str(tmp_path / "output.md")])  # shipped feature showcase, reports to tmp_path
     out = capsys.readouterr().out
     # One surface form per word, and a couple of the showcase derivations come through.
     assert out.count("Surface:") == len(project.words)
