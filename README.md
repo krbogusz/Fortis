@@ -226,3 +226,8 @@ fortis/
         ├── tiers.py             #   autosegmental tier ops: associate, cleanup/OCP, redock, spread/dock
         └── deriving.py          #   apply_rule per mode; derive a word → Derivation
 ```
+
+## License
+
+Licensed under [CC BY-NC 4.0](LICENSE) — free for private and scientific/research
+use with attribution; commercial use is not permitted.
