@@ -15,14 +15,19 @@ bundle, puts it on `sys.path`, imports `src.fortis`, and calls the engine direct
 (`src/lib/engine.js`). So any change to the engine or the shipped inventories is
 reflected on the next build — the glue only calls stable public functions
 (`derive`, `render_syllabified`, `describe_change`, `render_autosegmental`,
-`render_change`, `render_geometry_tree`).
+`render_change`, `render_geometry_tree`, and `main.py`'s `_build_report` /
+`_build_csv_report` for the two generated reports below).
 
 ## Using it
 
 - **Inventories** (left): the eight editable files — `features.toml`, `letters.csv`,
   `diacritics.toml`, `sonorities.toml`, `syllable_parts.toml`, `tiers.toml`,
   `words.toml`, `rules.toml`. Edit in place, or **Load file** / **Load project** to
-  swap in your own. `letters.csv` has a table view.
+  swap in your own. `letters.csv` has a table view. After them, two read-only
+  reports regenerate on every run: `output.md` (the same Markdown report the CLI's
+  `--output` writes) and `output.csv` (one row per word, one column per rule, holding
+  the resulting form wherever that rule fired) — `output.csv` gets the same table view
+  as `letters.csv`.
 - **Results** (right), two views:
   - **Historical** — the sound-change trace: each firing rule grouped under its
     `time:` heading, with `before → after (change)` per step and the surface form.

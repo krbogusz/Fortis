@@ -1,10 +1,47 @@
 <script>
-  // Read-only table view of a simple (unquoted) CSV, e.g. letters.csv.
+  // Read-only table view of a CSV (RFC4180 quoting: quoted fields may contain
+  // commas, newlines, and doubled `""` for a literal quote).
   let { content = "" } = $props();
 
-  const rows = $derived(
-    content.trim() ? content.trim().split(/\r?\n/).map((line) => line.split(",")) : [],
-  );
+  function parseCsv(text) {
+    const rows = [];
+    let row = [],
+      field = "",
+      inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (inQuotes) {
+        if (c === '"' && text[i + 1] === '"') {
+          field += '"';
+          i++;
+        } else if (c === '"') {
+          inQuotes = false;
+        } else {
+          field += c;
+        }
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === ",") {
+        row.push(field);
+        field = "";
+      } else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(field);
+        rows.push(row);
+        row = [];
+        field = "";
+      } else {
+        field += c;
+      }
+    }
+    if (field !== "" || row.length) {
+      row.push(field);
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  const rows = $derived(content.trim() ? parseCsv(content.trim()) : []);
   const header = $derived(rows[0] ?? []);
   const body = $derived(rows.slice(1));
 </script>
@@ -44,7 +81,7 @@
   table.csv {
     border-collapse: collapse;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: var(--fs-body);
   }
   .csv th,
   .csv td {
@@ -75,7 +112,7 @@
   }
   .csv td.sym {
     font-family: var(--ipa);
-    font-size: 15px;
+    font-size: var(--fs-body);
     font-weight: 600;
     color: var(--text-h);
   }

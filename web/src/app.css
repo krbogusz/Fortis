@@ -20,7 +20,13 @@
   --mono: ui-monospace, 'SF Mono', Consolas, monospace;
   --ipa: 'Gentium Plus', 'Charis SIL', 'Doulos SIL', serif;
 
-  font: 15px/1.5 var(--sans);
+  /* Type scale. Meta = --fs-body at --muted color, not a separate size. */
+  --fs-emphasis: 18px; /* the computed IPA forms: word headword, surface */
+  --fs-header: 16px; /* section/card titles, the brand wordmark */
+  --fs-body: 14px; /* everything else: controls, editor/diagram content, meta */
+  --fs-label: 10px; /* uppercase group captions: DEFAULT/PROJECT/REPORTS, VIEW */
+
+  font: var(--fs-body)/1.5 var(--sans);
   color: var(--text);
   background: var(--bg);
   color-scheme: light dark;
@@ -29,8 +35,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Theme: "system" (no data-theme attribute) follows prefers-color-scheme;
+   "light"/"dark" (set by the toggle, via documentElement.dataset.theme)
+   override it unconditionally. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --text: #c2c6cf;
     --text-h: #f3f4f6;
     --muted: #8b8f99;
@@ -45,6 +54,38 @@
     --error-bg: rgba(255, 122, 138, 0.1);
     --shadow: rgba(0, 0, 0, 0.4) 0 4px 12px -4px;
   }
+}
+
+:root[data-theme="dark"] {
+  --text: #c2c6cf;
+  --text-h: #f3f4f6;
+  --muted: #8b8f99;
+  --bg: #14151a;
+  --panel: #1a1b21;
+  --border: #2c2e38;
+  --code-bg: #1f2028;
+  --accent: #f3f4f6;
+  --accent-bg: rgba(255, 255, 255, 0.08);
+  --accent-border: #4d505a;
+  --error: #ff7a8a;
+  --error-bg: rgba(255, 122, 138, 0.1);
+  --shadow: rgba(0, 0, 0, 0.4) 0 4px 12px -4px;
+}
+
+:root[data-theme="light"] {
+  --text: #4b4753;
+  --text-h: #08060d;
+  --muted: #8a8594;
+  --bg: #ffffff;
+  --panel: #faf9fb;
+  --border: #e2e0e6;
+  --code-bg: #f4f3ec;
+  --accent: #08060d;
+  --accent-bg: #f0eff2;
+  --accent-border: #b9b6c0;
+  --error: #c0152f;
+  --error-bg: rgba(192, 21, 47, 0.08);
+  --shadow: rgba(0, 0, 0, 0.08) 0 4px 12px -4px;
 }
 
 * {

@@ -23,8 +23,17 @@ export const FILES = [
   "rules.toml",
 ];
 
+// Generated reports, read-only — written by run_derivations() after each run.
+export const OUTPUT_FILES = ["output.md", "output.csv"];
+
 // Python helper loaded into the interpreter after the engine is importable.
 // Rendering mirrors ../src/fortis/main.py:_print_derivation.
+//
+// Two directories mirror the CLI's project/fallback model: DEFAULT is the
+// pristine shipped project/default (read-only, from the bundle); OVERLAY is
+// what the user has customized (initially empty ⇒ everything falls back to
+// DEFAULT, exactly like load_project() with no project_dir). Editing or
+// loading a file always writes into OVERLAY, never DEFAULT.
 const HELPER = `
 import json, re
 from pathlib import Path
@@ -34,20 +43,36 @@ from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.application.diagram import render_autosegmental, render_change, render_geometry_tree
+from src.fortis.main import _build_report, _build_csv_report
 _SUB = re.compile(r"#\\d+$")
-INV = "/work/default"
-def read_file(name): return (Path(INV)/name).read_text(encoding="utf-8")
-def write_file(name, text): (Path(INV)/name).write_text(text, encoding="utf-8")
+DEFAULT = "/work/projects/default"
+OVERLAY = "/work/overlay"
+Path(OVERLAY).mkdir(parents=True, exist_ok=True)
+def _pick(name):
+    p = Path(OVERLAY)/name
+    return p if p.exists() else Path(DEFAULT)/name
+def read_file(name): return _pick(name).read_text(encoding="utf-8")
+def write_file(name, text): (Path(OVERLAY)/name).write_text(text, encoding="utf-8")
+def remove_file(name):
+    p = Path(OVERLAY)/name
+    if p.exists(): p.unlink()
+def reset_overlay():
+    for p in Path(OVERLAY).iterdir():
+        if p.is_file(): p.unlink()
+def file_status(names):
+    return json.dumps({name: ("project" if (Path(OVERLAY)/name).exists() else "default") for name in names})
 def run_derivations():
-    res = load_project(Path(INV))
+    res = load_project(Path(OVERLAY))
     if res.is_err(): return json.dumps({"error": res.unwrap_err()})
     project = res.unwrap()
     try: rules = resolve_rule_letters(project.rules, project)
     except ValueError as e: return json.dumps({"error":[str(e)]})
     out, R = [], lambda f,b: render_syllabified(lower_tiers(f), b, project)
+    all_derivations = []
     for ipa, word in project.words.items():
         d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
                    project.features, project.sonorities, project.syllable_parts, project.tiers)
+        all_derivations.append(d)
         steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
         has_tiers = any(t.autosegs for t in d.input.tiers.values())
         frames = []
@@ -73,6 +98,8 @@ def run_derivations():
         out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
                     "steps":steps,"frames":frames,"autosegmental":autoseg,
                     "inputGeometry":input_geometry,"outputGeometry":output_geometry})
+    (Path(OVERLAY)/"output.md").write_text(_build_report(all_derivations, project, None), encoding="utf-8")
+    (Path(OVERLAY)/"output.csv").write_text(_build_csv_report(all_derivations, rules, project), encoding="utf-8")
     return json.dumps({"derivations": out})
 `;
 
@@ -110,6 +137,11 @@ export function listFiles() {
   return [...FILES];
 }
 
+/** The generated (read-only) report filenames, written after each run_derivations(). */
+export function listOutputFiles() {
+  return [...OUTPUT_FILES];
+}
+
 /** Read an inventory file from the Pyodide virtual filesystem. */
 export function readFile(name) {
   const fn = py.globals.get("read_file");
@@ -120,11 +152,41 @@ export function readFile(name) {
   }
 }
 
-/** Write an inventory file into the Pyodide virtual filesystem. */
+/** Write an inventory file into the overlay (marks it as a project file). */
 export function writeFile(name, text) {
   const fn = py.globals.get("write_file");
   try {
     fn(name, text);
+  } finally {
+    fn.destroy();
+  }
+}
+
+/** Remove a file from the overlay, reverting it to the shipped default. */
+export function removeFile(name) {
+  const fn = py.globals.get("remove_file");
+  try {
+    fn(name);
+  } finally {
+    fn.destroy();
+  }
+}
+
+/** Clear the whole overlay — every file reverts to the shipped default. */
+export function resetOverlay() {
+  const fn = py.globals.get("reset_overlay");
+  try {
+    fn();
+  } finally {
+    fn.destroy();
+  }
+}
+
+/** @returns {Record<string, "default"|"project">} source of each of the 8 inventory files. */
+export function fileStatus() {
+  const fn = py.globals.get("file_status");
+  try {
+    return JSON.parse(fn(FILES));
   } finally {
     fn.destroy();
   }
