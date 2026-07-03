@@ -23,6 +23,10 @@ def test_word_scope_unknown_word_warns(tmp_path):
 def test_word_scope_known_word_does_not_warn(tmp_path, recwarn):
     # Matching by gloss ('mother') or by ipa ('meħˈteːr') is fine — no word-scope warning.
     rules = tmp_path / "rules.toml"
-    rules.write_text('[r]\nwords = ["mother", "meħˈteːr"]\ndefinition = "a → e"\n', encoding="utf-8")
+    rules.write_text(
+        '[r]\nwords = ["mother", "meħˈteːr"]\ndefinition = "a → e"\n', encoding="utf-8"
+    )
     load_project(_PIE, rules_path=rules)
     assert not [w for w in recwarn if "word-scope" in str(w.message)]
+
+

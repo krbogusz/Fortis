@@ -118,14 +118,8 @@ definition = "h → ∅ // # _"
 [cl_i_prosthesis]
 time = -100
 name = "i-prosthesis before word-initial s + consonant"
-description = "Pope s361 — Western Romance, attested 2nd century"
+description = "Pope s361 — Western Romance, attested 2nd century. The ˌ writes secondary stress onto the prosthetic vowel, matching DiaSim (where the stress rides through), which protects it from the unstressed reduction e→ə→∅: scutarium ˌesk… > écuyer /ekɥije/, stamen > étaim /et̪ɛ̃/, sponsum > époux /epu/."
 definition = "∅ → ˌɪ / # _ s [+consonantal]"
-
-[cl_i_prosthesis_stress]
-time = -100
-name = "the prosthetic vowel carries secondary stress"
-description = "DiaSim inserts ˌɪ and the secondary stress rides through, protecting the vowel from the unstressed reduction e→ə→∅ (scutarium ˌesk… > écuyer /ekɥije/, stamen > étaim /et̪ɛ̃/, sponsum > époux /epu/). Insertion via ∅→ˌɪ does not realize the stress on the new syllable in Fortis, so set it explicitly on the word-initial prosthetic vowel."
-definition = "[+syllabic, stress: none] → [stress: secondary] / # _ s [+consonantal]"
 
 [cl_stress_shift_antepenult_1]
 time = -100

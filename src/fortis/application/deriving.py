@@ -45,7 +45,6 @@ from src.fortis.application.applying import apply_match
 from src.fortis.application.combining import matches_exactly
 from src.fortis.application.matching import Match, SyllableView, find_matches, pattern_matches
 from src.fortis.application.segmentation import string_to_sequence
-from src.fortis.application.tiers import lower_tiers
 from src.fortis.application.syllabifying import (
     SyllabificationError,
     nuclei_by_position,
@@ -136,7 +135,7 @@ def _node_descendants_uncached(features: FeatureInventory) -> dict[str, frozense
 
 
 def _resolve_elements(
-    elements: tuple[Element, ...], project: Project, rule_id: str, *, match_side: bool
+    elements: tuple[Element, ...], project: Project, rule_id: str
 ) -> tuple[Element, ...]:
     """Replace each non-letter ``LetterRef`` run with its segmented ``LetterBundle``s.
 
@@ -147,17 +146,22 @@ def _resolve_elements(
     against the inventory). Recurses into all nesting; a multi-segment run nested
     under a quantifier/binding/negation is wrapped in a ``Group`` to stay one inner.
 
-    On the **match side** (``match_side=True`` — target, contexts, exceptions), a
-    literal's syllable-tier diacritics (``ˈ``/``ˌ`` stress, tone marks) are lowered
-    onto the resolved bundle so they *constrain* the match: ``ˌɔ`` matches only a
-    secondary-stressed ɔ, not ɔ at any stress. On the **result side** they are
-    dropped (``.bundles()``), preserving the existing "stress comes from the input,
-    not the rule literal" behaviour.
+    A literal's syllable-tier diacritics (``ˈ``/``ˌ`` stress, tone marks) are lowered
+    onto the resolved bundle on **every** side, so the same ``ˌe`` carries
+    ``stress: secondary``. What that value *does* depends on the side, downstream: in
+    the target/contexts/exceptions it *constrains* the match (``ˌɔ`` matches only a
+    secondary-stressed ɔ); in the result it *writes*, replacing the suprasegmental of
+    the changed segment's syllable (``ˌa → ˈa`` promotes secondary to primary — see
+    ``_carry_stranded_suprasegmentals``). A result literal with no mark carries no
+    syllable feature, so the syllable's stress simply persists.
+
+    A syllable-tier mark only lands on a nucleus: ``string_to_sequence`` attaches it to the
+    literal's nucleus, so a mark on a non-nucleus result literal (``d → ˈt``) has nothing to
+    attach to and is dropped — write the mark on the syllable's vowel instead.
     """
 
     def _segments(symbol: str) -> list:
-        seq = string_to_sequence(symbol, project)
-        return lower_tiers(seq) if match_side else seq.bundles()
+        return lower_tiers(string_to_sequence(symbol, project))
 
     resolved: list[Element] = []
     for element in elements:
@@ -171,50 +175,44 @@ def _resolve_elements(
                     )
                 resolved.extend(LetterBundle(bundle=segment) for segment in segments)
             case Group(inner):
-                resolved.append(Group(_resolve_elements(inner, project, rule_id, match_side=match_side)))
+                resolved.append(Group(_resolve_elements(inner, project, rule_id)))
             case Disjunction(branches):
                 resolved.append(
-                    Disjunction(
-                        tuple(
-                            _resolve_elements(b, project, rule_id, match_side=match_side)
-                            for b in branches
-                        )
-                    )
+                    Disjunction(tuple(_resolve_elements(b, project, rule_id) for b in branches))
                 )
             case Negated(inner):
-                resolved.append(Negated(_resolve_one(inner, project, rule_id, match_side=match_side)))
+                resolved.append(Negated(_resolve_one(inner, project, rule_id)))
             case Quantified(inner, quant):
-                resolved.append(
-                    Quantified(_resolve_one(inner, project, rule_id, match_side=match_side), quant)
-                )
+                resolved.append(Quantified(_resolve_one(inner, project, rule_id), quant))
             case Bound(ref, inner):
-                resolved.append(Bound(ref, _resolve_one(inner, project, rule_id, match_side=match_side)))
+                resolved.append(Bound(ref, _resolve_one(inner, project, rule_id)))
             case _:
                 resolved.append(element)
     return tuple(resolved)
 
 
-def _resolve_one(element: Element, project: Project, rule_id: str, *, match_side: bool) -> Element:
+def _resolve_one(element: Element, project: Project, rule_id: str) -> Element:
     """Resolve a single nested element; a multi-segment run becomes a ``Group``."""
-    resolved = _resolve_elements((element,), project, rule_id, match_side=match_side)
+    resolved = _resolve_elements((element,), project, rule_id)
     return resolved[0] if len(resolved) == 1 else Group(resolved)
 
 
 def _resolve_rule(rule: Rule, project: Project) -> Rule:
     """A copy of *rule* with every ``LetterRef`` run in its description resolved.
 
-    Stress/tone diacritics on a literal are lowered so they constrain the match on
-    the target/context/exception sides, but are dropped on the result side (where a
-    literal supplies segment content only; suprasegmentals carry over from the input).
+    Stress/tone diacritics on a literal are lowered on every side: in the target/
+    context/exception they constrain the match, in the result they write (replace)
+    the syllable's suprasegmental. A bare result literal carries none, so stress
+    persists from the input.
     """
     sd = rule.sd
     resolved = StructuralDescription(
-        target=_resolve_elements(sd.target, project, rule.id, match_side=True),
-        result=_resolve_elements(sd.result, project, rule.id, match_side=False),
-        left_context=_resolve_elements(sd.left_context, project, rule.id, match_side=True),
-        right_context=_resolve_elements(sd.right_context, project, rule.id, match_side=True),
-        left_exception=_resolve_elements(sd.left_exception, project, rule.id, match_side=True),
-        right_exception=_resolve_elements(sd.right_exception, project, rule.id, match_side=True),
+        target=_resolve_elements(sd.target, project, rule.id),
+        result=_resolve_elements(sd.result, project, rule.id),
+        left_context=_resolve_elements(sd.left_context, project, rule.id),
+        right_context=_resolve_elements(sd.right_context, project, rule.id),
+        left_exception=_resolve_elements(sd.left_exception, project, rule.id),
+        right_exception=_resolve_elements(sd.right_exception, project, rule.id),
     )
     return replace(rule, sd=resolved)
 
@@ -457,7 +455,7 @@ def _spliced_segments(
     source_bundles: list[FeatureBundle],
     tiers: TierInventory,
     bindings: Bindings,
-) -> list[Segment]:
+) -> tuple[list[Segment], set[tuple[str, int]]]:
     """Turn apply_match's (bundle, source-pos) pairs into Segments.
 
     A merged segment carries its id forward from *source* (so its tier links survive); an
@@ -465,8 +463,15 @@ def _spliced_segments(
     recall spreads the bound autosegment; otherwise a *changed* value writes (associates) or
     delinks (``none``), while an unchanged carried feature is left untouched so its
     autosegment keeps its identity.
+
+    Also returns the ``(tier_name, segment_id)`` pairs where a result literal wrote an
+    explicit, present-valued suprasegmental — the syllable's stress/tone stated by the
+    rule. ``_carry_stranded_suprasegmentals`` uses this to *not* re-anchor the replaced
+    nucleus's old autosegment on top: an explicit result mark replaces, it does not stack
+    (which would otherwise leave two same-anchor autosegs — a spurious ``x>x`` contour).
     """
     new_segments: list[Segment] = []
+    explicit_writes: set[tuple[str, int]] = set()
     for bundle, pos in replacement:
         seg_bundle, carried = split_carried(bundle, tiers)
         seg_id = source.segments[pos].id if pos is not None else out.fresh_id()
@@ -479,7 +484,9 @@ def _spliced_segments(
                 _spread_autoseg(out, source, bindings, recall, tier_name, seg_id)
             elif written != prev.get(tier_name, FeatureBundle()):
                 write_to_tier(out, seg_id, tier_name, written)
-    return new_segments
+                if any(spec.value is not None for spec in written.values()):
+                    explicit_writes.add((tier_name, seg_id))
+    return new_segments, explicit_writes
 
 
 def _carry_stranded_melody(
@@ -526,6 +533,7 @@ def _carry_stranded_suprasegmentals(
     new_segments: list[Segment],
     tiers: TierInventory,
     syllable_features: frozenset[str],
+    explicit_writes: set[tuple[str, int]],
 ) -> None:
     """Re-anchor a replaced nucleus's suprasegmentals onto the new nucleus.
 
@@ -538,12 +546,23 @@ def _carry_stranded_suprasegmentals(
     (``a → u``, ``ʐi → ʐ̩``) keeps its tone and stress, no feature-merge required. A pure
     deletion, with no new anchor in the replacement, falls through to the melody re-docking
     (re-dock to a neighbour). A merge strands nothing, so this is a no-op there.
+
+    Stability yields to an explicit result mark: when the result literal wrote a tier anywhere
+    in the replacement (``name in written_tiers`` — e.g. ``ˌa → ˈa``, or ``e → aˈna`` whose ``ˈ``
+    sits on the *second* new nucleus), the result's marks are authoritative for that tier across
+    the whole span, so the stranded old value is dropped rather than re-anchored. This both keeps
+    a write from stacking on its own nucleus (two same-anchor autosegs read as a spurious ``x>x``
+    contour) and stops an unmarked new nucleus (the first ``a`` of ``aˈna``) from inheriting the
+    replaced nucleus's stress — it stays unstressed, as the bare literal says.
     """
+    written_tiers = {tier_name for (tier_name, _anchor) in explicit_writes}
     for name, declaration in tiers.items():
         # Only suprasegmental tiers (those carrying a syllable-tier feature) are exempt; a
         # segment tier is not re-anchored to the nucleus.
         if not any(feature in syllable_features for feature in declaration.carries):
             continue
+        if name in written_tiers:
+            continue  # the result wrote this tier in the span — its marks replace, no re-anchor
         tier = out.tiers.get(name)
         if tier is None:
             continue
@@ -577,10 +596,14 @@ def _apply_simultaneous(
     # replacement from the ORIGINAL form (no application sees another's output).
     for match in sorted(selected, key=lambda m: m.start, reverse=True):
         replacement = apply_match(sd, match, bundles, letters, features, syllables)
-        new_segments = _spliced_segments(out, replacement, form, bundles, tiers, match.bindings)
+        new_segments, explicit_writes = _spliced_segments(
+            out, replacement, form, bundles, tiers, match.bindings
+        )
         stranded = _stranded_ids(form, match.start, match.end, new_segments)
         if stranded:  # supra re-anchoring first, then melody re-docking — order is load-bearing
-            _carry_stranded_suprasegmentals(out, stranded, new_segments, tiers, syllable_features)
+            _carry_stranded_suprasegmentals(
+                out, stranded, new_segments, tiers, syllable_features, explicit_writes
+            )
             _carry_stranded_melody(out, form, match.start, match.end, stranded, tiers)
         out.segments[match.start : match.end] = new_segments
     return out
@@ -635,10 +658,14 @@ def _apply_directional(
             match = min(candidates, key=lambda m: m.start)
 
         replacement = apply_match(sd, match, bundles, letters, features, view)
-        new_segments = _spliced_segments(work, replacement, work, bundles, tiers, match.bindings)
+        new_segments, explicit_writes = _spliced_segments(
+            work, replacement, work, bundles, tiers, match.bindings
+        )
         stranded = _stranded_ids(work, match.start, match.end, new_segments)
         if stranded:  # supra re-anchoring first, then melody re-docking — order is load-bearing
-            _carry_stranded_suprasegmentals(work, stranded, new_segments, tiers, syllable_features)
+            _carry_stranded_suprasegmentals(
+                work, stranded, new_segments, tiers, syllable_features, explicit_writes
+            )
             _carry_stranded_melody(work, work, match.start, match.end, stranded, tiers)
         work.segments[match.start : match.end] = new_segments
 

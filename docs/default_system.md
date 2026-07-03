@@ -289,11 +289,11 @@ release]`. There is no separate affricate/`delrel` feature. So the SPE
   consonant place features SPE keeps largely apart.
 
 - **`tone` and `stress` live on autosegmental tiers**, not in the segment
-  bundle (see the note under _Feature geometry_). A stress/tone diacritic on a
-  rule **literal** constrains the match to that value — `ˌɔ` matches only a
-  secondary-stressed ɔ — but a **bare** literal (`ɔ`) matches the melody at any
-  stress; to constrain by a suprasegmental without spelling the vowel, write it
-  in a bundle (`[+syllabic, stress: secondary]`).
+  bundle (see the note under _Feature geometry_). Keeping them off the melody is
+  what lets a stress/tone diacritic on a rule literal be handled apart from the
+  vowel — constraining the match in the target, writing the syllable's value in
+  the result. That is engine notation, not a modelling choice; see §5.1 of the
+  user guide.
 
 None of this is baked into the engine — it is the modelling style of
 `projects/default`. A project may adopt an SPE-style all-binary inventory, or

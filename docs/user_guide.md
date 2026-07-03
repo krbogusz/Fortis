@@ -281,6 +281,11 @@ In **target** position, letters and feature bundles both match by features. In *
 - A **feature bundle** merges into the matched segment — features it does not mention are preserved.
 - A **letter shorthand** replaces the matched segment entirely with the letter's full specification.
 
+**Stress and tone diacritics on a literal** (`ˈ`, `ˌ`, tone marks) are suprasegmentals — they live on their own tier (§5.12), apart from the segment's melody — so a literal that carries one does a different job on each side:
+
+- In the **target** (and contexts/exceptions) it *constrains* the match to that value: `ˌɔ` matches only a secondary-stressed ɔ, whereas a bare `ɔ` matches at any stress. To constrain by a suprasegmental without spelling the vowel, put it in a bundle: `[+syllabic, stress: secondary]`.
+- In the **result** it *writes*, replacing the suprasegmental of the changed segment's syllable: `e → ˈa` stresses that syllable, `ˌa → ˈa` promotes secondary to primary, `ˈe → ˌe` demotes. A **bare** result literal writes nothing, so the syllable's stress persists from the input. The mark must land on a **nucleus** — on a non-nucleus result literal (`d → ˈt`) it has nowhere to attach and is dropped; write it on the syllable's vowel, or use a bundle (`[stress: primary]`).
+
 ### 5.2 Special symbols
 
 ```

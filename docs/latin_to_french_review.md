@@ -493,3 +493,16 @@ Reaching exactly 140 would require solving each remaining diphthong cascade
 individually (feasible but hours of per-word ordering work) — it must not be
 done by hardcoding the rule-governed forms, which would make the engine only
 appear to derive French.
+
+**Engine (2026-07-03): result suprasegmental shorthands now write; no accuracy
+change.** Superseding Fix 5's "result side unchanged": a `ˈ`/`ˌ` (or tone) mark
+on a result *literal* now *writes* — it replaces the suprasegmental of the
+changed segment's syllable (`e → ˈa` stresses it, `ˌa → ˈa` promotes, `ˈe → ˌe`
+demotes), while a bare result still lets the input's stress persist. Two Latin
+consequences, both byte-compatible (all 140 surfaces and 106/140 unchanged):
+- **prosthesis** `∅ → ˌɪ` now writes its own secondary stress, so the workaround
+  rule `cl_i_prosthesis_stress` is removed (two steps collapse to one).
+- a companion **contour fix** (`x>x → x`; identical adjacent limbs are a level,
+  not a contrast) corrects a degenerate intermediate in *nouer*, where a
+  desyllabified `u̯` piled two secondary autosegments on one nucleus and rendered
+  as no stress.

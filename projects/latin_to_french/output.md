@@ -4766,9 +4766,7 @@ firing-rule trace (only the rules that changed the form).
 -100: Classical Latin length distinction becomes a quality (tense) distinction, first pass
     ˈspoː.sum → ˈspoː.sʊm   (u→ʊ)
 -100: i-prosthesis before word-initial s + consonant
-    ˈspoː.sʊm → ɪsˈpoː.sʊm   (∅→ɪ)
--100: the prosthetic vowel carries secondary stress
-    ɪsˈpoː.sʊm → ˌɪsˈpoː.sʊm   (ɪ→ˌɪ)
+    ˈspoː.sʊm → ˌɪsˈpoː.sʊm   (∅→ˌɪ)
 -100: the length feature is dropped now that quality carries the contrast
     ˌɪsˈpoː.sʊm → ˌɪsˈpo.sʊm   (ˈoː→ˈo)
 -100: lax high vowels lower to tense mid vowels
@@ -8441,9 +8439,7 @@ firing-rule trace (only the rules that changed the form).
 -100: Classical Latin length distinction becomes a quality (tense) distinction, first pass
     ˌskuːˈt̪ɑː.ri.um → ˌskuːˈt̪ɑː.rɪ.ʊm   (i→ɪ, u→ʊ)
 -100: i-prosthesis before word-initial s + consonant
-    ˌskuːˈt̪ɑː.rɪ.ʊm → ɪsˌkuːˈt̪ɑː.rɪ.ʊm   (∅→ɪ)
--100: the prosthetic vowel carries secondary stress
-    ɪsˌkuːˈt̪ɑː.rɪ.ʊm → ˌɪsˌkuːˈt̪ɑː.rɪ.ʊm   (ɪ→ˌɪ)
+    ˌskuːˈt̪ɑː.rɪ.ʊm → ˌɪsˌkuːˈt̪ɑː.rɪ.ʊm   (∅→ˌɪ)
 -100: unstressed short non-low vowels glide before another vowel (yod/w formation)
     ˌɪsˌkuːˈt̪ɑː.rɪ.ʊm → ˌɪsˌkuːˈt̪ɑː.rjʊm   (ɪ→j)
 -100: yod strengthens before a vowel
@@ -8508,9 +8504,7 @@ firing-rule trace (only the rules that changed the form).
 -100: Classical Latin length distinction becomes a quality (tense) distinction, first pass
     ˈst̪ɑː.men̪ → ˈst̪ɑː.mɛn̪   (e→ɛ)
 -100: i-prosthesis before word-initial s + consonant
-    ˈst̪ɑː.mɛn̪ → ɪsˈt̪ɑː.mɛn̪   (∅→ɪ)
--100: the prosthetic vowel carries secondary stress
-    ɪsˈt̪ɑː.mɛn̪ → ˌɪsˈt̪ɑː.mɛn̪   (ɪ→ˌɪ)
+    ˈst̪ɑː.mɛn̪ → ˌɪsˈt̪ɑː.mɛn̪   (∅→ˌɪ)
 -100: the length feature is dropped now that quality carries the contrast
     ˌɪsˈt̪ɑː.mɛn̪ → ˌɪsˈt̪ɑ.mɛn̪   (ˈɑː→ˈɑ)
 -100: lax high vowels lower to tense mid vowels
