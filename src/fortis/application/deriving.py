@@ -42,7 +42,7 @@ from __future__ import annotations
 from dataclasses import replace
 
 from src.fortis.application.applying import apply_match
-from src.fortis.application.combining import matches_exactly
+from src.fortis.application.combining import combine, matches_exactly, merge
 from src.fortis.application.matching import Match, SyllableView, find_matches, pattern_matches
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import (
@@ -69,6 +69,7 @@ from src.fortis.models.elements import (
     Group,
     LetterBundle,
     LetterRef,
+    ModifiedLetter,
     Negated,
     Quantified,
 )
@@ -174,6 +175,29 @@ def _resolve_elements(
                         "segment — it is not a known letter or letter+diacritic sequence"
                     )
                 resolved.extend(LetterBundle(bundle=segment) for segment in segments)
+            case ModifiedLetter(symbol, delta):
+                # letter^[Δ]: the ^ binds the LAST segment of the run; Δ's values override it.
+                # Split Δ by tier so `none` does the right thing on each: segmental features go
+                # through the geometry-aware `merge`, so a node delink drops its whole subtree
+                # (e^[oral: none] → schwa); syllable-tier features keep a `none` via `combine`,
+                # so it survives to become a tier delink on the result (e^[stress: none]).
+                # Expands to plain LetterBundles — the matcher/applier need no new case.
+                segments = _segments(symbol)
+                if not segments:
+                    raise ValueError(
+                        f"rule '{rule_id}': modified letter '{symbol}^[...]' resolves to no "
+                        "segment — its base is not a known letter or letter+diacritic sequence"
+                    )
+                seg_delta = FeatureBundle(
+                    {f: s for f, s in delta.items() if project.features.is_segmental(f)}
+                )
+                supra_delta = FeatureBundle(
+                    {f: s for f, s in delta.items() if not project.features.is_segmental(f)}
+                )
+                *prefix, last = segments
+                resolved.extend(LetterBundle(bundle=segment) for segment in prefix)
+                modified = combine(merge(last, seg_delta, project.features), supra_delta)
+                resolved.append(LetterBundle(bundle=modified))
             case Group(inner):
                 resolved.append(Group(_resolve_elements(inner, project, rule_id)))
             case Disjunction(branches):
@@ -464,11 +488,12 @@ def _spliced_segments(
     delinks (``none``), while an unchanged carried feature is left untouched so its
     autosegment keeps its identity.
 
-    Also returns the ``(tier_name, segment_id)`` pairs where a result literal wrote an
-    explicit, present-valued suprasegmental — the syllable's stress/tone stated by the
-    rule. ``_carry_stranded_suprasegmentals`` uses this to *not* re-anchor the replaced
-    nucleus's old autosegment on top: an explicit result mark replaces, it does not stack
-    (which would otherwise leave two same-anchor autosegs — a spurious ``x>x`` contour).
+    Also returns the ``(tier_name, segment_id)`` pairs where the result *wrote* a
+    suprasegmental — a value the rule stated (``ˌa → ˈa``) or an explicit delink
+    (``e^[stress: none]``, which sets none). ``_carry_stranded_suprasegmentals`` uses this to
+    *not* re-anchor the replaced nucleus's old autosegment on top: an explicit result write
+    replaces. Without it, a set would stack a second same-anchor autoseg (a spurious ``x>x``
+    contour) and a delink would be quietly undone by the re-anchored old value.
     """
     new_segments: list[Segment] = []
     explicit_writes: set[tuple[str, int]] = set()
@@ -484,8 +509,7 @@ def _spliced_segments(
                 _spread_autoseg(out, source, bindings, recall, tier_name, seg_id)
             elif written != prev.get(tier_name, FeatureBundle()):
                 write_to_tier(out, seg_id, tier_name, written)
-                if any(spec.value is not None for spec in written.values()):
-                    explicit_writes.add((tier_name, seg_id))
+                explicit_writes.add((tier_name, seg_id))  # a set or a delink both replace
     return new_segments, explicit_writes
 
 

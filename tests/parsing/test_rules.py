@@ -6,8 +6,37 @@ strings; that job now belongs to ``parse_definition``, which returns a
 ``StructuralDescription`` of parsed elements.
 """
 
-from src.fortis.models.elements import BundleElem, LetterRef, ResultElem
+from src.fortis.models.elements import BundleElem, LetterRef, ModifiedLetter, ResultElem
 from src.fortis.parsing.notation import parse_definition
+
+
+class TestModifiedLetter:
+    def test_result_side(self, features):
+        sd = parse_definition("ˈe -> a^[stress: none]", features).unwrap()
+        (mod,) = sd.result
+        assert isinstance(mod, ModifiedLetter)
+        assert mod.symbol == "a"
+        assert mod.delta["stress"].value is None
+
+    def test_target_side(self, features):
+        sd = parse_definition("e^[nasal: 1] -> i", features).unwrap()
+        (mod,) = sd.target
+        assert isinstance(mod, ModifiedLetter)
+        assert mod.symbol == "e"
+        assert "nasal" in mod.delta
+
+    def test_multi_letter_run_keeps_whole_symbol_for_resolve(self, features):
+        # The ^ binds the last letter, but that split needs the letter inventory, so the
+        # parser keeps the whole run; resolve_rule_letters segments it later.
+        sd = parse_definition("au^[nasal: 1] -> e", features).unwrap()
+        assert sd.target == (ModifiedLetter(symbol="au", delta=sd.target[0].delta),)
+
+    def test_pattern_delta_is_rejected(self, features):
+        # Δ must be a realized bundle — no negation, alpha, or conditional.
+        assert parse_definition("e^[!nasal] -> a", features).is_err()
+
+    def test_caret_requires_a_following_bundle(self, features):
+        assert parse_definition("e^ -> a", features).is_err()
 
 
 class TestParseDefinition:

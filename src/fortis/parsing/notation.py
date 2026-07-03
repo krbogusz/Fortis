@@ -62,6 +62,7 @@ from src.fortis.models.elements import (
     FloatingAutoseg,
     Group,
     LetterRef,
+    ModifiedLetter,
     Negated,
     Null,
     Quantified,
@@ -74,7 +75,11 @@ from src.fortis.models.elements import (
 )
 from src.fortis.models.features import FeatureInventory
 from src.fortis.models.rules import StructuralDescription
-from src.fortis.parsing.bundles import parse_pattern_bundle, parse_result_bundle
+from src.fortis.parsing.bundles import (
+    parse_feature_bundle,
+    parse_pattern_bundle,
+    parse_result_bundle,
+)
 from src.fortis.parsing.lexer import LexError, Token, TokenInfo, lex
 from src.fortis.result import Err, Ok, Result
 
@@ -297,6 +302,8 @@ class _Parser:
                 self._advance()
                 if tok.text in _NULL_SYMBOLS:
                     return Null()
+                if self._accept(Token.CARET):
+                    return self._modified_letter(tok)
                 return LetterRef(tok.text)
             case Token.BOUNDARY:
                 self._advance()
@@ -368,6 +375,20 @@ class _Parser:
             case Err(errors):
                 self._record(errors, tok)
                 return Wildcard()
+
+    def _modified_letter(self, name_tok: TokenInfo) -> Element:
+        """Parse ``letter ^ [ Δ ]`` — a letter modified by a concrete feature bundle.
+
+        Δ is parsed as a *realized* bundle (concrete values, including ``none``), so a
+        negation/alpha/conditional inside is rejected here rather than silently mis-applied.
+        """
+        tok = self._expect(Token.BUNDLE)
+        match parse_feature_bundle(tok.text, self._features):
+            case Ok(delta):
+                return ModifiedLetter(name_tok.text, delta)
+            case Err(errors):
+                self._record(errors, tok)
+                return Wildcard()  # placeholder; the Err path discards the tree
 
     def _result_bundle(self, tok: TokenInfo) -> Element:
         """Reduce a result-side ``[ ... ]`` into a ``ResultElem``."""

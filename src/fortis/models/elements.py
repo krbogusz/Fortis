@@ -41,6 +41,22 @@ class LetterBundle:
 
 
 @dataclass(frozen=True)
+class ModifiedLetter:
+    """A letter shorthand with a concrete feature override: ``e^[stress: none]``.
+
+    The base letter's full specification with *delta* combined on top — a wholesale
+    replacement (like a letter), but with the named features changed (or delinked, for a
+    ``none`` value). ``resolve_rule_letters`` expands it to a :class:`LetterBundle` of
+    ``combine(letter, delta)``, so nothing downstream needs a new case; the ``^`` binds the
+    **last** letter of a run (``au^[length: long]`` = ``a`` then a lengthened ``u``). *delta*
+    is a realized (concrete) bundle — no negation, alpha, or conditional features.
+    """
+
+    symbol: str
+    delta: FeatureBundle
+
+
+@dataclass(frozen=True)
 class BundleElem:
     """A pattern bundle in target, context, or exception position."""
 

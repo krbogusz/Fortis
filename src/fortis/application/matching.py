@@ -489,10 +489,12 @@ def _letter_matches(
     (whose bundle merely adds ``strident``). Segmental identity **excludes** syllable-tier
     features (tone, stress), which live on the nucleus, not in a letter's identity.
 
-    A syllable-tier feature the *letter* carries — from a ``ˈ``/``ˌ`` or tone diacritic on
-    a rule literal, lowered onto the resolved bundle — is instead an added *constraint*:
-    it must match the value on *syllable* (the segment's nucleus). So ``ˌɔ`` matches only a
-    secondary-stressed ɔ. A plain letter carries no syllable-tier feature and is unaffected.
+    A syllable-tier feature the *letter* carries — from a ``ˈ``/``ˌ`` or tone diacritic, or a
+    ``^[stress: …]`` override, lowered onto the resolved bundle — is instead an added
+    *constraint*: it must match the value on *syllable* (the segment's nucleus). So ``ˌɔ``
+    matches only a secondary-stressed ɔ. An **absent** value counts as ``none``: an unstressed
+    nucleus carries no stress feature, so ``e^[stress: none]`` matches it (and ``e^[stress:
+    primary]`` does not). A plain letter carries no syllable-tier feature and is unaffected.
     """
     seg = {f for f in segment.data if f not in syllable_features}
     let = {f for f in letter.data if f not in syllable_features}
@@ -500,9 +502,9 @@ def _letter_matches(
         return False
     for feature in letter.data:
         if feature in syllable_features:
-            if syllable is None or feature not in syllable.data:
-                return False
-            if syllable[feature].value != letter[feature].value:
+            # Absent ≡ none: the nucleus's value, or None when it carries the feature at all.
+            have = syllable[feature].value if syllable and feature in syllable.data else None
+            if have != letter[feature].value:
                 return False
     return True
 

@@ -170,8 +170,8 @@ Each entry maps an IPA string directly to a gloss. The IPA string is the key; th
 A word may also carry a **floating lexical tone** — a melody with no host segment
 of its own (e.g. a grammatical floating H) — written `⟨◌́⟩`: a tone diacritic on a
 dotted-circle placeholder (◌, U+25CC), in float brackets. Its position in the
-string matters: `kata⟨◌́⟩` places a floating high *after* the final segment (a
-suffixal tone that docks leftward onto it); `⟨◌́⟩kata` places one *before* the
+string matters: `kata⟨◌́⟩` places a floating high _after_ the final segment (a
+suffixal tone that docks leftward onto it); `⟨◌́⟩kata` places one _before_ the
 first. A dock rule (§5.12) then binds it wherever it sits.
 
 ### 4.2 rules.toml
@@ -272,7 +272,7 @@ p                letter shorthand
 A **bare feature name** with no sign or value (`[nasal]`, `[place]`) resolves
 differently by kind: for a **unary** feature it means present, same as
 `[+nasal]`; for a **binary** or **scalar** feature it means the feature is
-specified with *any* value, which is a pattern-only wildcard — it is a
+specified with _any_ value, which is a pattern-only wildcard — it is a
 validation error to write a bare non-unary feature in a **result**, since a
 concrete output segment needs an explicit value.
 
@@ -283,8 +283,34 @@ In **target** position, letters and feature bundles both match by features. In *
 
 **Stress and tone diacritics on a literal** (`ˈ`, `ˌ`, tone marks) are suprasegmentals — they live on their own tier (§5.12), apart from the segment's melody — so a literal that carries one does a different job on each side:
 
-- In the **target** (and contexts/exceptions) it *constrains* the match to that value: `ˌɔ` matches only a secondary-stressed ɔ, whereas a bare `ɔ` matches at any stress. To constrain by a suprasegmental without spelling the vowel, put it in a bundle: `[+syllabic, stress: secondary]`.
-- In the **result** it *writes*, replacing the suprasegmental of the changed segment's syllable: `e → ˈa` stresses that syllable, `ˌa → ˈa` promotes secondary to primary, `ˈe → ˌe` demotes. A **bare** result literal writes nothing, so the syllable's stress persists from the input. The mark must land on a **nucleus** — on a non-nucleus result literal (`d → ˈt`) it has nowhere to attach and is dropped; write it on the syllable's vowel, or use a bundle (`[stress: primary]`).
+- In the **target** (and contexts/exceptions) it _constrains_ the match to that value: `ˌɔ` matches only a secondary-stressed ɔ, whereas a bare `ɔ` matches at any stress. To constrain by a suprasegmental without spelling the vowel, put it in a bundle: `[+syllabic, stress: secondary]`.
+- In the **result** it _writes_, replacing the suprasegmental of the changed segment's syllable: `e → ˈa` stresses that syllable, `ˌa → ˈa` promotes secondary to primary, `ˈe → ˌe` demotes. A **bare** result literal writes nothing, so the syllable's stress persists from the input. The mark must land on a **nucleus** — on a non-nucleus result literal (`d → ˈt`) it has nowhere to attach and is dropped; write it on the syllable's vowel, or use a bundle (`[stress: primary]`).
+
+A **letter with a feature override** — `letter^[Δ]` — is a letter shorthand _modified_ by a concrete bundle Δ: the letter's full specification with Δ combined on top. It is a replacement (like a bare letter), not a merge, so Δ overrides only the features it names (a `none` value _delinks_). Δ is a **realized** bundle — concrete values only, no negation/alpha/conditional.
+
+```
+e^[stress: none]   e, unstressed          — the one way to remove stress while also changing the melody
+a^[stress: primary] a, primary-stressed
+t^[+voice]         t's spec, voiced
+e^[length: long]   a long e
+```
+
+The `^` binds the **last** letter of a run: `au^[length: long]` lengthens only the `u`. It is valid in every position: in the **result** it replaces-with-Δ (and a suprasegmental in Δ writes the syllable, overriding what would persist — so `ˈe → a^[stress: none]` genuinely destresses); in the **target** it is an identity match against the letter _plus_ Δ (`e^[length: long]` matches only a long e). Contrast the plain bundle `[Δ]`, which _merges_ onto — and keeps the melody of — the matched segment.
+
+A `none` value **delinks**. For a segmental feature it is geometry-aware — delinking a node drops its whole subtree, so `e^[oral: none]` (no place/quality) is a featureless schwa; it is a no-op only where the feature is already absent (`e^[nasal: none]`, since `e` carries no nasal). For a suprasegmental it delinks the tier (`e^[stress: none]` unstresses in the result). In the **target**, an absent value counts as `none`: an unstressed nucleus carries no stress feature, so `e^[stress: none]` matches an unstressed e — symmetric with `e^[stress: primary]`, which matches only a primary-stressed one.
+
+#### Letter–tier interactions
+
+A letter's *segmental* content sits in the bundle; a syllable-tier feature (stress, tone) sits on the nucleus's tier. How a literal touches that tier depends on the side. Taking `e` and stress as the example:
+
+| Form | Target — matches | Result — produces |
+| --- | --- | --- |
+| `e` | an `e` at **any** stress | an `e`; **stress persists** from the input |
+| `ˈe` | a **primary**-stressed `e` | an `e`, **writes** primary stress |
+| `e^[stress: none]` | an **unstressed** `e` | an `e`, **delinks** stress (unstressed) |
+| `e^[stress: primary]` | a **primary**-stressed `e` | an `e`, **writes** primary stress |
+
+Three things follow. **`ˈe` is exactly `e^[stress: primary]`** (and `ˌe` is `e^[stress: secondary]`) — the stress diacritic is shorthand for that override, on both sides. **Bare `e` is the only form that leaves the tier alone** — it matches at any stress and lets the input's stress persist on output; every marked or overridden form pins one value. And **`e^[stress: none]` has no diacritic equivalent** (there is no "unstressed" mark), so it is the only way to *match* an unstressed vowel or to *remove* stress in the result — the suprasegmental mirror of `e^[oral: none]` → schwa on the segmental side.
 
 ### 5.2 Special symbols
 
@@ -421,11 +447,11 @@ By default `[+F]` matches if F is `+` at any position in its contour. That `@any
 
 The default position depends on the shape of the value, not on any per-rule setting:
 
-| Value | Default position | Effect |
-| --- | --- | --- |
-| single value (`tone: 1`) | `@any` | matches at some limb |
-| multi-limb contour (`tone: 1>2`) | `@all` | must be the whole contour, exact arity |
-| whole-contour alpha (`tone: α`) | — | binds the entire contour, any length; a position suffix narrows it to the limb(s) there (`tone: α@initial` binds α to just the first limb) |
+| Value                            | Default position | Effect                                                                                                                                     |
+| -------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| single value (`tone: 1`)         | `@any`           | matches at some limb                                                                                                                       |
+| multi-limb contour (`tone: 1>2`) | `@all`           | must be the whole contour, exact arity                                                                                                     |
+| whole-contour alpha (`tone: α`)  | —                | binds the entire contour, any length; a position suffix narrows it to the limb(s) there (`tone: α@initial` binds α to just the first limb) |
 
 An alpha variable can bind **per limb** or to the **whole contour**, and the two read differently: `tone: α>β` binds one variable to each of exactly two limbs (the multi-limb default `@all` applies, so the target contour must have exactly that arity), while `tone: α` (no `>`) binds a single variable to the entire contour regardless of its length. `tone: α>α` additionally constrains the two limbs to be equal.
 
@@ -470,7 +496,7 @@ A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an _auto
 ```
 
 - **Spread** — `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _` gives a toneless vowel the tone of a preceding high vowel (one autosegment, now two anchors — not a copy). Adjacent elements match adjacent _segments_, so the `[-syll]*` is what spans the consonants between the two syllables — without it the two `[+syll]` would have to be a vowel hiatus. Under a directional mode (§6.2) the H spreads across a whole toneless run.
-- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality). A lexical floating tone (§4.1) is *positioned* — it docks only where it sits in the string — while one stranded by a deletion (below) is position-blind and docks at any matching site, so a directional application mode or a narrowing context is usually needed to dock it exactly once.
+- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality). A lexical floating tone (§4.1) is _positioned_ — it docks only where it sits in the string — while one stranded by a deletion (below) is position-blind and docks at any matching site, so a directional application mode or a narrowing context is usually needed to dock it exactly once.
 - **Delink** — `[+syll] → [tone: none]` removes the association.
 - **Stability** — _automatic_: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour (the tier's `stability` direction — `"left"` by default, or `"right"`) and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put. A word-initial deletion with no left neighbour leaves the autosegment floating; a still-floating autosegment is stray-erased at the surface.
 

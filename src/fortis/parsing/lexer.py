@@ -41,6 +41,7 @@ class Token(Enum):
     BANG = auto()  # !   negates the following element
     EQ = auto()  # =   binds the following element to an index
     AT = auto()  # @   recalls a bound element by index
+    CARET = auto()  # ^   modifies the preceding letter with a following [ ... ] bundle
     BUNDLE = auto()  # [ ... ]  (text = inner, brackets stripped)
     FLOATING = auto()  # ⟨ ... ⟩  floating autosegment (text = inner, brackets stripped)
     BOUNDARY = auto()  # # or $   (text = the symbol)
@@ -103,6 +104,7 @@ _SINGLE: dict[str, Token] = {
     "!": Token.BANG,
     "=": Token.EQ,
     "@": Token.AT,
+    "^": Token.CARET,
 }
 
 _BOUNDARY: frozenset[str] = frozenset("#$")
