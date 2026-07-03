@@ -87,12 +87,27 @@ def opposite_pole(atom: Limb, unary: bool) -> Limb:
 
 
 def make_value(limbs: tuple[Limb, ...]) -> Value:
-    """Build a feature value, collapsing a length-1 contour to a scalar."""
-    return limbs[0] if len(limbs) == 1 else limbs
+    """Build a feature value, normalizing away non-contrastive shape.
+
+    A run of identical adjacent limbs is a level stretch, not a contour — it carries no
+    contrast — so it folds to one (``5>5`` → ``5``, ``5>5>3`` → ``5>3``). A resulting
+    length-1 contour then collapses to a scalar. This keeps two same-valued autosegments
+    that land on one anchor (e.g. tone spread onto a like tone) from reading as a spurious
+    ``x>x`` rather than the single value they are.
+    """
+    folded: list[Limb] = []
+    for limb in limbs:
+        if not folded or folded[-1] != limb:
+            folded.append(limb)
+    return folded[0] if len(folded) == 1 else tuple(folded)
 
 
 def form_contour(value_1: Value, value_2: Value) -> Value:
-    """Form a contour from two values, each of which can also be contour."""
+    """Form a contour from two values, each of which can also be contour.
+
+    Routed through ``make_value`` so a level meeting its own value (``H`` onto ``H``) yields
+    the single value, not ``H>H``.
+    """
     limbs_1: ContourValue = (value_1,) if not isinstance(value_1, tuple) else value_1
     limbs_2: ContourValue = (value_2,) if not isinstance(value_2, tuple) else value_2
-    return limbs_1 + limbs_2
+    return make_value(limbs_1 + limbs_2)

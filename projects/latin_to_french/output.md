@@ -3362,9 +3362,9 @@ firing-rule trace (only the rules that changed the form).
 1400: final ɹ effaces after a monosyllabic e(ː) or a we(ː) nucleus
     ˌn̪uˈeɹ → ˌn̪uˈe   (ɹ→∅)
 1400: a countertonic high vowel consonantalizes before a lower vowel, ceding stress
-    ˌn̪uˈe → n̪u̯e   (ˌu→u̯, ˈe→e)
+    ˌn̪uˈe → ˌn̪u̯e   (ˌu→u̯, ˈe→ˌe)
 1400: stress is leveled — no longer distinctive for vowels
-    n̪u̯e → n̪u̯e   (e→e)
+    ˌn̪u̯e → n̪u̯e   (ˌe→e)
 ```
 
 ## notre

@@ -66,7 +66,14 @@ from src.fortis.models.features import FeatureInventory
 from src.fortis.models.inventories import LetterInventory
 from src.fortis.models.rules import StructuralDescription
 from src.fortis.models.specs import FeatureSpec
-from src.fortis.models.values import AlphaOp, AlphaRef, AutosegRecall, Limb, opposite_pole
+from src.fortis.models.values import (
+    AlphaOp,
+    AlphaRef,
+    AutosegRecall,
+    Limb,
+    make_value,
+    opposite_pole,
+)
 
 # Reused verbatim from the validator so the applier's path decision can never
 # disagree with what the parser accepted. ``parsing/rule_validation`` is the
@@ -245,7 +252,7 @@ def _resolve_result_bundle(bundle: ResultBundle, bindings: Bindings) -> FeatureB
                 limbs.append(
                     opposite_pole(bound, limb.unary) if limb.op is AlphaOp.opposite else bound
                 )
-            value = tuple(limbs)
+            value = make_value(tuple(limbs))  # a recall that levels the contour (α>α) folds to α
         delta[feature] = FeatureSpec(feature=feature, value=value)
     return delta
 

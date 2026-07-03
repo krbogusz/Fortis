@@ -35,6 +35,19 @@ class TestMakeValue:
         result = make_value((1, 0, 1))
         assert result == (1, 0, 1)
 
+    def test_identical_limbs_fold_to_scalar(self):
+        # A level stretch is not a contrast: x>x is just x.
+        assert make_value((1, 1)) == 1
+
+    def test_identical_adjacent_run_folds(self):
+        assert make_value((1, 1, 0)) == (1, 0)
+        assert make_value((1, 0, 0)) == (1, 0)
+        assert make_value((1, 1, 1)) == 1
+
+    def test_non_adjacent_identical_limbs_are_kept(self):
+        # A genuine contour that returns to a level (1>0>1) is a contrast — keep it.
+        assert make_value((1, 0, 1)) == (1, 0, 1)
+
 
 class TestFormContour:
     def test_two_scalars(self):
