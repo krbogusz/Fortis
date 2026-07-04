@@ -789,3 +789,56 @@ def derive(
         surface=current,
         surface_boundaries=surface_boundaries,
     )
+
+
+def derive_all(project: Project) -> list[Derivation]:
+    """Derive every word in *project*, in the lexicon's order.
+
+    A convenience over :func:`derive`: resolves the rules' letter runs once (see
+    :func:`resolve_rule_letters`), then segments and derives each word with the
+    project's inventories. Shared by the CLI and the analysis tools so they run
+    the same pipeline.
+
+    Raises:
+        ValueError: a rule spells a symbol that resolves to no segment.
+    """
+    rules = resolve_rule_letters(project.rules, project)
+    return [
+        derive(
+            word,
+            string_to_sequence(ipa, project),
+            rules,
+            project.letters,
+            project.features,
+            project.sonorities,
+            project.syllable_parts,
+            project.tiers,
+        )
+        for ipa, word in project.words.items()
+    ]
+
+
+def form_at_time(derivation: Derivation, time: int) -> tuple[Form, frozenset[int]]:
+    """The form and its syllable boundaries as of *time*.
+
+    Reconstructs the snapshot after every **timed** rule with ``rule.time ≤ time``
+    has fired, from the recorded firing steps — the derived state to compare
+    against an attested form for that stage. Untimed rules (``time is None``)
+    apply after all timed ones, so they never contribute to a stage snapshot;
+    they only shape the final surface. If no rule fired at or before *time*, the
+    input form stands.
+    """
+    form = derivation.input
+    # The input's boundaries are the first step's "before" (or the surface's, if
+    # nothing fired). Cosmetic only: grading strips syllable dots.
+    boundaries = (
+        derivation.steps[0].before_boundaries
+        if derivation.steps
+        else derivation.surface_boundaries
+    )
+    for step in derivation.steps:
+        if step.rule.time is None or step.rule.time > time:
+            continue
+        form = step.after
+        boundaries = step.after_boundaries
+    return form, boundaries

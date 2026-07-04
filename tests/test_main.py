@@ -18,6 +18,33 @@ def test_main_derives_every_word(project, capsys, tmp_path):
     assert "aŋ.ka" in out  # place assimilation: n → ŋ (node spread copies the velar's place)
 
 
+def test_main_writes_derivation_table_csv(tmp_path):
+    # The rule×word matrix is written as derivation_table.csv, in the output dir.
+    main(["--output", str(tmp_path / "output.md")])
+    assert (tmp_path / "derivation_table.csv").exists()
+
+
+def test_main_skips_distances_without_target(project, tmp_path):
+    # A lexicon with no attested forms (bare `word = "gloss"`) gets no distance summary.
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(f'"{ipa}" = "x"\n', encoding="utf-8")
+    main(["--project", str(tmp_path)])
+    assert not (tmp_path / "distances.md").exists()
+
+
+def test_main_writes_distances_with_target(project, tmp_path):
+    # A minimal project (one word carrying a target `final`, everything else falling
+    # back to the default inventory) triggers the distance summary.
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(
+        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+    )
+    main(["--project", str(tmp_path)])
+    distances = tmp_path / "distances.md"
+    assert distances.exists()
+    assert "# Distances" in distances.read_text(encoding="utf-8")
+
+
 def _derive(word, rules, project):
     return derive(
         Word(ipa=word),

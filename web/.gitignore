@@ -16,6 +16,9 @@ dist-ssr
 public/engine.tgz
 public/pyodide
 
+# Generated example-project assets + manifest (built by scripts/build-engine.mjs)
+public/projects
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

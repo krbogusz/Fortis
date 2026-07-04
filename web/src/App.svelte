@@ -9,7 +9,11 @@
     removeFile,
     resetOverlay,
     fileStatus,
-    runDerivations,
+    prepareRun,
+    deriveBatch,
+    finalizeRun,
+    listExampleProjects,
+    loadExampleProject,
   } from "./lib/engine.js";
   import CsvTable from "./lib/CsvTable.svelte";
 
@@ -24,15 +28,21 @@
   let active = $state(null); // filename, from either files or outputFiles
   let content = $state(""); // viewer content for the active file
   let busy = $state(false); // a derivation run is in flight
+  let progress = $state(0); // derivation progress, 0..1 (only meaningful while busy)
+  let progressText = $state(""); // "213 / 448" during a run
+  let runToken = 0; // bumped for each new run/load; a run whose token is stale aborts (supersession)
   let reportsReady = $state(false); // true once run_derivations() has written the reports at least once
 
-  let mode = $state("historical"); // "historical" | "autosegmental"
-  let showDef = $state(false); // off by default: hide rule definitions to keep results uncluttered
+  let openDefs = $state({}); // per-card: index → whether that card's rule definitions are shown
   let result = $state(null); // { derivations } | { error }
-  let csvMode = $state("table"); // csv view (letters.csv / output.csv): "table" | "raw"
+  let grading = $state(null); // grading summary from the last run, or null when there's no target
+  let resultView = $state("derivations"); // right-pane view: "derivations" | "grading"
+  let csvMode = $state("table"); // csv view (letters.csv / derivation_table.csv): "table" | "raw"
 
   let fileInput; // single-file <input>
   let projectInput; // multi-file (folder) <input>
+  let examples = $state([]); // bundled example projects from the static manifest
+  let picked = $state(""); // dir of the example currently loaded via the picker ("" = none)
 
   let debounceTimer = null;
 
@@ -52,6 +62,7 @@
       await initEngine((m) => (status = m));
       files = listFiles();
       outputFiles = listOutputFiles();
+      examples = await listExampleProjects();
       ready = true;
       refreshStatus();
       selectFile(files[0]);
@@ -71,19 +82,61 @@
     content = readFile(name);
   }
 
+  // Yield to the browser so a state change (the progress bar) actually paints
+  // before the next synchronous Pyodide batch blocks the main thread again.
+  const paint = () => new Promise((r) => setTimeout(r, 0));
+
   async function rerun() {
     if (!ready) return;
+    const myToken = ++runToken; // claim this run; a newer run bumps the token and supersedes us
     busy = true;
-    // Yield so the spinner paints before the (synchronous) Pyodide call.
-    await new Promise((r) => setTimeout(r, 0));
+    progress = 0;
+    progressText = "";
+    result = null; // clear the previous results so the pane doesn't show stale output under the bar
+    grading = null; // and the previous grading summary
+    openDefs = {}; // reset per-card definition toggles (indices map to new words after a run)
+    await paint(); // paint the (updated) left pane + cleared right pane before the first batch blocks
+    if (myToken !== runToken) return; // superseded while painting — a newer run owns the session now
     try {
-      result = runDerivations();
-      reportsReady = !result.error; // run_derivations() only writes the reports on success
+      const prep = prepareRun();
+      if (prep.error) {
+        result = { error: prep.error };
+        reportsReady = false;
+        return;
+      }
+      const total = prep.words;
+      const acc = [];
+      // Drive the run in slices, painting the bar between them. Batch size is
+      // adapted from the measured cost of the previous batch to keep each one a
+      // short, roughly fixed slice of wall-clock time (so the bar stays smooth
+      // and the thread never freezes for long, whatever the machine's speed).
+      let batch = 4;
+      for (let i = 0; i < total; ) {
+        const t0 = performance.now();
+        const slice = deriveBatch(i, batch);
+        acc.push(...slice);
+        i += slice.length || batch; // guard against an empty slice stalling the loop
+        progress = total ? i / total : 1;
+        progressText = `${Math.min(i, total)} / ${total}`;
+        const perWord = (performance.now() - t0) / Math.max(1, slice.length);
+        batch = Math.min(32, Math.max(1, Math.round(120 / Math.max(perWord, 1))));
+        if (i < total) {
+          await paint();
+          // If a newer run started, stop before the next batch: it has reset the
+          // Python session (prepare_run), so continuing would derive against it.
+          if (myToken !== runToken) return;
+        }
+      }
+      const fin = finalizeRun();
+      grading = fin?.grading ?? null;
+      if (!grading && resultView === "grading") resultView = "derivations"; // no target ⇒ leave the (now hidden) tab
+      result = { derivations: acc };
+      reportsReady = true;
       if (isOutput(active)) content = readFile(active); // keep an open report tab in sync
     } catch (e) {
-      result = { error: [e?.message ?? String(e)] };
+      if (myToken === runToken) result = { error: [e?.message ?? String(e)] };
     } finally {
-      busy = false;
+      if (myToken === runToken) busy = false; // only the latest run clears the busy flag
     }
   }
 
@@ -136,8 +189,57 @@
     ev.target.value = "";
   }
 
+  // Load one of the bundled example projects (the picker). "" reverts to the
+  // pristine default. Mirrors loadProject's overlay flow, but fetches the files
+  // from the app's static assets instead of a local folder.
+  async function loadExample(ev) {
+    const dir = ev.target.value;
+    picked = dir;
+    if (!dir) {
+      resetOverlay();
+      projectName = "default";
+      refreshStatus();
+      selectFile(active);
+      await rerun();
+      return;
+    }
+    const entry = examples.find((e) => e.dir === dir);
+    if (!entry) return;
+    // Represent the picked project in the left pane at once, and clear the right
+    // pane, before the (network) file load — so the UI reflects the choice
+    // immediately instead of showing the previous project until the run ends.
+    const myToken = ++runToken; // a second pick supersedes this one
+    busy = true;
+    progress = 0;
+    progressText = "";
+    projectName = entry.label || entry.dir;
+    result = null;
+    await paint();
+    if (myToken !== runToken) return; // superseded while painting
+    try {
+      await loadExampleProject(entry); // fetch this project's files into the overlay
+      // If the user picked again during the fetch, abandon: writing more files
+      // and running would race the newer selection's overlay + session.
+      if (myToken !== runToken) return;
+      refreshStatus();
+      selectFile(active);
+      await rerun(); // bumps runToken and takes over the busy flag from here
+    } catch (e) {
+      if (myToken === runToken) {
+        alert(`Could not load ${entry.label || entry.dir}: ${e?.message ?? e}`);
+        picked = "";
+        projectName = "default";
+        refreshStatus();
+        selectFile(active);
+      }
+    } finally {
+      if (myToken === runToken) busy = false; // if rerun ran it owns busy; else clear on our error
+    }
+  }
+
   async function loadProject(ev) {
     const incoming = Array.from(ev.target.files ?? []);
+    picked = ""; // a local-folder load supersedes any example-picker selection
     resetOverlay(); // loading a project REPLACES the current one, not merges into it
     let written = 0;
     const skipped = [];
@@ -206,6 +308,20 @@
       <div class="panel-head">
         <h2>{projectName}</h2>
         <div class="actions">
+          {#if examples.length}
+            <select
+              class="example-picker"
+              disabled={!ready}
+              bind:value={picked}
+              onchange={loadExample}
+              title="Load a bundled example project"
+            >
+              <option value="">Engine showcase</option>
+              {#each examples as ex}
+                <option value={ex.dir}>{ex.label}</option>
+              {/each}
+            </select>
+          {/if}
           <button disabled={!ready} onclick={() => fileInput.click()}
             >Load file</button
           >
@@ -265,7 +381,7 @@
         {/each}
       </div>
 
-      {#if active === "letters.csv" || active === "output.csv"}
+      {#if active === "letters.csv" || active === "derivation_table.csv"}
         <div class="view-bar">
           <span class="view-lbl">View</span>
           <button
@@ -281,7 +397,7 @@
         </div>
       {/if}
 
-      {#if (active === "letters.csv" || active === "output.csv") && csvMode === "table"}
+      {#if (active === "letters.csv" || active === "derivation_table.csv") && csvMode === "table"}
         <CsvTable {content} />
       {:else if isOutput(active)}
         <textarea class="editor ipa" spellcheck="false" readonly value={content}
@@ -320,37 +436,92 @@
         <div class="head-row">
           <h2>Results</h2>
           <div class="actions">
-            <button
-              class:active={showDef}
-              disabled={!ready}
-              onclick={() => (showDef = !showDef)}>Definition</button
-            >
-            <button
-              class:active={mode === "historical"}
-              disabled={!ready}
-              onclick={() => (mode = "historical")}>Historical</button
-            >
-            <button
-              class:active={mode === "autosegmental"}
-              disabled={!ready}
-              onclick={() => (mode = "autosegmental")}>Autosegmental</button
-            >
-            {#if busy}<span class="running"
-                ><span class="spinner small"></span> running…</span
-              >{/if}
+            {#if grading}
+              <div class="view-tabs">
+                <button
+                  class:active={resultView === "derivations"}
+                  onclick={() => (resultView = "derivations")}>Derivations</button
+                >
+                <button
+                  class:active={resultView === "grading"}
+                  onclick={() => (resultView = "grading")}>Grading</button
+                >
+              </div>
+            {/if}
+            {#if busy}
+              <span class="running">
+                <span class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progress * 100)}>
+                  <span class="progress-fill" style="width:{Math.round(progress * 100)}%"></span>
+                </span>
+                <span class="progress-text">{progressText || "running…"}</span>
+              </span>
+            {/if}
           </div>
         </div>
-        {#if mode === "autosegmental"}
-          <p class="legend">
-            Each rule as an association change: <code>│</code> kept ·
-            <code>╎</code> added (spread / dock) · <code>╪</code> delinked
-          </p>
-        {/if}
       </div>
 
       <div class="results ipa">
-        {#if !result}
-          <p class="muted">No results yet.</p>
+        {#if resultView === "grading" && grading}
+          <table class="grade-summary">
+            <thead>
+              <tr>
+                <th>stage</th><th>graded</th><th>exact</th><th>≤1</th>
+                <th>mean d</th><th>mean fd</th>
+              </tr>
+            </thead>
+            <tbody>
+              {#each grading.stages as s}
+                <tr class:final={s.label === "final"}>
+                  <td class="tgt">{s.label}</td>
+                  <td>{s.graded}</td>
+                  <td>{s.exact}</td>
+                  <td>{s.withinOne}</td>
+                  <td>{s.meanPhone.toFixed(3)}</td>
+                  <td>{s.meanFeature.toFixed(3)}</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+
+          {#if grading.hasStages}
+            <p class="caveat">
+              Intermediate stages compare the derived snapshot at rule-time T against
+              the target at stage-time T. If those timescales aren’t calibrated, the
+              stage rows read low for an alignment reason, not a phonological one —
+              only <strong>final</strong> is independent of that.
+            </p>
+          {/if}
+
+          {#each grading.stages as s}
+            <details class="grade-detail" open={s.label === "final"}>
+              <summary>
+                <span class="tgt">{s.label}</span>
+                <span class="muted">{s.graded - s.exact} of {s.graded} differ</span>
+              </summary>
+              {#if s.misses.length}
+                <table class="grade-misses">
+                  <thead>
+                    <tr><th>gloss</th><th>derived</th><th>target</th><th>d</th><th>fd</th></tr>
+                  </thead>
+                  <tbody>
+                    {#each s.misses as m}
+                      <tr>
+                        <td>{m.gloss}</td>
+                        <td class="form">{m.derived}</td>
+                        <td class="form">{m.target}</td>
+                        <td>{m.d}</td>
+                        <td>{m.fd ?? "—"}</td>
+                      </tr>
+                    {/each}
+                  </tbody>
+                </table>
+              {:else}
+                <p class="muted">All {s.graded} graded words exact.</p>
+              {/if}
+            </details>
+          {/each}
+        {:else if !result}
+          {#if !busy}<p class="muted">No results yet.</p>{/if}
         {:else if result.error}
           <div class="card error">
             <h3>Error</h3>
@@ -360,50 +531,20 @@
           </div>
         {:else if result.derivations.length === 0}
           <p class="muted">No words in the project.</p>
-        {:else if mode === "autosegmental"}
-          {#each result.derivations as d}
-            <details class="card auto-card" open={d.autosegmental}>
-              <summary>
-                <span class="word-ipa">{d.ipa}</span>
-                {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
-                {#if !d.autosegmental}<span class="flat-note">no autosegmental process</span>{/if}
-              </summary>
-              <div class="frames">
-                {#if d.inputGeometry?.length}
-                  <details class="geometry">
-                    <summary>Input geometry — one tree per segment</summary>
-                    <div class="frames">
-                      {#each d.inputGeometry as tree}
-                        <pre class="diagram">{tree}</pre>
-                      {/each}
-                    </div>
-                  </details>
-                {/if}
-                {#each d.frames as f}
-                  <div class="frame">
-                    <span class="frame-lbl">{f.label}</span>
-                    <pre class="diagram">{f.diagram}</pre>
-                  </div>
-                {/each}
-                {#if d.outputGeometry?.length}
-                  <details class="geometry">
-                    <summary>Output geometry — one tree per segment</summary>
-                    <div class="frames">
-                      {#each d.outputGeometry as tree}
-                        <pre class="diagram">{tree}</pre>
-                      {/each}
-                    </div>
-                  </details>
-                {/if}
-              </div>
-            </details>
-          {/each}
         {:else}
-          {#each result.derivations as d}
+          {#each result.derivations as d, i}
             <article class="card derivation">
               <header class="word-head">
                 <span class="word-ipa">{d.ipa}</span>
                 {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
+                {#if d.steps.some((s) => s.definition)}
+                  <button
+                    class="def-toggle"
+                    class:active={openDefs[i]}
+                    title="Show the rule definitions for this word"
+                    onclick={() => (openDefs[i] = !openDefs[i])}>Definition</button
+                  >
+                {/if}
               </header>
               <div class="steps">
                 {#each d.steps as s}
@@ -412,7 +553,7 @@
                   {/if}
                   {#if s.heading}
                     <div class="rule-heading">
-                      {s.heading}{#if s.definition && showDef}<span class="def">{s.definition}</span>{/if}
+                      {s.heading}{#if s.definition && openDefs[i]}<span class="def">{s.definition}</span>{/if}
                     </div>
                   {/if}
                   <div class="step">
@@ -563,6 +704,11 @@
     font-size: var(--fs-body);
     padding: 4px 10px;
   }
+  .example-picker {
+    font-size: var(--fs-body);
+    font-family: var(--sans);
+    padding: 4px 8px;
+  }
 
   .file-group-label {
     padding: 4px 16px 2px;
@@ -651,9 +797,29 @@
   .running {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     font-size: var(--fs-body);
     color: var(--muted);
+  }
+  .progress {
+    display: inline-block;
+    width: 120px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .progress-fill {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 120ms linear;
+  }
+  .progress-text {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   .results {
@@ -665,6 +831,83 @@
     color: var(--muted);
   }
 
+  .view-tabs {
+    display: inline-flex;
+    gap: 4px;
+  }
+  .view-tabs button {
+    font-size: var(--fs-body);
+    padding: 4px 10px;
+  }
+
+  .grade-summary,
+  .grade-misses {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--fs-body);
+    font-variant-numeric: tabular-nums;
+  }
+  .grade-summary {
+    margin-bottom: 14px;
+  }
+  .grade-summary th,
+  .grade-summary td,
+  .grade-misses th,
+  .grade-misses td {
+    border: 1px solid var(--border);
+    padding: 4px 9px;
+    text-align: right;
+  }
+  .grade-summary td.tgt,
+  .grade-misses th,
+  .grade-misses td:first-child {
+    text-align: left;
+  }
+  .grade-summary thead th,
+  .grade-misses thead th {
+    color: var(--muted);
+    font-weight: 600;
+    text-align: right;
+    background: var(--panel);
+  }
+  .grade-summary tr.final td {
+    font-weight: 700;
+    color: var(--text-h);
+    border-top-width: 2px;
+  }
+  .grade-misses td.form {
+    color: var(--text-h);
+  }
+
+  .caveat {
+    font-size: var(--fs-body);
+    color: var(--muted);
+    border-left: 3px solid var(--border);
+    padding: 6px 12px;
+    margin: 0 0 16px;
+  }
+
+  .grade-detail {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+  .grade-detail summary {
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    padding: 4px 0;
+    font-weight: 600;
+    color: var(--text-h);
+  }
+  .grade-detail summary .muted {
+    font-weight: 400;
+  }
+  .grade-detail .grade-misses {
+    margin-top: 6px;
+  }
+
   .card {
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -672,91 +915,6 @@
     margin-bottom: 14px;
     background: var(--panel);
     box-shadow: var(--shadow);
-  }
-  .auto-card > summary {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    cursor: pointer;
-    list-style: none;
-  }
-  .auto-card > summary::-webkit-details-marker {
-    display: none;
-  }
-  .auto-card > summary::before {
-    content: "▾";
-    color: var(--muted);
-    font-size: 11px;
-  }
-  .auto-card:not([open]) > summary::before {
-    content: "▸";
-  }
-  .auto-card[open] > summary {
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--muted);
-  }
-  .flat-note {
-    color: var(--muted);
-    font-style: italic;
-    font-size: var(--fs-body);
-  }
-  .frames {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .geometry {
-    margin-top: 12px;
-  }
-  .geometry summary {
-    cursor: pointer;
-    font-family: var(--sans);
-    font-size: var(--fs-body);
-    color: var(--muted);
-  }
-  .geometry .frames {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 10px;
-  }
-  .frame {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .frame-lbl {
-    font-family: var(--sans);
-    font-size: var(--fs-body);
-    font-weight: 600;
-    color: var(--accent);
-  }
-  .legend {
-    font-size: var(--fs-body);
-    color: var(--muted);
-    margin: 0;
-  }
-  .legend code {
-    font-family: var(--mono);
-    font-size: var(--fs-body);
-    color: var(--text-h);
-    padding: 0 2px;
-  }
-  /* Diagrams must be monospace for the box-drawing association lines to align. */
-  .diagram {
-    margin: 0;
-    padding: 10px 14px;
-    font-family: "DejaVu Sans Mono", "Noto Sans Mono", "JuliaMono", ui-monospace,
-      monospace;
-    font-size: var(--fs-body);
-    line-height: 1.35;
-    white-space: pre;
-    color: var(--text-h);
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: auto;
   }
   .card h3 {
     margin: 0 0 6px;
@@ -793,6 +951,15 @@
     font-size: var(--fs-body);
     color: var(--muted);
     font-style: italic;
+  }
+  .def-toggle {
+    margin-left: auto;
+    align-self: center;
+    font-family: var(--sans); /* UI chrome, not the IPA font inherited from .results.ipa */
+    font-size: var(--fs-label);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
   }
 
   .steps {
@@ -859,10 +1026,6 @@
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     display: inline-block;
-  }
-  .spinner.small {
-    width: 10px;
-    height: 10px;
   }
   @keyframes spin {
     to {

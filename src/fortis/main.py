@@ -5,8 +5,11 @@ bundles, runs it through all rules in time order, and prints a step-by-step
 derivation showing only the rules that changed the form, with syllable
 structure (``.`` between syllables) on the surface. Every run also writes a
 Markdown report (``<project>/output.md`` by default; ``--output`` overrides
-the path) and a CSV report alongside it (one row per word, one column per
-rule, holding the word's resulting form wherever that rule fired).
+the path) and ``derivation_table.csv`` alongside it (one row per word, one
+column per rule, holding the word's resulting form wherever that rule fired).
+When the lexicon carries attested forms (``final`` and/or intermediate
+``stages``), a ``distances.md`` summary grading the derivation against them is
+written too.
 """
 from __future__ import annotations
 
@@ -15,12 +18,14 @@ import csv
 import io
 import re
 import sys
+import time
 from collections.abc import Sequence
 from pathlib import Path
 
-from src.fortis.application.deriving import derive, resolve_rule_letters
+from src.fortis.analysis.grading import grade_stages
+from src.fortis.analysis.reporting import distance_summary_line, render_distance_summary
+from src.fortis.application.deriving import derive_all, resolve_rule_letters
 from src.fortis.application.rendering import describe_change, render_syllabified
-from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.config import config
 from src.fortis.loaders.project import load_project
@@ -71,10 +76,9 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         type=Path,
         metavar="FILE",
         help=(
-            "path for the Markdown report — the firing-rule trace plus an "
-            "association-change diagram for each tier operation. Always written, "
-            "alongside the printed trace and a same-named .csv report (one row per "
-            "word, one column per rule) (default path: <project>/output.md)"
+            "path for the Markdown report — the firing-rule trace per word. Always "
+            "written, alongside the printed trace and a derivation_table.csv report (one "
+            "row per word, one column per rule) (default path: <project>/output.md)"
         ),
     )
     return parser.parse_args(argv)
@@ -88,9 +92,15 @@ def main(argv: list[str] | None = None) -> None:
     letters, sonority, tiers, etc. stay the shipped defaults unless ``--project`` points to
     a project directory (whose own files override the defaults, the rest falling back).
     Every run writes ``output.md`` (the trace, ``--output`` overrides the path) and
-    ``output.csv`` (one row per word, one column per rule) into the same directory.
+    ``derivation_table.csv`` (one row per word, one column per rule) into the same
+    directory; if the lexicon has attested forms, a ``distances.md`` summary too.
+    Ends with a run summary on stderr: words derived, rules applied, per-phase
+    timing (init, apply, print), and the files saved.
     """
     args = _parse_args(argv)
+
+    # Phase 1 — engine initiation: load the inventories and resolve rule letters.
+    start = time.perf_counter()
     result = load_project(args.project, words_path=args.words, rules_path=args.rules)
     if result.is_err():
         for error in result.unwrap_err():
@@ -103,36 +113,85 @@ def main(argv: list[str] | None = None) -> None:
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error
+    init_done = time.perf_counter()
 
-    derivations = [
-        derive(
-            word,
-            string_to_sequence(ipa, project),
-            rules,
-            project.letters,
-            project.features,
-            project.sonorities,
-            project.syllable_parts,
-            project.tiers,
-        )
-        for ipa, word in project.words.items()
-    ]
+    # Phase 2 — rule application: derive every word.
+    try:
+        derivations = derive_all(project)
+    except ValueError as error:
+        print(f"error: {error}", file=sys.stderr)
+        raise SystemExit(1) from error
+    derive_done = time.perf_counter()
 
+    # Phase 3 — printing: write the reports and print the traces.
     output_dir = args.project or config.paths.default
     path = output_dir / "output.md" if args.output is _AUTO_OUTPUT else args.output
     path.write_text(_build_report(derivations, project, args.project), encoding="utf-8")
     print(f"wrote {path}", file=sys.stderr)
+    saved = [path]
 
-    csv_path = path.with_suffix(".csv")
+    csv_path = path.parent / "derivation_table.csv"
     csv_path.write_text(_build_csv_report(derivations, rules, project), encoding="utf-8")
     print(f"wrote {csv_path}", file=sys.stderr)
+    saved.append(csv_path)
+
+    # If the lexicon carries attested forms (final and/or intermediate stages),
+    # grade the derivation against them and write a distance summary alongside.
+    if any(word.final is not None or word.stages for word in project.words.values()):
+        stages = grade_stages(derivations, project)
+        where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
+        dist_path = path.parent / "distances.md"
+        dist_path.write_text(render_distance_summary(stages, where), encoding="utf-8")
+        print(f"wrote {dist_path}", file=sys.stderr)
+        saved.append(dist_path)
+        print(distance_summary_line(stages))
 
     for derivation in derivations:
         _print_derivation(derivation, project)
         print()
+    print_done = time.perf_counter()
+
+    _print_run_summary(derivations, rules, saved, (start, init_done, derive_done, print_done))
 
 
 _SUBRULE_SUFFIX = re.compile(r"#\d+$")
+
+
+def _applied_rule_count(derivations: list[Derivation]) -> int:
+    """How many distinct rules fired at least once across the run.
+
+    Sub-rules of one list-``definition`` (ids ``name#1``/``#2``) count once, to
+    match the CSV's rule columns.
+    """
+    fired = {_SUBRULE_SUFFIX.sub("", step.rule.id) for d in derivations for step in d.steps}
+    return len(fired)
+
+
+def _print_run_summary(
+    derivations: list[Derivation],
+    rules: RuleInventory,
+    saved: list[Path],
+    marks: tuple[float, float, float, float],
+) -> None:
+    """Print the end-of-run summary to stderr: counts, timing, and saved files.
+
+    ``marks`` are the four ``perf_counter`` readings bounding the phases: start,
+    end of engine initiation, end of rule application, end of printing.
+    """
+    start, init_done, derive_done, print_done = marks
+    words = len(derivations)
+    applied = _applied_rule_count(derivations)
+    total = len(_rule_columns(rules))
+    names = ", ".join(path.name for path in saved)
+    print(
+        f"\n{words} words derived, {applied} of {total} rules applied\n"
+        f"elapsed {print_done - start:.2f}s "
+        f"(init {init_done - start:.2f}s, "
+        f"apply {derive_done - init_done:.2f}s, "
+        f"print {print_done - derive_done:.2f}s)\n"
+        f"saved {names}",
+        file=sys.stderr,
+    )
 
 
 def _trace_lines(steps: Sequence[DerivationStep], project: Project) -> list[str]:
@@ -211,17 +270,20 @@ def _render_derivation_md(derivation: Derivation, project: Project) -> list[str]
 
 
 def _rule_columns(rules: RuleInventory) -> list[tuple[str, str]]:
-    """Ordered ``(base_id, label)`` pairs, one per rule, in firing order.
+    """Ordered ``(base_id, title)`` pairs, one per rule, in firing order.
 
-    A list-``definition`` rule's sub-rules (``name#1``, ``name#2``, ...) share one
-    column, matching how the Markdown report groups them under one heading.
+    The title is ``<time>: <name>`` (just the name for an untimed rule), matching
+    the trace headings. A list-``definition`` rule's sub-rules (``name#1``,
+    ``name#2``, ...) share one column, matching how the Markdown report groups
+    them under one heading.
     """
     columns: dict[str, str] = {}
     for time in sorted(rules.keys(), key=lambda t: (t is None, t)):
         for rule in rules[time]:
             base = _SUBRULE_SUFFIX.sub("", rule.id)
             if base not in columns:
-                columns[base] = rule.name or base
+                label = rule.name or base
+                columns[base] = f"{time}: {label}" if time is not None else label
     return list(columns.items())
 
 

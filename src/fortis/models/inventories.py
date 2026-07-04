@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import UserDict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import StrEnum, auto
 from functools import cached_property
 
@@ -184,15 +184,24 @@ class SyllablePartsInventory(UserDict[int, dict[str, SyllablePart]]):
 
 @dataclass
 class Word:
-    """A word with its IPA transcription and optional gloss.
+    """A word with its IPA transcription and optional gloss + attested forms.
+
+    Only ``ipa`` feeds derivation. ``final`` and ``stages`` are optional *target*
+    annotations co-located with the input — attested surface forms a grader can
+    compare the derived output against — and are ignored by the engine itself.
 
     Attributes:
-        ipa: The IPA transcription string.
+        ipa: The IPA transcription string (the derivation input).
         gloss: An optional gloss or translation.
+        final: The attested final/target surface form, if known (for grading).
+        stages: Attested forms keyed by time stage (for per-period grading);
+            keys are stage times, values the attested form at that stage.
     """
 
     ipa: str
     gloss: str = ""
+    final: str | None = None
+    stages: dict[int, str] = field(default_factory=dict)
 
 
 class WordInventory(UserDict[str, Word]):

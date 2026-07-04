@@ -86,13 +86,15 @@ python -m src.fortis.main --words my_words.toml --rules my_rules.toml
 python -m src.fortis.main --project projects/pie_to_germanic   # PIE → Proto-Germanic
 ```
 
-Every run also writes two reports, alongside the printed trace: a Markdown report —
-the firing-rule trace plus, for tier operations, an association-change diagram
-(`│` kept · `╎` added · `╪` delinked) — and a CSV report, one row per word and one
-column per rule, holding the word's resulting form wherever that rule fired (empty
-otherwise). By default both land in `<project>/output.md` / `<project>/output.csv`;
-`--output` overrides the Markdown path (the CSV then follows alongside it, same
-name, `.csv`):
+Every run also writes reports alongside the printed trace: a Markdown report
+(`output.md`) — the firing-rule trace plus, for tier operations, an
+association-change diagram (`│` kept · `╎` added · `╪` delinked) — and
+`derivation_table.csv`, one row per word and one column per rule, holding the
+word's resulting form wherever that rule fired (empty otherwise). If the lexicon
+carries attested forms (`final` and/or intermediate `stages`), a `distances.md`
+summary grades the derivation against them (phone and feature edit distance, per
+stage and final). All land in the `<project>/` directory; `--output` overrides
+the Markdown path (the other reports follow into the same directory):
 
 ```
 python -m src.fortis.main --project projects/latin_to_french --output

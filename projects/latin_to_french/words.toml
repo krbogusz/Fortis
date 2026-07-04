@@ -6,205 +6,452 @@
 # period's rules are in place. Widened from the original 16-word starter set specifically
 # to make dead/never-firing rules detectable (a 16-word sample hid 36 such rules for four
 # whole periods before the bug was found by accident).
-"ˌɑbˈɑnte" = "avant"
-"ˌɑmˈiːkum" = "ami"
-"ˈɑkwɑm" = "eau"
-"ˈɑmɑt" = "aime"
-"ˈɑnnum" = "an"
-"ˈɑrkuːm" = "arc"
-"ˈɑwrum" = "or"
-"ˈɑːlɑm" = "aile"
-"ˌɑmˈɑːrɑm" = "amère"
-"ˈɑmplum" = "ample"
-"ˈɑrtem" = "art"
-"ˈɑllium" = "ail"
-"ˈɑlbɑm" = "aube"
-"ˈɑnɑtem" = "ane"
-"ˈɑːbilem" = "able"
-"ˌɑwˈgustus" = "auguste"
-"ˌɑd̪wˈersum" = "avers"
-"ˌɑlˈɑwsɑm" = "alose"
-"ˈɑkin̪um" = "Aisne"
-"ˈɑn̪gulum" = "angle"
-"ˌɑrd̪ˈeːsiɑm" = "ardoise"
-"ˌɑwsˈɑːre" = "oser"
-"bˈɑrgɑm" = "barge"
-"bˈellɑm" = "belle"
-"blˈɑn̪kɑm" = "blanche"
-"brˈɑkʰiɑm" = "brace"
-"bˈuksit̪ɑm" = "boîte"
-"d̪ˈeːbet̪" = "doit"
-"d̪ˈeum" = "dieu"
-"d̪ˌiːβˈjoːn̪em" = "Dijon"
-"d̪ˈormit̪" = "dort"
-"d̪ˈuːroːs" = "durs"
-"ˈekwɑ" = "ive"
-"fˈɑkt̪um" = "fait"
-"fˈerɑm" = "fière"
-"fˈin̪d̪ere" = "fendre"
-"fˈoliɑ" = "feuille"
-"fˈossɑm" = "fosse"
-"frˈuːkt̪um" = "fruit"
-"gˈɑwt̪ɑ" = "joue"
-"grˈɑn̪d̪em" = "grand"
-"hˌɑbˈeːre" = "avoir"
-"hˈord̪eum" = "orge"
-"ˈjuwen̪em" = "jeune"
-"kˈae̯loːs" = "cieux"
-"kˌɑmˈiːsiɑm" = "chemise"
-"kˌɑːn̪ˈuːt̪um" = "chenu"
-"kˈɑrkerem" = "chartre"
-"kˈɑrt̪un̪eːs" = "Chartres"
-"kˈɑwlis" = "chou"
-"kˈerwum" = "cerf"
-"klˈɑːrum" = "clair"
-"kˈolpoːs" = "coups"
-"kˌompˈɑːn̪iɑ" = "compagne"
-"kˈorium" = "cuir"
-"krˌɑːt̪ˈɑːlem" = "graal"
-"krˈuːd̪oːs" = "crus"
-"kˈun̪eum" = "coin"
-"kwˈɑn̪t̪um" = "quant"
-"kwˌiːn̪t̪ˈɑːn̪ɑm" = "quintaine"
-"lˈɑkweum" = "lacs"
-"lˈɑt̪iɑm" = "laize"
-"lˈekt̪um" = "lit"
-"lˌigˈɑːmen̪" = "lien"
-"lˈit̪t̪erɑm" = "lettre"
-"lˌuːn̪isd̪ˈiːem" = "lundi"
-"mˌɑloːhˈɑːbit̪oː" = "malade"
-"mˌɑn̪t̪ˈellum" = "manteau"
-"mˈɑssɑm" = "masse"
-"mˌɑːt̪uːt̪ˈiːn̪um" = "matin"
-"mˌed̪ˈullɑm" = "moelle"
-"mˌerkˈeːd̪em" = "merci"
-"mˌin̪uːt̪ˈjɑːre" = "mincer"
-"mˈolliːs" = "mous"
-"mˈort̪em" = "mort"
-"mˈust̪um" = "moût"
-"n̪ˈɑwikɑm" = "noue"
-"n̪ˌoːd̪ˈɑːre" = "nouer"
-"n̪ˈost̪rum" = "notre"
-"n̪ˈumerum" = "nombre"
-"ˈorn̪ɑːmˈen̪t̪um" = "ornement"
-"pˈɑlmɑm" = "paume"
-"pˌɑrˈen̪t̪em" = "parent"
-"pˈɑːst̪or" = "pâtre"
-"pˈeːd̪ikum" = "piège"
-"pˌeːn̪ikˈellum" = "pinceau"
-"pˈersɑm" = "perse"
-"pˈiːɑm" = "pie"
-"pˈin̪n̪ɑm" = "panne"
-"plˌɑkˈeːre" = "plaisir"
-"plˈɑt̪t̪eɑm" = "place"
-"plˈuːs" = "plus"
-"pˈort̪ɑt̪" = "porte"
-"prˌɑe̯st̪ˈɑːre" = "prêter"
-"prˌimˈɑːriɑm" = "première"
-"pˌuːlikˈellɑm" = "pucelle"
-"pˌun̪kt̪ˈuːrɑm" = "pointure"
-"rˈɑːn̪ɑm" = "raine"
-"rˈen̪d̪it̪ɑm" = "rente"
-"rˌoːbˈiːkulɑm" = "rouille"
-"rˈussɑm" = "rousse"
-"sˌɑlin̪ˈɑːrium" = "saunier"
-"sˈɑlwum" = "sauf"
-"sˈɑpid̪um" = "sade"
-"sˈeks" = "six"
-"sˌen̪t̪ˈiːre" = "sentir"
-"sˈeːt̪ɑm" = "soie"
-"sˌin̪gulˈɑːrem" = "sanglier"
-"sˈomn̪ium" = "songe"
-"spˈon̪sum" = "époux"
-"sˈummɑm" = "somme"
-"t͡sˈukkɑm" = "souche"
-"t̪ˌɑlˈoːn̪em" = "talon"
-"t̪ˌempˈest̪ɑ" = "tempête"
-"t̪ˈepid̪um" = "tieˈde"
-"t̪ˌoːn̪sˈjoːn̪em" = "toison"
-"t̪ˈoːt̪t̪ɑm" = "toute"
-"t̪rˈeːs" = "trois"
-"t̪rˈugn̪ɑm" = "trogne"
-"t̪ˈeum" = "tien"
-"ˌusit̪ˈiːlium" = "outil"
-"wˈɑn̪n̪ˌellum" = "vanneau"
-"wˈelt̪rɑgum" = "vautre"
-"wˌermˈikulum" = "vermeil"
-"wˈet̪ulus" = "vieux"
-"wˈiːllɑm" = "ville"
-"wˈirgɑm" = "verge"
 
-# Added 2026-07-01: further FLLexPlus2024 sample words for accuracy validation
-"ˌɑbbɑːt̪ˈissɑm" = "abbesse"
-"ˌɑrkˈellum" = "arceau"
-"bˌurriˈoːn̪em" = "bourgeon"
-"fˈɑgum" = "fou"
-"gˈɑwd̪iɑm" = "joie"
-"iˈuːn̪ium" = "juin"
-"kˈert̪ɑm" = "certe"
-"kˈuːloːs" = "culs"
-"lˈiːgɑm" = "lie"
-"mˌed̪ˈɑːliɑ" = "maille"
-"n̪ˌɑwikˈellɑm" = "nacelle"
-"pˌɑren̪t̪ˈɑːt̪um" = "parenté"
-"pˈiːn̪um" = "pin"
-"pˈuːlikem" = "puce"
-"sˌɑlˈuːt̪em" = "salut"
-"sˈort̪em" = "sort"
-"t̪ˈert̪iɑm" = "tierce"
-"wˈɑːn̪ɑm" = "vaine"
-"ˌɑbˌɑn̪t̪iˈɑːre" = "avancer"
-"ˌɑgn̪ˈelloːs" = "agneaux"
-"ˌɑmˈiːkoːs" = "amis"
-"ˌɑrmɑːt̪ˈuːrɑm" = "armure"
-"bˌɑsiˈɑːre" = "baiser"
-"blˈɑn̪koːs" = "blancs"
-"bˌullikˈɑːre" = "bouger"
-"d̪ˈigit̪um" = "doigt"
-"d̪ˈuːrɑːs" = "dures"
-"fˈɑlsɑm" = "fausse"
-"fˈiːliɑm" = "fille"
-"fˌorˈest̪em" = "forêt"
-"fˈun̪d̪us" = "fonds"
-"grˈossum" = "gros"
-"iˌɑːn̪uˈɑːrium" = "janvier"
-"iˈowisd̪ˈiːem" = "jeudi"
-"kˌɑmˈoːxsum" = "chamois"
-"kˈɑːrɑm" = "chère"
-"kˈin̪gulɑ" = "sangle"
-"kˈokkum" = "coq"
-"krˈɑssiɑ" = "graisse"
-"kˈupulɑm" = "coffin"
-"lˈɑːikum" = "lai"
-"lˈɑwkkɑm" = "loche"
-"lˈiːn̪eɑm" = "ligne"
-"mˈɑgid̪em" = "maie"
-"mˌɑrˈiːt̪um" = "mari"
-"mˌed̪iˈɑːn̪ɑm" = "moyenne"
-"mˈikkɑm" = "mèche"
-"mˈord̪ere" = "mordre"
-"n̪ˈɑːwem" = "nef"
-"n̪ˌowˈellɑm" = "nouvelle"
-"ˈowum" = "œuf"
-"pˈɑrt̪em" = "part"
-"pˈeːn̪silem" = "poêle"
-"pˈikem" = "poix"
-"plˈɑt̪t̪oːs" = "plats"
-"pˈorkoːs" = "porcs"
-"prˌet̪iˈɑːre" = "priser"
-"pˌun̪kt̪iˈoːn̪em" = "poinçon"
-"rˈɑːsum" = "rez"
-"rˌuːmˈoːrem" = "rumeur"
-"sˌɑlt̪uˈɑːrium" = "sautier"
-"sˌɑt̪iˈoːn̪em" = "saison"
-"sˌerpˈen̪t̪em" = "serpent"
-"skˌuːt̪ˈɑːrium" = "écuyer"
-"st̪ˈɑːmen̪" = "étaim"
-"sˈurd̪ɑm" = "sourde"
-"t̪ˈɑrd̪ɑm" = "tarde"
-"t̪ˌiːmˈoːn̪em" = "timon"
-"t̪rˈɑwkum" = "trou"
-"t̪uˌum" = "ton"
-"wˌɑːn̪it̪ˈɑːre" = "vanter"
-"wˌereːkˈun̪d̪iɑm" = "vergogne"
-"wˌin̪d̪ˈeːmiɑm" = "vendange"
+"ˌɑbˈɑnte" = {gloss = "avant", final = "avɑ̃"}
+"ˌɑˈmiːkum" = {gloss = "ami", final = "ami"}
+"ˈɑkwɑm" = {gloss = "eau", final = "o"}
+"ˈɑmɑt" = {gloss = "aime", final = "ɛm", -100 = "ˈɑmɑt̪", 300 = "ˈɑmɑt̪", 600 = "ˈãj̃məθ", 1000 = "ˈɛ̃j̃mə", 1200 = "ˈɛ̃mə", 1400 = "ɛm"}
+"ˈɑnnum" = {gloss = "an", final = "ɑ̃", -100 = "ˈɑn̪n̪um", 300 = "ˈɑn̪n̪o", 600 = "ˈãn̪", 1000 = "ˈãn̪", 1200 = "ˈã", 1400 = "ɑ̃"}
+"ˈɑrkuːm" = {gloss = "arc", final = "aʁk", -100 = "ˈɑrkum", 300 = "ˈɑrku", 600 = "ˈark", 1000 = "ˈark", 1200 = "ˈark", 1400 = "aʁk"}
+"ˈɑwrum" = {gloss = "or", final = "ɔʁ", -100 = "ˈɑwrum", 300 = "ˈɑwro", 600 = "ˈɔr", 1000 = "ˈɔr", 1200 = "ˈɔr", 1400 = "ɔʁ"}
+"ˈɑːlɑm" = {gloss = "aile", final = "ɛl", -100 = "ˈɑlɑm", 300 = "ˈɑlɑ", 600 = "ˈelə", 1000 = "ˈelə", 1200 = "ˈelə", 1400 = "ɛl"}
+"ˌɑˈmɑːrɑm" = {gloss = "amère", final = "amɛʁ", -100 = "ˌɑmˈɑrɑm", 300 = "ˌɑmˈɑrɑ", 600 = "ˌãmˈerə", 1000 = "ˌãmˈerə", 1200 = "ˌãmˈerə", 1400 = "amɛʁ"}
+"ˈɑmplum" = {gloss = "ample", final = "ɑ̃pl"}
+"ˈɑrtem" = {gloss = "art", final = "aʁ"}
+"ˈɑllium" = {gloss = "ail", final = "aj", -100 = "ˈɑllium", 300 = "ˈɑllʝo", 600 = "ˈaʎ", 1000 = "ˈaʎ", 1200 = "ˈaʎ", 1400 = "aj"}
+"ˈɑlbɑm" = {gloss = "aube", final = "ob", -100 = "ˈɑlbɑm", 300 = "ˈɑɫbɑ", 600 = "ˈaɫbə", 1000 = "ˈawbə", 1200 = "ˈobə", 1400 = "ob"}
+"ˈɑnɑtem" = {gloss = "ane", final = "an̪"}
+"ˈɑːbilem" = {gloss = "able", final = "abl"}
+"ˌɑwˈgustus" = {gloss = "auguste", final = "ogyst̪"}
+"ˌɑd̪ˈwersum" = {gloss = "avers", final = "avɛʁ"}
+"ˌɑlˈɑwsɑm" = {gloss = "alose", final = "aloz"}
+"ˈɑkin̪um" = {gloss = "Aisne", final = "ɛn̪"}
+"ˈɑn̪gulum" = {gloss = "angle", final = "ɑ̃gl"}
+"ˌɑrˈd̪eːsiɑm" = {gloss = "ardoise", final = "aʁd̪waz"}
+"ˌɑwˈsɑːre" = {gloss = "oser", final = "oze", -100 = "ˌɑwsˈɑre", 300 = "ˌɑwsˈɑrɛ", 600 = "ˌɔzˈer", 1000 = "ˌɔzˈer", 1200 = "ˌozˈer", 1400 = "oze"}
+"ˈbɑrgɑm" = {gloss = "barge", final = "baʁʒ"}
+"ˈbellɑm" = {gloss = "belle", final = "bɛl"}
+"blˈɑn̪kɑm" = {gloss = "blanche", final = "blɑ̃ʃ"}
+"brˈɑkʰiɑm" = {gloss = "brace", final = "bʁas"}
+"bˈuksit̪ɑm" = {gloss = "boîte", final = "bwat̪"}
+"d̪ˈeːbet̪" = {gloss = "doit", final = "d̪wa"}
+"d̪ˈeum" = {gloss = "dieu", final = "d̪jø", -100 = "d̪ˈeum", 300 = "d̪ˈɛo", 600 = "d̪ˈiew", 1000 = "d̪jˈø", 1200 = "d̪jˈø", 1400 = "d̪jø"}
+"d̪ˌiːβˈjoːn̪em" = {gloss = "Dijon", final = "d̪iʒɔ̃"}
+"d̪ˈormit̪" = {gloss = "dort", final = "d̪ɔʁ", -100 = "d̪ˈormit̪", 300 = "d̪ˈɔrmet̪", 600 = "d̪ˈɔrt̪", 1000 = "d̪ˈɔrt̪", 1200 = "d̪ˈɔrt̪", 1400 = "d̪ɔʁ"}
+"d̪ˈuːroːs" = {gloss = "durs", final = "d̪yʁ"}
+"ˈekwɑ" = {gloss = "ive", final = "iv"}
+"fˈɑkt̪um" = {gloss = "fait", final = "fɛ", -100 = "fˈɑkt̪um", 300 = "fˈɑxt̪o", 600 = "fˈajt̪", 1000 = "fˈɛt̪", 1200 = "fˈɛt̪", 1400 = "fɛ"}
+"fˈerɑm" = {gloss = "fière", final = "fjɛʁ", -100 = "fˈerɑm", 300 = "fˈɛrɑ", 600 = "fˈierə", 1000 = "fjˈerə", 1200 = "fjˈerə", 1400 = "fjɛʁ"}
+"fˈin̪d̪ere" = {gloss = "fendre", final = "fɑ̃d̪ʁ", -100 = "fˈin̪d̪ere", 300 = "fˈen̪d̪ɛrɛ", 600 = "fˈẽn̪d̪rə", 1000 = "fˈãn̪d̪rə", 1200 = "fˈãd̪rə", 1400 = "fɑ̃d̪ʁ"}
+"fˈoliɑ" = {gloss = "feuille", final = "fœj", -100 = "fˈoliɑ", 300 = "fˈɔlʝɑ", 600 = "fˈyeʎə", 1000 = "fˈøʎə", 1200 = "fˈøʎə", 1400 = "fœj"}
+"fˈossɑm" = {gloss = "fosse", final = "fos"}
+"frˈuːkt̪um" = {gloss = "fruit", final = "fʁɥi", -100 = "frˈukt̪um", 300 = "frˈuxt̪o", 600 = "frˈyjt̪", 1000 = "frɥˈit̪", 1200 = "frɥˈit̪", 1400 = "fʁɥi"}
+"gˈɑwt̪ɑ" = {gloss = "joue", final = "ʒu", -100 = "gˈɑwt̪ɑm", 300 = "gˈɑwt̪ɑ", 600 = "d͡ʒˈɔwðə", 1000 = "ʒˈuə", 1200 = "ʒˈu", 1400 = "ʒu"}
+"grˈɑn̪d̪em" = {gloss = "grand", final = "gʁɑ̃", -100 = "grˈɑn̪d̪em", 300 = "grˈɑn̪d̪ɛ", 600 = "grˈãn̪t̪", 1000 = "grˈãn̪t̪", 1200 = "grˈãt̪", 1400 = "gʁɑ̃"}
+"hˌɑbˈeːre" = {gloss = "avoir", final = "avwaʁ", -100 = "hˌɑbˈere", 300 = "hˌɑβˈerɛ", 600 = "ˌavˈejr", 1000 = "ˌavwˈɛr", 1200 = "ˌavwˈɛr", 1400 = "avwaʁ"}
+"hˈord̪eum" = {gloss = "orge", final = "ɔʁʒ"}
+"ˈjuwen̪em" = {gloss = "jeune", final = "ʒœn̪"}
+"kˈae̯loːs" = {gloss = "cieux", final = "sjø"}
+"kˌɑmˈiːsiɑm" = {gloss = "chemise", final = "ʃəmiz"}
+"kˌɑːn̪ˈuːt̪um" = {gloss = "chenu", final = "ʃən̪y"}
+"kˈɑrkerem" = {gloss = "chartre", final = "ʃaʁt̪ʁ", -100 = "kˈɑrkerem", 300 = "kˈɑrcɛrɛ", 600 = "t͡ʃˈart̪rə", 1000 = "ʃˈart̪rə", 1200 = "ʃˈart̪rə", 1400 = "ʃaʁt̪ʁ"}
+"kˈɑrt̪un̪eːs" = {gloss = "Chartres", final = "ʃaʁt̪ʁ"}
+"kˈɑwlis" = {gloss = "chou", final = "ʃu"}
+"kˈerwum" = {gloss = "cerf", final = "sɛʁ"}
+"klˈɑːrum" = {gloss = "clair", final = "klɛʁ"}
+"kˈolpoːs" = {gloss = "coups", final = "ku"}
+"kˌompˈɑːn̪iɑ" = {gloss = "compagne", final = "kɔ̃paɲ"}
+"kˈorium" = {gloss = "cuir", final = "kɥiʁ"}
+"krˌɑːt̪ˈɑːlem" = {gloss = "graal", final = "gʁal"}
+"krˈuːd̪oːs" = {gloss = "crus", final = "kʁy"}
+"kˈun̪eum" = {gloss = "coin", final = "kwɛ̃", -100 = "kˈun̪eum", 300 = "kˈon̪ʝo", 600 = "kˈuj̃ɲ", 1000 = "kwˈĩɲ", 1200 = "kwˈɛ̃", 1400 = "kwɛ̃"}
+"kwˈɑn̪t̪um" = {gloss = "quant", final = "kɑ̃"}
+"kwˌiːn̪t̪ˈɑːn̪ɑm" = {gloss = "quintaine", final = "kɛ̃t̪ɛn̪"}
+"lˈɑkweum" = {gloss = "lacs", final = "la"}
+"lˈɑt̪iɑm" = {gloss = "laize", final = "lɛz"}
+"lˈekt̪um" = {gloss = "lit", final = "li", -100 = "lˈekt̪um", 300 = "lˈɛxt̪o", 600 = "lˈit̪", 1000 = "lˈit̪", 1200 = "lˈit̪", 1400 = "li"}
+"lˌigˈɑːmen̪" = {gloss = "lien", final = "ljɛ̃"}
+"lˈit̪t̪erɑm" = {gloss = "lettre", final = "lɛt̪ʁ"}
+"lˌuːn̪isd̪ˈiːem" = {gloss = "lundi", final = "lœ̃d̪i", -100 = "lˌun̪isd̪ˈiem", 300 = "lˌun̪esd̪ˈiɛ", 600 = "lˌyn̪zd̪ˈi", 1000 = "lˌỹn̪d̪ˈi", 1200 = "lˌỹd̪ˈi", 1400 = "lœ̃d̪i"}
+"mˌɑloːhˈɑːbit̪oː" = {gloss = "malade", final = "malad̪"}
+"mˌɑn̪t̪ˈellum" = {gloss = "manteau", final = "mɑ̃t̪o"}
+"mˈɑssɑm" = {gloss = "masse", final = "mas"}
+"mˌɑːt̪uːt̪ˈiːn̪um" = {gloss = "matin", final = "mat̪ɛ̃"}
+"mˌed̪ˈullɑm" = {gloss = "moelle", final = "mwal"}
+"mˌerkˈeːd̪em" = {gloss = "merci", final = "mɛʁsi"}
+"mˌin̪uːt̪iˈɑːre" = {gloss = "mincer", final = "mɛ̃se"}
+"mˈolliːs" = {gloss = "mous", final = "mu"}
+"mˈort̪em" = {gloss = "mort", final = "mɔʁ", -100 = "mˈort̪em", 300 = "mˈɔrt̪ɛ", 600 = "mˈɔrt̪", 1000 = "mˈɔrt̪", 1200 = "mˈɔrt̪", 1400 = "mɔʁ"}
+"mˈust̪um" = {gloss = "moût", final = "mu"}
+"n̪ˈɑwikɑm" = {gloss = "noue", final = "n̪u"}
+"n̪ˌoːd̪ˈɑːre" = {gloss = "nouer", final = "n̪we", -100 = "n̪ˌod̪ˈɑre", 300 = "n̪ˌod̪ˈɑrɛ", 600 = "n̪ˌoðˈer", 1000 = "n̪ˌuˈer", 1200 = "n̪ˌuˈer", 1400 = "n̪we"}
+"n̪ˈost̪rum" = {gloss = "notre", final = "n̪ɔt̪ʁ"}
+"n̪ˈumerum" = {gloss = "nombre", final = "n̪ɔ̃bʁ"}
+"ˈorn̪ɑːmˈen̪t̪um" = {gloss = "ornement", final = "ɔʁn̪əmɑ̃"}
+"pˈɑlmɑm" = {gloss = "paume", final = "pom"}
+"pˌɑrˈen̪t̪em" = {gloss = "parent", final = "paʁɑ̃"}
+"pˈɑːst̪or" = {gloss = "pâtre", final = "pɑt̪ʁ"}
+"pˈeːd̪ikum" = {gloss = "piège", final = "pjɛʒ"}
+"pˌeːn̪ikˈellum" = {gloss = "pinceau", final = "pɛ̃so"}
+"pˈersɑm" = {gloss = "perse", final = "pɛʁs"}
+"pˈiːɑm" = {gloss = "pie", final = "pi"}
+"pˈin̪n̪ɑm" = {gloss = "panne", final = "pan̪", -100 = "pˈin̪n̪ɑm", 300 = "pˈen̪n̪ɑ", 600 = "pˈẽn̪ə", 1000 = "pˈãn̪ə", 1200 = "pˈãn̪ə", 1400 = "pan̪"}
+"plˌɑkˈeːre" = {gloss = "plaisir", final = "pleziʁ", -100 = "plˌɑkˈere", 300 = "plˌɑcˈerɛ", 600 = "plˌajzˈir", 1000 = "plˌɛzˈir", 1200 = "plˌɛzˈir", 1400 = "pleziʁ"}
+"plˈɑt̪t̪eɑm" = {gloss = "place", final = "plas"}
+"plˈuːs" = {gloss = "plus", final = "ply"}
+"pˈort̪ɑt̪" = {gloss = "porte", final = "pɔʁt̪", -100 = "pˈort̪ɑt̪", 300 = "pˈɔrt̪ɑt̪", 600 = "pˈɔrt̪əθ", 1000 = "pˈɔrt̪ə", 1200 = "pˈɔrt̪ə", 1400 = "pɔʁt̪"}
+"prˌɑe̯st̪ˈɑːre" = {gloss = "prêter", final = "pʁɛt̪e"}
+"prˌimˈɑːriɑm" = {gloss = "première", final = "pʁəmjɛʁ"}
+"pˌuːlikˈellɑm" = {gloss = "pucelle", final = "pysɛl", -100 = "pˌulikˈellɑm", 300 = "pˌulecˈɛllɑ", 600 = "pˌyɫt͡sˈɛlə", 1000 = "pˌysˈɛlə", 1200 = "pˌysˈɛlə", 1400 = "pysɛl"}
+"pˌun̪kt̪ˈuːrɑm" = {gloss = "pointure", final = "pwɛ̃t̪yʁ", -100 = "pˌun̪kt̪ˈurɑm", 300 = "pˌoŋt̪ˈurɑ", 600 = "pˌuj̃n̪t̪ˈyrə", 1000 = "pwˌĩn̪t̪ˈyrə", 1200 = "pwˌɛ̃t̪ˈyrə", 1400 = "pwɛ̃t̪yʁ"}
+"rˈɑːn̪ɑm" = {gloss = "raine", final = "ʁɛn̪"}
+"rˈen̪d̪it̪ɑm" = {gloss = "rente", final = "ʁɑ̃t̪"}
+"rˌoːbˈiːkulɑm" = {gloss = "rouille", final = "ʁuj"}
+"rˈussɑm" = {gloss = "rousse", final = "ʁus"}
+"sˌɑlin̪ˈɑːrium" = {gloss = "saunier", final = "son̪je"}
+"sˈɑlwum" = {gloss = "sauf", final = "sof"}
+"sˈɑpid̪um" = {gloss = "sade", final = "sad̪"}
+"sˈeks" = {gloss = "six", final = "sis"}
+"sˌen̪t̪ˈiːre" = {gloss = "sentir", final = "sɑ̃t̪iʁ", -100 = "sˌen̪t̪ˈire", 300 = "sˌɛn̪t̪ˈirɛ", 600 = "sˌɛ̃n̪t̪ˈir", 1000 = "sˌãn̪t̪ˈir", 1200 = "sˌãt̪ˈir", 1400 = "sɑ̃t̪iʁ"}
+"sˈeːt̪ɑm" = {gloss = "soie", final = "swa"}
+"sˌin̪gulˈɑːrem" = {gloss = "sanglier", final = "sɑ̃glie", -100 = "sˌin̪gulˈɑrem", 300 = "sˌeŋgolˈɑrɛ", 600 = "sˌẽŋglˈer", 1000 = "sˌãŋglˈer", 1200 = "sˌãgljˈer", 1400 = "sɑ̃glie"}
+"sˈomn̪ium" = {gloss = "songe", final = "sɔ̃ʒ"}
+"spˈon̪sum" = {gloss = "époux", final = "epu"}
+"sˈummɑm" = {gloss = "somme", final = "sɔm", -100 = "sˈɑgmɑm", 300 = "sˈɑwmɑ", 600 = "sˈumə", 1000 = "sˈũmə", 1200 = "sˈũmə", 1400 = "sɔm"}
+"t͡sˈukkɑm" = {gloss = "souche", final = "suʃ"}
+"t̪ˌɑlˈoːn̪em" = {gloss = "talon", final = "t̪alɔ̃"}
+"t̪ˌempˈest̪ɑ" = {gloss = "tempête", final = "t̪ɑ̃pɛt̪"}
+"t̪ˈepid̪um" = {gloss = "tieˈde", final = "t̪jɛd̪"}
+"t̪ˌoːn̪sˈjoːn̪em" = {gloss = "toison", final = "t̪wazɔ̃", -100 = "t̪ˌon̪siˈon̪em", 300 = "t̪ˌosʝˈon̪ɛ", 600 = "t̪ˌojzˈun̪", 1000 = "t̪wˌɛzˈũn̪", 1200 = "t̪wˌɛzˈũ", 1400 = "t̪wazɔ̃"}
+"t̪ˈoːt̪t̪ɑm" = {gloss = "toute", final = "t̪ut̪", -100 = "t̪ˈot̪t̪ɑm", 300 = "t̪ˈot̪t̪ɑ", 600 = "t̪ˈot̪ə", 1000 = "t̪ˈut̪ə", 1200 = "t̪ˈut̪ə", 1400 = "t̪ut̪"}
+"t̪rˈeːs" = {gloss = "trois", final = "t̪ʁwa"}
+"t̪rˈugn̪ɑm" = {gloss = "trogne", final = "t̪ʁɔɲ"}
+"t̪ˈeum" = {gloss = "tien", final = "t̪jɛ̃"}
+"ˌusit̪ˈiːlium" = {gloss = "outil", final = "ut̪i"}
+"wˈɑn̪n̪ˌellum" = {gloss = "vanneau", final = "van̪o"}
+"wˈelt̪rɑgum" = {gloss = "vautre", final = "vot̪ʁ"}
+"wˌermˈikulum" = {gloss = "vermeil", final = "vɛʁmɛj"}
+"wˈet̪ulus" = {gloss = "vieux", final = "vjø", -100 = "wˈet̪ulos", 300 = "βˈɛklos", 600 = "vˈieɫt͡s", 1000 = "vjˈøs", 1200 = "vjˈøs", 1400 = "vjø"}
+"wˈiːllɑm" = {gloss = "ville", final = "vil"}
+"wˈirgɑm" = {gloss = "verge", final = "vɛʁʒ"}
+"ˌɑbbɑːt̪ˈissɑm" = {gloss = "abbesse", final = "abɛs"}
+"ˌɑrkˈellum" = {gloss = "arceau", final = "aʁso"}
+"bˌurriˈoːn̪em" = {gloss = "bourgeon", final = "buʁʒɔ̃"}
+"fˈɑgum" = {gloss = "fou", final = "fu"}
+"gˈɑwd̪iɑm" = {gloss = "joie", final = "ʒwɑ", -100 = "gˈɑwd̪iɑ", 300 = "gˈɑwʝʝɑ", 600 = "d͡ʒˈɔjə", 1000 = "ʒwˈɛə", 1200 = "ʒwˈɛ", 1400 = "ʒwɑ"}
+"iˈuːn̪ium" = {gloss = "juin", final = "ʒɥɛ̃", -100 = "iˈun̪ium", 300 = "ʝˈun̪ʝo", 600 = "d͡ʒˈyj̃ɲ", 1000 = "ʒɥˈĩɲ", 1200 = "ʒɥˈẽ", 1400 = "ʒɥɛ̃"}
+"kˈert̪ɑm" = {gloss = "certe", final = "sɛʁt̪"}
+"kˈuːloːs" = {gloss = "culs", final = "ky", -100 = "kˈullos", 300 = "kˈullos", 600 = "kˈyɫs", 1000 = "kˈys", 1200 = "kˈys", 1400 = "ky"}
+"lˈiːgɑm" = {gloss = "lie", final = "li"}
+"mˌed̪ˈɑːliɑ" = {gloss = "maille", final = "mɑj"}
+"n̪ˌɑwikˈellɑm" = {gloss = "nacelle", final = "n̪asɛl"}
+"pˌɑren̪t̪ˈɑːt̪um" = {gloss = "parenté", final = "paʁɑ̃t̪e"}
+"pˈiːn̪um" = {gloss = "pin", final = "pɛ̃"}
+"pˈuːlikem" = {gloss = "puce", final = "pys"}
+"sˌɑlˈuːt̪em" = {gloss = "salut", final = "saly"}
+"sˈort̪em" = {gloss = "sort", final = "sɔʁ"}
+"t̪ˈert̪iɑm" = {gloss = "tierce", final = "t̪jɛʁs"}
+"wˈɑːn̪ɑm" = {gloss = "vaine", final = "vɛn̪"}
+"ˌɑbˌɑn̪t̪iˈɑːre" = {gloss = "avancer", final = "avɑ̃se"}
+"ˌɑgn̪ˈelloːs" = {gloss = "agneaux", final = "aɲo", -100 = "ˌɑgn̪ˈellos", 300 = "ˌɑŋn̪ˈɛllos", 600 = "ˌãɲˈɛɫs", 1000 = "ˌãɲeˈaws", 1200 = "ˌãɲəˈos", 1400 = "aɲo"}
+"ˌɑmˈiːkoːs" = {gloss = "amis", final = "ami"}
+"ˌɑrmɑːt̪ˈuːrɑm" = {gloss = "armure", final = "aʁmyʁ"}
+"bˌɑsiˈɑːre" = {gloss = "baiser", final = "bɛze"}
+"blˈɑn̪koːs" = {gloss = "blancs", final = "blɑ̃"}
+"bˌullikˈɑːre" = {gloss = "bouger", final = "buʒe"}
+"d̪ˈigit̪um" = {gloss = "doigt", final = "d̪wa"}
+"d̪ˈuːrɑːs" = {gloss = "dures", final = "d̪yʁ"}
+"fˈɑlsɑm" = {gloss = "fausse", final = "fos"}
+"fˈiːliɑm" = {gloss = "fille", final = "fij", -100 = "fˈiliɑm", 300 = "fˈilʝɑ", 600 = "fˈiʎə", 1000 = "fˈiʎə", 1200 = "fˈiʎə", 1400 = "fij"}
+"fˌorˈest̪em" = {gloss = "forêt", final = "fɔʁɛ"}
+"fˈun̪d̪us" = {gloss = "fonds", final = "fɔ̃", -100 = "fˈun̪d̪us", 300 = "fˈon̪d̪os", 600 = "fˈun̪t͡s", 1000 = "fˈũn̪s", 1200 = "fˈũs", 1400 = "fɔ̃"}
+"grˈossum" = {gloss = "gros", final = "gʁo"}
+"iˌɑːn̪uˈɑːrium" = {gloss = "janvier", final = "ʒɑ̃vje"}
+"iˈowisd̪ˈiːem" = {gloss = "jeudi", final = "ʒød̪i"}
+"kˌɑmˈoːxsum" = {gloss = "chamois", final = "ʃamwa"}
+"kˈɑːrɑm" = {gloss = "chère", final = "ʃɛʁ", -100 = "kˈɑrɑm", 300 = "kˈɑrɑ", 600 = "t͡ʃˈierə", 1000 = "ʃjˈerə", 1200 = "ʃˈerə", 1400 = "ʃɛʁ"}
+"kˈin̪gulɑ" = {gloss = "sangle", final = "sɑ̃gl"}
+"kˈokkum" = {gloss = "coq", final = "kɔk"}
+"krˈɑssiɑ" = {gloss = "graisse", final = "gʁɛs"}
+"kˈupulɑm" = {gloss = "coffin", final = "kubl"}
+"lˈɑːikum" = {gloss = "lai", final = "lɛ"}
+"lˈɑwkkɑm" = {gloss = "loche", final = "lɔʃ"}
+"lˈiːn̪eɑm" = {gloss = "ligne", final = "liɲ", -100 = "lˈin̪eɑm", 300 = "lˈin̪ʝɑ", 600 = "lˈiɲə", 1000 = "lˈĩɲə", 1200 = "lˈiɲə", 1400 = "liɲ"}
+"mˈɑgid̪em" = {gloss = "maie", final = "mɛ"}
+"mˌɑrˈiːt̪um" = {gloss = "mari", final = "maʁi", -100 = "mˌɑrˈit̪um", 300 = "mˌɑrˈit̪o", 600 = "mˌarˈiθ", 1000 = "mˌarˈi", 1200 = "mˌarˈi", 1400 = "maʁi"}
+"mˌed̪iˈɑːn̪ɑm" = {gloss = "moyenne", final = "mwajɛn̪"}
+"mˈikkɑm" = {gloss = "mèche", final = "mɛʃ"}
+"mˈord̪ere" = {gloss = "mordre", final = "mɔʁd̪ʁ", -100 = "mˈord̪ere", 300 = "mˈɔrd̪ɛrɛ", 600 = "mˈɔrd̪rə", 1000 = "mˈɔrd̪rə", 1200 = "mˈɔrd̪rə", 1400 = "mɔʁd̪ʁ"}
+"n̪ˈɑːwem" = {gloss = "nef", final = "n̪ɛf", -100 = "n̪ˈɑwem", 300 = "n̪ˈɑβɛ", 600 = "n̪ˈef", 1000 = "n̪ˈef", 1200 = "n̪ˈef", 1400 = "n̪ɛf"}
+"n̪ˌowˈellɑm" = {gloss = "nouvelle", final = "n̪uvɛl"}
+"ˈowum" = {gloss = "œuf", final = "œf"}
+"pˈɑrt̪em" = {gloss = "part", final = "paʁ", -100 = "pˈɑrt̪em", 300 = "pˈɑrt̪ɛ", 600 = "pˈart̪", 1000 = "pˈart̪", 1200 = "pˈart̪", 1400 = "paʁ"}
+"pˈeːn̪silem" = {gloss = "poêle", final = "pwal"}
+"pˈikem" = {gloss = "poix", final = "pwa", -100 = "pˈikem", 300 = "pˈecɛ", 600 = "pˈejt͡s", 1000 = "pwˈɛs", 1200 = "pwˈɛs", 1400 = "pwa"}
+"plˈɑt̪t̪oːs" = {gloss = "plats", final = "pla"}
+"pˈorkoːs" = {gloss = "porcs", final = "pɔʁ", -100 = "pˈorkos", 300 = "pˈɔrkos", 600 = "pˈɔrs", 1000 = "pˈɔrs", 1200 = "pˈɔrs", 1400 = "pɔʁ"}
+"prˌet̪iˈɑːre" = {gloss = "priser", final = "pʁize"}
+"pˌun̪kt̪iˈoːn̪em" = {gloss = "poinçon", final = "pwɛ̃sɔ̃"}
+"rˈɑːsum" = {gloss = "rez", final = "ʁe"}
+"rˌuːmˈoːrem" = {gloss = "rumeur", final = "ʁymœʁ"}
+"sˌɑlt̪uˈɑːrium" = {gloss = "sautier", final = "sot̪je"}
+"sˌɑt̪iˈoːn̪em" = {gloss = "saison", final = "sɛzɔ̃"}
+"sˌerpˈen̪t̪em" = {gloss = "serpent", final = "sɛʁpɑ̃"}
+"skˌuːt̪ˈɑːrium" = {gloss = "écuyer", final = "ekɥije"}
+"st̪ˈɑːmen̪" = {gloss = "étaim", final = "et̪ɛ̃"}
+"sˈurd̪ɑm" = {gloss = "sourde", final = "suʁd̪"}
+"t̪ˈɑrd̪ɑm" = {gloss = "tarde", final = "t̪aʁd̪"}
+"t̪ˌiːmˈoːn̪em" = {gloss = "timon", final = "t̪imɔ̃"}
+"t̪rˈɑwkum" = {gloss = "trou", final = "t̪ʁu"}
+"t̪uˌum" = {gloss = "ton", final = "t̪ɔ̃"}
+"wˌɑːn̪it̪ˈɑːre" = {gloss = "vanter", final = "vɑ̃t̪e"}
+"wˌereːkˈun̪d̪iɑm" = {gloss = "vergogne", final = "vɛʁgɔɲ", -100 = "wˌerekˈun̪d̪iɑm", 300 = "βˌɛrekˈon̪ɟʝɑ", 600 = "vˌɛrgˈuɲə", 1000 = "vˌɛrgˈũɲə", 1200 = "vˌɛrgˈũɲə", 1400 = "vɛʁgɔɲ"}
+"wˌin̪d̪ˈeːmiɑm" = {gloss = "vendange", final = "vɑ̃d̪ɑ̃ʒ"}
+"ˌɑbbˈɑːt̪em" = {gloss = "abbé", final = "abe", -100 = "ˌɑbbˈɑt̪em", 300 = "ˌɑbbˈɑt̪ɛ", 600 = "ˌabˈeθ", 1000 = "ˌabˈe", 1200 = "ˌabˈe", 1400 = "abe"}
+"hˈɑbeo" = {gloss = "ai", final = "e", -100 = "hˈɑbeo", 300 = "hˈɑʝɔ", 600 = "ˈaj", 1000 = "ˈe", 1200 = "ˈe", 1400 = "e"}
+"ˈɑksem" = {gloss = "ais", final = "ɛ", -100 = "ˈɑksem", 300 = "ˈɑxsɛ", 600 = "ˈajs", 1000 = "ˈɛs", 1200 = "ˈɛs", 1400 = "ɛ"}
+"ˌɑn̪n̪ˈɑːt̪ɑm" = {gloss = "année", final = "an̪e", -100 = "ˌɑn̪n̪ˈɑt̪ɑm", 300 = "ˌɑn̪n̪ˈɑt̪ɑ", 600 = "ˌãn̪ˈeðə", 1000 = "ˌãn̪ˈeə", 1200 = "ˌãn̪ˈe", 1400 = "an̪e"}
+"ˈɑn̪n̪oːs" = {gloss = "ans", final = "ɑ̃", -100 = "ˈɑn̪n̪os", 300 = "ˈɑn̪n̪os", 600 = "ˈãn̪t͡s", 1000 = "ˈãn̪s", 1200 = "ˈãs", 1400 = "ɑ̃"}
+"ˌɑd̪sˈɑt̪is" = {gloss = "assez", final = "ase", -100 = "ˌɑd̪sˈɑt̪is", 300 = "ˌɑd̪sˈɑt̪es", 600 = "ˌasˈet͡s", 1000 = "ˌasˈes", 1200 = "ˌasˈes", 1400 = "ase"}
+"ˈɑllioːs" = {gloss = "aulx", final = "o", -100 = "ˈɑllios", 300 = "ˈɑllʝos", 600 = "ˈaɫt͡s", 1000 = "ˈaws", 1200 = "ˈos", 1400 = "o"}
+"ˈɑlt̪erum" = {gloss = "autre", final = "ot̪ʁ", -100 = "ˈɑlt̪erum", 300 = "ˈɑɫt̪ɛro", 600 = "ˈaɫt̪rə", 1000 = "ˈawt̪rə", 1200 = "ˈot̪rə", 1400 = "ot̪ʁ"}
+"bˈɑkɑm" = {gloss = "baie", final = "bɛ", -100 = "bˈɑkɑm", 300 = "bˈɑkɑ", 600 = "bˈajə", 1000 = "bˈajə", 1200 = "bˈɛ", 1400 = "bɛ"}
+"bˈɑln̪eum" = {gloss = "bain", final = "bɛ̃", -100 = "bˈɑln̪eum", 300 = "bˈɑn̪ʝo", 600 = "bˈãj̃ɲ", 1000 = "bˈɛ̃j̃ɲ", 1200 = "bˈɛ̃", 1400 = "bɛ̃"}
+"bˈɑln̪eoːs" = {gloss = "bains", final = "bɛ̃", -100 = "bˈɑln̪eos", 300 = "bˈɑn̪ʝos", 600 = "bˈãj̃n̪t͡s", 1000 = "bˈɛ̃j̃n̪s", 1200 = "bˈɛ̃s", 1400 = "bɛ̃"}
+"bˈɑrbɑm" = {gloss = "barbe", final = "baʁb", -100 = "bˈɑrbɑm", 300 = "bˈɑrbɑ", 600 = "bˈarbə", 1000 = "bˈarbə", 1200 = "bˈarbə", 1400 = "baʁb"}
+"bˈɑssum" = {gloss = "bas", final = "bɑ", -100 = "bˈɑssum", 300 = "bˈɑsso", 600 = "bˈas", 1000 = "bˈas", 1200 = "bˈas", 1400 = "bɑ"}
+"bˌellit̪ˈɑːt̪em" = {gloss = "beauté", final = "bot̪e", -100 = "bˌellit̪ˈɑt̪em", 300 = "bˌɛllet̪ˈɑt̪ɛ", 600 = "bˌɛɫt̪ˈeθ", 1000 = "beˌawt̪ˈe", 1200 = "bəˌot̪ˈe", 1400 = "bot̪e"}
+"bˈellus" = {gloss = "beaux", final = "bo", -100 = "bˈellus", 300 = "bˈɛllos", 600 = "bˈɛɫs", 1000 = "beˈaws", 1200 = "bəˈos", 1400 = "bo"}
+"bˈen̪e" = {gloss = "bien", final = "bjɛ̃", -100 = "bˈen̪e", 300 = "bˈɛn̪ɛ", 600 = "bˈien̪", 1000 = "bjˈẽn̪", 1200 = "bjˈẽ", 1400 = "bjɛ̃"}
+"bˌulliˈen̪t̪em" = {gloss = "bouillant", final = "bujɑ̃", -100 = "bˌulliˈen̪t̪em", 300 = "bˌollʝˈɛn̪t̪ɛ", 600 = "bˌoʎˈɛ̃n̪t̪", 1000 = "bˌuʎˈãn̪t̪", 1200 = "bˌuʎˈãt̪", 1400 = "bujɑ̃"}
+"brˈɑkkʰium" = {gloss = "bras", final = "bʁɑ", -100 = "brˈɑkkʰium", 300 = "brˈɑccʝo", 600 = "brˈat͡s", 1000 = "brˈas", 1200 = "brˈas", 1400 = "bʁɑ"}
+"bˌɑst̪ˈiːre" = {gloss = "bâtir", final = "bɑt̪iʁ", -100 = "bˌɑst̪ˈire", 300 = "bˌɑst̪ˈirɛ", 600 = "bˌast̪ˈir", 1000 = "bˌat̪ˈir", 1200 = "bˌat̪ˈir", 1400 = "bɑt̪iʁ"}
+"bˈowem" = {gloss = "bœuf", final = "bœf", -100 = "bˈowem", 300 = "bˈɔβɛ", 600 = "bˈyef", 1000 = "bˈøf", 1200 = "bˈøf", 1400 = "bœf"}
+"bˈowes" = {gloss = "bœufs", final = "bø", -100 = "bˈowes", 300 = "bˈɔβɛs", 600 = "bˈyes", 1000 = "bˈøs", 1200 = "bˈøs", 1400 = "bø"}
+"kˈɑweɑm" = {gloss = "cage", final = "kaʒ", -100 = "kˈɑweɑm", 300 = "kˈɑβʝɑ", 600 = "kˈad͡ʒə", 1000 = "kˈaʒə", 1200 = "kˈaʒə", 1400 = "kaʒ"}
+"kˈen̪t̪um" = {gloss = "cent", final = "sɑ̃", -100 = "kˈen̪t̪um", 300 = "cˈɛn̪t̪o", 600 = "t͡sˈɛ̃n̪t̪", 1000 = "sˈãn̪t̪", 1200 = "sˈãt̪", 1400 = "sɑ̃"}
+"kˈirkulum" = {gloss = "cercle", final = "sɛʁkl", -100 = "kˈirkulum", 300 = "cˈerklo", 600 = "t͡sˈerklə", 1000 = "sˈerklə", 1200 = "sˈɛrklə", 1400 = "sɛʁkl"}
+"kˌɑlˈeːre" = {gloss = "chaloir", final = "ʃalwaʁ", -100 = "kˌɑlˈere", 300 = "kˌɑlˈerɛ", 600 = "t͡ʃˌalˈejr", 1000 = "ʃˌalwˈɛr", 1200 = "ʃˌalwˈɛr", 1400 = "ʃalwaʁ"}
+"kˈɑmerɑm" = {gloss = "chambre", final = "ʃɑ̃bʁ", -100 = "kˈɑmerɑm", 300 = "kˈɑmɛrɑ", 600 = "t͡ʃˈãmbrə", 1000 = "ʃˈãn̪brə", 1200 = "ʃˈãbrə", 1400 = "ʃɑ̃bʁ"}
+"kˈɑmpum" = {gloss = "champ", final = "ʃɑ̃", -100 = "kˈɑmpum", 300 = "kˈɑmpo", 600 = "t͡ʃˈãmp", 1000 = "ʃˈãn̪p", 1200 = "ʃˈãp", 1400 = "ʃɑ̃"}
+"kˈɑrrum" = {gloss = "char", final = "ʃaʁ", -100 = "kˈɑrrum", 300 = "kˈɑrro", 600 = "t͡ʃˈar", 1000 = "ʃˈar", 1200 = "ʃˈar", 1400 = "ʃaʁ"}
+"kˈɑpum" = {gloss = "chef", final = "ʃɛf", -100 = "kˈɑpum", 300 = "kˈɑpo", 600 = "t͡ʃˈief", 1000 = "ʃjˈef", 1200 = "ʃˈef", 1400 = "ʃɛf"}
+"kˈɑːrum" = {gloss = "cher", final = "ʃɛʁ", -100 = "kˈɑrum", 300 = "kˈɑro", 600 = "t͡ʃˈier", 1000 = "ʃjˈer", 1200 = "ʃˈer", 1400 = "ʃɛʁ"}
+"kˌɑbˈɑllum" = {gloss = "cheval", final = "ʃəval", -100 = "kˌɑbˈɑllum", 300 = "kˌɑβˈɑllo", 600 = "t͡ʃˌəvˈal", 1000 = "ʃˌəvˈal", 1200 = "ʃˌəvˈal", 1400 = "ʃəval"}
+"kˈɑn̪em" = {gloss = "chien", final = "ʃjɛ̃", -100 = "kˈɑn̪em", 300 = "kˈɑn̪ɛ", 600 = "t͡ʃˈien̪", 1000 = "ʃjˈẽn̪", 1200 = "ʃjˈẽ", 1400 = "ʃjɛ̃"}
+"kˈɑwsɑm" = {gloss = "chose", final = "ʃoz", -100 = "kˈɑwsɑm", 300 = "kˈɑwsɑ", 600 = "t͡ʃˈɔzə", 1000 = "ʃˈɔzə", 1200 = "ʃˈozə", 1400 = "ʃoz"}
+"kwˈiːn̪kwˈɑːn̪t̪ɑm" = {gloss = "cinquante", final = "sɛ̃kɑ̃t̪", -100 = "kwˌin̪kwɑgˈin̪t̪ɑm", 300 = "cˌiŋkwˈɑn̪t̪ɑ", 600 = "t͡sˌiŋkwˈãn̪t̪ə", 1000 = "sˌĩŋkˈãn̪t̪ə", 1200 = "sˌẽkˈãt̪ə", 1400 = "sɛ̃kɑ̃t̪"}
+"kˈeːrɑm" = {gloss = "cire", final = "siʁ", -100 = "kˈerɑm", 300 = "cˈerɑ", 600 = "t͡sˈirə", 1000 = "sˈirə", 1200 = "sˈirə", 1400 = "siʁ"}
+"kˌiːwit̪ˈɑːt̪em" = {gloss = "cité", final = "sit̪e", -100 = "kˌiwit̪ˈɑt̪em", 300 = "cˌiβet̪ˈɑt̪ɛ", 600 = "t͡sˌit̪ˈeθ", 1000 = "sˌit̪ˈe", 1200 = "sˌit̪ˈe", 1400 = "sit̪e"}
+"kˌun̪eˈɑːt̪ɑm" = {gloss = "cognée", final = "kɔɲe", -100 = "kˌun̪eˈɑt̪ɑm", 300 = "kˌon̪ʝˈɑt̪ɑ", 600 = "kˌuɲˈieðə", 1000 = "kˌũɲjˈeə", 1200 = "kˌũɲˈe", 1400 = "kɔɲe"}
+"kˈumulum" = {gloss = "comble", final = "kɔ̃bl", -100 = "kˈumulum", 300 = "kˈomlo", 600 = "kˈumblə", 1000 = "kˈũn̪blə", 1200 = "kˈũblə", 1400 = "kɔ̃bl"}
+"kˌon̪n̪ˈoːskere" = {gloss = "connaître", final = "kɔn̪ɛt̪ʁ", -100 = "kˌon̪n̪ˈoskere", 300 = "kˌɔŋn̪ˈoscɛrɛ", 600 = "kˌun̪ˈojst̪rə", 1000 = "kˌũn̪wˈɛt̪rə", 1200 = "kˌũn̪ˈɛt̪rə", 1400 = "kɔn̪ɛt̪ʁ"}
+"kˈorpus" = {gloss = "corps", final = "kɔʁ", -100 = "kˈorpus", 300 = "kˈɔrpos", 600 = "kˈɔrs", 1000 = "kˈɔrs", 1200 = "kˈɔrs", 1400 = "kɔʁ"}
+"kˈubit̪um" = {gloss = "coude", final = "kud̪", -100 = "kˈubit̪um", 300 = "kˈoβet̪o", 600 = "kˈod̪ə", 1000 = "kˈud̪ə", 1200 = "kˈud̪ə", 1400 = "kud̪"}
+"kˈoːleɑm" = {gloss = "couille", final = "kuj", -100 = "kˈoleɑm", 300 = "kˈolʝɑ", 600 = "kˈoʎə", 1000 = "kˈuʎə", 1200 = "kˈuʎə", 1400 = "kuj"}
+"kˌulpˈɑːbilem" = {gloss = "coupable", final = "kupabl", -100 = "kˌulpˈɑbilem", 300 = "kˌoɫpˈɑblɛ", 600 = "kˌoɫpˈablə", 1000 = "kˌupˈablə", 1200 = "kˌupˈablə", 1400 = "kupabl"}
+"kˈuppɑm" = {gloss = "coupe", final = "kup", -100 = "kˈuppɑm", 300 = "kˈoppɑ", 600 = "kˈopə", 1000 = "kˈupə", 1200 = "kˈupə", 1400 = "kup"}
+"kˈursum" = {gloss = "cours", final = "kuʁ", -100 = "kˈursum", 300 = "kˈorso", 600 = "kˈors", 1000 = "kˈurs", 1200 = "kˈurs", 1400 = "kuʁ"}
+"kˌohˈort̪em" = {gloss = "court", final = "kuʁ", -100 = "kˌohˈort̪em", 300 = "kˈort̪ɛ", 600 = "kˈort̪", 1000 = "kˈurt̪", 1200 = "kˈurt̪", 1400 = "kuʁ"}
+"krˈeːt̪ɑm" = {gloss = "craie", final = "kʁɛ", -100 = "krˈet̪ɑm", 300 = "krˈet̪ɑ", 600 = "krˈejðə", 1000 = "krwˈɛə", 1200 = "krˈɛ", 1400 = "kʁɛ"}
+"d̪ˈeːbit̪ɑm" = {gloss = "dette", final = "d̪ɛt̪", -100 = "d̪ˈebit̪ɑm", 300 = "d̪ˈeβet̪ɑ", 600 = "d̪ˈet̪ə", 1000 = "d̪ˈɛt̪ə", 1200 = "d̪ˈɛt̪ə", 1400 = "d̪ɛt̪"}
+"d̪ˌeːbˈeːre" = {gloss = "devoir", final = "d̪əvwaʁ", -100 = "d̪ˌebˈere", 300 = "d̪ˌeβˈerɛ", 600 = "d̪ˌəvˈejr", 1000 = "d̪ˌəvwˈɛr", 1200 = "d̪ˌəvwˈɛr", 1400 = "d̪əvwaʁ"}
+"d̪ˈoːn̪um" = {gloss = "don", final = "d̪ɔ̃", -100 = "d̪ˈon̪um", 300 = "d̪ˈon̪o", 600 = "d̪ˈun̪", 1000 = "d̪ˈũn̪", 1200 = "d̪ˈũ", 1400 = "d̪ɔ̃"}
+"d̪ˈoːn̪ɑt̪" = {gloss = "donne", final = "d̪ɔn̪", -100 = "d̪ˈon̪ɑt̪", 300 = "d̪ˈon̪ɑt̪", 600 = "d̪ˈun̪əθ", 1000 = "d̪ˈũn̪ə", 1200 = "d̪ˈũn̪ə", 1400 = "d̪ɔn̪"}
+"d̪ˌoːn̪ˈɑːre" = {gloss = "donner", final = "d̪ɔn̪e", -100 = "d̪ˌon̪ˈɑre", 300 = "d̪ˌon̪ˈɑrɛ", 600 = "d̪ˌun̪ˈer", 1000 = "d̪ˌũn̪ˈer", 1200 = "d̪ˌũn̪ˈer", 1400 = "d̪ɔn̪e"}
+"d̪ˈuplum" = {gloss = "double", final = "d̪ubl", -100 = "d̪ˈuplum", 300 = "d̪ˈoplo", 600 = "d̪ˈublə", 1000 = "d̪ˈublə", 1200 = "d̪ˈublə", 1400 = "d̪ubl"}
+"d̪ˌubit̪ˈɑːre" = {gloss = "douter", final = "d̪ut̪e", -100 = "d̪ˌubit̪ˈɑre", 300 = "d̪ˌoβet̪ˈɑrɛ", 600 = "d̪ˌot̪ˈer", 1000 = "d̪ˌut̪ˈer", 1200 = "d̪ˌut̪ˈer", 1400 = "d̪ut̪e"}
+"d̪ˈoːgɑm" = {gloss = "douve", final = "d̪uv", -100 = "d̪ˈogɑm", 300 = "d̪ˈoɣɑ", 600 = "d̪ˈuvə", 1000 = "d̪ˈuvə", 1200 = "d̪ˈuvə", 1400 = "d̪uv"}
+"d̪rˈɑppum" = {gloss = "drap", final = "d̪ʁa", -100 = "d̪rˈɑppum", 300 = "d̪rˈɑppo", 600 = "d̪rˈap", 1000 = "d̪rˈap", 1200 = "d̪rˈap", 1400 = "d̪ʁa"}
+"d̪ˈuːrum" = {gloss = "dur", final = "d̪yʁ", -100 = "d̪ˈurum", 300 = "d̪ˈuro", 600 = "d̪ˈyr", 1000 = "d̪ˈyr", 1200 = "d̪ˈyr", 1400 = "d̪yʁ"}
+"d̪ˌisfˈɑkere" = {gloss = "défaire", final = "d̪efɛʁ", -100 = "d̪ˌisfˈɑkere", 300 = "d̪ˌesfˈɑkrɛ", 600 = "d̪ˌezfˈajrə", 1000 = "d̪ˌefˈɛrə", 1200 = "d̪ˌefˈɛrə", 1400 = "d̪efɛʁ"}
+"ˌeksfrˌuːkt̪ˈɑːre" = {gloss = "effriter", final = "efʁit̪e", -100 = "ˌeksfrˌukt̪ˈɑre", 300 = "ˌesfrˌuxt̪ˈɑrɛ", 600 = "ˌezfrˌyjt̪ˈier", 1000 = "ˌefrɥˌit̪jˈer", 1200 = "ˌefrˌit̪ˈer", 1400 = "efʁit̪e"}
+"ˈillɑm" = {gloss = "elle", final = "ɛl", -100 = "ˈillɑm", 300 = "ˈellɑ", 600 = "ˈelə", 1000 = "ˈɛlə", 1200 = "ˈɛlə", 1400 = "ɛl"}
+"ˌin̪gˈen̪ioːs" = {gloss = "engins", final = "ɑ̃ʒɛ̃", -100 = "ˌin̪gˈen̪ios", 300 = "ˌeŋɟˈɛn̪ʝos", 600 = "ˌẽŋd͡ʒˈin̪t͡s", 1000 = "ˌãn̪ʒˈĩn̪s", 1200 = "ˌãʒˈẽs", 1400 = "ɑ̃ʒɛ̃"}
+"ˌin̪sˈign̪iɑm" = {gloss = "enseigne", final = "ɑ̃sɛɲ", -100 = "ˌin̪sˈign̪iɑm", 300 = "ˌen̪sˈeŋn̪ʝɑ", 600 = "ˌẽn̪sˈẽj̃ɲə", 1000 = "ˌãn̪sˈɛ̃j̃ɲə", 1200 = "ˌãsˈɛ̃ɲə", 1400 = "ɑ̃sɛɲ"}
+"ˌeksˈɑgium" = {gloss = "essai", final = "esɛ", -100 = "ˌeksˈɑgium", 300 = "ˌessˈɑʝʝo", 600 = "ˌesˈaj", 1000 = "ˌesˈɛ", 1200 = "ˌesˈɛ", 1400 = "esɛ"}
+"ˈilloːs" = {gloss = "eux", final = "ø", -100 = "ˈillos", 300 = "ˈellos", 600 = "ˈeɫs", 1000 = "ˈøs", 1200 = "ˈøs", 1400 = "ø"}
+"fˈɑmem" = {gloss = "faim", final = "fɛ̃", -100 = "fˈɑmem", 300 = "fˈɑmɛ", 600 = "fˈãj̃n̪", 1000 = "fˈɛ̃j̃n̪", 1200 = "fˈɛ̃", 1400 = "fɛ̃"}
+"fˌen̪ˈɑːre" = {gloss = "faner", final = "fan̪e", -100 = "fˌen̪ˈɑre", 300 = "fˌɛn̪ˈɑrɛ", 600 = "fˌẽn̪ˈer", 1000 = "fˌãn̪ˈer", 1200 = "fˌãn̪ˈer", 1400 = "fan̪e"}
+"fˈɑkiɑm" = {gloss = "fasse", final = "fas", -100 = "fˈɑkiɑm", 300 = "fˈɑccʝɑ", 600 = "fˈat͡sə", 1000 = "fˈasə", 1200 = "fˈasə", 1400 = "fas"}
+"fˈin̪kt̪um" = {gloss = "feint", final = "fɛ̃", -100 = "fˈin̪kt̪um", 300 = "fˈeŋt̪o", 600 = "fˈẽj̃n̪t̪", 1000 = "fˈɛ̃j̃n̪t̪", 1200 = "fˈɛ̃t̪", 1400 = "fɛ̃"}
+"fˈeːmin̪ɑm" = {gloss = "femme", final = "fam", -100 = "fˈemin̪ɑm", 300 = "fˈemen̪ɑ", 600 = "fˈẽmə", 1000 = "fˈãmə", 1200 = "fˈãmə", 1400 = "fam"}
+"fˈerrum" = {gloss = "fer", final = "fɛʁ", -100 = "fˈerrum", 300 = "fˈɛrro", 600 = "fˈɛr", 1000 = "fˈɛr", 1200 = "fˈɛr", 1400 = "fɛʁ"}
+"fˌirmˈɑːre" = {gloss = "fermer", final = "fɛʁme", -100 = "fˌirmˈɑre", 300 = "fˌermˈɑrɛ", 600 = "fˌermˈer", 1000 = "fˌermˈer", 1200 = "fˌɛrmˈer", 1400 = "fɛʁme"}
+"fˌilt̪rˈɑːre" = {gloss = "feutrer", final = "føt̪ʁe", -100 = "fˌilt̪rˈɑre", 300 = "fˌeɫt̪rˈɑrɛ", 600 = "fˌeɫt̪rˈer", 1000 = "fˌøt̪rˈer", 1200 = "fˌøt̪rˈer", 1400 = "føt̪ʁe"}
+"fˌiːlikˈellɑm" = {gloss = "ficelle", final = "fisɛl", -100 = "fˌilikˈellɑm", 300 = "fˌilecˈɛllɑ", 600 = "fˌiʎt͡sˈɛlə", 1000 = "fˌisˈɛlə", 1200 = "fˌisˈɛlə", 1400 = "fisɛl"}
+"fˈiːlius" = {gloss = "fils", final = "fi", -100 = "fˈilius", 300 = "fˈilʝos", 600 = "fˈiʎt͡s", 1000 = "fˈis", 1200 = "fˈis", 1400 = "fi"}
+"fˈiːn̪em" = {gloss = "fin", final = "fɛ̃", -100 = "fˈin̪em", 300 = "fˈin̪ɛ", 600 = "fˈin̪", 1000 = "fˈĩn̪", 1200 = "fˈẽ", 1400 = "fɛ̃"}
+"flˌɑgˈelloːs" = {gloss = "fléaux", final = "fleo", -100 = "flˌɑgˈellos", 300 = "flˌɑʝˈɛllos", 600 = "flˌajˈɛɫs", 1000 = "flˌajeˈaws", 1200 = "flˌajˈos", 1400 = "fleo"}
+"fˈid̪em" = {gloss = "foi", final = "fwa", -100 = "fˈid̪em", 300 = "fˈed̪ɛ", 600 = "fˈejθ", 1000 = "fwˈɛ", 1200 = "fwˈɛ", 1400 = "fwa"}
+"fˌun̪d̪ˈɑːre" = {gloss = "fonder", final = "fɔ̃d̪e", -100 = "fˌun̪d̪ˈɑre", 300 = "fˌon̪d̪ˈɑrɛ", 600 = "fˌun̪d̪ˈer", 1000 = "fˌũn̪d̪ˈer", 1200 = "fˌũd̪ˈer", 1400 = "fɔ̃d̪e"}
+"fˌon̪t̪ˈɑːn̪ɑm" = {gloss = "fontaine", final = "fɔ̃t̪ɛn̪", -100 = "fˌon̪t̪ˈɑn̪ɑm", 300 = "fˌɔn̪t̪ˈɑn̪ɑ", 600 = "fˌun̪t̪ˈãj̃n̪ə", 1000 = "fˌũn̪t̪ˈɛ̃j̃n̪ə", 1200 = "fˌũt̪ˈɛ̃n̪ə", 1400 = "fɔ̃t̪ɛn̪"}
+"fˈort̪iɑm" = {gloss = "force", final = "fɔʁs", -100 = "fˈort̪iɑm", 300 = "fˈɔrt͡sʲʝɑ", 600 = "fˈɔrt͡sə", 1000 = "fˈɔrsə", 1200 = "fˈɔrsə", 1400 = "fɔʁs"}
+"fˈort̪em" = {gloss = "fort", final = "fɔʁ", -100 = "fˈort̪em", 300 = "fˈɔrt̪ɛ", 600 = "fˈɔrt̪", 1000 = "fˈɔrt̪", 1200 = "fˈɔrt̪", 1400 = "fɔʁ"}
+"fˈulgerem" = {gloss = "foudre", final = "fud̪ʁ", -100 = "fˈulgerem", 300 = "fˈoɫɟɛrɛ", 600 = "fˈoɫd̪rə", 1000 = "fˈud̪rə", 1200 = "fˈud̪rə", 1400 = "fud̪ʁ"}
+"fˈolleːs" = {gloss = "fous", final = "fu", -100 = "fˈolles", 300 = "fˈɔlles", 600 = "fˈɔɫs", 1000 = "fˈus", 1200 = "fˈus", 1400 = "fu"}
+"frˌikˈɑːre" = {gloss = "frayer", final = "fʁɛje", -100 = "frˌikˈɑre", 300 = "frˌekˈɑrɛ", 600 = "frˌejˈier", 1000 = "frwˌɛjˈer", 1200 = "frˌɛjˈer", 1400 = "fʁɛje"}
+"fˌuːmˈɑːre" = {gloss = "fumer", final = "fyme", -100 = "fˌumˈɑre", 300 = "fˌumˈɑrɛ", 600 = "fˌymˈer", 1000 = "fˌỹmˈer", 1200 = "fˌymˈer", 1400 = "fyme"}
+"fˌimˈɑːrium" = {gloss = "fumier", final = "fymje", -100 = "fˌimˈɑrium", 300 = "fˌemˈɑrʝo", 600 = "fˌəmˈier", 1000 = "fˌəmjˈer", 1200 = "fˌymjˈer", 1400 = "fymje"}
+"fˈest̪ɑm" = {gloss = "fête", final = "fɛt̪", -100 = "fˈest̪ɑm", 300 = "fˈɛst̪ɑ", 600 = "fˈɛst̪ə", 1000 = "fˈɛt̪ə", 1200 = "fˈɛt̪ə", 1400 = "fɛt̪"}
+"gˈen̪t̪em" = {gloss = "gent", final = "ʒɑ̃", -100 = "gˈen̪t̪em", 300 = "ɟˈɛn̪t̪ɛ", 600 = "d͡ʒˈɛ̃n̪t̪", 1000 = "ʒˈãn̪t̪", 1200 = "ʒˈãt̪", 1400 = "ʒɑ̃"}
+"iˈɑket̪" = {gloss = "git", final = "ʒi", -100 = "iˈɑket̪", 300 = "ʝˈɑcɛt̪", 600 = "d͡ʒˈit͡st̪", 1000 = "ʒˈit̪", 1200 = "ʒˈit̪", 1400 = "ʒi"}
+"gˈut̪t̪ɑm" = {gloss = "goutte", final = "gut̪", -100 = "gˈut̪t̪ɑm", 300 = "gˈot̪t̪ɑ", 600 = "gˈot̪ə", 1000 = "gˈut̪ə", 1200 = "gˈut̪ə", 1400 = "gut̪"}
+"gˈust̪um" = {gloss = "goût", final = "gu", -100 = "gˈust̪um", 300 = "gˈost̪o", 600 = "gˈost̪", 1000 = "gˈut̪", 1200 = "gˈut̪", 1400 = "gu"}
+"grˈɑːt̪um" = {gloss = "gré", final = "gʁe", -100 = "grˈɑt̪um", 300 = "grˈɑt̪o", 600 = "grˈeθ", 1000 = "grˈe", 1200 = "grˈe", 1400 = "gʁe"}
+"hˈeri" = {gloss = "hier", final = "jɛʁ", -100 = "hˈeri", 300 = "hˈɛre", 600 = "ˈier", 1000 = "jˈer", 1200 = "jˈer", 1400 = "jɛʁ"}
+"hˌiːbˈern̪um" = {gloss = "hiver", final = "ivɛʁ", -100 = "hˌibˈern̪um", 300 = "hˌiβˈɛrn̪o", 600 = "ˌivˈɛrn̪", 1000 = "ˌivˈɛr", 1200 = "ˌivˈɛr", 1400 = "ivɛʁ"}
+"hˌon̪ˈoːrem" = {gloss = "honneur", final = "ɔn̪œʁ", -100 = "hˌon̪ˈorem", 300 = "hˌɔn̪ˈorɛ", 600 = "ˌun̪ˈowr", 1000 = "ˌũn̪ˈør", 1200 = "ˌũn̪ˈør", 1400 = "ɔn̪œʁ"}
+"hˈod̪ieː" = {gloss = "hui", final = "ɥi", -100 = "hˈod̪ie", 300 = "hˈɔʝʝɛ", 600 = "ˈyj", 1000 = "ɥˈi", 1200 = "ɥˈi", 1400 = "ɥi"}
+"ˌuːst̪iˈɑːrium" = {gloss = "huisser", final = "ɥisje", -100 = "ˌust̪iˈɑrium", 300 = "ˌust͡sʲʝˈɑrʝo", 600 = "ˌyjsˈier", 1000 = "ɥˌisjˈer", 1200 = "ɥˌisˈer", 1400 = "ɥisje"}
+"iˈɑm" = {gloss = "ja", final = "ʒa", -100 = "iˈɑm", 300 = "ʝˈɑ", 600 = "d͡ʒˈa", 1000 = "ʒˈa", 1200 = "ʒˈa", 1400 = "ʒa"}
+"gˈɑlbin̪um" = {gloss = "jaune", final = "ʒon̪", -100 = "gˈɑlbin̪um", 300 = "gˈɑɫben̪o", 600 = "d͡ʒˈaɫn̪ə", 1000 = "ʒˈawn̪ə", 1200 = "ʒˈon̪ə", 1400 = "ʒon̪"}
+"d̪iˈurn̪um" = {gloss = "jour", final = "ʒuʁ", -100 = "d̪iˈurn̪um", 300 = "ɟʝˈorn̪o", 600 = "d͡ʒˈorn̪", 1000 = "ʒˈur", 1200 = "ʒˈur", 1400 = "ʒuʁ"}
+"lˌɑksˈɑːre" = {gloss = "laisser", final = "lɛse", -100 = "lˌɑksˈɑre", 300 = "lˌɑxsˈɑrɛ", 600 = "lˌajsˈier", 1000 = "lˌɛsjˈer", 1200 = "lˌɛsˈer", 1400 = "lɛse"}
+"lˈɑmin̪ɑm" = {gloss = "lame", final = "lam", -100 = "lˈɑmin̪ɑm", 300 = "lˈɑmen̪ɑ", 600 = "lˈãmə", 1000 = "lˈãmə", 1200 = "lˈãmə", 1400 = "lam"}
+"lˈɑkrimɑm" = {gloss = "larme", final = "laʁm", -100 = "lˈɑkrimɑm", 300 = "lˈɑkremɑ", 600 = "lˈajrmə", 1000 = "lˈɛrmə", 1200 = "lˈarmə", 1400 = "laʁm"}
+"lˌɑwˈɑːrɛ" = {gloss = "laver", final = "lave", -100 = "lˌɑwˈɑrɛ", 300 = "lˌɑβˈɑrɛ", 600 = "lˌavˈer", 1000 = "lˌavˈer", 1200 = "lˌavˈer", 1400 = "lave"}
+"illˈoːrum" = {gloss = "leur", final = "lœʁ", -100 = "illˈorum", 300 = "ellˈoro", 600 = "lˈowr", 1000 = "lˈør", 1200 = "lˈør", 1400 = "lœʁ"}
+"lˌiːn̪eˈɑːt̪ɑm" = {gloss = "lignée", final = "liɲe", -100 = "lˌin̪eˈɑt̪ɑm", 300 = "lˌin̪ʝˈɑt̪ɑ", 600 = "lˌiɲˈieðə", 1000 = "lˌĩɲjˈeə", 1200 = "lˌiɲˈe", 1400 = "liɲe"}
+"lˌiːmˈɑːre" = {gloss = "limer", final = "lime", -100 = "lˌimˈɑre", 300 = "lˌimˈɑrɛ", 600 = "lˌimˈer", 1000 = "lˌĩmˈer", 1200 = "lˌimˈer", 1400 = "lime"}
+"lˈiːbrɑm" = {gloss = "livre", final = "livʁ", -100 = "lˈibrɑm", 300 = "lˈiβrɑ", 600 = "lˈivrə", 1000 = "lˈivrə", 1200 = "lˈivrə", 1400 = "livʁ"}
+"lˈeporem" = {gloss = "lièvre", final = "ljɛvʁ", -100 = "lˈeporem", 300 = "lˈɛpɔrɛ", 600 = "lˈievrə", 1000 = "ljˈevrə", 1200 = "ljˈevrə", 1400 = "ljɛvʁ"}
+"lˈon̪goːs" = {gloss = "longs", final = "lɔ̃", -100 = "lˈon̪gos", 300 = "lˈɔŋgos", 600 = "lˈuŋs", 1000 = "lˈũn̪s", 1200 = "lˈũs", 1400 = "lɔ̃"}
+"lˌɑwrˈɑːrium" = {gloss = "lorier", final = "lɔʁje", -100 = "lˌɑwrˈɑrium", 300 = "lˌɑwrˈɑrʝo", 600 = "lˌɔrˈier", 1000 = "lˌɔrjˈer", 1200 = "lˌɔrjˈer", 1400 = "lɔʁje"}
+"lˌokˈɑːre" = {gloss = "louer", final = "lwe", -100 = "lˌokˈɑre", 300 = "lˌɔkˈɑrɛ", 600 = "lˌoˈer", 1000 = "lˌuˈer", 1200 = "lˌuˈer", 1400 = "lwe"}
+"lˈupɑm" = {gloss = "louve", final = "luv", -100 = "lˈupɑm", 300 = "lˈopɑ", 600 = "lˈuvə", 1000 = "lˈuvə", 1200 = "lˈuvə", 1400 = "luv"}
+"lˈuːn̪ɑm" = {gloss = "lune", final = "lyn̪", -100 = "lˈun̪ɑm", 300 = "lˈun̪ɑ", 600 = "lˈyn̪ə", 1000 = "lˈỹn̪ə", 1200 = "lˈyn̪ə", 1400 = "lyn̪"}
+"lˌewiˈɑːrium" = {gloss = "léger", final = "leʒe", -100 = "lˌewiˈɑrium", 300 = "lˌɛβʝˈɑrʝo", 600 = "lˌed͡ʒˈier", 1000 = "lˌeʒjˈer", 1200 = "lˌeʒˈer", 1400 = "leʒe"}
+"mˈɑjum" = {gloss = "mai", final = "mɛ", -100 = "mˈɑjum", 300 = "mˈɑʝo", 600 = "mˈaj", 1000 = "mˈɛ", 1200 = "mˈɛ", 1400 = "mɛ"}
+"mˈɑn̪u" = {gloss = "main", final = "mɛ̃", -100 = "mˈɑn̪u", 300 = "mˈɑn̪o", 600 = "mˈãj̃n̪", 1000 = "mˈɛ̃j̃n̪", 1200 = "mˈɛ̃", 1400 = "mɛ̃"}
+"mˈɑgis" = {gloss = "mais", final = "mɛ", -100 = "mˈɑgis", 300 = "mˈɑʝes", 600 = "mˈajs", 1000 = "mˈɛs", 1200 = "mˈɛs", 1400 = "mɛ"}
+"mˌɑn̪siˈoːn̪em" = {gloss = "maison", final = "mɛzɔ̃", -100 = "mˌɑn̪siˈon̪em", 300 = "mˌɑsʝˈon̪ɛ", 600 = "mˌajzˈun̪", 1000 = "mˌɛzˈũn̪", 1200 = "mˌɛzˈũ", 1400 = "mɛzɔ̃"}
+"mˌɑlum" = {gloss = "mal", final = "mal", -100 = "mˌɑlum", 300 = "mˌɑlo", 600 = "mˌal", 1000 = "mˌal", 1200 = "mˌal", 1400 = "mal"}
+"mˈɑn̪d̪ˈɑːre" = {gloss = "mander", final = "mɑ̃d̪e", -100 = "mˈɑn̪d̪ˈɑre", 300 = "mˌɑn̪d̪ˈɑrɛ", 600 = "mˌãn̪d̪ˈer", 1000 = "mˌãn̪d̪ˈer", 1200 = "mˌãd̪ˈer", 1400 = "mɑ̃d̪e"}
+"mˌɑn̪d̪uːkˈɑːre" = {gloss = "manger", final = "mɑ̃ʒe", -100 = "mˌɑn̪d̪ukˈɑre", 300 = "mˌɑn̪d̪ukˈɑrɛ", 600 = "mˌãn̪d͡ʒˈier", 1000 = "mˌãn̪ʒjˈer", 1200 = "mˌãʒˈer", 1400 = "mɑ̃ʒe"}
+"mˌeliˈoːrem" = {gloss = "meilleur", final = "mɛjœʁ", -100 = "mˌeliˈorem", 300 = "mˌɛlʝˈorɛ", 600 = "mˌeʎˈowr", 1000 = "mˌɛʎˈør", 1200 = "mˌɛʎˈør", 1400 = "mɛjœʁ"}
+"mˈembrum" = {gloss = "membre", final = "mɑ̃bʁ", -100 = "mˈembrum", 300 = "mˈɛmbro", 600 = "mˈɛ̃mbrə", 1000 = "mˈãn̪brə", 1200 = "mˈãbrə", 1400 = "mɑ̃bʁ"}
+"mˌin̪ˈɑːri" = {gloss = "mener", final = "mən̪e", -100 = "mˌin̪ˈɑri", 300 = "mˌen̪ˈɑre", 600 = "mˌən̪ˈer", 1000 = "mˌən̪ˈer", 1200 = "mˌən̪ˈer", 1400 = "mən̪e"}
+"mˈɑre" = {gloss = "mer", final = "mɛʁ", -100 = "mˈɑre", 300 = "mˈɑrɛ", 600 = "mˈer", 1000 = "mˈer", 1200 = "mˈer", 1400 = "mɛʁ"}
+"mˈiːkɑm" = {gloss = "mie", final = "mi", -100 = "mˈikɑm", 300 = "mˈikɑ", 600 = "mˈiə", 1000 = "mˈiə", 1200 = "mˈi", 1400 = "mi"}
+"mˈiːllem" = {gloss = "mille", final = "mil", -100 = "mˈillem", 300 = "mˈillɛ", 600 = "mˈil", 1000 = "mˈil", 1200 = "mˈil", 1400 = "mil"}
+"mˌessiˈoːn̪em" = {gloss = "moisson", final = "mwasɔ̃", -100 = "mˌessiˈon̪em", 300 = "mˌessʝˈon̪ɛ", 600 = "mˌejsˈun̪", 1000 = "mwˌɛsˈũn̪", 1200 = "mwˌɛsˈũ", 1400 = "mwasɔ̃"}
+"mˌon̪t̪ˈɑːn̪eɑm" = {gloss = "montagne", final = "mɔ̃t̪aɲ", -100 = "mˌon̪t̪ˈɑn̪eɑm", 300 = "mˌɔn̪t̪ˈɑn̪ʝɑ", 600 = "mˌun̪t̪ˈãɲə", 1000 = "mˌũn̪t̪ˈãɲə", 1200 = "mˌũt̪ˈãɲə", 1400 = "mɔ̃t̪aɲ"}
+"mˌorˈiːri" = {gloss = "mourir", final = "muʁiʁ", -100 = "mˌorˈiri", 300 = "mˌɔrˈire", 600 = "mˌorˈir", 1000 = "mˌurˈir", 1200 = "mˌurˈir", 1400 = "muʁiʁ"}
+"mˌed̪iˈɑːn̪um" = {gloss = "moyen", final = "mwajɛ̃", -100 = "mˌed̪iˈɑn̪um", 300 = "mˌɛʝʝˈɑn̪o", 600 = "mˌejˈien̪", 1000 = "mwˌɛjˈẽn̪", 1200 = "mwˌɛjˈẽ", 1400 = "mwajɛ̃"}
+"mˌod̪iˈolum" = {gloss = "moyeu", final = "mwajø", -100 = "mˌod̪iˈolum", 300 = "mˌɔʝʝˈɔlo", 600 = "mˌojˈyel", 1000 = "mwˌɛˈøl", 1200 = "mwˌɛjˈøl", 1400 = "mwajø"}
+"mˈuːrum" = {gloss = "mur", final = "myʁ", -100 = "mˈurum", 300 = "mˈuro", 600 = "mˈyr", 1000 = "mˈyr", 1200 = "mˈyr", 1400 = "myʁ"}
+"mˌuːrˈɑːliɑ" = {gloss = "muraille", final = "myʁɑj", -100 = "mˌurˈɑliɑ", 300 = "mˌurˈɑlʝɑ", 600 = "mˌyrˈaʎə", 1000 = "mˌyrˈaʎə", 1200 = "mˌyrˈaʎə", 1400 = "myʁɑj"}
+"mˈɑt̪rem" = {gloss = "mère", final = "mɛʁ", -100 = "mˈɑt̪rem", 300 = "mˈɑt̪rɛ", 600 = "mˈeðrə", 1000 = "mˈerə", 1200 = "mˈerə", 1400 = "mɛʁ"}
+"mˌiskulˈɑːre" = {gloss = "mêler", final = "mɛle", -100 = "mˌiskulˈɑre", 300 = "mˌeskolˈɑrɛ", 600 = "mˌezlˈer", 1000 = "mˌelˈer", 1200 = "mˌɛlˈer", 1400 = "mɛle"}
+"n̪ˌepˈoːt̪em" = {gloss = "neveu", final = "n̪əvø", -100 = "n̪ˌepˈot̪em", 300 = "n̪ˌɛpˈot̪ɛ", 600 = "n̪ˌəvˈowθ", 1000 = "n̪ˌəvˈø", 1200 = "n̪ˌəvˈø", 1400 = "n̪əvø"}
+"n̪ˈɑːsum" = {gloss = "nez", final = "n̪e", -100 = "n̪ˈɑsum", 300 = "n̪ˈɑso", 600 = "n̪ˈes", 1000 = "n̪ˈes", 1200 = "n̪ˈes", 1400 = "n̪e"}
+"n̪ˈigrum" = {gloss = "noir", final = "n̪waʁ", -100 = "n̪ˈigrum", 300 = "n̪ˈeɣro", 600 = "n̪ˈejr", 1000 = "n̪wˈɛr", 1200 = "n̪wˈɛr", 1400 = "n̪waʁ"}
+"n̪ˈukem" = {gloss = "noix", final = "n̪wa", -100 = "n̪ˈukem", 300 = "n̪ˈocɛ", 600 = "n̪ˈojt͡s", 1000 = "n̪wˈɛs", 1200 = "n̪wˈɛs", 1400 = "n̪wa"}
+"n̪ˈuːd̪um" = {gloss = "nu", final = "n̪y", -100 = "n̪ˈud̪um", 300 = "n̪ˈud̪o", 600 = "n̪ˈyθ", 1000 = "n̪ˈy", 1200 = "n̪ˈy", 1400 = "n̪y"}
+"n̪ˈuːd̪ɑm" = {gloss = "nue", final = "n̪y", -100 = "n̪ˈud̪ɑm", 300 = "n̪ˈud̪ɑ", 600 = "n̪ˈyðə", 1000 = "n̪ˈyə", 1200 = "n̪ˈy", 1400 = "n̪y"}
+"n̪ˈokt̪em" = {gloss = "nuit", final = "n̪ɥi", -100 = "n̪ˈokt̪em", 300 = "n̪ˈɔxt̪ɛ", 600 = "n̪ˈyjt̪", 1000 = "n̪ɥˈit̪", 1200 = "n̪ɥˈit̪", 1400 = "n̪ɥi"}
+"n̪ˈuːllum" = {gloss = "nul", final = "n̪yl", -100 = "n̪ˈullum", 300 = "n̪ˈullo", 600 = "n̪ˈyl", 1000 = "n̪ˈyl", 1200 = "n̪ˈyl", 1400 = "n̪yl"}
+"n̪ˈoːd̪um" = {gloss = "nœud", final = "n̪ø", -100 = "n̪ˈod̪um", 300 = "n̪ˈod̪o", 600 = "n̪ˈowθ", 1000 = "n̪ˈø", 1200 = "n̪ˈø", 1400 = "n̪ø"}
+"ˌɑwikˈelloːs" = {gloss = "oiseaux", final = "wazo", -100 = "ˌɑwikˈellos", 300 = "ˌɑwcˈɛllos", 600 = "ˌɔjzˈɛɫs", 1000 = "wˌɛzeˈaws", 1200 = "wˌɛzəˈos", 1400 = "wazo"}
+"ˈun̪gulɑm" = {gloss = "ongle", final = "ɔ̃gl", -100 = "ˈun̪gulɑm", 300 = "ˈoŋglɑ", 600 = "ˈuŋglə", 1000 = "ˈũŋglə", 1200 = "ˈũglə", 1400 = "ɔ̃gl"}
+"ˈursɑm" = {gloss = "ourse", final = "uʁs", -100 = "ˈursɑm", 300 = "ˈorsɑ", 600 = "ˈorsə", 1000 = "ˈursə", 1200 = "ˈursə", 1400 = "uʁs"}
+"ˌoperˈɑːrium" = {gloss = "ouvrier", final = "uvʁije", -100 = "ˌoperˈɑrium", 300 = "ˌopɛrˈɑrʝo", 600 = "ˌovrˈier", 1000 = "ˌuvrjˈer", 1200 = "ˌuvrjˈer", 1400 = "uvʁije"}
+"pˈɑleɑm" = {gloss = "paille", final = "pɑj", -100 = "pˈɑleɑm", 300 = "pˈɑlʝɑ", 600 = "pˈaʎə", 1000 = "pˈaʎə", 1200 = "pˈaʎə", 1400 = "pɑj"}
+"pˌɑleˈɑːrium" = {gloss = "pailler", final = "pɑje", -100 = "pˌɑleˈɑrium", 300 = "pˌɑlʝˈɑrʝo", 600 = "pˌaʎˈier", 1000 = "pˌaʎjˈer", 1200 = "pˌaʎˈer", 1400 = "pɑje"}
+"pˌɑrˈikulum" = {gloss = "pareil", final = "paʁej", -100 = "pˌɑrˈikulum", 300 = "pˌɑrˈeklo", 600 = "pˌarˈeʎ", 1000 = "pˌarˈeʎ", 1200 = "pˌarˈɛʎ", 1400 = "paʁej"}
+"pˈɑwper" = {gloss = "pauvre", final = "povʁ", -100 = "pˈɑwper", 300 = "pˈɑwpɛr", 600 = "pˈɔvrə", 1000 = "pˈɔvrə", 1200 = "pˈovrə", 1400 = "povʁ"}
+"pˌin̪kt̪ˈuːrɑm" = {gloss = "peinture", final = "pɛ̃t̪yʁ", -100 = "pˌin̪kt̪ˈurɑm", 300 = "pˌeŋt̪ˈurɑ", 600 = "pˌẽj̃n̪t̪ˈyrə", 1000 = "pˌɛ̃j̃n̪t̪ˈyrə", 1200 = "pˌɛ̃t̪ˈyrə", 1400 = "pɛ̃t̪yʁ"}
+"pˌeregrˈiːn̪um" = {gloss = "pelerin", final = "pɛlʁɛ̃", -100 = "pˌeregrˈin̪um", 300 = "pˌɛrɛɣrˈin̪o", 600 = "pˌələrˈin̪", 1000 = "pˌələrˈĩn̪", 1200 = "pˌɛlərˈɛ̃", 1400 = "pɛlʁɛ̃"}
+"pˌersˈoːn̪ɑm" = {gloss = "personne", final = "pɛʁsɔn̪", -100 = "pˌersˈon̪ɑm", 300 = "pˌɛrsˈon̪ɑ", 600 = "pˌɛrsˈun̪ə", 1000 = "pˌɛrsˈũn̪ə", 1200 = "pˌɛrsˈũn̪ə", 1400 = "pɛʁsɔn̪"}
+"pˌɑwˈoːrem" = {gloss = "peur", final = "pœʁ", -100 = "pˌɑwˈorem", 300 = "pˌɑˈorɛ", 600 = "pˌaˈowr", 1000 = "pˌəˈør", 1200 = "pəˈør", 1400 = "pœʁ"}
+"pˈot̪et̪" = {gloss = "peut", final = "pø", -100 = "pˈot̪et̪", 300 = "pˈɔt̪ɛt̪", 600 = "pˈyet̪", 1000 = "pˈøt̪", 1200 = "pˈøt̪", 1400 = "pø"}
+"pˈed̪em" = {gloss = "pied", final = "pje", -100 = "pˈed̪em", 300 = "pˈɛd̪ɛ", 600 = "pˈieθ", 1000 = "pjˈe", 1200 = "pjˈe", 1400 = "pje"}
+"pˈed̪es" = {gloss = "pieds", final = "pje", -100 = "pˈed̪es", 300 = "pˈɛd̪ɛs", 600 = "pˈiet͡s", 1000 = "pjˈes", 1200 = "pjˈes", 1400 = "pje"}
+"pˈɑːloːs" = {gloss = "pieux", final = "pjø", -100 = "pˈɑlos", 300 = "pˈɑlos", 600 = "pˈeɫs", 1000 = "pjˈøs", 1200 = "pjˈøs", 1400 = "pjø"}
+"pˈejus" = {gloss = "pis", final = "pi", -100 = "pˈejus", 300 = "pˈɛʝos", 600 = "pˈis", 1000 = "pˈis", 1200 = "pˈis", 1400 = "pi"}
+"pˌiet̪ˈɑːt̪em" = {gloss = "pitié", final = "pit̪je", -100 = "pˌiet̪ˈɑt̪em", 300 = "pˌiɛt̪ˈɑt̪ɛ", 600 = "pˌit̪ˈieθ", 1000 = "pˌit̪jˈe", 1200 = "pˌit̪jˈe", 1400 = "pit̪je"}
+"plˈɑːgɑm" = {gloss = "plaie", final = "plɛ", -100 = "plˈɑgɑm", 300 = "plˈɑɣɑ", 600 = "plˈajə", 1000 = "plˈajə", 1200 = "plˈɛ", 1400 = "plɛ"}
+"plˈɑn̪gere" = {gloss = "plaindre", final = "plɛ̃d̪ʁ", -100 = "plˈɑn̪gere", 300 = "plˈɑŋɟɛrɛ", 600 = "plˈãj̃n̪d̪rə", 1000 = "plˈɛ̃j̃n̪d̪rə", 1200 = "plˈɛ̃d̪rə", 1400 = "plɛ̃d̪ʁ"}
+"plˈeːn̪um" = {gloss = "plein", final = "plɛ̃", -100 = "plˈen̪um", 300 = "plˈen̪o", 600 = "plˈẽj̃n̪", 1000 = "plˈɛ̃j̃n̪", 1200 = "plˈɛ̃", 1400 = "plɛ̃"}
+"plˈeːn̪ɑm" = {gloss = "pleine", final = "plɛn̪", -100 = "plˈen̪ɑm", 300 = "plˈen̪ɑ", 600 = "plˈẽj̃n̪ə", 1000 = "plˈɛ̃j̃n̪ə", 1200 = "plˈɛ̃n̪ə", 1400 = "plɛn̪"}
+"plˈikɑt̪" = {gloss = "ploie", final = "plwa", -100 = "plˈikɑt̪", 300 = "plˈekɑt̪", 600 = "plˈejəθ", 1000 = "plwˈɛə", 1200 = "plwˈɛ", 1400 = "plwa"}
+"pˈun̪kt̪um" = {gloss = "point", final = "pwɛ̃", -100 = "pˈun̪kt̪um", 300 = "pˈoŋt̪o", 600 = "pˈuj̃n̪t̪", 1000 = "pwˈĩn̪t̪", 1200 = "pwˈɛ̃t̪", 1400 = "pwɛ̃"}
+"pˈoːmɑm" = {gloss = "pomme", final = "pɔm", -100 = "pˈomɑm", 300 = "pˈomɑ", 600 = "pˈumə", 1000 = "pˈũmə", 1200 = "pˈũmə", 1400 = "pɔm"}
+"pˈon̪ere" = {gloss = "pondre", final = "pɔ̃d̪ʁ", -100 = "pˈon̪ere", 300 = "pˈɔn̪ɛrɛ", 600 = "pˈun̪d̪rə", 1000 = "pˈũn̪d̪rə", 1200 = "pˈũd̪rə", 1400 = "pɔ̃d̪ʁ"}
+"pˈoːn̪t̪em" = {gloss = "pont", final = "pɔ̃", -100 = "pˈon̪t̪em", 300 = "pˈon̪t̪ɛ", 600 = "pˈun̪t̪", 1000 = "pˈũn̪t̪", 1200 = "pˈũt̪", 1400 = "pɔ̃"}
+"pˌort̪ˈɑːre" = {gloss = "porter", final = "pɔʁt̪e", -100 = "pˌort̪ˈɑre", 300 = "pˌɔrt̪ˈɑrɛ", 600 = "pˌɔrt̪ˈer", 1000 = "pˌɔrt̪ˈer", 1200 = "pˌɔrt̪ˈer", 1400 = "pɔʁt̪e"}
+"pˌort̪ɑt̪ˈoːrem" = {gloss = "porteur", final = "pɔʁt̪œʁ", -100 = "pˌort̪ɑt̪ˈorem", 300 = "pˌɔrt̪ɑt̪ˈorɛ", 600 = "pˌɔrt̪əðˈowr", 1000 = "pˌɔrt̪əˈør", 1200 = "pˌɔrt̪əˈør", 1400 = "pɔʁt̪œʁ"}
+"pˈulwerem" = {gloss = "poudre", final = "pud̪ʁ", -100 = "pˈulwerem", 300 = "pˈoɫβɛrɛ", 600 = "pˈoɫd̪rə", 1000 = "pˈud̪rə", 1200 = "pˈud̪rə", 1400 = "pud̪ʁ"}
+"prˌehˈen̪d̪ere" = {gloss = "prendre", final = "pʁɑ̃d̪ʁ", -100 = "prˌehˈen̪d̪ere", 300 = "prˈen̪d̪ɛrɛ", 600 = "prˈẽn̪d̪rə", 1000 = "prˈãn̪d̪rə", 1200 = "prˈãd̪rə", 1400 = "pʁɑ̃d̪ʁ"}
+"prˈessɑm" = {gloss = "presse", final = "pʁɛs", -100 = "prˈessɑm", 300 = "prˈɛssɑ", 600 = "prˈɛsə", 1000 = "prˈɛsə", 1200 = "prˈɛsə", 1400 = "pʁɛs"}
+"prˈet̪ium" = {gloss = "prix", final = "pʁi", -100 = "prˈet̪ium", 300 = "prˈɛt͡sʲʝo", 600 = "prˈit͡s", 1000 = "prˈis", 1200 = "prˈis", 1400 = "pʁi"}
+"prˈesbyt̪er" = {gloss = "prêtre", final = "pʁɛt̪ʁ", -100 = "prˈesbyt̪er", 300 = "prˈɛsbet̪ɛr", 600 = "prˈɛst̪rə", 1000 = "prˈɛt̪rə", 1200 = "prˈɛt̪rə", 1400 = "pʁɛt̪ʁ"}
+"pˈuːrum" = {gloss = "pur", final = "pyʁ", -100 = "pˈurum", 300 = "pˈuro", 600 = "pˈyr", 1000 = "pˈyr", 1200 = "pˈyr", 1400 = "pyʁ"}
+"pˌuːrgˈɑːre" = {gloss = "purger", final = "pyʁʒe", -100 = "pˌurgˈɑre", 300 = "pˌurgˈɑrɛ", 600 = "pˌyrd͡ʒˈier", 1000 = "pˌyrʒjˈer", 1200 = "pˌyrʒˈer", 1400 = "pyʁʒe"}
+"pˈɑst̪ɑm" = {gloss = "pâte", final = "pɑt̪", -100 = "pˈɑst̪ɑm", 300 = "pˈɑst̪ɑ", 600 = "pˈast̪ə", 1000 = "pˈat̪ə", 1200 = "pˈat̪ə", 1400 = "pɑt̪"}
+"pˈɑt̪rem" = {gloss = "père", final = "pɛʁ", -100 = "pˈɑt̪rem", 300 = "pˈɑt̪rɛ", 600 = "pˈeðrə", 1000 = "pˈerə", 1200 = "pˈerə", 1400 = "pɛʁ"}
+"rˌɑːd̪iːkˈiːn̪ɑm" = {gloss = "racine", final = "ʁasin̪", -100 = "rˌɑd̪ikˈin̪ɑm", 300 = "rˌɑd̪icˈin̪ɑ", 600 = "rˌat͡sˈin̪ə", 1000 = "rˌasˈĩn̪ə", 1200 = "rˌasˈin̪ə", 1400 = "ʁasin̪"}
+"rˈigid̪ɑm" = {gloss = "raide", final = "ʁɛd̪", -100 = "rˈigid̪ɑm", 300 = "rˈeʝd̪ɑ", 600 = "rˈejd̪ə", 1000 = "rwˈɛd̪ə", 1200 = "rˈɛd̪ə", 1400 = "ʁɛd̪"}
+"rˈigɑm" = {gloss = "raie", final = "ʁɛ", -100 = "rˈigɑm", 300 = "rˈeɣɑ", 600 = "rˈejə", 1000 = "rwˈɛə", 1200 = "rˈɛ", 1400 = "ʁɛ"}
+"rˌɑkˈeːmum" = {gloss = "raisin", final = "ʁɛzɛ̃", -100 = "rˌɑkˈemum", 300 = "rˌɑcˈemo", 600 = "rˌajzˈin̪", 1000 = "rˌɛzˈĩn̪", 1200 = "rˌɛzˈẽ", 1400 = "ʁɛzɛ̃"}
+"rˌɑt̪iˈoːn̪em" = {gloss = "raison", final = "ʁɛzɔ̃", -100 = "rˌɑt̪iˈon̪em", 300 = "rˌɑt͡sʲʝˈon̪ɛ", 600 = "rˌajzˈun̪", 1000 = "rˌɛzˈũn̪", 1200 = "rˌɛzˈũ", 1400 = "ʁɛzɔ̃"}
+"rˈiːd̪ere" = {gloss = "rire", final = "ʁiʁ", -100 = "rˈid̪ere", 300 = "rˈid̪ɛrɛ", 600 = "rˈiðrə", 1000 = "rˈirə", 1200 = "rˈirə", 1400 = "ʁiʁ"}
+"rˈiːsum" = {gloss = "ris", final = "ʁi", -100 = "rˈisum", 300 = "rˈiso", 600 = "rˈis", 1000 = "rˈis", 1200 = "rˈis", 1400 = "ʁi"}
+"rˈiːpɑm" = {gloss = "rive", final = "ʁiv", -100 = "rˈipɑm", 300 = "rˈipɑ", 600 = "rˈivə", 1000 = "rˈivə", 1200 = "rˈivə", 1400 = "ʁiv"}
+"rˈumpere" = {gloss = "rompre", final = "ʁɔ̃pʁ", -100 = "rˈumpere", 300 = "rˈompɛrɛ", 600 = "rˈumprə", 1000 = "rˈũn̪prə", 1200 = "rˈũprə", 1400 = "ʁɔ̃pʁ"}
+"rˈumikem" = {gloss = "ronce", final = "ʁɔ̃s", -100 = "rˈumikem", 300 = "rˈomecɛ", 600 = "rˈumt͡sə", 1000 = "rˈũn̪sə", 1200 = "rˈũsə", 1400 = "ʁɔ̃s"}
+"rˈubeum" = {gloss = "rouge", final = "ʁuʒ", -100 = "rˈubeum", 300 = "rˈobʝo", 600 = "rˈod͡ʒə", 1000 = "rˈuʒə", 1200 = "rˈuʒə", 1400 = "ʁuʒ"}
+"rˈuːgɑm" = {gloss = "rue", final = "ʁy", -100 = "rˈugɑm", 300 = "rˈuɣɑ", 600 = "rˈyə", 1000 = "rˈyə", 1200 = "rˈy", 1400 = "ʁy"}
+"sˈɑpiɑm" = {gloss = "sache", final = "saʃ", -100 = "sˈɑpiɑm", 300 = "sˈɑpʝɑ", 600 = "sˈat͡ʃə", 1000 = "sˈaʃə", 1200 = "sˈaʃə", 1400 = "saʃ"}
+"sˈɑn̪kt̪um" = {gloss = "saint", final = "sɛ̃", -100 = "sˈɑn̪kt̪um", 300 = "sˈɑŋt̪o", 600 = "sˈãj̃n̪t̪", 1000 = "sˈɛ̃j̃n̪t̪", 1200 = "sˈɛ̃t̪", 1400 = "sɛ̃"}
+"sˌɑn̪kt̪it̪ˈɑːt̪em" = {gloss = "sainteté", final = "sɛ̃t̪ət̪e", -100 = "sˌɑn̪kt̪it̪ˈɑt̪em", 300 = "sˌɑŋt̪et̪ˈɑt̪ɛ", 600 = "sˌãj̃n̪t̪əðˈeθ", 1000 = "sˌɛ̃j̃n̪t̪ət̪ˈe", 1200 = "sˌɛ̃t̪ət̪ˈe", 1400 = "sɛ̃t̪ət̪e"}
+"sˌɑːn̪it̪ˈɑːt̪em" = {gloss = "santé", final = "sɑ̃t̪e", -100 = "sˌɑn̪it̪ˈɑt̪em", 300 = "sˌɑn̪et̪ˈɑt̪ɛ", 600 = "sˌãn̪t̪ˈeθ", 1000 = "sˌãn̪t̪ˈe", 1200 = "sˌãt̪ˈe", 1400 = "sɑ̃t̪e"}
+"sˌɑlt̪ˈɑːre" = {gloss = "sauter", final = "sot̪e", -100 = "sˌɑlt̪ˈɑre", 300 = "sˌɑɫt̪ˈɑrɛ", 600 = "sˌaɫt̪ˈer", 1000 = "sˌawt̪ˈer", 1200 = "sˌot̪ˈer", 1400 = "sot̪e"}
+"sˌigˈelloːs" = {gloss = "sceau", final = "so", -100 = "sˌigˈellos", 300 = "sˌeʝˈɛllos", 600 = "sˌəˈɛɫs", 1000 = "sˌəeˈaws", 1200 = "səˈos", 1400 = "so"}
+"sˈikkum" = {gloss = "sec", final = "sɛk", -100 = "sˈikkum", 300 = "sˈekko", 600 = "sˈek", 1000 = "sˈɛk", 1200 = "sˈɛk", 1400 = "sɛk"}
+"sˌen̪iˈoːrem" = {gloss = "seigneur", final = "sɛɲœʁ", -100 = "sˌen̪iˈorem", 300 = "sˌɛn̪ʝˈorɛ", 600 = "sˌẽj̃ɲˈowr", 1000 = "sˌɛ̃j̃ɲˈør", 1200 = "sˌɛ̃ɲˈør", 1400 = "sɛɲœʁ"}
+"sˈept̪em" = {gloss = "sept", final = "sɛt̪", -100 = "sˈept̪em", 300 = "sˈɛpt̪ɛ", 600 = "sˈɛt̪", 1000 = "sˈɛt̪", 1200 = "sˈɛt̪", 1400 = "sɛt̪"}
+"sˈerwit̪" = {gloss = "sert", final = "sɛʁ", -100 = "sˈerwit̪", 300 = "sˈɛrβet̪", 600 = "sˈɛrt̪", 1000 = "sˈɛrt̪", 1200 = "sˈɛrt̪", 1400 = "sɛʁ"}
+"sˌerwˈiːre" = {gloss = "servir", final = "sɛʁviʁ", -100 = "sˌerwˈire", 300 = "sˌɛrβˈirɛ", 600 = "sˌɛrvˈir", 1000 = "sˌɛrvˈir", 1200 = "sˌɛrvˈir", 1400 = "sɛʁviʁ"}
+"sˈiːmium" = {gloss = "singe", final = "sɛ̃ʒ", -100 = "sˈimium", 300 = "sˈimʝo", 600 = "sˈimd͡ʒə", 1000 = "sˈĩn̪ʒə", 1200 = "sˈẽʒə", 1400 = "sɛ̃ʒ"}
+"sˌɑgmˈɑːrium" = {gloss = "sommier", final = "sɔmje", -100 = "sˌɑgmˈɑrium", 300 = "sˌɑwmˈɑrʝo", 600 = "sˌumˈier", 1000 = "sˌũmjˈer", 1200 = "sˌũmjˈer", 1400 = "sɔmje"}
+"sˈun̪t̪" = {gloss = "sont", final = "sɔ̃", -100 = "sˈun̪t̪", 300 = "sˈon̪t̪", 600 = "sˈun̪t̪", 1000 = "sˈũn̪t̪", 1200 = "sˈũt̪", 1400 = "sɔ̃"}
+"sˌolid̪ˈɑːre" = {gloss = "souder", final = "sud̪e", -100 = "sˌolid̪ˈɑre", 300 = "sˌɔled̪ˈɑrɛ", 600 = "sˌɔɫd̪ˈer", 1000 = "sˌud̪ˈer", 1200 = "sˌud̪ˈer", 1400 = "sud̪e"}
+"sˈikkɑm" = {gloss = "sèche", final = "sɛʃ", -100 = "sˈikkɑm", 300 = "sˈekkɑ", 600 = "sˈet͡ʃə", 1000 = "sˈɛʃə", 1200 = "sˈɛʃə", 1400 = "sɛʃ"}
+"sˌekˈuːrum" = {gloss = "sûr", final = "syʁ", -100 = "sˌekˈurum", 300 = "sˌɛkˈuro", 600 = "sˌəˈyr", 1000 = "sˌəˈyr", 1200 = "səˈyr", 1400 = "syʁ"}
+"sˈoror" = {gloss = "sœur", final = "sœʁ", -100 = "sˈoror", 300 = "sˈɔrɔr", 600 = "sˈyer", 1000 = "sˈør", 1200 = "sˈør", 1400 = "sœʁ"}
+"t̪ˈɑbulɑm" = {gloss = "table", final = "t̪abl", -100 = "t̪ˈɑbulɑm", 300 = "t̪ˈɑblɑ", 600 = "t̪ˈablə", 1000 = "t̪ˈablə", 1200 = "t̪ˈablə", 1400 = "t̪abl"}
+"t̪ˌɑbˈoːn̪em" = {gloss = "taon", final = "t̪ɑ̃", -100 = "t̪ˌɑbˈon̪em", 300 = "t̪ˌɑβˈon̪ɛ", 600 = "t̪ˌaˈun̪", 1000 = "t̪ˌaˈũn̪", 1200 = "t̪ˈã", 1400 = "t̪ɑ̃"}
+"t̪ˈɑrd̪um" = {gloss = "tart", final = "t̪aʁ", -100 = "t̪ˈɑrd̪um", 300 = "t̪ˈɑrd̪o", 600 = "t̪ˈart̪", 1000 = "t̪ˈart̪", 1200 = "t̪ˈart̪", 1400 = "t̪aʁ"}
+"t̪ˈɑlpɑm" = {gloss = "taupe", final = "t̪op", -100 = "t̪ˈɑlpɑm", 300 = "t̪ˈɑɫpɑ", 600 = "t̪ˈaɫpə", 1000 = "t̪ˈawpə", 1200 = "t̪ˈopə", 1400 = "t̪op"}
+"t̪ˈɑːlem" = {gloss = "tel", final = "t̪ɛl", -100 = "t̪ˈɑlem", 300 = "t̪ˈɑlɛ", 600 = "t̪ˈel", 1000 = "t̪ˈel", 1200 = "t̪ˈel", 1400 = "t̪ɛl"}
+"t̪ˈempus" = {gloss = "temps", final = "t̪ɑ̃", -100 = "t̪ˈempus", 300 = "t̪ˈɛmpos", 600 = "t̪ˈɛ̃ms", 1000 = "t̪ˈãn̪s", 1200 = "t̪ˈãs", 1400 = "t̪ɑ̃"}
+"t̪ˈen̪eɑt̪" = {gloss = "tienne", final = "t̪jɛn̪", -100 = "t̪ˈen̪eɑt̪", 300 = "t̪ˈɛn̪ʝɑt̪", 600 = "t̪ˈieɲəθ", 1000 = "t̪jˈẽɲə", 1200 = "t̪jˈẽɲə", 1400 = "t̪jɛn̪"}
+"t̪ˈen̪en̪t̪" = {gloss = "tiennent", final = "t̪jɛn̪", -100 = "t̪ˈen̪en̪t̪", 300 = "t̪ˈɛn̪ɛn̪t̪", 600 = "t̪ˈien̪ən̪t̪", 1000 = "t̪jˈẽn̪ət̪", 1200 = "t̪jˈẽn̪ə", 1400 = "t̪jɛn̪"}
+"t̪ˈen̪eo" = {gloss = "tiens", final = "t̪jɛ̃", -100 = "t̪ˈen̪eo", 300 = "t̪ˈɛn̪ʝɔ", 600 = "t̪ˈieɲ", 1000 = "t̪jˈẽɲ", 1200 = "t̪jˈẽ", 1400 = "t̪jɛ̃"}
+"t̪ˈen̪et̪" = {gloss = "tient", final = "t̪jɛ̃", -100 = "t̪ˈen̪et̪", 300 = "t̪ˈɛn̪ɛt̪", 600 = "t̪ˈien̪t̪", 1000 = "t̪jˈẽn̪t̪", 1200 = "t̪jˈẽt̪", 1400 = "t̪jɛ̃"}
+"t̪ˌiːt̪iˈoːn̪em" = {gloss = "tison", final = "t̪izɔ̃", -100 = "t̪ˌit̪iˈon̪em", 300 = "t̪ˌit͡sʲʝˈon̪ɛ", 600 = "t̪ˌizˈun̪", 1000 = "t̪ˌizˈũn̪", 1200 = "t̪ˌizˈũ", 1400 = "t̪izɔ̃"}
+"t̪ˈeːkt̪um" = {gloss = "toi", final = "t̪wa", -100 = "t̪ˈekt̪um", 300 = "t̪ˈext̪o", 600 = "t̪ˈejt̪", 1000 = "t̪wˈɛt̪", 1200 = "t̪wˈɛt̪", 1400 = "t̪wa"}
+"t̪ˌormˈen̪t̪um" = {gloss = "tourment", final = "t̪uʁmɑ̃", -100 = "t̪ˌormˈen̪t̪um", 300 = "t̪ˌɔrmˈɛn̪t̪o", 600 = "t̪ˌormˈɛ̃n̪t̪", 1000 = "t̪ˌurmˈãn̪t̪", 1200 = "t̪ˌurmˈãt̪", 1400 = "t̪uʁmɑ̃"}
+"t̪ˈoːt̪t̪um" = {gloss = "tout", final = "t̪u", -100 = "t̪ˈot̪t̪um", 300 = "t̪ˈot̪t̪o", 600 = "t̪ˈot̪", 1000 = "t̪ˈut̪", 1200 = "t̪ˈut̪", 1400 = "t̪u"}
+"t̪rˌɑkt̪ˈɑːre" = {gloss = "traiter", final = "t̪ʁɛt̪e", -100 = "t̪rˌɑkt̪ˈɑre", 300 = "t̪rˌɑxt̪ˈɑrɛ", 600 = "t̪rˌajt̪ˈier", 1000 = "t̪rˌɛt̪jˈer", 1200 = "t̪rˌɛt̪ˈer", 1400 = "t̪ʁɛt̪e"}
+"t̪ˈuː" = {gloss = "tu", final = "t̪y", -100 = "t̪ˈu", 300 = "t̪ˈu", 600 = "t̪ˈy", 1000 = "t̪ˈy", 1200 = "t̪ˈy", 1400 = "t̪y"}
+"t̪ˌest̪imˈoːn̪ium" = {gloss = "témoin", final = "t̪emwɛ̃", -100 = "t̪ˌest̪imˈon̪ium", 300 = "t̪ˌɛst̪emˈon̪ʝo", 600 = "t̪ˌezmˈuj̃ɲ", 1000 = "t̪ˌemwˈĩɲ", 1200 = "t̪ˌemwˈɛ̃", 1400 = "t̪emwɛ̃"}
+"t̪ˈost̪um" = {gloss = "tôt", final = "t̪o", -100 = "t̪ˈost̪um", 300 = "t̪ˈɔst̪o", 600 = "t̪ˈɔst̪", 1000 = "t̪ˈot̪", 1200 = "t̪ˈot̪", 1400 = "t̪o"}
+"ˌuːn̪um" = {gloss = "un", final = "œ̃", -100 = "ˌun̪um", 300 = "ˌun̪o", 600 = "ˌyn̪", 1000 = "ˌỹn̪", 1200 = "ˌỹ", 1400 = "œ̃"}
+"ˌuːn̪ɑm" = {gloss = "une", final = "yn̪", -100 = "ˌun̪ɑm", 300 = "ˌun̪ɑ", 600 = "ˌyn̪ə", 1000 = "ˌỹn̪ə", 1200 = "ˌyn̪ə", 1400 = "yn̪"}
+"wˈɑrium" = {gloss = "vair", final = "vɛʁ", -100 = "wˈɑrium", 300 = "βˈɑrʝo", 600 = "vˈajr", 1000 = "vˈɛr", 1200 = "vˈɛr", 1400 = "vɛʁ"}
+"wˌigilˈɑːre" = {gloss = "veiller", final = "vɛje", -100 = "wˌigilˈɑre", 300 = "βˌeʝelˈɑrɛ", 600 = "vˌeʎˈier", 1000 = "vˌeʎjˈer", 1200 = "vˌeʎˈer", 1400 = "vɛje"}
+"wˈen̪t̪um" = {gloss = "vent", final = "vɑ̃", -100 = "wˈen̪t̪um", 300 = "βˈɛn̪t̪o", 600 = "vˈɛ̃n̪t̪", 1000 = "vˈãn̪t̪", 1200 = "vˈãt̪", 1400 = "vɑ̃"}
+"wˈiːt̪ɑm" = {gloss = "vie", final = "vi", -100 = "wˈit̪ɑm", 300 = "βˈit̪ɑ", 600 = "vˈiðə", 1000 = "vˈiə", 1200 = "vˈi", 1400 = "vi"}
+"wˈet̪ulum" = {gloss = "vieil", final = "vjɛj", -100 = "wˈet̪ulum", 300 = "βˈɛklo", 600 = "vˈieʎ", 1000 = "vjˈeʎ", 1200 = "vjˈeʎ", 1400 = "vjɛj"}
+"wˌiːllˈɑːn̪um" = {gloss = "vilain", final = "vilɛ̃", -100 = "wˌillˈɑn̪um", 300 = "βˌillˈɑn̪o", 600 = "vˌilˈãj̃n̪", 1000 = "vˌilˈɛ̃j̃n̪", 1200 = "vˌilˈɛ̃", 1400 = "vilɛ̃"}
+"wˈiːwere" = {gloss = "vivre", final = "vivʁ", -100 = "wˈiwere", 300 = "βˈiβɛrɛ", 600 = "vˈivrə", 1000 = "vˈivrə", 1200 = "vˈivrə", 1400 = "vivʁ"}
+"wˌeːkt̪ˈuːrɑm" = {gloss = "voiture", final = "vwat̪yʁ", -100 = "wˌekt̪ˈurɑm", 300 = "βˌext̪ˈurɑ", 600 = "vˌejt̪ˈyrə", 1000 = "vwˌɛt̪ˈyrə", 1200 = "vwˌɛt̪ˈyrə", 1400 = "vwat̪yʁ"}
+"ˈokuloːs" = {gloss = "yeux", final = "jø", -100 = "ˈokulos", 300 = "ˈɔklos", 600 = "ˈyeɫt͡s", 1000 = "jˈøs", 1200 = "jˈøs", 1400 = "jø"}
+"ˌae̯t̪ˈɑːt̪ikum" = {gloss = "âge", final = "ɑʒ", -100 = "ˌaet̪ˈɑt̪ikum", 300 = "ˌɛt̪ˈɑt̪eko", 600 = "ˌəðˈad͡ʒə", 1000 = "ˌəˈaʒə", 1200 = "ˈaʒə", 1400 = "ɑʒ"}
+"ˈɑn̪imɑm" = {gloss = "âme", final = "ɑm", -100 = "ˈɑn̪imɑm", 300 = "ˈɑn̪emɑ", 600 = "ˈãmə", 1000 = "ˈãmə", 1200 = "ˈãmə", 1400 = "ɑm"}
+"spˈiːn̪ɑm" = {gloss = "épine", final = "epin̪", -100 = "spˈin̪ɑm", 300 = "ˌespˈin̪ɑ", 600 = "ˌespˈin̪ə", 1000 = "ˌepˈĩn̪ə", 1200 = "ˌepˈin̪ə", 1400 = "epin̪"}
+"spˈɑt̪ʰɑm" = {gloss = "épée", final = "epe", -100 = "spˈɑt̪ʰɑm", 300 = "ˌespˈɑt̪ɑ", 600 = "ˌespˈeðə", 1000 = "ˌepˈeə", 1200 = "ˌepˈe", 1400 = "epe"}
+"ˈokulum" = {gloss = "œil", final = "œj", -100 = "ˈokulum", 300 = "ˈɔklo", 600 = "ˈyeʎ", 1000 = "ˈøʎ", 1200 = "ˈøʎ", 1400 = "œj"}

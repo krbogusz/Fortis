@@ -1,6 +1,7 @@
 # Segmental features — every feature here lives on the segment (no `tier` field needed).
 # Suprasegmental features (tone, stress) live in tiers.toml. A `root` node parenting the
 # top-level features is synthesised automatically; no need to declare it.
+# Indentations are for readability only.
 consonantal = { kind = "binary", short = "cons" }
 syllabic = { kind = "binary", short = "syll" }
 sonorant = { kind = "binary", short = "son" }

@@ -1,4 +1,4 @@
-# Output — `projects/default`
+# Output — the shipped `projects/default`
 
 Engine-generated run output. For each word: the surface form and the
 firing-rule trace (only the rules that changed the form).

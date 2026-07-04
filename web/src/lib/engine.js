@@ -11,6 +11,10 @@
 const PYODIDE_URL = new URL("pyodide/pyodide.mjs", document.baseURI).href;
 const PYODIDE_INDEX = new URL("pyodide/", document.baseURI).href;
 const ENGINE_TGZ = new URL("engine.tgz", document.baseURI).href;
+// Example projects live beside the app as static assets (built by
+// scripts/build-engine.mjs). Resolve against document.baseURI so they load
+// under a GitHub Pages project subpath, exactly like the assets above.
+const EXAMPLES_INDEX = new URL("projects/index.json", document.baseURI).href;
 
 export const FILES = [
   "features.toml",
@@ -24,7 +28,7 @@ export const FILES = [
 ];
 
 // Generated reports, read-only — written by run_derivations() after each run.
-export const OUTPUT_FILES = ["output.md", "output.csv"];
+export const OUTPUT_FILES = ["output.md", "derivation_table.csv"];
 
 // Python helper loaded into the interpreter after the engine is importable.
 // Rendering mirrors ../src/fortis/main.py:_print_derivation.
@@ -42,7 +46,7 @@ from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
-from src.fortis.application.diagram import render_autosegmental, render_change, render_geometry_tree
+from src.fortis.analysis.grading import grade_stages
 from src.fortis.main import _build_report, _build_csv_report
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
@@ -61,46 +65,88 @@ def reset_overlay():
         if p.is_file(): p.unlink()
 def file_status(names):
     return json.dumps({name: ("project" if (Path(OVERLAY)/name).exists() else "default") for name in names})
-def run_derivations():
+# A run is split so the UI can paint a progress bar between word batches:
+# prepare_run() parses the project once; derive_batch(start,count) renders a
+# slice (accumulating raw derivations for the reports); finalize_run() writes
+# the reports. _SESSION carries state across these calls (Python globals persist
+# across runPython). run_derivations() composes them for one-shot callers.
+_SESSION = {}
+
+def _derive_one(project, rules, ipa, word):
+    R = lambda f,b: render_syllabified(lower_tiers(f), b, project)
+    d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
+               project.features, project.sonorities, project.syllable_parts, project.tiers)
+    steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
+    for s in d.steps:
+        base = _SUB.sub("", s.rule.id)
+        heading = (s.rule.name or base) if base!=prev else None
+        time_header = s.rule.time if (s.rule.time is not None and s.rule.time != prev_time) else None
+        prev, prev_time = base, s.rule.time
+        steps.append({"timeHeader":time_header,"heading":heading,"definition":s.rule.raw_definition,
+                      "time":s.rule.time,"name":s.rule.name or base,
+                      "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
+                      "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
+    return d, {"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),"steps":steps}
+
+def prepare_run():
     res = load_project(Path(OVERLAY))
     if res.is_err(): return json.dumps({"error": res.unwrap_err()})
     project = res.unwrap()
     try: rules = resolve_rule_letters(project.rules, project)
     except ValueError as e: return json.dumps({"error":[str(e)]})
-    out, R = [], lambda f,b: render_syllabified(lower_tiers(f), b, project)
-    all_derivations = []
-    for ipa, word in project.words.items():
-        d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
-                   project.features, project.sonorities, project.syllable_parts, project.tiers)
-        all_derivations.append(d)
-        steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
-        has_tiers = any(t.autosegs for t in d.input.tiers.values())
-        frames = []
-        for s in d.steps:
-            base = _SUB.sub("", s.rule.id)
-            heading = (s.rule.name or base) if base!=prev else None
-            time_header = s.rule.time if (s.rule.time is not None and s.rule.time != prev_time) else None
-            prev, prev_time = base, s.rule.time
-            steps.append({"timeHeader":time_header,"heading":heading,"definition":s.rule.raw_definition,
-                          "time":s.rule.time,"name":s.rule.name or base,
-                          "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
-                          "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
-            lbl = (str(s.rule.time)+": " if s.rule.time is not None else "")+(s.rule.name or base)
-            for sublabel, diagram in render_change(s.before, s.after, s.rule, project):  # tier + spreads
-                frames.append({"label": lbl + (" · " + sublabel if sublabel else ""), "diagram":diagram})
-        # The change diagrams already show before→after, so separate Input/Surface melody snapshots
-        # are redundant. Keep an Input melody only for a tier word with no change (else it'd be blank).
-        if not frames and has_tiers:
-            frames.append({"label":"Input","diagram":render_autosegmental(d.input,project)})
-        autoseg = bool(frames)  # any autosegmental content: a change diagram or the lone-melody snapshot
-        input_geometry = [render_geometry_tree(seg.bundle, project) for seg in d.input.segments]
-        output_geometry = [render_geometry_tree(seg.bundle, project) for seg in d.surface.segments]
-        out.append({"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),
-                    "steps":steps,"frames":frames,"autosegmental":autoseg,
-                    "inputGeometry":input_geometry,"outputGeometry":output_geometry})
-    (Path(OVERLAY)/"output.md").write_text(_build_report(all_derivations, project, None), encoding="utf-8")
-    (Path(OVERLAY)/"output.csv").write_text(_build_csv_report(all_derivations, rules, project), encoding="utf-8")
-    return json.dumps({"derivations": out})
+    _SESSION.clear()
+    _SESSION.update(project=project, rules=rules, words=list(project.words.items()), acc=[])
+    return json.dumps({"words": len(_SESSION["words"])})
+
+def derive_batch(start, count):
+    if "project" not in _SESSION: return json.dumps([])  # session superseded/cleared — caller aborts
+    project, rules = _SESSION["project"], _SESSION["rules"]
+    out = []
+    for ipa, word in _SESSION["words"][start:start+count]:
+        d, rendered = _derive_one(project, rules, ipa, word)
+        _SESSION["acc"].append(d)
+        out.append(rendered)
+    return json.dumps(out)
+
+def _grade_summary(acc, project):
+    # None when the lexicon carries no attested forms; otherwise a per-target
+    # (each stage + final) summary with the words that differ, for the UI to render.
+    if not any(d.word.final is not None or d.word.stages for d in acc):
+        return None
+    stages = grade_stages(acc, project)
+    return {
+        "hasStages": any(s.time is not None for s in stages),
+        "stages": [{
+            "label": s.label,
+            "graded": s.report.graded,
+            "exact": s.report.exact,
+            "withinOne": s.report.within_one,
+            "meanPhone": round(s.report.mean_distance, 3),
+            "meanFeature": round(s.report.mean_feature_distance, 3),
+            "misses": [{"gloss": g.gloss or g.ipa, "derived": g.derived, "target": g.target,
+                        "d": g.distance, "fd": g.feature_distance}
+                       for g in sorted(s.report.grades, key=lambda g: (g.gloss or g.ipa).lower())
+                       if not g.exact],
+        } for s in stages],
+    }
+
+def finalize_run():
+    if "project" not in _SESSION: return json.dumps({"grading": None})  # superseded run
+    project, rules, acc = _SESSION["project"], _SESSION["rules"], _SESSION["acc"]
+    (Path(OVERLAY)/"output.md").write_text(_build_report(acc, project, None), encoding="utf-8")
+    (Path(OVERLAY)/"derivation_table.csv").write_text(_build_csv_report(acc, rules, project), encoding="utf-8")
+    grading = _grade_summary(acc, project)
+    _SESSION.clear()
+    return json.dumps({"grading": grading})
+
+def run_derivations():
+    prep = json.loads(prepare_run())
+    if "error" in prep: return json.dumps(prep)
+    out = []
+    for i in range(0, prep["words"], 64):
+        out.extend(json.loads(derive_batch(i, 64)))
+    fin = json.loads(finalize_run())
+    return json.dumps({"derivations": out, "grading": fin.get("grading")})
 `;
 
 let py = null; // the Pyodide interpreter, set once initialised
@@ -193,11 +239,87 @@ export function fileStatus() {
 }
 
 /**
+ * List the bundled example projects from the static manifest.
+ * @returns {Promise<Array<{dir: string, label: string, files: string[]}>>}
+ *   empty array if the manifest is absent (e.g. no examples were bundled).
+ */
+export async function listExampleProjects() {
+  try {
+    const res = await fetch(EXAMPLES_INDEX);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data?.projects) ? data.projects : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Load a bundled example project into the overlay: clears the overlay, then
+ * fetches each of its inventory files and writes it in. Files the project does
+ * not supply fall back to the shipped default, exactly like the CLI loader.
+ * @param {{dir: string, files: string[]}} entry a manifest entry
+ */
+export async function loadExampleProject(entry) {
+  resetOverlay(); // loading a project REPLACES the current one, not merges into it
+  for (const name of entry.files) {
+    const url = new URL(`projects/${entry.dir}/${name}`, document.baseURI).href;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Could not fetch ${entry.dir}/${name} (${res.status})`);
+    writeFile(name, await res.text());
+  }
+}
+
+/**
  * Run all derivations.
  * @returns {{derivations: Array}|{error: string[]}}
  */
 export function runDerivations() {
   const fn = py.globals.get("run_derivations");
+  try {
+    return JSON.parse(fn());
+  } finally {
+    fn.destroy();
+  }
+}
+
+// Batched run API — lets the caller drive derivations in slices and paint a
+// progress bar between them (a single runDerivations() call would block the main
+// thread for the whole run, so the bar could never update).
+
+/**
+ * Begin a run: parse the project and count its words.
+ * @returns {{words: number}|{error: string[]}}
+ */
+export function prepareRun() {
+  const fn = py.globals.get("prepare_run");
+  try {
+    return JSON.parse(fn());
+  } finally {
+    fn.destroy();
+  }
+}
+
+/**
+ * Derive a slice of words, accumulating them for the reports.
+ * @returns {Array} the rendered derivations for words [start, start+count).
+ */
+export function deriveBatch(start, count) {
+  const fn = py.globals.get("derive_batch");
+  try {
+    return JSON.parse(fn(start, count));
+  } finally {
+    fn.destroy();
+  }
+}
+
+/**
+ * Finish a run: write the reports from the accumulated derivations and grade them.
+ * @returns {{grading: object|null}} the grading summary, or null when the lexicon
+ *   carries no attested forms (nothing to grade against).
+ */
+export function finalizeRun() {
+  const fn = py.globals.get("finalize_run");
   try {
     return JSON.parse(fn());
   } finally {

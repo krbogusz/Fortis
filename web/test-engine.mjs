@@ -38,10 +38,10 @@ try {
 
   // The reports are written into the virtual FS alongside the inventory files.
   const md = py.runPython(`read_file("output.md")`).toString();
-  const csv = py.runPython(`read_file("output.csv")`).toString();
+  const csv = py.runPython(`read_file("derivation_table.csv")`).toString();
   if (!md.startsWith("# Output")) throw new Error("output.md missing its header: " + md.slice(0, 80));
-  if (!csv.startsWith("ipa,gloss,")) throw new Error("output.csv missing its header row: " + csv.slice(0, 80));
-  log(`5. reports written: output.md (${md.length} chars), output.csv (${csv.split("\n").length} rows)`);
+  if (!csv.startsWith("ipa,gloss,")) throw new Error("derivation_table.csv missing its header row: " + csv.slice(0, 80));
+  log(`5. reports written: output.md (${md.length} chars), derivation_table.csv (${csv.split("\n").length} rows)`);
 
   // Overlay model: empty overlay ⇒ all-default; write ⇒ project; remove ⇒ back to default.
   const FILES = [

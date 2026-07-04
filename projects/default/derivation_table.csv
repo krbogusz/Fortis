@@ -1,4 +1,4 @@
-ipa,gloss,"Coda s-lenition (early, t=0)",Intervocalic voicing,Spirantisation,Debuccalisation,Hiatus coalescence,"Coda s-lenition (late, t=500)",Voicing assimilation,i-umlaut,Final devoicing,Intervocalic loss,Epenthesis,Degemination,Tone spread,Place assimilation,Tone stability,Tone delinking,Contour tone (by spreading),Stress assignment,Disjunction,Gemination,Exception,Right-to-left raising,Vowel harmony (agreement),Vowel harmony (spreading)
+ipa,gloss,"0: Coda s-lenition (early, t=0)",100: Intervocalic voicing,200: Spirantisation,300: Debuccalisation,300: Hiatus coalescence,"500: Coda s-lenition (late, t=500)",Voicing assimilation,i-umlaut,Final devoicing,Intervocalic loss,Epenthesis,Degemination,Tone spread,Place assimilation,Tone stability,Tone delinking,Contour tone (by spreading),Stress assignment,Disjunction,Gemination,Exception,Right-to-left raising,Vowel harmony (agreement),Vowel harmony (spreading)
 akba,voicing assimilation,,,,,,,ag.ba,,,,,,,,,,,,,,,,,
 taki,i-umlaut,,,,,,,,te.ki,,,,,,,,,,,,,,,,
 tag,final devoicing,,,,,,,,,tak,,,,,,,,,,,,,,,

@@ -3,25 +3,32 @@
 #
 #   python -m src.fortis.main          # run this showcase
 #   python -m src.fortis.main --project projects/pie_to_pger   # the PIE → Proto-Germanic project
+#
+# Most words carry a `final` — the attested target the engine is graded against (here,
+# its own correct derivation, so the showcase grades 100% exact). `pata`, the "sound
+# change over time" word, also carries intermediate `stages` keyed by rule time, to
+# demonstrate the per-stage distance summary. A run writes distances.md and, in the web
+# app, populates the Grading tab. A few words keep the bare `word = "gloss"` form (no
+# target) to show both lexicon styles are supported; those are simply left ungraded.
 
-"akba"   = "voicing assimilation"
-"taki"   = "i-umlaut"
-"tag"    = "final devoicing"
-"asta"   = "coda lenition, early"
-"aspa"   = "coda lenition, late"
+"akba"   = {gloss = "voicing assimilation", final = "agba"}
+"taki"   = {gloss = "i-umlaut", final = "teki"}
+"tag"    = {gloss = "final devoicing", final = "tak"}
+"asta"   = {gloss = "coda lenition, early", final = "ahta"}
+"aspa"   = {gloss = "coda lenition, late", final = "aspa"}
 "maha"   = "intervocalic loss"
-"katr"   = "epenthesis"
+"katr"   = {gloss = "epenthesis", final = "katər"}
 "atta"   = "degemination"
-"anka"   = "place assimilation"
-"katá"  = "tone stability"
-"kará"  = "tone delinking"
-"pátà"  = "contour tone"
-"kata"   = "stress"
+"anka"   = {gloss = "place assimilation", final = "aŋka"}
+"katá"  = {gloss = "tone stability", final = "kat˦"}
+"kará"  = {gloss = "tone delinking", final = "kara"}
+"pátà"  = {gloss = "contour tone", final = "pa˦ta˦˨"}
+"kata"   = {gloss = "stress", final = "ˈkata"}
 "kaj"    = "disjunction"
-"bidja"  = "gemination"
+"bidja"  = {gloss = "gemination", final = "biddja"}
 "asasi"  = "exception"
-"tepei"  = "right-to-left"
-"pata"   = "sound change over time"
-"otine"  = "vowel harmony (agreement)"
-"utine"  = "vowel harmony (spreading)"
-"táka" = "tone spread"
+"tepei"  = {gloss = "right-to-left", final = "tipii"}
+"pata"   = {gloss = "sound change over time", final = "paː", 100 = "pada", 200 = "pað̠a", 300 = "paː"}
+"otine"  = {gloss = "vowel harmony (agreement)", final = "otunɤ"}
+"utine"  = {gloss = "vowel harmony (spreading)", final = "utunɤ"}
+"táka" = {gloss = "tone spread", final = "ta˦ka˦"}
