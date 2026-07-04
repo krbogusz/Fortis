@@ -37,6 +37,22 @@ from src.fortis.models.rules import RuleInventory
 _AUTO_OUTPUT = object()
 
 
+def _progress_bar(done: int, total: int) -> None:
+    """Render an in-place derivation progress bar on stderr.
+
+    A no-op when stderr is not a terminal (piped or captured output stays clean).
+    Redraws on the same line via a carriage return; the final update emits a
+    trailing newline so the ``wrote …`` messages that follow start fresh.
+    """
+    if total == 0 or not sys.stderr.isatty():
+        return
+    width = 28
+    filled = round(width * done / total)
+    bar = "█" * filled + "░" * (width - filled)
+    end = "\n" if done == total else ""
+    print(f"\rderiving [{bar}] {done}/{total}{end}", end="", file=sys.stderr, flush=True)
+
+
 def _parse_args(argv: list[str] | None) -> argparse.Namespace:
     """Parse the command-line interface."""
     parser = argparse.ArgumentParser(
@@ -115,9 +131,9 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit(1) from error
     init_done = time.perf_counter()
 
-    # Phase 2 — rule application: derive every word.
+    # Phase 2 — rule application: derive every word (with a progress bar on a TTY).
     try:
-        derivations = derive_all(project)
+        derivations = derive_all(project, on_progress=_progress_bar)
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error

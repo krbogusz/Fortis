@@ -39,6 +39,7 @@ output, only enables ``$``-conditioned rules.)
 """
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import replace
 
 from src.fortis.application.applying import apply_match
@@ -791,7 +792,10 @@ def derive(
     )
 
 
-def derive_all(project: Project) -> list[Derivation]:
+def derive_all(
+    project: Project,
+    on_progress: Callable[[int, int], None] | None = None,
+) -> list[Derivation]:
     """Derive every word in *project*, in the lexicon's order.
 
     A convenience over :func:`derive`: resolves the rules' letter runs once (see
@@ -799,23 +803,34 @@ def derive_all(project: Project) -> list[Derivation]:
     project's inventories. Shared by the CLI and the analysis tools so they run
     the same pipeline.
 
+    Args:
+        project: The loaded project.
+        on_progress: Optional callback invoked ``(done, total)`` after each word,
+            e.g. to render a progress bar.
+
     Raises:
         ValueError: a rule spells a symbol that resolves to no segment.
     """
     rules = resolve_rule_letters(project.rules, project)
-    return [
-        derive(
-            word,
-            string_to_sequence(ipa, project),
-            rules,
-            project.letters,
-            project.features,
-            project.sonorities,
-            project.syllable_parts,
-            project.tiers,
+    items = list(project.words.items())
+    total = len(items)
+    derivations: list[Derivation] = []
+    for done, (ipa, word) in enumerate(items, start=1):
+        derivations.append(
+            derive(
+                word,
+                string_to_sequence(ipa, project),
+                rules,
+                project.letters,
+                project.features,
+                project.sonorities,
+                project.syllable_parts,
+                project.tiers,
+            )
         )
-        for ipa, word in project.words.items()
-    ]
+        if on_progress is not None:
+            on_progress(done, total)
+    return derivations
 
 
 def form_at_time(derivation: Derivation, time: int) -> tuple[Form, frozenset[int]]:
