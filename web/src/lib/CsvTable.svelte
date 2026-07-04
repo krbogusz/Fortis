@@ -81,7 +81,7 @@
   table.csv {
     border-collapse: collapse;
     font-family: var(--mono);
-    font-size: var(--fs-body);
+    font-size: 16px;
   }
   .csv th,
   .csv td {
@@ -112,7 +112,7 @@
   }
   .csv td.sym {
     font-family: var(--ipa);
-    font-size: var(--fs-body);
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-h);
   }

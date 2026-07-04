@@ -15,6 +15,9 @@
     loadExampleProject,
   } from "./lib/engine.js";
   import CsvTable from "./lib/CsvTable.svelte";
+  import { marked } from "marked";
+  import userGuideMd from "../../docs/user_guide.md?raw";
+  import defaultSystemMd from "../../docs/default_system.md?raw";
 
   let ready = $state(false);
   let status = $state("Starting…");
@@ -47,6 +50,12 @@
   let examples = $state([]); // bundled example projects from the static manifest
   let imported = $state([]); // imported (local-folder) projects: { id, label, files }
   let picked = $state(""); // id of the selected project ("" = the built-in default)
+
+  let docsOpen = $state(false); // the Docs floating window
+  let docsTab = $state("guide"); // active docs tab: "guide" | "system"
+  const docsHtml = $derived(
+    marked.parse(docsTab === "guide" ? userGuideMd : defaultSystemMd),
+  );
 
   let debounceTimer = null;
 
@@ -289,11 +298,16 @@
   }
 </script>
 
+<svelte:window onkeydown={(e) => e.key === "Escape" && (docsOpen = false)} />
+
 <div class="app">
   <header class="bar">
-    <div class="brand">
-      <strong>Fortis</strong>
-      <span class="tag">phonology engine</span>
+    <div class="bar-left">
+      <div class="brand">
+        <strong>Fortis</strong>
+        <span class="tag">phonology engine</span>
+      </div>
+      <button class="docs-btn" onclick={() => (docsOpen = true)}>Docs</button>
     </div>
     <div class="state">
       {#if initError}
@@ -595,6 +609,35 @@
   </main>
 </div>
 
+{#if docsOpen}
+  <!-- backdrop click closes (Esc and × also close) -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <div
+    class="docs-overlay"
+    role="presentation"
+    onclick={(e) => e.target === e.currentTarget && (docsOpen = false)}
+  >
+    <div class="docs-window" role="dialog" aria-modal="true" aria-label="Documentation">
+      <div class="docs-head">
+        <div class="docs-tabs">
+          <button
+            class:active={docsTab === "guide"}
+            onclick={() => (docsTab = "guide")}>User guide</button
+          >
+          <button
+            class:active={docsTab === "system"}
+            onclick={() => (docsTab = "system")}>Default system</button
+          >
+        </div>
+        <button class="docs-close" title="Close (Esc)" onclick={() => (docsOpen = false)}
+          >×</button
+        >
+      </div>
+      <div class="docs-body">{@html docsHtml}</div>
+    </div>
+  </div>
+{/if}
+
 <style>
   .app {
     display: flex;
@@ -610,6 +653,15 @@
     border-bottom: 1px solid var(--border);
     background: var(--panel);
     flex: none;
+  }
+  .bar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .docs-btn {
+    font-size: var(--fs-body);
+    padding: 4px 12px;
   }
   .brand strong {
     color: var(--text-h);
@@ -812,7 +864,7 @@
     border-radius: 6px;
     background: var(--panel); /* match the derivation card background */
     color: var(--text-h);
-    font-size: var(--fs-body);
+    font-size: 16px;
     line-height: 1.55;
     resize: none;
     tab-size: 4;
@@ -1104,5 +1156,147 @@
       width: auto;
       height: 1px;
     }
+  }
+
+  /* Docs floating window */
+  .docs-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 16px;
+  }
+  .docs-window {
+    display: flex;
+    flex-direction: column;
+    width: min(880px, 100%);
+    max-height: 92vh;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .docs-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    flex: none;
+  }
+  .docs-tabs {
+    display: inline-flex;
+    gap: 4px;
+  }
+  .docs-tabs button {
+    font-size: var(--fs-body);
+    padding: 4px 12px;
+  }
+  .docs-close {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1;
+    padding: 2px 8px;
+  }
+  .docs-close:hover:not(:disabled) {
+    color: var(--text-h);
+    border: none;
+  }
+  .docs-body {
+    overflow: auto;
+    padding: 4px 26px 28px;
+    font-family: var(--sans);
+    color: var(--text);
+    font-size: var(--fs-body);
+  }
+
+  /* Rendered markdown (dynamic {@html}, so :global) */
+  .docs-body :global(h1) {
+    font-size: 22px;
+    color: var(--text-h);
+    margin: 18px 0 10px;
+  }
+  .docs-body :global(h2) {
+    font-size: 18px;
+    color: var(--text-h);
+    margin: 22px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .docs-body :global(h3) {
+    font-size: 15px;
+    color: var(--text-h);
+    margin: 16px 0 6px;
+  }
+  .docs-body :global(h4) {
+    font-size: 14px;
+    color: var(--text-h);
+    margin: 14px 0 4px;
+  }
+  .docs-body :global(p),
+  .docs-body :global(li) {
+    line-height: 1.6;
+  }
+  .docs-body :global(ul),
+  .docs-body :global(ol) {
+    padding-left: 22px;
+  }
+  .docs-body :global(a) {
+    color: var(--accent);
+  }
+  .docs-body :global(code) {
+    font-family: var(--ipa), var(--mono);
+    font-size: 0.92em;
+    background: var(--code-bg);
+    padding: 1px 4px;
+    border-radius: 4px;
+  }
+  .docs-body :global(pre) {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    overflow-x: auto;
+  }
+  .docs-body :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+  .docs-body :global(table) {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.95em;
+  }
+  .docs-body :global(th),
+  .docs-body :global(td) {
+    border: 1px solid var(--border);
+    padding: 4px 9px;
+    text-align: left;
+  }
+  .docs-body :global(th) {
+    background: var(--panel);
+    color: var(--text-h);
+  }
+  .docs-body :global(blockquote) {
+    margin: 8px 0;
+    padding: 2px 12px;
+    border-left: 3px solid var(--border);
+    color: var(--muted);
+  }
+  .docs-body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 18px 0;
   }
 </style>

@@ -301,16 +301,16 @@ A `none` value **delinks**. For a segmental feature it is geometry-aware — del
 
 #### Letter–tier interactions
 
-A letter's *segmental* content sits in the bundle; a syllable-tier feature (stress, tone) sits on the nucleus's tier. How a literal touches that tier depends on the side. Taking `e` and stress as the example:
+A letter's _segmental_ content sits in the bundle; a syllable-tier feature (stress, tone) sits on the nucleus's tier. How a literal touches that tier depends on the side. Taking `e` and stress as the example:
 
-| Form | Target — matches | Result — produces |
-| --- | --- | --- |
-| `e` | an `e` at **any** stress | an `e`; **stress persists** from the input |
-| `ˈe` | a **primary**-stressed `e` | an `e`, **writes** primary stress |
-| `e^[stress: none]` | an **unstressed** `e` | an `e`, **delinks** stress (unstressed) |
-| `e^[stress: primary]` | a **primary**-stressed `e` | an `e`, **writes** primary stress |
+| Form                  | Target — matches           | Result — produces                          |
+| --------------------- | -------------------------- | ------------------------------------------ |
+| `e`                   | an `e` at **any** stress   | an `e`; **stress persists** from the input |
+| `ˈe`                  | a **primary**-stressed `e` | an `e`, **writes** primary stress          |
+| `e^[stress: none]`    | an **unstressed** `e`      | an `e`, **delinks** stress (unstressed)    |
+| `e^[stress: primary]` | a **primary**-stressed `e` | an `e`, **writes** primary stress          |
 
-Three things follow. **`ˈe` is exactly `e^[stress: primary]`** (and `ˌe` is `e^[stress: secondary]`) — the stress diacritic is shorthand for that override, on both sides. **Bare `e` is the only form that leaves the tier alone** — it matches at any stress and lets the input's stress persist on output; every marked or overridden form pins one value. And **`e^[stress: none]` has no diacritic equivalent** (there is no "unstressed" mark), so it is the only way to *match* an unstressed vowel or to *remove* stress in the result — the suprasegmental mirror of `e^[oral: none]` → schwa on the segmental side.
+Three things follow. **`ˈe` is exactly `e^[stress: primary]`** (and `ˌe` is `e^[stress: secondary]`) — the stress diacritic is shorthand for that override, on both sides. **Bare `e` is the only form that leaves the tier alone** — it matches at any stress and lets the input's stress persist on output; every marked or overridden form pins one value. And **`e^[stress: none]` has no diacritic equivalent** (there is no "unstressed" mark), so it is the only way to _match_ an unstressed vowel or to _remove_ stress in the result — the suprasegmental mirror of `e^[oral: none]` → schwa on the segmental side.
 
 ### 5.2 Special symbols
 

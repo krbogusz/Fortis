@@ -6,4 +6,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 export default defineConfig({
   base: './',
   plugins: [svelte()],
+  // Allow importing the repo's docs/*.md (one level above this web/ root) as ?raw.
+  server: { fs: { allow: ['..'] } },
 })
