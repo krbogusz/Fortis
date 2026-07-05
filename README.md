@@ -181,6 +181,14 @@ how many words it improves, regresses, or leaves unchanged:
 python -m src.fortis.analysis.main --project projects/latin_to_french --try 'eː → ɛː / _ t'
 ```
 
+To scope any of these to a sub-population, `--filter 'PATTERN'` restricts every
+report to the words whose **attested target** matches a sequence pattern (the same
+notation a rule target uses — feature bundles, letters, quantifiers):
+
+```
+python -m src.fortis.analysis.main --project projects/latin_to_french --filter 't̪ [aperture: high]'
+```
+
 The thresholds these analyses use (the autopsy's support floor, how many phones
 to autopsy, the edit distance's metathesis cost) are tunable per project in an
 optional `settings.toml`; a project that omits it, or any key, gets the built-in

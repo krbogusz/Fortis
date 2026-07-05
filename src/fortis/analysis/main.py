@@ -9,6 +9,9 @@ per-stage), and ``blame.md`` (each wrong word attributed to a rule). With
 
     python -m src.fortis.analysis.main --project projects/latin_to_french
 
+``--filter 'PATTERN'`` restricts every report to the words whose attested target
+matches a sequence pattern (Fortis rule notation, e.g. ``k [aperture: high]``).
+
 The engine CLI (``python -m src.fortis.main``) writes the same reports as part of
 a full run; this standalone entry point is for grading on its own.
 """
@@ -27,12 +30,14 @@ from src.fortis.analysis.diagnosis import (
     render_timeline,
     timeline_summary_line,
 )
+from src.fortis.analysis.filtering import filter_by_target, filter_note
 from src.fortis.analysis.grading import grade_stages
 from src.fortis.analysis.reporting import distance_summary_line, render_distance_summary
 from src.fortis.analysis.whatif import render_whatif, try_rule, whatif_summary_line
 from src.fortis.application.deriving import derive_all
 from src.fortis.config import config
 from src.fortis.loaders.project import load_project
+from src.fortis.result import Err, Ok
 
 # Sentinel: no ``--output`` given ⇒ write to ``<project>/distances.md``.
 _AUTO_OUTPUT = object()
@@ -87,6 +92,13 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         metavar="TIME",
         help="time to insert the --try rule at (default: untimed, after all timed rules)",
     )
+    parser.add_argument(
+        "--filter",
+        dest="filter",
+        metavar="PATTERN",
+        help="restrict the reports to words whose attested target matches a sequence "
+        "pattern (Fortis notation, e.g. 'k [aperture: high]')",
+    )
     return parser.parse_args(argv)
 
 
@@ -106,8 +118,21 @@ def main(argv: list[str] | None = None) -> None:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error
 
-    stages = grade_stages(derivations, project)
     where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
+
+    # --filter restricts every report to the words whose target matches a pattern.
+    if args.filter is not None:
+        match filter_by_target(derivations, args.filter, project):
+            case Err(errs):
+                for error in errs:
+                    print(f"error: --filter: {error}", file=sys.stderr)
+                raise SystemExit(1)
+            case Ok(selection):
+                derivations = list(selection.matched)
+                where += f" · {filter_note(selection)}"
+                print(filter_note(selection), file=sys.stderr)  # announce, incl. a 0-match filter
+
+    stages = grade_stages(derivations, project)
 
     output_dir = args.project or config.paths.default
     path = output_dir / "distances.md" if args.output is _AUTO_OUTPUT else args.output
