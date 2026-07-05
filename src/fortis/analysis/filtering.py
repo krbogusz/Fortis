@@ -106,10 +106,8 @@ def _locations(derivation: Derivation, sd: StructuralDescription, project: Proje
     return locations
 
 
-def filter_by_pattern(
-    derivations: list[Derivation], pattern: str, project: Project
-) -> Result[FilterResult, list[str]]:
-    """Select the words the pattern matches in any form; ``Err`` if it will not parse/resolve."""
+def _parse_and_resolve(pattern: str, project: Project) -> Result[StructuralDescription, list[str]]:
+    """Parse a pattern and resolve its letter runs, or ``Err`` — shared by both filters."""
     match parse_sequence(pattern, project.features):
         case Err(errs):
             return Err(errs)
@@ -118,16 +116,70 @@ def filter_by_pattern(
     if not elements:
         return Err(["filter pattern is empty"])
     try:
-        sd = _resolve_pattern(elements, pattern, project)
+        return Ok(_resolve_pattern(elements, pattern, project))
     except ValueError as error:
         return Err([str(error)])
 
+
+def filter_by_pattern(
+    derivations: list[Derivation], pattern: str, project: Project
+) -> Result[FilterResult, list[str]]:
+    """Select the words the pattern matches in any form; ``Err`` if it will not parse/resolve."""
+    match _parse_and_resolve(pattern, project):
+        case Err(errs):
+            return Err(errs)
+        case Ok(sd):
+            pass
     matched: list[MatchedWord] = []
     for derivation in derivations:
         locations = _locations(derivation, sd, project)
         if locations:
             matched.append(MatchedWord(derivation, tuple(locations)))
     return Ok(FilterResult(pattern=pattern, matched=tuple(matched), considered=len(derivations)))
+
+
+@dataclass(frozen=True)
+class ScopeResult:
+    """The words whose attested forms match a pattern (for scoping the error reports).
+
+    ``considered`` is the words carrying any attested form (target or a stage) — the
+    scope's denominator; words with none are neither scoped nor graded.
+    """
+
+    pattern: str
+    matched: tuple[Derivation, ...]
+    considered: int
+
+
+def filter_attested(
+    derivations: list[Derivation], pattern: str, project: Project
+) -> Result[ScopeResult, list[str]]:
+    """Select the words whose **attested** target or any attested stage matches *pattern*.
+
+    Unlike :func:`filter_by_pattern` this looks only at the attested forms (not the derived
+    ones), so its subset is the natural population to restrict grading/diagnosis/blame to.
+    """
+    match _parse_and_resolve(pattern, project):
+        case Err(errs):
+            return Err(errs)
+        case Ok(sd):
+            pass
+    matched: list[Derivation] = []
+    considered = 0
+    for derivation in derivations:
+        word = derivation.word
+        forms = ([word.final] if word.final is not None else []) + list(word.stages.values())
+        if not forms:
+            continue
+        considered += 1
+        if any(_matches(sd, _segment(form, project), project) for form in forms):
+            matched.append(derivation)
+    return Ok(ScopeResult(pattern=pattern, matched=tuple(matched), considered=considered))
+
+
+def scope_summary_line(result: ScopeResult) -> str:
+    """A one-line headline for stderr."""
+    return f"scope `{result.pattern}`: {len(result.matched)}/{result.considered} words match an attested form"
 
 
 def filter_summary_line(result: FilterResult) -> str:

@@ -399,3 +399,15 @@ class TestGradeCli:
         assert "# Distances" in output.read_text(encoding="utf-8")
         out = capsys.readouterr().out
         assert "exact" in out
+
+    def test_scope_restricts_the_reports(self, tmp_path):
+        # A scope pattern present in the default targets stamps the subset into the header.
+        output = tmp_path / "distances.md"
+        grade_cli.main(["--output", str(output), "--scope", "[+syllabic]"])  # any vowel
+        assert "scope `[+syllabic]`" in output.read_text(encoding="utf-8")
+
+    def test_bad_scope_pattern_exits(self, tmp_path):
+        import pytest
+
+        with pytest.raises(SystemExit):
+            grade_cli.main(["--output", str(tmp_path / "distances.md"), "--scope", "[bad"])

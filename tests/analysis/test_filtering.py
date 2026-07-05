@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from src.fortis.analysis.filtering import filter_by_pattern, filter_summary_line
+from src.fortis.analysis.filtering import (
+    filter_attested,
+    filter_by_pattern,
+    filter_summary_line,
+    scope_summary_line,
+)
 from src.fortis.application.deriving import derive_all
 from src.fortis.loaders.project import load_project
 
@@ -58,3 +63,33 @@ class TestFilterSummaryLine:
     def test_line_reports_counts(self, derivs, latin):
         line = filter_summary_line(filter_by_pattern(derivs, "ʁ", latin).unwrap())
         assert "filter `ʁ`" in line and "matched" in line
+
+
+class TestFilterAttested:
+    def test_matches_the_attested_target(self, derivs, latin):
+        result = filter_attested(derivs, "ʁ", latin).unwrap()
+        assert len(result.matched) > 0
+        for d in result.matched:
+            forms = ([d.word.final] if d.word.final else []) + list(d.word.stages.values())
+            assert any("ʁ" in f for f in forms)
+
+    def test_matches_a_stage_the_final_lacks(self, derivs, latin):
+        # /s/ survives in early attested stages of some words but drops by the final —
+        # scoping on all stages (not just the target) must include those words.
+        result = filter_attested(derivs, "s", latin).unwrap()
+        assert any(
+            d.word.final and "s" not in d.word.final and any("s" in v for v in d.word.stages.values())
+            for d in result.matched
+        )
+
+    def test_considered_is_words_with_an_attested_form(self, derivs, latin):
+        result = filter_attested(derivs, "ʁ", latin).unwrap()
+        expected = sum(1 for d in derivs if d.word.final is not None or d.word.stages)
+        assert result.considered == expected
+
+    def test_parse_error_is_err(self, derivs, latin):
+        assert filter_attested(derivs, "[bad", latin).is_err()
+
+    def test_summary_line(self, derivs, latin):
+        line = scope_summary_line(filter_attested(derivs, "ʁ", latin).unwrap())
+        assert "scope `ʁ`" in line and "match" in line

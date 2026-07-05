@@ -9,9 +9,13 @@ per-stage), and ``blame.md`` (each wrong word attributed to a rule). With
 
     python -m src.fortis.analysis.main --project projects/latin_to_french
 
+``--scope 'PATTERN'`` restricts every report to the words whose attested target — or
+any attested stage — matches a sequence pattern (Fortis notation, e.g.
+``k [aperture: high]``), for debugging accuracy on a sub-population.
+
 The engine CLI (``python -m src.fortis.main``) writes the same reports as part of
-a full run — and, with ``--filter``, a filtered synthesis; this standalone entry
-point is for grading on its own.
+a full run — and, with ``--filter``, an all-forms filtered synthesis; this standalone
+entry point is for grading on its own.
 """
 from __future__ import annotations
 
@@ -28,12 +32,14 @@ from src.fortis.analysis.diagnosis import (
     render_timeline,
     timeline_summary_line,
 )
+from src.fortis.analysis.filtering import filter_attested, scope_summary_line
 from src.fortis.analysis.grading import grade_stages
 from src.fortis.analysis.reporting import distance_summary_line, render_distance_summary
 from src.fortis.analysis.whatif import render_whatif, try_rule, whatif_summary_line
 from src.fortis.application.deriving import derive_all
 from src.fortis.config import config
 from src.fortis.loaders.project import load_project
+from src.fortis.result import Err, Ok
 
 # Sentinel: no ``--output`` given ⇒ write to ``<project>/distances.md``.
 _AUTO_OUTPUT = object()
@@ -88,6 +94,13 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         metavar="TIME",
         help="time to insert the --try rule at (default: untimed, after all timed rules)",
     )
+    parser.add_argument(
+        "--scope",
+        dest="scope",
+        metavar="PATTERN",
+        help="restrict every report to words whose attested target or ANY attested stage "
+        "matches a sequence pattern (Fortis notation, e.g. 'k [aperture: high]')",
+    )
     return parser.parse_args(argv)
 
 
@@ -108,6 +121,18 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit(1) from error
 
     where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
+
+    # --scope restricts every report to words whose attested target or any stage matches.
+    if args.scope is not None:
+        match filter_attested(derivations, args.scope, project):
+            case Err(errs):
+                for error in errs:
+                    print(f"error: --scope: {error}", file=sys.stderr)
+                raise SystemExit(1)
+            case Ok(scoped):
+                derivations = list(scoped.matched)
+                where += f" · scope `{args.scope}`: {len(scoped.matched)}/{scoped.considered} words"
+                print(scope_summary_line(scoped), file=sys.stderr)  # announce, incl. a 0-match scope
 
     stages = grade_stages(derivations, project)
 

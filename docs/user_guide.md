@@ -612,12 +612,19 @@ Alongside the printed trace, every CLI run writes into the project directory:
 - **`blame.md`** — each wrong word attributed to the rule that produced the wrong
   phone, with a per-step trajectory toward each era's attested form.
 
-With `--filter 'PATTERN'` the run also writes **`filtered_output.md`** and
-**`filtered_table.csv`** — a synthesis of the words a sequence pattern touches in
-*any* form (input, an intermediate derived form, the surface, the attested target,
-or a stage), each with its trace labelled by where it matched. Because a pattern is
-often transient, most matched words derive correctly, so it answers *which* words
-pass through a shape and *where*, not which are wrong.
+Two pattern filters scope this output (both take Fortis sequence notation — feature
+bundles, letters, quantifiers):
+
+- On the standalone grader, `--scope 'PATTERN'` **restricts** every report to the
+  words whose attested target — or any attested stage — matches, for debugging
+  accuracy on a sub-population (e.g. words that carried an /s/ at some stage, even if
+  it later dropped).
+- On the engine run, `--filter 'PATTERN'` additionally writes **`filtered_output.md`**
+  and **`filtered_table.csv`** — a synthesis of the words a pattern touches in *any*
+  form (input, an intermediate derived form, the surface, the attested target, or a
+  stage), each with its trace labelled by where it matched. Because a pattern is often
+  transient, most matched words derive correctly, so it answers *which* words pass
+  through a shape and *where*, not which are wrong.
 
 The thresholds these analyses use are tunable per project in an optional
 `settings.toml` (the autopsy's support floor and how many phones to autopsy, the
