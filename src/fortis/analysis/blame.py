@@ -28,7 +28,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from src.fortis.analysis.grading import align, compare, split_phones
+from src.fortis.analysis.grading import align, compare, feature_compare, split_phones
 from src.fortis.application.deriving import form_at_time
 from src.fortis.application.rendering import render_segment, render_syllabified
 from src.fortis.application.tiers import lower_tiers
@@ -82,13 +82,22 @@ class StageDivergence:
 
 @dataclass(frozen=True)
 class TrajectoryPoint:
-    """The rendered form after one firing step (or the input/surface), with its distance."""
+    """The rendered form after one firing step, scored against the era's attested target.
+
+    ``target`` is the attested form this point is measured against — the stage the
+    derivation is heading toward here (the earliest ``Word.stages`` time ≥ the point's
+    rule-time), or ``Word.final`` once past the last stage — so an intermediate snapshot
+    is compared to the temporally-appropriate attested form, not the final one. ``distance``
+    and ``feature_distance`` are the phone and feature edit distances to that ``target``.
+    """
 
     label: str
     time: int | None
     form: str
+    target: str
     distance: int
-    regressed: bool  # distance rose vs. the previous point (a lead, never the culprit)
+    feature_distance: int | None
+    regressed: bool  # distance rose against the SAME target (a lead, never the culprit)
 
 
 @dataclass(frozen=True)
@@ -174,31 +183,60 @@ def _stage_divergence(derivation: Derivation, project: Project) -> StageDivergen
     return None
 
 
-def _trajectory(derivation: Derivation, target: str, project: Project) -> tuple[TrajectoryPoint, ...]:
-    """The rendered form and target distance after each firing step (input → surface)."""
+def _trajectory(derivation: Derivation, project: Project) -> tuple[TrajectoryPoint, ...]:
+    """Each firing step's rendered form, scored against the era's attested target.
+
+    A snapshot is compared to the attested stage it is heading toward — the earliest
+    ``Word.stages`` time ≥ the step's rule-time — or to ``Word.final`` once past the last
+    stage (and for untimed steps). The input heads to the earliest stage; the surface is
+    the final. With no attested stages, every point is compared to ``final``.
+    """
     swap = project.settings.grading.transposition_cost
-    points: list[tuple[str, int | None, str]] = [
-        ("input", None, _render(derivation.input, derivation.steps[0].before_boundaries, project))
-        if derivation.steps
-        else ("input", None, _render(derivation.input, derivation.surface_boundaries, project))
+    stages = derivation.word.stages
+    final = derivation.word.final
+    stage_times = sorted(stages)
+
+    def target_at(time: int | None) -> str:
+        if time is not None:
+            for stage_time in stage_times:  # the earliest attested stage at or after `time`
+                if stage_time >= time:
+                    return stages[stage_time]
+        return final  # untimed step, or past the last attested stage
+
+    input_boundaries = (
+        derivation.steps[0].before_boundaries if derivation.steps else derivation.surface_boundaries
+    )
+    # (label, time, form, target): the input heads to the earliest stage; the surface is final
+    # (so its distance still equals the grader's headline).
+    rows: list[tuple[str, int | None, str, str]] = [
+        (
+            "input", None, _render(derivation.input, input_boundaries, project),
+            stages[stage_times[0]] if stage_times else final,
+        )
     ]
     for step in derivation.steps:
-        label = f"{step.rule.name or step.rule.id}"
-        points.append((label, step.rule.time, _render(step.after, step.after_boundaries, project)))
-    # Final point is the surface itself (post tier-cleanup), so its distance == the grader's.
-    points.append(("surface", None, _render(derivation.surface, derivation.surface_boundaries, project)))
+        rows.append((
+            step.rule.name or step.rule.id, step.rule.time,
+            _render(step.after, step.after_boundaries, project), target_at(step.rule.time),
+        ))
+    rows.append(
+        ("surface", None, _render(derivation.surface, derivation.surface_boundaries, project), final)
+    )
 
     trajectory: list[TrajectoryPoint] = []
-    previous = None
-    for label, time, form in points:
+    prev_distance: int | None = None
+    prev_target: str | None = None
+    for label, time, form, target in rows:
         distance = compare(form, target, swap)
+        # A regression is only meaningful within one era — a rise against the *same* target.
+        regressed = prev_distance is not None and target == prev_target and distance > prev_distance
         trajectory.append(
             TrajectoryPoint(
-                label=label, time=time, form=form, distance=distance,
-                regressed=previous is not None and distance > previous,
+                label=label, time=time, form=form, target=target, distance=distance,
+                feature_distance=feature_compare(form, target, project, swap), regressed=regressed,
             )
         )
-        previous = distance
+        prev_distance, prev_target = distance, target
     return tuple(trajectory)
 
 
@@ -219,7 +257,7 @@ def blame_word(derivation: Derivation, project: Project) -> Blame | None:
         distance=distance,
         residuals=_residuals(derivation, target, surface),
         stage_divergence=_stage_divergence(derivation, project),
-        trajectory=_trajectory(derivation, target, project),
+        trajectory=_trajectory(derivation, project),
     )
 
 
@@ -273,7 +311,9 @@ def render_blame(blames: list[Blame], where: str) -> str:
         "are notationally comparable to the engine's output: if they use reconstructive",
         "notation the engine never emits (stress placement, length, θ/ə…), an early",
         "‘divergence’ is a notation artifact, not a real error. The **trajectory** is",
-        "context — distance to the target after each step; a rise (⤴) is a lead, not the culprit.",
+        "context — each step's form against the attested form of the era it is heading",
+        "toward (the **target** column), with phone (**d**) and feature (**fd**) distances;",
+        "a rise against the same target (⤴) is a lead, not the culprit.",
         "",
     ]
     if not blames:
@@ -299,10 +339,14 @@ def _blame_section(blame: Blame) -> list[str]:
             f"derived `{sd.derived}`.",
             "",
         ]
-    lines += ["| step | t | form | dist |", "| --- | ---: | --- | ---: |"]
+    lines += ["| step | t | form | target | d | fd |", "| --- | ---: | --- | --- | ---: | ---: |"]
     for point in blame.trajectory:
         time = "" if point.time is None else str(point.time)
         mark = " ⤴" if point.regressed else ""
-        lines.append(f"| {point.label}{mark} | {time} | `{point.form}` | {point.distance} |")
+        fd = "—" if point.feature_distance is None else str(point.feature_distance)
+        lines.append(
+            f"| {point.label}{mark} | {time} | `{point.form}` | `{point.target}` "
+            f"| {point.distance} | {fd} |"
+        )
     lines.append("")
     return lines

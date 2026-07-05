@@ -2,11 +2,14 @@
 
 Loads a project (the same way the engine CLI does), derives every word, grades
 the derived forms against the attested ``final`` and intermediate ``stages`` in
-``words.toml``, prints a summary, and writes a ``distances.md`` report. Run::
+``words.toml``, and writes the analysis reports — ``distances.md`` (grading),
+``diagnosis.md`` (confusions + autopsy), ``timeline.md`` (errors by rule-time +
+per-stage), and ``blame.md`` (each wrong word attributed to a rule). With
+``--try 'RULE'`` it also writes ``whatif.md`` previewing a candidate rule. Run::
 
     python -m src.fortis.analysis.main --project projects/latin_to_french
 
-The engine CLI (``python -m src.fortis.main``) writes the same report as part of
+The engine CLI (``python -m src.fortis.main``) writes the same reports as part of
 a full run; this standalone entry point is for grading on its own.
 """
 from __future__ import annotations
@@ -72,11 +75,6 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         help="path for the Markdown report (default: <project>/distances.md)",
     )
     parser.add_argument(
-        "--blame",
-        action="store_true",
-        help="attribute each wrong word to the rule that produced it (writes blame.md)",
-    )
-    parser.add_argument(
         "--try",
         dest="candidate",
         metavar="RULE",
@@ -125,21 +123,20 @@ def main(argv: list[str] | None = None) -> None:
     print(f"wrote {diagnosis_path}", file=sys.stderr)
     print(diagnosis_summary_line(grades))
 
-    # The temporal views: errors bucketed by the rule-time that produced them (blame
-    # provenance) and the full diagnosis recomputed at each attested stage.
-    buckets = errors_by_time(blame_all(derivations, project))
+    # Blame and the temporal views share the per-word blames — computed once here.
+    blames = blame_all(derivations, project)
+    buckets = errors_by_time(blames)
     stage_diag = diagnose_stages(derivations, project)
     timeline_path = path.parent / "timeline.md"
     timeline_path.write_text(render_timeline(buckets, stage_diag, project, where), encoding="utf-8")
     print(f"wrote {timeline_path}", file=sys.stderr)
     print(timeline_summary_line(buckets))
 
-    if args.blame:
-        blames = blame_all(derivations, project)
-        blame_path = path.parent / "blame.md"
-        blame_path.write_text(render_blame(blames, where), encoding="utf-8")
-        print(f"wrote {blame_path}", file=sys.stderr)
-        print(blame_summary_line(blames))
+    # Attribute each wrong word to the rule that produced it.
+    blame_path = path.parent / "blame.md"
+    blame_path.write_text(render_blame(blames, where), encoding="utf-8")
+    print(f"wrote {blame_path}", file=sys.stderr)
+    print(blame_summary_line(blames))
 
     if args.candidate is not None:
         result = try_rule(project, args.candidate, args.at)

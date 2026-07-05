@@ -186,8 +186,9 @@ def _blame_summary(blames):
                       for r in b.residuals],
         "stage": ({"time": b.stage_divergence.time, "attested": b.stage_divergence.attested,
                    "derived": b.stage_divergence.derived} if b.stage_divergence else None),
-        "trajectory": [{"label": p.label, "time": p.time, "form": p.form,
-                        "distance": p.distance, "regressed": p.regressed} for p in b.trajectory],
+        "trajectory": [{"label": p.label, "time": p.time, "form": p.form, "target": p.target,
+                        "distance": p.distance, "fd": p.feature_distance, "regressed": p.regressed}
+                       for p in b.trajectory],
     } for b in blames]}
 
 def _write_or_clear(path, text):

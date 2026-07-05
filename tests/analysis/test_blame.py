@@ -8,17 +8,9 @@ from pathlib import Path
 
 import pytest
 
-from src.fortis.analysis.blame import (
-    _phone_ids,
-    blame_all,
-    blame_summary_line,
-    blame_word,
-    render_blame,
-)
+from src.fortis.analysis.blame import blame_all, blame_summary_line, blame_word, render_blame
 from src.fortis.analysis.grading import grade, split_phones
 from src.fortis.application.deriving import derive_all
-from src.fortis.application.rendering import render_syllabified
-from src.fortis.application.tiers import lower_tiers
 from src.fortis.loaders.project import load_project
 
 
@@ -54,6 +46,33 @@ class TestInvariants:
         for blame in blames:
             assert blame.distance > 0
             assert blame.residuals  # a wrong word has at least one residual
+
+
+class TestTrajectoryTargets:
+    def test_targets_track_the_attested_stage(self, derivs, latin):
+        # connaître carries stages -200,-100,750,1000,1200,1400 + final.
+        d = next(dv for dv in derivs if dv.word.gloss == "connaître")
+        blame = blame_word(d, latin)
+        stages, times = d.word.stages, sorted(d.word.stages)
+        # The input heads to the earliest attested stage; the surface is the final.
+        assert blame.trajectory[0].label == "input"
+        assert blame.trajectory[0].target == stages[times[0]]
+        assert blame.trajectory[-1].label == "surface" and blame.trajectory[-1].target == d.word.final
+        # A timed step targets the earliest stage at or after its rule-time (else final).
+        for point in blame.trajectory:
+            if point.time is None:
+                continue
+            expected = next((stages[t] for t in times if t >= point.time), d.word.final)
+            assert point.target == expected
+        # d and fd are both computed (the final form segments).
+        assert blame.trajectory[-1].feature_distance is not None
+
+    def test_no_stages_targets_everything_to_final(self, derivs, latin):
+        # A wrong word without attested stages compares every point to the final.
+        d = next((dv for dv in derivs if not dv.word.stages and blame_word(dv, latin)), None)
+        if d is not None:  # the latin lexicon may or may not have such a word
+            blame = blame_word(d, latin)
+            assert all(p.target == d.word.final for p in blame.trajectory)
 
 
 class TestProvenance:
@@ -96,29 +115,29 @@ class TestStructure:
 
 
 class TestUnattributable:
-    """When a surface phone doesn't map 1:1 to a segment (leading stress mark, tie-bar
-    affricate), attribution is dropped rather than blaming a misaligned rule."""
+    """When a surface phone doesn't map 1:1 to a segment (a tie-bar affricate is one
+    segment but two phones), attribution is dropped rather than blaming a misaligned
+    rule. (Stress marks no longer trigger this — they're dropped before comparison.)"""
 
-    def test_length_mismatch_degrades_to_no_culprit(self):
-        # A fresh default project (its word.final is mutated below, so not the shared
-        # session fixture); it has a word whose render adds a phone with no segment.
-        project = load_project().unwrap()
-        derivations = derive_all(project)
-        mismatch = next(
-            d
-            for d in derivations
-            if len(split_phones(render_syllabified(lower_tiers(d.surface), d.surface_boundaries, project)))
-            != len(_phone_ids(d.surface))
-        )
-        surface = render_syllabified(lower_tiers(mismatch.surface), mismatch.surface_boundaries, project)
-        phones = split_phones(surface)
-        # Mangle the last phone so the word is wrong and yields at least one residual.
-        mismatch.word.final = "".join(phones[:-1]) + ("x" if phones[-1] != "x" else "y")
+    def test_split_phones_splits_a_tie_bar_affricate(self):
+        # The invariant the guard protects against: 'd͡ʒ' is one segment, two phones.
+        assert split_phones("d͡ʒa") == ["d͡", "ʒ", "a"]
 
-        blame = blame_word(mismatch, project)
-        assert blame is not None and blame.residuals
-        # Every residual: no rule blamed, flagged unattributed, and NOT mislabelled omission.
-        assert all(not r.attributed for r in blame.residuals)
-        assert all(r.culprit is None for r in blame.residuals)
-        assert all(r.kind != "omission" for r in blame.residuals)
-        assert "unattributed" in render_blame([blame], "`proj`")
+    def test_residuals_degrade_when_phones_exceed_segments(self):
+        from src.fortis.analysis.blame import _residuals
+        from src.fortis.models.bundles import FeatureBundle
+        from src.fortis.models.derivation import Derivation
+        from src.fortis.models.form import Form
+        from src.fortis.models.inventories import Word
+        from src.fortis.models.segment import Segment
+
+        # A surface of two segments that renders to three phones (the affricate splits).
+        surface_form = Form(segments=[Segment(FeatureBundle(), 0), Segment(FeatureBundle(), 1)])
+        derivation = Derivation(word=Word(ipa="x", gloss="x"), input=surface_form,
+                                steps=(), surface=surface_form)
+        residuals = _residuals(derivation, target="ka", surface="d͡ʒa")
+
+        assert residuals
+        assert all(not r.attributed for r in residuals)  # attribution dropped, not guessed
+        assert all(r.culprit is None for r in residuals)
+        assert all(r.kind != "omission" for r in residuals)  # not mislabelled

@@ -22,7 +22,7 @@ import time
 from collections.abc import Sequence
 from pathlib import Path
 
-from src.fortis.analysis.blame import blame_all
+from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame
 from src.fortis.analysis.diagnosis import (
     diagnose_stages,
     diagnosis_summary_line,
@@ -187,8 +187,9 @@ def main(argv: list[str] | None = None) -> None:
         saved.append(diag_path)
         print(diagnosis_summary_line(grades))
 
-        # Temporal views split into timeline.md (errors by rule-time + per-stage diagnosis).
-        buckets = errors_by_time(blame_all(derivations, project))
+        # Blame + the temporal views share the per-word blames (computed once).
+        blames = blame_all(derivations, project)
+        buckets = errors_by_time(blames)
         stage_diag = diagnose_stages(derivations, project)
         timeline_path = path.parent / "timeline.md"
         timeline_path.write_text(
@@ -197,6 +198,13 @@ def main(argv: list[str] | None = None) -> None:
         print(f"wrote {timeline_path}", file=sys.stderr)
         saved.append(timeline_path)
         print(timeline_summary_line(buckets))
+
+        # Attribute each wrong word to the rule that produced it (blame.md).
+        blame_path = path.parent / "blame.md"
+        blame_path.write_text(render_blame(blames, where), encoding="utf-8")
+        print(f"wrote {blame_path}", file=sys.stderr)
+        saved.append(blame_path)
+        print(blame_summary_line(blames))
     grade_done = time.perf_counter()
 
     # Phase 4b — syllabification warnings: words whose onset/coda patterns admitted no

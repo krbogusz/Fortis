@@ -117,6 +117,9 @@ try {
   const blamedWord = diag.blame.words[0];
   if (!blamedWord.residuals.length || !blamedWord.trajectory.length)
     throw new Error("blame word missing residuals/trajectory: " + JSON.stringify(blamedWord));
+  const step = blamedWord.trajectory[0];
+  if (!("target" in step) || !("fd" in step) || !("distance" in step))
+    throw new Error("trajectory point missing target/d/fd: " + JSON.stringify(step));
   const diagMd = py.runPython(`read_file("diagnosis.md")`).toString();
   const timelineMd = py.runPython(`read_file("timeline.md")`).toString();
   const blameMd = py.runPython(`read_file("blame.md")`).toString();

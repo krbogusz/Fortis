@@ -50,6 +50,13 @@ class TestSplitPhones:
         assert split_phones("a.vɑ̃") == ["a", "v", "ɑ̃"]
         assert split_phones("a v a") == ["a", "v", "a"]
 
+    def test_stress_marks_dropped_regardless_of_placement(self):
+        # ˈ/ˌ are suprasegmental structure; their rendered position is a convention
+        # (onset ˌkon vs pre-vowel kˌon), so both normalise to the same phones.
+        assert split_phones("ˌkon") == ["k", "o", "n"]
+        assert split_phones("kˌon") == ["k", "o", "n"]
+        assert split_phones("ˈka.ta") == ["k", "a", "t", "a"]
+
     def test_empty(self):
         assert split_phones("") == []
         assert split_phones("..") == []

@@ -48,17 +48,25 @@ from src.fortis.models.project import Project
 # (Lm/Sk — length ``ː``, palatalization ``ʲ``, superscripts, tone letters).
 _ATTACHING = frozenset({"Mn", "Mc", "Lm", "Sk"})
 
+# Dropped before comparison — structural, not segmental phones: syllable dots, morpheme
+# boundaries, whitespace, and the stress marks ``ˈ``/``ˌ``. Stress *precedes* its syllable,
+# so its rendered position is a syllabification convention (the engine marks the syllable
+# onset, e.g. ``ˌkon``; other notations mark the vowel, ``kˌon``) — comparing those
+# placements as phones yields spurious ∅→ˈ/∅→ˌ confusions, not a real segmental error.
+_IGNORED = frozenset(".-ˈˌ")
+
 
 def split_phones(form: str) -> list[str]:
     """Split a rendered form into phones for edit-distance comparison.
 
-    A phone is a base character plus any following attaching marks. Syllable
-    dots, morpheme boundaries (``-``), and whitespace are dropped (structural, not
-    segmental), so ``a.vɑ̃`` and ``avɑ̃`` both split to ``['a', 'v', 'ɑ̃']``.
+    A phone is a base character plus any following attaching marks. Syllable dots,
+    morpheme boundaries (``-``), whitespace, and stress marks (``ˈ``/``ˌ``) are dropped
+    (structural, not segmental), so ``a.vɑ̃`` and ``avɑ̃`` both split to ``['a', 'v', 'ɑ̃']``
+    and ``ˌkon`` and ``kˌon`` both to ``['k', 'o', 'n']``.
     """
     phones: list[str] = []
     for char in form:
-        if char in ".-" or char.isspace():
+        if char in _IGNORED or char.isspace():
             continue
         if phones and unicodedata.category(char) in _ATTACHING:
             phones[-1] += char
@@ -235,11 +243,12 @@ def feature_edit_distance(
 def _segment(form: str, project: Project) -> list[FeatureBundle] | None:
     """Segment a rendered form into feature bundles for the feature comparison.
 
-    Syllable dots, morpheme boundaries, and whitespace (structural, not segmental)
-    are stripped first, matching :func:`split_phones`. Returns ``None`` if the form
+    Syllable dots, morpheme boundaries, whitespace, and stress marks (structural, not
+    segmental) are stripped first, matching :func:`split_phones` — so the feature
+    distance stays 0 exactly when the phone distance is. Returns ``None`` if the form
     uses a symbol the project cannot segment.
     """
-    cleaned = "".join(form.replace(".", "").replace("-", "").split())
+    cleaned = "".join(char for char in form if char not in _IGNORED and not char.isspace())
     try:
         return lower_tiers(string_to_sequence(cleaned, project))
     except ValueError:

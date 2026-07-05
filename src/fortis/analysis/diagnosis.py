@@ -10,7 +10,7 @@ in :func:`src.fortis.analysis.grading.align`:
   which target phone was reproduced as which other phone (or dropped, or a spurious
   phone inserted). Answers "which phones am I getting wrong, and how often".
 
-- **Context autopsy** — for one *focus* target phone, the gold-form environments most
+- **Context autopsy** — for one *focus* target phone, the attested-form environments most
   associated with getting that phone wrong, scored by the phi coefficient. Answers
   "when I get /e/ wrong, what conditions it".
 
@@ -23,7 +23,7 @@ matches how a linguist actually debugs a cascade.
 
 Two caveats the reports repeat:
 
-- The environment is read from the **gold** form, a proxy: the derived form's
+- The environment is read from the **attested** form, a proxy: the derived form's
   environment may differ (and that difference is often the very cause). It is the
   stable coordinate to condition on, not a claim about the derivation's own context.
 - Because the alignment carries no transposition discount, a metathesis reads as an
@@ -114,7 +114,7 @@ def confusions(grades: tuple[Grade, ...], limit: int | None = None) -> list[Conf
 class ContextAssociation:
     """One environment predictor's association with getting a focus phone wrong.
 
-    ``predictor`` names the gold-form environment (e.g. ``"right=n"`` or
+    ``predictor`` names the attested-form environment (e.g. ``"right=n"`` or
     ``"left:voice=1"``). The 2×2 counts are over the focus phone's positions:
     ``err_here``/``ok_here`` are error vs. correct *with* the predictor present,
     ``err_away``/``ok_away`` without it. ``phi`` is the phi coefficient — positive
@@ -215,7 +215,7 @@ def error_contexts(grades: tuple[Grade, ...], focus: str, project: Project) -> F
 
     Over every graded word, each target position holding *focus* is a trial: an error
     if the phone was substituted or deleted, correct if reproduced. Each trial's
-    gold-form neighbours yield a set of environment predictors; for every predictor a
+    attested-form neighbours yield a set of environment predictors; for every predictor a
     2×2 of (present/absent) × (error/correct) gives a phi coefficient. Predictors
     below the support floor are dropped; the rest are returned most-error-associated
     first. Insertions have no focus target phone and never enter this analysis.
@@ -401,7 +401,7 @@ def render_diagnosis(grades: tuple[Grade, ...], project: Project, where: str) ->
         f"# Diagnosis — {where}",
         "",
         "*Where* the derivation goes wrong, from the same forms `distances.md` scores.",
-        "Environments are read from the **gold** form (a stable coordinate to condition",
+        "Environments are read from the **attested** form (a stable coordinate to condition",
         "on — the derived form's own environment may differ, and often that difference is",
         "the cause). A metathesis reads as an adjacent pair of substitutions.",
         "",
@@ -533,13 +533,13 @@ def _stages_section(stages: list[StageDiagnosis], diagnosis) -> list[str]:
 
 def _autopsy_intro(min_support: int, min_support_percent: int) -> list[str]:
     return [
-        "For each target phone that most often comes out wrong, the gold-form",
+        "For each target phone that most often comes out wrong, the attested-form",
         "environments most associated with the error, by phi coefficient (positive =",
         "more error-prone). A predictor is shown only if it clears the support floor —",
         f"max({min_support}, {min_support_percent}% of the phone's occurrences), so the bar rises",
         "with a bigger word base; the raw *err/ok* counts, present (here) vs. absent (away),",
         "travel with each row so a thin cell is visible. `left`/`right` name the",
-        "neighbouring gold phone; `left:f=v` a feature of that neighbour.",
+        "neighbouring attested phone; `left:f=v` a feature of that neighbour.",
         "",
     ]
 

@@ -711,7 +711,7 @@
         {:else if resultView === "diagnosis" && diagnosis}
           <p class="caveat">
             <em>What</em> goes wrong at the end, from the same graded forms. Environments are
-            read from the <strong>gold</strong> form; a metathesis reads as an adjacent
+            read from the <strong>attested</strong> form; a metathesis reads as an adjacent
             substitution pair. <em>When</em> errors enter is in the Timeline tab.
           </p>
           <h3 class="section-head">Confusions</h3>
@@ -791,7 +791,7 @@
               {/if}
               <table class="grade-misses">
                 <thead>
-                  <tr><th>step</th><th>t</th><th>form</th><th>dist</th></tr>
+                  <tr><th>step</th><th>t</th><th>form</th><th>target</th><th>d</th><th>fd</th></tr>
                 </thead>
                 <tbody>
                   {#each w.trajectory as p}
@@ -799,7 +799,9 @@
                       <td>{p.label}{p.regressed ? " ⤴" : ""}</td>
                       <td>{p.time ?? ""}</td>
                       <td class="form">{p.form}</td>
+                      <td class="form">{p.target}</td>
                       <td>{p.distance}</td>
+                      <td>{p.fd ?? "—"}</td>
                     </tr>
                   {/each}
                 </tbody>
