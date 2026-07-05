@@ -8,6 +8,7 @@ from src.fortis.loaders.diacritics import load_diacritic_inventory
 from src.fortis.loaders.features import load_feature_inventory
 from src.fortis.loaders.letters import load_letter_inventory
 from src.fortis.loaders.rules import load_rule_inventory
+from src.fortis.loaders.settings import load_settings
 from src.fortis.loaders.sonorities import load_sonorities_inventory
 from src.fortis.loaders.syllable_parts import load_syllable_parts_inventory
 from src.fortis.loaders.tiers import load_tier_inventory
@@ -148,6 +149,15 @@ def load_project(
         case Ok(result):
             rules = result
 
+    # ---- Settings (optional tunable parameters) --------------------------------------------------
+    # Absent ⇒ built-in defaults; present keys override. Not feature-dependent, so order-free.
+    settings = None
+    match load_settings(pick("settings.toml")):
+        case Err(err):
+            error_list.extend(f"settings.toml: {e}" for e in err)
+        case Ok(result):
+            settings = result
+
     if error_list:
         return Err(error_list)
 
@@ -157,6 +167,7 @@ def load_project(
     assert syllable_parts is not None
     assert words is not None
     assert rules is not None
+    assert settings is not None
 
     _warn_unknown_scoped_words(rules, words)
 
@@ -176,5 +187,6 @@ def load_project(
             rules=rules,
             time=time,
             tiers=tiers,
+            settings=settings,
         )
     )

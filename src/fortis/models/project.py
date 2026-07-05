@@ -11,6 +11,7 @@ from src.fortis.models.inventories import (
     WordInventory,
 )
 from src.fortis.models.rules import RuleInventory
+from src.fortis.models.settings import Settings
 from src.fortis.models.tier_declaration import TierInventory
 
 
@@ -27,3 +28,4 @@ class Project:
     rules: RuleInventory  # pre-sorted by (time, file order)
     time: int  # current time
     tiers: TierInventory = field(default_factory=TierInventory)  # autosegmental tiers; {} = none
+    settings: Settings = field(default_factory=Settings)  # tunable analysis parameters
