@@ -181,11 +181,11 @@ how many words it improves, regresses, or leaves unchanged:
 python -m src.fortis.analysis.main --project projects/latin_to_french --try 'eː → ɛː / _ t'
 ```
 
-To focus the error analyses on an environment, `--scope 'PATTERN'` restricts every
-report above (grading, diagnosis, timeline, blame) to the words whose attested
-target — or **any** attested stage — matches the pattern, so you can debug accuracy on
-just that sub-population (e.g. words that carried an /s/ at some stage, even if it later
-dropped):
+To focus the error analyses on an environment, `--scope 'PATTERN'` writes a
+`scoped_output.md` — the four analyses above (grading, diagnosis, timeline, blame)
+recomputed over just the words whose attested target, or **any** attested stage, matches
+the pattern — leaving the whole-lexicon reports intact. So you can debug accuracy on a
+sub-population, including words that carried an /s/ at some stage even if it later dropped:
 
 ```
 python -m src.fortis.analysis.main --project projects/latin_to_french --scope 'ʁ'

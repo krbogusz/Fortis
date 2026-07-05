@@ -615,10 +615,11 @@ Alongside the printed trace, every CLI run writes into the project directory:
 Two pattern filters scope this output (both take Fortis sequence notation — feature
 bundles, letters, quantifiers):
 
-- On the standalone grader, `--scope 'PATTERN'` **restricts** every report to the
-  words whose attested target — or any attested stage — matches, for debugging
-  accuracy on a sub-population (e.g. words that carried an /s/ at some stage, even if
-  it later dropped).
+- On the standalone grader, `--scope 'PATTERN'` writes **`scoped_output.md`** — the
+  four analyses recomputed over just the words whose attested target, or any attested
+  stage, matches — for debugging accuracy on a sub-population (e.g. words that carried
+  an /s/ at some stage, even if it later dropped). The whole-lexicon reports are left
+  intact.
 - On the engine run, `--filter 'PATTERN'` additionally writes **`filtered_output.md`**
   and **`filtered_table.csv`** — a synthesis of the words a pattern touches in *any*
   form (input, an intermediate derived form, the surface, the attested target, or a

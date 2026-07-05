@@ -50,7 +50,8 @@ from src.fortis.application.tiers import lower_tiers
 from src.fortis.analysis.grading import grade_stages, grade, grade_derivation
 from src.fortis.analysis.diagnosis import confusions, diagnose, diagnose_stages, errors_by_time, render_diagnosis, render_timeline
 from src.fortis.analysis.blame import blame_all, render_blame
-from src.fortis.analysis.filtering import filter_by_pattern
+from src.fortis.analysis.filtering import filter_by_pattern, filter_attested
+from src.fortis.analysis.synthesis import render_scoped
 from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
 from src.fortis.main import _build_report, _build_csv_report, _build_filtered_report
 _SUB = re.compile(r"#\\d+$")
@@ -282,6 +283,28 @@ def run_filter(pattern):
                        "considered": result.considered, "grading": grading,
                        "confusions": confusions_json, "words": words})
 
+def run_scope(pattern):
+    # Restrict the accuracy analyses to the words whose attested forms match the pattern:
+    # write scoped_output.md, and return the subset's grading headline + diagnosis.
+    if "project" not in _LAST:
+        return json.dumps({"error": ["Run the project first, then scope."]})
+    project, derivations = _LAST["project"], _LAST["derivations"]
+    res = filter_attested(derivations, pattern, project)
+    if res.is_err():
+        return json.dumps({"error": res.unwrap_err()})
+    result = res.unwrap()
+    subset = list(result.matched)
+    where = "the current project · scope '" + pattern + "': " + str(len(subset)) + "/" + str(result.considered) + " words"
+    Path(OVERLAY).joinpath("scoped_output.md").write_text(render_scoped(subset, project, where), encoding="utf-8")
+    report = grade(subset, project)
+    grading = None
+    if report.graded:
+        grading = {"exact": report.exact, "graded": report.graded,
+                   "accuracy": round(report.accuracy, 4), "meanPhone": round(report.mean_distance, 3)}
+    diagnosis = _diagnosis_summary(report.grades, project) if report.graded else None
+    return json.dumps({"pattern": pattern, "matched": len(subset), "considered": result.considered,
+                       "grading": grading, "diagnosis": diagnosis})
+
 def run_derivations():
     prep = json.loads(prepare_run())
     if "error" in prep: return json.dumps(prep)
@@ -485,6 +508,22 @@ export function finalizeRun() {
  */
 export function runFilter(pattern) {
   const fn = py.globals.get("run_filter");
+  try {
+    return JSON.parse(fn(pattern));
+  } finally {
+    fn.destroy();
+  }
+}
+
+/**
+ * Scope the accuracy analyses to words whose attested forms match PATTERN: writes
+ * scoped_output.md and returns the subset's grading headline + diagnosis.
+ * @param {string} pattern a Fortis sequence pattern
+ * @returns {{pattern: string, matched: number, considered: number, grading: object|null,
+ *   diagnosis: object|null}|{error: string[]}}
+ */
+export function runScope(pattern) {
+  const fn = py.globals.get("run_scope");
   try {
     return JSON.parse(fn(pattern));
   } finally {

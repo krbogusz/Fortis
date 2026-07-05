@@ -10,6 +10,7 @@ from src.fortis.analysis.filtering import (
     filter_summary_line,
     scope_summary_line,
 )
+from src.fortis.analysis.synthesis import render_scoped
 from src.fortis.application.deriving import derive_all
 from src.fortis.loaders.project import load_project
 
@@ -93,3 +94,12 @@ class TestFilterAttested:
     def test_summary_line(self, derivs, latin):
         line = scope_summary_line(filter_attested(derivs, "ʁ", latin).unwrap())
         assert "scope `ʁ`" in line and "match" in line
+
+
+class TestRenderScoped:
+    def test_bundles_the_four_analyses(self, derivs, latin):
+        subset = list(filter_attested(derivs, "ʁ", latin).unwrap().matched)
+        md = render_scoped(subset, latin, "`proj` · scope `ʁ`")
+        assert md.startswith("# Scoped")
+        for section in ("## Distances", "## Diagnosis", "## Timeline", "## Blame"):
+            assert section in md

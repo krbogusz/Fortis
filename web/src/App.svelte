@@ -12,6 +12,7 @@
     deriveBatch,
     finalizeRun,
     runFilter,
+    runScope,
     listExampleProjects,
     loadExampleProject,
   } from "./lib/engine.js";
@@ -44,6 +45,10 @@
   let filterData = $state(null); // the last run_filter result, or null
   let filterError = $state(null); // filter parse/resolve errors, or null
   let filterBusy = $state(false); // a filter run is in flight
+  let scopePattern = $state(""); // the Scope tab's pattern input
+  let scopeData = $state(null); // the last run_scope result, or null
+  let scopeError = $state(null); // scope parse/resolve errors, or null
+  let scopeBusy = $state(false); // a scope run is in flight
   let tableCsv = $state(""); // derivation_table.csv content, for the right-pane Table view
   let resultView = $state("derivations"); // right-pane view: derivations | table | grading | diagnosis | blame | warnings
 
@@ -212,6 +217,8 @@
       if (!warnings.length && resultView === "warnings") resultView = "derivations"; // none ⇒ leave the tab
       filterData = null; // a new run invalidates the last filter's matches
       filterError = null;
+      scopeData = null;
+      scopeError = null;
       tableCsv = readFile("derivation_table.csv"); // for the Table view
       result = { derivations: acc };
     } catch (e) {
@@ -254,6 +261,28 @@
     }
   }
 
+  async function runScopeAction() {
+    const pattern = scopePattern.trim();
+    if (!pattern || scopeBusy) return;
+    scopeBusy = true;
+    scopeError = null;
+    await paint();
+    try {
+      const res = runScope(pattern);
+      if (res.error) {
+        scopeError = res.error;
+        scopeData = null;
+      } else {
+        scopeData = res;
+        scopeError = null;
+      }
+    } catch (e) {
+      scopeError = [e?.message ?? String(e)];
+    } finally {
+      scopeBusy = false;
+    }
+  }
+
   async function removeFileTab(name, ev) {
     ev.stopPropagation();
     removeFile(name);
@@ -286,6 +315,7 @@
     blame: "blame.md",
     warnings: "warnings.md",
     filter: "filtered_output.md",
+    scope: "scoped_output.md",
   };
 
   function saveResult() {
@@ -597,6 +627,12 @@
                   onclick={() => (resultView = "filter")}
                   title="Find the words a pattern touches in any form (input → surface → target)"
                   >Filter</button
+                >
+                <button
+                  class:active={resultView === "scope"}
+                  onclick={() => (resultView = "scope")}
+                  title="Grade + diagnose only the words whose attested forms match a pattern"
+                  >Scope</button
                 >
               </div>
               <button
@@ -945,6 +981,51 @@
             {/each}
           {:else}
             <p class="muted">Enter a pattern and click <strong>Run filter</strong>.</p>
+          {/if}
+        {:else if resultView === "scope"}
+          <div class="filter-bar">
+            <input
+              class="filter-input"
+              placeholder="pattern to scope by, e.g.  ʁ   or   [aperture: high] n̪"
+              bind:value={scopePattern}
+              onkeydown={(e) => e.key === "Enter" && runScopeAction()}
+            />
+            <button
+              class="run-filter"
+              disabled={scopeBusy || !scopePattern.trim()}
+              onclick={runScopeAction}>{scopeBusy ? "Running…" : "Run scope"}</button
+            >
+          </div>
+          <p class="caveat">
+            Grades and diagnoses only the words whose <strong>attested</strong> target — or any
+            attested stage — matches the pattern, for debugging accuracy on a sub-population. The
+            full grading + timeline + blame for the subset is in the downloadable
+            <code>scoped_output.md</code>.
+          </p>
+          {#if scopeError}
+            <div class="card error">
+              {#each scopeError as line}<pre>{line}</pre>{/each}
+            </div>
+          {:else if scopeData}
+            <p>
+              Scoped to <strong>{scopeData.matched} of {scopeData.considered}</strong> words for
+              <code>{scopeData.pattern}</code>.
+              {#if scopeData.grading}
+                {scopeData.grading.exact}/{scopeData.grading.graded} exact ({(
+                  scopeData.grading.accuracy * 100
+                ).toFixed(1)}%), mean d {scopeData.grading.meanPhone.toFixed(3)}.
+              {/if}
+            </p>
+            {#if scopeData.diagnosis}
+              <h3 class="section-head">Confusions</h3>
+              {@render confusionTable(scopeData.diagnosis.confusions)}
+              <h3 class="section-head">Context autopsy</h3>
+              {@render autopsyBlock(scopeData.diagnosis.autopsy)}
+            {:else}
+              <p class="muted">No graded words in the scoped subset.</p>
+            {/if}
+          {:else}
+            <p class="muted">Enter a pattern and click <strong>Run scope</strong>.</p>
           {/if}
         {:else if !result}
           {#if !busy}<p class="muted">No results yet.</p>{/if}

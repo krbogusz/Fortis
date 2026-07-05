@@ -400,11 +400,14 @@ class TestGradeCli:
         out = capsys.readouterr().out
         assert "exact" in out
 
-    def test_scope_restricts_the_reports(self, tmp_path):
-        # A scope pattern present in the default targets stamps the subset into the header.
+    def test_scope_writes_scoped_output_leaving_standard_whole(self, tmp_path):
         output = tmp_path / "distances.md"
         grade_cli.main(["--output", str(output), "--scope", "[+syllabic]"])  # any vowel
-        assert "scope `[+syllabic]`" in output.read_text(encoding="utf-8")
+        scoped = tmp_path / "scoped_output.md"
+        assert scoped.exists()
+        assert "# Scoped" in scoped.read_text(encoding="utf-8")
+        # the standard report stays whole-lexicon — no scope note
+        assert "scope" not in output.read_text(encoding="utf-8")
 
     def test_bad_scope_pattern_exits(self, tmp_path):
         import pytest

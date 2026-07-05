@@ -144,6 +144,18 @@ try {
   const badFilter = JSON.parse(py.runPython(`run_filter("[bad")`).toString());
   if (!badFilter.error) throw new Error("expected run_filter to error on a bad pattern");
   log(`13. run_filter: matched ${filt.matched}/${filt.considered}, filtered_output.md written; bad pattern → error`);
+
+  // 14. Interactive scope: restrict grading+diagnosis to words whose attested forms match,
+  //     write scoped_output.md, return the subset's grading headline + diagnosis.
+  const scoped = JSON.parse(py.runPython(`run_scope("[+syllabic]")`).toString());
+  if (scoped.error) throw new Error("run_scope errored: " + JSON.stringify(scoped.error));
+  if (typeof scoped.matched !== "number" || typeof scoped.considered !== "number")
+    throw new Error("run_scope missing matched/considered: " + JSON.stringify(scoped));
+  const scopedMd = py.runPython(`read_file("scoped_output.md")`).toString();
+  if (!scopedMd.startsWith("# Scoped")) throw new Error("scoped_output.md not written");
+  if (!JSON.parse(py.runPython(`run_scope("[bad")`).toString()).error)
+    throw new Error("expected run_scope to error on a bad pattern");
+  log(`14. run_scope: ${scoped.matched}/${scoped.considered} words, scoped_output.md written; bad pattern → error`);
   py.runPython(`reset_overlay()`);
 
   log("SMOKE TEST PASSED");

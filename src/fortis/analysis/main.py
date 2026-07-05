@@ -9,9 +9,10 @@ per-stage), and ``blame.md`` (each wrong word attributed to a rule). With
 
     python -m src.fortis.analysis.main --project projects/latin_to_french
 
-``--scope 'PATTERN'`` restricts every report to the words whose attested target — or
-any attested stage — matches a sequence pattern (Fortis notation, e.g.
-``k [aperture: high]``), for debugging accuracy on a sub-population.
+``--scope 'PATTERN'`` writes ``scoped_output.md`` — the four analyses recomputed over
+the words whose attested target, or any attested stage, matches a sequence pattern
+(Fortis notation, e.g. ``k [aperture: high]``) — for debugging accuracy on a
+sub-population, leaving the whole-lexicon reports intact.
 
 The engine CLI (``python -m src.fortis.main``) writes the same reports as part of
 a full run — and, with ``--filter``, an all-forms filtered synthesis; this standalone
@@ -35,6 +36,7 @@ from src.fortis.analysis.diagnosis import (
 from src.fortis.analysis.filtering import filter_attested, scope_summary_line
 from src.fortis.analysis.grading import grade_stages
 from src.fortis.analysis.reporting import distance_summary_line, render_distance_summary
+from src.fortis.analysis.synthesis import render_scoped
 from src.fortis.analysis.whatif import render_whatif, try_rule, whatif_summary_line
 from src.fortis.application.deriving import derive_all
 from src.fortis.config import config
@@ -98,8 +100,8 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         "--scope",
         dest="scope",
         metavar="PATTERN",
-        help="restrict every report to words whose attested target or ANY attested stage "
-        "matches a sequence pattern (Fortis notation, e.g. 'k [aperture: high]')",
+        help="write scoped_output.md — the analyses recomputed over words whose attested "
+        "target or ANY attested stage matches a sequence pattern (e.g. 'k [aperture: high]')",
     )
     return parser.parse_args(argv)
 
@@ -121,18 +123,6 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit(1) from error
 
     where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
-
-    # --scope restricts every report to words whose attested target or any stage matches.
-    if args.scope is not None:
-        match filter_attested(derivations, args.scope, project):
-            case Err(errs):
-                for error in errs:
-                    print(f"error: --scope: {error}", file=sys.stderr)
-                raise SystemExit(1)
-            case Ok(scoped):
-                derivations = list(scoped.matched)
-                where += f" · scope `{args.scope}`: {len(scoped.matched)}/{scoped.considered} words"
-                print(scope_summary_line(scoped), file=sys.stderr)  # announce, incl. a 0-match scope
 
     stages = grade_stages(derivations, project)
 
@@ -164,6 +154,23 @@ def main(argv: list[str] | None = None) -> None:
     blame_path.write_text(render_blame(blames, where), encoding="utf-8")
     print(f"wrote {blame_path}", file=sys.stderr)
     print(blame_summary_line(blames))
+
+    # --scope: a post-run pass. The standard reports above stay whole-lexicon; this bundles
+    # the four analyses, recomputed over the words whose attested forms match, into one file.
+    if args.scope is not None:
+        match filter_attested(derivations, args.scope, project):
+            case Err(errs):
+                for error in errs:
+                    print(f"error: --scope: {error}", file=sys.stderr)
+                raise SystemExit(1)
+            case Ok(scoped):
+                scoped_where = f"{where} · scope `{args.scope}`: {len(scoped.matched)}/{scoped.considered} words"
+                scoped_path = path.parent / "scoped_output.md"
+                scoped_path.write_text(
+                    render_scoped(list(scoped.matched), project, scoped_where), encoding="utf-8"
+                )
+                print(f"wrote {scoped_path}", file=sys.stderr)
+                print(scope_summary_line(scoped))
 
     if args.candidate is not None:
         result = try_rule(project, args.candidate, args.at)
