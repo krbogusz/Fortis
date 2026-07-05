@@ -11,6 +11,7 @@
     prepareRun,
     deriveBatch,
     finalizeRun,
+    runFilter,
     listExampleProjects,
     loadExampleProject,
   } from "./lib/engine.js";
@@ -39,6 +40,10 @@
   let timeline = $state(null); // temporal views (errors by rule-time + per-stage), or null when all exact
   let blame = $state(null); // per-word blame, or null when all exact
   let warnings = $state([]); // syllabification-fallback warnings from the last run
+  let filterPattern = $state(""); // the Filter tab's pattern input
+  let filterData = $state(null); // the last run_filter result, or null
+  let filterError = $state(null); // filter parse/resolve errors, or null
+  let filterBusy = $state(false); // a filter run is in flight
   let tableCsv = $state(""); // derivation_table.csv content, for the right-pane Table view
   let resultView = $state("derivations"); // right-pane view: derivations | table | grading | diagnosis | blame | warnings
 
@@ -205,6 +210,8 @@
       if (!blame && resultView === "blame") resultView = "derivations"; // all exact ⇒ leave the tab
       warnings = fin?.warnings ?? [];
       if (!warnings.length && resultView === "warnings") resultView = "derivations"; // none ⇒ leave the tab
+      filterData = null; // a new run invalidates the last filter's matches
+      filterError = null;
       tableCsv = readFile("derivation_table.csv"); // for the Table view
       result = { derivations: acc };
     } catch (e) {
@@ -223,6 +230,28 @@
 
   function runProject() {
     rerun(true); // force a run regardless of size (the Run project button)
+  }
+
+  async function runFilterAction() {
+    const pattern = filterPattern.trim();
+    if (!pattern || filterBusy) return;
+    filterBusy = true;
+    filterError = null;
+    await paint(); // let the button repaint as "Running…" before the blocking call
+    try {
+      const res = runFilter(pattern);
+      if (res.error) {
+        filterError = res.error;
+        filterData = null;
+      } else {
+        filterData = res;
+        filterError = null;
+      }
+    } catch (e) {
+      filterError = [e?.message ?? String(e)];
+    } finally {
+      filterBusy = false;
+    }
   }
 
   async function removeFileTab(name, ev) {
@@ -256,6 +285,7 @@
     timeline: "timeline.md",
     blame: "blame.md",
     warnings: "warnings.md",
+    filter: "filtered_output.md",
   };
 
   function saveResult() {
@@ -562,6 +592,12 @@
                     >Warnings <span class="warn-count">{warnings.length}</span></button
                   >
                 {/if}
+                <button
+                  class:active={resultView === "filter"}
+                  onclick={() => (resultView = "filter")}
+                  title="Find the words a pattern touches in any form (input → surface → target)"
+                  >Filter</button
+                >
               </div>
               <button
                 class="save-result"
@@ -601,6 +637,21 @@
         <CsvTable content={tableCsv} />
       {:else}
       <div class="results ipa">
+        <!-- The firing-rule trace of one word — shared by the Filter tab. -->
+        {#snippet traceSteps(steps)}
+          <div class="steps">
+            {#each steps as s}
+              {#if s.timeHeader != null}<div class="time-header">{s.timeHeader}</div>{/if}
+              {#if s.heading}<div class="rule-heading">{s.heading}</div>{/if}
+              <div class="step">
+                <span class="form">{s.before}</span>
+                <span class="arrow">→</span>
+                <span class="form">{s.after}</span>
+                {#if s.change}<span class="change">({s.change})</span>{/if}
+              </div>
+            {/each}
+          </div>
+        {/snippet}
         <!-- Shared by the Diagnosis and Timeline views (final + per-stage). -->
         {#snippet confusionTable(confs)}
           <table class="grade-summary">
@@ -840,6 +891,61 @@
               {/each}
             </tbody>
           </table>
+        {:else if resultView === "filter"}
+          <div class="filter-bar">
+            <input
+              class="filter-input"
+              placeholder="pattern, e.g.  d͡ʒ   or   t̪ [aperture: high]"
+              bind:value={filterPattern}
+              onkeydown={(e) => e.key === "Enter" && runFilterAction()}
+            />
+            <button
+              class="run-filter"
+              disabled={filterBusy || !filterPattern.trim()}
+              onclick={runFilterAction}>{filterBusy ? "Running…" : "Run filter"}</button
+            >
+          </div>
+          <p class="caveat">
+            Finds the words a sequence pattern touches in <strong>any</strong> form — the input,
+            an intermediate derived form, the surface, the attested target, or a stage. A pattern
+            is often transient, so most matched words derive correctly: this shows <em>which</em>
+            words pass through a shape and <em>where</em>.
+          </p>
+          {#if filterError}
+            <div class="card error">
+              {#each filterError as line}<pre>{line}</pre>{/each}
+            </div>
+          {:else if filterData}
+            <p>
+              Matched <strong>{filterData.matched} of {filterData.considered}</strong> words for
+              <code>{filterData.pattern}</code>.
+              {#if filterData.grading}
+                Subset grading: {filterData.grading.exact}/{filterData.grading.graded} exact ({(
+                  filterData.grading.accuracy * 100
+                ).toFixed(1)}%), mean d {filterData.grading.meanPhone.toFixed(3)}.
+              {/if}
+            </p>
+            {#if filterData.confusions.length}
+              {@render confusionTable(filterData.confusions)}
+            {/if}
+            {#each filterData.words as w}
+              <article class="card derivation">
+                <header class="word-head">
+                  <span class="word-ipa">{w.card.ipa}</span>
+                  {#if w.card.gloss}<span class="gloss">‘{w.card.gloss}’</span>{/if}
+                  {#if w.grade}<span class="muted">· {w.grade.exact ? "exact" : "d" + w.grade.distance}</span>{/if}
+                </header>
+                <p class="residuals">
+                  <span class="muted">matched at:</span>
+                  {#each w.locations as loc, i}<code>{loc}</code>{#if i < w.locations.length - 1}, {/if}{/each}
+                </p>
+                {@render traceSteps(w.card.steps)}
+                <div class="surface"><span class="form">{w.card.surface}</span></div>
+              </article>
+            {/each}
+          {:else}
+            <p class="muted">Enter a pattern and click <strong>Run filter</strong>.</p>
+          {/if}
         {:else if !result}
           {#if !busy}<p class="muted">No results yet.</p>{/if}
         {:else if result.error}
@@ -1349,6 +1455,42 @@
   .grade-misses tr.regressed td:first-child {
     font-weight: 600;
     color: var(--text-h);
+  }
+
+  /* Filter tab: the pattern input + run button */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .filter-input {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--panel);
+    color: var(--text-h);
+  }
+  .filter-input:focus {
+    outline: none;
+    border-color: var(--text-h);
+  }
+  .run-filter {
+    font-size: var(--fs-body);
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--panel);
+    color: var(--text-h);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .run-filter:disabled {
+    opacity: 0.5;
+    cursor: default;
   }
 
   .card {

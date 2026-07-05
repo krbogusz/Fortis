@@ -129,6 +129,23 @@ try {
   log(`12. diagnosis + timeline + blame (${diag.blame.words.length} word(s)) through Pyodide, reports written`);
   py.runPython(`reset_overlay()`);
 
+  // 13. Interactive filter over the last run: match a vowel pattern against every form,
+  //     return matched words (trace + where-matched) and write filtered_output.md.
+  const run13 = JSON.parse(py.runPython("run_derivations()").toString());
+  if (run13.error) throw new Error("filter setup run failed: " + JSON.stringify(run13.error));
+  const filt = JSON.parse(py.runPython(`run_filter("[+syllabic]")`).toString());
+  if (filt.error) throw new Error("run_filter errored: " + JSON.stringify(filt.error));
+  if (!filt.words.length) throw new Error("expected matched words for a vowel pattern");
+  const fw = filt.words[0];
+  if (!fw.card || !Array.isArray(fw.locations) || !fw.locations.length)
+    throw new Error("filter word missing card/locations: " + JSON.stringify(fw));
+  const filteredMd = py.runPython(`read_file("filtered_output.md")`).toString();
+  if (!filteredMd.startsWith("# Filtered")) throw new Error("filtered_output.md not written");
+  const badFilter = JSON.parse(py.runPython(`run_filter("[bad")`).toString());
+  if (!badFilter.error) throw new Error("expected run_filter to error on a bad pattern");
+  log(`13. run_filter: matched ${filt.matched}/${filt.considered}, filtered_output.md written; bad pattern → error`);
+  py.runPython(`reset_overlay()`);
+
   log("SMOKE TEST PASSED");
 } catch (e) {
   const m = (e && e.message) ? e.message : String(e);

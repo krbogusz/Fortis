@@ -47,11 +47,12 @@ from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
-from src.fortis.analysis.grading import grade_stages, grade
+from src.fortis.analysis.grading import grade_stages, grade, grade_derivation
 from src.fortis.analysis.diagnosis import confusions, diagnose, diagnose_stages, errors_by_time, render_diagnosis, render_timeline
 from src.fortis.analysis.blame import blame_all, render_blame
+from src.fortis.analysis.filtering import filter_by_pattern
 from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
-from src.fortis.main import _build_report, _build_csv_report
+from src.fortis.main import _build_report, _build_csv_report, _build_filtered_report
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
 OVERLAY = "/work/overlay"
@@ -75,11 +76,13 @@ def file_status(names):
 # the reports. _SESSION carries state across these calls (Python globals persist
 # across runPython). run_derivations() composes them for one-shot callers.
 _SESSION = {}
+# The last completed run (project + derivations + rules), so the interactive Filter tab
+# can run over it without re-deriving. Set at finalize; cleared when a new run starts.
+_LAST = {}
 
-def _derive_one(project, rules, ipa, word):
+def _card(d, project):
+    # One word's rendered derivation trace (the Derivations-tab card shape).
     R = lambda f,b: render_syllabified(lower_tiers(f), b, project)
-    d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
-               project.features, project.sonorities, project.syllable_parts, project.tiers)
     steps, prev, prev_time = [], None, object()  # prev_time sentinel ⇒ first time emits a header
     for s in d.steps:
         base = _SUB.sub("", s.rule.id)
@@ -90,7 +93,12 @@ def _derive_one(project, rules, ipa, word):
                       "time":s.rule.time,"name":s.rule.name or base,
                       "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                       "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
-    return d, {"ipa":ipa,"gloss":word.gloss,"surface":R(d.surface,d.surface_boundaries),"steps":steps}
+    return {"ipa":d.word.ipa,"gloss":d.word.gloss,"surface":R(d.surface,d.surface_boundaries),"steps":steps}
+
+def _derive_one(project, rules, ipa, word):
+    d = derive(word, string_to_sequence(ipa, project), rules, project.letters,
+               project.features, project.sonorities, project.syllable_parts, project.tiers)
+    return d, _card(d, project)
 
 def prepare_run():
     res = load_project(Path(OVERLAY))
@@ -99,6 +107,7 @@ def prepare_run():
     try: rules = resolve_rule_letters(project.rules, project)
     except ValueError as e: return json.dumps({"error":[str(e)]})
     _SESSION.clear()
+    _LAST.clear()  # a new run invalidates the Filter cache
     _SESSION.update(project=project, rules=rules, words=list(project.words.items()), acc=[])
     n_rules = sum(len(rules_at_time) for rules_at_time in project.rules.values())
     return json.dumps({"words": len(_SESSION["words"]), "rules": n_rules})
@@ -233,9 +242,45 @@ def finalize_run():
     _write_or_clear(O/"warnings.md", render_warnings(warns, "the current project") if warns else None)
     warnings = [{"word": w.gloss or w.ipa, "stage": w.stage,
                  "clusters": list(w.clusters), "syllabified": w.syllabified} for w in warns]
+    _LAST.update(project=project, rules=rules, derivations=list(acc))  # for the Filter tab
     _SESSION.clear()
     return json.dumps({"grading": grading, "diagnosis": diagnosis, "timeline": timeline,
                        "blame": blame, "warnings": warnings})
+
+def run_filter(pattern):
+    # Interactive filter over the last completed run — matches the pattern against every
+    # form each word takes, writes filtered_output.md/filtered_table.csv, and returns the
+    # matched words (trace card + where-matched + grade) for the Filter tab.
+    if "project" not in _LAST:
+        return json.dumps({"error": ["Run the project first, then filter."]})
+    project, rules, derivations = _LAST["project"], _LAST["rules"], _LAST["derivations"]
+    res = filter_by_pattern(derivations, pattern, project)
+    if res.is_err():
+        return json.dumps({"error": res.unwrap_err()})
+    result = res.unwrap()
+    matched_derivs = [m.derivation for m in result.matched]
+    O = Path(OVERLAY)
+    O.joinpath("filtered_output.md").write_text(
+        _build_filtered_report(result, project, "the current project"), encoding="utf-8")
+    O.joinpath("filtered_table.csv").write_text(
+        _build_csv_report(matched_derivs, rules, project), encoding="utf-8")
+
+    report = grade(matched_derivs, project)
+    grading = None
+    confusions_json = []
+    if report.graded:
+        grading = {"exact": report.exact, "graded": report.graded,
+                   "accuracy": round(report.accuracy, 4), "meanPhone": round(report.mean_distance, 3)}
+        confusions_json = _confusions_json(confusions(report.grades))
+    words = []
+    for m in result.matched:
+        g = grade_derivation(m.derivation, project)
+        words.append({"card": _card(m.derivation, project),
+                      "locations": [loc.label for loc in m.locations],
+                      "grade": ({"target": g.target, "distance": g.distance, "exact": g.exact} if g else None)})
+    return json.dumps({"pattern": pattern, "matched": len(result.matched),
+                       "considered": result.considered, "grading": grading,
+                       "confusions": confusions_json, "words": words})
 
 def run_derivations():
     prep = json.loads(prepare_run())
@@ -425,6 +470,23 @@ export function finalizeRun() {
   const fn = py.globals.get("finalize_run");
   try {
     return JSON.parse(fn());
+  } finally {
+    fn.destroy();
+  }
+}
+
+/**
+ * Filter the last completed run: match PATTERN against every form each word takes and
+ * return the matched words (trace card + where-matched + grade). Also writes
+ * filtered_output.md / filtered_table.csv into the overlay.
+ * @param {string} pattern a Fortis sequence pattern
+ * @returns {{pattern: string, matched: number, considered: number, grading: object|null,
+ *   confusions: Array, words: Array}|{error: string[]}}
+ */
+export function runFilter(pattern) {
+  const fn = py.globals.get("run_filter");
+  try {
+    return JSON.parse(fn(pattern));
   } finally {
     fn.destroy();
   }
