@@ -400,6 +400,11 @@ class TestGradeCli:
         out = capsys.readouterr().out
         assert "exact" in out
 
+    def test_summary_reports_analysis_timing(self, capsys, tmp_path):
+        grade_cli.main(["--output", str(tmp_path / "distances.md")])
+        err = capsys.readouterr().err
+        assert "derive" in err and "grade" in err and "analysis" in err
+
     def test_scope_writes_scoped_output_leaving_standard_whole(self, tmp_path):
         output = tmp_path / "distances.md"
         grade_cli.main(["--output", str(output), "--scope", "[+syllabic]"])  # any vowel

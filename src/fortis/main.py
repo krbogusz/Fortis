@@ -182,6 +182,7 @@ def main(argv: list[str] | None = None) -> None:
     # Phase 4 — grading: if the lexicon carries attested forms (final and/or
     # intermediate stages), grade the derivation against them and write a summary.
     graded = any(word.final is not None or word.stages for word in project.words.values())
+    grade_split = write_done  # split point between grading and the (costlier) analysis
     if graded:
         stages = grade_stages(derivations, project)
         dist_path = path.parent / "distances.md"
@@ -189,6 +190,7 @@ def main(argv: list[str] | None = None) -> None:
         print(f"wrote {dist_path}", file=sys.stderr)
         saved.append(dist_path)
         print(distance_summary_line(stages))
+        grade_split = time.perf_counter()  # grading done; what follows is analysis
 
         # Diagnose where the final derivation goes wrong (confusions + context autopsy).
         grades = next(s for s in stages if s.time is None).report.grades
@@ -258,8 +260,9 @@ def main(argv: list[str] | None = None) -> None:
     print_done = time.perf_counter()
 
     phases = {"init": init_done - start, "apply": derive_done - init_done}
-    if graded:  # grading + writing distances.md; report writes count as printing
-        phases["grade"] = grade_done - write_done
+    if graded:  # grade = grading + distances.md; analysis = diagnosis + timeline + blame
+        phases["grade"] = grade_split - write_done
+        phases["analysis"] = grade_done - grade_split
     phases["print"] = (write_done - derive_done) + (print_done - grade_done)
     _print_run_summary(derivations, rules, saved, phases, print_done - start)
 
@@ -286,8 +289,11 @@ def _print_run_summary(
 ) -> None:
     """Print the end-of-run summary to stderr: counts, timing, and saved files.
 
-    ``phases`` maps each phase name (init, apply, grade, print — grade only when
-    the run graded) to its elapsed seconds; ``total`` is the whole run's seconds.
+    ``phases`` maps each phase name (init, apply, grade, analysis, print — grade and
+    analysis only when the run graded) to its elapsed seconds; ``total`` is the whole
+    run's seconds. Analysis (diagnosis + timeline + blame) is split from grade because
+    it is the costlier half — notably ``diagnose_stages``, which re-runs the diagnosis
+    at each attested stage.
     """
     words = len(derivations)
     applied = _applied_rule_count(derivations)

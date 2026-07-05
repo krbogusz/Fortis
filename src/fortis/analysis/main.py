@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from pathlib import Path
 
 from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame
@@ -116,11 +117,13 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit(1)
     project = result.unwrap()
 
+    start = time.perf_counter()
     try:
         derivations = derive_all(project)
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error
+    derive_done = time.perf_counter()
 
     where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
 
@@ -131,6 +134,7 @@ def main(argv: list[str] | None = None) -> None:
     path.write_text(render_distance_summary(stages, where), encoding="utf-8")
     print(f"wrote {path}", file=sys.stderr)
     print(distance_summary_line(stages))
+    grade_done = time.perf_counter()
 
     # Diagnose where the final derivation goes wrong (the snapshot), from the same graded forms.
     final = next(s for s in stages if s.time is None)
@@ -154,6 +158,13 @@ def main(argv: list[str] | None = None) -> None:
     blame_path.write_text(render_blame(blames, where), encoding="utf-8")
     print(f"wrote {blame_path}", file=sys.stderr)
     print(blame_summary_line(blames))
+    analysis_done = time.perf_counter()
+
+    print(
+        f"{len(derivations)} words · derive {derive_done - start:.2f}s, "
+        f"grade {grade_done - derive_done:.2f}s, analysis {analysis_done - grade_done:.2f}s",
+        file=sys.stderr,
+    )
 
     # --scope: a post-run pass. The standard reports above stay whole-lexicon; this bundles
     # the four analyses, recomputed over the words whose attested forms match, into one file.

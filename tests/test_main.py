@@ -45,6 +45,18 @@ def test_main_writes_distances_with_target(project, tmp_path):
     assert "# Distances" in distances.read_text(encoding="utf-8")
 
 
+def test_main_run_summary_splits_out_analysis(project, tmp_path, capsys):
+    # The end-of-run timing now reports `analysis` (diagnosis + timeline + blame)
+    # separately from `grade`, so its cost is visible.
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(
+        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+    )
+    main(["--project", str(tmp_path)])
+    err = capsys.readouterr().err
+    assert "grade" in err and "analysis" in err
+
+
 def test_main_filter_writes_synthesis(project, tmp_path):
     # --filter synthesises the words a pattern touches (any form) into two extra files.
     ipa = next(iter(project.words))
