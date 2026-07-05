@@ -53,7 +53,6 @@ from src.fortis.application.matching import (
 )
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.syllabifying import (
-    SyllabificationError,
     nuclei_by_position,
     syllabify,
 )
@@ -295,10 +294,7 @@ def _maintain_tiers(
         return form
     nucleus_part = syllable_parts.get_nucleus(time)
     nucleus_def = nucleus_part.definition if nucleus_part is not None else None
-    try:
-        boundaries = syllabify(form.bundles(), sonorities, syllable_parts, time, letters)
-    except SyllabificationError:
-        return form
+    boundaries = syllabify(form.bundles(), sonorities, syllable_parts, time, letters)
     return redock_to_nuclei(form, boundaries, nucleus_def)
 
 
@@ -345,12 +341,7 @@ def _syllable_context(
     """
     if sonorities is None or syllable_parts is None:
         return frozenset(), None
-    try:
-        boundaries = syllabify(form, sonorities, syllable_parts, time, letters, cache=cache)
-    except SyllabificationError:
-        # Syllabification runs after every rule; an unsyllabifiable form (under
-        # onset/coda constraints) yields no structure rather than aborting.
-        return frozenset(), None
+    boundaries = syllabify(form, sonorities, syllable_parts, time, letters, cache=cache)
     nucleus_part = syllable_parts.get_nucleus(time)
     if nucleus_part is None or nucleus_part.definition is None:
         return boundaries, None
@@ -396,15 +387,12 @@ def _display_boundaries(
     time: int | None,
     letters: LetterInventory,
 ) -> frozenset[int]:
-    """Syllable boundaries for the trace — best-effort; an unsyllabifiable form is empty.
+    """Syllable boundaries for the trace — display only, so it ignores the ``$``-usage gate.
 
-    Unlike the matcher's boundaries this is purely for display, so it ignores the
-    ``$``-usage gate and never propagates a ``SyllabificationError``.
+    A form with no nucleus is empty; a cluster the patterns can't divide falls back to
+    sonority, like everywhere else.
     """
-    try:
-        return _boundaries(form, sonorities, syllable_parts, time, letters)
-    except SyllabificationError:
-        return frozenset()
+    return _boundaries(form, sonorities, syllable_parts, time, letters)
 
 
 def apply_rule(

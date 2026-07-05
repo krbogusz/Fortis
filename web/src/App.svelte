@@ -35,8 +35,9 @@
   let openDefs = $state({}); // per-card: index → whether that card's rule definitions are shown
   let result = $state(null); // { derivations } | { error }
   let grading = $state(null); // grading summary from the last run, or null when there's no target
+  let warnings = $state([]); // syllabification-fallback warnings from the last run
   let tableCsv = $state(""); // derivation_table.csv content, for the right-pane Table view
-  let resultView = $state("derivations"); // right-pane view: "derivations" | "table" | "grading"
+  let resultView = $state("derivations"); // right-pane view: derivations | table | grading | warnings
 
   // A project with more than this many words OR rules is too costly to re-run on
   // every edit; it waits for the "Run project" button instead of auto-running.
@@ -150,6 +151,7 @@
     progressText = "";
     result = null; // clear the previous results so the pane doesn't show stale output under the bar
     grading = null; // and the previous grading summary
+    warnings = []; // and the previous warnings
     tableCsv = ""; // and the previous derivation table
     openDefs = {}; // reset per-card definition toggles (indices map to new words after a run)
     await paint(); // paint the (updated) left pane + cleared right pane before the first batch blocks
@@ -192,6 +194,8 @@
       const fin = finalizeRun();
       grading = fin?.grading ?? null;
       if (!grading && resultView === "grading") resultView = "derivations"; // no target ⇒ leave the (now hidden) tab
+      warnings = fin?.warnings ?? [];
+      if (!warnings.length && resultView === "warnings") resultView = "derivations"; // none ⇒ leave the tab
       tableCsv = readFile("derivation_table.csv"); // for the Table view
       result = { derivations: acc };
     } catch (e) {
@@ -239,6 +243,7 @@
     derivations: "output.md",
     table: "derivation_table.csv",
     grading: "distances.md",
+    warnings: "warnings.md",
   };
 
   function saveResult() {
@@ -513,6 +518,14 @@
                     onclick={() => (resultView = "grading")}>Grading</button
                   >
                 {/if}
+                {#if warnings.length}
+                  <button
+                    class:active={resultView === "warnings"}
+                    onclick={() => (resultView = "warnings")}
+                    title="Words that fell back to sonority syllabification"
+                    >Warnings <span class="warn-count">{warnings.length}</span></button
+                  >
+                {/if}
               </div>
               <button
                 class="save-result"
@@ -611,6 +624,27 @@
               {/if}
             </details>
           {/each}
+        {:else if resultView === "warnings" && warnings.length}
+          <p class="caveat">
+            These words’ onset/coda patterns admitted no legal split for the listed cluster, so
+            syllabification fell back to the sonority Maximal Onset division. Loosen the patterns to
+            cover these clusters, or accept the fallback.
+          </p>
+          <table class="grade-summary">
+            <thead>
+              <tr><th>word</th><th>form</th><th>cluster(s)</th><th>syllabified as</th></tr>
+            </thead>
+            <tbody>
+              {#each warnings as w}
+                <tr>
+                  <td class="tgt">{w.word}</td>
+                  <td>{w.stage}</td>
+                  <td class="form">{w.clusters.join(", ")}</td>
+                  <td class="form">{w.syllabified}</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
         {:else if !result}
           {#if !busy}<p class="muted">No results yet.</p>{/if}
         {:else if result.error}
@@ -1013,6 +1047,18 @@
   .view-tabs button {
     font-size: var(--fs-body);
     padding: 4px 10px;
+  }
+  .warn-count {
+    display: inline-block;
+    min-width: 1.4em;
+    padding: 0 5px;
+    margin-left: 4px;
+    border-radius: 999px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    font-size: 0.85em;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
   }
   .save-result {
     margin-left: 8px;

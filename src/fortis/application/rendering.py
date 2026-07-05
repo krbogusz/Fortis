@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 from src.fortis.application.combining import differing, matches_exactly
-from src.fortis.application.syllabifying import SyllabificationError, syllabify, syllables
+from src.fortis.application.syllabifying import syllabify, syllables
 from src.fortis.general.utils import IdentityCache
 from src.fortis.models.bundles import FeatureBundle, is_morpheme_boundary
 from src.fortis.models.inventories import Diacritic, DiacriticKind
@@ -21,19 +21,15 @@ def sequence_to_string(sequence: list[FeatureBundle], inventories: Project) -> s
     before-kind mark like stress ``ˈ`` at the syllable's left edge, a combining/
     after-kind mark like tone on the nucleus — so a stressed word round-trips as
     ``ˈseχmoː``, not ``sˈeχmoː``. To do that the sequence is syllabified; when it
-    has no nucleus or no legal division (e.g. a bare cluster), it falls back to a
-    flat per-segment render with no repositioning.
+    has no nucleus, it falls back to a flat per-segment render with no repositioning.
     """
-    try:
-        boundaries = syllabify(
-            sequence,
-            inventories.sonorities,
-            inventories.syllable_parts,
-            inventories.time,
-            inventories.letters,
-        )
-    except SyllabificationError:
-        boundaries = frozenset()
+    boundaries = syllabify(
+        sequence,
+        inventories.sonorities,
+        inventories.syllable_parts,
+        inventories.time,
+        inventories.letters,
+    )
     if boundaries:
         return render_syllabified(sequence, boundaries, inventories, dots=False)
     return "".join(render_segment(segment, inventories) for segment in sequence)

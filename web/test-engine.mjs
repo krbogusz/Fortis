@@ -79,6 +79,26 @@ try {
     throw new Error("reset_overlay() left project files behind: " + JSON.stringify(afterReset));
   log("10. reset_overlay(): all files back to default");
 
+  // 11. The non-empty warnings path: onset = coda = [-syll] cannot split a 3-consonant
+  //     cluster, so 'astra' falls back to sonority. Exercises finalize_run's populated
+  //     branch (render_warnings + the structured list) through the real Pyodide round-trip.
+  py.globals.set(
+    "_sp",
+    '[0]\nnucleus = { definition = "+syll" }\nonset = { definition = "[-syll]" }\ncoda = { definition = "[-syll]" }\n',
+  );
+  py.globals.set("_wd", '"astra" = "three"\n"apta" = "ok"\n');
+  py.runPython(`write_file("syllable_parts.toml", _sp); write_file("words.toml", _wd)`);
+  const warned = JSON.parse(py.runPython("run_derivations()").toString());
+  if (warned.error) throw new Error("warnings run failed: " + JSON.stringify(warned.error));
+  const ws = warned.warnings || [];
+  const astra = ws.find((w) => w.syllabified === "as.tra");
+  if (!astra || !astra.clusters.includes("str") || !astra.stage)
+    throw new Error("expected a populated 'astra' warning, got: " + JSON.stringify(ws));
+  const warnMd = py.runPython(`read_file("warnings.md")`).toString();
+  if (!warnMd.includes("as.tra")) throw new Error("warnings.md not written: " + warnMd.slice(0, 80));
+  log(`11. warnings path: ${ws.length} warning(s) through Pyodide, warnings.md written`);
+  py.runPython(`reset_overlay()`);
+
   log("SMOKE TEST PASSED");
 } catch (e) {
   const m = (e && e.message) ? e.message : String(e);

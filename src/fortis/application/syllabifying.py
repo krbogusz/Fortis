@@ -25,10 +25,11 @@ so a pattern may license a non-sonority-rising onset (e.g. ``s``+stop). With no
 pattern, the sonority Maximal Onset division above is used. ``[nasal]`` is a
 mandatory single-nasal coda; ``[nasal]?`` an optional one (the matcher's
 quantifiers express optionality — there is no implicit empty). If no split is
-pattern-legal the cluster is unsyllabifiable and ``SyllabificationError`` is
-raised rather than emitting an illegal division. Patterns apply only at the
-interior split where there is a choice; word-edge onsets/codas are forced and not
-checked.
+pattern-legal for a cluster, syllabification **falls back to the sonority Maximal
+Onset division** for that cluster (rather than failing) and reports the fallback,
+so the derivation always has structure; the caller can surface a warning. Patterns
+apply only at the interior split where there is a choice; word-edge onsets/codas
+are forced and not checked.
 """
 from __future__ import annotations
 
@@ -44,9 +45,9 @@ from src.fortis.models.inventories import (
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.syllable import Syllable
 
-
-class SyllabificationError(Exception):
-    """No legal syllable division exists for a cluster under the onset/coda constraints."""
+# A fallen-back cluster, as the ``(start, end)`` half-open span of segment positions whose
+# division the patterns could not make and that used the sonority split instead.
+type Fallback = tuple[int, int]
 
 
 def syllables(
@@ -136,23 +137,25 @@ def _split(
     onset_part: SyllablePart | None,
     coda_part: SyllablePart | None,
     letters: LetterInventory,
-) -> int:
-    """The onset-start index for an interior cluster.
+) -> tuple[int, bool]:
+    """The onset-start index for an interior cluster, and whether sonority was a fallback.
 
     With an onset or coda pattern defined, every split point is a candidate and the
     longest pattern-legal onset wins — the patterns define legality, so sonority is
     not consulted (this is what lets a pattern license a non-sonority-rising onset).
-    With no pattern, the sonority Maximal Onset division is used. Raises
-    ``SyllabificationError`` when a pattern admits no division.
+    With no pattern, the sonority Maximal Onset division is used. When a pattern *is*
+    defined but no split point is legal, this falls back to the sonority division (so
+    the form still syllabifies) and returns ``True`` as the second element, letting the
+    caller record a warning. The bool is ``False`` on the pattern and no-pattern paths.
     """
     if not (_has_pattern(onset_part) or _has_pattern(coda_part)):
-        return _onset_start(levels)
+        return _onset_start(levels), False
     for k in range(len(segments) + 1):  # k = 0 is the maximal (whole-cluster) onset
         if _legal_constituent(segments[k:], onset_part, letters) and _legal_constituent(
             segments[:k], coda_part, letters
         ):
-            return k
-    raise SyllabificationError("no pattern-legal onset/coda division for an intervocalic cluster")
+            return k, False
+    return _onset_start(levels), True  # no pattern-legal split → sonority fallback (flagged)
 
 
 _syllabify_cache = IdentityCache(maxsize=8)
@@ -182,18 +185,34 @@ def syllabify(
             as immutable. Pass ``False`` for a list that can recur under the same identity
             with different content (e.g. a directional scan's working form).
 
-    Raises:
-        SyllabificationError: if an interior cluster admits no pattern-legal division.
+    A cluster the onset/coda patterns cannot divide falls back to the sonority split (see
+    :func:`syllabification_fallbacks` to detect where that happened).
     """
     if not cache:
-        return _syllabify_uncached(segments, sonorities, syllable_parts, time, letters)
+        return _syllabify_uncached(segments, sonorities, syllable_parts, time, letters)[0]
     letters_id = id(letters) if letters is not None else None
     extra = (id(sonorities), id(syllable_parts), time, letters_id)
     return _syllabify_cache.get_or_compute(
         segments,
         extra,
         lambda: _syllabify_uncached(segments, sonorities, syllable_parts, time, letters),
-    )
+    )[0]
+
+
+def syllabification_fallbacks(
+    segments: list[FeatureBundle],
+    sonorities: SonoritiesInventory,
+    syllable_parts: SyllablePartsInventory,
+    time: int | None,
+    letters: LetterInventory | None = None,
+) -> tuple[Fallback, ...]:
+    """The clusters of *segments* whose division the patterns could not make at *time*.
+
+    Each is the ``(start, end)`` span (a nucleus's cluster) that fell back to the sonority
+    Maximal Onset split. Empty when nothing fell back. Recomputed from the same core as
+    :func:`syllabify`, so the detection cannot drift from the split actually used.
+    """
+    return _syllabify_uncached(segments, sonorities, syllable_parts, time, letters)[1]
 
 
 def _syllabify_uncached(
@@ -202,20 +221,21 @@ def _syllabify_uncached(
     syllable_parts: SyllablePartsInventory,
     time: int | None,
     letters: LetterInventory | None,
-) -> frozenset[int]:
+) -> tuple[frozenset[int], tuple[Fallback, ...]]:
     letters = letters if letters is not None else LetterInventory()
     nucleus_part = syllable_parts.get_nucleus(time)
     if nucleus_part is None or nucleus_part.definition is None:
-        return frozenset()
+        return frozenset(), ()
 
     nuclei = [i for i, seg in enumerate(segments) if pattern_matches(nucleus_part.definition, seg)]
     if not nuclei:
-        return frozenset()
+        return frozenset(), ()
 
     onset_part = syllable_parts.get_part(time, "onset")
     coda_part = syllable_parts.get_part(time, "coda")
     levels = [_sonority(seg, sonorities) for seg in segments]
     boundaries = {0, len(segments)}  # word edges are syllable edges
+    fallbacks: list[Fallback] = []
     for left, right in zip(nuclei, nuclei[1:], strict=False):
         # A morpheme boundary in the cluster forces the split at its own position,
         # overriding sonority/MOP: material before it is the left syllable's coda, material
@@ -226,9 +246,11 @@ def _syllabify_uncached(
             continue
         cluster_levels = levels[left + 1 : right]
         cluster_segs = segments[left + 1 : right]
-        start = _split(cluster_levels, cluster_segs, onset_part, coda_part, letters)
+        start, fell_back = _split(cluster_levels, cluster_segs, onset_part, coda_part, letters)
         boundaries.add(left + 1 + start)
-    return frozenset(boundaries)
+        if fell_back:
+            fallbacks.append((left + 1, right))
+    return frozenset(boundaries), tuple(fallbacks)
 
 
 def nuclei_by_position(

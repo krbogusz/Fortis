@@ -202,6 +202,10 @@ Morpheme-boundary loss
     at-a → a.ta   (-→∅)
 ```
 
+## syllabification fallback
+
+`tastsa` → `tas.tsa`
+
 ## tone spread
 
 `táka` → `ta˦.ka˦`

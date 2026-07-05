@@ -47,6 +47,7 @@ from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.analysis.grading import grade_stages
+from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
 from src.fortis.main import _build_report, _build_csv_report
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
@@ -132,13 +133,21 @@ def _grade_summary(acc, project):
     }
 
 def finalize_run():
-    if "project" not in _SESSION: return json.dumps({"grading": None})  # superseded run
+    if "project" not in _SESSION: return json.dumps({"grading": None, "warnings": []})  # superseded
     project, rules, acc = _SESSION["project"], _SESSION["rules"], _SESSION["acc"]
     (Path(OVERLAY)/"output.md").write_text(_build_report(acc, project, None), encoding="utf-8")
     (Path(OVERLAY)/"derivation_table.csv").write_text(_build_csv_report(acc, rules, project), encoding="utf-8")
     grading = _grade_summary(acc, project)
+    warns = syllabification_warnings(acc, project)
+    warn_path = Path(OVERLAY)/"warnings.md"
+    if warns:
+        warn_path.write_text(render_warnings(warns, "the current project"), encoding="utf-8")
+    elif warn_path.exists():
+        warn_path.unlink()  # clear a stale report from a run that had warnings
+    warnings = [{"word": w.gloss or w.ipa, "stage": w.stage,
+                 "clusters": list(w.clusters), "syllabified": w.syllabified} for w in warns]
     _SESSION.clear()
-    return json.dumps({"grading": grading})
+    return json.dumps({"grading": grading, "warnings": warnings})
 
 def run_derivations():
     prep = json.loads(prepare_run())
@@ -147,7 +156,7 @@ def run_derivations():
     for i in range(0, prep["words"], 64):
         out.extend(json.loads(derive_batch(i, 64)))
     fin = json.loads(finalize_run())
-    return json.dumps({"derivations": out, "grading": fin.get("grading")})
+    return json.dumps({"derivations": out, "grading": fin.get("grading"), "warnings": fin.get("warnings")})
 `;
 
 let py = null; // the Pyodide interpreter, set once initialised
@@ -316,8 +325,8 @@ export function deriveBatch(start, count) {
 
 /**
  * Finish a run: write the reports from the accumulated derivations and grade them.
- * @returns {{grading: object|null}} the grading summary, or null when the lexicon
- *   carries no attested forms (nothing to grade against).
+ * @returns {{grading: object|null, warnings: Array<object>}} the grading summary (null
+ *   when the lexicon carries no attested forms) and any syllabification-fallback warnings.
  */
 export function finalizeRun() {
   const fn = py.globals.get("finalize_run");

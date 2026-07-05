@@ -33,4 +33,5 @@
 "otine"  = {gloss = "vowel harmony (agreement)", final = "otunɤ"}
 "utine"  = {gloss = "vowel harmony (spreading)", final = "utunɤ"}
 "at-a"   = {gloss = "morpheme boundary", final = "ata"}
+"tastsa" = {gloss = "syllabification fallback", final = "tastsa"}
 "táka" = {gloss = "tone spread", final = "ta˦ka˦"}

@@ -24,6 +24,11 @@ from pathlib import Path
 
 from src.fortis.analysis.grading import grade_stages
 from src.fortis.analysis.reporting import distance_summary_line, render_distance_summary
+from src.fortis.analysis.warnings import (
+    render_warnings,
+    syllabification_warnings,
+    warnings_summary_line,
+)
 from src.fortis.application.deriving import derive_all, resolve_rule_letters
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.tiers import lower_tiers
@@ -152,18 +157,31 @@ def main(argv: list[str] | None = None) -> None:
     saved.append(csv_path)
     write_done = time.perf_counter()
 
+    where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
+
     # Phase 4 — grading: if the lexicon carries attested forms (final and/or
     # intermediate stages), grade the derivation against them and write a summary.
     graded = any(word.final is not None or word.stages for word in project.words.values())
     if graded:
         stages = grade_stages(derivations, project)
-        where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
         dist_path = path.parent / "distances.md"
         dist_path.write_text(render_distance_summary(stages, where), encoding="utf-8")
         print(f"wrote {dist_path}", file=sys.stderr)
         saved.append(dist_path)
         print(distance_summary_line(stages))
     grade_done = time.perf_counter()
+
+    # Phase 4b — syllabification warnings: words whose onset/coda patterns admitted no
+    # legal split and fell back to sonority. Only written when there is something to report.
+    warnings = syllabification_warnings(derivations, project)
+    warn_path = path.parent / "warnings.md"
+    if warnings:
+        warn_path.write_text(render_warnings(warnings, where), encoding="utf-8")
+        print(f"wrote {warn_path}", file=sys.stderr)
+        saved.append(warn_path)
+        print(warnings_summary_line(warnings), file=sys.stderr)
+    elif warn_path.exists():
+        warn_path.unlink()  # a prior run warned but this one doesn't — clear the stale report
 
     # Phase 5 — printing: print the per-word traces.
     for derivation in derivations:

@@ -3,12 +3,10 @@
 The ``sonorities`` and ``syllable_parts`` fixtures come from conftest.
 """
 
-import pytest
-
 from src.fortis.application.syllabifying import (
-    SyllabificationError,
     consolidate_suprasegmentals,
     nuclei_by_position,
+    syllabification_fallbacks,
     syllabify,
 )
 from src.fortis.models.bundles import FeatureBundle
@@ -176,9 +174,12 @@ class TestOnsetCodaConstraints:
         parts = self._parts(features, onset="[+cons][+cons]")
         assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 1, 4]
 
-    def test_no_legal_division_raises(self, sonorities, features):
-        # Onset and coda must each be exactly one segment, but the cluster has three.
+    def test_no_legal_division_falls_back_to_sonority(self, sonorities, features):
+        # Onset and coda must each be exactly one segment, but the cluster has three, so
+        # no pattern-legal split exists. Rather than fail, it falls back to the sonority
+        # MOP division (the whole rising stop<fric<lat cluster becomes the onset) and
+        # reports the fallen-back cluster span.
         word = [_v(), self._stop(), self._fric(), _lat(), _v()]
         parts = self._parts(features, onset="[]", coda="[]")
-        with pytest.raises(SyllabificationError):
-            syllabify(word, sonorities, parts, 0)
+        assert sorted(syllabify(word, sonorities, parts, 0)) == [0, 1, 5]
+        assert syllabification_fallbacks(word, sonorities, parts, 0) == ((1, 4),)

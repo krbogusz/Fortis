@@ -204,12 +204,10 @@ class TestDerive:
         )
         assert _values(with_syll.surface.bundles()) == _values(without.surface.bundles())
 
-    def test_boundary_free_rule_does_not_abort_on_unsyllabifiable_form(
-        self, features, letters, sonorities
-    ):
-        # Onset and coda must each be a vowel → an intervocalic consonant can be
-        # neither, so the form is unsyllabifiable. A $-free rule must not syllabify
-        # at all, so it cannot abort on it.
+    def test_unpatternable_form_falls_back_to_sonority(self, features, letters, sonorities):
+        # Onset and coda must each be a vowel → an intervocalic consonant can be neither,
+        # so no pattern-legal split exists. Rather than yield no structure, the form falls
+        # back to the sonority division, and a $-free rule fires as usual.
         nucleus = SyllablePart("nucleus", 0, parse_pattern_bundle("+syll", features).unwrap())
         vowel_only = parse_sequence("[+syllabic]", features).unwrap()
         parts = SyllablePartsInventory(
@@ -227,8 +225,9 @@ class TestDerive:
         result = derive(
             Word(ipa="ana"), Form.from_bundles(segs), rules, letters, features, sonorities, parts
         )
-        assert _values(result.surface.bundles())[1]["voice"] == 1  # rule fired, no abort
-        assert result.surface_boundaries == frozenset()  # surface unsyllabifiable → no structure
+        assert _values(result.surface.bundles())[1]["voice"] == 1  # rule fired
+        # Sonority fallback: the lone medial consonant is the onset of the 2nd syllable (a.na).
+        assert result.surface_boundaries == frozenset({0, 1, 3})
 
     def test_tier_aware_match_reads_the_syllable_end_to_end(
         self, features, letters, sonorities, syllable_parts
