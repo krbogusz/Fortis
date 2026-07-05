@@ -40,7 +40,11 @@ from src.fortis.analysis.warnings import (
     syllabification_warnings,
     warnings_summary_line,
 )
-from src.fortis.application.deriving import derive_all, resolve_rule_letters
+from src.fortis.application.deriving import (
+    derive_all,
+    derive_all_parallel,
+    resolve_rule_letters,
+)
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.config import config
@@ -122,6 +126,22 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         "(input, intermediate, surface, target, stage) into filtered_output.md + "
         "filtered_table.csv, e.g. 't̪ [aperture: high]'",
     )
+    parser.add_argument(
+        "--serial",
+        dest="serial",
+        action="store_true",
+        help="derive in a single process, disabling the automatic multiprocessing "
+        "(which otherwise fans a big lexicon across worker processes).",
+    )
+    parser.add_argument(
+        "--workers",
+        dest="workers",
+        type=int,
+        default=None,
+        metavar="N",
+        help="pin the worker-process count for the parallel derivation "
+        "(default: auto, ~CPU count − 2). Ignored with --serial.",
+    )
     return parser.parse_args(argv)
 
 
@@ -135,6 +155,8 @@ def main(argv: list[str] | None = None) -> None:
     Every run writes ``output.md`` (the trace, ``--output`` overrides the path) and
     ``derivation_table.csv`` (one row per word, one column per rule) into the same
     directory; if the lexicon has attested forms, a ``distances.md`` summary too.
+    A big lexicon is derived across worker processes automatically (identical output);
+    ``--serial`` forces a single process and ``--workers N`` pins the pool size.
     Ends with a run summary on stderr: words derived, rules applied, per-phase
     timing (init, apply, print), and the files saved.
     """
@@ -157,8 +179,15 @@ def main(argv: list[str] | None = None) -> None:
     init_done = time.perf_counter()
 
     # Phase 2 — rule application: derive every word (with a progress bar on a TTY).
+    # Parallel by default — derive_all_parallel fans a big lexicon across worker
+    # processes and quietly falls back to serial for small ones; --serial forces it off.
     try:
-        derivations = derive_all(project, on_progress=_progress_bar)
+        if args.serial:
+            derivations = derive_all(project, on_progress=_progress_bar)
+        else:
+            derivations = derive_all_parallel(
+                project, workers=args.workers, on_progress=_progress_bar
+            )
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error

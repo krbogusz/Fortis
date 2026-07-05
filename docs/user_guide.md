@@ -637,6 +637,18 @@ candidate rule against the lexicon and writes `whatif.md`.
 A run ends with a one-line summary on stderr — words derived, rules applied,
 per-phase timing, and the files saved.
 
+### 8.4 Parallel derivation
+
+Because deriving one word never affects another, both CLIs (`python -m src.fortis.main`
+and `python -m src.fortis.analysis.main`) fan a large lexicon across worker processes
+**automatically**, giving a ~4–6× speedup on a multi-core machine. The result is
+byte-identical to a serial run and in the same order. A small lexicon (below a couple
+hundred words) stays in a single process, since the pool's start-up cost — spawning
+processes and handing each the project — would outweigh the gain. `--serial` forces a
+single process (useful for profiling or a reproducible baseline); `--workers N` pins the
+pool size (default: about two below the CPU count). The browser app derives serially:
+Pyodide (CPython on WebAssembly) has no multiprocessing, so this applies to the CLIs only.
+
 ---
 
 ## 9. Validation

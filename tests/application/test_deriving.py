@@ -2,7 +2,13 @@
 
 import pytest
 
-from src.fortis.application.deriving import apply_rule, derive, resolve_rule_letters
+from src.fortis.application.deriving import (
+    apply_rule,
+    derive,
+    derive_all,
+    derive_all_parallel,
+    resolve_rule_letters,
+)
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import associate_tiers, lower_tiers
 from src.fortis.models.bundles import FeatureBundle
@@ -378,3 +384,21 @@ def test_word_scoped_rule_fires_only_on_named_words(project):
     assert fired("kata")  # named by ipa → fires
     assert not fired("taka")  # neither ipa nor gloss named → skipped
     assert fired("taka", gloss="kata")  # named by gloss → fires
+
+
+def test_derive_all_parallel_matches_serial(project):
+    # Forcing the process-pool path (min_words=0) on the small default lexicon must
+    # reproduce the serial derivation exactly, in the same order.
+    serial = derive_all(project)
+    parallel = derive_all_parallel(project, workers=2, min_words=0)
+    assert len(parallel) == len(serial)
+    assert [d.surface for d in parallel] == [d.surface for d in serial]
+    assert [len(d.steps) for d in parallel] == [len(d.steps) for d in serial]
+
+
+def test_derive_all_parallel_falls_back_below_threshold(project):
+    # Below the word-count floor, or with a single worker, it runs serially — same
+    # result, no pool spun up.
+    serial_surfaces = [d.surface for d in derive_all(project)]
+    assert [d.surface for d in derive_all_parallel(project, min_words=10_000)] == serial_surfaces
+    assert [d.surface for d in derive_all_parallel(project, workers=1)] == serial_surfaces

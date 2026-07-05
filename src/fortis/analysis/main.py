@@ -39,7 +39,7 @@ from src.fortis.analysis.grading import grade_stages
 from src.fortis.analysis.reporting import distance_summary_line, render_distance_summary
 from src.fortis.analysis.synthesis import render_scoped
 from src.fortis.analysis.whatif import render_whatif, try_rule, whatif_summary_line
-from src.fortis.application.deriving import derive_all
+from src.fortis.application.deriving import derive_all, derive_all_parallel
 from src.fortis.config import config
 from src.fortis.loaders.project import load_project
 from src.fortis.result import Err, Ok
@@ -104,6 +104,22 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         help="write scoped_output.md — the analyses recomputed over words whose attested "
         "target or ANY attested stage matches a sequence pattern (e.g. 'k [aperture: high]')",
     )
+    parser.add_argument(
+        "--serial",
+        dest="serial",
+        action="store_true",
+        help="derive in a single process, disabling the automatic multiprocessing "
+        "(which otherwise fans a big lexicon across worker processes).",
+    )
+    parser.add_argument(
+        "--workers",
+        dest="workers",
+        type=int,
+        default=None,
+        metavar="N",
+        help="pin the worker-process count for the parallel derivation "
+        "(default: auto, ~CPU count − 2). Ignored with --serial.",
+    )
     return parser.parse_args(argv)
 
 
@@ -119,7 +135,10 @@ def main(argv: list[str] | None = None) -> None:
 
     start = time.perf_counter()
     try:
-        derivations = derive_all(project)
+        if args.serial:
+            derivations = derive_all(project)
+        else:
+            derivations = derive_all_parallel(project, workers=args.workers)
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error

@@ -111,6 +111,13 @@ the Markdown path (the others follow into the same directory):
 python -m src.fortis.main --project projects/latin_to_french --output
 ```
 
+Deriving one word never touches another, so a large lexicon is fanned across worker
+processes **automatically** — a ~4–6× speedup on a multi-core machine, with output
+byte-identical to a serial run. Small lexica stay in a single process (the pool's
+startup cost is not worth paying below a couple hundred words). Pass `--serial` to
+force one process, or `--workers N` to pin the pool size. The same flags apply to the
+grading/diagnosis CLI (`python -m src.fortis.analysis.main`), which derives the same way.
+
 ### Web app
 
 `web/` is a browser front end that runs the same Python engine used by the CLI —

@@ -39,6 +39,7 @@ output, only enables ``$``-conditioned rules.)
 """
 from __future__ import annotations
 
+import os
 from collections.abc import Callable
 from dataclasses import replace
 
@@ -888,3 +889,106 @@ def form_at_time(derivation: Derivation, time: int) -> tuple[Form, frozenset[int
         form = step.after
         boundaries = step.after_boundaries
     return form, boundaries
+
+
+# --- Parallel derivation ----------------------------------------------------
+#
+# Deriving one word never touches another, so ``derive_all`` is embarrassingly
+# parallel. Threads don't help (the derive loop is CPU-bound, so the GIL
+# serialises it), but processes do: on a 10-core machine this reaches ~4.5x on
+# the ~450-word Latin project and ~6x on larger lexicons. Each worker gets its
+# own copy of the module-global identity caches, so there is no shared mutable
+# state to synchronise. Results come back in lexicon order (``imap`` is ordered),
+# byte-identical to the serial path.
+#
+# The worker + its state must be module-level so the ``spawn`` start method can
+# pickle them by qualified name (a closure could not be shipped to the children).
+
+_PARALLEL_STATE: dict[str, object] = {}
+
+
+def _parallel_init(project: Project, rules: RuleInventory) -> None:
+    """Pool initialiser: stash the (already letter-resolved) run inputs per worker."""
+    _PARALLEL_STATE["project"] = project
+    _PARALLEL_STATE["rules"] = rules
+
+
+def _parallel_derive_chunk(
+    chunk: list[tuple[str, Word]],
+) -> list[Derivation]:
+    """Derive a slice of the lexicon inside one worker process."""
+    project = _PARALLEL_STATE["project"]
+    assert isinstance(project, Project)
+    rules = _PARALLEL_STATE["rules"]
+    assert isinstance(rules, RuleInventory)
+    return [
+        derive(
+            word,
+            string_to_sequence(ipa, project),
+            rules,
+            project.letters,
+            project.features,
+            project.sonorities,
+            project.syllable_parts,
+            project.tiers,
+        )
+        for ipa, word in chunk
+    ]
+
+
+def derive_all_parallel(
+    project: Project,
+    workers: int | None = None,
+    min_words: int = 200,
+    on_progress: Callable[[int, int], None] | None = None,
+) -> list[Derivation]:
+    """Like :func:`derive_all`, but fans the lexicon across worker processes.
+
+    Falls back to the serial :func:`derive_all` when there is little to gain — a
+    lexicon under *min_words*, a single worker, or no reported CPUs — so the fixed
+    ~0.8s pool-startup cost (spawning processes, shipping the project, importing
+    the engine per child) never makes a small run *slower*. Above that threshold
+    the speedup grows with lexicon size as the startup amortises.
+
+    The output is identical to :func:`derive_all` and in the same order.
+
+    Args:
+        project: The loaded project.
+        workers: Worker process count. Defaults to two below the CPU count (the
+            empirical sweet spot — leaves headroom and avoids the past-peak
+            slowdown), clamped to at least one.
+        min_words: Below this lexicon size, run serially instead.
+        on_progress: Optional ``(done, total)`` callback, invoked once per chunk
+            as results arrive (coarser than the serial per-word cadence).
+
+    Raises:
+        ValueError: a rule spells a symbol that resolves to no segment.
+    """
+    items = list(project.words.items())
+    total = len(items)
+    if workers is None:
+        workers = max(1, (os.cpu_count() or 3) - 2)
+    if workers <= 1 or total < min_words:
+        return derive_all(project, on_progress)
+
+    # Resolve letter runs once here; ship the resolved rules to every worker.
+    rules = resolve_rule_letters(project.rules, project)
+
+    # Aim for a few chunks per worker so a late-finishing chunk can't leave a
+    # core idle, while keeping chunks big enough to amortise per-task dispatch.
+    num_chunks = min(total, workers * 4)
+    size = (total + num_chunks - 1) // num_chunks
+    chunks = [items[i : i + size] for i in range(0, total, size)]
+
+    from multiprocessing import get_context
+
+    ctx = get_context("spawn")  # explicit: identical behaviour on every platform
+    derivations: list[Derivation] = []
+    done = 0
+    with ctx.Pool(workers, initializer=_parallel_init, initargs=(project, rules)) as pool:
+        for result, chunk in zip(pool.imap(_parallel_derive_chunk, chunks), chunks):
+            derivations.extend(result)
+            done += len(chunk)
+            if on_progress is not None:
+                on_progress(done, total)
+    return derivations
