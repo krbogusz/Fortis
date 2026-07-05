@@ -119,8 +119,17 @@ def _grade_summary(acc, project):
     if not any(d.word.final is not None or d.word.stages for d in acc):
         return None
     stages = grade_stages(acc, project)
+    final = next((s for s in stages if s.time is None), None)
+    weighted = None  # a token-weighted final headline, only when frequencies vary
+    if final is not None and final.report.frequencies_vary:
+        r = final.report
+        weighted = {"accuracy": round(r.weighted_accuracy, 4),
+                    "meanPhone": round(r.weighted_mean_distance, 3),
+                    "meanFeature": round(r.weighted_mean_feature_distance, 3),
+                    "weight": r.weight}
     return {
         "hasStages": any(s.time is not None for s in stages),
+        "weighted": weighted,
         "stages": [{
             "label": s.label,
             "graded": s.report.graded,

@@ -65,6 +65,27 @@ class TestWordTableForm:
             1700: "ɛm",
         }
 
+    def test_frequency_default_is_one(self, tmp_path):
+        inv = self._load(tmp_path, '"ka" = {gloss = "x", final = "ka"}\n').unwrap()
+        assert inv["ka"].frequency == 1
+
+    def test_frequency_parsed(self, tmp_path):
+        inv = self._load(tmp_path, '"ka" = {gloss = "x", final = "ka", frequency = 240}\n').unwrap()
+        assert inv["ka"].frequency == 240
+
+    def test_frequency_bool_rejected(self, tmp_path):
+        # bool is an int subclass — `true` must not become 1.
+        err = self._load(tmp_path, '"ka" = {gloss = "x", frequency = true}\n').unwrap_err()
+        assert any("frequency" in e for e in err)
+
+    def test_frequency_non_positive_rejected(self, tmp_path):
+        err = self._load(tmp_path, '"ka" = {gloss = "x", frequency = 0}\n').unwrap_err()
+        assert any("frequency" in e for e in err)
+
+    def test_frequency_non_integer_rejected(self, tmp_path):
+        err = self._load(tmp_path, '"ka" = {gloss = "x", frequency = 1.5}\n').unwrap_err()
+        assert any("frequency" in e for e in err)
+
     def test_both_forms_coexist(self, tmp_path):
         # The explicit requirement: the plain string form and the table form
         # must both work in one inventory.

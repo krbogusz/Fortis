@@ -196,12 +196,16 @@ class Word:
         final: The attested final/target surface form, if known (for grading).
         stages: Attested forms keyed by time stage (for per-period grading);
             keys are stage times, values the attested form at that stage.
+        frequency: A token frequency (a positive integer weight; default 1) for
+            frequency-weighted grading — a word counts this many times toward the
+            weighted accuracy and mean distances. Ignored by the engine.
     """
 
     ipa: str
     gloss: str = ""
     final: str | None = None
     stages: dict[int, str] = field(default_factory=dict)
+    frequency: int = 1
 
 
 class WordInventory(UserDict[str, Word]):

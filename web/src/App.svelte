@@ -671,6 +671,16 @@
             </tbody>
           </table>
 
+          {#if grading.weighted}
+            <p class="caveat">
+              <strong>Token-weighted</strong> (by <code>frequency</code>, total weight
+              {grading.weighted.weight}): final {(grading.weighted.accuracy * 100).toFixed(1)}%
+              exact, mean d {grading.weighted.meanPhone.toFixed(3)}, mean fd
+              {grading.weighted.meanFeature.toFixed(3)}. Confusions and the autopsy stay
+              unweighted token counts.
+            </p>
+          {/if}
+
           {#if grading.hasStages}
             <p class="caveat">
               Intermediate stages compare the derived snapshot at rule-time T against

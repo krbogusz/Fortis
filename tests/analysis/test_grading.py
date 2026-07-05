@@ -240,6 +240,46 @@ class TestGradeAggregates:
         assert not Grade("w", "i", "x", "y", 1).exact
 
 
+class TestWeightedAggregates:
+    def _report(self, pairs):  # pairs of (distance, frequency)
+        grades = tuple(
+            Grade(gloss=f"w{i}", ipa=f"i{i}", derived="x", target="x", distance=d,
+                  feature_distance=d, frequency=f)
+            for i, (d, f) in enumerate(pairs)
+        )
+        return GradeReport(grades=grades)
+
+    def test_no_variation_is_a_noop(self):
+        report = self._report([(0, 1), (1, 1)])  # all default frequency
+        assert not report.frequencies_vary
+        assert report.weighted_accuracy == report.accuracy  # 0.5 == 0.5
+
+    def test_weighting_shifts_accuracy_toward_frequent_words(self):
+        # A frequent word is wrong, a rare word is exact: unweighted looks 50%,
+        # but by token weight the frequent error dominates.
+        report = self._report([(1, 99), (0, 1)])
+        assert report.frequencies_vary
+        assert report.accuracy == 0.5  # one of two words exact
+        assert report.weight == 100
+        assert report.weighted_accuracy == 0.01  # only the freq-1 exact word counts
+        assert report.weighted_mean_distance == 0.99  # (99*1 + 1*0) / 100
+
+    def test_weighting_rewards_frequent_correct_words(self):
+        # The mirror: the frequent word is exact, the rare one wrong.
+        report = self._report([(0, 99), (1, 1)])
+        assert report.weighted_accuracy == 0.99
+        assert report.weighted_mean_distance == 0.01
+
+    def test_weighted_feature_distance_skips_unsegmentable(self):
+        grades = (
+            Grade("a", "a", "x", "x", 0, feature_distance=0, frequency=10),
+            Grade("b", "b", "y", "z", 2, feature_distance=None, frequency=5),  # unsegmentable
+            Grade("c", "c", "y", "z", 1, feature_distance=4, frequency=2),
+        )
+        report = GradeReport(grades=grades)
+        assert report.weighted_mean_feature_distance == (10 * 0 + 2 * 4) / (10 + 2)
+
+
 class TestGradeDerivationIntegration:
     """End-to-end plumbing against the real engine, using the default project.
 

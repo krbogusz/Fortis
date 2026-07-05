@@ -285,6 +285,7 @@ class Grade:
     target: str
     distance: int
     feature_distance: int | None = None
+    frequency: int = 1
 
     @property
     def exact(self) -> bool:
@@ -353,6 +354,37 @@ class GradeReport:
         """Mean feature edit distance per word that has one (0.0 if none)."""
         return self.total_feature_distance / self.feature_graded if self.feature_graded else 0.0
 
+    # ---- Token-frequency-weighted aggregates (each word counts ``frequency`` times) ----
+
+    @property
+    def frequencies_vary(self) -> bool:
+        """Whether any graded word carries a non-default frequency (else weighting is a no-op)."""
+        return any(grade.frequency != 1 for grade in self.grades)
+
+    @property
+    def weight(self) -> int:
+        """Total token weight across graded words (the weighted denominator)."""
+        return sum(grade.frequency for grade in self.grades)
+
+    @property
+    def weighted_accuracy(self) -> float:
+        """Token-weighted exact-match fraction (0.0 if no weight)."""
+        exact = sum(grade.frequency for grade in self.grades if grade.exact)
+        return exact / self.weight if self.weight else 0.0
+
+    @property
+    def weighted_mean_distance(self) -> float:
+        """Token-weighted mean phone distance (0.0 if no weight)."""
+        total = sum(grade.frequency * grade.distance for grade in self.grades)
+        return total / self.weight if self.weight else 0.0
+
+    @property
+    def weighted_mean_feature_distance(self) -> float:
+        """Token-weighted mean feature distance over words that have one (0.0 if none)."""
+        weighted = [(g.frequency, g.feature_distance) for g in self.grades if g.feature_distance is not None]
+        weight = sum(freq for freq, _ in weighted)
+        return sum(freq * fd for freq, fd in weighted) / weight if weight else 0.0
+
 
 def grade_derivation(derivation: Derivation, project: Project) -> Grade | None:
     """Grade one derivation against its word's target ``final``.
@@ -365,10 +397,15 @@ def grade_derivation(derivation: Derivation, project: Project) -> Grade | None:
     derived = render_syllabified(
         lower_tiers(derivation.surface), derivation.surface_boundaries, project
     )
-    return _grade(derivation.word.gloss, derivation.word.ipa, derived, target, project)
+    return _grade(
+        derivation.word.gloss, derivation.word.ipa, derived, target, project,
+        frequency=derivation.word.frequency,
+    )
 
 
-def _grade(gloss: str, ipa: str, derived: str, target: str, project: Project) -> Grade:
+def _grade(
+    gloss: str, ipa: str, derived: str, target: str, project: Project, frequency: int = 1
+) -> Grade:
     """Build a :class:`Grade` from a rendered derived form and a target form."""
     swap = project.settings.grading.transposition_cost
     return Grade(
@@ -378,6 +415,7 @@ def _grade(gloss: str, ipa: str, derived: str, target: str, project: Project) ->
         target=target,
         distance=compare(derived, target, swap),
         feature_distance=feature_compare(derived, target, project, swap),
+        frequency=frequency,
     )
 
 
@@ -430,7 +468,10 @@ def grade_stages(derivations: Iterable[Derivation], project: Project) -> list[St
                 continue
             form, boundaries = form_at_time(derivation, time)
             derived = render_syllabified(lower_tiers(form), boundaries, project)
-            grades.append(_grade(derivation.word.gloss, derivation.word.ipa, derived, target, project))
+            grades.append(_grade(
+                derivation.word.gloss, derivation.word.ipa, derived, target, project,
+                frequency=derivation.word.frequency,
+            ))
         stages.append(StageGrades(str(time), time, GradeReport(tuple(grades))))
     stages.append(StageGrades("final", None, grade(derivations, project)))
     return stages

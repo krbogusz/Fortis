@@ -7,7 +7,7 @@ from src.fortis.models.inventories import Word, WordInventory
 from src.fortis.result import Err, Ok, Result
 
 
-_RESERVED_KEYS = ("gloss", "final")
+_RESERVED_KEYS = ("gloss", "final", "frequency")
 
 
 def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
@@ -17,10 +17,11 @@ def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
 
     - a **string** — the gloss (the concise form): ``"ˌɑbˈɑnte" = "avant"``; or
     - a **table** with an optional ``gloss``, an optional ``final`` (the attested
-      surface form), and any number of integer-keyed *stage* forms (the attested
-      form at that time), e.g.::
+      surface form), an optional ``frequency`` (a positive-integer token weight for
+      frequency-weighted grading, default 1), and any number of integer-keyed
+      *stage* forms (the attested form at that time), e.g.::
 
-          "ˈɑmɑt̪" = {gloss = "aime – loves", final = "ɛm",
+          "ˈɑmɑt̪" = {gloss = "aime – loves", final = "ɛm", frequency = 240,
                      100 = "ˈɑ.mɑt̪", 600 = "ˈãj̃.məθ", 1400 = "ˈɛ̃.mə"}
 
       ``final`` and the stage forms are target annotations for grading; only the
@@ -78,6 +79,12 @@ def _parse_word_table(ipa: str, table: dict, error_list: list[str]) -> Word | No
         error_list.append(f"Word '{ipa}' has a 'final' that is not a string")
         return None
 
+    # bool is an int subclass — reject it so `frequency = true` cannot become 1.
+    frequency = table.get("frequency", 1)
+    if type(frequency) is not int or frequency <= 0:
+        error_list.append(f"Word '{ipa}' has a 'frequency' that is not a positive integer")
+        return None
+
     stages: dict[int, str] = {}
     ok = True
     for key, form in table.items():
@@ -104,6 +111,7 @@ def _parse_word_table(ipa: str, table: dict, error_list: list[str]) -> Word | No
         gloss=gloss.strip(),
         final=final.strip() if isinstance(final, str) else None,
         stages=stages,
+        frequency=frequency,
     )
 
 

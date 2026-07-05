@@ -27,8 +27,11 @@ def distance_summary_line(stages: list[StageGrades]) -> str:
     r = final.report
     intermediate = [s.label for s in stages if s.time is not None]
     stage_note = f" · stages {', '.join(intermediate)} graded too" if intermediate else ""
+    weighted = (
+        f", token-weighted {r.weighted_accuracy:.1%}" if r.frequencies_vary else ""
+    )
     return (
-        f"final: {r.exact}/{r.graded} exact ({r.accuracy:.1%}), "
+        f"final: {r.exact}/{r.graded} exact ({r.accuracy:.1%}){weighted}, "
         f"mean phone {r.mean_distance:.3f}, mean feature {r.mean_feature_distance:.3f}"
         f"{stage_note}"
     )
@@ -53,7 +56,8 @@ def render_distance_summary(stages: list[StageGrades], where: str) -> str:
     ]
     for stage in stages:
         lines.append(_summary_row(stage))
-    lines.append("")  # blank line separates the table from the first detail heading
+    lines.append("")
+    lines += _weighted_note(stages)  # token-weighted headline, only when frequencies vary
     for stage in stages:
         lines += _detail_section(stage)
     return "\n".join(lines).rstrip() + "\n"
@@ -65,6 +69,25 @@ def _summary_row(stage: StageGrades) -> str:
         f"| {stage.label} | {r.graded} | {r.exact} | {r.within_one} "
         f"| {r.mean_distance:.3f} | {r.mean_feature_distance:.3f} |"
     )
+
+
+def _weighted_note(stages: list[StageGrades]) -> list[str]:
+    """A token-weighted headline for the final stage — only when frequencies vary.
+
+    The table above counts each word once; when the lexicon carries `frequency`
+    weights, this line re-scores the final by token frequency (a word counts
+    `frequency` times). Confusions and the autopsy stay unweighted token counts.
+    """
+    final = next((s for s in stages if s.time is None), None)
+    if final is None or not final.report.frequencies_vary:
+        return []
+    r = final.report
+    return [
+        f"**Token-weighted** (by `frequency`, total weight {r.weight}): final "
+        f"{r.weighted_accuracy:.1%} exact, mean phone {r.weighted_mean_distance:.3f}, "
+        f"mean feature {r.weighted_mean_feature_distance:.3f}.",
+        "",
+    ]
 
 
 def _detail_section(stage: StageGrades) -> list[str]:
