@@ -1,0 +1,6 @@
+# A deliberately tiny diacritic set — this project leans on plain letters, but a
+# non-empty diacritics file is required, and these two are genuinely SPE-appropriate
+# (both reference only flat features defined in features.toml). Neither is used by the
+# shipped lexicon; they are here to show the mechanism carries over to a flat system.
+"◌̃" = { tier = "segment", kind = "combining", bundle = "nasal: +" }    # nasalization
+"◌̥" = { tier = "segment", kind = "combining", bundle = "voice: -" }    # voicelessness

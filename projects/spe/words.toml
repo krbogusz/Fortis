@@ -1,0 +1,10 @@
+# A tiny showcase lexicon. Each word is scoped (by ipa) to exactly one rule in rules.toml,
+# so every rule is shown in isolation. Each `final` is the attested target the derivation
+# is graded against — here, its own intended output, so the run grades 100% exact.
+
+"ata"  = { gloss = "intervocalic voicing",              final = "ada" }
+"tad"  = { gloss = "final devoicing",                   final = "tat" }
+"anpa" = { gloss = "nasal place assimilation (labial)", final = "ampa" }
+"anka" = { gloss = "nasal place assimilation (velar)",  final = "aŋka" }
+"uti"  = { gloss = "backness & rounding harmony",       final = "utu" }
+"beti" = { gloss = "metaphony (raising)",               final = "biti" }

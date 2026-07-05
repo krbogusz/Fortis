@@ -1,0 +1,4 @@
+# No suprasegmental tiers — this SPE showcase is purely segmental. An empty/comment-only
+# tiers file is valid and simply means the engine runs with no autosegmental tiers, which
+# overrides the shipped default's tone/stress tiers (they reference features this flat
+# system does not define).

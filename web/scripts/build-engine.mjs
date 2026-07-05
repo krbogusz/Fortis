@@ -28,6 +28,7 @@ const INVENTORY = [
 // expose another project — no other file needs to change.
 const EXAMPLE_PROJECTS = [
   { dir: "latin_to_french", label: "Latin → French" },
+  { dir: "spe", label: "SPE (flat features)" },
 ];
 
 // 1. Engine bundle (exact command from the task spec).

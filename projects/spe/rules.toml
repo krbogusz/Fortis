@@ -1,0 +1,30 @@
+# Five classic SPE-style rules, each scoped (by ipa) to one showcase word. They run on a
+# FLAT feature matrix — there is no place node and no geometry — yet natural classes,
+# α-variable agreement, and tongue-body assimilation all work exactly as in a geometric
+# system. The nasal rule is the point of the whole project: place assimilation with no
+# place node, done purely by agreeing the flat [coronal, anterior, high, back] features.
+
+[intervocalic_voicing]                 # natural-class target, environment either side
+words      = ["ata"]
+name       = "Intervocalic voicing"
+definition = "[-sonorant] -> [+voice] / [+syllabic] _ [+syllabic]"
+
+[final_devoicing]                      # a merge conditioned by the word edge (#)
+words      = ["tad"]
+name       = "Final devoicing"
+definition = "[-sonorant] -> [-voice] / _ #"
+
+[nasal_place_assimilation]             # flat-place assimilation: four α-variables, no place node
+words      = ["anpa", "anka"]
+name       = "Nasal place assimilation"
+definition = "[+nasal] -> [α coronal, β anterior, γ high, δ back] / _ [-syllabic, α coronal, β anterior, γ high, δ back]"
+
+[backness_rounding_harmony]            # tongue-body features on VOWELS, agreeing across a consonant
+words      = ["uti"]
+name       = "Backness & rounding harmony"
+definition = "[+syllabic] -> [α back, β round] / [+syllabic, α back, β round] [-syllabic]* _"
+
+[metaphony_raising]                    # [+high] spreads leftward onto a mid vowel (e -> i before i)
+words      = ["beti"]
+name       = "Metaphony (raising)"
+definition = "[+syllabic, -high, -low] -> [+high] / _ [-syllabic]* [+syllabic, +high]"
