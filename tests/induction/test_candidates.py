@@ -43,7 +43,7 @@ class TestPropose:
         assert "o → ∅ / _ #" in definitions
 
     def test_unsegmentable_literal_yields_no_candidates(self, synth):
-        # The phantom tie-bar phone split_phones leaves cannot be a rule literal.
+        # A stray tie-bar fragment doesn't segment as a lone literal, so can't be a rule literal.
         corr = Correspondence(expected="s", got="t͡", count=5, delta=1, predictors=())
         assert propose(corr, synth) == []
 

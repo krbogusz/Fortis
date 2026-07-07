@@ -1,7 +1,7 @@
 """The M0 scoreboard: ``L`` of the identity cascade vs the hand cascade, real and synthetic.
 
 This is the number §8's M0 milestone delivers and every later milestone reads — the fixed
-reference the inducer's output is graded against. For a project it reports four cascade scores:
+reference the inducer's output is assessed against. For a project it reports four cascade scores:
 
 - **identity** (no rules) and **hand** (the project's own rules) on the **real** lexicon, and
 - the same two on the **synthetic** lexicon (the hand cascade's own output — the learnability
@@ -66,7 +66,7 @@ def compute_scoreboard(
 def _row(label: str, score: CascadeScore) -> str:
     return (
         f"| {label:<20} | {score.fit_bits:12,.0f} | {score.rule_bits:10,.0f} "
-        f"| {score.total:12,.0f} | {score.exact:>4}/{score.graded:<4} "
+        f"| {score.total:12,.0f} | {score.exact:>4}/{score.assessed:<4} "
         f"| {score.mean_distance:6.3f} |"
     )
 
@@ -79,7 +79,7 @@ def render_scoreboard(board: Scoreboard, where: str) -> str:
         "The MDL loss `L = fit_bits + rule_bits` of the identity cascade (no rules) and the",
         "hand cascade, on the real lexicon and on the synthetic one (the hand cascade's own",
         "output — the learnability floor, where its residual is zero). Every later induction",
-        "milestone is graded against these numbers.",
+        "milestone is assessed against these numbers.",
         "",
         "| cascade | fit_bits | rule_bits | L (total) | exact | mean dist |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",

@@ -71,6 +71,7 @@
   /* Type scale. Meta = --fs-body at --muted color, not a separate size. */
   --fs-emphasis: 18px; /* the computed IPA forms: word headword, surface */
   --fs-header: 16px; /* section/card titles, the brand wordmark */
+  --fs-content: 16px; /* dense editable content: the text editor + CSV-table cells */
   --fs-body: 14px; /* everything else: controls, editor content, meta */
   --fs-label: 10px; /* uppercase group captions: DEFAULT/PROJECT/REPORTS */
 

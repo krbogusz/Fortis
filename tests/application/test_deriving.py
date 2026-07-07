@@ -368,7 +368,7 @@ def test_word_scoped_rule_fires_only_on_named_words(project):
     scoped = Rule(id="r", time=0, raw_definition="a → e", sd=sd, words=("kata",))
     inv = RuleInventory({0: (scoped,)})
 
-    def fired(ipa, gloss=None):
+    def fired(ipa, gloss=""):
         d = derive(
             Word(ipa=ipa, gloss=gloss),
             string_to_sequence(ipa, project),

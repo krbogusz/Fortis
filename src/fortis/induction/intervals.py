@@ -10,7 +10,8 @@ ones, and an attested stage can expose an environment the final form has since e
 An interval problem is literally a :class:`Project`: the words become ``{source_form:
 Word(ipa=source, final=target, frequency=…)}``, the rules start empty, and everything else
 (features, letters, tiers, settings, syllabification) is shared with the parent — so every
-downstream tool (``derive_all``, ``grade``, ``confusions``, ``blame``) runs on it unchanged.
+downstream tool (``derive_all``, ``measure_accuracy``, ``confusions``, ``blame``) runs on it
+unchanged.
 
 The synthetic generator (:func:`synthetic_project`) derives the real cascade and snapshots
 ``form_at_time`` at each attested stage, emitting a machine-generated, perfectly self-consistent
@@ -180,6 +181,6 @@ def synthetic_project(project: Project) -> Project:
     """A copy of *project* with its lexicon replaced by the synthetic one (rules unchanged).
 
     On this project the hand cascade scores ``fit_bits`` ≈ 0 (the targets are its own output),
-    the exact benchmark the M0 scoreboard checks and every later milestone is graded against.
+    the exact benchmark the M0 scoreboard checks and every later milestone is assessed against.
     """
     return replace(project, words=synthetic_words(project))

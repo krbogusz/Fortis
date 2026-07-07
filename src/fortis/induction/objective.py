@@ -6,7 +6,7 @@ per-dataset ``λ`` knob. A rule is worth adding exactly when writing it costs fe
 the corrections it makes unnecessary.
 
 - **Fit bits** (:func:`residual_bits`) price the corrections that turn a *derived* form into
-  its *attested* one, read off the deterministic ``grading.align`` op list: a substitution
+  its *attested* one, read off the deterministic ``accuracy.align`` op list: a substitution
   costs a site tag plus the feature delta between the two phones, a deletion costs a site tag
   plus spelling the missing phone, a spurious insertion costs only a site tag. Encoding
   substitutions as feature deltas is deliberate — it makes the fit term a blend of phone-edit
@@ -27,15 +27,16 @@ import math
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-from src.fortis.analysis.grading import (
-    Grade,
-    GradeReport,
+from src.fortis.analysis.accuracy import (
+    AccuracyReport,
+    DistanceToTarget,
+    accuracy_by_stage,
     align,
     feature_diff,
-    grade_stages,
+    form_phones,
     segment_form,
     specified_features,
-    split_phones,
+    try_segment,
 )
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.derivation import Derivation
@@ -90,10 +91,11 @@ def _mean_attested_length(project: Project) -> float:
     """
     lengths: list[int] = []
     for word in project.words.values():
-        if word.final is not None:
-            lengths.append(len(split_phones(word.final)))
-        for form in word.stages.values():
-            lengths.append(len(split_phones(form)))
+        strings = ([word.final] if word.final is not None else []) + list(word.stages.values())
+        for string in strings:
+            form = try_segment(string, project)
+            if form is not None:  # skip an attested form the inventory cannot segment
+                lengths.append(len(form_phones(form, project)))
     return sum(lengths) / len(lengths) if lengths else 1.0
 
 
@@ -131,7 +133,7 @@ def _mean_values_per_feature(project: Project) -> float:
 # --- Fit bits (residual encoding) -------------------------------------------------------
 
 # A phone → its featurised bundle (or None if it will not segment), memoised per call site:
-# split_phones yields the same handful of phones millions of times across a lexicon.
+# the same handful of phones recur millions of times across a lexicon.
 PhoneCache = dict[str, FeatureBundle | None]
 
 
@@ -161,15 +163,15 @@ def _spell_bits(phone: str, project: Project, model: BitsModel, cache: PhoneCach
 
 
 def residual_bits(
-    grade: Grade,
+    dtt: DistanceToTarget,
     project: Project,
     model: BitsModel | None = None,
     cache: PhoneCache | None = None,
 ) -> float:
-    """Bits to encode the corrections turning ``grade.derived`` into ``grade.target``.
+    """Bits to encode the corrections turning ``dtt.derived`` into ``dtt.target``.
 
     Reads the same deterministic target→derived alignment ``diagnosis`` uses. An exact word
-    costs 0. Pass a shared *model* and *cache* when scoring many grades (they are rebuilt on
+    costs 0. Pass a shared *model* and *cache* when scoring many distances (they are rebuilt on
     every call otherwise); a one-off caller may omit both.
     """
     if model is None:
@@ -177,7 +179,7 @@ def residual_bits(
     if cache is None:
         cache = {}
     total = 0.0
-    for op in align(split_phones(grade.target), split_phones(grade.derived)):
+    for op in align(dtt.target_phones, dtt.derived_phones):
         if op.kind == "match":
             continue
         if op.kind == "sub":
@@ -272,14 +274,14 @@ class CascadeScore:
     ``fit_bits`` sums the residual bits over every attested checkpoint (each ``Word.stages``
     form and the ``final``), frequency-weighted, with the final checkpoint scaled by the
     project's ``final_weight``. ``rule_bits`` is the total structural cost of the cascade.
-    ``exact``/``graded``/``mean_distance`` describe the *final* checkpoint alone — the
+    ``exact``/``assessed``/``mean_distance`` describe the *final* checkpoint alone — the
     human-readable accuracy comparable to the grader's headline.
     """
 
     fit_bits: float
     rule_bits: float
     exact: int
-    graded: int
+    assessed: int
     mean_distance: float
 
     @property
@@ -289,21 +291,21 @@ class CascadeScore:
 
     @property
     def accuracy(self) -> float:
-        """Final-checkpoint exact-match fraction (0.0 if nothing graded)."""
-        return self.exact / self.graded if self.graded else 0.0
+        """Final-checkpoint exact-match fraction (0.0 if nothing assessed)."""
+        return self.exact / self.assessed if self.assessed else 0.0
 
 
 def fit_bits_of_report(
-    report: GradeReport,
+    report: AccuracyReport,
     project: Project,
     model: BitsModel,
     cache: PhoneCache,
     weight: float = 1.0,
 ) -> float:
-    """Frequency-weighted residual bits summed over one checkpoint's grades, times *weight*."""
+    """Frequency-weighted residual bits summed over one checkpoint's distances, times *weight*."""
     return weight * sum(
-        grade.frequency * residual_bits(grade, project, model, cache)
-        for grade in report.grades
+        dtt.frequency * residual_bits(dtt, project, model, cache)
+        for dtt in report.distances
     )
 
 
@@ -311,7 +313,7 @@ def cascade_score(derivations: Sequence[Derivation], project: Project) -> Cascad
     """Score a whole derived cascade: fit bits over every checkpoint, plus the rule bits.
 
     ``fit_bits`` is the multi-checkpoint objective of §1 — every attested ``Word.stages`` form
-    (graded against the derived snapshot at its rule-time) and the ``final`` (against the
+    (assessed against the derived snapshot at its rule-time) and the ``final`` (against the
     surface), frequency-weighted, the final scaled by the project's ``final_weight``. The
     headline accuracy fields read the final checkpoint. The rule bits come straight from the
     project's inventory, so this is ``L(R)`` for the project *as derived*.
@@ -319,19 +321,19 @@ def cascade_score(derivations: Sequence[Derivation], project: Project) -> Cascad
     model = bits_model(project)
     cache: PhoneCache = {}
     final_weight = project.settings.induction.final_weight
-    stages = grade_stages(derivations, project)
+    stages = accuracy_by_stage(derivations, project)
     fit = 0.0
-    final_report: GradeReport | None = None
+    final_report: AccuracyReport | None = None
     for stage in stages:
         weight = final_weight if stage.time is None else 1.0
         fit += fit_bits_of_report(stage.report, project, model, cache, weight)
         if stage.time is None:
             final_report = stage.report
-    assert final_report is not None  # grade_stages always appends the final step
+    assert final_report is not None  # accuracy_by_stage always appends the final step
     return CascadeScore(
         fit_bits=fit,
         rule_bits=cascade_rule_bits(project, model),
         exact=final_report.exact,
-        graded=final_report.graded,
+        assessed=final_report.assessed,
         mean_distance=final_report.mean_distance,
     )

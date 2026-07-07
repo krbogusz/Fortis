@@ -313,8 +313,9 @@ any other, by writing its own `features.toml`.
   per segment, one column per feature (every feature the system declares,
   segmental and syllabic alike; a blank cell is unspecified).
 
-- **`diacritics.toml`** maps a combining mark or spacing diacritic to a
-  partial bundle that modifies whatever base segment it attaches to,
+- **`diacritics.toml`** (or `diacritics.csv` — columns `diacritic, tier, kind,
+  bundle, marks_boundary, read_only, contour`) maps a combining mark or spacing
+  diacritic to a partial bundle that modifies whatever base segment it attaches to,
   tagged with the tier it targets (`segment` or `syllable`) and its `kind`:
   `before`/`after` (a spacing mark adjacent to the base) or `combining` (a
   true Unicode combining diacritic). Stress marks (`ˈ`, `ˌ`) additionally
@@ -325,7 +326,8 @@ any other, by writing its own `features.toml`.
   legible in isolation; the carrier is stripped on load, so `◌̃` and `̃` are the
   same diacritic. The shipped file writes every combining diacritic that way.
 
-- **`sonorities.toml`** assigns each segment a sonority level by first-match
+- **`sonorities.toml`** (or `sonorities.csv` — columns `name, level, bundle`, in
+  first-match row order) assigns each segment a sonority level by first-match
   against an ordered list of feature-bundle predicates. The default scale
   has eight levels — vowel, semivowel, glide, rhotic, lateral, nasal,
   fricative, stop — each a one-line bundle (e.g. a rhotic is `consonantal: +,

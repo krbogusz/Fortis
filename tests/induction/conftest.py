@@ -23,7 +23,12 @@ SYNTH_DIR = Path(__file__).parent / "fixtures" / "synth"
 @pytest.fixture(scope="module")
 def synth() -> Project:
     """The synthetic induction benchmark (input + stages + final), loaded from the fixture."""
-    return load_project(SYNTH_DIR).unwrap()
+    from src.fortis.analysis.accuracy import ingest_words
+
+    project = load_project(SYNTH_DIR).unwrap()
+    # segment the attested forms once; the shared words carry it to re-derivations
+    ingest_words(project)
+    return project
 
 
 @pytest.fixture(scope="module")

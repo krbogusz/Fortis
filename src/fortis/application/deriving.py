@@ -346,6 +346,7 @@ def _syllable_context(
     nucleus_part = syllable_parts.get_nucleus(time)
     if nucleus_part is None or nucleus_part.definition is None:
         return boundaries, None
+    nucleus_definition = nucleus_part.definition
     if cache:
         # A rule sweep rebuilds this for the same unchanged form across every rule
         # that doesn't fire — cached by the bundle list's identity, like syllabify.
@@ -354,14 +355,14 @@ def _syllable_context(
             form,
             boundaries,
             lambda: (
-                nucleus_part.definition,
-                nuclei_by_position(form, boundaries, nucleus_part.definition),
+                nucleus_definition,
+                nuclei_by_position(form, boundaries, nucleus_definition),
             ),
         )
-        if definition is not nucleus_part.definition:
-            nuclei = nuclei_by_position(form, boundaries, nucleus_part.definition)
+        if definition is not nucleus_definition:
+            nuclei = nuclei_by_position(form, boundaries, nucleus_definition)
     else:
-        nuclei = nuclei_by_position(form, boundaries, nucleus_part.definition)
+        nuclei = nuclei_by_position(form, boundaries, nucleus_definition)
     return boundaries, SyllableView(
         nuclei=nuclei, features=syllable_features, floating=floating,
         node_descendants=node_descendants,
@@ -877,7 +878,7 @@ def form_at_time(derivation: Derivation, time: int) -> tuple[Form, frozenset[int
     """
     form = derivation.input
     # The input's boundaries are the first step's "before" (or the surface's, if
-    # nothing fired). Cosmetic only: grading strips syllable dots.
+    # nothing fired). Cosmetic only: the distance metric strips syllable dots.
     boundaries = (
         derivation.steps[0].before_boundaries
         if derivation.steps
@@ -986,7 +987,7 @@ def derive_all_parallel(
     derivations: list[Derivation] = []
     done = 0
     with ctx.Pool(workers, initializer=_parallel_init, initargs=(project, rules)) as pool:
-        for result, chunk in zip(pool.imap(_parallel_derive_chunk, chunks), chunks):
+        for result, chunk in zip(pool.imap(_parallel_derive_chunk, chunks), chunks, strict=True):
             derivations.extend(result)
             done += len(chunk)
             if on_progress is not None:

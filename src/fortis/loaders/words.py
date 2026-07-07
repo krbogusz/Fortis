@@ -16,7 +16,7 @@ def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
     Both formats carry the same schema — an IPA key with an optional ``gloss``, ``final``
     (attested surface), ``frequency`` (positive-integer token weight, default 1), and any
     number of integer-keyed *stage* forms (the attested form at that time). ``final`` and the
-    stages are target annotations for grading; only the IPA key feeds derivation.
+    stages are target annotations for accuracy; only the IPA key feeds derivation.
 
     A ``.csv`` path is read as a lexicon table (see :func:`load_word_inventory_csv`); any other
     path is read as TOML (:func:`load_word_inventory_toml`).
@@ -37,13 +37,13 @@ def load_word_inventory_toml(path: Path) -> Result[WordInventory, list[str]]:
     - a **string** — the gloss (the concise form): ``"ˌɑbˈɑnte" = "avant"``; or
     - a **table** with an optional ``gloss``, an optional ``final`` (the attested
       surface form), an optional ``frequency`` (a positive-integer token weight for
-      frequency-weighted grading, default 1), and any number of integer-keyed
+      frequency-weighted accuracy, default 1), and any number of integer-keyed
       *stage* forms (the attested form at that time), e.g.::
 
           "ˈɑmɑt̪" = {gloss = "aime – loves", final = "ɛm", frequency = 240,
                      100 = "ˈɑ.mɑt̪", 600 = "ˈãj̃.məθ", 1400 = "ˈɛ̃.mə"}
 
-      ``final`` and the stage forms are target annotations for grading; only the
+      ``final`` and the stage forms are target annotations for accuracy; only the
       IPA key feeds derivation.
 
     Args:
@@ -103,7 +103,7 @@ def load_word_inventory_csv(path: Path) -> Result[WordInventory, list[str]]:
     - every other column whose name is an **integer** is a *stage* time; its cell is the
       attested form at that stage.
 
-    ``final`` and the stages are target annotations for grading; only ``word`` feeds
+    ``final`` and the stages are target annotations for accuracy; only ``word`` feeds
     derivation. An empty cell means "not present" (no gloss, no final, no form at that
     stage). Fields are read with the ``csv`` module, so a value containing a comma must be
     quoted (``"amère, bitter"``).

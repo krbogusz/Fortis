@@ -18,8 +18,8 @@ from typing import Any
 
 from src.fortis.general.file_handling import load_toml_file
 from src.fortis.models.settings import (
+    AccuracySettings,
     DiagnosisSettings,
-    GradingSettings,
     InductionSettings,
     Settings,
 )
@@ -28,7 +28,7 @@ from src.fortis.result import Err, Ok, Result
 # section -> {key: minimum allowed value}. Doubles as the schema (known sections/keys)
 # and the range check. Kept in step with the dataclass fields in models/settings.py.
 _SCHEMA: dict[str, dict[str, float]] = {
-    "grading": {"transposition_cost": 0},
+    "accuracy": {"transposition_cost": 0},
     "diagnosis": {
         "min_support": 1,
         "min_support_percent": 0,
@@ -49,7 +49,7 @@ _SCHEMA: dict[str, dict[str, float]] = {
 # Keys that accept a real number (an ``int`` is promoted); every other key is int-only.
 _FLOAT_KEYS: frozenset[str] = frozenset({"final_weight"})
 _TYPES = {
-    "grading": GradingSettings,
+    "accuracy": AccuracySettings,
     "diagnosis": DiagnosisSettings,
     "induction": InductionSettings,
 }
@@ -113,7 +113,7 @@ def load_settings(path: Path) -> Result[Settings, list[str]]:
 
     return Ok(
         Settings(
-            grading=_TYPES["grading"](**sections.get("grading", {})),
+            accuracy=_TYPES["accuracy"](**sections.get("accuracy", {})),
             diagnosis=_TYPES["diagnosis"](**sections.get("diagnosis", {})),
             induction=_TYPES["induction"](**sections.get("induction", {})),
         )

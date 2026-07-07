@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from src.fortis.analysis.grading import segment_form
+from src.fortis.analysis.accuracy import segment_form
 from src.fortis.application.deriving import resolve_rule_letters
 from src.fortis.application.matching import find_matches
 from src.fortis.application.rendering import render_syllabified
@@ -64,7 +64,9 @@ def _resolve_pattern(elements, pattern: str, project: Project) -> StructuralDesc
     silently match nothing.
     """
     sd = StructuralDescription(target=tuple(elements), result=())
-    inventory = RuleInventory({None: (Rule(id="filter", time=None, raw_definition=pattern, sd=sd),)})
+    inventory = RuleInventory(
+        {None: (Rule(id="filter", time=None, raw_definition=pattern, sd=sd),)}
+    )
     return resolve_rule_letters(inventory, project)[None][0].sd
 
 
@@ -72,7 +74,9 @@ def _matches(sd: StructuralDescription, bundles, project: Project) -> bool:
     return bundles is not None and bool(find_matches(sd, bundles, project.letters))
 
 
-def _locations(derivation: Derivation, sd: StructuralDescription, project: Project) -> list[Location]:
+def _locations(
+    derivation: Derivation, sd: StructuralDescription, project: Project
+) -> list[Location]:
     """Every form of *derivation* the pattern matches in, one entry per distinct phase.
 
     Deduped by *label*, so a pattern that persists across several rules at one time
@@ -143,7 +147,7 @@ class ScopeResult:
     """The words whose attested forms match a pattern (for scoping the error reports).
 
     ``considered`` is the words carrying any attested form (target or a stage) — the
-    scope's denominator; words with none are neither scoped nor graded.
+    scope's denominator; words with none are neither scoped nor assessed.
     """
 
     pattern: str
@@ -157,7 +161,7 @@ def filter_attested(
     """Select the words whose **attested** target or any attested stage matches *pattern*.
 
     Unlike :func:`filter_by_pattern` this looks only at the attested forms (not the derived
-    ones), so its subset is the natural population to restrict grading/diagnosis/blame to.
+    ones), so its subset is the natural population to restrict accuracy/diagnosis/blame to.
     """
     match _parse_and_resolve(pattern, project):
         case Err(errs):
@@ -179,7 +183,10 @@ def filter_attested(
 
 def scope_summary_line(result: ScopeResult) -> str:
     """A one-line headline for stderr."""
-    return f"scope `{result.pattern}`: {len(result.matched)}/{result.considered} words match an attested form"
+    return (
+        f"scope `{result.pattern}`: {len(result.matched)}/{result.considered} "
+        "words match an attested form"
+    )
 
 
 def filter_summary_line(result: FilterResult) -> str:

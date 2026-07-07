@@ -99,7 +99,7 @@ class TestExpressibleRecovery:
         )
         result = induce_interval(interval, escape=False)
         assert result.final_fit == pytest.approx(0.0)
-        assert result.final_exact == result.graded
+        assert result.final_exact == result.assessed
         assert result.stopped == "fit_zero"
 
 

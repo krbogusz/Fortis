@@ -1,7 +1,7 @@
 """Per-project tunable parameters (``settings.toml``).
 
 Everything here is a knob a project may set to tune the *analysis* layer without
-touching the engine — grading and error diagnosis. The field defaults on these
+touching the engine — accuracy and error diagnosis. The field defaults on these
 dataclasses are the single source of truth: a project that ships no ``settings.toml``
 (or omits a key) gets exactly these values, and ``projects/default/settings.toml`` is
 just a documented mirror of them (a test pins the two together).
@@ -12,8 +12,8 @@ from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
-class GradingSettings:
-    """Knobs for the edit-distance grader (:mod:`src.fortis.analysis.grading`)."""
+class AccuracySettings:
+    """Knobs for the edit-distance grader (:mod:`src.fortis.analysis.accuracy`)."""
 
     # Cost of swapping two adjacent segments (a metathesis) in the Damerau–Levenshtein
     # distance. 1 charges a reorder as one edit; raise it (e.g. 2) to score a metathesis
@@ -73,6 +73,6 @@ class InductionSettings:
 class Settings:
     """A project's tunable parameters, grouped by the layer they steer."""
 
-    grading: GradingSettings = field(default_factory=GradingSettings)
+    accuracy: AccuracySettings = field(default_factory=AccuracySettings)
     diagnosis: DiagnosisSettings = field(default_factory=DiagnosisSettings)
     induction: InductionSettings = field(default_factory=InductionSettings)

@@ -3,7 +3,7 @@
 Given a ``words.toml`` of proto inputs and attested targets (``final`` and, ideally,
 intermediate ``stages``), induce the sound-change cascade that derives the targets — the
 ancestor-given sub-problem of reconstruction. This is the topmost consumer layer: it treats
-the engine as a fixed black box and sits atop the ``analysis`` tools, reusing ``grading``,
+the engine as a fixed black box and sits atop the ``analysis`` tools, reusing ``accuracy``,
 ``diagnosis``, ``blame``, and the parallel derivation drivers rather than being used by them.
 
 The modules:

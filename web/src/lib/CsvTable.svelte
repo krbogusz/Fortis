@@ -62,9 +62,12 @@
   let tableEl = $state(null); // the <table>, for moving DOM focus onto the selected cell
   let wrapEl = $state(null); // the scroll container, for virtualization
   let scrollTop = $state(0);
+  let scrollLeft = $state(0);
   let viewportH = $state(600);
+  let viewportW = $state(800); // nonzero so the first paint isn't a collapsed column window
   let rowH = $state(24); // measured body-row height (rows are uniform, single-line)
   const OVERSCAN = 10; // extra rows rendered above/below the viewport
+  const COL_OVERSCAN = 6; // extra columns rendered left/right of the viewport
   let seedNext = false; // caret to end (type-to-edit) rather than select-all
   let reverting = false; // an Escape in progress — discard the edit on blur
   let editOrig = ""; // the cell value when editing began, for Escape to restore
@@ -83,7 +86,6 @@
   const isSel = (r, c) => sel && sel.r === r && sel.c === c;
 
   // ---- virtualization: render only the body rows in (or near) the viewport --------------
-  const colspan = $derived(cols + (editable ? 1 : 0));
   const bodyCount = $derived(Math.max(0, rows.length - 1));
   const vStart = $derived(Math.max(0, Math.floor(scrollTop / rowH) - OVERSCAN));
   const vEnd = $derived(
@@ -99,13 +101,16 @@
   function onScroll() {
     if (!wrapEl) return;
     scrollTop = wrapEl.scrollTop;
+    scrollLeft = wrapEl.scrollLeft;
     viewportH = wrapEl.clientHeight;
+    viewportW = wrapEl.clientWidth;
   }
   // Measure a real row height once the table is on screen, and re-measure on content change.
   $effect(() => {
     rows.length; // re-run when the lexicon changes
     if (!wrapEl) return;
     viewportH = wrapEl.clientHeight;
+    viewportW = wrapEl.clientWidth;
     const tr = wrapEl.querySelector("tbody tr:not(.vpad)");
     if (tr?.offsetHeight) rowH = tr.offsetHeight;
   });
@@ -117,8 +122,9 @@
   const CTRL_W = 26; // the ⋮ handle column (editable only)
   const CELL_PAD = 16; // 7px l/r padding + 1px l/r border + a hair of slack
   const HANDLE_W = 20; // header padding-right that makes room for its ⋮ handle
-  // Fonts mirror the CSS below: body is mono 16px; the first (symbol) column is the IPA face;
-  // headers are the sans face, semibold.
+  // Fonts mirror the CSS below (16px == the --fs-content token): body is mono; the first
+  // (symbol) column is the IPA face; headers are the sans face, semibold. Keep the 16px here
+  // in sync with --fs-content if that token changes — canvas can't read CSS variables.
   const MONO_FONT = "16px 'Noto Sans Mono', ui-monospace, 'SF Mono', Consolas, monospace";
   const IPA_FONT = "600 16px 'Charis SIL', serif";
   const HEAD_FONT = "600 16px system-ui, 'Segoe UI', Roboto, sans-serif";
@@ -161,6 +167,45 @@
   const tableWidth = $derived(
     (editable ? CTRL_W : 0) + colWidths.reduce((sum, w) => sum + w, 0),
   );
+
+  // ---- column virtualization (read-only wide tables) -----------------------------------
+  // The result-pane derivation table can carry hundreds of rule columns; rendering every
+  // <td> for each visible row is what makes it lag. Mirroring the row window above, we render
+  // only the columns near the horizontal viewport, with left/right spacer cells holding the
+  // off-screen width. Only for read-only tables — editable inventory tables are column-bounded
+  // (a handful of columns), so they keep every column and column drag-reorder/selection, which
+  // index by the true column number, stay exact.
+  // Cumulative left edge of each data column: colX[c]..colX[c+1] is column c; colX[cols] is
+  // the full data width (the editable ⋮ ctrl column is never virtualized, so it is excluded).
+  const colX = $derived.by(() => {
+    const xs = [0];
+    for (let c = 0; c < cols; c++) xs.push(xs[c] + (colWidths[c] ?? 0));
+    return xs;
+  });
+  const colWindow = $derived.by(() => {
+    if (editable || cols <= 1) return { start: 1, end: cols, leftPad: 0, rightPad: 0 };
+    const x = colX;
+    const left = scrollLeft;
+    const right = scrollLeft + viewportW;
+    let start = 1;
+    while (start < cols && x[start + 1] <= left) start++; // first col reaching past the left edge
+    start = Math.max(1, start - COL_OVERSCAN);
+    let end = start;
+    while (end < cols && x[end] < right) end++; // one past the last col starting before the right edge
+    end = Math.min(cols, end + COL_OVERSCAN);
+    return { start, end, leftPad: x[start] - x[1], rightPad: x[cols] - x[end] };
+  });
+  // The per-row column layout: the sticky column 0, an optional left spacer, the visible data
+  // columns, an optional right spacer. Editable tables get every column and no spacers.
+  const rowCols = $derived.by(() => {
+    const w = colWindow;
+    const items = [{ kind: "cell", c: 0 }];
+    if (w.leftPad > 0) items.push({ kind: "pad", id: "L", w: w.leftPad });
+    for (let c = w.start; c < w.end; c++) items.push({ kind: "cell", c });
+    if (w.rightPad > 0) items.push({ kind: "pad", id: "R", w: w.rightPad });
+    return items;
+  });
+  const colspan = $derived(rowCols.length + (editable ? 1 : 0));
 
   // Scroll a body row into view (so keyboard navigation off-screen still renders + focuses).
   function ensureVisible(r) {
@@ -368,48 +413,57 @@
     <table class="csv" class:editable bind:this={tableEl} style="width: {tableWidth}px">
       <colgroup>
         {#if editable}<col style="width: {CTRL_W}px" />{/if}
-        {#each colWidths as w, i (i)}<col style="width: {w}px" />{/each}
+        {#each rowCols as it (it.kind === "pad" ? "pad-" + it.id : it.c)}
+          {#if it.kind === "pad"}<col style="width: {it.w}px" />{:else}<col
+              style="width: {colWidths[it.c]}px"
+            />{/if}
+        {/each}
       </colgroup>
       <thead>
         <tr>
           {#if editable}<th class="ctrl" aria-hidden="true"></th>{/if}
-          {#each header as h, c (c)}
-            <th
-              class:sym-head={c === 0}
-              class:selected={isSel(0, c)}
-              class:ins-left={insLeft(c)}
-              class:ins-right={insRight(c)}
-              class:col-dragging={dragCol(c)}
-              data-cell={`0-${c}`}
-              tabindex={isSel(0, c) && !editing ? 0 : -1}
-              ondragover={(e) => overCol(e, c)}
-              ondrop={dropCol}
-              onclick={() => select(0, c)}
-              ondblclick={() => startEdit(0, c)}
-              onkeydown={(e) => cellKey(e, 0, c)}
-            >
-              {#if editing && isSel(0, c)}
-                <input
-                  use:focusCell
-                  value={rows[0][c] ?? ""}
-                  onblur={(e) => inputBlur(e, 0, c)}
-                  onkeydown={inputKey}
-                />
-              {:else}
-                <span class="label">{h}</span>
-              {/if}
-              {#if editable}
-                <button
-                  class="handle"
-                  title="Column options — click for menu, drag to move"
-                  aria-label="Column options"
-                  draggable="true"
-                  ondragstart={(e) => startDrag("col", c, e)}
-                  ondragend={endDrag}
-                  onclick={(e) => openMenu("col", c, e)}>⋮</button
-                >
-              {/if}
-            </th>
+          {#each rowCols as it (it.kind === "pad" ? "pad-" + it.id : it.c)}
+            {#if it.kind === "pad"}
+              <th class="cpad" aria-hidden="true"></th>
+            {:else}
+              {@const c = it.c}
+              <th
+                class:sym-head={c === 0}
+                class:selected={isSel(0, c)}
+                class:ins-left={insLeft(c)}
+                class:ins-right={insRight(c)}
+                class:col-dragging={dragCol(c)}
+                data-cell={`0-${c}`}
+                tabindex={isSel(0, c) && !editing ? 0 : -1}
+                ondragover={(e) => overCol(e, c)}
+                ondrop={dropCol}
+                onclick={() => select(0, c)}
+                ondblclick={() => startEdit(0, c)}
+                onkeydown={(e) => cellKey(e, 0, c)}
+              >
+                {#if editing && isSel(0, c)}
+                  <input
+                    use:focusCell
+                    value={rows[0][c] ?? ""}
+                    onblur={(e) => inputBlur(e, 0, c)}
+                    onkeydown={inputKey}
+                  />
+                {:else}
+                  <span class="label">{header[c]}</span>
+                {/if}
+                {#if editable}
+                  <button
+                    class="handle"
+                    title="Column options — click for menu, drag to move"
+                    aria-label="Column options"
+                    draggable="true"
+                    ondragstart={(e) => startDrag("col", c, e)}
+                    ondragend={endDrag}
+                    onclick={(e) => openMenu("col", c, e)}>⋮</button
+                  >
+                {/if}
+              </th>
+            {/if}
           {/each}
         </tr>
       </thead>
@@ -440,30 +494,35 @@
                 >
               </td>
             {/if}
-            {#each header as _, c (c)}
-              <td
-                class:sym={c === 0}
-                class:selected={isSel(r, c)}
-                class:ins-left={insLeft(c)}
-                class:ins-right={insRight(c)}
-                class:col-dragging={dragCol(c)}
-                data-cell={`${r}-${c}`}
-                tabindex={isSel(r, c) && !editing ? 0 : -1}
-                ondragover={(e) => overCol(e, c)}
-                ondrop={dropCol}
-                onclick={() => select(r, c)}
-                ondblclick={() => startEdit(r, c)}
-                onkeydown={(e) => cellKey(e, r, c)}
-              >
-                {#if editing && isSel(r, c)}
-                  <input
-                    use:focusCell
-                    value={row[c] ?? ""}
-                    onblur={(e) => inputBlur(e, r, c)}
-                    onkeydown={inputKey}
-                  />
-                {:else}{row[c] ?? ""}{/if}
-              </td>
+            {#each rowCols as it (it.kind === "pad" ? "pad-" + it.id : it.c)}
+              {#if it.kind === "pad"}
+                <td class="cpad" aria-hidden="true"></td>
+              {:else}
+                {@const c = it.c}
+                <td
+                  class:sym={c === 0}
+                  class:selected={isSel(r, c)}
+                  class:ins-left={insLeft(c)}
+                  class:ins-right={insRight(c)}
+                  class:col-dragging={dragCol(c)}
+                  data-cell={`${r}-${c}`}
+                  tabindex={isSel(r, c) && !editing ? 0 : -1}
+                  ondragover={(e) => overCol(e, c)}
+                  ondrop={dropCol}
+                  onclick={() => select(r, c)}
+                  ondblclick={() => startEdit(r, c)}
+                  onkeydown={(e) => cellKey(e, r, c)}
+                >
+                  {#if editing && isSel(r, c)}
+                    <input
+                      use:focusCell
+                      value={row[c] ?? ""}
+                      onblur={(e) => inputBlur(e, r, c)}
+                      onkeydown={inputKey}
+                    />
+                  {:else}{row[c] ?? ""}{/if}
+                </td>
+              {/if}
             {/each}
           </tr>
         {/each}
@@ -513,7 +572,7 @@
   table.csv {
     border-collapse: collapse;
     font-family: var(--mono);
-    font-size: 16px;
+    font-size: var(--fs-content);
     /* Fixed layout + measured <colgroup> widths: columns stay put as virtualization swaps
        the rendered rows (auto layout would re-fit them to the visible subset and jitter). */
     table-layout: fixed;
@@ -635,7 +694,7 @@
   }
   .csv td.sym {
     font-family: var(--ipa);
-    font-size: 16px;
+    font-size: var(--fs-content);
     font-weight: 600;
     color: var(--text-h);
   }
@@ -644,8 +703,11 @@
     width: 1%;
     padding: 0 2px;
   }
-  /* Virtualization spacers: hold the scroll height for the off-screen rows. */
-  .csv tr.vpad td {
+  /* Virtualization spacers: hold the scroll height for off-screen rows (vpad) and the
+     scroll width for off-screen columns (cpad). Inert — no border, padding, or interaction. */
+  .csv tr.vpad td,
+  .csv th.cpad,
+  .csv td.cpad {
     padding: 0;
     border: 0;
   }

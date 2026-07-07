@@ -23,7 +23,7 @@ to them directly.
 
 When the lexicon records the forms a word is *meant* to reach — its attested
 final reflex, and optionally its form at intermediate historical stages — Fortis
-grades its own output against them: a phone-level and a finer feature-weighted
+measures its own output's distance to them: a phone-level and a finer feature-weighted
 edit distance, per stage and for the final surface, so a rule set's accuracy can
 be tracked as it is built.
 
@@ -92,26 +92,33 @@ python -m src.fortis.main --words my_words.toml --rules my_rules.toml
 python -m src.fortis.main --project projects/pie_to_germanic   # PIE → Proto-Germanic
 ```
 
-The lexicon, the rule list, the diacritics, and the sonority scale may each be written as
-**TOML or CSV** — the loader dispatches on the file extension, so `--words my_words.csv` or a
-project carrying `rules.csv` works the same way (the CSV is a flatter, spreadsheet-friendly form
-of the same schema; if a project has both formats of a file, TOML wins). The feature system,
-tiers, and syllable parameters stay TOML, since they nest. See `docs/user_guide.md` §4.1–§4.2.
+The lexicon, the rule list, the diacritics, and the sonority scale may each be written in
+**either TOML or CSV** — the two are equally valid encodings of the same schema, and the loader
+dispatches on the file extension (so `--words my_words.csv` or a project carrying `rules.csv`
+works exactly like the TOML form). If a project happens to carry both formats of a file, the
+TOML is used. The feature system, tiers, and syllable parameters are TOML-only, since they nest.
+See `docs/user_guide.md` §4.1–§4.2 for the CSV schemas.
 
-Every run also writes reports alongside the printed trace: `output.md` (the
-firing-rule trace per word) and `derivation_table.csv` (one row per word and one
-column per rule — each titled `<time>: <rule>` — holding the word's resulting
-form wherever that rule fired, empty otherwise). If the lexicon carries attested
-forms (`final` and/or intermediate `stages`), four more reports analyse the
-result: `distances.md` grades it (phone and feature edit distance, per stage and
-final); `diagnosis.md` shows which phones are confused and in what environment;
-`timeline.md` shows when in the cascade errors enter and re-runs the diagnosis at
-each attested stage; and `blame.md` attributes each wrong word to the rule that
-produced it (see [Diagnosing a rule set](#diagnosing-a-rule-set)). A
-run ends with a one-line summary on stderr — words derived, rules applied,
-per-phase timing, files saved — and shows a progress bar while deriving in a
-terminal. All reports land in the `<project>/` directory; `--output` overrides
-the Markdown path (the others follow into the same directory):
+Every run also writes reports into a `reports/` subfolder of the project: the
+main one is `derivations.csv`, a long-format trace with one row per word × firing
+rule (columns `word, rule, t, before, after, change`), each word bookended by two
+synthetic rules — `input` (its raw IPA and how the engine ingested it: syllabified,
+normalised) and `output` (the surface form). Alongside it, `derivation_table.csv`
+gives the wide view (one row per word and one column per rule — each titled
+`<time>: <rule>` — holding the word's resulting form wherever that rule fired,
+empty otherwise). If the lexicon carries attested forms (`final` and/or
+intermediate `stages`), four more reports analyse the result: the **accuracy**
+analysis writes `accuracy.csv` (per-stage exact-match accuracy + mean phone
+and feature distance) and `distance_to_target.csv` (per-word); the **errors**
+analysis writes `errors.csv` (which segments came out wrong, per stage) and the
+**error context** analysis `error_context.csv` (the attested-form environments most
+associated with each error, per stage and segment); and `blame.md` attributes each
+wrong word to the rule that produced it (see
+[Diagnosing a rule set](#diagnosing-a-rule-set)). A run ends with a one-line
+summary on stderr — words derived, rules applied, per-phase timing, files saved —
+and shows a progress bar while deriving in a terminal. All reports land in
+`<project>/reports/`; `--output` overrides the main report's path (the others
+follow into the same directory):
 
 ```
 python -m src.fortis.main --project projects/latin_to_french --output
@@ -122,7 +129,7 @@ processes **automatically** — a ~4–6× speedup on a multi-core machine, with
 byte-identical to a serial run. Small lexica stay in a single process (the pool's
 startup cost is not worth paying below a couple hundred words). Pass `--serial` to
 force one process, or `--workers N` to pin the pool size. The same flags apply to the
-grading/diagnosis CLI (`python -m src.fortis.analysis.main`), which derives the same way.
+accuracy/diagnosis CLI (`python -m src.fortis.analysis.main`), which derives the same way.
 
 ### Web app
 
@@ -130,8 +137,8 @@ grading/diagnosis CLI (`python -m src.fortis.analysis.main`), which derives the 
 compiled to WebAssembly and executed in-browser via [Pyodide](https://pyodide.org),
 rather than a separate JavaScript reimplementation. Edit any of the 9 project
 files (the eight inventories plus `settings.toml`, or load your own project) and
-the derivations re-run in a trace view, with **Grading**, **Diagnosis**,
-**Timeline**, and **Blame** tabs that score and analyse them against the lexicon's
+the derivations re-run in a trace view, with **Accuracy**, **Errors**,
+**Error context**, and **Blame** tabs that score and analyse them against the lexicon's
 attested forms when it has them; see [`web/README.md`](web/README.md) for the full
 picture, including the type scale and theming. To run it locally:
 
@@ -141,12 +148,12 @@ npm install
 npm run dev
 ```
 
-### Grading against attested forms
+### Accuracy against attested forms
 
 A lexicon entry may record the form the engine should reproduce — its `final`
 reflex, and optionally its form at intermediate historical `stages` keyed by rule
 time. Both the table form (with targets) and the bare `word = "gloss"` form
-(ungraded) are accepted:
+(unassessed) are accepted:
 
 ```toml
 "ˈɑmɑt" = {gloss = "aime", final = "ɛm", 600 = "ˈãj̃məθ", 1400 = "ɛm"}
@@ -158,30 +165,29 @@ distance (a base segment plus its combining marks is one phone; an exact match i
 0) and a finer **feature** distance (a substitution costs the number of features
 that differ, so `ɑ̃` is one edit from `ɑ` but eleven from `t`; an adjacent-swap
 metathesis counts as one). Both are reported per word and in aggregate, per stage
-and for the final surface, in `distances.md`. To grade without a full run:
+and for the final surface, in `accuracy.csv` / `distance_to_target.csv`. To
+measure accuracy without a full run:
 
 ```
 python -m src.fortis.analysis.main --project projects/latin_to_french
 ```
 
-Intermediate `stages` are graded by matching the derived snapshot at rule-time T
+Intermediate `stages` are measured by matching the derived snapshot at rule-time T
 against the attested form at stage T, so those rows are only meaningful when the
 rule times are calibrated to the stage timescale — the `final` score never
 depends on that alignment.
 
 ### Diagnosing a rule set
 
-Grading says _how_ wrong a derivation is; three further analyses say _what_ and
+Accuracy says _how_ wrong a derivation is; three further analyses say _what_ and
 _where_, all from the same attested targets and written on every run when the
 lexicon has them:
 
-- **`diagnosis.md`** — a ranked tally of the phone confusions across the lexicon
-  (which target phone came out as which), and a **context autopsy** that, for the
-  phones most often wrong, finds the attested-form environments most associated
-  with the error (by phi coefficient).
-- **`timeline.md`** — _when_ errors enter: each wrong phone attributed to the
-  rule-time that produced it (via the blame provenance below), plus the full
-  diagnosis re-run at each attested stage.
+- **`errors.csv`** — per attested stage (and the final), a ranked tally of the phone
+  confusions (which target phone came out as which, with count, kind, and examples).
+- **`error_context.csv`** — per stage and per erroring segment, a **context autopsy**:
+  the attested-form environments most associated with getting that segment wrong (by
+  phi coefficient), with F₁ and the raw err/ok counts with vs. without each environment.
 - **`blame.md`** — each wrong word attributed to the specific rule that produced
   the wrong phone, tracing (by stable segment id) which rule last set it, with a
   per-step trajectory toward each era's attested form.
@@ -195,7 +201,7 @@ python -m src.fortis.analysis.main --project projects/latin_to_french --try 'eː
 ```
 
 To focus the error analyses on an environment, `--scope 'PATTERN'` writes a
-`scoped_output.md` — the four analyses above (grading, diagnosis, timeline, blame)
+`scoped_output.md` — the four analyses above (accuracy, diagnosis, timeline, blame)
 recomputed over just the words whose attested target, or **any** attested stage, matches
 the pattern — leaving the whole-lexicon reports intact. So you can debug accuracy on a
 sub-population, including words that carried an /s/ at some stage even if it later dropped:
@@ -208,7 +214,7 @@ To trace a configuration through the derivation, `--filter 'PATTERN'` on the eng
 run synthesises every word the pattern touches in **any** form — its input, an
 intermediate derived form, the surface, the attested target, or a stage — into
 `filtered_output.md` (each matched word's trace, labelled by where it matched, over a
-subset grading + confusion header) and `filtered_table.csv`. Because a pattern is often
+subset accuracy + confusion header) and `filtered_table.csv`. Because a pattern is often
 transient (it arises at one rule and resolves at a later one), most matched words derive
 correctly: this answers *which* words pass through a shape and *where*, not which are
 wrong. The pattern is the same notation a rule target uses (feature bundles, letters,
@@ -374,8 +380,8 @@ A strict downward dependency DAG — each layer imports only from those above it
 fortis/
 ├── projects/
 │   ├── default/                 # shipped project — user-authored data, fallback base for all others
-│   │   ├── features.toml  letters.csv  diacritics.toml
-│   │   ├── sonorities.toml  syllable_parts.toml  tiers.toml
+│   │   ├── features.toml  letters.csv  diacritics.toml   # words/rules/diacritics/sonorities may
+│   │   ├── sonorities.toml  syllable_parts.toml  tiers.toml   # equally be given as .csv (TOML default)
 │   │   └── words.toml  rules.toml  settings.toml   # settings.toml: tunable analysis params (optional)
 │   └── ...                      # other projects, e.g. latin_to_french, pie_to_germanic
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
@@ -432,13 +438,13 @@ fortis/
     │   └── deriving.py          #   apply_rule per mode; derive_all → [Derivation]; form_at_time
     │
     └── analysis/                # OUTPUT ANALYSIS       (depends on: models, application)
-        ├── grading.py           #   phone + feature edit distance vs attested target forms
+        ├── accuracy.py          #   phone + feature edit distance vs attested target forms
         ├── diagnosis.py         #   confusions + context autopsy; errors-by-time; per-stage
         ├── blame.py             #   attribute each wrong word to the rule that produced it
-        ├── whatif.py            #   preview a candidate rule's grade delta before committing
+        ├── whatif.py            #   preview a candidate rule's accuracy delta before committing
         ├── warnings.py          #   syllabification-fallback warnings
-        ├── reporting.py         #   render the per-stage / final distance summary → distances.md
-        └── main.py              #   grader CLI: grade + diagnose + blame a project, no full run
+        ├── reporting.py         #   render the accuracy CSVs (per-stage summary + per-word)
+        └── main.py              #   accuracy CLI: measure + diagnose + blame a project, no full run
 ```
 
 ## Current limitations and future directions
@@ -479,7 +485,7 @@ None of these are commitments, but plausible directions if the project
 grows: richer (weighted or optional) rule application for gradient change,
 some notion of morphological structure to support reduplication and
 affix-conditioned rules, metrical foot structure alongside the existing
-tone/stress tiers, further grading work (frequency-weighted accuracy, and
+tone/stress tiers, further accuracy work (frequency-weighted accuracy, and
 attribution of errors to morphological analogy rather than sound change — the
 segmental confusion diagnosis, per-stage divergence, and rule-level blame under
 [Diagnosing a rule set](#diagnosing-a-rule-set) are already in place), and

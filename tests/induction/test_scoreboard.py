@@ -12,7 +12,7 @@ from src.fortis.induction.scoreboard import (
 
 
 def _fake(fit: float, rule: float, exact: int) -> CascadeScore:
-    return CascadeScore(fit_bits=fit, rule_bits=rule, exact=exact, graded=100, mean_distance=0.0)
+    return CascadeScore(fit_bits=fit, rule_bits=rule, exact=exact, assessed=100, mean_distance=0.0)
 
 
 class TestRender:
@@ -39,7 +39,7 @@ class TestIntegration:
         assert board.real_gap > 0
         # The learnability floor: the hand cascade regenerates its own synthetic lexicon.
         assert board.synthetic_hand.fit_bits == pytest.approx(0.0)
-        assert board.synthetic_hand.exact == board.synthetic_hand.graded
+        assert board.synthetic_hand.exact == board.synthetic_hand.assessed
         # Identity fits nothing.
         assert board.real_identity.exact == 0
         assert board.real_identity.rule_bits == 0.0

@@ -79,7 +79,9 @@ class TestFilterAttested:
         # scoping on all stages (not just the target) must include those words.
         result = filter_attested(derivs, "s", latin).unwrap()
         assert any(
-            d.word.final and "s" not in d.word.final and any("s" in v for v in d.word.stages.values())
+            d.word.final
+            and "s" not in d.word.final
+            and any("s" in v for v in d.word.stages.values())
             for d in result.matched
         )
 
@@ -101,5 +103,5 @@ class TestRenderScoped:
         subset = list(filter_attested(derivs, "ʁ", latin).unwrap().matched)
         md = render_scoped(subset, latin, "`proj` · scope `ʁ`")
         assert md.startswith("# Scoped")
-        for section in ("## Distances", "## Diagnosis", "## Timeline", "## Blame"):
+        for section in ("## Accuracy", "## Errors", "## Error context", "## Blame"):
             assert section in md

@@ -110,7 +110,7 @@ Referencing a parent node with no value — e.g. `[place]` — matches any segme
 
 ### 3.4 Sonority
 
-The sonority scale is user-defined in `sonorities.toml`, both in the number of levels and in the feature predicates that assign segments to them. Levels are assigned by first-match against an ordered list of predicates. A typical scale might look like:
+The sonority scale is user-defined in `sonorities.toml` (or `sonorities.csv` — columns `name, level, bundle`, in first-match row order), both in the number of levels and in the feature predicates that assign segments to them. Levels are assigned by first-match against an ordered list of predicates. A typical scale might look like:
 
 | Level | Class      |
 | ----- | ---------- |
@@ -140,17 +140,26 @@ Every inventory Fortis uses is loaded from a file. All of them are user-authored
 | `words.toml`          | The lexicon                                         |
 | `rules.toml`          | Phonological rules                                  |
 
+**TOML and CSV are equally valid.** Four of these inventories — the lexicon (`words`), the
+rules (`rules`), the diacritics (`diacritics`), and the sonority scale (`sonorities`) — may be
+supplied in **either** format, chosen by the file's extension; the CSV form carries the exact
+same schema as the TOML form (§4.1–§4.2 give the two lexicon/rule schemas; the diacritic and
+sonority CSVs simply put each TOML field in a named column). The letter inventory is CSV
+(`letters.csv`); the feature system, tiers, and syllable parameters are TOML, since they nest.
+If a project carries both formats of the same inventory, the TOML is used.
+
 `syllable_parts.toml` supplies the **nucleus** definition (a feature pattern that
 identifies syllable peaks) and, optionally, **onset**/**coda** patterns that
 constrain the division (§7). Each part's `definition` is the relevant notation:
 a single-segment bundle for the nucleus, an element sequence for an onset or coda
 (e.g. `definition = "[+cons][-syll, -cons]?"`).
 
-### 4.1 words.toml
+### 4.1 The lexicon — `words.toml` / `words.csv`
 
-Each entry's key is an IPA string; its value is either a **gloss string** or a
+The lexicon is given in TOML or CSV (equally valid — see the **CSV form** at the end of this
+section). In the TOML form, each entry's key is an IPA string; its value is either a **gloss string** or a
 **table**. The table form adds optional *target* annotations — attested forms the
-derivation is graded against (§8.3): `final`, the attested surface form, and any
+derivation is measured against (§8.3): `final`, the attested surface form, and any
 number of integer-keyed `stages`, the attested form at that derivation `time`.
 
 ```toml
@@ -172,10 +181,10 @@ string matters: `kata⟨◌́⟩` places a floating high _after_ the final segme
 suffixal tone that docks leftward onto it); `⟨◌́⟩kata` places one _before_ the
 first. A dock rule (§5.12) then binds it wherever it sits.
 
-**CSV form (`words.csv`).** The lexicon may instead be written as a CSV table — the
-same schema, one word per row — chosen by the file's extension (`load_word_inventory`
-dispatches on `.csv` vs TOML). A header row names the columns, read **by name** so any
-order works; the canonical order follows the derivation timeline:
+**CSV form (`words.csv`).** The lexicon may equally be written as a CSV table — the same
+schema, one word per row — chosen by the file's extension (`load_word_inventory` dispatches on
+`.csv` vs TOML). A header row names the columns, read **by name** so any order works; the
+canonical order follows the derivation timeline:
 
 ```
 word, gloss, <intermediate stage times, ascending>, final
@@ -188,9 +197,10 @@ cell means "not present". Fields are read with the `csv` module, so a value cont
 comma must be quoted (`"amère, bitter"`). A project may carry either form; if both
 `words.toml` and `words.csv` are present, TOML wins.
 
-### 4.2 rules.toml
+### 4.2 Rules — `rules.toml` / `rules.csv`
 
-Each rule is a TOML table whose header is the rule's **id** (a slug). Chronology is carried by a separate `time` field, not by the header.
+Rules are given in TOML or CSV (equally valid — see the **CSV form** at the end of this
+section). In the TOML form, each rule is a table whose header is the rule's **id** (a slug). Chronology is carried by a separate `time` field, not by the header.
 
 ```toml
 [laryngeal_coloring]
@@ -225,7 +235,7 @@ definition  = "∅ [+cons, +syll] → u [-syll]"
 
 The three rules above also illustrate the result-position distinction of §5.1: in `laryngeal_coloring`, `a` is a **letter** and replaces the matched segment entirely; in `u_epenthesis`, the inserted `u` is a letter (full segment) while `[+cons, +syll] → [-syll]` is a **bundle** that merges, changing only syllabicity and leaving the rest of the consonant intact.
 
-**CSV form (`rules.csv`).** The rule list may also be written as a CSV table — one rule
+**CSV form (`rules.csv`).** The rule list may equally be written as a CSV table — one rule
 per row, chosen by extension. Columns are read by name; the canonical order mirrors a rule
 table top-to-bottom:
 
@@ -619,28 +629,38 @@ meħˈteːr – "mother"
 
 The change summary shows the segments that changed as `old→new` (e.g. `kʲ→k`); for a length change it trims the shared prefix/suffix and shows just the differing region (`m̩→um`, with `∅` for a fully inserted or deleted side).
 
-### 8.3 Written reports and grading
+### 8.3 Written reports and accuracy
 
-Alongside the printed trace, every CLI run writes into the project directory:
+Alongside the printed trace, every CLI run writes into a `reports/` subfolder of the
+project directory:
 
-- **`output.md`** — the firing-rule trace (as above) in Markdown.
-- **`derivation_table.csv`** — one row per word, one column per rule (each titled
-  `<time>: <name>`), holding the word's form right after that rule fired (empty
-  where it did not).
-- **`distances.md`** — written only when the lexicon carries attested forms
-  (`final`/`stages`, §4.1). It grades each derived form against its target with
-  two edit distances: a **phone** distance (a base segment plus its combining
-  marks is one phone; an exact match is 0) and a finer **feature** distance (a
-  substitution costs the number of features that differ, so `ɑ̃` is one edit from
-  `ɑ` but eleven from `t`; an adjacent-segment swap counts as one). Both are
-  reported per word and in aggregate, for each stage and the final surface.
-- **`diagnosis.md`** — when there are wrong words: a ranked tally of the phone
-  confusions across the lexicon (which target phone came out as which), and a
-  context **autopsy** that, for the phones most often wrong, finds the
-  attested-form environments most associated with the error (by phi coefficient).
-- **`timeline.md`** — the temporal views: each wrong phone bucketed by the
-  rule-time that produced it (traced by stable segment id), and the diagnosis
-  re-run at each attested stage.
+- **`derivations.csv`** — the main report: the firing-rule trace in long format, one
+  row per word × firing rule (columns `word, rule, t, before, after, change`). Each
+  word is bookended by two synthetic rules — **`input`** (`before` = the raw IPA as
+  written in the lexicon, `after` = the form the engine ingested it as: syllabified,
+  diacritics normalised) and **`output`** (`after` = the surface form). A word on which
+  no rule fired is just its `input` and `output` rows.
+- **`derivation_table.csv`** — the same run in wide format: one row per word, one column
+  per rule (each titled `<time>: <name>`), holding the word's form right after that rule
+  fired (empty where it did not).
+- **`accuracy.csv`** and **`distance_to_target.csv`** — the **accuracy**
+  analysis, written only when the lexicon carries attested forms (`final`/`stages`,
+  §4.1). It measures each derived form's distance to its target with two edit
+  distances: a **phone** distance (a base segment plus its combining marks is one
+  phone; an exact match is 0) and a finer **feature** distance (a substitution costs
+  the number of features that differ, so `ɑ̃` is one edit from `ɑ` but eleven from
+  `t`; an adjacent-segment swap counts as one). `accuracy.csv` is the
+  per-stage summary (columns `stage, assessed, exact, within 1, mean phone dist, mean
+  feature dist`); `distance_to_target.csv` is the per-word long table (columns `stage,
+  gloss, derived, target, d, fd`). Both cover each stage and the final surface.
+- **`errors.csv`** — the **errors** analysis, when there are wrong words: per attested
+  stage (and the final), a ranked tally of the phone confusions — `stage, expected, got,
+  count, kind, examples (gloss: derived vs. attested)`. `∅` marks the absent side (an
+  insertion has no *expected*, a deletion no *got*).
+- **`error_context.csv`** — the **error context** analysis: per stage and per erroring
+  segment, the attested-form environments most associated with getting it wrong —
+  `stage, segment, environment, assoc. (φ), F₁, err/ok · with, err/ok · without`
+  (positive-φ predictors that clear the support floor; complete, no display cap).
 - **`blame.md`** — each wrong word attributed to the rule that produced the wrong
   phone, with a per-step trajectory toward each era's attested form.
 

@@ -18,7 +18,7 @@ def _interval(synth) -> InducedInterval:
     )
     return InducedInterval(
         label="750→1000", rules=[rule], steps=[step], stopped="converged",
-        start_fit=1000.0, final_fit=360.0, start_exact=53, final_exact=75, graded=299,
+        start_fit=1000.0, final_fit=360.0, start_exact=53, final_exact=75, assessed=299,
         shrink_log=["removed `x → y` (L 400 → 390, exact kept)"],
     )
 
@@ -40,7 +40,7 @@ class TestRender:
     def test_empty_interval_says_nothing_induced(self, synth):
         empty = InducedInterval(
             label="input→-200", rules=[], steps=[], stopped="fit_zero",
-            start_fit=0.0, final_fit=0.0, start_exact=299, final_exact=299, graded=299,
+            start_fit=0.0, final_fit=0.0, start_exact=299, final_exact=299, assessed=299,
         )
         text = render_induction([empty], "`synth`")
         assert "nothing induced" in text.lower()

@@ -37,11 +37,12 @@ try {
   log(`   ${first.ipa}  ->  ${first.surface}  (${first.steps.length} steps)`);
 
   // The reports are written into the virtual FS alongside the inventory files.
-  const md = py.runPython(`read_file("output.md")`).toString();
-  const csv = py.runPython(`read_file("derivation_table.csv")`).toString();
-  if (!md.startsWith("# Output")) throw new Error("output.md missing its header: " + md.slice(0, 80));
+  const derivations = py.runPython(`read_file("reports/derivations.csv")`).toString();
+  const csv = py.runPython(`read_file("reports/derivation_table.csv")`).toString();
+  if (!derivations.startsWith("word,rule,t,before,after,change"))
+    throw new Error("derivations.csv missing its header row: " + derivations.slice(0, 80));
   if (!csv.startsWith("ipa,gloss,")) throw new Error("derivation_table.csv missing its header row: " + csv.slice(0, 80));
-  log(`5. reports written: output.md (${md.length} chars), derivation_table.csv (${csv.split("\n").length} rows)`);
+  log(`5. reports written: derivations.csv (${derivations.split("\n").length} rows), derivation_table.csv (${csv.split("\n").length} rows)`);
 
   // Overlay model: empty overlay ⇒ all-default; write ⇒ project; remove ⇒ back to default.
   const FILES = [
@@ -128,26 +129,24 @@ try {
   const astra = ws.find((w) => w.syllabified === "as.tra");
   if (!astra || !astra.clusters.includes("str") || astra.form !== "astra" || astra.word !== "astra")
     throw new Error("expected a populated 'astra' warning, got: " + JSON.stringify(ws));
-  const warnMd = py.runPython(`read_file("warnings.md")`).toString();
+  const warnMd = py.runPython(`read_file("reports/warnings.md")`).toString();
   if (!warnMd.includes("as.tra")) throw new Error("warnings.md not written: " + warnMd.slice(0, 80));
   log(`11. warnings path: ${ws.length} warning(s) through Pyodide, warnings.md written`);
   py.runPython(`reset_overlay()`);
 
-  // 12. Diagnosis + blame populated: a word with a deliberately-wrong `final` makes one
-  //     graded miss, so finalize_run's diagnosis (confusions + autopsy) and blame branches
-  //     both fill and round-trip through the real Pyodide path.
+  // 12. Errors + Error context + blame populated: a word with a deliberately-wrong `final`
+  //     makes one assessed miss, so finalize_run's errors (per-stage confusions), error
+  //     context (per-stage autopsy), and blame branches all fill through the real Pyodide path.
   py.globals.set("_wd2", '"apa" = { gloss = "wrong", final = "xxx" }\n"ata" = { gloss = "ok", final = "ata" }\n');
   py.runPython(`write_file("words.toml", _wd2)`);
   const diag = JSON.parse(py.runPython("run_derivations()").toString());
-  if (diag.error) throw new Error("diagnosis run failed: " + JSON.stringify(diag.error));
-  if (!diag.diagnosis || !diag.diagnosis.confusions.length)
-    throw new Error("expected a populated diagnosis, got: " + JSON.stringify(diag.diagnosis));
-  if (!diag.timeline || !Array.isArray(diag.timeline.byTime) || !Array.isArray(diag.timeline.stages))
-    throw new Error("timeline missing byTime/stages: " + JSON.stringify(diag.timeline));
-  if (typeof diag.gradeMs !== "number" || typeof diag.analysisMs !== "number")
-    throw new Error("run missing grade/analysis timing: " + JSON.stringify({g: diag.gradeMs, a: diag.analysisMs}));
-  if (!diag.timeline.stages.some((s) => s.label === "final"))
-    throw new Error("per-stage timeline missing the final stage");
+  if (diag.error) throw new Error("errors run failed: " + JSON.stringify(diag.error));
+  if (!diag.errors || !Array.isArray(diag.errors.stages) || !diag.errors.stages.length)
+    throw new Error("expected populated errors, got: " + JSON.stringify(diag.errors));
+  if (!diag.errors.stages.some((s) => s.label === "final" && s.confusions.length))
+    throw new Error("errors missing the final stage confusions");
+  if (typeof diag.accuracyMs !== "number" || typeof diag.analysisMs !== "number")
+    throw new Error("run missing accuracy/analysis timing: " + JSON.stringify({a: diag.accuracyMs, n: diag.analysisMs}));
   if (!diag.blame || !diag.blame.words.length)
     throw new Error("expected a populated blame, got: " + JSON.stringify(diag.blame));
   const blamedWord = diag.blame.words[0];
@@ -156,13 +155,22 @@ try {
   const step = blamedWord.trajectory[0];
   if (!("target" in step) || !("fd" in step) || !("distance" in step))
     throw new Error("trajectory point missing target/d/fd: " + JSON.stringify(step));
-  const diagMd = py.runPython(`read_file("diagnosis.md")`).toString();
-  const timelineMd = py.runPython(`read_file("timeline.md")`).toString();
-  const blameMd = py.runPython(`read_file("blame.md")`).toString();
-  if (!diagMd.startsWith("# Diagnosis")) throw new Error("diagnosis.md not written: " + diagMd.slice(0, 80));
-  if (!timelineMd.startsWith("# Timeline")) throw new Error("timeline.md not written: " + timelineMd.slice(0, 80));
+  const errorsCsv = py.runPython(`read_file("reports/errors.csv")`).toString();
+  const ctxCsv = py.runPython(`read_file("reports/error_context.csv")`).toString();
+  const blameMd = py.runPython(`read_file("reports/blame.md")`).toString();
+  if (!errorsCsv.startsWith("stage,expected,got,count,kind,examples"))
+    throw new Error("errors.csv missing its header: " + errorsCsv.slice(0, 80));
+  if (!ctxCsv.startsWith("stage,segment,environment,assoc. (φ),F₁,err/ok · with,err/ok · without"))
+    throw new Error("error_context.csv missing its header: " + ctxCsv.slice(0, 90));
   if (!blameMd.startsWith("# Blame")) throw new Error("blame.md not written: " + blameMd.slice(0, 80));
-  log(`12. diagnosis + timeline + blame (${diag.blame.words.length} word(s)) through Pyodide, reports written`);
+  // The accuracy CSVs are written for a lexicon with attested forms.
+  const overallCsv = py.runPython(`read_file("reports/accuracy.csv")`).toString();
+  const dttCsv = py.runPython(`read_file("reports/distance_to_target.csv")`).toString();
+  if (!overallCsv.startsWith("stage,assessed,exact,within 1,mean phone dist,mean feature dist"))
+    throw new Error("accuracy.csv missing its header: " + overallCsv.slice(0, 80));
+  if (!dttCsv.startsWith("stage,gloss,derived,target,d,fd"))
+    throw new Error("distance_to_target.csv missing its header: " + dttCsv.slice(0, 80));
+  log(`12. errors + error context + blame (${diag.blame.words.length} word(s)) + accuracy CSVs through Pyodide`);
   py.runPython(`reset_overlay()`);
 
   // 13. Interactive filter over the last run: match a vowel pattern against every form,
@@ -175,7 +183,7 @@ try {
   const fw = filt.words[0];
   if (!fw.card || !Array.isArray(fw.locations) || !fw.locations.length)
     throw new Error("filter word missing card/locations: " + JSON.stringify(fw));
-  const filteredMd = py.runPython(`read_file("filtered_output.md")`).toString();
+  const filteredMd = py.runPython(`read_file("reports/filtered_output.md")`).toString();
   if (!filteredMd.startsWith("# Filtered")) throw new Error("filtered_output.md not written");
   const badFilter = JSON.parse(py.runPython(`run_filter("[bad")`).toString());
   if (!badFilter.error) throw new Error("expected run_filter to error on a bad pattern");
@@ -187,7 +195,7 @@ try {
   if (scoped.error) throw new Error("run_scope errored: " + JSON.stringify(scoped.error));
   if (typeof scoped.matched !== "number" || typeof scoped.considered !== "number")
     throw new Error("run_scope missing matched/considered: " + JSON.stringify(scoped));
-  const scopedMd = py.runPython(`read_file("scoped_output.md")`).toString();
+  const scopedMd = py.runPython(`read_file("reports/scoped_output.md")`).toString();
   if (!scopedMd.startsWith("# Scoped")) throw new Error("scoped_output.md not written");
   if (!JSON.parse(py.runPython(`run_scope("[bad")`).toString()).error)
     throw new Error("expected run_scope to error on a bad pattern");

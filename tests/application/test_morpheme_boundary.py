@@ -3,12 +3,18 @@
 A ``-`` in a word is a real, deletable segment that forces a syllable break and is
 matched only by a ``-`` rule element. These tests exercise the whole pipeline on the
 shipped default project: lexing, parsing, segmentation, syllabification, matching,
-deletion, insertion, rendering, and grading.
+deletion, insertion, rendering, and accuracy.
 """
 
 import pytest
 
-from src.fortis.analysis.grading import compare, feature_compare, split_phones
+from src.fortis.analysis.accuracy import (
+    comparable_bundles,
+    edit_distance,
+    feature_edit_distance,
+    form_phones,
+    try_segment,
+)
 from src.fortis.application.deriving import apply_rule
 from src.fortis.application.rendering import render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
@@ -140,10 +146,21 @@ def test_word_edge_boundary_renders(project, word, rendered):
     assert _render(string_to_sequence(word, project), project) == rendered
 
 
-# -- grading ---------------------------------------------------------------------------
+# -- accuracy ---------------------------------------------------------------------------
 
 
 def test_grader_treats_a_boundary_as_structural(project):
-    assert split_phones("at-a") == ["a", "t", "a"]
-    assert compare("at-a", "ata") == 0
-    assert feature_compare("at-a", "ata", project) == 0
+    with_boundary, without = try_segment("at-a", project), try_segment("ata", project)
+    assert with_boundary is not None and without is not None  # both are well-formed IPA
+    assert form_phones(with_boundary, project) == ["a", "t", "a"]  # the boundary is not a phone
+    swap = project.settings.accuracy.transposition_cost
+    assert (
+        edit_distance(form_phones(with_boundary, project), form_phones(without, project), swap)
+        == 0
+    )
+    assert (
+        feature_edit_distance(
+            comparable_bundles(with_boundary), comparable_bundles(without), swap
+        )
+        == 0
+    )

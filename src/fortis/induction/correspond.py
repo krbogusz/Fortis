@@ -14,10 +14,10 @@ condition on. Words whose edit distance exceeds ``alignment_distance_cap`` are e
 the tallies (their alignments are unreliable); they still count in the loss.
 
 Deferred to a later milestone (documented, not silently dropped): **self**-predictors
-(``self:stress=primary``) — the handle for stress/length-conditioned changes. Stress is
-stripped by ``grading.split_phones`` (so invisible to the residual anyway), and length rides
-inside the phone, so a v1 built on phone strings gains little from them; they arrive with the
-tier-aware proposer (plan §2.2 / M4).
+(``self:stress=primary``) — conditioning a change on the changed segment's *own* feature.
+Stress and length ride inside the segment phone (the accuracy phones fold suprasegmentals onto
+their anchor), so a v1 built on neighbour predictors gains little from them; they arrive with
+the tier-aware proposer (plan §2.2 / M4).
 """
 from __future__ import annotations
 
@@ -25,8 +25,8 @@ import math
 from collections import Counter
 from dataclasses import dataclass, field
 
+from src.fortis.analysis.accuracy import DistanceToTarget, align, segment_form, specified_features
 from src.fortis.analysis.diagnosis import f_score, phi_coefficient
-from src.fortis.analysis.grading import Grade, align, segment_form, specified_features, split_phones
 from src.fortis.induction.notation import render_feature_element
 from src.fortis.models.project import Project
 
@@ -36,8 +36,9 @@ BOUNDARY = "#"
 # A phone → its specified {feature: value} map (or None if it will not segment), memoised.
 _FeatureMapCache = dict[str, dict[str, object] | None]
 
-# One word ready for correspondence extraction: its grade with the split target/derived phones.
-_Word = tuple[Grade, list[str], list[str]]
+# One word ready for correspondence extraction: its distance to target with the split
+# target/derived phones.
+_Word = tuple[DistanceToTarget, list[str], list[str]]
 
 
 def _feature_map(phone: str, project: Project, cache: _FeatureMapCache) -> dict[str, object] | None:
@@ -115,13 +116,13 @@ class Correspondence:
         return self.feature_delta
 
 
-def _gradeable(grades: tuple[Grade, ...], distance_cap: int) -> list[_Word]:
+def _gradeable(distances: tuple[DistanceToTarget, ...], distance_cap: int) -> list[_Word]:
     """Non-exact words within the distance cap, each with its split target/derived phones."""
     out: list[_Word] = []
-    for grade in grades:
-        if grade.exact or grade.distance > distance_cap:
+    for dtt in distances:
+        if dtt.exact or dtt.distance > distance_cap:
             continue
-        out.append((grade, split_phones(grade.target), split_phones(grade.derived)))
+        out.append((dtt, list(dtt.target_phones), list(dtt.derived_phones)))
     return out
 
 
@@ -131,8 +132,8 @@ def _tally_confusions(
     """Count every non-match alignment op by its (expected, got) pair, with a few examples."""
     counts: Counter[tuple[str | None, str | None]] = Counter()
     examples: dict[tuple[str | None, str | None], list[str]] = {}
-    for grade, target_phones, derived_phones in words:
-        label = grade.gloss or grade.ipa
+    for dtt, target_phones, derived_phones in words:
+        label = dtt.gloss or dtt.ipa
         for op in align(target_phones, derived_phones):
             if op.kind == "match":
                 continue
@@ -158,9 +159,8 @@ def _predictors_at(
 
     A boundary edge contributes ``#``; a neighbour that segments contributes its identity
     literal plus one bracketed single-feature element per specified feature. A neighbour that
-    will *not* segment (e.g. the phantom ``t͡`` ``split_phones`` leaves from a tie-bar affricate)
-    contributes nothing — an unsegmentable phone cannot be a rule literal, so conditioning on it
-    would only produce candidates the resolver rejects.
+    will *not* segment as a lone literal contributes nothing — an unsegmentable phone cannot be
+    a rule literal, so conditioning on it would only produce candidates the resolver rejects.
     """
     predictors: set[tuple[str, str]] = set()
     for side, phone in (("left", left), ("right", right)):
@@ -236,7 +236,7 @@ def _substitution_predictors(
     change_with: Counter[tuple[str, str]] = Counter()
     stay_with: Counter[tuple[str, str]] = Counter()
     changes = stays = 0
-    for _grade, target_phones, derived_phones in words:
+    for _measure, target_phones, derived_phones in words:
         for op in align(target_phones, derived_phones):
             if op.derived != got or op.derived_index is None:
                 continue
@@ -271,7 +271,7 @@ def _deletion_predictors(
     left_counts: Counter[str] = Counter()
     right_counts: Counter[str] = Counter()
     sites = 0
-    for _grade, target_phones, derived_phones in words:
+    for _measure, target_phones, derived_phones in words:
         derived_pos = 0  # how many derived phones consumed so far (the gap's left index)
         for op in align(target_phones, derived_phones):
             if op.kind == "delete" and op.target == expected:
@@ -296,7 +296,9 @@ def _deletion_predictors(
     return tuple(predictors)
 
 
-def correspondences(grades: tuple[Grade, ...], project: Project, cap: int) -> list[Correspondence]:
+def correspondences(
+    distances: tuple[DistanceToTarget, ...], project: Project, cap: int
+) -> list[Correspondence]:
     """The top *cap* residual correspondences, each with its derived-side predictors.
 
     Confusions are tallied over the words within ``alignment_distance_cap`` (unreliable
@@ -305,7 +307,7 @@ def correspondences(grades: tuple[Grade, ...], project: Project, cap: int) -> li
     derived phone; a deletion reads them from the derived gap.
     """
     distance_cap = project.settings.induction.alignment_distance_cap
-    words = _gradeable(grades, distance_cap)
+    words = _gradeable(distances, distance_cap)
     counts, examples = _tally_confusions(words)
     ordered = sorted(counts.items(), key=lambda kv: (-kv[1], str(kv[0][0]), str(kv[0][1])))
     cache: _FeatureMapCache = {}
@@ -347,7 +349,7 @@ def _insertion_predictors(
     change_with: Counter[tuple[str, str]] = Counter()
     stay_with: Counter[tuple[str, str]] = Counter()
     changes = stays = 0
-    for _grade, target_phones, derived_phones in words:
+    for _measure, target_phones, derived_phones in words:
         for op in align(target_phones, derived_phones):
             if op.derived != got or op.derived_index is None:
                 continue

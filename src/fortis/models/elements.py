@@ -163,6 +163,7 @@ class RecallRef:
 type Element = (
     LetterRef
     | LetterBundle
+    | ModifiedLetter
     | BundleElem
     | FloatingAutoseg
     | ResultElem

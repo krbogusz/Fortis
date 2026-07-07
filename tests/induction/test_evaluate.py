@@ -1,7 +1,7 @@
 """Tests for the append-scoring fast path (src/fortis/induction/evaluate.py).
 
 The load-bearing test is :meth:`TestFastPathEquivalence` — that ``append_derivation`` produces
-a graded surface **byte-identical** to a real ``derive`` with the candidate genuinely appended,
+a assessed surface **byte-identical** to a real ``derive`` with the candidate genuinely appended,
 including on the stress-tier-bearing Latin forms whose ``_maintain_tiers``/re-dock the fast path
 must reproduce. If that holds, every ΔL the search reads is exact.
 """
@@ -9,7 +9,7 @@ from dataclasses import replace
 
 import pytest
 
-from src.fortis.analysis.grading import grade_derivation, split_phones
+from src.fortis.analysis.accuracy import distance_to_target, form_phones
 from src.fortis.application.deriving import derive_all
 from src.fortis.application.rendering import render_syllabified
 from src.fortis.application.tiers import lower_tiers
@@ -68,9 +68,9 @@ class TestFastPathEquivalence:
         real = derive_all(replace(mini, rules=timed_inventory(base_rules + [candidate])))
 
         for fast_d, real_d in zip(fast, real, strict=True):
-            # Graded phone sequence identical (syllable dots are cosmetic, stripped in grading).
-            assert split_phones(_surface(fast_d, synth)) == split_phones(_surface(real_d, synth))
-            fast_g, real_g = grade_derivation(fast_d, synth), grade_derivation(real_d, synth)
+            # The assessed segment sequence is identical (what the accuracy analysis compares).
+            assert form_phones(fast_d.surface, synth) == form_phones(real_d.surface, synth)
+            fast_g, real_g = distance_to_target(fast_d, synth), distance_to_target(real_d, synth)
             assert fast_g is not None and real_g is not None
             assert (fast_g.distance, fast_g.feature_distance) == (
                 real_g.distance,

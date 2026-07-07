@@ -4,7 +4,7 @@ from dataclasses import replace
 
 import pytest
 
-from src.fortis.analysis.grading import Grade
+from src.fortis.analysis.accuracy import DistanceToTarget
 from src.fortis.application.deriving import derive_all
 from src.fortis.induction.intervals import synthetic_project
 from src.fortis.induction.objective import (
@@ -19,8 +19,26 @@ from src.fortis.loaders.rules import load_rule
 from src.fortis.models.rules import RuleInventory
 
 
-def _grade(target: str, derived: str) -> Grade:
-    return Grade(gloss="w", ipa=target, derived=derived, target=target, distance=0)
+def _phones(form: str) -> tuple[str, ...]:
+    """Base + combining marks per phone (the old codepoint split), for these synthetic forms."""
+    import unicodedata
+
+    out: list[str] = []
+    for char in form:
+        if char in ".-ˈˌ" or char.isspace():
+            continue
+        if out and unicodedata.category(char) in {"Mn", "Mc", "Lm", "Sk"}:
+            out[-1] += char
+        else:
+            out.append(char)
+    return tuple(out)
+
+
+def _measure(target: str, derived: str) -> DistanceToTarget:
+    return DistanceToTarget(
+        gloss="w", ipa=target, derived=derived, target=target, distance=0,
+        derived_phones=_phones(derived), target_phones=_phones(target),
+    )
 
 
 class TestBitsModel:
@@ -45,12 +63,12 @@ class TestBitsModel:
 
 class TestResidualBits:
     def test_exact_word_costs_nothing(self, synth):
-        assert residual_bits(_grade("avɑ", "avɑ"), synth) == 0.0
+        assert residual_bits(_measure("avɑ", "avɑ"), synth) == 0.0
 
     def test_substitution_costs_a_site_plus_feature_delta(self, synth):
         model = bits_model(synth)
         # A one-phone near miss: t vs d differ only by voice → one site + a small delta.
-        bits = residual_bits(_grade("t", "d"), synth, model, {})
+        bits = residual_bits(_measure("t", "d"), synth, model, {})
         assert bits > model.b_site  # more than a bare site
         assert bits < model.b_site + model.b_feat * model.mean_features  # less than a full spell
 
@@ -58,16 +76,16 @@ class TestResidualBits:
         model = bits_model(synth)
         cache: dict = {}
         # target has a phone the derived lacks (deletion): spell it.
-        deletion = residual_bits(_grade("at", "a"), synth, model, cache)
+        deletion = residual_bits(_measure("at", "a"), synth, model, cache)
         # derived has a spurious phone (insertion): site only.
-        insertion = residual_bits(_grade("a", "at"), synth, model, cache)
+        insertion = residual_bits(_measure("a", "at"), synth, model, cache)
         assert deletion > insertion
         assert insertion == pytest.approx(model.b_site)
 
     def test_unsegmentable_phone_falls_back_not_crashes(self, synth):
         # A symbol the project cannot segment must degrade to the mean-feature spell, not raise.
         model = bits_model(synth)
-        bits = residual_bits(_grade("💥", "a"), synth, model, {})
+        bits = residual_bits(_measure("💥", "a"), synth, model, {})
         assert bits == pytest.approx(model.b_site + model.b_feat * model.mean_features)
 
 
@@ -108,7 +126,7 @@ class TestCascadeScore:
         synth = synthetic_project(synth)
         score = cascade_score(derive_all(synth), synth)
         assert score.fit_bits == pytest.approx(0.0)
-        assert score.exact == score.graded
+        assert score.exact == score.assessed
         assert score.mean_distance == pytest.approx(0.0)
 
     def test_cascade_rule_bits_sums_every_rule(self, synth):

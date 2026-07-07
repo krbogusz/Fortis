@@ -36,9 +36,9 @@
 
   let openDefs = $state({}); // per-card: index → whether that card's rule definitions are shown
   let result = $state(null); // { derivations } | { error }
-  let grading = $state(null); // grading summary from the last run, or null when there's no target
-  let diagnosis = $state(null); // diagnosis snapshot (confusions + autopsy), or null when all exact
-  let timeline = $state(null); // temporal views (errors by rule-time + per-stage), or null when all exact
+  let accuracy = $state(null); // accuracy summary from the last run, or null when there's no target
+  let errors = $state(null); // Errors analysis: per-stage confusions, or null when all exact
+  let errorContext = $state(null); // Error-context analysis: per-stage per-segment autopsy, or null
   let blame = $state(null); // per-word blame, or null when all exact
   let warnings = $state([]); // syllabification-fallback warnings from the last run
   let filterPattern = $state(""); // the Filter tab's pattern input
@@ -49,9 +49,9 @@
   let scopeData = $state(null); // the last run_scope result, or null
   let scopeError = $state(null); // scope parse/resolve errors, or null
   let scopeBusy = $state(false); // a scope run is in flight
-  let timing = $state(null); // {words, deriveMs, gradeMs, analysisMs} from the last run
+  let timing = $state(null); // {words, deriveMs, accuracyMs, analysisMs} from the last run
   let tableCsv = $state(""); // derivation_table.csv content, for the right-pane Table view
-  let resultView = $state("derivations"); // right-pane view: derivations | table | grading | diagnosis | blame | warnings
+  let resultView = $state("derivations"); // right-pane view: derivations | table | accuracy | errors | errorContext | blame | warnings
 
   // A project with more than this many words OR rules is too costly to re-run on
   // every edit; it waits for the "Run project" button instead of auto-running.
@@ -118,7 +118,7 @@
     "words.csv": "The lexicon (CSV) — input IPA plus attested target and stage forms",
     "rules.toml": "The ordered, time-keyed sound-change rules",
     "rules.csv": "The ordered, time-keyed sound-change rules (CSV)",
-    "settings.toml": "Tunable analysis parameters (grading, diagnosis, induction)",
+    "settings.toml": "Tunable analysis parameters (accuracy, error analysis, induction)",
   };
 
   // Everything the project switcher lists: the built-in default, the bundled
@@ -224,7 +224,7 @@
     progress = 0;
     progressText = "";
     result = null; // clear the previous results so the pane doesn't show stale output under the bar
-    grading = null; // and the previous grading summary
+    accuracy = null; // and the previous accuracy summary
     warnings = []; // and the previous warnings
     tableCsv = ""; // and the previous derivation table
     timing = null; // and the previous run's timing
@@ -268,16 +268,16 @@
         }
       }
       const deriveMs = performance.now() - runStart;
-      progressText = "analysing…"; // grading + diagnosis + timeline + blame can be slow
+      progressText = "analysing…"; // accuracy + errors + error context + blame can be slow
       await paint();
       const fin = finalizeRun();
-      timing = { words: total, deriveMs, gradeMs: fin?.gradeMs ?? 0, analysisMs: fin?.analysisMs ?? 0 };
-      grading = fin?.grading ?? null;
-      if (!grading && resultView === "grading") resultView = "derivations"; // no target ⇒ leave the (now hidden) tab
-      diagnosis = fin?.diagnosis ?? null;
-      if (!diagnosis && resultView === "diagnosis") resultView = "derivations"; // all exact ⇒ leave the tab
-      timeline = fin?.timeline ?? null;
-      if (!timeline && resultView === "timeline") resultView = "derivations"; // all exact ⇒ leave the tab
+      timing = { words: total, deriveMs, accuracyMs: fin?.accuracyMs ?? 0, analysisMs: fin?.analysisMs ?? 0 };
+      accuracy = fin?.accuracy ?? null;
+      if (!accuracy && resultView === "accuracy") resultView = "derivations"; // no target ⇒ leave the (now hidden) tab
+      errors = fin?.errors ?? null;
+      if (!errors && resultView === "errors") resultView = "derivations"; // all exact ⇒ leave the tab
+      errorContext = fin?.errorContext ?? null;
+      if (!errorContext && resultView === "errorContext") resultView = "derivations"; // none ⇒ leave the tab
       blame = fin?.blame ?? null;
       if (!blame && resultView === "blame") resultView = "derivations"; // all exact ⇒ leave the tab
       warnings = fin?.warnings ?? [];
@@ -286,7 +286,7 @@
       filterError = null;
       scopeData = null;
       scopeError = null;
-      tableCsv = readFile("derivation_table.csv"); // for the Table view
+      tableCsv = readFile("reports/derivation_table.csv"); // for the Table view
       result = { derivations: acc };
     } catch (e) {
       if (myToken === runToken) result = { error: [e?.message ?? String(e)] };
@@ -326,6 +326,15 @@
     return { code: line, comment: "" };
   }
   const editorLines = $derived(content.split("\n").map(splitComment));
+
+  // Render a confusion cell's examples. Spaces inside each label are made non-breaking so a
+  // single example ("acheter: a.ʃa.t̪e/aʃ.t̪e") never wraps mid-way; the "  • " separator's
+  // two leading spaces are non-breaking too, so a line break can fall only after a bullet —
+  // between examples, never inside one.
+  const NBSP = String.fromCharCode(0xA0); // non-breaking space
+  const exampleList = (examples) =>
+    examples.map((e) => e.replaceAll(" ", NBSP)).join(NBSP + NBSP + "• ");
+
   function syncScroll() {
     if (hlEl && taEl) {
       hlEl.scrollTop = taEl.scrollTop;
@@ -410,13 +419,15 @@
     download(active, content);
   }
 
-  // The report file each right-pane view is generated from.
+  // The report file each right-pane view is generated from (basenames; the reports
+  // live in the overlay's reports/ subfolder — saveResult() reads from there but keeps
+  // the download named by the basename).
   const RESULT_FILE = {
-    derivations: "output.md",
+    derivations: "derivations.csv",
     table: "derivation_table.csv",
-    grading: "distances.md",
-    diagnosis: "diagnosis.md",
-    timeline: "timeline.md",
+    accuracy: "accuracy.csv",
+    errors: "errors.csv",
+    errorContext: "error_context.csv",
     blame: "blame.md",
     warnings: "warnings.md",
     filter: "filtered_output.md",
@@ -425,7 +436,7 @@
 
   function saveResult() {
     const name = RESULT_FILE[resultView];
-    if (name) download(name, readFile(name));
+    if (name) download(name, readFile("reports/" + name)); // read from reports/, download by basename
   }
 
   function matchFile(name) {
@@ -725,27 +736,27 @@
                   title="Every word's form at each stage, in one table (derivation_table.csv)"
                   onclick={() => (resultView = "table")}>Table</button
                 >
-                {#if grading}
+                {#if accuracy}
                   <button
-                    class:active={resultView === "grading"}
+                    class:active={resultView === "accuracy"}
                     title="Exact-match accuracy and edit distance vs the attested targets"
-                    onclick={() => (resultView = "grading")}>Grading</button
+                    onclick={() => (resultView = "accuracy")}>Accuracy</button
                   >
                 {/if}
-                {#if diagnosis}
+                {#if errors}
                   <button
-                    class:active={resultView === "diagnosis"}
-                    onclick={() => (resultView = "diagnosis")}
-                    title="Confusions and context autopsy — what goes wrong at the end"
-                    >Diagnosis</button
+                    class:active={resultView === "errors"}
+                    onclick={() => (resultView = "errors")}
+                    title="Which segments came out wrong, per attested stage and the final"
+                    >Errors</button
                   >
                 {/if}
-                {#if timeline}
+                {#if errorContext}
                   <button
-                    class:active={resultView === "timeline"}
-                    onclick={() => (resultView = "timeline")}
-                    title="Errors by rule-time and per-stage diagnosis — when errors enter"
-                    >Timeline</button
+                    class:active={resultView === "errorContext"}
+                    onclick={() => (resultView = "errorContext")}
+                    title="The attested-form environments most associated with each error, per stage"
+                    >Error context</button
                   >
                 {/if}
                 {#if blame}
@@ -773,7 +784,7 @@
                 <button
                   class:active={resultView === "scope"}
                   onclick={() => (resultView = "scope")}
-                  title="Grade + diagnose only the words whose attested forms match a pattern"
+                  title="Measure accuracy + diagnose only the words whose attested forms match a pattern"
                   >Scope</button
                 >
               </div>
@@ -789,7 +800,7 @@
       </div>
 
       {#if busy}
-        <div class="results ipa">
+        <div class="results">
           <div class="run-prompt">
             <span class="progress big" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progress * 100)}>
               <span class="progress-fill" style="width:{Math.round(progress * 100)}%"></span>
@@ -798,7 +809,7 @@
           </div>
         </div>
       {:else if needsRun}
-        <div class="results ipa">
+        <div class="results">
           <div class="run-prompt">
             <button
               class="run-project"
@@ -821,27 +832,37 @@
       {:else if resultView === "table" && tableCsv}
         <CsvTable content={tableCsv} />
       {:else}
-      <div class="results ipa">
-        <!-- The firing-rule trace of one word — shared by the Filter tab. -->
-        {#snippet traceSteps(steps)}
-          <div class="steps">
-            {#each steps as s}
-              {#if s.timeHeader != null}<div class="time-header">{s.timeHeader}</div>{/if}
-              {#if s.heading}<div class="rule-heading">{s.heading}</div>{/if}
-              <div class="step">
-                <span class="form">{s.before}</span>
-                <span class="arrow">→</span>
-                <span class="form">{s.after}</span>
-                {#if s.change}<span class="change">(<span class="change-text">{s.change}</span>)</span>{/if}
-              </div>
-            {/each}
-          </div>
-        {/snippet}
-        <!-- Shared by the Diagnosis and Timeline views (final + per-stage). -->
-        {#snippet confusionTable(confs)}
-          <table class="grade-summary">
+      <div class="results">
+        <!-- The firing-rule trace of one word, as a borderless table (rule · t · before → after
+             · change) — shared by the Derivation and Filter tabs. `showDefs` reveals each rule's
+             definition under its name (the Derivation tab's Definition toggle). -->
+        {#snippet traceSteps(steps, showDefs)}
+          {@const hasTime = steps.some((s) => s.time != null)}
+          <table class="report-misses blame-traj">
             <thead>
-              <tr><th>expected</th><th>got</th><th>count</th><th>kind</th><th>examples</th></tr>
+              <tr><th>rule</th>{#if hasTime}<th>t</th>{/if}<th>before</th><th>after</th><th>change</th></tr>
+            </thead>
+            <tbody>
+              {#each steps as s}
+                <tr>
+                  <td class="st-rule">{#if s.heading}{s.heading}{/if}</td>
+                  {#if hasTime}<td class="st-time">{s.time ?? ""}</td>{/if}
+                  <td class="form">{s.before}</td>
+                  <td class="form">{s.after}</td>
+                  <td class="form">{s.change ?? ""}</td>
+                </tr>
+                {#if showDefs && s.heading && s.definition}
+                  <tr><td colspan={hasTime ? 5 : 4} class="def-cell">{s.definition}</td></tr>
+                {/if}
+              {/each}
+            </tbody>
+          </table>
+        {/snippet}
+        <!-- Shared by the Errors, Error context, Filter, and Scope views. -->
+        {#snippet confusionTable(confs)}
+          <table class="report-summary">
+            <thead>
+              <tr><th>expected</th><th>got</th><th>count</th><th>kind</th><th>examples (gloss: derived vs. attested)</th></tr>
             </thead>
             <tbody>
               {#each confs as c}
@@ -850,7 +871,7 @@
                   <td class="form">{c.got ?? "∅"}</td>
                   <td>{c.count}</td>
                   <td>{c.kind}</td>
-                  <td class="muted">{c.examples.join(", ")}</td>
+                  <td class="form">{exampleList(c.examples)}</td>
                 </tr>
               {/each}
             </tbody>
@@ -858,13 +879,13 @@
         {/snippet}
         {#snippet autopsyBlock(autopsy)}
           {#each autopsy as a}
-            <details class="grade-detail">
+            <details class="report-detail">
               <summary>
-                <span class="form tgt">{a.phone}</span>
+                <span class="form tgt">{a.segment}</span>
                 <span class="muted">wrong {a.errors}/{a.total} · support ≥{a.supportFloor}</span>
               </summary>
               {#if a.predictors.length}
-                <table class="grade-misses">
+                <table class="report-misses">
                   <thead>
                     <tr>
                       <th title="The attested-form environment tested as a predictor of this error (e.g. right=n)">environment</th>
@@ -894,25 +915,25 @@
         {/snippet}
         {#if timing}
           <p class="muted timing-line">
-            {timing.words} words · derive {(timing.deriveMs / 1000).toFixed(1)}s · grade
-            {(timing.gradeMs / 1000).toFixed(1)}s · analysis {(timing.analysisMs / 1000).toFixed(1)}s
+            {timing.words} words · derive {(timing.deriveMs / 1000).toFixed(1)}s · accuracy
+            {(timing.accuracyMs / 1000).toFixed(1)}s · analysis {(timing.analysisMs / 1000).toFixed(1)}s
           </p>
         {/if}
-        {#if resultView === "grading" && grading}
-          <table class="grade-summary">
+        {#if resultView === "accuracy" && accuracy}
+          <table class="report-summary">
             <thead>
               <tr>
-                <th>stage</th><th>graded</th><th>exact</th>
+                <th>stage</th><th>assessed</th><th>exact</th>
                 <th title="Words within edit distance 1 of the target (an exact match, or one insertion/deletion/substitution away)">within 1</th>
-                <th title="Mean phone edit distance: Levenshtein distance over segments, averaged across graded words">mean phone dist</th>
-                <th title="Mean feature distance: per-segment featural difference, averaged across graded words">mean feature dist</th>
+                <th title="Mean phone edit distance: Levenshtein distance over segments, averaged across assessed words">mean phone dist</th>
+                <th title="Mean feature distance: per-segment featural difference, averaged across assessed words">mean feature dist</th>
               </tr>
             </thead>
             <tbody>
-              {#each grading.stages as s}
+              {#each accuracy.stages as s}
                 <tr class:final={s.label === "final"}>
                   <td class="tgt">{s.label}</td>
-                  <td>{s.graded}</td>
+                  <td>{s.assessed}</td>
                   <td>{s.exact}</td>
                   <td>{s.withinOne}</td>
                   <td>{s.meanPhone.toFixed(3)}</td>
@@ -922,17 +943,17 @@
             </tbody>
           </table>
 
-          {#if grading.weighted}
+          {#if accuracy.weighted}
             <p class="caveat">
               <strong>Token-weighted</strong> (by <code>frequency</code>, total weight
-              {grading.weighted.weight}): final {(grading.weighted.accuracy * 100).toFixed(1)}%
-              exact, mean phone dist {grading.weighted.meanPhone.toFixed(3)}, mean feature dist
-              {grading.weighted.meanFeature.toFixed(3)}. Confusions and the autopsy stay
+              {accuracy.weighted.weight}): final {(accuracy.weighted.accuracy * 100).toFixed(1)}%
+              exact, mean phone dist {accuracy.weighted.meanPhone.toFixed(3)}, mean feature dist
+              {accuracy.weighted.meanFeature.toFixed(3)}. Confusions and the autopsy stay
               unweighted token counts.
             </p>
           {/if}
 
-          {#if grading.hasStages}
+          {#if accuracy.hasStages}
             <p class="caveat">
               Intermediate stages compare the derived snapshot at rule-time T against
               the target at stage-time T. If those timescales aren’t calibrated, the
@@ -941,14 +962,14 @@
             </p>
           {/if}
 
-          {#each grading.stages as s}
-            <details class="grade-detail" open={s.label === "final"}>
+          {#each accuracy.stages as s}
+            <details class="report-detail" open={s.label === "final"}>
               <summary>
                 <span class="tgt">{s.label}</span>
-                <span class="muted">{s.graded - s.exact} of {s.graded} differ</span>
+                <span class="muted">{s.assessed - s.exact} of {s.assessed} differ</span>
               </summary>
               {#if s.misses.length}
-                <table class="grade-misses">
+                <table class="report-misses">
                   <thead>
                     <tr><th>gloss</th><th>derived</th><th>target</th><th>d</th><th>fd</th></tr>
                   </thead>
@@ -965,62 +986,40 @@
                   </tbody>
                 </table>
               {:else}
-                <p class="muted">All {s.graded} graded words exact.</p>
+                <p class="muted">All {s.assessed} assessed words exact.</p>
               {/if}
             </details>
           {/each}
-        {:else if resultView === "diagnosis" && diagnosis}
+        {:else if resultView === "errors" && errors}
           <p class="caveat">
-            <em>What</em> goes wrong at the end, from the same graded forms. Environments are
-            read from the <strong>attested</strong> form; a metathesis reads as an adjacent
-            substitution pair. <em>When</em> errors enter is in the Timeline tab.
+            Which segments came out wrong at each attested stage (and the final): the phone
+            confusions, most frequent first. <code>∅</code> on the <em>got</em> side is a
+            dropped phone; on the <em>expected</em> side, a spurious inserted one. Trust an
+            intermediate stage only where its attested forms are notationally comparable to
+            the engine’s output.
           </p>
-          <h3 class="section-head">Confusions</h3>
-          {@render confusionTable(diagnosis.confusions)}
-
-          <h3 class="section-head">Context autopsy</h3>
-          {@render autopsyBlock(diagnosis.autopsy)}
-        {:else if resultView === "timeline" && timeline}
-          <h3 class="section-head">Errors by rule-time</h3>
-          <p class="caveat">
-            Each wrong phone attributed (via blame provenance) to the rule-time that produced
-            it — where errors <em>enter</em>. <code>t=∅</code> groups phones no single rule owns.
-          </p>
-          <table class="grade-summary">
-            <thead><tr><th>rule-time</th><th>wrong</th><th>top confusions</th></tr></thead>
-            <tbody>
-              {#each timeline.byTime as b}
-                <tr>
-                  <td class="tgt">{b.time == null ? "∅" : "t=" + b.time}</td>
-                  <td>{b.count}</td>
-                  <td class="form"
-                    >{b.confusions
-                      .slice(0, 4)
-                      .map((c) => `${c.expected ?? "∅"}→${c.got ?? "∅"} ×${c.count}`)
-                      .join(", ")}</td
-                  >
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-
-          <h3 class="section-head">Per-stage diagnosis</h3>
-          <p class="caveat">
-            The confusions and autopsy at each attested stage. Trust an intermediate stage
-            only where its attested forms are notationally comparable to the engine’s output.
-          </p>
-          {#each timeline.stages as s}
-            <details class="grade-detail">
+          {#each errors.stages as s}
+            <details class="report-detail" open={s.label === "final"}>
               <summary>
                 <span class="tgt">stage {s.label}</span>
                 <span class="muted">{s.confusions.length} confusion(s)</span>
               </summary>
-              {#if s.confusions.length}
-                {@render confusionTable(s.confusions)}
-                {@render autopsyBlock(s.autopsy)}
-              {:else}
-                <p class="muted">All graded words at this stage are exact.</p>
-              {/if}
+              {@render confusionTable(s.confusions)}
+            </details>
+          {/each}
+        {:else if resultView === "errorContext" && errorContext}
+          <p class="caveat">
+            For each erroring segment, the <strong>attested</strong>-form environments most
+            associated with getting it wrong (by phi coefficient), per stage. A metathesis
+            reads as an adjacent substitution pair.
+          </p>
+          {#each errorContext.stages as s}
+            <details class="report-detail" open={s.label === "final"}>
+              <summary>
+                <span class="tgt">stage {s.label}</span>
+                <span class="muted">{s.segments.length} segment(s)</span>
+              </summary>
+              {@render autopsyBlock(s.segments)}
             </details>
           {/each}
         {:else if resultView === "blame" && blame}
@@ -1032,7 +1031,7 @@
             forms are notationally comparable to the engine’s output.
           </p>
           {#each blame.words as w}
-            <details class="grade-detail">
+            <details class="report-detail">
               <summary>
                 <span class="tgt">{w.word}</span>
                 <span class="form">{w.surface}</span>
@@ -1050,7 +1049,7 @@
                   <span class="form">{w.stage.derived}</span>
                 </p>
               {/if}
-              <table class="grade-misses blame-traj">
+              <table class="report-misses blame-traj">
                 <thead>
                   <tr><th>step</th><th>t</th><th>form</th><th>target</th><th>d</th><th>fd</th></tr>
                 </thead>
@@ -1075,7 +1074,7 @@
             syllabification fell back to the sonority Maximal Onset division. Loosen the patterns to
             cover these clusters, or accept the fallback.
           </p>
-          <table class="grade-summary">
+          <table class="report-summary warnings-table">
             <thead>
               <tr><th>word</th><th>gloss</th><th>form</th><th>cluster</th><th>syllabified as</th></tr>
             </thead>
@@ -1120,10 +1119,10 @@
             <p>
               Matched <strong>{filterData.matched} of {filterData.considered}</strong> words for
               <code>{filterData.pattern}</code>.
-              {#if filterData.grading}
-                Subset grading: {filterData.grading.exact}/{filterData.grading.graded} exact ({(
-                  filterData.grading.accuracy * 100
-                ).toFixed(1)}%), mean phone dist {filterData.grading.meanPhone.toFixed(3)}.
+              {#if filterData.accuracy}
+                Subset accuracy: {filterData.accuracy.exact}/{filterData.accuracy.assessed} exact ({(
+                  filterData.accuracy.accuracy * 100
+                ).toFixed(1)}%), mean phone dist {filterData.accuracy.meanPhone.toFixed(3)}.
               {/if}
             </p>
             {#if filterData.confusions.length}
@@ -1134,14 +1133,14 @@
                 <header class="word-head">
                   <span class="word-ipa">{w.card.ipa}</span>
                   {#if w.card.gloss}<span class="gloss">‘{w.card.gloss}’</span>{/if}
-                  {#if w.grade}<span class="muted">· {w.grade.exact ? "exact" : "d" + w.grade.distance}</span>{/if}
+                  {#if w.measurement}<span class="muted">· {w.measurement.exact ? "exact" : "d" + w.measurement.distance}</span>{/if}
                 </header>
                 <p class="residuals">
                   <span class="muted">matched at:</span>
                   {#each w.locations as loc, i}<code>{loc}</code>{#if i < w.locations.length - 1}, {/if}{/each}
                 </p>
-                {@render traceSteps(w.card.steps)}
-                <div class="surface"><span class="form">{w.card.surface}</span></div>
+                {@render traceSteps(w.card.steps, false)}
+                <div class="surface"><span class="muted" aria-hidden="true">→</span><span class="form">{w.card.surface}</span></div>
               </article>
             {/each}
           {:else}
@@ -1158,14 +1157,14 @@
             <button
               class="run-filter"
               disabled={scopeBusy || !scopePattern.trim()}
-              title="Grade and diagnose only the words whose attested forms match this pattern"
+              title="Measure accuracy + errors only for the words whose attested forms match this pattern"
               onclick={runScopeAction}>{scopeBusy ? "Running…" : "Run scope"}</button
             >
           </div>
           <p class="caveat">
-            Grades and diagnoses only the words whose <strong>attested</strong> target — or any
+            Measures accuracy + errors only for the words whose <strong>attested</strong> target — or any
             attested stage — matches the pattern, for debugging accuracy on a sub-population. The
-            full grading + timeline + blame for the subset is in the downloadable
+            full accuracy + errors + error context + blame for the subset is in the downloadable
             <code>scoped_output.md</code>.
           </p>
           {#if scopeError}
@@ -1176,19 +1175,25 @@
             <p>
               Scoped to <strong>{scopeData.matched} of {scopeData.considered}</strong> words for
               <code>{scopeData.pattern}</code>.
-              {#if scopeData.grading}
-                {scopeData.grading.exact}/{scopeData.grading.graded} exact ({(
-                  scopeData.grading.accuracy * 100
-                ).toFixed(1)}%), mean phone dist {scopeData.grading.meanPhone.toFixed(3)}.
+              {#if scopeData.accuracy}
+                {scopeData.accuracy.exact}/{scopeData.accuracy.assessed} exact ({(
+                  scopeData.accuracy.accuracy * 100
+                ).toFixed(1)}%), mean phone dist {scopeData.accuracy.meanPhone.toFixed(3)}.
               {/if}
             </p>
-            {#if scopeData.diagnosis}
-              <h3 class="section-head">Confusions</h3>
-              {@render confusionTable(scopeData.diagnosis.confusions)}
-              <h3 class="section-head">Context autopsy</h3>
-              {@render autopsyBlock(scopeData.diagnosis.autopsy)}
+            {#if scopeData.errors}
+              <h3 class="section-head">Errors</h3>
+              {#each scopeData.errors.stages as s}
+                <details class="report-detail" open={s.label === "final"}>
+                  <summary>
+                    <span class="tgt">stage {s.label}</span>
+                    <span class="muted">{s.confusions.length} confusion(s)</span>
+                  </summary>
+                  {@render confusionTable(s.confusions)}
+                </details>
+              {/each}
             {:else}
-              <p class="muted">No graded words in the scoped subset.</p>
+              <p class="muted">No assessed words in the scoped subset.</p>
             {/if}
           {:else}
             <p class="muted">Enter a pattern and click <strong>Run scope</strong>.</p>
@@ -1215,29 +1220,13 @@
                     class="def-toggle"
                     class:active={openDefs[i]}
                     title="Show the rule definitions for this word"
-                    onclick={() => (openDefs[i] = !openDefs[i])}>Definition</button
+                    onclick={() => (openDefs[i] = !openDefs[i])}>Definitions</button
                   >
                 {/if}
               </header>
-              <div class="steps">
-                {#each d.steps as s}
-                  {#if s.timeHeader != null}
-                    <div class="time-header">{s.timeHeader}</div>
-                  {/if}
-                  {#if s.heading}
-                    <div class="rule-heading">
-                      {s.heading}{#if s.definition && openDefs[i]}<span class="def">{s.definition}</span>{/if}
-                    </div>
-                  {/if}
-                  <div class="step">
-                    <span class="form">{s.before}</span>
-                    <span class="arrow">→</span>
-                    <span class="form">{s.after}</span>
-                    {#if s.change}<span class="change">(<span class="change-text">{s.change}</span>)</span>{/if}
-                  </div>
-                {/each}
-              </div>
+              {@render traceSteps(d.steps, openDefs[i])}
               <div class="surface">
+                <span class="muted" aria-hidden="true">→</span>
                 <span class="form">{d.surface}</span>
               </div>
             </article>
@@ -1523,7 +1512,7 @@
     border-radius: 6px;
     background: var(--panel); /* match the derivation card background */
     color: var(--text-h);
-    font-size: 16px;
+    font-size: var(--fs-content);
     line-height: 1.55;
     resize: none;
     tab-size: 4;
@@ -1603,6 +1592,17 @@
     overflow: auto;
     padding: 4px 16px 24px;
   }
+  /* IPA is opt-in: the results panel defaults to the Sans body face, and only the linguistic
+     forms take the Charis (IPA) face — the computed forms (.form), the emphasised word/target
+     cells (.word-ipa, .tgt), and code spans (which may carry an IPA pattern). This replaces the
+     old "whole panel is IPA, then override back to Sans" model, so gloss/heading/label cells are
+     Sans by default with no counter-override. */
+  .results .form,
+  .results .tgt,
+  .results .word-ipa,
+  .results code {
+    font-family: var(--ipa);
+  }
   .muted {
     color: var(--muted);
   }
@@ -1653,47 +1653,52 @@
     margin-left: 8px;
   }
 
-  .grade-summary,
-  .grade-misses {
+  .report-summary,
+  .report-misses {
     border-collapse: collapse;
     width: 100%;
     font-size: var(--fs-body);
     font-variant-numeric: tabular-nums;
   }
-  .grade-summary {
+  .report-summary {
     margin-bottom: 14px;
   }
-  .grade-summary th,
-  .grade-summary td,
-  .grade-misses th,
-  .grade-misses td {
+  .report-summary th,
+  .report-summary td,
+  .report-misses th,
+  .report-misses td {
     border: 1px solid var(--border);
     padding: 4px 9px;
     text-align: right;
   }
-  .grade-summary td.tgt,
-  .grade-misses th,
-  .grade-misses td:first-child {
+  .report-summary td.tgt,
+  .report-misses th,
+  .report-misses td:first-child {
     text-align: left;
   }
-  /* Gloss is a translation, not IPA — render it in the sans face, muted. */
-  .grade-summary td.gloss-cell {
-    font-family: var(--sans);
+  /* Gloss is a translation, not IPA — muted (Sans is now the panel default, so no override). */
+  .report-summary td.gloss-cell {
     color: var(--muted);
   }
-  .grade-summary thead th,
-  .grade-misses thead th {
+  /* Warnings table: word/gloss/form/cluster (the first four columns) read left-to-right, so
+     left-align their headers and cells (report-summary right-aligns by default). */
+  .warnings-table th:nth-child(-n + 4),
+  .warnings-table td:nth-child(-n + 4) {
+    text-align: left;
+  }
+  .report-summary thead th,
+  .report-misses thead th {
     color: var(--muted);
     font-weight: 600;
     text-align: right;
     background: var(--panel);
   }
-  .grade-summary tr.final td {
-    font-weight: 700;
+  .report-summary tr.final td {
+    font-weight: 600;
     color: var(--text-h);
     border-top-width: 2px;
   }
-  .grade-misses td.form {
+  .report-misses td.form {
     color: var(--text-h);
   }
   /* Blame trajectory: the t/form/target/d/fd columns hug their content; the first `step`
@@ -1718,12 +1723,12 @@
     margin: 0 0 16px;
   }
 
-  .grade-detail {
+  .report-detail {
     margin-bottom: 10px;
     border-bottom: 1px solid var(--border);
     padding-bottom: 8px;
   }
-  .grade-detail summary {
+  .report-detail summary {
     cursor: pointer;
     display: flex;
     gap: 10px;
@@ -1732,17 +1737,22 @@
     font-weight: 600;
     color: var(--text-h);
   }
-  .grade-detail summary .muted {
+  .report-detail summary .muted {
     font-weight: 400;
   }
-  .grade-detail .grade-misses {
+  .report-detail .report-misses {
     margin-top: 6px;
   }
+  /* The Errors tab renders a .report-summary confusion table per stage <details>;
+     give it a bit more breathing room below the stage heading. */
+  .report-detail .report-summary {
+    margin-top: 12px;
+  }
 
-  /* Diagnosis + Blame tabs (reuse the grade-* tables above) */
+  /* Errors, Error context + Blame tabs (reuse the report-* tables above) */
   .section-head {
     font-size: var(--fs-body);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-h);
     margin: 12px 0 8px;
   }
@@ -1758,7 +1768,7 @@
     font-size: var(--fs-body);
     margin: 0 0 8px;
   }
-  .grade-misses tr.regressed td:first-child {
+  .report-misses tr.regressed td:first-child {
     font-weight: 600;
     color: var(--text-h);
   }
@@ -1836,12 +1846,10 @@
     align-items: baseline;
     gap: 10px;
     margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--muted);
   }
   .word-ipa {
     font-size: var(--fs-emphasis);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-h);
   }
   .gloss {
@@ -1852,59 +1860,23 @@
   .def-toggle {
     margin-left: auto;
     align-self: center;
-    font-family: var(--sans); /* UI chrome, not the IPA font inherited from .results.ipa */
     font-size: var(--fs-label);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 3px 8px;
   }
 
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .rule-heading {
-    margin: 10px 0 2px;
-    font-size: var(--fs-header);
-    font-weight: 600;
-    color: var(--text-h);
-  }
-  .time-header {
-    margin: 18px 0 3px;
-    padding-bottom: 3px;
-    border-bottom: 1px solid var(--border);
-    font-size: var(--fs-header);
-    font-weight: 600;
-    color: var(--text-h);
-  }
-  .rule-heading .def {
-    display: block;
-    margin-top: 2px;
+  /* The firing-rule trace reuses the Blame trajectory table look (report-misses blame-traj).
+     Additions: a rule's definition revealed as a full-width merged row by the Definitions
+     toggle, and a left-aligned first-column ("rule") header. */
+  .blame-traj td.def-cell {
     font-family: var(--mono);
     font-size: var(--fs-body);
     font-weight: 400;
     color: var(--muted);
   }
-  .step {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding-left: 16px;
-    font-size: var(--fs-emphasis);
-    color: var(--text-h);
-  }
-  .arrow {
-    color: var(--muted);
-  }
-  .change {
-    color: var(--muted);
-    font-family: var(--mono);
-  }
-  /* Shrink only the change description, not its surrounding parentheses. */
-  .change-text {
-    font-size: 0.85em;
+  .blame-traj thead th:first-child {
+    text-align: left;
   }
 
   .surface {
@@ -1912,8 +1884,6 @@
     align-items: baseline;
     gap: 8px;
     margin-top: 12px;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
     font-size: var(--fs-emphasis);
   }
   .surface .form {
@@ -2029,14 +1999,15 @@
     font-size: var(--fs-body);
   }
 
-  /* Rendered markdown (dynamic {@html}, so :global) */
+  /* Rendered markdown (dynamic {@html}, so :global). Its own heading scale: h2/h4 land on
+     the shared tokens; h1 (22px) and h3 (15px) are documented docs-only steps between them. */
   .docs-body :global(h1) {
     font-size: 22px;
     color: var(--text-h);
     margin: 18px 0 10px;
   }
   .docs-body :global(h2) {
-    font-size: 18px;
+    font-size: var(--fs-emphasis);
     color: var(--text-h);
     margin: 22px 0 8px;
     padding-bottom: 4px;
@@ -2048,7 +2019,7 @@
     margin: 16px 0 6px;
   }
   .docs-body :global(h4) {
-    font-size: 14px;
+    font-size: var(--fs-body);
     color: var(--text-h);
     margin: 14px 0 4px;
   }

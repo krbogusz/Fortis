@@ -8,6 +8,7 @@ from functools import cached_property
 from src.fortis.general.utils import by_length
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.elements import Element
+from src.fortis.models.form import Form
 from src.fortis.models.tiers import Tier
 
 
@@ -193,11 +194,11 @@ class Word:
     Attributes:
         ipa: The IPA transcription string (the derivation input).
         gloss: An optional gloss or translation.
-        final: The attested final/target surface form, if known (for grading).
-        stages: Attested forms keyed by time stage (for per-period grading);
+        final: The attested final/target surface form, if known (for accuracy).
+        stages: Attested forms keyed by time stage (for per-period accuracy);
             keys are stage times, values the attested form at that stage.
         frequency: A token frequency (a positive integer weight; default 1) for
-            frequency-weighted grading — a word counts this many times toward the
+            frequency-weighted accuracy — a word counts this many times toward the
             weighted accuracy and mean distances. Ignored by the engine.
     """
 
@@ -206,6 +207,15 @@ class Word:
     final: str | None = None
     stages: dict[int, str] = field(default_factory=dict)
     frequency: int = 1
+    # The attested forms segmented against the project inventory — the *ingested* record
+    # the accuracy/errors analyses compare against, stored as a ``Form`` so it keeps the full
+    # autosegmental structure (a segment is one inventory unit — an affricate ``d͡ʒ`` is one,
+    # not split by codepoint — and any tone/stress tiers survive). Populated by a post-load
+    # pass (:func:`src.fortis.analysis.accuracy.ingest_targets`); left empty when the attested
+    # form is absent OR uses a symbol the inventory cannot segment (that form is then skipped,
+    # with a warning). ``final`` present but ``final_form`` None ⇒ unsegmentable, not "no target".
+    final_form: Form | None = None
+    stage_forms: dict[int, Form] = field(default_factory=dict)
 
 
 class WordInventory(UserDict[str, Word]):

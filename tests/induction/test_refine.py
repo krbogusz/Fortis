@@ -27,7 +27,7 @@ def _induced(label: str, definitions: list[str], synth) -> InducedInterval:
     ]
     return InducedInterval(
         label=label, rules=rules, steps=[], stopped="converged",
-        start_fit=0.0, final_fit=0.0, start_exact=0, final_exact=0, graded=0,
+        start_fit=0.0, final_fit=0.0, start_exact=0, final_exact=0, assessed=0,
     )
 
 
@@ -51,7 +51,9 @@ class TestCompose:
         late = _induced("1000→1200", ["k → t"], synth)
         inventory = compose([early, late], synth)
         times = {r.raw_definition: t for t, rs in inventory.items() for r in rs}
-        assert times["o → u"] < times["k → t"]
+        early_t, late_t = times["o → u"], times["k → t"]
+        assert early_t is not None and late_t is not None
+        assert early_t < late_t
 
     def test_empty_interval_contributes_nothing(self, synth):
         inventory = compose([_induced("-100→750", [], synth)], synth)
@@ -61,7 +63,7 @@ class TestCompose:
 class TestRoundTrip:
     def test_induce_serialize_reload_derives_identically(self, synth, tmp_path):
         # A tiny composed cascade must serialize to a rules.toml that reloads and derives the
-        # same surfaces — the induce → load → grade round trip (plan §4.4).
+        # same surfaces — the induce → load → measure round trip (plan §4.4).
         synth = synthetic_project(synth)
         result = induce_project(
             synth, only_interval=(750, 1000),

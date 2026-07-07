@@ -30,7 +30,7 @@ class TestRenderFeature:
 
 class TestRoundTrip:
     def _bundle_of(self, synth, source: str):
-        from src.fortis.analysis.grading import segment_form
+        from src.fortis.analysis.accuracy import segment_form
 
         bundles = segment_form(source, synth)
         assert bundles is not None

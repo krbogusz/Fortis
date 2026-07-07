@@ -2,7 +2,7 @@
 # needs a settings.toml only to change one, and may list just the keys it overrides —
 # any omitted key (or a missing file) falls back to these built-in defaults.
 
-[grading]
+[accuracy]
 # Cost of a metathesis (swapping two adjacent segments) in the edit distance. 1 scores
 # a reorder as a single edit; set 2 to score it as two substitutions instead.
 transposition_cost = 1

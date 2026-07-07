@@ -7,9 +7,9 @@ the baseline. Every word whose surface moves is bucketed:
 - **improved** — closer to its target (candidate distance < baseline),
 - **regressed** — further from its target,
 - **lateral** — changed but no closer or further,
-- **ungraded** — surface moved but the word has no target to score against.
+- **unassessed** — surface moved but the word has no target to score against.
 
-The net exact-match delta (over the graded words) is the headline. The project's own
+The net exact-match delta (over the assessed words) is the headline. The project's own
 rules are never mutated — the augmented inventory is built from fresh tuples — so the
 baseline computed first stays valid.
 
@@ -20,7 +20,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
-from src.fortis.analysis.grading import compare
+from src.fortis.analysis.accuracy import edit_distance, form_phones, ingest_targets
 from src.fortis.application.deriving import derive_all
 from src.fortis.application.rendering import render_syllabified
 from src.fortis.application.tiers import lower_tiers
@@ -45,7 +45,7 @@ class WordChange:
 
     @property
     def delta(self) -> int | None:
-        """Change in target distance (negative = improved); ``None`` if ungraded."""
+        """Change in target distance (negative = improved); ``None`` if unassessed."""
         if self.baseline_distance is None or self.candidate_distance is None:
             return None
         return self.candidate_distance - self.baseline_distance
@@ -60,17 +60,19 @@ class WhatIf:
     improved: tuple[WordChange, ...]
     regressed: tuple[WordChange, ...]
     lateral: tuple[WordChange, ...]
-    ungraded: tuple[WordChange, ...]
-    net_exact_delta: int  # graded words exact under candidate minus under baseline
+    unassessed: tuple[WordChange, ...]
+    net_exact_delta: int  # assessed words exact under candidate minus under baseline
 
     @property
     def touched(self) -> int:
         """How many words the candidate moved at all."""
-        return len(self.improved) + len(self.regressed) + len(self.lateral) + len(self.ungraded)
+        return len(self.improved) + len(self.regressed) + len(self.lateral) + len(self.unassessed)
 
 
 def _surface(derivation: Derivation, project: Project) -> str:
-    return render_syllabified(lower_tiers(derivation.surface), derivation.surface_boundaries, project)
+    return render_syllabified(
+        lower_tiers(derivation.surface), derivation.surface_boundaries, project
+    )
 
 
 def _augmented_rules(project: Project, candidate) -> RuleInventory:
@@ -81,7 +83,9 @@ def _augmented_rules(project: Project, candidate) -> RuleInventory:
     return augmented
 
 
-def try_rule(project: Project, definition: str, time: int | None = None) -> Result[WhatIf, list[str]]:
+def try_rule(
+    project: Project, definition: str, time: int | None = None
+) -> Result[WhatIf, list[str]]:
     """Preview inserting the rule *definition* at *time*, diffing against the baseline.
 
     *definition* is Fortis rule notation (``target → result / context``, e.g.
@@ -94,22 +98,26 @@ def try_rule(project: Project, definition: str, time: int | None = None) -> Resu
         case Ok(candidate):
             pass
 
-    swap = project.settings.grading.transposition_cost
+    swap = project.settings.accuracy.transposition_cost
     baseline = derive_all(project)
+    # segment the attested forms once (shared with the candidate run)
+    ingest_targets(baseline, project)
     candidate_run = derive_all(replace(project, rules=_augmented_rules(project, candidate)))
 
     improved: list[WordChange] = []
     regressed: list[WordChange] = []
     lateral: list[WordChange] = []
-    ungraded: list[WordChange] = []
+    unassessed: list[WordChange] = []
     base_exact = cand_exact = 0
 
     for base, cand in zip(baseline, candidate_run, strict=True):
         target = base.word.final
+        target_form = base.word.final_form
         base_surface, cand_surface = _surface(base, project), _surface(cand, project)
-        if target is not None:
-            base_dist = compare(base_surface, target, swap)
-            cand_dist = compare(cand_surface, target, swap)
+        if target_form is not None:  # a target the inventory could segment
+            target_phones = form_phones(target_form, project)
+            base_dist = edit_distance(form_phones(base.surface, project), target_phones, swap)
+            cand_dist = edit_distance(form_phones(cand.surface, project), target_phones, swap)
             base_exact += base_dist == 0
             cand_exact += cand_dist == 0
         else:
@@ -121,11 +129,12 @@ def try_rule(project: Project, definition: str, time: int | None = None) -> Resu
             baseline=base_surface, candidate=cand_surface, target=target,
             baseline_distance=base_dist, candidate_distance=cand_dist,
         )
-        if target is None:
-            ungraded.append(change)
-        elif change.delta < 0:
+        delta = change.delta
+        if target_form is None or delta is None:  # no target, or an unsegmentable one
+            unassessed.append(change)
+        elif delta < 0:
             improved.append(change)
-        elif change.delta > 0:
+        elif delta > 0:
             regressed.append(change)
         else:
             lateral.append(change)
@@ -134,7 +143,7 @@ def try_rule(project: Project, definition: str, time: int | None = None) -> Resu
         WhatIf(
             definition=definition, time=time,
             improved=tuple(improved), regressed=tuple(regressed),
-            lateral=tuple(lateral), ungraded=tuple(ungraded),
+            lateral=tuple(lateral), unassessed=tuple(unassessed),
             net_exact_delta=cand_exact - base_exact,
         )
     )
@@ -151,7 +160,9 @@ def whatif_summary_line(whatif: WhatIf) -> str:
 
 
 def _placement(time: int | None) -> str:
-    return "untimed (after all timed rules)" if time is None else f"t={time} (after existing t={time} rules)"
+    if time is None:
+        return "untimed (after all timed rules)"
+    return f"t={time} (after existing t={time} rules)"
 
 
 def render_whatif(whatif: WhatIf, where: str) -> str:
@@ -162,28 +173,33 @@ def render_whatif(whatif: WhatIf, where: str) -> str:
         "",
         f"Candidate rule `{whatif.definition}` inserted at **{_placement(whatif.time)}**.",
         "",
-        f"**Net {sign}{whatif.net_exact_delta} exact** over the graded lexicon — "
+        f"**Net {sign}{whatif.net_exact_delta} exact** over the assessed lexicon — "
         f"{len(whatif.improved)} improved, {len(whatif.regressed)} regressed, "
-        f"{len(whatif.lateral)} changed laterally, {len(whatif.ungraded)} ungraded moved.",
+        f"{len(whatif.lateral)} changed laterally, {len(whatif.unassessed)} unassessed moved.",
         "",
     ]
     if whatif.touched == 0:
-        lines.append("The candidate changed no word's surface — it never fires, or its output matches.")
+        lines.append(
+            "The candidate changed no word's surface — it never fires, or its output matches."
+        )
         return "\n".join(lines).rstrip() + "\n"
     lines += _change_table("Improved", whatif.improved)
     lines += _change_table("Regressed", whatif.regressed)
     lines += _change_table("Lateral (changed, no closer)", whatif.lateral)
-    lines += _change_table("Ungraded (no target)", whatif.ungraded)
+    lines += _change_table("Unassessed (no target)", whatif.unassessed)
     return "\n".join(lines).rstrip() + "\n"
 
 
 def _change_table(heading: str, changes: tuple[WordChange, ...]) -> list[str]:
     if not changes:
         return []
-    graded = changes and changes[0].target is not None
+    assessed = changes and changes[0].target is not None
     lines = [f"## {heading} ({len(changes)})", ""]
-    if graded:
-        lines += ["| word | baseline | candidate | target | dist |", "| --- | --- | --- | --- | ---: |"]
+    if assessed:
+        lines += [
+            "| word | baseline | candidate | target | dist |",
+            "| --- | --- | --- | --- | ---: |",
+        ]
         for c in sorted(changes, key=lambda c: c.delta or 0):
             lines.append(
                 f"| {c.gloss or c.ipa} | `{c.baseline}` | `{c.candidate}` | `{c.target}` "

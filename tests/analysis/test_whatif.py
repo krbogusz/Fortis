@@ -1,7 +1,7 @@
 """Tests for the what-if rule preview (src/fortis/analysis/whatif.py).
 
-Runs on the small default project (fast) — it has firing rules, graded words, and
-ungraded words, which is all the diff needs to exercise. Loads its *own* copy rather
+Runs on the small default project (fast) — it has firing rules, assessed words, and
+unassessed words, which is all the diff needs to exercise. Loads its *own* copy rather
 than the shared ``project`` fixture, whose ``word.final`` values other tests mutate.
 """
 
@@ -34,18 +34,21 @@ class TestTryRule:
         assert whatif.regressed
         assert whatif.net_exact_delta < 0
         for change in whatif.regressed:
+            assert change.candidate_distance is not None
+            assert change.baseline_distance is not None
             assert change.candidate_distance > change.baseline_distance
-            assert change.delta > 0
+            delta = change.delta
+            assert delta is not None and delta > 0
 
-    def test_ungraded_changes_bucketed_separately(self, project):
-        # Words with no target that the rule moves land in `ungraded`, never in the
-        # graded buckets.
+    def test_unassessed_changes_bucketed_separately(self, project):
+        # Words with no target that the rule moves land in `unassessed`, never in the
+        # assessed buckets.
         whatif = try_rule(project, "a → e").unwrap()
-        assert whatif.ungraded  # the default lexicon has bare (target-less) words
-        for change in whatif.ungraded:
+        assert whatif.unassessed  # the default lexicon has bare (target-less) words
+        for change in whatif.unassessed:
             assert change.target is None
-        graded = set(whatif.improved) | set(whatif.regressed) | set(whatif.lateral)
-        assert graded.isdisjoint(set(whatif.ungraded))
+        assessed = set(whatif.improved) | set(whatif.regressed) | set(whatif.lateral)
+        assert assessed.isdisjoint(set(whatif.unassessed))
 
     def test_project_rules_are_not_mutated(self, project):
         before = {time: len(rules) for time, rules in project.rules.items()}

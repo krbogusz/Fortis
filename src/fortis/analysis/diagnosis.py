@@ -1,14 +1,15 @@
 """Diagnose *where* a rule set goes wrong, not just *how much*.
 
-The grader (:mod:`src.fortis.analysis.grading`) scores each derived form against its
-attested target. This module reads the same graded forms but asks the follow-up
-question — *what is going wrong, and in what environment* — so a score becomes a
-lead on the next rule to fix. Two views, both built on the target→derived alignment
-in :func:`src.fortis.analysis.grading.align`:
+The accuracy analysis (:mod:`src.fortis.analysis.accuracy`) scores each derived form
+against its attested target. This module reads the same assessed forms but asks the
+follow-up question — *what is going wrong, and in what environment* — so a score becomes
+a lead on the next rule to fix. It powers two per-stage analyses (``errors.csv`` and
+``error_context.csv``), both built on the target→derived alignment in
+:func:`src.fortis.analysis.accuracy.align`:
 
-- **Confusions** — a ranked tally of the phone mismatches across the whole lexicon:
-  which target phone was reproduced as which other phone (or dropped, or a spurious
-  phone inserted). Answers "which phones am I getting wrong, and how often".
+- **Errors** (confusions) — a ranked tally of the phone mismatches at each attested
+  stage: which target phone was reproduced as which other phone (or dropped, or a
+  spurious phone inserted). Answers "which segments am I getting wrong, and how often".
 
 - **Context autopsy** — for one *focus* target phone, the attested-form environments most
   associated with getting that phone wrong, scored by the phi coefficient. Answers
@@ -31,12 +32,13 @@ Two caveats the reports repeat:
 """
 from __future__ import annotations
 
+import csv
+import io
 import math
 from collections import Counter
 from dataclasses import dataclass, field
 
-from src.fortis.analysis.blame import Blame, blame_all
-from src.fortis.analysis.grading import Grade, align, grade_stages, split_phones
+from src.fortis.analysis.accuracy import DistanceToTarget, accuracy_by_stage, align
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.models.derivation import Derivation
@@ -55,12 +57,13 @@ _STAGE_CONFUSION_CAP = 15
 
 @dataclass(frozen=True)
 class Confusion:
-    """One aggregated phone mismatch across the graded lexicon.
+    """One aggregated phone mismatch across the assessed lexicon.
 
     ``expected`` is the target phone, ``got`` the phone produced in its place; a
     ``None`` on either side marks the op that has no counterpart — ``got is None`` is
     a deletion (target phone dropped), ``expected is None`` an insertion (spurious
-    derived phone). ``examples`` holds a few word labels showing the confusion.
+    derived phone). ``examples`` holds a few ``"gloss: derived/attested"`` labels — the word,
+    the form it came out as at this checkpoint, and its attested target — showing the confusion.
     """
 
     expected: str | None
@@ -78,20 +81,28 @@ class Confusion:
         return "substitution"
 
 
-def confusions(grades: tuple[Grade, ...], limit: int | None = None) -> list[Confusion]:
-    """Tally every non-match alignment op across the graded words, most frequent first.
+def confusions(
+    distances: tuple[DistanceToTarget, ...], limit: int | None = None
+) -> list[Confusion]:
+    """Tally every non-match alignment op across the assessed words, most frequent first.
 
-    Each graded word's target is aligned to its derived form; substitutions,
+    Each assessed word's target is aligned to its derived form; substitutions,
     deletions, and insertions are counted by their (expected, got) phone pair. Exact
     words contribute nothing. Ties break by the string pair for a stable order.
     """
     counts: Counter[tuple[str | None, str | None]] = Counter()
     examples: dict[tuple[str | None, str | None], list[str]] = {}
-    for grade in grades:
-        if grade.exact:
+    for dtt in distances:
+        if dtt.exact:
             continue
-        label = f"{grade.ipa} • {grade.gloss}" if grade.gloss else grade.ipa
-        for op in align(split_phones(grade.target), split_phones(grade.derived)):
+        # "gloss: derived/attested" — the word, how it came out at this checkpoint, and what
+        # it should be (at a stage, the stage forms; at the final, surface vs attested).
+        label = (
+            f"{dtt.gloss}: {dtt.derived}/{dtt.target}"
+            if dtt.gloss
+            else f"{dtt.derived}/{dtt.target}"
+        )
+        for op in align(dtt.target_phones, dtt.derived_phones):
             if op.kind == "match":
                 continue
             key = (op.target, op.derived)
@@ -232,10 +243,12 @@ def _predictors(
     return predictors
 
 
-def error_contexts(grades: tuple[Grade, ...], focus: str, project: Project) -> FocusAutopsy:
+def error_contexts(
+    distances: tuple[DistanceToTarget, ...], focus: str, project: Project
+) -> FocusAutopsy:
     """The conditioned context autopsy for one focus target phone.
 
-    Over every graded word, each target position holding *focus* is a trial: an error
+    Over every assessed word, each target position holding *focus* is a trial: an error
     if the phone was substituted or deleted, correct if reproduced. Each trial's
     attested-form neighbours yield a set of environment predictors; for every predictor a
     2×2 of (present/absent) × (error/correct) gives a phi coefficient. Predictors
@@ -247,9 +260,9 @@ def error_contexts(grades: tuple[Grade, ...], focus: str, project: Project) -> F
     err_with: Counter[str] = Counter()
     ok_with: Counter[str] = Counter()
     cache: dict[str, dict | None] = {}
-    for grade in grades:
-        target_phones = split_phones(grade.target)
-        for op in align(target_phones, split_phones(grade.derived)):
+    for dtt in distances:
+        target_phones = dtt.target_phones
+        for op in align(target_phones, dtt.derived_phones):
             if op.target != focus or op.target_index is None:
                 continue
             total += 1
@@ -263,7 +276,9 @@ def error_contexts(grades: tuple[Grade, ...], focus: str, project: Project) -> F
     diagnosis = project.settings.diagnosis
     # The floor scales with the phone's occurrences: a predictor covering a trivial slice
     # of a common phone is noise, while the absolute floor keeps phi stable on rare ones.
-    support_floor = max(diagnosis.min_support, math.ceil(diagnosis.min_support_percent * total / 100))
+    support_floor = max(
+        diagnosis.min_support, math.ceil(diagnosis.min_support_percent * total / 100)
+    )
     associations: list[ContextAssociation] = []
     if errors >= diagnosis.min_errors:
         for predictor in err_with.keys() | ok_with.keys():
@@ -274,7 +289,9 @@ def error_contexts(grades: tuple[Grade, ...], focus: str, project: Project) -> F
             associations.append(
                 ContextAssociation(
                     predictor=predictor,
-                    phi=phi_coefficient(err_here, ok_here, errors - err_here, (total - errors) - ok_here),
+                    phi=phi_coefficient(
+                        err_here, ok_here, errors - err_here, (total - errors) - ok_here
+                    ),
                     fscore=f_score(err_here, ok_here, errors - err_here),
                     err_here=err_here,
                     ok_here=ok_here,
@@ -290,7 +307,7 @@ def error_contexts(grades: tuple[Grade, ...], focus: str, project: Project) -> F
 
 
 def diagnose(
-    grades: tuple[Grade, ...], project: Project, top: int | None = None
+    distances: tuple[DistanceToTarget, ...], project: Project, top: int | None = None
 ) -> list[FocusAutopsy]:
     """Autopsy the focus phones behind the *top* most frequent substitution/deletion.
 
@@ -303,62 +320,12 @@ def diagnose(
     if top is None:
         top = project.settings.diagnosis.focus_count
     focus_phones: list[str] = []
-    for confusion in confusions(grades):
+    for confusion in confusions(distances):
         if confusion.expected is not None and confusion.expected not in focus_phones:
             focus_phones.append(confusion.expected)
         if len(focus_phones) >= top:
             break
-    return [error_contexts(grades, phone, project) for phone in focus_phones]
-
-
-@dataclass(frozen=True)
-class TimeBucket:
-    """The wrong phones a rule-time introduced, from blame provenance.
-
-    ``time`` is the rule-time whose rules produced these wrong phones (``None`` groups
-    the residuals no single rule owns — omissions, deletions, and unattributed phones).
-    ``count`` is how many wrong phones fall in the bucket; ``confusions`` tally them by
-    ``expected→got`` within the time.
-    """
-
-    time: int | None
-    count: int
-    confusions: tuple[Confusion, ...]
-
-
-def errors_by_time(blames: list[Blame]) -> list[TimeBucket]:
-    """Bucket every wrong phone by the rule-time that produced it, worst bucket first.
-
-    Reads blame's segment-id provenance: each residual's ``culprit_time`` is the time of
-    the rule that set the wrong phone. Answers "which period introduces the most errors".
-    Residuals with no attributable rule (omissions, deletions, unattributed phones) group
-    under ``time=None``.
-    """
-    counts: dict[int | None, Counter[tuple[str | None, str | None]]] = {}
-    examples: dict[tuple[int | None, str | None, str | None], list[str]] = {}
-    for blame in blames:
-        label = f"{blame.ipa} • {blame.gloss}" if blame.gloss else blame.ipa
-        for residual in blame.residuals:
-            time = residual.culprit_time if residual.culprit else None
-            pair = (residual.expected, residual.got)
-            counts.setdefault(time, Counter())[pair] += 1
-            bucket = examples.setdefault((time, *pair), [])
-            if label not in bucket and len(bucket) < 3:
-                bucket.append(label)
-    result = [
-        TimeBucket(
-            time=time,
-            count=sum(pairs.values()),
-            confusions=tuple(
-                Confusion(exp, got, n, tuple(examples[(time, exp, got)]))
-                for (exp, got), n in sorted(pairs.items(), key=lambda kv: (-kv[1], str(kv[0])))
-            ),
-        )
-        for time, pairs in counts.items()
-    ]
-    # Worst bucket first; the None (no-rule) bucket sorts by its count like any other.
-    result.sort(key=lambda b: (-b.count, b.time is None, b.time or 0))
-    return result
+    return [error_contexts(distances, phone, project) for phone in focus_phones]
 
 
 @dataclass(frozen=True)
@@ -372,23 +339,32 @@ class StageDiagnosis:
 
 
 def diagnose_stages(derivations: list[Derivation], project: Project) -> list[StageDiagnosis]:
-    """Diagnose each attested stage (and the final), from its derived-vs-attested grades.
+    """Diagnose each attested stage (and the final), from its derived-vs-attested distances.
 
-    For every stage :func:`grade_stages` scores (each attested ``Word.stages[T]`` plus
-    the final ``Word.final``), runs the confusion tally and context autopsy on that
-    stage's grades — so the errors present at each historical checkpoint are visible,
-    not only the final. Only meaningful where the attested stage forms are notationally
-    comparable to the engine's output (see the stage-grading caveat).
+    For every stage :func:`accuracy_by_stage` scores (each attested ``Word.stages[T]`` plus
+    the final ``Word.final``), the *complete* confusion tally and a context autopsy for
+    *every* erroring focus segment on that stage's distances — so the errors present at each
+    historical checkpoint are visible, not only the final, and nothing is truncated for a
+    display cap (the ``errors.csv``/``error_context.csv`` exports are complete). Only
+    meaningful where the attested stage forms are notationally comparable to the engine's
+    output (see the stage-accuracy caveat).
     """
     stages: list[StageDiagnosis] = []
-    for stage in grade_stages(derivations, project):
-        grades = stage.report.grades
+    for stage in accuracy_by_stage(derivations, project):
+        distances = stage.report.distances
+        stage_confusions = tuple(confusions(distances))
+        # Autopsy every distinct erroring target segment (an insertion has no target
+        # segment and is skipped), not just the top ``focus_count`` — the CSV is complete.
+        focus: list[str] = []
+        for confusion in stage_confusions:
+            if confusion.expected is not None and confusion.expected not in focus:
+                focus.append(confusion.expected)
         stages.append(
             StageDiagnosis(
                 label=stage.label,
                 time=stage.time,
-                confusions=tuple(confusions(grades)),
-                autopsy=tuple(diagnose(grades, project)),
+                confusions=stage_confusions,
+                autopsy=tuple(error_contexts(distances, phone, project) for phone in focus),
             )
         )
     return stages
@@ -399,103 +375,122 @@ def _confusion_label(value: str | None, *, missing: str) -> str:
     return f"`{value}`" if value is not None else missing
 
 
-def diagnosis_summary_line(grades: tuple[Grade, ...]) -> str:
-    """A one-line headline for stderr."""
-    table = confusions(grades)
-    if not table:
-        return "no confusions — every graded word is exact"
-    sites = sum(c.count for c in table)
-    top = table[0]
+def errors_summary_line(stages: list[StageDiagnosis]) -> str:
+    """A one-line stderr headline, built from the final stage's confusions."""
+    final = next((s for s in stages if s.time is None), None)
+    if final is None or not final.confusions:
+        return "no errors — every assessed word is exact at the final"
+    sites = sum(c.count for c in final.confusions)
+    top = final.confusions[0]
     exp = top.expected if top.expected is not None else "∅"
     got = top.got if top.got is not None else "∅"
     return (
-        f"{sites} error site(s), {len(table)} distinct confusion(s); "
-        f"most common {exp}→{got} ({top.count}×) — see diagnosis.md"
+        f"final: {sites} error site(s), {len(final.confusions)} distinct; "
+        f"most common {exp}→{got} ({top.count}×) — see errors.csv"
     )
 
 
-def render_diagnosis(grades: tuple[Grade, ...], project: Project, where: str) -> str:
-    """The ``diagnosis.md`` snapshot: the final confusion tally then per-phone autopsy.
+def render_errors_csv(stages: list[StageDiagnosis]) -> str:
+    """The per-stage confusion tally as CSV — which segments were errors at each stage.
 
-    The *temporal* views — errors bucketed by rule-time and the per-stage diagnosis —
-    live in their own :func:`render_timeline` report (``timeline.md``).
+    Columns: ``stage, expected, got, count, kind, examples (gloss: derived vs. attested)``.
+    ``∅`` marks the absent side (an insertion has no *expected*, a deletion no *got* — the
+    ``kind`` column disambiguates). Complete: every confusion at every stage, no display cap.
+    """
+    buffer = io.StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(
+        ["stage", "expected", "got", "count", "kind", "examples (gloss: derived vs. attested)"]
+    )
+    for stage in stages:
+        for c in stage.confusions:
+            writer.writerow([
+                stage.label,
+                c.expected if c.expected is not None else "∅",
+                c.got if c.got is not None else "∅",
+                c.count, c.kind, "; ".join(c.examples),
+            ])
+    return buffer.getvalue()
+
+
+def render_error_context_csv(stages: list[StageDiagnosis]) -> str:
+    """The per-stage, per-segment context autopsy as CSV.
+
+    Columns: ``stage, segment, environment, assoc. (φ), F₁, err/ok · with, err/ok · without``.
+    For each erroring focus *segment*, the attested-form *environment* predictors positively
+    associated with getting it wrong (phi > 0), each with its phi, F1, and the raw err/ok
+    counts with vs. without the predictor. Complete: every such predictor at every stage,
+    no top-N cap; segments with no error-associated predictor contribute no rows.
+    """
+    buffer = io.StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow([
+        "stage", "segment", "environment", "assoc. (φ)", "F₁", "err/ok · with", "err/ok · without",
+    ])
+    for stage in stages:
+        for autopsy in stage.autopsy:
+            for a in autopsy.associations:
+                if a.phi <= 0:
+                    continue  # error *context* = predictors associated with the error
+                writer.writerow([
+                    stage.label, autopsy.phone, a.predictor,
+                    f"{a.phi:+.2f}", f"{a.fscore:.2f}",
+                    f"{a.err_here}/{a.ok_here}", f"{a.err_away}/{a.ok_away}",
+                ])
+    return buffer.getvalue()
+
+
+def render_errors_md(stages: list[StageDiagnosis], where: str) -> str:
+    """The Errors analysis as Markdown — the per-stage confusion tally (for the scoped bundle).
+
+    The primary Errors output is ``errors.csv``; this Markdown rendering exists so the
+    ``--scope`` synthesis can carry a per-stage confusion overview. Capped for display.
     """
     lines = [
-        f"# Diagnosis — {where}",
+        f"# Errors — {where}",
         "",
-        "*Where* the derivation goes wrong, from the same forms `distances.md` scores.",
-        "Environments are read from the **attested** form (a stable coordinate to condition",
-        "on — the derived form's own environment may differ, and often that difference is",
-        "the cause). A metathesis reads as an adjacent pair of substitutions.",
+        "Which segments came out wrong at each attested stage (and the final): the phone",
+        "confusions, most frequent first. `∅` on the *got* side is a dropped phone; on the",
+        "*expected* side, a spurious inserted one (the *kind* column disambiguates).",
         "",
     ]
-    table = confusions(grades)
-    if not table:
-        lines.append("Every graded word is exact — no confusions to report.")
-        return "\n".join(lines).rstrip() + "\n"
-
-    lines += [
-        "## Confusions",
-        "",
-        "Phone mismatches across all graded words, most frequent first. `∅` on the",
-        "*got* side is a dropped phone; on the *expected* side, a spurious inserted one.",
-        "",
-        "| expected | got | count | kind | examples |",
-        "| --- | --- | ---: | --- | --- |",
-    ]
-    for c in table:
-        expected = _confusion_label(c.expected, missing="`∅`")
-        got = _confusion_label(c.got, missing="`∅`")
-        lines.append(
-            f"| {expected} | {got} | {c.count} | {c.kind} | {', '.join(c.examples)} |"
-        )
-    diagnosis = project.settings.diagnosis
-    lines += ["", "## Context autopsy", ""]
-    lines += _autopsy_intro(diagnosis.min_support, diagnosis.min_support_percent)
-    for autopsy in diagnose(grades, project):
-        lines += _autopsy_section(autopsy, diagnosis.min_errors, diagnosis.report_top)
+    for stage in stages:
+        lines += [f"## stage {stage.label}", ""]
+        if not stage.confusions:
+            lines += ["All assessed words at this stage are exact.", ""]
+            continue
+        shown = stage.confusions[:_STAGE_CONFUSION_CAP]
+        if len(stage.confusions) > len(shown):
+            lines += [f"Top {len(shown)} of {len(stage.confusions)} confusions.", ""]
+        lines += _confusion_rows(shown)
+        lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
 
-def timeline_summary_line(buckets: list[TimeBucket]) -> str:
-    """A one-line headline for stderr, naming the period that introduces the most errors."""
-    attributed = [b for b in buckets if b.time is not None]
-    if not attributed:
-        return "no rule-time attributed errors — see timeline.md"
-    worst = max(attributed, key=lambda b: b.count)
-    return f"errors enter mostly at t={worst.time} ({worst.count} phones) — see timeline.md"
+def render_error_context_md(stages: list[StageDiagnosis], project: Project, where: str) -> str:
+    """The Error-context analysis as Markdown — the per-stage, per-segment autopsy (scoped bundle).
 
-
-def render_timeline(
-    buckets: list[TimeBucket],
-    stages: list[StageDiagnosis],
-    project: Project,
-    where: str,
-) -> str:
-    """The ``timeline.md`` report: errors by rule-time, then a per-stage diagnosis.
-
-    The two *temporal* views split out of the diagnosis snapshot — *when* in the cascade
-    errors enter (from blame provenance) and *what* is wrong at each attested stage.
+    The primary output is ``error_context.csv``; this Markdown rendering is for the
+    ``--scope`` synthesis. Capped for display (top predictors per segment).
     """
-    lines = [
-        f"# Timeline — {where}",
-        "",
-        "*When* the derivation goes wrong, alongside the `diagnosis.md` snapshot of *what*",
-        "goes wrong at the end. Two views: errors bucketed by the rule-time that produced",
-        "them, and the full diagnosis recomputed at each attested stage.",
-    ]
-    if buckets:
-        lines += _by_time_section(buckets)
-    if stages:
-        lines += _stages_section(stages, project.settings.diagnosis)
-    if not buckets and not stages:
-        lines += ["", "Every graded word is exact — no timeline to report."]
+    diagnosis = project.settings.diagnosis
+    lines = [f"# Error context — {where}", ""]
+    lines += _autopsy_intro(diagnosis.min_support, diagnosis.min_support_percent)
+    for stage in stages:
+        lines += [f"## stage {stage.label}", ""]
+        sections = []
+        for autopsy in stage.autopsy:
+            sections += _autopsy_section(autopsy, diagnosis.min_errors, diagnosis.report_top)
+        lines += sections or ["No errors to autopsy at this stage.", ""]
     return "\n".join(lines).rstrip() + "\n"
 
 
 def _confusion_rows(table: tuple[Confusion, ...]) -> list[str]:
     """A confusion table body (header + rows), shared by the sections."""
-    rows = ["| expected | got | count | kind | examples |", "| --- | --- | ---: | --- | --- |"]
+    rows = [
+        "| expected | got | count | kind | examples (gloss: derived vs. attested) |",
+        "| --- | --- | ---: | --- | --- |",
+    ]
     for c in table:
         rows.append(
             f"| {_confusion_label(c.expected, missing='`∅`')} "
@@ -503,55 +498,6 @@ def _confusion_rows(table: tuple[Confusion, ...]) -> list[str]:
             f"| {c.count} | {c.kind} | {', '.join(c.examples)} |"
         )
     return rows
-
-
-def _by_time_section(buckets: list[TimeBucket]) -> list[str]:
-    """"Errors by rule-time": which period introduced the most wrong phones."""
-    lines = [
-        "",
-        "## Errors by rule-time",
-        "",
-        "Each wrong phone attributed (via blame provenance) to the rule-time that produced",
-        "it — where errors *enter* the derivation. `t=∅` groups phones no single rule owns",
-        "(omissions, deletions, unattributed). Worst period first.",
-        "",
-        "| rule-time | wrong phones | top confusions |",
-        "| --- | ---: | --- |",
-    ]
-    for b in buckets:
-        time = "∅" if b.time is None else f"t={b.time}"
-        top = ", ".join(
-            f"{c.expected or '∅'}→{c.got or '∅'} ×{c.count}" for c in b.confusions[:4]
-        )
-        lines.append(f"| {time} | {b.count} | {top} |")
-    return lines
-
-
-def _stages_section(stages: list[StageDiagnosis], diagnosis) -> list[str]:
-    """"Per-stage diagnosis": the confusion tally + autopsy at each attested stage."""
-    lines = [
-        "",
-        "## Per-stage diagnosis",
-        "",
-        "The confusions and context autopsy at each attested stage (and the final) — the",
-        "errors present at each historical checkpoint. Trust an intermediate stage only",
-        "where its attested forms are notationally comparable to the engine's output.",
-        "",
-    ]
-    for stage in stages:
-        lines += [f"### stage {stage.label}", ""]
-        if not stage.confusions:
-            lines += ["All graded words at this stage are exact.", ""]
-            continue
-        shown = stage.confusions[:_STAGE_CONFUSION_CAP]
-        if len(stage.confusions) > len(shown):
-            lines.append(f"Top {len(shown)} of {len(stage.confusions)} confusions.")
-            lines.append("")
-        lines += _confusion_rows(shown)
-        lines.append("")
-        for autopsy in stage.autopsy:
-            lines += _autopsy_section(autopsy, diagnosis.min_errors, diagnosis.report_top)
-    return lines
 
 
 def _autopsy_intro(min_support: int, min_support_percent: int) -> list[str]:
@@ -563,7 +509,8 @@ def _autopsy_intro(min_support: int, min_support_percent: int) -> list[str]:
         "with a bigger word base; the raw *err/ok* counts, present (here) vs. absent (away),",
         "travel with each row so a thin cell is visible. **F** is the F1 of the predictor as",
         "an error signal — a companion to phi (rows rank by phi, which is chance-corrected).",
-        "`left`/`right` name the neighbouring attested phone; `left:f=v` a feature of that neighbour.",
+        "`left`/`right` name the neighbouring attested phone; "
+        "`left:f=v` a feature of that neighbour.",
         "",
     ]
 

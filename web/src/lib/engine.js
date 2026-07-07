@@ -32,8 +32,9 @@ export const FILES = [
   "settings.toml",
 ];
 
-// Generated reports, read-only — written by run_derivations() after each run.
-export const OUTPUT_FILES = ["output.md", "derivation_table.csv"];
+// Generated reports, read-only — written by run_derivations() into the overlay's
+// reports/ subfolder (mirroring the CLI's <project>/reports/) after each run.
+export const OUTPUT_FILES = ["reports/derivations.csv", "reports/derivation_table.csv"];
 
 // Python helper loaded into the interpreter after the engine is importable.
 // Rendering mirrors ../src/fortis/main.py:_print_derivation.
@@ -44,20 +45,21 @@ export const OUTPUT_FILES = ["output.md", "derivation_table.csv"];
 // DEFAULT, exactly like load_project() with no project_dir). Editing or
 // loading a file always writes into OVERLAY, never DEFAULT.
 const HELPER = `
-import json, re, time
+import json, re, time, shutil
 from pathlib import Path
 from src.fortis.loaders.project import load_project
 from src.fortis.application.deriving import derive, resolve_rule_letters
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
-from src.fortis.analysis.grading import grade_stages, grade, grade_derivation
-from src.fortis.analysis.diagnosis import confusions, diagnose, diagnose_stages, errors_by_time, render_diagnosis, render_timeline
+from src.fortis.analysis.accuracy import accuracy_by_stage, measure_accuracy, distance_to_target, ingest_targets
+from src.fortis.analysis.diagnosis import confusions, diagnose_stages, render_errors_csv, render_error_context_csv
 from src.fortis.analysis.blame import blame_all, render_blame
 from src.fortis.analysis.filtering import filter_by_pattern, filter_attested
 from src.fortis.analysis.synthesis import render_scoped
+from src.fortis.analysis.reporting import render_accuracy_csv, render_distance_to_target_csv
 from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
-from src.fortis.main import _build_report, _build_csv_report, _build_filtered_report
+from src.fortis.main import _build_derivations_csv, _build_csv_report, _build_filtered_report
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
 OVERLAY = "/work/overlay"
@@ -74,7 +76,13 @@ def remove_file(name):
     if p.exists(): p.unlink()
 def reset_overlay():
     for p in Path(OVERLAY).iterdir():
-        if p.is_file(): p.unlink()
+        if p.is_dir(): shutil.rmtree(p, ignore_errors=True)  # e.g. the reports/ subfolder
+        else: p.unlink()
+def _reports_dir():
+    # The reports/ subfolder of the overlay, mirroring the CLI's <project>/reports/.
+    d = Path(OVERLAY)/"reports"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
 def _active_of(toml_name, csv_name):
     # The file load_project() actually uses for a toml/csv pair: overlay TOML, else overlay
     # CSV, else the shipped default's TOML (mirrors pick_words/pick_rules in load_project).
@@ -122,6 +130,11 @@ def _card(d, project):
                       "time":s.rule.time,"name":s.rule.name or base,
                       "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                       "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
+    # A leading "input" pseudo-step: how the raw lexicon IPA is syllabified/normalised on import
+    # (raw string -> the form the first rule sees, or the surface if nothing fired).
+    syllabified_input = steps[0]["before"] if steps else R(d.surface, d.surface_boundaries)
+    steps.insert(0, {"timeHeader":None,"heading":"Input","definition":None,"time":None,
+                     "name":"Input","before":d.word.ipa,"after":syllabified_input,"change":""})
     return {"ipa":d.word.ipa,"gloss":d.word.gloss,"surface":R(d.surface,d.surface_boundaries),"steps":steps}
 
 def _derive_one(project, rules, ipa, word):
@@ -151,12 +164,12 @@ def derive_batch(start, count):
         out.append(rendered)
     return json.dumps(out)
 
-def _grade_summary(acc, project):
+def _accuracy_summary(acc, project):
     # None when the lexicon carries no attested forms; otherwise a per-target
     # (each stage + final) summary with the words that differ, for the UI to render.
     if not any(d.word.final is not None or d.word.stages for d in acc):
         return None
-    stages = grade_stages(acc, project)
+    stages = accuracy_by_stage(acc, project)
     final = next((s for s in stages if s.time is None), None)
     weighted = None  # a token-weighted final headline, only when frequencies vary
     if final is not None and final.report.frequencies_vary:
@@ -170,14 +183,14 @@ def _grade_summary(acc, project):
         "weighted": weighted,
         "stages": [{
             "label": s.label,
-            "graded": s.report.graded,
+            "assessed": s.report.assessed,
             "exact": s.report.exact,
             "withinOne": s.report.within_one,
             "meanPhone": round(s.report.mean_distance, 3),
             "meanFeature": round(s.report.mean_feature_distance, 3),
             "misses": [{"gloss": g.gloss or g.ipa, "derived": g.derived, "target": g.target,
                         "d": g.distance, "fd": g.feature_distance}
-                       for g in sorted(s.report.grades, key=lambda g: (g.gloss or g.ipa).lower())
+                       for g in sorted(s.report.distances, key=lambda g: (g.gloss or g.ipa).lower())
                        if not g.exact],
         } for s in stages],
     }
@@ -187,7 +200,7 @@ def _confusions_json(cs):
              "kind": c.kind, "examples": list(c.examples)} for c in cs]
 
 def _autopsy_json(aus, top):
-    return [{"phone": a.phone, "errors": a.errors, "total": a.total,
+    return [{"segment": a.phone, "errors": a.errors, "total": a.total,
              "supportFloor": a.support_floor,
              "predictors": [{"predictor": x.predictor, "phi": round(x.phi, 2),
                              "fscore": round(x.fscore, 2),
@@ -196,34 +209,28 @@ def _autopsy_json(aus, top):
                             for x in a.associations if x.phi > 0][:top]}
             for a in aus]
 
-def _diagnosis_summary(grades, project):
-    # The snapshot: None when every graded word is exact; else the final confusion tally
-    # + per-phone context autopsy.
-    table = confusions(grades)
-    if not table:
+def _errors_summary(stages):
+    # The Errors analysis: which segments came out wrong at each stage (and the final).
+    # None when every assessed word is exact at every stage.
+    if not any(s.confusions for s in stages):
         return None
-    top = project.settings.diagnosis.report_top
-    return {
-        "confusions": _confusions_json(table),
-        "autopsy": _autopsy_json(diagnose(grades, project), top),
-    }
+    return {"stages": [{"label": s.label, "time": s.time,
+                        "confusions": _confusions_json(s.confusions)}
+                       for s in stages if s.confusions]}
 
-def _timeline_summary(buckets, stages, project):
-    # The temporal views: errors bucketed by rule-time (blame provenance) and a per-stage
-    # diagnosis. None when there is nothing wrong at the final or any attested stage.
-    if not buckets and not any(s.confusions for s in stages):
-        return None
+def _error_context_summary(stages, project):
+    # The Error-context analysis: per stage, per erroring segment, the environment
+    # predictors positively associated with the error. None when nothing is associated.
     top = project.settings.diagnosis.report_top
-    return {
-        "byTime": [{"time": b.time, "count": b.count, "confusions": _confusions_json(b.confusions[:6])}
-                   for b in buckets],
-        "stages": [{"label": s.label, "time": s.time, "confusions": _confusions_json(s.confusions[:15]),
-                    "autopsy": _autopsy_json(s.autopsy, top)}
-                   for s in stages],
-    }
+    staged = []
+    for s in stages:
+        segments = [seg for seg in _autopsy_json(s.autopsy, top) if seg["predictors"]]
+        if segments:
+            staged.append({"label": s.label, "time": s.time, "segments": segments})
+    return {"stages": staged} if staged else None
 
 def _blame_summary(blames):
-    # None when every graded word is exact; else per wrong word its residuals (with
+    # None when every assessed word is exact; else per wrong word its residuals (with
     # the culprit rule), stage divergence, and distance trajectory.
     if not blames:
         return None
@@ -247,26 +254,29 @@ def _write_or_clear(path, text):
 
 def finalize_run():
     if "project" not in _SESSION:  # superseded
-        return json.dumps({"grading": None, "diagnosis": None, "timeline": None, "blame": None, "warnings": []})
+        return json.dumps({"accuracy": None, "errors": None, "errorContext": None, "blame": None, "warnings": []})
     project, rules, acc = _SESSION["project"], _SESSION["rules"], _SESSION["acc"]
-    O = Path(OVERLAY)
-    (O/"output.md").write_text(_build_report(acc, project, None), encoding="utf-8")
+    O = _reports_dir()  # every report mirrors the CLI's <project>/reports/ subfolder
+    (O/"derivations.csv").write_text(_build_derivations_csv(acc, project), encoding="utf-8")
     (O/"derivation_table.csv").write_text(_build_csv_report(acc, rules, project), encoding="utf-8")
 
     _t0 = time.perf_counter()
-    grading = _grade_summary(acc, project)
-    # Diagnosis (snapshot) + timeline + blame share the final grades / wrong words.
-    grades = grade(acc, project).grades
-    _t_grade = time.perf_counter()
+    ingest_targets(acc, project)  # segment attested forms once before any analysis reads them
+    accuracy = _accuracy_summary(acc, project)
+    # Machine-readable distance tables (only when the lexicon carries attested forms);
+    # cleared otherwise so a run without targets leaves no stale CSV.
+    stages = accuracy_by_stage(acc, project) if accuracy is not None else None
+    _write_or_clear(O/"accuracy.csv", render_accuracy_csv(stages) if stages is not None else None)
+    _write_or_clear(O/"distance_to_target.csv", render_distance_to_target_csv(stages) if stages is not None else None)
+    _t_accuracy = time.perf_counter()
+    # Errors + Error context, per attested stage (and the final); complete CSVs, capped JSON.
+    stage_diag = diagnose_stages(acc, project) if accuracy is not None else None
+    _write_or_clear(O/"errors.csv", render_errors_csv(stage_diag) if stage_diag is not None else None)
+    _write_or_clear(O/"error_context.csv", render_error_context_csv(stage_diag) if stage_diag is not None else None)
+    errors = _errors_summary(stage_diag) if stage_diag is not None else None
+    error_context = _error_context_summary(stage_diag, project) if stage_diag is not None else None
     blames = blame_all(acc, project)
-    buckets = errors_by_time(blames)
-    stage_diag = diagnose_stages(acc, project)
-    diagnosis = _diagnosis_summary(grades, project)
-    timeline = _timeline_summary(buckets, stage_diag, project)
     blame = _blame_summary(blames)
-    _write_or_clear(O/"diagnosis.md", render_diagnosis(grades, project, "the current project") if diagnosis else None)
-    _write_or_clear(O/"timeline.md",
-        render_timeline(buckets, stage_diag, project, "the current project") if timeline else None)
     _write_or_clear(O/"blame.md", render_blame(blames, "the current project") if blame else None)
 
     warns = syllabification_warnings(acc, project)
@@ -276,14 +286,14 @@ def finalize_run():
     _t_end = time.perf_counter()
     _LAST.update(project=project, rules=rules, derivations=list(acc))  # for the Filter tab
     _SESSION.clear()
-    return json.dumps({"grading": grading, "diagnosis": diagnosis, "timeline": timeline,
+    return json.dumps({"accuracy": accuracy, "errors": errors, "errorContext": error_context,
                        "blame": blame, "warnings": warnings,
-                       "gradeMs": round((_t_grade - _t0) * 1000), "analysisMs": round((_t_end - _t_grade) * 1000)})
+                       "accuracyMs": round((_t_accuracy - _t0) * 1000), "analysisMs": round((_t_end - _t_accuracy) * 1000)})
 
 def run_filter(pattern):
     # Interactive filter over the last completed run — matches the pattern against every
     # form each word takes, writes filtered_output.md/filtered_table.csv, and returns the
-    # matched words (trace card + where-matched + grade) for the Filter tab.
+    # matched words (trace card + where-matched + measurement) for the Filter tab.
     if "project" not in _LAST:
         return json.dumps({"error": ["Run the project first, then filter."]})
     project, rules, derivations = _LAST["project"], _LAST["rules"], _LAST["derivations"]
@@ -292,32 +302,32 @@ def run_filter(pattern):
         return json.dumps({"error": res.unwrap_err()})
     result = res.unwrap()
     matched_derivs = [m.derivation for m in result.matched]
-    O = Path(OVERLAY)
+    O = _reports_dir()
     O.joinpath("filtered_output.md").write_text(
         _build_filtered_report(result, project, "the current project"), encoding="utf-8")
     O.joinpath("filtered_table.csv").write_text(
         _build_csv_report(matched_derivs, rules, project), encoding="utf-8")
 
-    report = grade(matched_derivs, project)
-    grading = None
+    report = measure_accuracy(matched_derivs, project)
+    accuracy = None
     confusions_json = []
-    if report.graded:
-        grading = {"exact": report.exact, "graded": report.graded,
+    if report.assessed:
+        accuracy = {"exact": report.exact, "assessed": report.assessed,
                    "accuracy": round(report.accuracy, 4), "meanPhone": round(report.mean_distance, 3)}
-        confusions_json = _confusions_json(confusions(report.grades))
+        confusions_json = _confusions_json(confusions(report.distances))
     words = []
     for m in result.matched:
-        g = grade_derivation(m.derivation, project)
+        g = distance_to_target(m.derivation, project)
         words.append({"card": _card(m.derivation, project),
                       "locations": [loc.label for loc in m.locations],
-                      "grade": ({"target": g.target, "distance": g.distance, "exact": g.exact} if g else None)})
+                      "measurement": ({"target": g.target, "distance": g.distance, "exact": g.exact} if g else None)})
     return json.dumps({"pattern": pattern, "matched": len(result.matched),
-                       "considered": result.considered, "grading": grading,
+                       "considered": result.considered, "accuracy": accuracy,
                        "confusions": confusions_json, "words": words})
 
 def run_scope(pattern):
     # Restrict the accuracy analyses to the words whose attested forms match the pattern:
-    # write scoped_output.md, and return the subset's grading headline + diagnosis.
+    # write scoped_output.md, and return the subset accuracy headline + errors.
     if "project" not in _LAST:
         return json.dumps({"error": ["Run the project first, then scope."]})
     project, derivations = _LAST["project"], _LAST["derivations"]
@@ -327,15 +337,16 @@ def run_scope(pattern):
     result = res.unwrap()
     subset = list(result.matched)
     where = "the current project · scope '" + pattern + "': " + str(len(subset)) + "/" + str(result.considered) + " words"
-    Path(OVERLAY).joinpath("scoped_output.md").write_text(render_scoped(subset, project, where), encoding="utf-8")
-    report = grade(subset, project)
-    grading = None
-    if report.graded:
-        grading = {"exact": report.exact, "graded": report.graded,
+    _reports_dir().joinpath("scoped_output.md").write_text(render_scoped(subset, project, where), encoding="utf-8")
+    report = measure_accuracy(subset, project)
+    accuracy = None
+    errors = None
+    if report.assessed:
+        accuracy = {"exact": report.exact, "assessed": report.assessed,
                    "accuracy": round(report.accuracy, 4), "meanPhone": round(report.mean_distance, 3)}
-    diagnosis = _diagnosis_summary(report.grades, project) if report.graded else None
+        errors = _errors_summary(diagnose_stages(subset, project))
     return json.dumps({"pattern": pattern, "matched": len(subset), "considered": result.considered,
-                       "grading": grading, "diagnosis": diagnosis})
+                       "accuracy": accuracy, "errors": errors})
 
 def run_derivations():
     prep = json.loads(prepare_run())
@@ -344,10 +355,10 @@ def run_derivations():
     for i in range(0, prep["words"], 64):
         out.extend(json.loads(derive_batch(i, 64)))
     fin = json.loads(finalize_run())
-    return json.dumps({"derivations": out, "grading": fin.get("grading"),
-                       "diagnosis": fin.get("diagnosis"), "timeline": fin.get("timeline"),
+    return json.dumps({"derivations": out, "accuracy": fin.get("accuracy"),
+                       "errors": fin.get("errors"), "errorContext": fin.get("errorContext"),
                        "blame": fin.get("blame"), "warnings": fin.get("warnings"),
-                       "gradeMs": fin.get("gradeMs"), "analysisMs": fin.get("analysisMs")})
+                       "accuracyMs": fin.get("accuracyMs"), "analysisMs": fin.get("analysisMs")})
 `;
 
 let py = null; // the Pyodide interpreter, set once initialised
@@ -515,10 +526,10 @@ export function deriveBatch(start, count) {
 }
 
 /**
- * Finish a run: write the reports from the accumulated derivations and grade them.
- * @returns {{grading: object|null, diagnosis: object|null, timeline: object|null, blame: object|null, warnings: Array<object>}}
- *   the grading summary, the diagnosis snapshot (confusions + context autopsy), the
- *   timeline (errors by rule-time + per-stage diagnosis), the per-word blame, and any
+ * Finish a run: write the reports from the accumulated derivations and measure them.
+ * @returns {{accuracy: object|null, errors: object|null, errorContext: object|null, blame: object|null, warnings: Array<object>}}
+ *   the accuracy summary, the errors (per-stage confusions), the error context
+ *   (per-stage per-segment autopsy), the per-word blame, and any
  *   syllabification-fallback warnings — the first four are null when the lexicon carries
  *   no attested forms or every word is exact.
  */
@@ -533,10 +544,10 @@ export function finalizeRun() {
 
 /**
  * Filter the last completed run: match PATTERN against every form each word takes and
- * return the matched words (trace card + where-matched + grade). Also writes
+ * return the matched words (trace card + where-matched + measurement). Also writes
  * filtered_output.md / filtered_table.csv into the overlay.
  * @param {string} pattern a Fortis sequence pattern
- * @returns {{pattern: string, matched: number, considered: number, grading: object|null,
+ * @returns {{pattern: string, matched: number, considered: number, accuracy: object|null,
  *   confusions: Array, words: Array}|{error: string[]}}
  */
 export function runFilter(pattern) {
@@ -550,10 +561,10 @@ export function runFilter(pattern) {
 
 /**
  * Scope the accuracy analyses to words whose attested forms match PATTERN: writes
- * scoped_output.md and returns the subset's grading headline + diagnosis.
+ * scoped_output.md and returns the subset's accuracy headline + errors.
  * @param {string} pattern a Fortis sequence pattern
- * @returns {{pattern: string, matched: number, considered: number, grading: object|null,
- *   diagnosis: object|null}|{error: string[]}}
+ * @returns {{pattern: string, matched: number, considered: number, accuracy: object|null,
+ *   errors: object|null}|{error: string[]}}
  */
 export function runScope(pattern) {
   const fn = py.globals.get("run_scope");

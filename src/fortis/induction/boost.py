@@ -71,13 +71,13 @@ class InducedInterval:
     final_fit: float
     start_exact: int
     final_exact: int
-    graded: int
+    assessed: int
     shrink_log: list[str] = field(default_factory=list)
 
 
 def _exact(state: IntervalState) -> int:
     """The number of exactly-derived words in the current baseline."""
-    return sum(1 for grade in state.baseline_grades if grade is not None and grade.exact)
+    return sum(1 for dtt in state.baseline_distances if dtt is not None and dtt.exact)
 
 
 def _gather(
@@ -88,8 +88,8 @@ def _gather(
     Deduped by definition so an expanded confusion cap (the escape ladder) re-scores only new
     candidates cheaply upstream — the caller tracks what it has already scored.
     """
-    grades = tuple(grade for grade in state.baseline_grades if grade is not None)
-    corrs = correspondences(grades, project, confusion_cap)
+    distances = tuple(dtt for dtt in state.baseline_distances if dtt is not None)
+    corrs = correspondences(distances, project, confusion_cap)
     candidates: list[Candidate] = []
     seen: set[str] = set()
     for correspondence in corrs:
@@ -251,7 +251,7 @@ def induce_interval(
     state = IntervalState(project, [])
     start_fit = state.baseline_fit
     start_exact = _exact(state)
-    graded = sum(1 for grade in state.baseline_grades if grade is not None)
+    assessed = sum(1 for dtt in state.baseline_distances if dtt is not None)
 
     steps: list[InductionStep] = []
     stopped = "converged"
@@ -305,6 +305,6 @@ def induce_interval(
         final_fit=state.baseline_fit,
         start_exact=start_exact,
         final_exact=_exact(state),
-        graded=graded,
+        assessed=assessed,
         shrink_log=shrink_log,
     )

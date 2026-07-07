@@ -9,7 +9,8 @@ from src.fortis.models.rules import RuleInventory
 
 
 def test_main_derives_every_word(project, capsys, tmp_path):
-    main(["--output", str(tmp_path / "output.md")])  # shipped feature showcase, reports to tmp_path
+    # shipped feature showcase, reports to tmp_path
+    main(["--output", str(tmp_path / "derivations.csv")])
     out = capsys.readouterr().out
     # One surface form per word, and a couple of the showcase derivations come through.
     assert out.count("Surface:") == len(project.words)
@@ -19,42 +20,81 @@ def test_main_derives_every_word(project, capsys, tmp_path):
 
 
 def test_main_writes_derivation_table_csv(tmp_path):
-    # The rule×word matrix is written as derivation_table.csv, in the output dir.
-    main(["--output", str(tmp_path / "output.md")])
+    # The rule×word matrix is written as derivation_table.csv, alongside the main report.
+    main(["--output", str(tmp_path / "derivations.csv")])
     assert (tmp_path / "derivation_table.csv").exists()
 
 
-def test_main_skips_distances_without_target(project, tmp_path):
-    # A lexicon with no attested forms (bare `word = "gloss"`) gets no distance summary.
+def test_main_writes_derivations_csv_long_format(tmp_path):
+    # The main report is derivations.csv: one row per word × rule, bookended by the
+    # synthetic `input` (raw IPA → ingested form) and `output` (→ surface) rows.
+    import csv
+
+    out = tmp_path / "derivations.csv"
+    main(["--output", str(out)])
+    rows = list(csv.reader(out.read_text(encoding="utf-8").splitlines()))
+    assert rows[0] == ["word", "rule", "t", "before", "after", "change"]
+    body = rows[1:]
+    assert body[0][1] == "input"  # first row of the first word is its input
+    # input's `before` is the raw IPA; `change` is empty on both synthetic rows.
+    inputs = [r for r in body if r[1] == "input"]
+    outputs = [r for r in body if r[1] == "output"]
+    assert inputs and len(inputs) == len(outputs)  # one of each per word
+    assert all(r[3] and r[5] == "" for r in inputs)  # before set, change empty
+    # after set, before/change empty
+    assert all(r[3] == "" and r[4] and r[5] == "" for r in outputs)
+
+
+def test_main_writes_reports_into_subfolder(project, tmp_path):
+    # With --project (no --output), every report lands in <project>/reports/.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(f'"{ipa}" = "x"\n', encoding="utf-8")
     main(["--project", str(tmp_path)])
-    assert not (tmp_path / "distances.md").exists()
+    assert (tmp_path / "reports" / "derivations.csv").exists()
+    assert (tmp_path / "reports" / "derivation_table.csv").exists()
+    assert not (tmp_path / "derivations.csv").exists()  # not at the project root
 
 
-def test_main_writes_distances_with_target(project, tmp_path):
+def test_main_skips_accuracy_without_target(project, tmp_path):
+    # A lexicon with no attested forms (bare `word = "gloss"`) gets no accuracy report.
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(f'"{ipa}" = "x"\n', encoding="utf-8")
+    main(["--project", str(tmp_path)])
+    assert not (tmp_path / "reports" / "accuracy.csv").exists()
+
+
+def test_main_writes_accuracy_with_target(project, tmp_path):
     # A minimal project (one word carrying a target `final`, everything else falling
-    # back to the default inventory) triggers the distance summary.
+    # back to the default inventory) triggers the accuracy CSVs, in reports/.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(
         f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
     )
     main(["--project", str(tmp_path)])
-    distances = tmp_path / "distances.md"
-    assert distances.exists()
-    assert "# Distances" in distances.read_text(encoding="utf-8")
+    reports = tmp_path / "reports"
+    overall = reports / "accuracy.csv"
+    assert overall.exists()
+    assert overall.read_text(encoding="utf-8").startswith(
+        "stage,assessed,exact,within 1,mean phone dist,mean feature dist"
+    )
+    assert (reports / "distance_to_target.csv").read_text(encoding="utf-8").startswith(
+        "stage,gloss,derived,target,d,fd"
+    )
+    # No Markdown accuracy report is written.
+    assert not (reports / "accuracy.md").exists()
+    assert not (reports / "distances.md").exists()
 
 
 def test_main_run_summary_splits_out_analysis(project, tmp_path, capsys):
-    # The end-of-run timing now reports `analysis` (diagnosis + timeline + blame)
-    # separately from `grade`, so its cost is visible.
+    # The end-of-run timing reports `accuracy` and `analysis` (diagnosis + timeline +
+    # blame) separately, so each cost is visible.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(
         f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
     )
     main(["--project", str(tmp_path)])
     err = capsys.readouterr().err
-    assert "grade" in err and "analysis" in err
+    assert "accuracy" in err and "analysis" in err
 
 
 def test_main_filter_writes_synthesis(project, tmp_path):
@@ -62,8 +102,8 @@ def test_main_filter_writes_synthesis(project, tmp_path):
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(f'"{ipa}" = "x"\n', encoding="utf-8")
     main(["--project", str(tmp_path), "--filter", "[+syllabic]"])  # any vowel — always present
-    filtered = tmp_path / "filtered_output.md"
-    assert filtered.exists() and (tmp_path / "filtered_table.csv").exists()
+    filtered = tmp_path / "reports" / "filtered_output.md"
+    assert filtered.exists() and (tmp_path / "reports" / "filtered_table.csv").exists()
     assert "# Filtered" in filtered.read_text(encoding="utf-8")
 
 

@@ -29,7 +29,9 @@ class TestModifiedLetter:
         # The ^ binds the last letter, but that split needs the letter inventory, so the
         # parser keeps the whole run; resolve_rule_letters segments it later.
         sd = parse_definition("au^[nasal: 1] -> e", features).unwrap()
-        assert sd.target == (ModifiedLetter(symbol="au", delta=sd.target[0].delta),)
+        target = sd.target[0]
+        assert isinstance(target, ModifiedLetter)
+        assert sd.target == (ModifiedLetter(symbol="au", delta=target.delta),)
 
     def test_pattern_delta_is_rejected(self, features):
         # Δ must be a realized bundle — no negation, alpha, or conditional.

@@ -40,8 +40,8 @@ _NULL = "∅"
 def _segments(phone: str, project: Project) -> bool:
     """Whether a phone literal segments under the project's letters (the null is always fine).
 
-    A phone ``split_phones`` mangles (a tie-bar affricate leaves a stray ``t͡``) cannot be a
-    rule literal — the resolver would reject it — so a rewrite that needs it is not proposed.
+    A phone that does not segment as a lone literal cannot be a rule literal — the resolver
+    would reject it — so a rewrite that needs it is not proposed.
     """
     if phone == _NULL:
         return True

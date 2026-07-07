@@ -19,7 +19,7 @@ import time
 from dataclasses import replace
 from pathlib import Path
 
-from src.fortis.analysis.grading import grade
+from src.fortis.analysis.accuracy import ingest_targets, measure_accuracy
 from src.fortis.application.deriving import derive_all_parallel
 from src.fortis.config import config
 from src.fortis.induction.refine import induce_project, refine, refine_localized
@@ -48,14 +48,15 @@ def _parse_interval(spec: str) -> tuple[int | None, int | None]:
 def _accuracy(
     project, inventory: RuleInventory, *, serial: bool, workers: int | None
 ) -> tuple[int, int, float]:
-    """Composed accuracy: derive the whole lexicon from true inputs under *inventory* and grade.
+    """Composed accuracy: derive the whole lexicon from true inputs under *inventory* and measure.
 
-    Returns ``(exact, graded, mean_distance)`` against each word's attested ``final``.
+    Returns ``(exact, assessed, mean_distance)`` against each word's attested ``final``.
     """
     runnable = replace(project, rules=inventory)
     derivations = derive_all_parallel(runnable, workers=1 if serial else workers)
-    report = grade(derivations, runnable)
-    return report.exact, report.graded, report.mean_distance
+    ingest_targets(derivations, runnable)  # parallel returns word copies; ingest those
+    report = measure_accuracy(derivations, runnable)
+    return report.exact, report.assessed, report.mean_distance
 
 
 def _parse_args(argv: list[str] | None) -> argparse.Namespace:
@@ -138,12 +139,12 @@ def main(argv: list[str] | None = None) -> None:
     print(induction_summary_line(induction.intervals))
 
     # Composed accuracy from the true inputs over the whole lexicon.
-    exact, graded, mean = _accuracy(
+    exact, assessed, mean = _accuracy(
         project, inventory, serial=args.serial, workers=args.workers
     )
     rules = sum(len(rs) for rs in inventory.values())
     print(
-        f"composed cascade: {exact}/{graded} exact (mean phone dist {mean:.3f}) "
+        f"composed cascade: {exact}/{assessed} exact (mean phone dist {mean:.3f}) "
         f"with {rules} induced rules · induced in {elapsed:.0f}s",
         file=sys.stderr,
     )

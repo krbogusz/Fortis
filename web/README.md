@@ -16,7 +16,7 @@ bundle, puts it on `sys.path`, imports `src.fortis`, and calls the engine direct
 (`src/lib/engine.js`). So any change to the engine or the shipped inventories is
 reflected on the next build — the glue only calls stable public functions
 (`derive`, `render_syllabified`, `describe_change`, and `main.py`'s
-`_build_report` / `_build_csv_report` for the two generated reports below).
+`_build_derivations_csv` / `_build_csv_report` for the two generated reports below).
 
 ## Using it
 
@@ -42,12 +42,12 @@ reflected on the next build — the glue only calls stable public functions
 - **Right panel** shows the results, with a view switcher: **Derivations** (the
   firing-rule trace, each word a card with a per-card **Definition** toggle),
   **Table** (`derivation_table.csv` — one row per word, one column per rule), and,
-  when the lexicon carries attested forms, **Grading** (the distance summary),
-  **Diagnosis** (phone confusions + context autopsy), **Timeline** (errors by
-  rule-time + a per-stage diagnosis), and **Blame** (each wrong word attributed to
-  the rule that produced it). A **Save** button downloads the active view's report
-  (`output.md` / `derivation_table.csv` / `distances.md` / `diagnosis.md` /
-  `timeline.md` / `blame.md`). Small projects re-run automatically on every edit; a
+  when the lexicon carries attested forms, **Accuracy** (the distance-to-target summary),
+  **Errors** (which segments came out wrong, per stage), **Error context** (the
+  attested-form environments most associated with each error, per stage), and **Blame**
+  (each wrong word attributed to the rule that produced it). A **Save** button downloads
+  the active view's report (`derivations.csv` / `derivation_table.csv` / `accuracy.csv` /
+  `errors.csv` / `error_context.csv` / `blame.md`). Small projects re-run automatically on every edit; a
   large one (over 500 words or 100 rules) waits for a **Run project** button instead.
 
   Example projects are built by `scripts/build-engine.mjs` into

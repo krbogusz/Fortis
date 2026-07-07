@@ -3,7 +3,7 @@
 The boosting default places a candidate *after* every current interval rule, so its input is
 each word's already-derived form. Scoring is then one ``apply_rule`` per word — no
 re-derivation: ``cannot_match`` prunes most words for free (the identity contract makes a
-non-firing sweep cheap), and only the words the candidate actually moves get re-graded. This
+non-firing sweep cheap), and only the words the candidate actually moves get re-assessed. This
 is the whole reason the search is affordable — the candidate count never multiplies a full
 derivation (plan §5).
 
@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
-from src.fortis.analysis.grading import Grade, grade_derivation
+from src.fortis.analysis.accuracy import DistanceToTarget, distance_to_target, ingest_words
 from src.fortis.application.deriving import (
     _display_boundaries,
     _fired,
@@ -84,14 +84,15 @@ class IntervalState:
         self.rules: list[Rule] = list(rules or [])
         self.model: BitsModel = bits_model(project)
         self._phones: PhoneCache = {}
+        ingest_words(project)  # segment the attested forms once; the shared words carry it forward
         self.baseline: list[Derivation] = self._derive_baseline()
-        self.baseline_grades: list[Grade | None] = [
-            grade_derivation(d, project) for d in self.baseline
+        self.baseline_distances: list[DistanceToTarget | None] = [
+            distance_to_target(d, project) for d in self.baseline
         ]
         # Per-word frequency-weighted residual bits, kept so a candidate that moves only a few
         # words re-scores just those (plan §5) — the running fit is a subtract/add, not a resum.
         self.baseline_residuals: list[float] = [
-            self._residual(grade) for grade in self.baseline_grades
+            self._residual(dtt) for dtt in self.baseline_distances
         ]
         self.baseline_fit: float = sum(self.baseline_residuals)
 
@@ -101,11 +102,11 @@ class IntervalState:
         """Derive the mini-lexicon under the current induced rules (index-timed)."""
         return derive_all(replace(self.project, rules=timed_inventory(self.rules)))
 
-    def _residual(self, grade: Grade | None) -> float:
+    def _residual(self, dtt: DistanceToTarget | None) -> float:
         """One word's frequency-weighted residual bits (0 when it has no target)."""
-        if grade is None:
+        if dtt is None:
             return 0.0
-        return grade.frequency * residual_bits(grade, self.project, self.model, self._phones)
+        return dtt.frequency * residual_bits(dtt, self.project, self.model, self._phones)
 
     # ---- the append fast path ----------------------------------------------------------
 
@@ -119,7 +120,7 @@ class IntervalState:
 
         *rule* must already be letter-resolved and timed past the cascade (see
         :meth:`_resolved`). Mirrors ``derive``'s per-rule tail — fire check, ``_maintain_tiers``,
-        then the final surface ``cleanup_tiers`` — so the graded surface is byte-identical to a
+        then the final surface ``cleanup_tiers`` — so the assessed surface is byte-identical to a
         real ``derive`` with *rule* genuinely appended. Returns *base* unchanged when the rule
         does not fire on this word (the common case, pruned cheaply by ``apply_rule``).
         """
@@ -167,13 +168,13 @@ class IntervalState:
         """Score *candidate* at the append placement, returning the exact MDL change ``ΔL``.
 
         One ``apply_rule`` per word against the cached derivations; only moved words are
-        re-graded. The returned ``delta_l`` is exact for *this* placement (plan §2.3).
+        re-assessed. The returned ``delta_l`` is exact for *this* placement (plan §2.3).
         """
         resolved = self._resolved(candidate)
         delta_fit = 0.0
         improved = regressed = moved = 0
         # A non-moved word contributes 0 to Δfit (its residual is already in baseline_fit), so
-        # only the moved words are re-graded — the incremental scoring the fast path exists for.
+        # only the moved words are re-assessed — the incremental scoring the fast path exists for.
         # "improved"/"regressed" count a word by whether its *residual bits* fell or rose — the
         # objective's own metric, not phone distance. This matters: a feature-shift toward the
         # target (ɛ→e when the target is i) lowers residual bits with the phone distance
@@ -187,7 +188,7 @@ class IntervalState:
                 continue
             moved += 1
             old_residual = self.baseline_residuals[index]
-            new_residual = self._residual(grade_derivation(new_deriv, self.project))
+            new_residual = self._residual(distance_to_target(new_deriv, self.project))
             delta_fit += new_residual - old_residual
             if new_residual < old_residual:
                 improved += 1
@@ -222,7 +223,7 @@ class IntervalState:
         for base, base_residual, derivation in zip(
             self.baseline, self.baseline_residuals, derivations, strict=True
         ):
-            new_grade = grade_derivation(derivation, self.project)
+            new_grade = distance_to_target(derivation, self.project)
             new_residual = self._residual(new_grade)
             new_fit += new_residual
             if base.surface != derivation.surface:
@@ -251,8 +252,8 @@ class IntervalState:
         resolved = self._resolved(candidate)
         self.rules.append(candidate)
         self.baseline = [self.append_derivation(base, resolved) for base in self.baseline]
-        self.baseline_grades = [grade_derivation(d, self.project) for d in self.baseline]
-        self.baseline_residuals = [self._residual(grade) for grade in self.baseline_grades]
+        self.baseline_distances = [distance_to_target(d, self.project) for d in self.baseline]
+        self.baseline_residuals = [self._residual(dtt) for dtt in self.baseline_distances]
         self.baseline_fit = sum(self.baseline_residuals)
 
     def accept_at(self, candidate: Rule, index: int) -> None:
@@ -267,6 +268,6 @@ class IntervalState:
             return
         self.rules.insert(index, candidate)
         self.baseline = self._derive_baseline()
-        self.baseline_grades = [grade_derivation(d, self.project) for d in self.baseline]
-        self.baseline_residuals = [self._residual(grade) for grade in self.baseline_grades]
+        self.baseline_distances = [distance_to_target(d, self.project) for d in self.baseline]
+        self.baseline_residuals = [self._residual(dtt) for dtt in self.baseline_distances]
         self.baseline_fit = sum(self.baseline_residuals)
