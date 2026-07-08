@@ -50,9 +50,6 @@ from src.fortis.models.project import Project
 
 # Word-boundary sentinel used as the neighbour of an edge phone.
 _BOUNDARY = "#"
-# Per-stage confusion tables are capped in the report — an intermediate stage often has a
-# long noisy tail (notation differences), and the full tally lives in the final section.
-_STAGE_CONFUSION_CAP = 15
 
 
 @dataclass(frozen=True)
@@ -370,11 +367,6 @@ def diagnose_stages(derivations: list[Derivation], project: Project) -> list[Sta
     return stages
 
 
-def _confusion_label(value: str | None, *, missing: str) -> str:
-    """Render one side of a confusion, using *missing* for the absent side."""
-    return f"`{value}`" if value is not None else missing
-
-
 def errors_summary_line(stages: list[StageDiagnosis]) -> str:
     """A one-line stderr headline, built from the final stage's confusions."""
     final = next((s for s in stages if s.time is None), None)
@@ -440,105 +432,19 @@ def render_error_context_csv(stages: list[StageDiagnosis]) -> str:
     return buffer.getvalue()
 
 
-def render_errors_md(stages: list[StageDiagnosis], where: str) -> str:
-    """The Errors analysis as Markdown — the per-stage confusion tally (for the scoped bundle).
+def error_context_omissions(stages: list[StageDiagnosis]) -> list[tuple[str, str]]:
+    """The ``(stage, segment)`` autopsies that ``error_context.csv`` leaves out.
 
-    The primary Errors output is ``errors.csv``; this Markdown rendering exists so the
-    ``--scope`` synthesis can carry a per-stage confusion overview. Capped for display.
+    A focus segment appears in ``error_context.csv`` only if at least one environment
+    predictor is positively associated with the error (phi > 0). A segment that erred too
+    few times to autopsy (< ``min_errors``) or whose predictors were all non-associated
+    contributes no row — it is present in ``errors.csv`` but silent in the context export.
+    This lists those omissions, one per ``(stage, segment)``, so a caller can say plainly
+    what was cut rather than let it vanish.
     """
-    lines = [
-        f"# Errors — {where}",
-        "",
-        "Which segments came out wrong at each attested stage (and the final): the phone",
-        "confusions, most frequent first. `∅` on the *got* side is a dropped phone; on the",
-        "*expected* side, a spurious inserted one (the *kind* column disambiguates).",
-        "",
-    ]
-    for stage in stages:
-        lines += [f"## stage {stage.label}", ""]
-        if not stage.confusions:
-            lines += ["All assessed words at this stage are exact.", ""]
-            continue
-        shown = stage.confusions[:_STAGE_CONFUSION_CAP]
-        if len(stage.confusions) > len(shown):
-            lines += [f"Top {len(shown)} of {len(stage.confusions)} confusions.", ""]
-        lines += _confusion_rows(shown)
-        lines.append("")
-    return "\n".join(lines).rstrip() + "\n"
-
-
-def render_error_context_md(stages: list[StageDiagnosis], project: Project, where: str) -> str:
-    """The Error-context analysis as Markdown — the per-stage, per-segment autopsy (scoped bundle).
-
-    The primary output is ``error_context.csv``; this Markdown rendering is for the
-    ``--scope`` synthesis. Capped for display (top predictors per segment).
-    """
-    diagnosis = project.settings.diagnosis
-    lines = [f"# Error context — {where}", ""]
-    lines += _autopsy_intro(diagnosis.min_support, diagnosis.min_support_percent)
-    for stage in stages:
-        lines += [f"## stage {stage.label}", ""]
-        sections = []
-        for autopsy in stage.autopsy:
-            sections += _autopsy_section(autopsy, diagnosis.min_errors, diagnosis.report_top)
-        lines += sections or ["No errors to autopsy at this stage.", ""]
-    return "\n".join(lines).rstrip() + "\n"
-
-
-def _confusion_rows(table: tuple[Confusion, ...]) -> list[str]:
-    """A confusion table body (header + rows), shared by the sections."""
-    rows = [
-        "| expected | got | count | kind | examples (gloss: derived vs. attested) |",
-        "| --- | --- | ---: | --- | --- |",
-    ]
-    for c in table:
-        rows.append(
-            f"| {_confusion_label(c.expected, missing='`∅`')} "
-            f"| {_confusion_label(c.got, missing='`∅`')} "
-            f"| {c.count} | {c.kind} | {', '.join(c.examples)} |"
-        )
-    return rows
-
-
-def _autopsy_intro(min_support: int, min_support_percent: int) -> list[str]:
     return [
-        "For each target phone that most often comes out wrong, the attested-form",
-        "environments most associated with the error, by phi coefficient (positive =",
-        "more error-prone). A predictor is shown only if it clears the support floor —",
-        f"max({min_support}, {min_support_percent}% of the phone's occurrences), so the bar rises",
-        "with a bigger word base; the raw *err/ok* counts, present (here) vs. absent (away),",
-        "travel with each row so a thin cell is visible. **F** is the F1 of the predictor as",
-        "an error signal — a companion to phi (rows rank by phi, which is chance-corrected).",
-        "`left`/`right` name the neighbouring attested phone; "
-        "`left:f=v` a feature of that neighbour.",
-        "",
+        (stage.label, autopsy.phone)
+        for stage in stages
+        for autopsy in stage.autopsy
+        if not any(a.phi > 0 for a in autopsy.associations)
     ]
-
-
-def _autopsy_section(autopsy: FocusAutopsy, min_errors: int, report_top: int) -> list[str]:
-    rate = autopsy.errors / autopsy.total if autopsy.total else 0.0
-    header = [
-        f"### `{autopsy.phone}` — wrong {autopsy.errors}/{autopsy.total} ({rate:.0%})",
-        "",
-    ]
-    if autopsy.errors < min_errors:
-        return [*header, f"Too few errors to autopsy (< {min_errors}).", ""]
-    shown = [a for a in autopsy.associations if a.phi > 0][:report_top]
-    if not shown:
-        return [*header, "No environment predictor was positively associated with the error.", ""]
-    note = (
-        f"Top {len(shown)} of {len(autopsy.associations)} predictors "
-        f"(support ≥ {autopsy.support_floor})."
-    )
-    rows = [
-        note,
-        "",
-        "| context | phi | F | err/ok here | err/ok away |",
-        "| --- | ---: | ---: | ---: | ---: |",
-    ]
-    for a in shown:
-        rows.append(
-            f"| `{a.predictor}` | {a.phi:+.2f} | {a.fscore:.2f} "
-            f"| {a.err_here}/{a.ok_here} | {a.err_away}/{a.ok_away} |"
-        )
-    return [*header, *rows, ""]

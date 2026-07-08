@@ -99,9 +99,11 @@ class TestFilterAttested:
 
 
 class TestRenderScoped:
-    def test_bundles_the_four_analyses(self, derivs, latin):
+    def test_bundles_accuracy_and_blame(self, derivs, latin):
         subset = list(filter_attested(derivs, "ʁ", latin).unwrap().matched)
         md = render_scoped(subset, latin, "`proj` · scope `ʁ`")
         assert md.startswith("# Scoped")
-        for section in ("## Accuracy", "## Errors", "## Error context", "## Blame"):
+        for section in ("## Accuracy", "## Blame"):
             assert section in md
+        # Errors + error context are CSV-only; they are not carried into the Markdown bundle.
+        assert "## Errors" not in md and "## Error context" not in md

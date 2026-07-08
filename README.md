@@ -201,9 +201,9 @@ python -m src.fortis.analysis.main --project projects/latin_to_french --try 'eː
 ```
 
 To focus the error analyses on an environment, `--scope 'PATTERN'` writes a
-`scoped_output.md` — the four analyses above (accuracy, diagnosis, timeline, blame)
-recomputed over just the words whose attested target, or **any** attested stage, matches
-the pattern — leaving the whole-lexicon reports intact. So you can debug accuracy on a
+`scoped_output.md` — accuracy and blame recomputed over just the words whose attested
+target, or **any** attested stage, matches the pattern (the per-stage errors and error
+context stay CSV-only) — leaving the whole-lexicon reports intact. So you can debug accuracy on a
 sub-population, including words that carried an /s/ at some stage even if it later dropped:
 
 ```

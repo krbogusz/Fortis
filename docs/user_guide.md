@@ -613,7 +613,9 @@ For each word, Fortis records the sequence of forms from the input through every
 
 ### 8.2 Output format
 
-Each word prints its headword and gloss (`ipa – "gloss"`), then a block for each rule that fired: a heading line with the rule's `time:` and name, and beneath it one indented `before → after   (change)` line per locus the rule changed (with `.` between syllables). A final `Surface:` line gives the surface form. Rules that did not fire are omitted.
+The terminal shows only summary and general information — the files written, a `words derived / rules applied` count, per-phase timing, and (when the lexicon carries targets) the accuracy, errors, and blame headlines. The full per-word derivation trace is written to **`derivations.csv`** (long-format: one row per word × firing rule), not printed.
+
+The same trace renders in human-readable block form in `filtered_output.md` and the web app — each word's headword and gloss (`ipa – "gloss"`), then a block per rule that fired: a heading line with the rule's `time:` and name, and beneath it one indented `before → after   (change)` line per locus the rule changed (with `.` between syllables), ending in a `Surface:` line:
 
 ```
 meħˈteːr – "mother"
@@ -631,8 +633,7 @@ The change summary shows the segments that changed as `old→new` (e.g. `kʲ→k
 
 ### 8.3 Written reports and accuracy
 
-Alongside the printed trace, every CLI run writes into a `reports/` subfolder of the
-project directory:
+Every CLI run writes into a `reports/` subfolder of the project directory:
 
 - **`derivations.csv`** — the main report: the firing-rule trace in long format, one
   row per word × firing rule (columns `word, rule, t, before, after, change`). Each
@@ -667,11 +668,11 @@ project directory:
 Two pattern filters scope this output (both take Fortis sequence notation — feature
 bundles, letters, quantifiers):
 
-- On the standalone grader, `--scope 'PATTERN'` writes **`scoped_output.md`** — the
-  four analyses recomputed over just the words whose attested target, or any attested
-  stage, matches — for debugging accuracy on a sub-population (e.g. words that carried
-  an /s/ at some stage, even if it later dropped). The whole-lexicon reports are left
-  intact.
+- On the standalone grader, `--scope 'PATTERN'` writes **`scoped_output.md`** — accuracy
+  and blame recomputed over just the words whose attested target, or any attested stage,
+  matches (the per-stage errors and error context stay CSV-only) — for debugging accuracy
+  on a sub-population (e.g. words that carried an /s/ at some stage, even if it later
+  dropped). The whole-lexicon reports are left intact.
 - On the engine run, `--filter 'PATTERN'` additionally writes **`filtered_output.md`**
   and **`filtered_table.csv`** — a synthesis of the words a pattern touches in *any*
   form (input, an intermediate derived form, the surface, the attested target, or a

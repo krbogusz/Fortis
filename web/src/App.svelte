@@ -1002,7 +1002,7 @@
             <details class="report-detail" open={s.label === "final"}>
               <summary>
                 <span class="tgt">stage {s.label}</span>
-                <span class="muted">{s.confusions.length} confusion(s)</span>
+                <span class="muted">{s.confusions.length} error(s)</span>
               </summary>
               {@render confusionTable(s.confusions)}
             </details>
@@ -1187,7 +1187,7 @@
                 <details class="report-detail" open={s.label === "final"}>
                   <summary>
                     <span class="tgt">stage {s.label}</span>
-                    <span class="muted">{s.confusions.length} confusion(s)</span>
+                    <span class="muted">{s.confusions.length} error(s)</span>
                   </summary>
                   {@render confusionTable(s.confusions)}
                 </details>

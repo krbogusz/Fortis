@@ -189,8 +189,8 @@ try {
   if (!badFilter.error) throw new Error("expected run_filter to error on a bad pattern");
   log(`13. run_filter: matched ${filt.matched}/${filt.considered}, filtered_output.md written; bad pattern → error`);
 
-  // 14. Interactive scope: restrict grading+diagnosis to words whose attested forms match,
-  //     write scoped_output.md, return the subset's grading headline + diagnosis.
+  // 14. Interactive scope: restrict the accuracy analyses to words whose attested forms match,
+  //     write scoped_output.md, return the subset's accuracy headline + errors.
   const scoped = JSON.parse(py.runPython(`run_scope("[+syllabic]")`).toString());
   if (scoped.error) throw new Error("run_scope errored: " + JSON.stringify(scoped.error));
   if (typeof scoped.matched !== "number" || typeof scoped.considered !== "number")

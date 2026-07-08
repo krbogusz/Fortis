@@ -3,20 +3,26 @@
 from src.fortis.application.deriving import derive
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.loaders.rules import load_rule
-from src.fortis.main import _print_derivation, main
+from src.fortis.main import _trace_lines, main
 from src.fortis.models.inventories import Word
 from src.fortis.models.rules import RuleInventory
 
 
 def test_main_derives_every_word(project, capsys, tmp_path):
     # shipped feature showcase, reports to tmp_path
-    main(["--output", str(tmp_path / "derivations.csv")])
+    out_path = tmp_path / "derivations.csv"
+    main(["--output", str(out_path)])
     out = capsys.readouterr().out
-    # One surface form per word, and a couple of the showcase derivations come through.
-    assert out.count("Surface:") == len(project.words)
-    assert "ag.ba" in out  # voicing assimilation: k → g before b
-    assert "tak" in out  # final devoicing: g → k word-finally
-    assert "aŋ.ka" in out  # place assimilation: n → ŋ (node spread copies the velar's place)
+    # The per-word cascade is written to derivations.csv, not printed. stdout carries only
+    # summary/general information — the accuracy headline, never a per-word trace ("Surface:"
+    # was the cascade's per-word marker).
+    assert "Surface:" not in out
+    assert "final:" in out  # the accuracy headline still prints
+    # A couple of the showcase derivations come through in the long-format trace.
+    trace = out_path.read_text(encoding="utf-8")
+    assert "ag.ba" in trace  # voicing assimilation: k → g before b
+    assert "tak" in trace  # final devoicing: g → k word-finally
+    assert "aŋ.ka" in trace  # place assimilation: n → ŋ (node spread copies the velar's place)
 
 
 def test_main_writes_derivation_table_csv(tmp_path):
@@ -129,8 +135,8 @@ def _derive(word, rules, project):
     )
 
 
-def test_list_definition_substeps_share_one_heading(project, capsys):
-    # A list-definition rule's sub-steps (ids `name#1`, `#2`) print under a single
+def test_list_definition_substeps_share_one_heading(project):
+    # A list-definition rule's sub-steps (ids `name#1`, `#2`) render under a single
     # heading, one change line each — not the rule name repeated per sub-step.
     sub = load_rule(
         "stress_change",
@@ -144,17 +150,17 @@ def test_list_definition_substeps_share_one_heading(project, capsys):
         },
         project.features,
     ).unwrap()
-    _print_derivation(_derive("koˈta", RuleInventory({-1000: tuple(sub)}), project), project)
-    out = capsys.readouterr().out
+    derivation = _derive("koˈta", RuleInventory({-1000: tuple(sub)}), project)
+    out = "\n".join(_trace_lines(derivation.steps, project))
     assert out.count("Stress change to first syllable") == 1  # one heading, not per sub-step
     assert out.count(" → ") == 2  # both sub-steps' before → after lines are shown
     assert "stress_change#1" not in out and "stress_change#2" not in out  # suffix hidden
 
 
-def test_standalone_rule_keeps_its_own_heading(project, capsys):
+def test_standalone_rule_keeps_its_own_heading(project):
     # A plain (non-list) rule is its own heading, with its id shown when unnamed.
     spec = {"time": 0, "definition": "[+cons] → [-voice]"}
     [rule] = load_rule("devoicing", spec, project.features).unwrap()
-    _print_derivation(_derive("ˈba", RuleInventory({0: (rule,)}), project), project)
-    out = capsys.readouterr().out
+    derivation = _derive("ˈba", RuleInventory({0: (rule,)}), project)
+    out = "\n".join(_trace_lines(derivation.steps, project))
     assert "0: devoicing" in out  # unnamed rule falls back to its id (no suffix to strip)

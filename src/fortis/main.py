@@ -1,10 +1,12 @@
 """Main entry point for the Fortis phonology engine.
 
-Loads every inventory, then for each word: segments the IPA into feature
-bundles, runs it through all rules in time order, and prints a step-by-step
-derivation showing only the rules that changed the form, with syllable
-structure (``.`` between syllables) on the surface. Every run writes its
-reports into a ``reports/`` subfolder of the project (``--output`` overrides
+Loads every inventory, then for each word segments the IPA into feature
+bundles and runs it through all rules in time order. The full step-by-step
+derivation is written to the reports, not printed: the terminal shows only
+summary and general information (the files written, counts, per-phase timing,
+and — when the lexicon carries targets — the accuracy/errors/blame headlines).
+Every run writes its reports into a ``reports/`` subfolder of the project
+(``--output`` overrides
 the main file's path, and everything else follows alongside it). The main
 report is ``derivations.csv``, a long-format trace: one row per word × firing
 rule (columns ``word, rule, t, before, after, change``), each word bookended by
@@ -37,6 +39,7 @@ from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blam
 from src.fortis.analysis.diagnosis import (
     confusions,
     diagnose_stages,
+    error_context_omissions,
     errors_summary_line,
     render_error_context_csv,
     render_errors_csv,
@@ -261,6 +264,17 @@ def main(argv: list[str] | None = None) -> None:
             print(f"wrote {report_path}", file=sys.stderr)
             saved.append(report_path)
         print(errors_summary_line(stage_diag))
+        # Say plainly what error_context.csv left out — segments that erred but were too
+        # sparse to autopsy (< min_errors) or had no error-associated environment.
+        omitted = error_context_omissions(stage_diag)
+        if omitted:
+            shown = ", ".join(f"{seg} @ {label}" for label, seg in omitted[:10])
+            more = f", +{len(omitted) - 10} more" if len(omitted) > 10 else ""
+            print(
+                f"note: {len(omitted)} erroring segment(s) omitted from error_context.csv "
+                f"(too few errors or no error-associated environment): {shown}{more}",
+                file=sys.stderr,
+            )
 
         # Attribute each wrong word to the rule that produced it (blame.md).
         blames = blame_all(derivations, project)
@@ -306,18 +320,15 @@ def main(argv: list[str] | None = None) -> None:
                     saved.append(report_path)
                 print(filter_summary_line(result))
 
-    # Phase 5 — printing: print the per-word traces.
-    for derivation in derivations:
-        _print_derivation(derivation, project)
-        print()
-    print_done = time.perf_counter()
-
+    # Phase 5 — summary: the full per-word trace lives in derivations.csv, not the
+    # terminal; only the run summary and headlines are printed.
+    done = time.perf_counter()
     phases = {"init": init_done - start, "apply": derive_done - init_done}
-    if has_targets:  # accuracy = the distance CSVs; analysis = diagnosis + timeline + blame
+    if has_targets:  # accuracy = the distance CSVs; analysis = errors + error context + blame
         phases["accuracy"] = accuracy_split - write_done
         phases["analysis"] = accuracy_done - accuracy_split
-    phases["print"] = (write_done - derive_done) + (print_done - accuracy_done)
-    _print_run_summary(derivations, rules, saved, phases, print_done - start)
+    phases["write"] = (write_done - derive_done) + (done - accuracy_done)
+    _print_run_summary(derivations, rules, saved, phases, done - start)
 
 
 _SUBRULE_SUFFIX = re.compile(r"#\d+$")
@@ -342,7 +353,7 @@ def _print_run_summary(
 ) -> None:
     """Print the end-of-run summary to stderr: counts, timing, and saved files.
 
-    ``phases`` maps each phase name (init, apply, accuracy, analysis, print — accuracy and
+    ``phases`` maps each phase name (init, apply, accuracy, analysis, write — accuracy and
     analysis only when the run assessed) to its elapsed seconds; ``total`` is the whole
     run's seconds. Analysis (errors + error context + blame) is split from accuracy because
     it is the costlier half — notably ``diagnose_stages``, which tallies confusions and
@@ -381,29 +392,6 @@ def _trace_lines(steps: Sequence[DerivationStep], project: Project) -> list[str]
             previous_base = base
         lines.append(f"    {before} → {after}   ({change})")
     return lines
-
-
-def _print_derivation(derivation: Derivation, project: Project) -> None:
-    """Print one word's derivation: headword, each firing rule, then the surface.
-
-    Each firing rule is shown as ``<time>: <rule name>``, with the before → after
-    forms and a change summary on the indented line below. Consecutive steps from
-    one list-``definition`` rule (sub-rules sharing a ``name#1``/``#2`` id) are
-    grouped under a single heading, one change line per sub-step.
-    """
-    word = derivation.word
-    gloss = f' – "{word.gloss}"' if word.gloss else ""
-    print("")
-    print(f"{word.ipa}{gloss}")  # echo the input verbatim (no render round-trip)
-
-    for line in _trace_lines(derivation.steps, project):
-        print(f"    {line}")
-
-    surface = render_syllabified(
-        lower_tiers(derivation.surface), derivation.surface_boundaries, project
-    )
-    print(f"    Surface: {surface}")
-    print("")
 
 
 def _build_derivations_csv(derivations: list[Derivation], project: Project) -> str:

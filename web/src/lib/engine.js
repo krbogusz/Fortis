@@ -37,7 +37,7 @@ export const FILES = [
 export const OUTPUT_FILES = ["reports/derivations.csv", "reports/derivation_table.csv"];
 
 // Python helper loaded into the interpreter after the engine is importable.
-// Rendering mirrors ../src/fortis/main.py:_print_derivation.
+// Rendering mirrors ../src/fortis/main.py:_trace_lines.
 //
 // Two directories mirror the CLI's project/fallback model: DEFAULT is the
 // pristine shipped project/default (read-only, from the bundle); OVERLAY is
