@@ -19,10 +19,6 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from src.fortis.application.deriving import derive, resolve_rule_letters
-from src.fortis.application.diagram import (
-    render_autosegmental,
-    render_change,
-)
 from src.fortis.application.rendering import describe_change, render_syllabified
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
@@ -190,9 +186,8 @@ def _build_report(derivations: list[Derivation], project: Project, project_dir: 
     lines = [
         f"# Output — {where}",
         "",
-        "Engine-generated run output. For each word: the firing-rule trace and,",
-        "for tier operations, the association-change diagram — `│` kept · `╎` added ·",
-        "`╪` delinked.",
+        "Engine-generated run output. For each word: the surface form and the",
+        "firing-rule trace (only the rules that changed the form).",
         "",
     ]
     for derivation in derivations:
@@ -201,25 +196,17 @@ def _build_report(derivations: list[Derivation], project: Project, project_dir: 
 
 
 def _render_derivation_md(derivation: Derivation, project: Project) -> list[str]:
-    """One word's derivation as Markdown: surface, firing-rule trace, and change diagrams."""
+    """One word's derivation as Markdown: surface form and firing-rule trace."""
     word = derivation.word
     surface = render_syllabified(
         lower_tiers(derivation.surface), derivation.surface_boundaries, project
     )
     lines = [f"## {word.gloss or word.ipa}", "", f"`{word.ipa}` → `{surface}`", ""]
-    if any(tier.autosegs for tier in derivation.input.tiers.values()):
-        melody = render_autosegmental(derivation.input, project)
-        lines += ["Input melody", "", "```", melody, "```", ""]
 
     trace = _trace_lines(derivation.steps, project)
     if trace:
         lines += ["```", *trace, "```", ""]
 
-    for step in derivation.steps:
-        base = step.rule.name or _SUBRULE_SUFFIX.sub("", step.rule.id)
-        for sublabel, diagram in render_change(step.before, step.after, step.rule, project):
-            label = f"{base} · {sublabel}" if sublabel else base
-            lines += [f"{label} — association change", "", "```", diagram, "```", ""]
     return lines
 
 

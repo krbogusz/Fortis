@@ -13,10 +13,12 @@ manner = { kind = "unary", children = ["continuant", "strident", "lateral", "tap
     tap = { kind = "unary", short = "tap" }
     trill = { kind = "unary", short = "tr" }
 nasal = { kind = "unary", short = "nas" }
-oral = { kind = "unary", children = ["labial", "dental", "lingual"] }
+oral = { kind = "unary", children = ["labial", "lingual", "dental"] }
     labial = { kind = "unary", short = "lab", children = ["rounded", "compressed"] }
         rounded = { kind = "unary", short = "rnd"}
         compressed = { kind = "unary", short = "cmpr"}
+    # dental = the passive articulator (at the teeth): combines with labial (f, v, ɱ)
+    # or with lingual (t̪, n̪) — hence a sibling of both, not a lingual child.
     dental = { kind = "unary", short = "dnt"}
     lingual = { kind = "unary", short = "ling", children = ["apical", "retroflex", "front", "back", "aperture", "advancement"] }
         apical = { kind = "unary", short = "api"}
@@ -25,12 +27,8 @@ oral = { kind = "unary", children = ["labial", "dental", "lingual"] }
             anterior = { kind = "unary", short = "ant"}
             posterior = { kind = "unary", short = "post"}
         back = { kind = "unary", short = "bk" }
-        aperture = { kind = "unary", short = "aper", children = ["high", "low"]}
-            high = { kind = "unary", short = "hi"}
-            low = { kind = "unary", short = "lo"}
-        advancement = { kind = "unary", short = "adv", children = ["ATR", "RTR"] }
-            ATR = { kind = "unary", short = "ATR"}
-            RTR = { kind = "unary", short = "RTR"}
+        aperture = { kind = "scalar", short = "aper", values = { -1 = "low", 0 = "mid", 1 = "high" } }
+        advancement = { kind = "scalar", short = "adv", values = { -1 = "rtr", 0 = "neutral", 1 = "atr" } }
 glottal = { kind = "unary", short = "glt", children = ["voice", "glottal_aperture", "tension", "larynx_height"] }
     voice = { kind = "binary", short = "vc"}
     glottal_aperture = { kind = "scalar", short = "glap", values = { -1 = "constricted", 0 = "neutral", 1 = "spread" } }

@@ -36,12 +36,12 @@ def test_place_assimilation_spreads_the_oral_node(tmp_path):
 def test_spread_copies_a_childless_leaf_for_vowel_harmony(tmp_path):
     # A childless leaf (`back`, `rounded`, `labial`) spreads by node-copy too — the feature
     # itself, with no subtree. Turkish-style harmony: every vowel takes the preceding vowel's
-    # backness, and a high vowel additionally takes its rounding (gated by <1: +high>). The
+    # backness, and a high vowel additionally takes its rounding (gated by <1: aperture: high>). The
     # cascade across `[-syllabic]*` also guards that node captures survive backtracking.
     (tmp_path / "words.toml").write_text('"utine" = "harmony"\n')
     (tmp_path / "rules.toml").write_text(
         '[harmony]\nwords = ["harmony"]\napplication = "left_to_right"\n'
-        'definition = "[+syllabic, <1: +high>] -> '
+        'definition = "[+syllabic, <1: aperture: high>] -> '
         "[back: ~1, front: none, <1: rounded: ~2>, <1: labial: ~3>] / "
         '[+syllabic, back: ~1, rounded: ~2, labial: ~3] [-syllabic]* _"\n'
     )

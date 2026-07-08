@@ -45,6 +45,7 @@ from src.fortis.application.applying import apply_match
 from src.fortis.application.combining import matches_exactly
 from src.fortis.application.matching import Match, SyllableView, find_matches, pattern_matches
 from src.fortis.application.segmentation import string_to_sequence
+from src.fortis.application.tiers import lower_tiers
 from src.fortis.application.syllabifying import (
     SyllabificationError,
     nuclei_by_position,
@@ -57,6 +58,7 @@ from src.fortis.application.tiers import (
     split_carried,
     write_to_tier,
 )
+from src.fortis.general.utils import IdentityCache
 from src.fortis.models.autosegment import AutosegmentalTier
 from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle
@@ -91,10 +93,23 @@ from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.models.tiers import Tier
 from src.fortis.models.values import AutosegRecall
 
+_derivation_geometry_cache = IdentityCache(maxsize=8)
+
 
 def _syllable_features(features: FeatureInventory) -> frozenset[str]:
-    """The names of the syllable-tier features (tone, stress, …)."""
-    return frozenset(name for name, feature in features.items() if feature.tier == Tier.syllable)
+    """The names of the syllable-tier features (tone, stress, …).
+
+    Pure function of *features* — the same ``FeatureInventory`` recurs across every
+    rule application in a derivation run, so cached by its identity (see
+    ``_node_descendants``, which shares this reasoning and this cache).
+    """
+    return _derivation_geometry_cache.get_or_compute(
+        features,
+        "syllable_features",
+        lambda: frozenset(
+            name for name, feature in features.items() if feature.tier == Tier.syllable
+        ),
+    )
 
 
 def _node_descendants(features: FeatureInventory) -> dict[str, frozenset[str]]:
@@ -102,7 +117,17 @@ def _node_descendants(features: FeatureInventory) -> dict[str, frozenset[str]]:
 
     Every segmental feature is included, not only those with children: a childless leaf like
     ``back`` maps to an empty set, so ``[back: ~n]`` spreads the feature itself (vowel harmony).
+
+    Called once per rule application (``apply_rule``/``_apply_directional``) with the same
+    *features* every time — the feature geometry is fixed for the whole run — so it's cached
+    by identity of *features* rather than re-walking the descendant tree on every call.
     """
+    return _derivation_geometry_cache.get_or_compute(
+        features, "node_descendants", lambda: _node_descendants_uncached(features)
+    )
+
+
+def _node_descendants_uncached(features: FeatureInventory) -> dict[str, frozenset[str]]:
     return {
         name: frozenset(features.descendants(name))
         for name in features
@@ -111,7 +136,7 @@ def _node_descendants(features: FeatureInventory) -> dict[str, frozenset[str]]:
 
 
 def _resolve_elements(
-    elements: tuple[Element, ...], project: Project, rule_id: str
+    elements: tuple[Element, ...], project: Project, rule_id: str, *, match_side: bool
 ) -> tuple[Element, ...]:
     """Replace each non-letter ``LetterRef`` run with its segmented ``LetterBundle``s.
 
@@ -121,12 +146,24 @@ def _resolve_elements(
     it spells. A plain single letter is left as a ``LetterRef`` (still resolved
     against the inventory). Recurses into all nesting; a multi-segment run nested
     under a quantifier/binding/negation is wrapped in a ``Group`` to stay one inner.
+
+    On the **match side** (``match_side=True`` — target, contexts, exceptions), a
+    literal's syllable-tier diacritics (``ˈ``/``ˌ`` stress, tone marks) are lowered
+    onto the resolved bundle so they *constrain* the match: ``ˌɔ`` matches only a
+    secondary-stressed ɔ, not ɔ at any stress. On the **result side** they are
+    dropped (``.bundles()``), preserving the existing "stress comes from the input,
+    not the rule literal" behaviour.
     """
+
+    def _segments(symbol: str) -> list:
+        seq = string_to_sequence(symbol, project)
+        return lower_tiers(seq) if match_side else seq.bundles()
+
     resolved: list[Element] = []
     for element in elements:
         match element:
             case LetterRef(symbol) if symbol not in project.letters:
-                segments = string_to_sequence(symbol, project).bundles()
+                segments = _segments(symbol)
                 if not segments:
                     raise ValueError(
                         f"rule '{rule_id}': letter reference '{symbol}' resolves to no "
@@ -134,38 +171,50 @@ def _resolve_elements(
                     )
                 resolved.extend(LetterBundle(bundle=segment) for segment in segments)
             case Group(inner):
-                resolved.append(Group(_resolve_elements(inner, project, rule_id)))
+                resolved.append(Group(_resolve_elements(inner, project, rule_id, match_side=match_side)))
             case Disjunction(branches):
                 resolved.append(
-                    Disjunction(tuple(_resolve_elements(b, project, rule_id) for b in branches))
+                    Disjunction(
+                        tuple(
+                            _resolve_elements(b, project, rule_id, match_side=match_side)
+                            for b in branches
+                        )
+                    )
                 )
             case Negated(inner):
-                resolved.append(Negated(_resolve_one(inner, project, rule_id)))
+                resolved.append(Negated(_resolve_one(inner, project, rule_id, match_side=match_side)))
             case Quantified(inner, quant):
-                resolved.append(Quantified(_resolve_one(inner, project, rule_id), quant))
+                resolved.append(
+                    Quantified(_resolve_one(inner, project, rule_id, match_side=match_side), quant)
+                )
             case Bound(ref, inner):
-                resolved.append(Bound(ref, _resolve_one(inner, project, rule_id)))
+                resolved.append(Bound(ref, _resolve_one(inner, project, rule_id, match_side=match_side)))
             case _:
                 resolved.append(element)
     return tuple(resolved)
 
 
-def _resolve_one(element: Element, project: Project, rule_id: str) -> Element:
+def _resolve_one(element: Element, project: Project, rule_id: str, *, match_side: bool) -> Element:
     """Resolve a single nested element; a multi-segment run becomes a ``Group``."""
-    resolved = _resolve_elements((element,), project, rule_id)
+    resolved = _resolve_elements((element,), project, rule_id, match_side=match_side)
     return resolved[0] if len(resolved) == 1 else Group(resolved)
 
 
 def _resolve_rule(rule: Rule, project: Project) -> Rule:
-    """A copy of *rule* with every ``LetterRef`` run in its description resolved."""
+    """A copy of *rule* with every ``LetterRef`` run in its description resolved.
+
+    Stress/tone diacritics on a literal are lowered so they constrain the match on
+    the target/context/exception sides, but are dropped on the result side (where a
+    literal supplies segment content only; suprasegmentals carry over from the input).
+    """
     sd = rule.sd
     resolved = StructuralDescription(
-        target=_resolve_elements(sd.target, project, rule.id),
-        result=_resolve_elements(sd.result, project, rule.id),
-        left_context=_resolve_elements(sd.left_context, project, rule.id),
-        right_context=_resolve_elements(sd.right_context, project, rule.id),
-        left_exception=_resolve_elements(sd.left_exception, project, rule.id),
-        right_exception=_resolve_elements(sd.right_exception, project, rule.id),
+        target=_resolve_elements(sd.target, project, rule.id, match_side=True),
+        result=_resolve_elements(sd.result, project, rule.id, match_side=False),
+        left_context=_resolve_elements(sd.left_context, project, rule.id, match_side=True),
+        right_context=_resolve_elements(sd.right_context, project, rule.id, match_side=True),
+        left_exception=_resolve_elements(sd.left_exception, project, rule.id, match_side=True),
+        right_exception=_resolve_elements(sd.right_exception, project, rule.id, match_side=True),
     )
     return replace(rule, sd=resolved)
 
@@ -205,8 +254,13 @@ def _maintain_tiers(
     re-docks any suprasegmental now on a non-nucleus segment to its syllable's nucleus —
     the spatial re-pool ``consolidate_suprasegmentals`` used to do, on tier links.
     Best-effort: an unsyllabifiable form skips the re-dock.
+
+    Copies *form* first: ``cleanup_tiers``/``redock_to_nuclei`` mutate their argument in
+    place, but *form*'s identity may already be cached by ``lower_tiers``/``syllabify``
+    (e.g. the ``_fired`` check just before this runs) — mutating it in place would make
+    that cache stale for anyone still holding the old reference.
     """
-    form = cleanup_tiers(form, tiers)
+    form = cleanup_tiers(form.copy(), tiers)
     if sonorities is None or syllable_parts is None:
         return form
     nucleus_part = syllable_parts.get_nucleus(time)
@@ -250,15 +304,19 @@ def _syllable_context(
     syllable_features: frozenset[str],
     node_descendants: dict[str, frozenset[str]],
     floating: tuple[tuple[int, FeatureBundle, int | None], ...] = (),
+    *,
+    cache: bool = True,
 ) -> tuple[frozenset[int], SyllableView | None]:
     """Boundaries (for ``$``) and the per-position nucleus view (for tier-aware matching).
 
-    Returns ``(frozenset(), None)`` when syllabification is unconfigured.
+    Returns ``(frozenset(), None)`` when syllabification is unconfigured. ``cache=False``
+    for a directional scan's working form, whose identity is reused across iterations
+    while its content is rewritten in place — see ``lower_tiers``'s ``cache`` parameter.
     """
     if sonorities is None or syllable_parts is None:
         return frozenset(), None
     try:
-        boundaries = syllabify(form, sonorities, syllable_parts, time, letters)
+        boundaries = syllabify(form, sonorities, syllable_parts, time, letters, cache=cache)
     except SyllabificationError:
         # Syllabification runs after every rule; an unsyllabifiable form (under
         # onset/coda constraints) yields no structure rather than aborting.
@@ -549,10 +607,14 @@ def _apply_directional(
     node_descendants = _node_descendants(features)  # invariant for the rule; not per-locus
     cursor = len(work.segments) if reverse else 0
     while True:
-        bundles = lower_tiers(work)
+        # work mutates in place each iteration (see the docstring above), so its identity
+        # is reused across content changes — bypass the identity cache, which would
+        # otherwise keep serving the pre-mutation syllabification/tier-lowering forever.
+        bundles = lower_tiers(work, cache=False)
         boundaries, view = _syllable_context(
             bundles, sonorities, syllable_parts, time, letters,
             syllable_features, node_descendants, _floating_autosegs(work),
+            cache=False,
         )
         if reverse:
             candidates = [
@@ -662,7 +724,9 @@ def derive(
                 )
                 current = after
 
-    current = cleanup_tiers(current, tiers, surface=True)  # stray-erase floating autosegs
+    # Copy first: current's identity may already be cached (see _maintain_tiers), and
+    # cleanup_tiers mutates its argument in place.
+    current = cleanup_tiers(current.copy(), tiers, surface=True)  # stray-erase floating autosegs
     latest = max((t for t in rules if t is not None), default=0)  # surface uses the latest parts
     surface_boundaries = _display_boundaries(
         current.bundles(), sonorities, syllable_parts, latest, letters

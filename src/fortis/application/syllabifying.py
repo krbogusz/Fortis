@@ -33,6 +33,7 @@ checked.
 from __future__ import annotations
 
 from src.fortis.application.matching import full_match, pattern_matches
+from src.fortis.general.utils import IdentityCache
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.inventories import (
     LetterInventory,
@@ -135,12 +136,17 @@ def _split(
     raise SyllabificationError("no pattern-legal onset/coda division for an intervocalic cluster")
 
 
+_syllabify_cache = IdentityCache(maxsize=8)
+
+
 def syllabify(
     segments: list[FeatureBundle],
     sonorities: SonoritiesInventory,
     syllable_parts: SyllablePartsInventory,
     time: int | None,
     letters: LetterInventory | None = None,
+    *,
+    cache: bool = True,
 ) -> frozenset[int]:
     """Return the syllable-boundary positions of *segments* at *time*.
 
@@ -151,10 +157,33 @@ def syllabify(
             and the optional onset/coda patterns.
         time: Derivation time, selecting the constraints in force.
         letters: Letter inventory, for letter shorthands inside onset/coda patterns.
+        cache: Whether to memoize by identity of *segments*. A rule sweep re-syllabifies
+            the same unchanged *segments* across every rule that doesn't fire, so caching
+            (the default) skips that redundant work — safe wherever *segments* is treated
+            as immutable. Pass ``False`` for a list that can recur under the same identity
+            with different content (e.g. a directional scan's working form).
 
     Raises:
         SyllabificationError: if an interior cluster admits no pattern-legal division.
     """
+    if not cache:
+        return _syllabify_uncached(segments, sonorities, syllable_parts, time, letters)
+    letters_id = id(letters) if letters is not None else None
+    extra = (id(sonorities), id(syllable_parts), time, letters_id)
+    return _syllabify_cache.get_or_compute(
+        segments,
+        extra,
+        lambda: _syllabify_uncached(segments, sonorities, syllable_parts, time, letters),
+    )
+
+
+def _syllabify_uncached(
+    segments: list[FeatureBundle],
+    sonorities: SonoritiesInventory,
+    syllable_parts: SyllablePartsInventory,
+    time: int | None,
+    letters: LetterInventory | None,
+) -> frozenset[int]:
     letters = letters if letters is not None else LetterInventory()
     nucleus_part = syllable_parts.get_nucleus(time)
     if nucleus_part is None or nucleus_part.definition is None:

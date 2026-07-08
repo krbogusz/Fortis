@@ -4,9 +4,11 @@ from collections.abc import Mapping
 
 from src.fortis.application.combining import differing, matches_exactly
 from src.fortis.application.syllabifying import SyllabificationError, syllabify, syllables
+from src.fortis.general.utils import IdentityCache
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.inventories import Diacritic, DiacriticKind
 from src.fortis.models.project import Project
+from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.tiers import Tier
 
 
@@ -136,6 +138,9 @@ def render_syllabified(
     return "".join(parts)
 
 
+_render_segment_cache: dict[tuple[int, frozenset[tuple[str, object]], frozenset[str]], str] = {}
+
+
 def render_segment(
     segment: FeatureBundle, inventories: Project, exclude: frozenset[str] = frozenset()
 ) -> str:
@@ -143,7 +148,27 @@ def render_segment(
 
     Features named in *exclude* are ignored — used by ``render_syllabified`` to
     render a segment without its syllable-tier features, which it positions itself.
+
+    The engine re-renders the same handful of realized segments over and over — one
+    word's derivation revisits the same phoneme at every step where it didn't change,
+    and the same phonemes recur across words. Cached by *value* (segment's features,
+    ``exclude``, and identity of ``inventories``), unlike the identity caches elsewhere
+    in the engine: a rendered segment is closed-over pattern-free data, so equal content
+    always renders the same, and the realized segments in play are a small, bounded set
+    (unlike the transient ``Form``s those other caches guard against unbounded growth for).
     """
+    key = (id(inventories), frozenset((f, spec.value) for f, spec in segment.items()), exclude)
+    cached = _render_segment_cache.get(key)
+    if cached is not None:
+        return cached
+    result = _render_segment_uncached(segment, inventories, exclude)
+    _render_segment_cache[key] = result
+    return result
+
+
+def _render_segment_uncached(
+    segment: FeatureBundle, inventories: Project, exclude: frozenset[str]
+) -> str:
     if exclude:
         segment = FeatureBundle({f: spec for f, spec in segment.items() if f not in exclude})
     # 1. Try exact match first
@@ -163,6 +188,10 @@ def render_segment(
     # features (a nucleus, where suprasegmentals live) gets its tone/stress marks;
     # non-nuclei have no syllable-tier features, so syllable-tier diacritics never fit.
     all_diacritics = inventories.diacritics
+    # A plain dict, built once: every letter below re-runs the same fit-checks against
+    # this unchanged segment, and a native dict.get beats FeatureBundle's Mapping-mixin
+    # __contains__/__getitem__ pair on a loop this hot.
+    target = dict(segment)
 
     for letter_symbol, letter_def in inventories.letters.items():
         total_diffs = differing(segment, letter_def.bundle)
@@ -170,7 +199,7 @@ def render_segment(
         before: list[str] = []
         combining: list[str] = []
         after: list[str] = []
-        _find_diacritics(segment, remaining, all_diacritics, before, combining, after)
+        _find_diacritics(target, remaining, all_diacritics, before, combining, after)
 
         if (len(remaining) < best_remaining) or (
             len(remaining) == best_remaining and len(total_diffs) < best_total_diffs
@@ -201,8 +230,38 @@ def _bucket_for(
     return after
 
 
+_DiacriticEntry = tuple[str, Diacritic, frozenset[str], tuple[tuple[str, object], ...]]
+_diacritic_entries_cache = IdentityCache(maxsize=8)
+
+
+def _diacritic_entries(diacritics: Mapping[str, Diacritic]) -> tuple[_DiacriticEntry, ...]:
+    """A precomputed, cached view of the eligible (non-read-only) diacritics.
+
+    ``_find_diacritics`` re-scans every diacritic on every greedy round, for every
+    candidate letter, for every segment rendered — but a diacritic's own feature set
+    and (feature, value) pairs never change across those calls, so re-deriving them
+    from *diacritics* (a ``Mapping``, walked through the slow generic ``KeysView``/
+    ``ItemsView`` machinery) on each round was pure waste. Cached by identity of
+    *diacritics*, which is one long-lived inventory shared by the whole run.
+    """
+    return _diacritic_entries_cache.get_or_compute(
+        diacritics,
+        None,
+        lambda: tuple(
+            (
+                symbol,
+                dia_def,
+                frozenset(dia_def.bundle.keys()),
+                tuple((feature, value.value) for feature, value in dia_def.bundle.items()),
+            )
+            for symbol, dia_def in diacritics.items()
+            if not dia_def.read_only and dia_def.bundle  # input-only alias, or no features to give
+        ),
+    )
+
+
 def _find_diacritics(
-    target_bundle: FeatureBundle,
+    target: Mapping[str, FeatureSpec],
     remaining_diffs: set[str],
     diacritics: Mapping[str, Diacritic],
     before: list[str],
@@ -216,24 +275,22 @@ def _find_diacritics(
     target bundle with matching values. The search repeats until no
     diacritic can fill any remaining gap.
     """
+    entries = _diacritic_entries(diacritics)
     while remaining_diffs:
         best_symbol: str | None = None
         best_def: Diacritic | None = None
+        best_features: frozenset[str] = frozenset()
         best_coverage = 0
 
-        for dia_symbol, dia_def in diacritics.items():
-            if dia_def.read_only:  # input-only alias — never emitted on output
-                continue
-            dia_features = set(dia_def.bundle.keys())
-            if not dia_features:
-                continue
-
-            # Every feature in the diacritic must exist in the target
-            # with the same value (otherwise the diacritic would create
-            # a new difference or express the wrong value).
+        for dia_symbol, dia_def, dia_features, dia_items in entries:
+            # Every feature in the diacritic must hold in the target with the same
+            # value (otherwise the diacritic would create a new difference or express
+            # the wrong value). A feature absent from the target is unspecified —
+            # equivalent to None — matching how patterns treat absence elsewhere.
             fits = True
-            for feature, value in dia_def.bundle.items():
-                if feature not in target_bundle or value.value != target_bundle[feature].value:
+            for feature, value in dia_items:
+                spec = target.get(feature)
+                if (spec.value if spec is not None else None) != value:
                     fits = False
                     break
             if not fits:
@@ -244,23 +301,22 @@ def _find_diacritics(
             if coverage > best_coverage:
                 best_symbol = dia_symbol
                 best_def = dia_def
+                best_features = dia_features
                 best_coverage = coverage
 
         if best_def is None or best_symbol is None:
             # No exact diacritic — but a contour (tuple) value can still render as a
             # sequence of its levels' contour diacritics (e.g. tone (2,1,4) → ˨˩˦).
-            if _render_contour(
-                target_bundle, remaining_diffs, diacritics, before, combining, after
-            ):
+            if _render_contour(target, remaining_diffs, diacritics, before, combining, after):
                 continue
             break
 
-        remaining_diffs -= set(best_def.bundle.keys())
+        remaining_diffs -= best_features
         _bucket_for(best_def.kind, before, combining, after).append(best_symbol)
 
 
 def _render_contour(
-    target_bundle: FeatureBundle,
+    target: Mapping[str, FeatureSpec],
     remaining_diffs: set[str],
     diacritics: Mapping[str, Diacritic],
     before: list[str],
@@ -278,7 +334,7 @@ def _render_contour(
     so a contour with its own single diacritic still uses that.
     """
     for feature in list(remaining_diffs):
-        spec = target_bundle.get(feature)
+        spec = target.get(feature)
         if spec is None or not isinstance(spec.value, tuple):
             continue
         sequence: list[tuple[str, Diacritic]] = []

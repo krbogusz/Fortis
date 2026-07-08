@@ -14,6 +14,7 @@ from typing import cast
 
 from src.fortis.application.matching import pattern_matches
 from src.fortis.application.syllabifying import syllables
+from src.fortis.general.utils import IdentityCache
 from src.fortis.models.autosegment import Autoseg, AutosegmentalTier
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.form import Form
@@ -21,6 +22,8 @@ from src.fortis.models.segment import Segment
 from src.fortis.models.specs import FeatureSpec
 from src.fortis.models.tier_declaration import TierInventory
 from src.fortis.models.values import Limb, make_value
+
+_lower_tiers_cache = IdentityCache(maxsize=8)
 
 
 def associate_tiers(form: Form, tiers: TierInventory) -> Form:
@@ -59,13 +62,25 @@ def associate_tiers(form: Form, tiers: TierInventory) -> Form:
     return form
 
 
-def lower_tiers(form: Form) -> list[FeatureBundle]:
+def lower_tiers(form: Form, *, cache: bool = True) -> list[FeatureBundle]:
     """Merge each segment's carried features back into its bundle (the inverse of associate).
 
     Lets the matcher and renderer read suprasegmentals from bundles as before the flip,
     without threading the tiers into them. The carried features are indexed by anchor in one
     pass (rather than re-scanning every tier per segment), so this is O(autosegs), not quadratic.
+
+    A rule sweep re-derives this for the same unchanged ``form`` across every rule that
+    doesn't fire, so results are cached by *identity* of ``form`` when ``cache`` is true —
+    safe wherever a ``Form`` is treated as immutable (a rewrite produces a fresh copy).
+    Pass ``cache=False`` for a form mutated in place across calls (e.g. a directional
+    scan's working copy), where the same identity can legitimately hold new content.
     """
+    if not cache:
+        return _lower_tiers_uncached(form)
+    return _lower_tiers_cache.get_or_compute(form, None, lambda: _lower_tiers_uncached(form))
+
+
+def _lower_tiers_uncached(form: Form) -> list[FeatureBundle]:
     carried = _carried_by_anchor(form)
     empty = FeatureBundle()
     return [

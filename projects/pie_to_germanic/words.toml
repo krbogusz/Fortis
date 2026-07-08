@@ -1,9 +1,9 @@
-# PIE → Modern English. A curated lexicon: each PIE form descends — by the regular sound
-# laws plus the odd word-scoped leveling/sporadic rule — to a recognizable Modern English
-# word, shown as the gloss (the verification target). *ħr̩tkʲos 'bear' is kept as a
-# deliberate exception: the root left no English descendant (it was tabooed in Germanic),
-# so its line shows what the bare sound laws produce on their own.
-# Format: IPA = "Modern English target"
+# PIE → Proto-Germanic. A curated lexicon: each PIE form descends by the regular sound
+# laws (plus the odd word-scoped leveling/sporadic rule) to its Proto-Germanic reflex —
+# the engine output. The gloss is the eventual Modern English descendant, kept as an
+# etymological label (not a phonetic target): *ħr̩tkʲos → PGmc *hurtkas is glossed 'bear'
+# even though that root left no English word (it was tabooed in Germanic).
+# Format: IPA = "Modern English descendant (label)"
 
 "meħˈteːr"    = "mother"
 "ˈbʱleʁʷmoː"  = "bloom"

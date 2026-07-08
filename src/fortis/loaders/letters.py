@@ -13,9 +13,12 @@ from src.fortis.result import Err, Ok, Result
 def load_letter(row: dict[str, str], features: FeatureInventory) -> Result[Letter, list[str]]:
     """Load a letter definition from a dictionary."""
     error_list = []
-    symbol = row.get("symbol", "").strip()
+    raw_symbol = row.get("symbol", "")
+    symbol = raw_symbol.strip()
     if not symbol:
         return Err(["A letter is missing the required 'symbol' field"])
+    if raw_symbol != symbol:
+        return Err([f"Letter '{symbol}' has leading/trailing whitespace in its symbol cell"])
 
     bundle = FeatureBundle()
     for feature_name, raw_value in row.items():
@@ -81,16 +84,30 @@ def load_letter_inventory(
     if error_list:
         return Err(error_list)
 
-    return validate_letter_inventory(letter_inventory).map(lambda _: letter_inventory)
+    return validate_letter_inventory(letter_inventory, features).map(lambda _: letter_inventory)
 
 
-def validate_letter_inventory(letter_inventory: LetterInventory) -> Result[None, list[str]]:
-    """Check for symbols with empty feature bundles or duplicate bundles."""
+def validate_letter_inventory(
+    letter_inventory: LetterInventory, features: FeatureInventory
+) -> Result[None, list[str]]:
+    """Check for empty/duplicate bundles and geometry-consistent bundles.
+
+    A letter's bundle is a full segment description, so every feature it sets must
+    also have its declared parent set (a ``front`` without ``lingual`` is a segment
+    the geometry can't describe). Diacritic bundles are deltas — merging implies the
+    missing ancestors — so this check applies to letters only.
+    """
     error_list = []
 
     for symbol, letter_def in letter_inventory.data.items():
         if not letter_def.bundle:
             error_list.append(f"Symbol '{symbol}' has no feature specifications")
+        for feature_name in letter_def.bundle:
+            parent = features[feature_name].parent
+            if parent is not None and parent != "root" and parent not in letter_def.bundle:
+                error_list.append(
+                    f"Letter '{symbol}' sets '{feature_name}' but not its parent '{parent}'"
+                )
 
     # Check for letters with identical feature bundles
     bundle_to_symbols: dict[tuple[tuple[str, object], ...], list[str]] = {}

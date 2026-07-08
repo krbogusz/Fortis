@@ -1,0 +1,3778 @@
+# Classical Latin → Modern French, ported from DiaSim's DiaCLEF2025 cascade
+# (https://github.com/clmarr/DiaSim/blob/gamma/DiaCLEF2025), which is itself a computerized
+# encoding — refined via forward-reconstruction testing against real Latin/French word pairs
+# (Marr & Mortensen 2020, 2023; Marr 2024) — of the relative chronology described in Mildred K.
+# Pope's 1934 "From Latin to Modern French". See ../../README.md of this project for full
+# attribution and license notes (DiaSim/DiaCLEF2025 is GPL-3.0; this is an independent
+# re-authoring in Fortis's own notation, not a copy of DiaSim's source text).
+#
+# DiaCLEF2025's own stage markers (~/=) give the period boundaries used here as time values:
+#   -100  Classical Latin       (lines 1-378 of DiaCLEF2025)
+#    300  Late Latin            (379-509)
+#    500  Early Gallo-Roman     (510-1088)
+#    600  Middle Gallo-Roman    (1089-1813)
+#    750  Later Gallo-Roman     (1814-2212)
+#   1000  Old French I (Early)  (2213-2789)
+#   1200  Old French II (Later) (2790-3010)
+#   1400  Middle/Modern French  (3011-3301)
+# Rules sharing a time value are applied in the file order below, preserving DiaCLEF2025's own
+# relative ordering within each period exactly.
+
+# --- Classical Latin (Pope ch. II p.72ff, characteristics as of p.75) ---
+
+[cl_n_velar_assim]
+time = -100
+name = "n assimilates to a following velar stop"
+definition = "n̪ → ŋ / _ [aperture: high, +back, -continuant, nasal: none]"
+
+[cl_g_n_assim]
+time = -100
+name = "g assimilates to a following coronal nasal (gn cluster)"
+definition = "g → ŋ / _ n̪"
+
+[cl_a_backing]
+time = -100
+name = "low vowel backs by default"
+definition = "[aperture: low, +syllabic] → [front: none, +back]"
+
+[cl_a_fronting_before_e_glide]
+time = -100
+name = "low vowel re-fronts before the e-glide"
+definition = "[aperture: low, +syllabic] → [+front, back: none] / _ e̯"
+
+[cl_d_total_assim_obstruent]
+time = -100
+name = "d totally assimilates to a following obstruent"
+description = "e.g. ad + capere > accapere, ad + ferre > afferre (prefix-final d assimilation)"
+definition = "d̪ → @1 / _ 1=[-sonorant]"
+
+[cl_d_total_assim_nasal]
+time = -100
+name = "d totally assimilates to a following nasal"
+definition = "d̪ → @1 / _ 1=[+nasal]"
+
+[cl_jw_hardening]
+time = -100
+name = "j/w harden to fricative-like consonants before a vowel (not in a falling diphthong)"
+description = "Pope s106 (j: p55 s106c; w: p56 s109)"
+definition = "(j|w) → [+consonantal, -sonorant] / _ [+syllabic]"
+
+[cl_ghw_to_w_after_velar]
+time = -100
+name = "the labiovelar approximant simplifies to w after a velar consonant"
+description = "Pope s186 — betacism doesn't occur after k"
+definition = "ɣʷ → w / [+back, aperture: high, +consonantal] _"
+
+[cl_b_total_assim]
+time = -100
+name = "b totally assimilates to a following m or the labiovelar approximant"
+definition = "b → @1 / _ 1=(m|ɣʷ)"
+
+[cl_greek_deaspiration]
+time = -100
+name = "aspiration lost on Greek loanwords (2nd century)"
+description = "Pope p226 s629"
+definition = "[glottal_aperture: spread, -continuant, nasal: none] → [glottal_aperture: neutral]"
+
+[cl_greek_y_unrounding]
+time = -100
+name = "Greek y unrounds to i"
+description = "Pope p226-7 s632"
+definition = "[aperture: high, +front, +syllabic] → [rounded: none, labial: none]"
+
+[cl_ns_lengthening]
+time = -100
+name = "vowel lengthens before ns when the next syllable is unstressed"
+description = "Pope s359 ~ s156iii"
+definition = "[+syllabic] → [length: long] / _ n̪ s ([-syllabic])* [stress: none]"
+
+[cl_n_loss_after_long_before_s]
+time = -100
+name = "n lost after a long vowel before s (compensatory lengthening already applied)"
+definition = "n̪ → ∅ / [+syllabic, length: long] _ s"
+
+[cl_r_loss_after_long_before_s]
+time = -100
+name = "r lost after a long vowel before s"
+description = "Pope s359 ~ s156iii — e.g. persica, dorsum"
+definition = "r → ∅ / [+syllabic, length: long] _ s"
+
+[cl_pietatem_type_lengthening]
+time = -100
+name = "stressed i + e becomes iːx (pietatem-type lexemes)"
+description = "Pope explicitly notes pitie' as pixt-, implying this development"
+definition = "[aperture: high, +front, +syllabic, stress: primary] e → [length: long] x / _ [nasal: none]"
+
+[cl_quantity_to_quality_1]
+time = -100
+name = "Classical Latin length distinction becomes a quality (tense) distinction, first pass"
+description = "Pope p72-73 s154i ~ p89 s179 — short non-low vowels become lax; 2024 correction: only for vowels with some degree of stress is implicit in later re-application"
+definition = "[+syllabic, aperture: !low, length: short] → [advancement: rtr]"
+
+[cl_h_loss_internal]
+time = -100
+name = "h lost word-internally (word-initial h survives at this stage)"
+description = "Pope s155i ~ s185"
+definition = "h → ∅ // # _"
+
+[cl_i_prosthesis]
+time = -100
+name = "i-prosthesis before word-initial s + consonant"
+description = "Pope s361 — Western Romance, attested 2nd century"
+definition = "∅ → ˌɪ / # _ s [+consonantal]"
+
+[cl_stress_shift_antepenult_1]
+time = -100
+name = "stress moves to the penult when the antepenult has an adjacent short vowel (type 1)"
+description = "Pope s214i — must precede yod formation, which it feeds"
+definition = "[+syllabic, aperture: mid, stress: none] → [stress: primary] / [stress: primary, aperture: !low, +front, length: short] _ ([-syllabic])* [+syllabic] ([-syllabic])* #"
+
+[cl_stress_shift_antepenult_1_demote_old]
+time = -100
+name = "the old primary stress demotes when a new one has been placed (type 1)"
+description = "stress is syllable-level, so bare [stress: primary] matches every segment of the stressed syllable (including its onset) — both the target and the lookahead are anchored to +syllabic so only the nucleus can match"
+definition = "[+syllabic, stress: primary] → [stress: secondary] / # ([-syllabic])* _ [+syllabic, stress: primary]"
+
+[cl_stress_shift_antepenult_1_clear_secondary]
+time = -100
+name = "any leftover non-primary stress clears once a new primary is set (type 1)"
+definition = "[+syllabic, stress: primary] → [stress: none] / _ [+syllabic, stress: primary]"
+
+[cl_stress_shift_antepenult_2]
+time = -100
+name = "stress moves forward if the antepenult's following syllable is short-vowel + stop + r (type 2, not for educated classes)"
+description = "Pope s214ii"
+definition = "[stress: none] → [stress: primary] / [stress: primary] ([-syllabic])* _ [-continuant, nasal: none] r ([-syllabic])* [+syllabic] ([-syllabic])* #"
+
+[cl_stress_shift_antepenult_2_demote_old]
+time = -100
+name = "the old primary stress demotes when a new one has been placed (type 2)"
+description = "stress is syllable-level, so bare [stress: primary] matches every segment of the stressed syllable (including its onset) — both the target and the lookahead are anchored to +syllabic so only the nucleus can match"
+definition = "[+syllabic, stress: primary] → [stress: secondary] / # ([-syllabic])* _ ([-syllabic])* [+syllabic, stress: primary]"
+
+[cl_stress_shift_antepenult_2_clear_secondary]
+time = -100
+name = "any leftover non-primary stress clears once a new primary is set (type 2)"
+definition = "[+syllabic, stress: primary] → [stress: none] / _ ([-syllabic])* [+syllabic, stress: primary]"
+
+[cl_yod_w_formation]
+time = -100
+name = "unstressed short non-low vowels glide before another vowel (yod/w formation)"
+description = "Pope s220, s156i — called for this early by s187. Output is a true glide (+consonantal): a pre-vocalic yod/w, not a diphthong off-glide semivowel — so it feeds yod strengthening (j→ʝ) and the palatalization chain, matching DiaSim's single [+hi,-syl] yod."
+definition = "[+syllabic, length: short, stress: none, aperture: !low] → [aperture: high, syllabic: -, +consonantal, advancement: atr] / _ [+syllabic]"
+
+[cl_u_to_sonus_medius]
+time = -100
+name = "unstressed long u becomes a mid central vowel (sonus medius), not word-finally"
+description = "Diachronically equivalent to ɪ; does not bleed or feed prior yod formation. Target guarded to unstressed — a bare `uː` literal matches any stress, so it was eating the stressed ū of crus/durs/salut (which must survive to front to y)."
+definition = "[aperture: high, +back, +rounded, +syllabic, length: long, stress: none] → ɪ / _ [-syllabic] // _ [-syllabic] #"
+
+[cl_yod_loss_after_pr]
+time = -100
+name = "yod lost between p/r and a following front non-high non-low vowel"
+description = "Pope s220"
+definition = "j → ∅ / (p|r) _ [+front, aperture: mid, +syllabic]"
+
+[cl_l_darkening]
+time = -100
+name = "l darkens before a non-lateral consonant"
+definition = "l → ɫ / _ [+consonantal, lateral: none]"
+
+[cl_yod_strengthening]
+time = -100
+name = "yod strengthens before a vowel"
+description = "Pope s105c, s106. Matches the yod by bundle (not the literal `j`): a derived pre-vocalic glide carries advancement: atr, so it is not letter-identical to `j` — but it is the same [+cons, +front, high, -syll] segment DiaSim strengthens."
+definition = "[+consonantal, +front, aperture: high, syllabic: -] → ʝ / _ [+syllabic]"
+
+[cl_yod_loss_after_velar_w]
+time = -100
+name = "the strengthened yod is lost word-initially after a velar stop + w"
+definition = "ʝ → ∅ / # [+back, -continuant, nasal: none] w _"
+
+[cl_round_glide_loss_before_yod]
+time = -100
+name = "the rounded glide is lost before the strengthened yod"
+definition = "(ɣʷ|w) → ∅ / _ ʝ"
+
+[cl_ghw_loss_lo_round]
+time = -100
+name = "the labiovelar approximant is lost between a low vowel and a rounded vowel"
+definition = "ɣʷ → ∅ / [aperture: low] _ [+syllabic, +rounded]"
+
+[cl_w_loss_after_k_round]
+time = -100
+name = "w is lost after k before a rounded vowel"
+definition = "w → ∅ / k _ [+syllabic, +rounded]"
+
+[cl_syncope_u_o_before_l]
+time = -100
+name = "posttonic ʊ/o syncopates before l + vowel near the end of the word"
+definition = "(ʊ|o) → ∅ / [+syllabic, stress: primary] ([-syllabic])* ([-continuant, nasal: none]|m|r) _ [+lateral] [+syllabic] ([-syllabic])? #"
+
+[cl_syncope_o_before_l]
+time = -100
+name = "posttonic ɔ syncopates before l + vowel near the end of the word"
+definition = "ɔ → ∅ / [+syllabic, stress: primary] ([-syllabic])* ([-continuant, labial: none, nasal: none]|m|r) _ [+lateral] [+syllabic] ([-syllabic])? #"
+
+[cl_syncope_i_before_d_front]
+time = -100
+name = "posttonic ɪ syncopates between a sonorant and d + front non-low vowel (-idem/-item type)"
+definition = "ɪ → ∅ / [+syllabic, stress: primary] ([-syllabic])* [+sonorant] _ d̪ [+front, aperture: !low] ([-syllabic])? #"
+
+[cl_syncope_i_before_d_back]
+time = -100
+name = "posttonic ɪ syncopates between a voiced consonant and d + back non-low vowel"
+definition = "ɪ → ∅ / [+syllabic, stress: primary] ([-syllabic])* [+consonantal, +voice] _ d̪ [+back, aperture: !low] ([-syllabic])? #"
+
+[cl_syncope_between_n_r]
+time = -100
+name = "posttonic non-low vowel syncopates between n and r + vowel"
+definition = "[aperture: !low, stress: none] → ∅ / [+syllabic, stress: primary] ([-syllabic])* n̪ _ r [+syllabic]"
+
+[cl_syncope_between_l_r]
+time = -100
+name = "posttonic non-low vowel syncopates between l and r + vowel"
+definition = "[aperture: !low, stress: none] → ∅ / [+syllabic, stress: primary] ([-syllabic])* [+lateral] _ r [+syllabic]"
+
+[cl_i_loss_after_vowel_velar]
+time = -100
+name = "ɪ lost after a non-low vowel + velar stop, before l"
+definition = "ɪ → ∅ / [aperture: !low, +syllabic] [-continuant, +back, nasal: none] _ l"
+
+[cl_front_vowel_syncope_a]
+time = -100
+name = "unstressed front vowel lost between a back stop and a coronal (type a)"
+definition = "[stress: none, +front] → ∅ / [stress: primary, aperture: low] [+back, -continuant, nasal: none] _ [+lingual, +front, strident: none, nasal: none, lateral: none] [+syllabic]"
+
+[cl_front_vowel_syncope_b]
+time = -100
+name = "unstressed front vowel lost between g and a voiced coronal"
+definition = "[stress: none, +front] → ∅ / [+syllabic] g _ [+lingual, +front, lateral: none, +voice] [+syllabic]"
+
+[cl_i_loss_ghw_k]
+time = -100
+name = "ɪ lost between the labiovelar approximant and k"
+definition = "ɪ → ∅ / ɣʷ _ k"
+
+[cl_ghw_to_w_before_cons]
+time = -100
+name = "the labiovelar approximant simplifies to w before a consonant"
+definition = "ɣʷ → w / _ [+consonantal]"
+
+[cl_ghw_to_w_lo_lo]
+time = -100
+name = "the labiovelar approximant simplifies to w between low vowels (second short)"
+definition = "ɣʷ → w / [aperture: low, +syllabic] _ [aperture: low, +syllabic, length: short]"
+
+[cl_ghw_remainder_to_bw]
+time = -100
+name = "any remaining labiovelar approximant becomes a labialized voiced bilabial fricative"
+definition = "ɣʷ → βʷ"
+
+[cl_b_lenition]
+time = -100
+name = "b lenites to β intervocalically / before a sonorant"
+definition = "b → β / [+syllabic] _ [+sonorant]"
+
+[cl_posttonic_g_loss]
+time = -100
+name = "unstressed g deleted between an unstressed vowel and the following unstressed syllable"
+description = "target and right-context anchored to +syllabic — bare [stress: none] matches any segment of an unstressed syllable, including a following onset consonant, not just its nucleus"
+definition = "[stress: none, +syllabic] g → ∅ / [stress: primary] ([-syllabic])* _ [stress: none, +syllabic] ([-syllabic])* #"
+
+[cl_ee_contraction_stressed_second]
+time = -100
+name = "e + e contracts to a long stressed e when stress is on the second vowel"
+definition = "[+front, aperture: mid, +syllabic] [+front, aperture: mid, +syllabic, stress: primary] → ˈeː"
+
+[cl_oo_contraction_stressed_second]
+time = -100
+name = "o + o contracts to a long stressed o when stress is on the second vowel"
+definition = "[+rounded, aperture: !high, +syllabic] [+rounded, aperture: !high, +syllabic, stress: primary] → ˈoː"
+
+[cl_ee_contraction_stressed_first]
+time = -100
+name = "e + e contracts to a long secondary-stressed e when stress is on the first vowel"
+definition = "[+front, aperture: mid, +syllabic, stress: secondary] [+front, aperture: mid, +syllabic] → ˌeː"
+
+[cl_quantity_to_quality_2]
+time = -100
+name = "Classical Latin length distinction becomes a quality distinction, second pass"
+description = "Reapplied after the contractions above introduce new short non-low vowels"
+definition = "[+syllabic, aperture: !low, length: short] → [advancement: rtr]"
+
+[cl_long_feature_becomes_redundant]
+time = -100
+name = "the length feature is dropped now that quality carries the contrast"
+definition = "[+syllabic, length: long] → [length: short]"
+
+[cl_ae_monophthongization]
+time = -100
+name = "the ae diphthong monophthongizes to ɛ, preserving any stress mark"
+definition = "(a e̯|ˌa e̯|ˈa e̯) → (ɛ|ˌɛ|ˈɛ)"
+
+[cl_oe_monophthongization]
+time = -100
+name = "the oe diphthong monophthongizes to e"
+description = "Placed after the length>tense shift, per Pope's own logic, else oe would become ɛ"
+definition = "[+rounded, aperture: !high, +syllabic] e̯ → [+front, rounded: none, back: none, advancement: atr, labial: none] ∅"
+
+[cl_k_loss_after_ng_before_voiceless_coronal]
+time = -100
+name = "k lost after ŋ before a voiceless coronal"
+definition = "k → ∅ / ŋ _ [+lingual, +front, -voice]"
+
+[cl_k_loss_before_sc]
+time = -100
+name = "k lost before s + consonant"
+definition = "k → ∅ / _ s [+consonantal]"
+
+[cl_k_to_x]
+time = -100
+name = "k spirantizes to x after a vowel/glide before a voiceless coronal"
+definition = "k → x / [-consonantal] _ [+lingual, +front, -voice]"
+
+[cl_e_raising_before_ssj]
+time = -100
+name = "secondary-stressed ɛ raises to e before ssʝ"
+definition = "ˌɛ → ˌe / _ s s ʝ"
+
+[cl_g_spirantizes_before_m]
+time = -100
+name = "g spirantizes before m"
+definition = "g → [+continuant] / _ m"
+
+[cl_gh_to_w_before_m]
+time = -100
+name = "the resulting velar fricative becomes w before m"
+definition = "ɣ → w / _ m"
+
+[cl_w_loss_au_u_sequence]
+time = -100
+name = "w lost between ɑ and an eventual stressed high round back vowel"
+definition = "[-syllabic, -consonantal, aperture: !low, +rounded, +back] → ∅ / ˌɑ _ ([-syllabic])* [+syllabic, stress: primary, aperture: high, +rounded, +back]"
+
+[cl_lax_high_to_tense_mid]
+time = -100
+name = "lax high vowels lower to tense mid vowels"
+definition = "[aperture: high, +syllabic, advancement: rtr] → [aperture: mid, advancement: atr]"
+
+[cl_o_lowering_before_high_back]
+time = -100
+name = "stressed o lowers to ɔ before a high back vowel"
+definition = "ˈo → ˈɔ / _ [aperture: high, +syllabic, +back]"
+
+[cl_e_raising_before_low]
+time = -100
+name = "stressed ɛ raises to e before a low vowel"
+definition = "ˈɛ → ˈe / _ [aperture: low, +syllabic]"
+
+[cl_e_raising_before_e]
+time = -100
+name = "stressed e raises to i before e"
+definition = "ˈe → ˈi / _ e"
+
+[cl_t_to_k_before_lateral]
+time = -100
+name = "t becomes k before a lateral"
+definition = "t̪ → k / _ [+lateral]"
+
+[cl_final_nasal_loss_unstressed]
+time = -100
+name = "word-final nasal consonant lost after an unstressed vowel"
+definition = "[+nasal, +consonantal] → ∅ / [stress: none] _ #"
+
+[cl_final_nasal_loss_low_nonprimary]
+time = -100
+name = "word-final nasal consonant lost after a non-primary-stressed low vowel"
+definition = "[+nasal, +consonantal] → ∅ / [aperture: low, +syllabic, stress: !primary] _ #"
+
+[cl_w_dissimilation_kw_kw]
+time = -100
+name = "w dissimilates between two kw sequences"
+definition = "w → ∅ / k _ [+syllabic] ([-syllabic])? k w [+syllabic]"
+
+[cl_ts_to_f_before_sonorant_cons]
+time = -100
+name = "ts becomes f before a sonorant consonant"
+definition = "t͡s → f / _ [+consonantal, +sonorant]"
+
+[cl_td_palatalization_before_yod]
+time = -100
+name = "t/d palatalize before yod (t → tsʲ, d → ɟ)"
+definition = "(t̪|d̪) → (t͡sʲ|ɟ) / _ [aperture: high, +front, syllabic: -, +continuant]"
+
+[cl_k_gemination_before_yod_vowel]
+time = -100
+name = "k geminates (as palatal cc) intervocalically before yod + vowel"
+definition = "k → c c / [+syllabic] _ ʝ [+syllabic]"
+
+[cl_velar_fronting_second_palatalization]
+time = -100
+name = "a velar stop fronts before a following front non-low continuant (second palatalization trigger)"
+definition = "[aperture: high, +back, -continuant, nasal: none] → [+front] / _ [+continuant, aperture: !low, +front, lateral: none]"
+
+[cl_back_front_cleanup]
+time = -100
+name = "a segment marked both back and front loses the back specification"
+definition = "[+back, +front] → [back: none]"
+
+[cl_k_assim_before_c]
+time = -100
+name = "k assimilates to a following palatal c"
+definition = "k → c / _ c"
+
+[cl_c_depalatalization]
+time = -100
+name = "palatal c depalatalizes back to k in a specific stressed-antepenult context"
+description = "\"@\" in the source marks \"not word-final\"; here rendered as an exception"
+definition = "c → k / [+back, stress: primary] _ [aperture: mid, +front, +syllabic, stress: none] (t̪|r|l) // [+back, stress: primary] _ [aperture: mid, +front, +syllabic, stress: none] (t̪|r|l) #"
+
+[cl_lateral_loss_before_nasal_yod]
+time = -100
+name = "a lateral is lost before a nasal + yod"
+definition = "[+lateral] → ∅ / _ [+nasal] ʝ"
+
+[cl_voiced_stop_spirantization]
+time = -100
+name = "a voiced high stop/affricate spirantizes after a vowel before a sonorant or yod"
+definition = "[-continuant, aperture: high, +voice, nasal: none] → [+continuant] / [-consonantal] _ ([+sonorant, lateral: none, nasal: none]|ʝ)"
+
+# --- Late Latin (Pope p73 s155-5iv ff.) ---
+
+[ll_yod_absorption]
+time = 300
+name = "yod absorbed into a preceding palatalized consonant"
+definition = "ʝ → ∅ / [-continuant, aperture: high, +front, nasal: none] _"
+
+[ll_mnj_to_mmj]
+time = 300
+name = "n assimilates to a preceding m before yod (mnj > mmj)"
+description = "bleeds the following n+yod palatalization"
+definition = "n̪ → m / m _ ʝ"
+
+[ll_n_palatalization]
+time = 300
+name = "the coronal nasal palatalizes before yod"
+description = "Pope p131 s311"
+definition = "n̪ [aperture: high, +front, syllabic: -, +voice, +continuant] → ɲ"
+
+[ll_ll_palatalization]
+time = 300
+name = "ll palatalizes to ʎ before yod"
+description = "Pope p131 s312"
+definition = "l l ʝ → ʎ"
+
+[ll_l_palatalization]
+time = 300
+name = "l palatalizes to ʎ before yod"
+definition = "l ʝ → ʎ"
+
+[ll_syncope_after_bhw]
+time = 300
+name = "unstressed vowels deleted between the labiovelar fricative and a coronal stop"
+description = "even when not penultimate, unlike Pope's s353"
+definition = "[stress: none, +syllabic] → ∅ / [+syllabic] βʷ _ [+lingual, +front, -continuant, nasal: none, trill: none]"
+
+[ll_e_to_schwa_glide]
+time = 300
+name = "e becomes a schwa-glide between an unrounded labial and a dental/postalveolar fricative + non-low vowel"
+description = "Pope s353 broadened (2024 correction) to all positions except pretonic"
+definition = "e → ə̯ / [rounded: none] [+labial] _ (θ|ð|ʃ|ʒ) [aperture: !low, +syllabic]"
+
+[ll_e_deletion]
+time = 300
+name = "e deleted between a non-nasal non-syllabic segment and a dental/postalveolar fricative + non-primary-stressed vowel"
+definition = "e → ∅ / [nasal: none, -syllabic] _ (θ|ð|ʃ|ʒ) [stress: !primary, +syllabic]"
+
+[ll_n_to_m_after_p]
+time = 300
+name = "n becomes m after p (carpinum-type: charme)"
+description = "Pope covers it but doesn't attribute it to Late Latin"
+definition = "n̪ → m / p _"
+
+[ll_n_to_r_after_d]
+time = 300
+name = "n becomes r after d (earliest flapping, e.g. Londres, ordre)"
+description = "bleeds s365; modeled regularly though Pope attributes it to non-phonological factors"
+definition = "n̪ → r / d̪ _"
+
+[ll_cluster_reduction_1]
+time = 300
+name = "a stop is deleted internal to a cluster, before a non-high obstruent"
+description = "Pope s365 — deletion of plosives internal to a cluster not ending in l or r; earliest implementation, before Gallo-Roman"
+definition = "[-continuant, nasal: none, trill: none] → ∅ / [+consonantal] _ [-sonorant, aperture: !high]"
+
+[ll_cluster_reduction_2]
+time = 300
+name = "a stop is deleted internal to a cluster, before a high stop"
+definition = "[-continuant, nasal: none, trill: none] → ∅ / [+consonantal] _ [-continuant, nasal: none, aperture: high]"
+
+[ll_sk_reduction_before_l]
+time = 300
+name = "k is lost in an sk cluster before l"
+description = "Pope s365i, additional velar deletion in rgl/skl; earlier than Pope explicitly states"
+definition = "k → ∅ / s _ l"
+
+[ll_rg_reduction_before_l]
+time = 300
+name = "g is lost in an rg cluster before l"
+definition = "g → ∅ / r _ l"
+
+[ll_intervocalic_lenition]
+time = 300
+name = "a voiced stop lenites to a continuant intervocalically or before a non-nasal sonorant"
+description = "Pope p73 s155iia, pp136-137 ss332-336, p6 s9 — unified 2024 into one rule"
+definition = "[-continuant, +voice, nasal: none, trill: none] → [+continuant] / [+syllabic] _ [+sonorant, nasal: none]"
+
+[ll_devoicing_before_voiceless_anterior]
+time = 300
+name = "an anterior obstruent devoices before a voiceless anterior consonant"
+description = "Pope s353"
+definition = "[+anterior, +consonantal, -sonorant] → [-voice] / _ [-voice, +anterior]"
+
+[ll_progressive_devoicing]
+time = 300
+name = "an anterior obstruent devoices after a stressed vowel + voiceless anterior consonant"
+description = "2024 correction — progressive posttonic devoicing, any voiceless anterior consonant"
+definition = "[+anterior, +consonantal, -sonorant] → [-voice] / [stress: primary, +syllabic] [-voice, +anterior] _"
+
+[ll_countertonic_i_to_e]
+time = 300
+name = "secondary-stressed i lowers to e under influence of a later primary-stressed high tense vowel"
+description = "Pope s156vi s127 — a \"tendency\", undated"
+definition = "ˌi → ˌe / _ ([-syllabic])* [aperture: high, rounded: none, stress: primary, +syllabic, advancement: atr]"
+
+[ll_yod_loss_after_m]
+time = 300
+name = "yod lost word-initially after m"
+description = "2025 correction — Occitano-Romance, Franco-Provençal, and Oïl"
+definition = "ʝ → ∅ / # m _"
+
+[ll_stressed_vowel_lengthening_final]
+time = 300
+name = "a stressed vowel lengthens word-finally"
+description = "Pope p73 s154ii — length returns for stressed vowels in open contexts"
+definition = "[stress: primary, +syllabic] → [length: long] / _ #"
+
+[ll_stressed_vowel_lengthening_hiatus]
+time = 300
+name = "a stressed vowel lengthens before another vowel"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+syllabic]"
+
+[ll_stressed_vowel_lengthening_open_syllable]
+time = 300
+name = "a stressed vowel lengthens before a single consonant + glide"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+consonantal] [-consonantal]"
+
+[ll_stressed_vowel_lengthening_stop_liquid]
+time = 300
+name = "a stressed vowel lengthens before a plosive + non-nasal sonorant (muta cum liquida)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [-continuant, nasal: none, trill: none] [+consonantal, +sonorant, nasal: none]"
+
+[ll_stressed_vowel_lengthening_bvr]
+time = 300
+name = "a stressed vowel lengthens before a voiced labial + r + vowel + word end"
+description = "chevre, couleuvre, levre, fievre-type; Pope only stipulates plosive + r is free, neglecting that b had already become fricative"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+labial, +voice] r [+syllabic] #"
+
+[ll_stressed_vowel_lengthening_monosyllable]
+time = 300
+name = "a stressed vowel lengthens in a monosyllable before a final consonant"
+definition = "[stress: primary, +syllabic] → [length: long] / # ([-syllabic])* _ [+consonantal] #"
+
+# --- Early Gallo-Roman (Pope s163, 6th-7th centuries) ---
+
+[egr_we_syncope]
+time = 500
+name = "we deleted unstressed after a vowel+velar consonant, before a consonant+vowel, in longer words"
+description = "aquila > aille, sanguisuga > sangsue; FrPr and northern Occitano-Romance, not southern"
+definition = "w e → ∅ / [+syllabic] ([-syllabic])* [aperture: high, +back, +consonantal] _ [+consonantal] ([-syllabic])* [+syllabic]"
+
+[egr_sk_metathesis]
+time = 500
+name = "intervocalic sk metathesizes to ks before a word-final tense round vowel"
+description = "Pope s325ii, precedes s325i"
+definition = "s k → k s / [+syllabic] _ [+syllabic, advancement: atr, +rounded] #"
+
+[egr_velar_stop_spirantization_before_coronal]
+time = 500
+name = "a velar stop spirantizes after a vowel/glide before a coronal consonant"
+description = "Pope failed to specify this occurs after nonconsonantal sounds"
+definition = "[aperture: high, +back, -continuant, nasal: none] → [+continuant] / [-consonantal] _ [+lingual, +front, +consonantal]"
+
+[egr_velar_stop_spirantization_before_ly]
+time = 500
+name = "a velar stop spirantizes after a vowel/glide before ʎ"
+description = "Pope s407 — cuilliere"
+definition = "[aperture: high, +back, -continuant, nasal: none] → [+continuant] / [-consonantal] _ ʎ"
+
+[egr_k_to_x_before_w_glide]
+time = 500
+name = "intervocalic k spirantizes to x before w + glide (qu-)"
+description = "Pope s327-330, s186-188; 2024 correction extends to before glides"
+definition = "k → x / [+syllabic] _ w [-consonantal]"
+
+[egr_lw_to_ll]
+time = 500
+name = "lw becomes ll after a rounded vowel/glide, before a non-consonantal segment"
+description = "Pope s374ii"
+definition = "[+lateral] [syllabic: -, +continuant, +rounded] → l l / [-consonantal, +rounded] _ [-consonantal]"
+
+[egr_sw_to_ss]
+time = 500
+name = "sw becomes ss everywhere"
+description = "Pope s374ii"
+definition = "s w → s s"
+
+[egr_s_loss_word_initial_before_s]
+time = 500
+name = "word-initial s lost before s"
+definition = "s → ∅ / # _ s"
+
+[egr_gh_loss_before_tense_round]
+time = 500
+name = "the early Gallo-Roman velar fricative is lost before a tense round vowel"
+description = "Pope p138-139 s341"
+definition = "ɣ → ∅ / _ [advancement: atr, +rounded, +syllabic]"
+
+[egr_gh_loss_between_high_round_and_low]
+time = 500
+name = "the velar fricative is lost between a high round vowel and a low vowel"
+definition = "ɣ → ∅ / [aperture: high, +rounded, +syllabic] _ [aperture: low, +syllabic]"
+
+[egr_gh_to_bhw]
+time = 500
+name = "the velar fricative becomes a labialized bilabial fricative between o and a low vowel"
+definition = "ɣ → βʷ / [+rounded, aperture: !high, +back, +syllabic] _ [aperture: low, +syllabic]"
+
+[egr_gh_loss_before_r_stressed]
+time = 500
+name = "the velar fricative is lost between a front-mid vowel and stressed r"
+description = "Pope s323 — stated for /e/, extended to /ɛ/ (peregrinum)"
+definition = "ɣ → ∅ / [+front, aperture: mid, +syllabic] _ r [stress: primary]"
+
+[egr_bh_to_w_before_w]
+time = 500
+name = "the bilabial fricative becomes w before another w"
+description = "Pope s374ii — first round; will recur"
+definition = "β → w / _ w"
+
+[egr_bh_loss_after_low_before_labial_vowel]
+time = 500
+name = "the bilabial fricative is lost after a (non-initial) low vowel before a labial vowel"
+description = "Pope p78 s163.7, p139 s343 — not word-initially"
+definition = "β → ∅ / [aperture: low, +syllabic] _ [+labial, +syllabic] // # [aperture: low, +syllabic] _ [+labial, +syllabic]"
+
+[egr_bh_loss_after_tonic_u]
+time = 500
+name = "the bilabial fricative is lost after tonic u"
+definition = "β → ∅ / [stress: primary, aperture: high, +rounded, +back, +syllabic] _"
+
+[egr_ph_loss_between_consonants]
+time = 500
+name = "the voiceless bilabial fricative (plain or labialized) is lost between consonants"
+definition = "(ɸ|ɸʷ) → ∅ / [+consonantal] _ [+consonantal]"
+
+[egr_ica_e_loss_after_voiceless]
+time = 500
+name = "e lost in -ica- endings after a voiceless consonant, before k + low vowel"
+description = "Pope s352 — voiceless outcome"
+definition = "e → ∅ / [-voice] _ k [aperture: low, +syllabic]"
+
+[egr_ica_e_loss_after_stressed_low]
+time = 500
+name = "e lost in -ica- endings after a stressed low vowel + optional l + consonant, before k + non-primary low vowel"
+definition = "e → ∅ / [aperture: low, stress: primary, +syllabic] l? [+consonantal] _ k [aperture: low, stress: !primary, +syllabic]"
+
+[egr_k_voicing]
+time = 500
+name = "k voices to g intervocalically"
+description = "Pope p137 s335-336, p77 s163-5 — began 5th c., general by 6th c.; includes gw > ɣw (s329)"
+definition = "k → g / [-consonantal] _ [+syllabic]"
+
+[egr_ica_e_loss_voiced_outcome]
+time = 500
+name = "e lost in -ica- endings before the now-voiced g + low vowel"
+description = "2024 correction — voiced outcome of the -ika- rule"
+definition = "e → ∅ / _ g [aperture: low, +syllabic]"
+
+[egr_syncope_between_r_and_back_stressed]
+time = 500
+name = "unstressed mid front vowel syncopates between (front vowel + r) and (consonant + back stressed vowel)"
+description = "verecundiam, caerefolium"
+definition = "[+front, +syllabic, aperture: mid, stress: none] → ∅ / [+front, aperture: mid, stress: secondary, +syllabic] r _ [+consonantal] [+back, stress: primary, +syllabic]"
+
+[egr_g_spirantization_recurrence]
+time = 500
+name = "g spirantizes to ɣ intervocalically (recurrence)"
+description = "Pope s333i"
+definition = "g → ɣ / [-consonantal] _ [-consonantal]"
+
+[egr_fricative_voicing]
+time = 500
+name = "a voiceless fricative voices intervocalically"
+description = "Pope s334ii — must precede first palatalization of s/z"
+definition = "[+continuant, -sonorant] → [+voice] / [-consonantal] _ [+syllabic]"
+
+[egr_fricative_voicing_before_yod]
+time = 500
+name = "a voiceless fricative voices before yod + a non-consonantal segment"
+definition = "[+continuant, -sonorant] → [+voice] / [-consonantal] _ ʝ [-consonantal]"
+
+[egr_y_mutation]
+time = 500
+name = "a non-round non-high stressed vowel backs and rounds before a velar continuant + high round + non-back sequence"
+description = "2024 correction — unifies several of Pope's separately-timed rules into one \"y-mutation\" phenomenon"
+definition = "[stress: primary, rounded: none, aperture: !high, +syllabic] → [aperture: mid, front: none, +back, +rounded, +labial] / _ [+back, +continuant, anterior: none, nasal: none] [aperture: high, +rounded] [back: none]"
+
+[egr_mid_vowel_raising_before_final_i]
+time = 500
+name = "a stressed tense mid vowel raises to a high front vowel before word-final i"
+definition = "[stress: primary, advancement: atr, aperture: mid, +syllabic] → [aperture: high, +front] / _ ([-syllabic])* i #"
+
+[egr_h_loss_unconditional]
+time = 500
+name = "h lost unconditionally (any remaining h)"
+definition = "h → ∅"
+
+[egr_l_darkening_intervocalic]
+time = 500
+name = "l darkens after a vowel/glide before a non-lateral consonant"
+definition = "l → ɫ / [-consonantal] _ [+consonantal, lateral: none]"
+
+[egr_palatalization_ng_l_s]
+time = 500
+name = "ŋ/ɫ/s palatalize before a complex palatal-triggering sequence"
+definition = "(ŋ|ɫ|s) → [aperture: high, +front, back: none] / _ [-continuant, aperture: high, +front, nasal: none] [stress: none, +front] [+lingual, +front, +consonantal, lateral: none] ([-syllabic])* [+syllabic] ([-syllabic])* #"
+
+[egr_e_loss_before_coronal_sonorant]
+time = 500
+name = "ɛ lost before a coronal non-nasal sonorant + vowel, near the end of the word"
+definition = "[+syllabic, +front, aperture: mid, rounded: none, advancement: rtr, stress: none] → ∅ / _ [+lingual, +front, +sonorant, nasal: none] ([-syllabic])* [+syllabic] ([-syllabic])* #"
+
+[egr_n_bh_to_mb]
+time = 500
+name = "n + voiced labial fricative becomes mb before a lateral"
+definition = "n̪ (β|v) → m b / _ [+lateral]"
+
+[egr_bh_loss_after_nonlabial_before_r]
+time = 500
+name = "a voiced labial fricative is lost after a non-labial non-high consonant before r"
+definition = "(β|v) → ∅ / [+consonantal, labial: none, aperture: !high] _ r"
+
+[egr_b_epenthesis_after_m]
+time = 500
+name = "b epenthesized between m and a coronal non-nasal sonorant glide"
+definition = "∅ → b / m _ [+lingual, +front, nasal: none, +sonorant, syllabic: -]"
+
+[egr_d_epenthesis_after_lateral]
+time = 500
+name = "d epenthesized between a lateral and r"
+definition = "∅ → d̪ / [+lateral] _ r"
+
+[egr_d_epenthesis_zr]
+time = 500
+name = "d epenthesized between z and r"
+definition = "∅ → d̪ / z _ r"
+
+[egr_d_epenthesis_nr]
+time = 500
+name = "d epenthesized between n and r"
+definition = "∅ → d̪ / n̪ _ r"
+
+[egr_t_epenthesis_sr]
+time = 500
+name = "t epenthesized between s and r"
+definition = "∅ → t̪ / s _ r"
+
+[egr_palatal_stop_spirantization_before_distributed]
+time = 500
+name = "a palatal stop spirantizes before a dental/postalveolar fricative"
+definition = "(c|ɟ) → (ç|ʝ) / _ (θ|ð|ʃ|ʒ)"
+
+[egr_palatal_stop_to_dental_before_nonfront]
+time = 500
+name = "a palatal stop becomes a dental fricative before a non-front consonant"
+definition = "[-continuant, aperture: high, +front, nasal: none] → [aperture: none, front: none, back: none, +lingual, +dental] / _ [+consonantal, front: none]"
+
+[egr_closed_syllable_shortening]
+time = 500
+name = "a vowel shortens before a consonant cluster"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] [+consonantal]"
+
+[egr_stressed_vowel_lengthening_final]
+time = 500
+name = "a stressed vowel lengthens word-finally"
+definition = "[stress: primary, +syllabic] → [length: long] / _ #"
+
+[egr_stressed_vowel_lengthening_open_syllable]
+time = 500
+name = "a stressed vowel lengthens before an optional consonant + vowel"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+consonantal]? [+syllabic]"
+
+[egr_stressed_vowel_lengthening_stop_liquid]
+time = 500
+name = "a stressed vowel lengthens before a plosive + non-nasal sonorant"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [-continuant, nasal: none, trill: none] [+consonantal, +sonorant, nasal: none]"
+
+[egr_stressed_vowel_lengthening_labial_r]
+time = 500
+name = "a stressed vowel lengthens before a voiced labial + r + vowel + word end"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+labial, +voice] r [+syllabic] #"
+
+[egr_stressed_vowel_lengthening_monosyllable]
+time = 500
+name = "a stressed vowel lengthens in a monosyllable before a final consonant"
+definition = "[stress: primary, +syllabic] → [length: long] / # ([-syllabic])* _ [+consonantal] #"
+
+[egr_bhw_phw_delabialization]
+time = 500
+name = "labialized bilabial fricatives delabialize"
+definition = "(βʷ|ɸʷ) → (β|ɸ)"
+
+[egr_yod_loss_after_countertonic_e]
+time = 500
+name = "yod lost after secondary-stressed e before a vowel"
+definition = "ʝ → ∅ / ˌe _ [+syllabic]"
+
+[egr_countertonic_mid_backvowel_tensing_before_geminate_yod]
+time = 500
+name = "secondary-stressed ɛ/ɔ become tense before geminate yod"
+description = "Pope — ɛ/ɔ tense to e/o before geminate yod"
+definition = "(ˌɛ|ˌɔ) → [advancement: atr] / _ ʝ ʝ"
+
+[egr_yod_degemination]
+time = 500
+name = "yod degeminates (lost before another yod)"
+definition = "ʝ → ∅ / _ ʝ"
+
+[egr_e_lengthening_after_highfront_before_coronal]
+time = 500
+name = "stressed e lengthens after a high-front consonant, before a coronal + yod/coronal"
+definition = "ˈe → ˈeː / [aperture: high, +front, +consonantal] _ [+lingual, +front] (ʝ|[+lingual, +front, nasal: none])"
+
+[egr_ee_raising_after_highfront_consonant]
+time = 500
+name = "stressed eː raises to iː after a high-front consonant"
+definition = "ˈeː → ˈiː / [+consonantal, aperture: high, +front] _"
+
+[egr_xn_to_ngny]
+time = 500
+name = "xn becomes ŋɲ"
+definition = "x n̪ → ŋ ɲ"
+
+[egr_prenasal_raising]
+time = 500
+name = "a round non-high vowel becomes tense, high, and nasalized before a nasal"
+definition = "[+rounded, aperture: !high, +syllabic] → [advancement: atr, aperture: high, +nasal] / _ [+nasal]"
+
+[egr_long_mid_diphthongization_1]
+time = 500
+name = "long stressed ɛː/ɔː diphthongize to ie̯/uo̯"
+definition = "(ˈɛː|ˈɔː) → (ˈi e̯|ˈu o̯)"
+
+[egr_k_spirantization_word_final]
+time = 500
+name = "k spirantizes to x intervocalically word-finally"
+definition = "k → x / [+syllabic] _ #"
+
+[egr_n_palatalization_before_yod]
+time = 500
+name = "a non-labial nasal palatalizes before a voiced high-front non-nasal consonant"
+definition = "[+nasal, labial: none] → ɲ / _ [+consonantal, aperture: high, +front, +voice, nasal: none]"
+
+[egr_lateral_palatalization_before_highfront]
+time = 500
+name = "a lateral palatalizes before a high-front consonant"
+definition = "[+lateral] → ʎ / _ [+consonantal, aperture: high, +front]"
+
+[egr_yod_loss_after_ny]
+time = 500
+name = "a high-front glide is lost after a high-front nasal sonorant consonant (ɲ)"
+definition = "[lateral: none, nasal: none, syllabic: -, aperture: high, +front] → ∅ / [aperture: high, +front, +sonorant, +consonantal, +nasal] _"
+
+[egr_ng_palatalization_before_coronal]
+time = 500
+name = "ŋ palatalizes to ɲ before a coronal"
+definition = "ŋ → ɲ / _ [+lingual, +front]"
+
+[egr_yod_hardening_after_rr]
+time = 500
+name = "yod hardens to ɟ after geminate r"
+definition = "ʝ → ɟ / r r _"
+
+[egr_rj_to_rpalatalized]
+time = 500
+name = "r + yod becomes palatalized r"
+definition = "r ʝ → rʲ"
+
+[egr_zj_to_zpalatalized]
+time = 500
+name = "z + yod becomes palatalized z"
+definition = "z ʝ → zʲ"
+
+[egr_sj_geminate_1]
+time = 500
+name = "s + high-front consonant becomes geminate palatalized s"
+definition = "s [aperture: high, +front, +consonantal] → sʲ sʲ"
+
+[egr_sj_geminate_2]
+time = 500
+name = "s + high-front consonant becomes geminate palatalized s (recurrence)"
+definition = "s [aperture: high, +front, +consonantal] → sʲ sʲ"
+
+[egr_sj_triple_simplification]
+time = 500
+name = "palatalized s lost before a geminate palatalized s (prevents a triple geminate)"
+definition = "sʲ → ∅ / _ sʲ sʲ"
+
+[egr_cc_to_tts]
+time = 500
+name = "geminate palatal stop cc becomes t + tsʲ"
+definition = "c c → t̪ t͡sʲ"
+
+[egr_palatal_stop_affrication]
+time = 500
+name = "a palatal stop affricates"
+definition = "(c|ɟ) → (t͡sʲ|d͡ʒ)"
+
+[egr_gh_loss_before_tense_round_prim]
+time = 500
+name = "the velar fricative is lost before a primary-stressed tense round vowel (recurrence)"
+definition = "ɣ → ∅ / _ [advancement: atr, +rounded, stress: primary, +syllabic]"
+
+[egr_gh_loss_after_round_before_low]
+time = 500
+name = "the velar fricative is lost after a rounded non-consonantal segment before a low vowel"
+definition = "ɣ → ∅ / [+rounded, -consonantal] _ [aperture: low, +syllabic]"
+
+[egr_gh_loss_after_round_glide_before_tense_round]
+time = 500
+name = "the velar fricative is lost after a rounded non-syllabic glide before an unstressed tense round vowel"
+definition = "ɣ → ∅ / [+rounded, -consonantal, syllabic: -] _ [advancement: atr, stress: none, +rounded, +syllabic]"
+
+[egr_gh_loss_word_initial_before_tense_round]
+time = 500
+name = "the velar fricative is lost word-initially after a back non-consonantal segment before an unstressed tense round vowel"
+definition = "ɣ → ∅ / # [+back, -consonantal] _ [advancement: atr, stress: none, +rounded, +syllabic]"
+
+[egr_gh_loss_after_obstruent_back_before_tense_round]
+time = 500
+name = "the velar fricative is lost after a non-sonorant + back non-consonantal segment before an unstressed tense round vowel"
+definition = "ɣ → ∅ / [-sonorant] [+back, -consonantal] _ [advancement: atr, stress: none, +rounded, +syllabic]"
+
+[egr_gh_loss_extended_before_tense_round]
+time = 500
+name = "the velar fricative is lost after (non-syllabic-or-boundary) + non-syllabic + back non-consonantal, before an unstressed tense round vowel"
+definition = "ɣ → ∅ / ([-syllabic]|#) [-syllabic] [+back, -consonantal] _ [advancement: atr, stress: none, +rounded, +syllabic]"
+
+[egr_gh_loss_ieo]
+time = 500
+name = "the velar fricative is lost between ie̯ and o"
+definition = "ɣ → ∅ / ˈi e̯ _ o"
+
+[egr_gh_loss_before_long_a]
+time = 500
+name = "the velar fricative is lost after a tense front-mid vowel before long stressed a"
+definition = "ɣ → ∅ / [+front, aperture: mid, advancement: atr, +syllabic] _ ˈɑː"
+
+[egr_stressed_o_raising_final]
+time = 500
+name = "stressed o raises to u word-finally"
+definition = "[+rounded, +back, aperture: !high, advancement: atr, +syllabic, stress: primary] → u / _ #"
+
+[egr_final_high_vowel_glide]
+time = 500
+name = "an unstressed high vowel becomes non-syllabic after a stressed vowel, word-finally"
+definition = "[aperture: high, stress: none, +syllabic] → [syllabic: -] / [stress: primary, +syllabic] _ #"
+
+[egr_tense_front_vowel_loss_before_coronal_long_low]
+time = 500
+name = "an unstressed front tense vowel lost before a coronal + long low vowel"
+definition = "[+front, advancement: atr, aperture: !low, stress: none, +syllabic] → ∅ / _ [+lingual, +front] [aperture: low, length: long, +syllabic]"
+
+[egr_j_epenthesis_before_low]
+time = 500
+name = "j epenthesized after secondary-stressed e before a low vowel"
+definition = "∅ → j / ˌe _ [aperture: low, +syllabic]"
+
+[egr_dh_to_ldark_before_lateral]
+time = 500
+name = "ð becomes dark l after a back segment before a lateral"
+definition = "ð → ɫ / [+back] _ [+lateral]"
+
+[egr_dh_to_l_before_lateral]
+time = 500
+name = "ð becomes l before a lateral (elsewhere)"
+definition = "ð → l / _ [+lateral]"
+
+[egr_ts_affrication]
+time = 500
+name = "t + s becomes the affricate tsʲ"
+definition = "t̪ s → t͡sʲ"
+
+[egr_low_vowel_fronting_default]
+time = 500
+name = "the low vowel fronts by default"
+definition = "[aperture: low, +syllabic] → [+front, back: none]"
+
+[egr_low_vowel_backing_monosyllable]
+time = 500
+name = "the low vowel backs in a bare monosyllable"
+definition = "[aperture: low, +syllabic] → [front: none, +back] / # ([-syllabic])* _ #"
+
+[egr_labial_stop_to_t_before_voiceless_coronal]
+time = 500
+name = "a labial stop becomes t before a voiceless coronal stop"
+definition = "[+labial, nasal: none, rounded: none, -continuant] → t̪ / _ [-continuant, +lingual, +front, -voice, -sonorant]"
+
+[egr_labial_consonant_to_d_before_voiced_coronal]
+time = 500
+name = "a labial consonant becomes d before a voiced coronal stop"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → d̪ / _ [-continuant, +lingual, +front, +voice, -sonorant]"
+
+[egr_labial_consonant_to_s_before_s]
+time = 500
+name = "a labial consonant becomes s before s"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → s / _ s"
+
+[egr_n_to_m_before_m]
+time = 500
+name = "n becomes m before m"
+definition = "n̪ → m / _ m"
+
+[egr_w_to_bh_between_vowels_after_n]
+time = 500
+name = "w becomes the bilabial fricative between vowels, after n(n)"
+definition = "w → β / [+syllabic] n̪? n̪ _ [+syllabic]"
+
+[egr_degemination_n]
+time = 500
+name = "geminate n degeminates after a consonant"
+definition = "n̪ n̪ → n̪ / [+consonantal] _"
+
+[egr_degemination_s]
+time = 500
+name = "geminate s degeminates after a consonant"
+definition = "s s → s / [+consonantal] _"
+
+[egr_degemination_d]
+time = 500
+name = "geminate d degeminates after a consonant"
+definition = "d̪ d̪ → d̪ / [+consonantal] _"
+
+[egr_degemination_t]
+time = 500
+name = "geminate t degeminates after a consonant"
+definition = "t̪ t̪ → t̪ / [+consonantal] _"
+
+[egr_degemination_w]
+time = 500
+name = "geminate w degeminates after a consonant"
+definition = "w w → w / [+consonantal] _"
+
+[egr_degemination_m]
+time = 500
+name = "geminate m degeminates after a consonant"
+definition = "m m → m / [+consonantal] _"
+
+[egr_w_loss_after_nonback_consonant]
+time = 500
+name = "w lost after a non-back consonant"
+definition = "w → ∅ / [+consonantal, back: none] _"
+
+[egr_x_fronting_before_coronal]
+time = 500
+name = "the back high continuant obstruent (x) fronts before a coronal"
+definition = "[+back, aperture: high, +continuant, -sonorant] → [back: none, +front] / _ [+lingual, +front]"
+
+[egr_x_fronting_before_ly]
+time = 500
+name = "the back high continuant obstruent (x) fronts before ʎ"
+definition = "[+back, aperture: high, +continuant, -sonorant] → [back: none, +front] / _ ʎ"
+
+[egr_c_cedilla_to_t_before_ts]
+time = 500
+name = "ç becomes t before the affricate tsʲ"
+definition = "ç → t̪ / _ t͡sʲ"
+
+[egr_c_cedilla_to_s_word_initial]
+time = 500
+name = "ç becomes s word-initially after secondary-stressed ɛ, before s"
+definition = "ç → s / # ˌɛ _ s"
+
+[egr_e_raising_before_c_cedilla]
+time = 500
+name = "secondary-stressed ɛ raises to e before ç"
+definition = "ˌɛ → ˌe / _ ç"
+
+[egr_nasal_loss_after_ny]
+time = 500
+name = "a nasal consonant is lost after ɲ"
+definition = "[+nasal, +consonantal] → ∅ / ɲ _"
+
+[egr_ng_to_ny_before_ny]
+time = 500
+name = "ŋ becomes ɲ before ɲ"
+definition = "ŋ → ɲ / _ ɲ"
+
+[egr_lateral_palatalization_after_highfront]
+time = 500
+name = "a lateral palatalizes after a high-front consonant"
+definition = "[+lateral] → ʎ / [aperture: high, +front, +consonantal] _"
+
+[egr_anterior_coronal_palatalization]
+time = 500
+name = "an anterior non-lateral coronal palatalizes after a high-front consonant"
+definition = "[+lingual, +front, +anterior, lateral: none] → [aperture: high, +front] / [aperture: high, +front, +consonantal] _"
+
+[egr_high_tense_round_centralization]
+time = 500
+name = "a high tense round non-nasal vowel centralizes"
+definition = "[aperture: high, advancement: atr, +rounded, +syllabic, nasal: none] → [front: none, back: none]"
+
+[egr_anterior_coronal_voicing_after_back_yod]
+time = 500
+name = "an anterior coronal voices after a back vowel + yod"
+definition = "[+lingual, +front, +anterior] → [+voice] / [+back, +syllabic] ʝ _ [-consonantal]"
+
+[egr_anterior_coronal_voicing_after_low_yod]
+time = 500
+name = "an anterior coronal voices after a low vowel + yod"
+definition = "[+lingual, +front, +anterior] → [+voice] / [aperture: low, +syllabic] ʝ _ [-consonantal]"
+
+[egr_shortening_before_two_nonsyllabic]
+time = 500
+name = "a vowel shortens before two or more non-syllabic segments + word end"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] ([-syllabic])+ #"
+
+[egr_shortening_before_cluster]
+time = 500
+name = "a vowel shortens before a consonant cluster (recurrence)"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] [+consonantal]"
+
+[egr_nonprimary_shortening]
+time = 500
+name = "a non-primary-stressed vowel shortens"
+definition = "[stress: !primary, +syllabic] → [length: short]"
+
+[egr_lengthening_final_2]
+time = 500
+name = "a stressed vowel lengthens word-finally (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ #"
+
+[egr_lengthening_open_syllable_2]
+time = 500
+name = "a stressed vowel lengthens before an optional consonant + vowel (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+consonantal]? [+syllabic]"
+
+[egr_lengthening_stop_liquid_2]
+time = 500
+name = "a stressed vowel lengthens before a plosive + non-nasal sonorant (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [-continuant, nasal: none, trill: none] [+consonantal, +sonorant, nasal: none]"
+
+[egr_lengthening_labial_r_2]
+time = 500
+name = "a stressed vowel lengthens before a voiced labial + r + vowel (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+labial, +voice] r [+syllabic]"
+
+[egr_lengthening_monosyllable_2]
+time = 500
+name = "a stressed vowel lengthens in a monosyllable before a final consonant (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / # ([-syllabic])* _ [+consonantal] #"
+
+[egr_shortening_before_ly_ny]
+time = 500
+name = "a non-high tense vowel shortens before ʎ/ɲ"
+definition = "[aperture: !high, advancement: atr, +syllabic] → [length: short] / _ (ʎ|ɲ)"
+
+[egr_long_mid_diphthongization_2]
+time = 500
+name = "long stressed ɛː/ɔː diphthongize (recurrence)"
+definition = "(ˈɛː|ˈɔː) → (ˈi e̯|ˈu o̯)"
+
+[egr_short_mid_diphthongization]
+time = 500
+name = "short stressed ɛ/ɔ also diphthongize before a high-front consonant"
+definition = "(ˈɛ|ˈɔ) → (ˈi e̯|ˈu o̯) / _ [+consonantal, aperture: high, +front]"
+
+[egr_o_raising_before_two_highfront]
+time = 500
+name = "secondary-stressed ɔ raises to u before two high-front consonants"
+definition = "ˌɔ → ˌu / _ [+consonantal, aperture: high, +front] [+consonantal, aperture: high, +front]"
+
+[egr_e_diphthongization_before_coronal_stop]
+time = 500
+name = "stressed ɛ diphthongizes to ie̯ before a coronal non-nasal consonant + high-front stop"
+definition = "ˈɛ → ˈi e̯ / _ [+consonantal, +lingual, +front, nasal: none] [+consonantal, aperture: high, +front, -continuant, nasal: none]"
+
+[egr_w_fronting_before_front_vowel]
+time = 500
+name = "the high back consonant w fronts before a front vowel"
+definition = "[aperture: high, +back, +consonantal] → [+front] / _ [+front, +syllabic]"
+
+[egr_nt_to_nasalized_schwa]
+time = 500
+name = "unstressed vowel + n becomes a nasalized schwa before word-final t"
+definition = "[stress: none, +syllabic] n̪ → ə̃ / _ t̪ #"
+
+[egr_hiatus_front_glide]
+time = 500
+name = "an unstressed front non-low vowel becomes a glide in hiatus after a stressed vowel"
+description = "source text garbled here (\"oback\"/\"ofront\"); reconstructed from the prose description — revisit if validation reveals a mismatch"
+definition = "[+front, aperture: !low, +syllabic, stress: none] → [aperture: high, syllabic: -] / [stress: primary, +syllabic] [-consonantal, aperture: !high]? _"
+
+[egr_hiatus_back_glide]
+time = 500
+name = "an unstressed back round non-low vowel becomes a glide in hiatus after a stressed vowel"
+description = "source text garbled here (\"oback\"/\"ofront\"); reconstructed from the prose description — revisit if validation reveals a mismatch"
+definition = "[+back, +rounded, aperture: !low, +syllabic, stress: none] → [aperture: high, syllabic: -] / [stress: primary, +syllabic] [-consonantal, aperture: !high]? _"
+
+[egr_shortening_before_w]
+time = 500
+name = "a vowel shortens before the high back round glide (w)"
+definition = "[+syllabic] → [length: short] / _ [syllabic: -, +back, aperture: high, +rounded]"
+
+[egr_a_to_o_before_w]
+time = 500
+name = "a becomes ɔ before the high back round glide (w), at any stress level"
+definition = "(a|ˌa|ˈa) → (ɔ|ˌɔ|ˈɔ) / _ [syllabic: -, +back, aperture: high, +rounded]"
+
+[egr_countertonic_a_to_e_1]
+time = 500
+name = "secondary-stressed a becomes ɛ after a front consonant, before a non-coronal non-consonantal segment"
+description = "simplified: drops the source's additional \"-nasal\" refinement on the middle segment for tractability"
+definition = "ˌa → ˌɛ / [+consonantal, +front] _ ![+lingual, +front] [-consonantal]"
+
+[egr_countertonic_a_to_e_2]
+time = 500
+name = "secondary-stressed a becomes ɛ after a front consonant, before a nasal + long vowel"
+definition = "ˌa → ˌɛ / [+consonantal, +front] _ [+nasal] [+syllabic, length: long]"
+
+[egr_long_a_to_e_word_initial]
+time = 500
+name = "long stressed aː becomes ɛː word-initially after a front consonant"
+definition = "ˈɑː → ˈɛː / # [+consonantal, +front] _"
+
+[egr_long_a_to_e_before_nonfront]
+time = 500
+name = "long stressed aː becomes ɛː after a front consonant, before a non-front non-nasal consonant"
+definition = "ˈɑː → ˈɛː / [+consonantal, +front] _ [+consonantal, front: none, nasal: none]"
+
+[egr_long_a_to_e_before_rj]
+time = 500
+name = "long stressed aː becomes ɛː after a front consonant, before palatalized r"
+definition = "ˈɑː → ˈɛː / [+consonantal, +front] _ rʲ"
+
+[egr_long_mid_diphthongization_3]
+time = 500
+name = "long stressed ɛː/ɔː diphthongize (final recurrence)"
+definition = "(ˈɛː|ˈɔː) → (ˈi e̯|ˈu o̯)"
+
+# --- Middle Gallo-Roman ---
+# Note: DiaSim's "delrel" (delayed release, marks affricates) has no Fortis equivalent —
+# Fortis represents affricates as distinct letters (t͡s, d͡ʒ, ...) instead. Two source rules
+# whose only effect was clearing "-delrel" (a no-op result in Fortis) are omitted below.
+
+[mgr_yod_loss_before_ly_rj]
+time = 600
+name = "yod lost before ʎ or palatalized r"
+definition = "[aperture: high, +front, lateral: none, syllabic: -] → ∅ / _ (ʎ|rʲ)"
+
+[mgr_back_front_cleanup]
+time = 600
+name = "a segment marked both back and front loses the back specification (recurrence)"
+definition = "[+back, +front] → [back: none]"
+
+[mgr_voiced_stop_spirantization_1]
+time = 600
+name = "a voiced stop spirantizes intervocalically or before r"
+definition = "[-continuant, +voice, nasal: none, trill: none] → [+continuant] / [-consonantal] _ ([-consonantal]|r)"
+
+[mgr_voiced_nonlabial_stop_spirantization_before_lateral]
+time = 600
+name = "a voiced non-labial stop spirantizes before a lateral"
+definition = "[-continuant, labial: none, +voice, nasal: none, trill: none] → [+continuant] / [-consonantal] _ [+lateral]"
+
+[mgr_d_to_edh_before_labial_continuant]
+time = 600
+name = "d becomes ð before a labial continuant consonant"
+definition = "d̪ → ð / _ [+continuant, +labial, +consonantal]"
+
+[mgr_td_spirantization_word_final]
+time = 600
+name = "t/d spirantize word-finally after a vowel"
+definition = "(t̪|d̪) → [+continuant] / [+syllabic] _ #"
+
+[mgr_yod_absorbed_by_palatal_lateral]
+time = 600
+name = "a yod is absorbed by a preceding palatal lateral (ʎj > ʎ)"
+description = "l + yod gives the palatal ʎ, which absorbs the triggering yod — medalia > maille /mɑj/, not *mɑjʒ. Must precede yod-hardening, or the stray yod hardens to ɟ > d͡ʒ > ʒ."
+definition = "(j|ʝ) → ∅ / ʎ _"
+
+[mgr_yod_hardening_medial]
+time = 600
+name = "yod hardens to ɟ word-medially after one or more consonants, before a vowel"
+definition = "(j|ʝ) → ɟ / [+consonantal]+ _ [+syllabic] // # [+consonantal]+ _ [+syllabic]"
+
+[mgr_j_devoicing]
+time = 600
+name = "ɟ devoices to c after a voiceless segment"
+definition = "ɟ → c / [-voice] _"
+
+[mgr_palatal_stop_affrication_postalveolar]
+time = 600
+name = "a palatal stop affricates to a postalveolar affricate"
+definition = "(c|ɟ) → (t͡ʃ|d͡ʒ)"
+
+[mgr_m_to_n_before_dz]
+time = 600
+name = "m becomes n before dʒ"
+definition = "m → n̪ / _ d͡ʒ"
+
+[mgr_stop_assimilation_before_affricate]
+time = 600
+name = "a stop assimilates place to a following affricate (k/tʃ, g/dʒ)"
+definition = "(k t͡ʃ|g d͡ʒ) → (t̪ t͡ʃ|d̪ d͡ʒ)"
+
+[mgr_ee_lowering_before_edh_e_gh]
+time = 600
+name = "stressed eː lowers to ɛː before ð + e + the velar fricative"
+definition = "ˈeː → ˈɛː / _ ð e ɣ"
+
+[mgr_bh_loss_between_back_round_and_front_tense]
+time = 600
+name = "the bilabial fricative is lost between a secondary-stressed round back vowel and a front tense vowel"
+definition = "β → ∅ / (#|[front: none]) [stress: secondary, +rounded, +back, +syllabic] _ [+syllabic, +front, advancement: atr]"
+
+[mgr_a_to_schwa_pretonic]
+time = 600
+name = "an unstressed a becomes schwa before consonants + vowel + optional consonants + word end"
+description = "source (DiaCLEF2025 line ~1160) omits the stress exclusion its own section header implies (\"effacement of unstressed penultimate\"); added to match its sibling non-low rule (mgr_unstressed_nonlow_reduction_1), which does exclude stress in this same environment — without it, a primary-stressed root vowel in a disyllabic word (e.g. annum > an) was spuriously reduced and then deleted"
+definition = "[stress: none, aperture: low, +syllabic] → ə / _ ([-syllabic])+ [+syllabic] ([-syllabic])* #"
+
+[mgr_schwa_restoration_before_distributed]
+time = 600
+name = "schwa restores to a before a dental/postalveolar fricative + vowel"
+definition = "ə → a / _ (θ|ð|ʃ|ʒ) [+syllabic]"
+
+[mgr_unstressed_nonlow_reduction_1]
+time = 600
+name = "an unstressed non-low vowel reduces to schwa before consonants + vowel + optional consonants + word end"
+definition = "[stress: none, aperture: !low, +syllabic] → ə / _ ([-syllabic])+ [+syllabic] ([-syllabic])* #"
+
+[mgr_nonprimary_low_reduction_medial]
+time = 600
+name = "a non-primary-stressed low vowel reduces to schwa word-medially"
+definition = "[stress: !primary, aperture: low, +syllabic] → ə / # ([-syllabic])* [-syllabic] _ [-syllabic] ([-syllabic])* #"
+
+[mgr_unstressed_nonlow_reduction_before_stressed_low]
+time = 600
+name = "an unstressed non-low vowel reduces to schwa before consonants + a primary-stressed low vowel"
+definition = "[stress: none, aperture: !low, +syllabic] → ə / _ ([-syllabic])+ [aperture: low, stress: primary, +syllabic]"
+
+[mgr_aarj_metathesis]
+time = 600
+name = "aːrʲ metathesizes to jɛːr"
+definition = "ˈɑː rʲ → j ˈɛː r / [+syllabic] ([-syllabic])* _ [+syllabic] #"
+
+[mgr_unstressed_nonlow_reduction_before_boundary]
+time = 600
+name = "an unstressed non-low non-nasalized vowel reduces to schwa before a consonant or word end"
+definition = "[stress: none, aperture: !low, +syllabic, nasal: none] → ə / _ ([-syllabic]|#)"
+
+[mgr_unstressed_nonlow_tense_reduction]
+time = 600
+name = "an unstressed non-low tense vowel reduces to schwa unconditionally"
+definition = "[stress: none, aperture: !low, +syllabic, advancement: atr] → ə"
+
+[mgr_labial_loss_before_obstruent]
+time = 600
+name = "a labial consonant is lost between a consonant and an obstruent"
+definition = "[+consonantal, +labial] → ∅ / [+consonantal] _ [-sonorant]"
+
+[mgr_labial_loss_before_nasal]
+time = 600
+name = "a labial consonant is lost between a consonant and a nasal consonant"
+definition = "[+consonantal, +labial] → ∅ / [+consonantal] _ [+nasal, +consonantal]"
+
+[mgr_coronal_sonorant_to_tap_1]
+time = 600
+name = "a coronal sonorant becomes a tap between (velar+schwa) and (schwa + optional s + word end)"
+definition = "[+sonorant, +lingual, +front] → ɾ / [-sonorant, labial: none, strident: none, front: none] ə _ ə s? #"
+
+[mgr_n_to_tap_between_r_schwa]
+time = 600
+name = "n becomes a tap between r(+schwa) and schwa"
+definition = "n̪ → ɾ / r ə? _ ə"
+
+[mgr_coronal_sonorant_vowel_to_tap_schwa]
+time = 600
+name = "a non-high coronal sonorant + unstressed vowel becomes tap + schwa between a vowel and a continuant consonant + sonorant"
+definition = "[+lingual, +front, +sonorant, aperture: !high] [+syllabic, stress: none] → ɾ ə / [+syllabic] _ [+consonantal, +continuant, lingual: none] [+sonorant, lateral: none, aperture: !high]"
+
+[mgr_schwa_desyllabification]
+time = 600
+name = "schwa becomes non-syllabic"
+definition = "ə → ə̯"
+
+[mgr_tap_schwa_to_r]
+time = 600
+name = "tap + non-syllabic schwa becomes r after a front non-low vowel (+ optional r)"
+definition = "ɾ ə̯ → r / [+front, aperture: !low, +syllabic] r? _"
+
+[mgr_tap_to_l_before_schwa_voiced]
+time = 600
+name = "a tap becomes l before a non-syllabic schwa + voiced consonant"
+definition = "ɾ → l / _ ə̯ [+consonantal, +voice]"
+
+[mgr_schwa_r_metathesis_final]
+time = 600
+name = "non-syllabic schwa + r/tap metathesizes word-finally"
+definition = "(ə̯ r|ə̯ ɾ) → (r ə̯|ɾ ə̯) / _ #"
+
+[mgr_fricative_gemination_after_coronal_schwa]
+time = 600
+name = "a fricative geminates/hardens after a coronal sonorant + non-syllabic schwa, before consonants + a tense non-low glide"
+definition = "(ɣ|t͡sʲ|β|v) → (g g|t̪ t͡sʲ|f|f) / [+lingual, +front, +sonorant] ə̯ _ ([-syllabic])* [-consonantal, advancement: atr, aperture: !low]"
+
+[mgr_schwa_restoration_after_lateral]
+time = 600
+name = "non-syllabic schwa restores to schwa after a lateral, before an optional obstruent (+ optional schwa) + non-nasal coronal sonorant"
+definition = "ə̯ → ə / [+lateral] _ [-sonorant]? ə̯? [+sonorant, +lingual, +front, nasal: none]"
+
+[mgr_schwa_restoration_after_stressed]
+time = 600
+name = "non-syllabic schwa restores after a stressed vowel + optional consonants + a non-anterior consonant or fricative + sonorant"
+definition = "ə̯ → ə / [stress: !none] ([-syllabic])* ([+consonantal, anterior: none]|(θ|ð|ʃ|ʒ)) [+sonorant] _"
+
+[mgr_schwa_restoration_before_front_sonorant]
+time = 600
+name = "non-syllabic schwa restores before a front sonorant consonant"
+definition = "ə̯ → ə / _ [+front, +consonantal, +sonorant]"
+
+[mgr_schwa_desyllabification_before_rj]
+time = 600
+name = "schwa becomes non-syllabic before palatalized r"
+definition = "ə → ə̯ / _ rʲ"
+
+[mgr_schwa_restoration_m_tsj_prim]
+time = 600
+name = "non-syllabic schwa restores after m before tsʲ + primary stress"
+definition = "ə̯ → ə / m _ t͡sʲ [+syllabic, stress: primary]"
+
+[mgr_schwa_restoration_before_three_consonants]
+time = 600
+name = "non-syllabic schwa restores before three consonants"
+definition = "ə̯ → ə / _ [+consonantal] [+consonantal] [+consonantal]"
+
+[mgr_schwa_restoration_before_nasal_obstruent]
+time = 600
+name = "non-syllabic schwa restores before a nasal consonant + obstruent"
+definition = "ə̯ → ə / _ [+nasal, +consonantal] [-sonorant]"
+
+[mgr_schwa_restoration_after_nonstrident_coronal]
+time = 600
+name = "non-syllabic schwa restores after a non-strident coronal before the velar fricative"
+definition = "ə̯ → ə / [+lingual, +front, strident: none] _ ɣ"
+
+[mgr_schwa_restoration_after_dental_schwa_gh]
+time = 600
+name = "non-syllabic schwa restores after a dental fricative + schwa + the velar fricative"
+definition = "ə̯ → ə / (θ|ð) ə ɣ _"
+
+[mgr_schwa_restoration_after_cons_w]
+time = 600
+name = "non-syllabic schwa restores after a consonant + w, before a consonant"
+definition = "ə̯ → ə / [+consonantal] w _ [+consonantal]"
+
+[mgr_schwa_restoration_after_cons_p]
+time = 600
+name = "non-syllabic schwa restores after a consonant + p, before a stop + optional consonants + primary stress"
+definition = "ə̯ → ə / [+consonantal] p _ [-continuant, nasal: none, trill: none] ([-syllabic])* [+syllabic, stress: primary]"
+
+[mgr_schwa_restoration_after_postalveolar_affricate]
+time = 600
+name = "non-syllabic schwa restores after a postalveolar affricate"
+definition = "ə̯ → ə / (t͡ʃ|d͡ʒ) _"
+
+[mgr_schwa_lowering_word_initial_before_s]
+time = 600
+name = "non-syllabic schwa lowers to e word-initially before consonants + s + word end"
+definition = "ə̯ → e / # ([-syllabic])+ _ s #"
+
+[mgr_schwa_restoration_after_schwa]
+time = 600
+name = "non-syllabic schwa restores after another non-syllabic schwa + optional consonants, word-finally"
+definition = "ə̯ → ə / ə̯ ([-syllabic])* _ #"
+
+[mgr_schwa_restoration_monosyllable]
+time = 600
+name = "non-syllabic schwa restores in a bare monosyllable"
+definition = "ə̯ → ə / # ([-syllabic])* _ #"
+
+[mgr_schwa_restoration_after_stop_r]
+time = 600
+name = "non-syllabic schwa restores after a stop + r, before a consonant"
+definition = "ə̯ → ə / [-continuant, nasal: none, trill: none] r _ [+consonantal]"
+
+[mgr_schwa_restoration_after_cons_l]
+time = 600
+name = "non-syllabic schwa restores after a non-lateral consonant + l, before a consonant"
+definition = "ə̯ → ə / [lateral: none, +consonantal] l _ [+consonantal]"
+
+[mgr_schwa_lj_to_schwa_ly]
+time = 600
+name = "non-syllabic schwa + lj becomes schwa + ʎ between stops"
+definition = "ə̯ l j → ə ʎ / [-continuant, nasal: none, trill: none] ə̯? [-continuant, nasal: none, trill: none] _"
+
+[mgr_schwa_restoration_complex]
+time = 600
+name = "non-syllabic schwa restores after a consonant (+optional schwa) + stop, before consonant + non-syllabic + primary stress"
+definition = "ə̯ → ə / [+consonantal] ə̯? [-continuant, nasal: none, trill: none] _ [+consonantal] [-syllabic] [+syllabic, stress: primary]"
+
+[mgr_schwa_loss_elsewhere]
+time = 600
+name = "non-syllabic schwa is lost elsewhere"
+definition = "ə̯ → ∅"
+
+[mgr_i_epenthesis_after_tsj]
+time = 600
+name = "i epenthesized after tsʲ before continuant consonants + primary stress"
+definition = "∅ → i / t͡sʲ _ ([+consonantal, +continuant])+ [+syllabic, stress: primary]"
+
+[mgr_schwa_epenthesis_after_back_stop_w]
+time = 600
+name = "schwa epenthesized after a back stop + w, word-finally"
+definition = "∅ → ə / [-continuant, nasal: none, trill: none, +back] w _ #"
+
+[mgr_w_loss_after_consonant_final]
+time = 600
+name = "w lost after a consonant, word-finally"
+definition = "w → ∅ / [+consonantal] _ #"
+
+[mgr_dts_to_dz]
+time = 600
+name = "d + tsʲ becomes dz before schwa"
+definition = "d̪ t͡sʲ → d͡z / _ ə"
+
+[mgr_edh_hardening_after_lateral]
+time = 600
+name = "ð (plain or palatalized) hardens to d after a lateral"
+definition = "(ð|ðʲ) → (d̪|d̪ʲ) / [+lateral] _"
+
+[mgr_edh_hardening_after_labial_stop]
+time = 600
+name = "ð (plain or palatalized) hardens to d after a labial stop"
+definition = "(ð|ðʲ) → (d̪|d̪ʲ) / [-continuant, nasal: none, trill: none, +labial] _"
+
+[mgr_edh_loss_after_consonant]
+time = 600
+name = "ð (plain or palatalized) is lost after a consonant elsewhere"
+definition = "(ð|ðʲ) → ∅ / [+consonantal] _"
+
+[mgr_bh_hardening_before_lateral]
+time = 600
+name = "the bilabial fricative hardens to b before a lateral"
+definition = "β → b / _ l"
+
+[mgr_k_loss_before_tsj]
+time = 600
+name = "k is lost before tsʲ"
+definition = "k → ∅ / _ t͡sʲ"
+
+[mgr_anterior_coronal_voicing_after_voiced_labial]
+time = 600
+name = "an anterior coronal voices after a non-high voiced labial consonant, before a voiced segment"
+definition = "[+lingual, +front, +anterior] → [+voice] / [+labial, +voice, aperture: !high, +consonantal, nasal: none] _ [+voice]"
+
+[mgr_anterior_coronal_voicing_after_back_yod_2]
+time = 600
+name = "an anterior coronal voices after a back vowel + yod (recurrence)"
+definition = "[+lingual, +front, +anterior] → [+voice] / [+back, +syllabic] ʝ _ [-consonantal]"
+
+[mgr_anterior_coronal_voicing_after_low_yod_2]
+time = 600
+name = "an anterior coronal voices after a low vowel + yod (recurrence)"
+definition = "[+lingual, +front, +anterior] → [+voice] / [aperture: low, +syllabic] ʝ _ [-consonantal]"
+
+[mgr_yh_weakening_word_final]
+time = 600
+name = "ʝ weakens to j before optional consonants + word end"
+definition = "ʝ → j / _ ([-syllabic])* #"
+
+[mgr_schwa_epenthesis_after_obstruent_sonorant]
+time = 600
+name = "schwa epenthesized after an obstruent + sonorant consonant, before optional consonants + word end"
+definition = "∅ → ə / [+consonantal, -sonorant] [+sonorant, +consonantal] _ ([+consonantal])* #"
+
+[mgr_schwa_epenthesis_after_nonnasal_nasal]
+time = 600
+name = "schwa epenthesized after a non-nasal consonant + nasal consonant, word-finally"
+definition = "∅ → ə / [+consonantal, nasal: none] [+consonantal, +nasal] _ #"
+
+[mgr_schwa_epenthesis_after_ny]
+time = 600
+name = "schwa epenthesized after a consonant + ɲ, word-finally"
+definition = "∅ → ə / [+consonantal] ɲ _ #"
+
+[mgr_schwa_epenthesis_after_affricate]
+time = 600
+name = "schwa epenthesized after a postalveolar affricate, word-finally"
+definition = "∅ → ə / (t͡ʃ|d͡ʒ) _ #"
+
+[mgr_schwa_epenthesis_after_cons_l]
+time = 600
+name = "schwa epenthesized after a non-lateral consonant + l, word-finally"
+definition = "∅ → ə / [lateral: none, +consonantal] l _ #"
+
+[mgr_schwa_epenthesis_after_mm]
+time = 600
+name = "schwa epenthesized after mm, word-finally"
+definition = "∅ → ə / m m _ #"
+
+[mgr_schwa_epenthesis_after_labial_coronal]
+time = 600
+name = "schwa epenthesized after a labial consonant + coronal, word-finally"
+definition = "∅ → ə / [+consonantal, +labial] [+lingual, +front] _ #"
+
+[mgr_d_epenthesis_schwa_final]
+time = 600
+name = "a voiced anterior stop becomes t + schwa after a voiceless segment, word-finally"
+definition = "d̪ → t̪ ə / [-voice] _ #"
+
+[mgr_schwa_epenthesis_after_dt]
+time = 600
+name = "schwa epenthesized after dt, word-finally"
+definition = "∅ → ə / d̪ t̪ _ #"
+
+[mgr_e_epenthesis_after_ny]
+time = 600
+name = "e epenthesized after ɲ before a continuant consonant + consonant"
+definition = "∅ → e / ɲ _ [+continuant, +consonantal] [+consonantal]"
+
+[mgr_i_epenthesis_after_nasal]
+time = 600
+name = "i epenthesized after a non-high nasal consonant before a run of front consonants + a non-front consonant"
+definition = "∅ → i / [+nasal, +consonantal, aperture: !high] _ [+consonantal, +front] ([+consonantal, +front])* [+consonantal, front: none]"
+
+[mgr_e_epenthesis_after_strident]
+time = 600
+name = "e epenthesized after a consonant + strident front consonant, before two consonants"
+definition = "∅ → e / [+consonantal] [+strident, +front] _ [+consonantal] [+consonantal]"
+
+[mgr_i_epenthesis_after_u_tsj]
+time = 600
+name = "i epenthesized after a high round vowel + tsʲ, before a nasal consonant"
+definition = "∅ → i / [+rounded, aperture: high, +syllabic] t͡sʲ _ [+nasal, +consonantal]"
+
+[mgr_schwa_epenthesis_after_obstruent_nasal]
+time = 600
+name = "schwa epenthesized after an obstruent + nasal consonant, before one or more consonants + word end"
+definition = "∅ → ə / [-sonorant] [+nasal, +consonantal] _ ([+consonantal])+ #"
+
+[mgr_anterior_coronal_palatalization_recurrence]
+time = 600
+name = "an anterior non-lateral coronal palatalizes after a high-front consonant (recurrence)"
+definition = "[+lingual, +front, +anterior, lateral: none] → [aperture: high, +front] / [aperture: high, +front, +consonantal] _"
+
+[mgr_dental_s_affrication_final]
+time = 600
+name = "a dental fricative + s becomes the affricate ts word-finally"
+definition = "(θ|ð) s → t͡s / _ #"
+
+[mgr_z_loss_before_s]
+time = 600
+name = "z is lost before s"
+definition = "z → ∅ / _ s"
+
+[mgr_labial_to_t_before_voiceless_coronal_stop]
+time = 600
+name = "a labial consonant becomes t before a voiceless coronal stop"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → t̪ / _ [-continuant, +lingual, +front, -voice, -sonorant]"
+
+[mgr_labial_to_d_before_voiced_coronal_stop]
+time = 600
+name = "a labial consonant becomes d before a voiced coronal stop"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → d̪ / _ [-continuant, +lingual, +front, +voice, -sonorant]"
+
+[mgr_labial_to_s_before_s]
+time = 600
+name = "a labial consonant becomes s before s"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → s / _ s"
+
+[mgr_n_to_m_before_m]
+time = 600
+name = "n becomes m before m (recurrence)"
+definition = "n̪ → m / m _"
+
+[mgr_geminate_reduction_after_consonant]
+time = 600
+name = "an identical consonant geminate reduces to one, after a consonant or word start"
+description = "generalizes DiaCLEF2025's explicit list of ~25 pairs (plain/palatalized/affricated variants) via reference matching"
+definition = "1=[+consonantal] @1 → @1 / ([+consonantal]|#) _"
+
+[mgr_geminate_reduction_before_consonant]
+time = 600
+name = "an identical consonant geminate reduces to one, before a consonant + consonant-or-boundary"
+definition = "1=[+consonantal] @1 → @1 / _ [+consonantal] ([+consonantal]|#)"
+
+[mgr_geminate_reduction_before_obstruent_nasal]
+time = 600
+name = "an identical consonant geminate reduces to one, before an obstruent or nasal"
+definition = "1=[+consonantal] @1 → @1 / _ ([+consonantal, -sonorant]|[+consonantal, +nasal])"
+
+[mgr_geminate_reduction_palatalized_pairs]
+time = 600
+name = "a base consonant + its palatalized counterpart reduces to the palatalized form, before a consonant"
+definition = "(s s|s sʲ|m m|m mʲ|w w) → (s|sʲ|m|mʲ|w) / _ [+consonantal]"
+
+[mgr_word_initial_stop_cluster_reduction]
+time = 600
+name = "a word-initial stop is lost before another stop"
+definition = "[-continuant, nasal: none, trill: none] → ∅ / # _ [-continuant, nasal: none, trill: none]"
+
+[mgr_tsj_sj_reduction]
+time = 600
+name = "tsʲ + sʲ reduces to tsʲ"
+definition = "t͡sʲ sʲ → t͡sʲ"
+
+[mgr_b_epenthesis_after_m_recurrence]
+time = 600
+name = "b epenthesized between m and a coronal non-nasal sonorant glide (recurrence)"
+definition = "∅ → b / m _ [+lingual, +front, nasal: none, +sonorant, syllabic: -]"
+
+[mgr_d_epenthesis_lateral_r_recurrence]
+time = 600
+name = "d epenthesized between a lateral and r (recurrence)"
+definition = "∅ → d̪ / [+lateral] _ r"
+
+[mgr_d_t_epenthesis_zr_sr]
+time = 600
+name = "a stop epenthesized between z/s and r, matching voicing"
+definition = "(z r|s r) → (z d̪ r|s t̪ r)"
+
+[mgr_nbh_to_mb]
+time = 600
+name = "n + the bilabial fricative becomes mb before a lateral"
+definition = "n̪ β → m b / _ [+lateral]"
+
+[mgr_j_epenthesis_before_front_run_rj]
+time = 600
+name = "j epenthesized after a non-consonantal segment before one or more non-front consonants + palatalized r"
+definition = "∅ → j / [-consonantal] _ ([+consonantal, front: none])+ rʲ"
+
+[mgr_j_epenthesis_before_rj]
+time = 600
+name = "j epenthesized after a non-consonantal segment directly before palatalized r"
+definition = "∅ → j / [-consonantal] _ rʲ"
+
+[mgr_j_loss_after_diphthong_before_rj]
+time = 600
+name = "j lost after a vowel + optional consonants + stressed ie̯, before palatalized r"
+definition = "j → ∅ / [+syllabic] ([-syllabic])* ˈi e̯ _ rʲ"
+
+[mgr_intervocalic_voicing_general]
+time = 600
+name = "a voiceless consonant voices intervocalically"
+definition = "[-voice] → [+voice] / [-consonantal] _ [-consonantal]"
+
+[mgr_anterior_voicing_before_coronal_sonorant]
+time = 600
+name = "a voiceless anterior consonant voices before a coronal sonorant non-nasal consonant"
+definition = "[-voice, +anterior] → [+voice] / [-consonantal] _ [+lingual, +front, +sonorant, nasal: none]"
+
+[mgr_t_voicing_before_nasal]
+time = 600
+name = "t voices to d before a nasal consonant"
+definition = "t̪ → d̪ / _ [+nasal, +consonantal]"
+
+[mgr_shortening_before_obstruent]
+time = 600
+name = "a vowel shortens before a consonant cluster ending in an obstruent"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] [+consonantal, -sonorant]"
+
+[mgr_shortening_before_nasal_cluster]
+time = 600
+name = "a vowel shortens before a consonant cluster ending in a nasal"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] [+consonantal, +nasal]"
+
+[mgr_nonprimary_shortening_1]
+time = 600
+name = "a non-primary-stressed vowel shortens"
+definition = "[stress: !primary, +syllabic] → [length: short]"
+
+[mgr_lengthening_final_1]
+time = 600
+name = "a stressed vowel lengthens word-finally"
+definition = "[stress: primary, +syllabic] → [length: long] / _ #"
+
+[mgr_lengthening_open_1]
+time = 600
+name = "a stressed vowel lengthens before a vowel"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+syllabic]"
+
+[mgr_lengthening_onset_vowel_1]
+time = 600
+name = "a stressed vowel lengthens before a consonant + vowel"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+consonantal] [+syllabic]"
+
+[mgr_lengthening_stop_liquid_1]
+time = 600
+name = "a stressed vowel lengthens before a plosive + non-nasal sonorant"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [-continuant, nasal: none, trill: none] [+consonantal, +sonorant, nasal: none]"
+
+[mgr_lengthening_labial_r_1]
+time = 600
+name = "a stressed vowel lengthens before a voiced labial + r + vowel + word end"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+labial, +voice] r [+syllabic] #"
+
+[mgr_lengthening_monosyllable_1]
+time = 600
+name = "a stressed vowel lengthens in a monosyllable before a final consonant"
+definition = "[stress: primary, +syllabic] → [length: long] / # ([-syllabic])* _ [+consonantal] #"
+
+[mgr_shortening_before_ly_ny_1]
+time = 600
+name = "a non-high tense vowel shortens before ʎ/ɲ"
+definition = "[aperture: !high, advancement: atr, +syllabic] → [length: short] / _ (ʎ|ɲ)"
+
+[mgr_lengthening_before_j_coronal]
+time = 600
+name = "a stressed vowel lengthens before j + optional consonants + a high-front coronal"
+definition = "[stress: primary, +syllabic] → [length: long] / _ j ([+consonantal])* [+lingual, +front, aperture: high]"
+
+[mgr_lengthening_before_rs_final]
+time = 600
+name = "a stressed vowel lengthens before r + s + word end"
+definition = "[stress: primary, +syllabic] → [length: long] / [+syllabic] ([-syllabic])* _ r s #"
+
+[mgr_tedhg_to_affricate]
+time = 600
+name = "t/d/ð + schwa + the velar fricative becomes an affricate"
+definition = "(t̪ ə ɣ|d̪ ə ɣ|ð ə ɣ) → (t̪ t͡ʃ|d̪ d͡ʒ|d̪ d͡ʒ)"
+
+[mgr_stressed_low_lowering_1]
+time = 600
+name = "a stressed low vowel becomes front non-tense after a front glide, before a non-consonantal segment"
+definition = "[aperture: low, stress: primary, +syllabic] → [aperture: mid, +front] / [+front, aperture: high, syllabic: -] _ [-consonantal]"
+
+[mgr_stressed_low_lowering_2]
+time = 600
+name = "a stressed low vowel becomes front non-tense after a front glide, before a consonant + non-consonantal"
+definition = "[aperture: low, stress: primary, +syllabic] → [aperture: mid, +front] / [+front, aperture: high, syllabic: -] _ [+consonantal] [-consonantal]"
+
+[mgr_stressed_low_lowering_3]
+time = 600
+name = "a stressed low vowel becomes front non-tense after a front glide, before a plosive + non-nasal sonorant"
+definition = "[aperture: low, stress: primary, +syllabic] → [aperture: mid, +front] / [+front, aperture: high, syllabic: -] _ [-continuant, nasal: none, trill: none] [+consonantal, +sonorant, nasal: none]"
+
+[mgr_stressed_low_lowering_4]
+time = 600
+name = "a stressed low vowel becomes front non-tense after a front glide, before palatalized r + word end"
+definition = "[aperture: low, stress: primary, +syllabic] → [aperture: mid, +front] / [+front, aperture: high, syllabic: -] _ rʲ #"
+
+[mgr_stressed_low_lowering_5]
+time = 600
+name = "a stressed low vowel becomes front non-tense after a front glide, before r + s + word end"
+definition = "[aperture: low, stress: primary, +syllabic] → [aperture: mid, +front] / [+front, aperture: high, syllabic: -] _ r s #"
+
+[mgr_stressed_low_lowering_6]
+time = 600
+name = "a stressed low vowel becomes front non-tense after a front continuant glide, before a sonorant non-lateral consonant"
+definition = "[aperture: low, stress: primary, +syllabic] → [aperture: mid, +front] / [+front, aperture: high, syllabic: -, +continuant] _ [+sonorant, lateral: none, +consonantal]"
+
+[mgr_long_mid_diphthongization_1]
+time = 600
+name = "long stressed ɛː/ɔː diphthongize (recurrence)"
+definition = "(ˈɛː|ˈɔː) → (ˈi e̯|ˈu o̯)"
+
+[mgr_high_tense_round_centralization]
+time = 600
+name = "a high tense round non-nasal vowel centralizes (recurrence)"
+definition = "[aperture: high, advancement: atr, +rounded, +syllabic, nasal: none] → [front: none, back: none]"
+
+[mgr_voiced_stop_spirantization_2]
+time = 600
+name = "a voiced stop spirantizes intervocalically or before a non-nasal non-lateral sonorant"
+definition = "[-continuant, +voice, nasal: none, trill: none] → [+continuant] / [-consonantal] _ ([-consonantal]|[+sonorant, nasal: none, lateral: none])"
+
+[mgr_voiced_nonlabial_stop_spirantization_before_lateral_2]
+time = 600
+name = "a voiced non-labial stop spirantizes before a lateral (recurrence)"
+definition = "[-continuant, labial: none, +voice, nasal: none, trill: none] → [+continuant] / [-consonantal] _ [+lateral]"
+
+[mgr_d_to_edh_before_nasal]
+time = 600
+name = "d becomes ð between a vowel and a nasal"
+definition = "d̪ → ð / [+syllabic] _ [+nasal]"
+
+[mgr_tap_to_n_after_edh]
+time = 600
+name = "a tap becomes n after ð"
+definition = "ɾ → n̪ / ð _"
+
+[mgr_tap_hardening_final]
+time = 600
+name = "a tap hardens to the trill"
+definition = "ɾ → r"
+
+[mgr_yh_to_j_final]
+time = 600
+name = "ʝ weakens to j unconditionally"
+definition = "ʝ → j"
+
+[mgr_w_loss_after_k_before_front]
+time = 600
+name = "w is lost after k before a front non-low vowel"
+description = "By this stage the labiovelar has often palatalized to ɥ (quintana > kɥin…); match both so the whole labiovelar drops (qu > k before e/i). Running late, after 2nd palatalization, keeps the freed k from palatalizing."
+definition = "(w|ɥ) → ∅ / k _ [+front, aperture: !low, +syllabic]"
+
+[mgr_prenasal_raising_recurrence]
+time = 600
+name = "a back round vowel raises to high tense before a nasal consonant (recurrence)"
+definition = "[+syllabic, +back, +rounded] → [aperture: high, advancement: atr] / _ [+nasal, +consonantal]"
+
+[mgr_sj_degemination]
+time = 600
+name = "geminate palatalized s degeminates"
+definition = "sʲ sʲ → sʲ"
+
+[mgr_rj_depalatalization]
+time = 600
+name = "palatalized r depalatalizes"
+definition = "rʲ → r"
+
+[mgr_palatalized_consonant_metathesis]
+time = 600
+name = "a palatalized consonant moves its palatalization onto a preceding j"
+definition = "(t̪ʲ|d̪ʲ|sʲ|zʲ|n̪ʲ|d͡zʲ|d͡ʒʲ|t͡ʃʲ) → (j t̪|j d̪|j s|j z|j n̪|j d͡z|j d͡ʒ|j t͡ʃ)"
+
+[mgr_j_loss_after_j_or_consonant]
+time = 600
+name = "j is lost after j or a consonant, before a consonant"
+definition = "j → ∅ / (j|[+consonantal]) _ [+consonantal]"
+
+[mgr_e_lowering_before_jz]
+time = 600
+name = "secondary-stressed e lowers to ɛ before jz"
+definition = "ˌe → ˌɛ / _ j z"
+
+[mgr_ejz_to_i]
+time = 600
+name = "secondary-stressed ɛj becomes i before a coronal"
+definition = "ˌɛ j → ˌi / _ [+lingual, +front]"
+
+[mgr_coronal_palatalization_between_highfront]
+time = 600
+name = "a coronal palatalizes between two high-front segments"
+definition = "[+lingual, +front] → [aperture: high, +front] / [+front, aperture: high] _ [aperture: high, +front]"
+
+[mgr_depalatalization_after_front_tense_high]
+time = 600
+name = "a palatalized consonant depalatalizes after a front tense non-low vowel + a high segment"
+definition = "(t̪ʲ|d̪ʲ|sʲ|zʲ|n̪ʲ|d͡zʲ|lʲ|rʲ|d͡ʒʲ|t͡ʃʲ) → (t̪|d̪|s|z|n̪|d͡z|l|r|d͡ʒ|t͡ʃ) / [+front, advancement: atr, aperture: !low, +syllabic] [aperture: high] _"
+
+[mgr_j_loss_before_ie_glide]
+time = 600
+name = "j lost after a consonant before a high front unrounded sonorant + e-glide"
+definition = "j → ∅ / [+consonantal] _ [aperture: high, +front, rounded: none, +sonorant] e̯"
+
+[mgr_s_affrication_after_highfront_sonorant]
+time = 600
+name = "s affricates after a high-front sonorant consonant, word-finally"
+definition = "s → t͡sʲ / [+consonantal, +sonorant, aperture: high, +front] _ #"
+
+[mgr_dz_lenition_intervocalic]
+time = 600
+name = "dz lenites to z intervocalically"
+definition = "d͡z → z / [-consonantal] _ [-consonantal]"
+
+[mgr_shortening_before_two_nonsyllabic_2]
+time = 600
+name = "a vowel shortens before two or more non-syllabic segments + word end (recurrence)"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] ([-syllabic])+ #"
+
+[mgr_shortening_before_obstruent_2]
+time = 600
+name = "a vowel shortens before a consonant cluster ending in an obstruent (recurrence)"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] [+consonantal, -sonorant]"
+
+[mgr_shortening_before_nasal_cluster_2]
+time = 600
+name = "a vowel shortens before a consonant cluster ending in a nasal (recurrence)"
+definition = "[+syllabic] → [length: short] / _ [-syllabic] [+consonantal, +nasal]"
+
+[mgr_nonprimary_shortening_2]
+time = 600
+name = "a non-primary-stressed vowel shortens (recurrence)"
+definition = "[stress: !primary, +syllabic] → [length: short]"
+
+[mgr_lengthening_final_2]
+time = 600
+name = "a stressed vowel lengthens word-finally (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ #"
+
+[mgr_lengthening_open_2]
+time = 600
+name = "a stressed vowel lengthens before a vowel (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+syllabic]"
+
+[mgr_lengthening_onset_vowel_2]
+time = 600
+name = "a stressed vowel lengthens before a consonant + vowel (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+consonantal] [+syllabic]"
+
+[mgr_lengthening_stop_liquid_2]
+time = 600
+name = "a stressed vowel lengthens before a plosive + non-nasal sonorant (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [-continuant, nasal: none, trill: none] [+consonantal, +sonorant, nasal: none]"
+
+[mgr_lengthening_labial_r_2]
+time = 600
+name = "a stressed vowel lengthens before a voiced labial + r + vowel + word end (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / _ [+labial, +voice] r [+syllabic] #"
+
+[mgr_lengthening_monosyllable_2]
+time = 600
+name = "a stressed vowel lengthens in a monosyllable before a final consonant (recurrence)"
+definition = "[stress: primary, +syllabic] → [length: long] / # ([-syllabic])* _ [+consonantal] #"
+
+[mgr_shortening_before_ly_ny_2]
+time = 600
+name = "a non-high tense vowel shortens before ʎ/ɲ (recurrence)"
+definition = "[aperture: !high, advancement: atr, +syllabic] → [length: short] / _ (ʎ|ɲ)"
+
+[mgr_shortening_before_stop_l]
+time = 600
+name = "a non-round vowel shortens before a stop + l"
+definition = "[+syllabic, rounded: none] → [length: short] / _ [-continuant, nasal: none, trill: none] l"
+
+[mgr_shortening_before_ny]
+time = 600
+name = "a vowel shortens before ɲ"
+definition = "[+syllabic] → [length: short] / _ ɲ"
+
+[mgr_d_epenthesis_nr_recurrence]
+time = 600
+name = "d epenthesized between n and r (recurrence)"
+definition = "∅ → d̪ / n̪ _ r"
+
+[mgr_schwa_epenthesis_after_stop_sonorant]
+time = 600
+name = "schwa epenthesized after a stop + non-syllabic sonorant, before a non-syllabic segment"
+definition = "∅ → ə / [-continuant, nasal: none, trill: none] [+sonorant, syllabic: -] _ [-syllabic]"
+
+[mgr_aa_shortening_before_l_final]
+time = 600
+name = "long stressed aː shortens before a continuant + non-syllabic sonorant + l, word-finally"
+definition = "ˈɑː → ˈa / [+continuant] [syllabic: -, +sonorant] _ l #"
+
+[mgr_eej_shortening]
+time = 600
+name = "eːj/eːʝ shortens to ej"
+definition = "(ˈeː j|ˈeː ʝ) → (ˈe j|ˈe j)"
+
+[mgr_long_vowel_diphthongization_general]
+time = 600
+name = "long stressed vowels diphthongize"
+definition = "(ˈaː|ˈeː|ˈoː|ˈɛː) → (ˈa e̯|ˈe j|ˈo w|ˈi e̯)"
+
+[mgr_low_vowel_fronting_recurrence]
+time = 600
+name = "the low vowel fronts by default (recurrence)"
+definition = "[aperture: low, +syllabic] → [+front, back: none]"
+
+[mgr_j_epenthesis_after_countertonic_e_nts]
+time = 600
+name = "j epenthesized after secondary-stressed e before nts"
+definition = "∅ → j / ˌe _ n̪ t͡sʲ"
+
+[mgr_j_epenthesis_after_eglide_tsj]
+time = 600
+name = "j epenthesized after the e-glide before tsʲ"
+definition = "∅ → j / e̯ _ t͡sʲ"
+
+[mgr_w_to_j_before_tsj]
+time = 600
+name = "w becomes j after a round vowel before tsʲ"
+definition = "w → j / [+rounded, +syllabic] _ t͡sʲ"
+
+[mgr_eglide_loss_after_stressed_a]
+time = 600
+name = "the e-glide is lost after stressed a before a front sonorant glide"
+description = "Source `e̯ > ∅ / ˈa __ [+front,+son,-syl]`. The glide restriction needs `aperture: high` in Fortis: here `l` and `r` are also +front sonorant non-syllabic (coronal place uses the same `front` node), so the bare context wrongly deleted the offglide before a lateral (aile ae̯l → *al instead of monophthongizing to ɛl)."
+definition = "e̯ → ∅ / ˈa _ [+front, aperture: high, +sonorant, syllabic: -]"
+
+[mgr_bh_loss_after_w_before_unstressed_tense_round]
+time = 600
+name = "the bilabial fricative is lost after w before an unstressed tense round vowel"
+definition = "β → ∅ / w _ [advancement: atr, +rounded, stress: none, +syllabic]"
+
+[mgr_countertonic_mid_raising_before_lateral_cluster]
+time = 600
+name = "secondary-stressed ɛ/ɔ raise before a lateral + consonant"
+definition = "(ˌɛ|ˌɔ) → (ˌɨ|ˌɯ) / _ [+lateral] [+consonantal]"
+
+[mgr_countertonic_e_raising_before_rr]
+time = 600
+name = "secondary-stressed ɛ raises to e before rr"
+definition = "ˌɛ → ˌe / _ r r"
+
+[mgr_countertonic_e_raising_word_initial]
+time = 600
+name = "secondary-stressed ɛ raises to e word-initially before a coronal continuant"
+definition = "ˌɛ → ˌe / # _ [+lingual, +front, +continuant]"
+
+[mgr_countertonic_e_raising_to_barred_i]
+time = 600
+name = "secondary-stressed ɛ raises to ɨ before a coronal non-nasal continuant + non-nasal consonant"
+definition = "ˌɛ → ˌɨ / _ [+lingual, +front, nasal: none, +continuant] [+consonantal, nasal: none]"
+
+[mgr_countertonic_e_raising_before_any_two]
+time = 600
+name = "secondary-stressed ɛ raises to e before any two segments"
+definition = "ˌɛ → ˌe / _ [] []"
+
+[mgr_countertonic_o_raising_before_voiceless_coronal]
+time = 600
+name = "secondary-stressed ɔ raises to ɯ before a voiceless coronal"
+definition = "ˌɔ → ˌɯ / _ [+lingual, +front, -voice]"
+
+[mgr_countertonic_o_raising_before_stressed_o]
+time = 600
+name = "secondary-stressed ɔ raises to ɯ before stressed ɔ"
+definition = "ˌɔ → ˌɯ / _ ˈɔ"
+
+[mgr_countertonic_o_raising_before_w]
+time = 600
+name = "secondary-stressed ɔ raises to ɯ before w"
+definition = "ˌɔ → ˌɯ / _ w"
+
+[mgr_countertonic_o_raising_unconditional]
+time = 600
+name = "secondary-stressed ɔ raises to o unconditionally"
+definition = "ˌɔ → ˌo"
+
+[mgr_barred_vowels_reversion]
+time = 600
+name = "the intermediate central vowels revert to ɛ/ɔ"
+definition = "(ˌɨ|ˌɯ) → (ˌɛ|ˌɔ)"
+
+[mgr_w_loss_after_lax_round_before_various]
+time = 600
+name = "the high back round glide is lost after a lax round vowel, before a non-front non-syllabic segment, a strident, or a non-syllabic sonorant"
+definition = "[syllabic: -, aperture: high, +back, +rounded] → ∅ / [+rounded] _ ([syllabic: -, front: none]|[+strident]|[syllabic: -, +sonorant])"
+
+[mgr_prenasal_raising_recurrence_2]
+time = 600
+name = "a back round vowel raises to nasalized high tense before a nasal consonant (recurrence)"
+definition = "[+syllabic, +back, +rounded] → [+nasal, aperture: high, advancement: atr] / _ [+nasal, +consonantal]"
+
+[mgr_bhm_pbh_assimilation]
+time = 600
+name = "the bilabial fricative + m assimilates to mm; p + the bilabial fricative assimilates to ββ"
+definition = "(β m|p β) → (m m|β β)"
+
+[mgr_ghw_to_w_before_consonant]
+time = 600
+name = "the labialized velar fricative simplifies to w before an optional schwa + consonant"
+definition = "ɣʷ → w / _ ə? [+consonantal]"
+
+[mgr_bh_to_w_before_nonlabial_obstruent]
+time = 600
+name = "the bilabial fricative becomes w before a non-labial obstruent"
+definition = "β → w / _ [-sonorant, labial: none]"
+
+[mgr_bh_to_w_before_nasal]
+time = 600
+name = "the bilabial fricative becomes w before a nasal consonant"
+definition = "β → w / _ [+consonantal, +nasal]"
+
+[mgr_bh_to_v_after_front_before_r]
+time = 600
+name = "the bilabial fricative becomes v after a non-low front vowel before r"
+definition = "β → v / [aperture: !low, +front, +syllabic] _ r"
+
+[mgr_bh_to_w_before_r_consonant]
+time = 600
+name = "the bilabial fricative becomes w before r + consonant"
+definition = "β → w / _ r [+consonantal]"
+
+[mgr_bh_to_v_final]
+time = 600
+name = "the remaining bilabial fricative becomes v"
+definition = "β → v"
+
+[mgr_v_loss_before_two_consonants]
+time = 600
+name = "v is lost before two consonants"
+definition = "v → ∅ / _ [+consonantal] [+consonantal]"
+
+# --- Later Gallo-Roman (Pope s165, 8th-9th centuries) ---
+
+[lgr_intervocalic_fricative_voicing_recurrence]
+time = 750
+name = "a voiceless fricative voices intervocalically (recurrence, after the diphthongs resolve)"
+description = "Source `[-voi] > [+voi] / [-cons] __ [-cons]` (line 1515) — the intervocalic voicing recurs once the au/ei diphthongs have shed their glides, exposing an s that only now sits between two vowels: oser/alose/laize s > z. Restricted to fricatives to avoid re-voicing the stops that already lenited."
+definition = "[+continuant, -sonorant, -voice] → [+voice] / [-consonantal] _ [+syllabic]"
+
+[lgr_ae_glide_hardens_before_nasal]
+time = 750
+name = "the ae̯ diphthong's offglide hardens to j before a non-velar/palatal nasal, under stress"
+description = "Pope s427 — sɑ̃ (sang) shows this is bled before ŋ; also blocked before ɲ except a few lexicalized exceptions (châtaigne)"
+definition = "e̯ → j / [stress: primary, aperture: low] _ [+nasal, +consonantal, aperture: !high]"
+
+[lgr_final_stop_reopens]
+time = 750
+name = "a word-final stop re-opens to a fricative after a vowel"
+description = "Pope s355-357 — re-application of final spirantization to stops that had since re-closed"
+definition = "[-continuant, nasal: none, trill: none] → [+continuant] / [-consonantal] _ #"
+
+[lgr_phi_to_f]
+time = 750
+name = "the voiceless bilabial fricative becomes labiodental f"
+definition = "ɸ → f"
+
+[lgr_k_loss_before_final_s]
+time = 750
+name = "k is lost before word-final s"
+description = "Pope s326 — Later Gallo-Roman ks simplifies straight to s, not to xs"
+definition = "k → ∅ / _ s #"
+
+[lgr_unstressed_a_to_schwa]
+time = 750
+name = "an unstressed a reduces to schwa, word-medially or finally"
+description = "Pope s165-2, s251 — reduction of unstressed a, both final and intertonic; source omits the stress condition its own description implies (see the analogous mgr_a_to_schwa_pretonic fix)"
+definition = "[stress: none, aperture: low, +syllabic] → ə / [+syllabic] ([-syllabic])* _"
+
+[lgr_schwa_to_e_before_r_obstruent]
+time = 750
+name = "a surviving schwa becomes a secondary-stressed ɛ before r + obstruent"
+description = "CORRECTION 2024"
+definition = "ə → ˌɛ / _ r [-sonorant]"
+
+[lgr_schwa_to_e_after_cj]
+time = 750
+name = "a surviving schwa becomes a secondary-stressed ɛ after a consonant + j, before the tonic syllable"
+description = "CORRECTION 2024 (source's own note: \"sort of a bandaid solution\", flagged TODO) — simplified the ambiguous inner optionality group to a plain consonant-skip up to the primary-stressed syllable"
+definition = "ə → ˌɛ / [+consonantal] j _ ([-syllabic])* [+syllabic, stress: primary]"
+
+[lgr_nyny_degemination]
+time = 750
+name = "a geminate ɲɲ degeminates"
+definition = "ɲ → ∅ / _ ɲ"
+
+[lgr_ny_to_jn_preconsonantal]
+time = 750
+name = "pre-consonantal ɲ resolves to a nasalized j + dental n"
+description = "Pope s165.8, s279iv"
+definition = "ɲ → j̃ n̪ / _ [+consonantal]"
+
+[lgr_final_devoicing]
+time = 750
+name = "all final obstruents devoice"
+description = "Pope s165-3, s206 — she says \"all consonants\" but doesn't list sonorants, so restricted to obstruents here"
+definition = "[-sonorant] → [-voice] / _ #"
+
+[lgr_ae_glide_fuses_with_gh_before_w]
+time = 750
+name = "the ae̯ diphthong's offglide fuses with a following ɣ to j, when a w still follows"
+description = "Pope's aqua > iaue > eaue chain (aquam > aiuem > eauem; vera:cum > vrai not vrec)"
+definition = "e̯ [+back, rounded: none, -sonorant] → j / ˈa _"
+
+[lgr_w_loss_after_gh]
+time = 750
+name = "w (with any following schwa) is lost after ɣ, before an obstruent"
+description = "second step of the aqua > eau chain (suis, suit)"
+definition = "w ə → ∅ / ɣ _ [-sonorant]"
+
+[lgr_w_loss_after_gh_bare]
+time = 750
+name = "w is lost after ɣ, before an obstruent, when no schwa follows"
+definition = "w → ∅ / ɣ _ [-sonorant]"
+
+[lgr_ghw_to_jv]
+time = 750
+name = "the sequence ɣw becomes jv"
+description = "évier, ive, antive, antif, suivre, sive"
+definition = "ɣ w → j v"
+
+[lgr_length_reset]
+time = 750
+name = "vowel length resets to short"
+description = "the old Latin quantity distinction is fully replaced going forward by new compensatory lengthening"
+definition = "[+syllabic] → [length: short]"
+
+[lgr_ae_to_long_e]
+time = 750
+name = "the ae̯ diphthong monophthongizes to a long e, preserving its stress level"
+description = "Pope s231-3 (Buckley criticizes this analysis, but it's kept here per Pope); moved late so it doesn't counterfeed the aqua > eau chain above"
+definition = ["a e̯ → eː", "ˌa e̯ → ˌeː", "ˈa e̯ → ˈeː"]
+
+[lgr_w_loss_medial_cluster]
+time = 750
+name = "w is lost inside a consonant cluster"
+definition = "w → ∅ / [+consonantal] _ [+consonantal]"
+
+[lgr_ghw_to_g_initial]
+time = 750
+name = "word-initial ɣʷ hardens back to g"
+description = "Pope s192ii"
+definition = "ɣʷ → g / # _"
+
+[lgr_final_fricative_closes]
+time = 750
+name = "a supported non-strident fricative closes to a stop word-finally"
+description = "Pope s355-357"
+definition = "[+continuant, -sonorant, strident: none] → [-continuant] / [+consonantal] _ #"
+
+[lgr_gh_devoices]
+time = 750
+name = "ɣ devoices to x before a voiceless segment or word-finally"
+description = "CORRECTION 2024"
+definition = "ɣ → x / _ ([-voice]|#)"
+
+[lgr_x_loss_unstressed_final]
+time = 750
+name = "x is lost word-finally after an unstressed syllable"
+description = "Pope s357"
+definition = "x → ∅ / [stress: !primary] _ #"
+
+[lgr_x_to_k_after_stressed_back_vowel]
+time = 750
+name = "x closes to k word-finally after a stressed back vowel"
+description = "Pope s357, CORRECTION 2024"
+definition = "x → k / [+syllabic, stress: primary, +back] _ #"
+
+[lgr_x_to_k_after_stressed_back_glide]
+time = 750
+name = "x closes to k word-finally after a stressed vowel + back off-glide"
+definition = "x → k / [+syllabic, stress: primary] [+back, -syllabic, -consonantal] _ #"
+
+[lgr_gh_x_fronting]
+time = 750
+name = "remaining x/ɣ front"
+description = "CORRECTION 2024 — the contexts where x closes to k are specified above; elsewhere it fronts"
+definition = "[+back, -sonorant, rounded: none, +continuant] → [back: none, +front]"
+
+[lgr_c_cedilla_to_yogh]
+time = 750
+name = "ç merges into ʝ"
+description = "Pope s357, s359, s324, s325"
+definition = "ç → ʝ"
+
+[lgr_td_to_edh_before_coronal_sonorant]
+time = 750
+name = "a dental stop becomes ð after a vowel, before a coronal sonorant (r/l/n)"
+description = "Pope s372ii — corrected to require a preceding vowel"
+definition = "(t̪|d̪) → ð / [-consonantal] _ [+sonorant, +lingual]"
+
+[lgr_td_to_edh_before_nasal]
+time = 750
+name = "a dental stop becomes ð after a vowel, before a nasal"
+description = "Pope s372ii"
+definition = "(t̪|d̪) → ð / [-consonantal] _ [+nasal]"
+
+[lgr_p_to_b_before_sonorant]
+time = 750
+name = "p voices to b after a vowel, before a continuant non-nasal sonorant"
+description = "Pope s372iii"
+definition = "p → b / [-consonantal] _ [+sonorant, +continuant, nasal: none]"
+
+[lgr_b_to_bh_before_r]
+time = 750
+name = "b spirantizes to β after a vowel, before r"
+description = "Pope s372iii — halts at b before l"
+definition = "b → β / [-consonantal] _ r"
+
+[lgr_bh_to_v_recurrence]
+time = 750
+name = "the bilabial fricative becomes v (recurrence)"
+definition = "β → v"
+
+[lgr_yogh_to_j]
+time = 750
+name = "ʝ becomes j everywhere"
+description = "Pope s404 — CORRECTION: not just after vowels as Pope states"
+definition = "ʝ → j"
+
+[lgr_j_loss_after_high_front_tense_vowel]
+time = 750
+name = "j deletes after a high front tense vowel"
+description = "Pope s404 — j absorbed by a preceding i"
+definition = "j → ∅ / [aperture: high, +front, advancement: atr, +syllabic] _"
+
+[lgr_aw_to_o]
+time = 750
+name = "the sequence a+w (from earlier β/ɣ) levels to a long ɔ"
+description = "Pope s165.5, s505; also applies to nasal aw per a 2026 correction"
+definition = "[aperture: low, +syllabic] [-syllabic, aperture: high, +back, +rounded] → [+back, front: none, +rounded, +labial, advancement: rtr, aperture: none, length: long] ∅"
+
+[lgr_n_denasalizes_after_coronal_before_s]
+time = 750
+name = "n denasalizes to a dental stop after a non-lateral coronal sonorant, before s"
+description = "Pope s365ii — early denasalization of nns/rns clusters, feeding the ts affricate below"
+definition = "n̪ → t̪ / [-consonantal] [+lingual, lateral: none, +sonorant] _ s"
+
+[lgr_sts_to_ts]
+time = 750
+name = "the cluster s-t-s simplifies to the affricate ts"
+description = "Pope s365ii"
+definition = "s t̪ s → t͡s / [-consonantal] _ [-consonantal]"
+
+[lgr_s_loss_before_ts]
+time = 750
+name = "s is lost before the affricate ts"
+definition = "s → ∅ / _ t͡s"
+
+[lgr_td_s_to_ts]
+time = 750
+name = "d/t plus s becomes the affricate ts"
+description = "Pope s367 — brought into contact by the first fall of schwa"
+definition = "(t̪|d̪) s → t͡s"
+
+[lgr_medial_consonant_loss_before_obstruent]
+time = 750
+name = "a medial consonant/glide is lost between two consonants, before an obstruent (not l/r)"
+description = "Pope s365 — CORRECTION: extended to hit all non-syllabic segments, not just consonantal ones"
+definition = "[-syllabic] → ∅ / [+consonantal] _ [-sonorant]"
+
+[lgr_medial_consonant_loss_before_nasal]
+time = 750
+name = "a medial consonant/glide is lost between two consonants, before a nasal"
+definition = "[-syllabic] → ∅ / [+consonantal] _ [+nasal, +consonantal]"
+
+[lgr_w_loss_after_stop_cluster]
+time = 750
+name = "w is lost after two consecutive stops"
+description = "recurrence of an earlier rule (s374i)"
+definition = "w → ∅ / [-continuant, nasal: none, trill: none] [-continuant, nasal: none, trill: none] _"
+
+[lgr_w_loss_after_nonvelar_stop]
+time = 750
+name = "w is lost after a non-velar stop"
+definition = "w → ∅ / [-continuant, back: none, nasal: none, trill: none] _"
+
+[lgr_s_voices_after_vowel_before_voiced_consonant]
+time = 750
+name = "s voices to z after a vowel, before a voiced consonant"
+description = "Pope s377 — restricted to after non-consonantals, per correction"
+definition = "s → z / [-consonantal] _ [+voice, +consonantal]"
+
+[lgr_s_voices_before_noncoronal_fricative]
+time = 750
+name = "s voices to z before a non-coronal continuant consonant (e.g. f)"
+definition = "s → z / _ [+continuant, +consonantal, lingual: none]"
+
+[lgr_skl_to_zl]
+time = 750
+name = "the s-velar-l cluster (skl) loses its velar and voices the s, intervocalically"
+description = "Pope s365i"
+definition = "s k l → z l / [-consonantal] _ [-consonantal]"
+
+[lgr_rgl_to_rl]
+time = 750
+name = "the r-velar-l cluster (rgl) loses its velar, intervocalically"
+description = "Pope s365i"
+definition = "r g l → r l / [-consonantal] _ [-consonantal]"
+
+[lgr_b_epenthesis_after_m]
+time = 750
+name = "b is epenthesized between m and a following r or l"
+description = "Pope s368-370"
+definition = "∅ → b / m _ [+lingual, nasal: none, +sonorant, -syllabic]"
+
+[lgr_d_epenthesis_after_lateral]
+time = 750
+name = "d is epenthesized between l and a following r"
+definition = "∅ → d̪ / [+lateral] _ r"
+
+[lgr_d_epenthesis_after_z]
+time = 750
+name = "d is epenthesized between z and a following r"
+definition = "z → z d̪ / _ r"
+
+[lgr_d_epenthesis_after_n]
+time = 750
+name = "d is epenthesized between n and a following r"
+definition = "n̪ → n̪ d̪ / _ r"
+
+[lgr_t_epenthesis_after_s]
+time = 750
+name = "t is epenthesized between s and a following r"
+definition = "s → s t̪ / _ r"
+
+[lgr_n_assimilates_to_preceding_m]
+time = 750
+name = "n assimilates to a preceding m"
+description = "Pope s371"
+definition = "n̪ → m / m _"
+
+[lgr_labial_assimilates_to_following_voiceless_coronal_stop]
+time = 750
+name = "a non-nasal non-round labial assimilates to a following voiceless coronal stop"
+description = "Pope s373 — recurrent per s162"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → t̪ / _ [-continuant, +lingual, -voice]"
+
+[lgr_labial_assimilates_to_following_voiced_coronal_stop]
+time = 750
+name = "a non-nasal non-round labial assimilates to a following voiced coronal stop"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → d̪ / _ [-continuant, +lingual, +voice, nasal: none, trill: none]"
+
+[lgr_labial_assimilates_to_following_s]
+time = 750
+name = "a non-nasal non-round labial assimilates to a following s"
+definition = "[+labial, nasal: none, rounded: none, +consonantal] → s / _ s"
+
+[lgr_labial_loss_before_affricate]
+time = 750
+name = "a non-nasal labial obstruent deletes before an affricate"
+description = "Fortis represents DiaSim's [+delrel] (affricate) via distinct letters; enumerated here"
+definition = "[+labial, nasal: none, -sonorant] → ∅ / _ (t͡s|d͡ʒ|t͡ʃ|t͡sʲ)"
+
+[lgr_coronal_loss_before_labial_stop]
+time = 750
+name = "a dental stop deletes before a labial stop"
+definition = "(t̪|d̪) → ∅ / _ [+labial, -continuant, nasal: none]"
+
+[lgr_coronal_loss_before_coronal_stop]
+time = 750
+name = "a dental stop deletes before another coronal stop"
+definition = "(t̪|d̪) → ∅ / _ [+lingual, -continuant, nasal: none, trill: none]"
+
+[lgr_coronal_loss_before_affricate]
+time = 750
+name = "a dental stop deletes before an affricate"
+definition = "(t̪|d̪) → ∅ / _ (t͡s|d͡ʒ|t͡ʃ|t͡sʲ)"
+
+[lgr_e_diphthongizes_before_dh_stop]
+time = 750
+name = "a stressed front mid vowel diphthongizes to ˈie̯ when a following ð is about to delete before a stop"
+description = "Pope s372ii, CORRECTION 2026 — applies also to palatalized ð"
+definition = "[stress: primary, +front, aperture: mid, +syllabic] → ˈi e̯ / # [+consonantal] _ [+lingual, -sonorant, +continuant, +voice, strident: none] [-continuant, nasal: none, trill: none]"
+
+[lgr_dh_loss_before_stop]
+time = 750
+name = "ð deletes before a stop"
+definition = "ð → ∅ / _ [-continuant, nasal: none, trill: none]"
+
+[lgr_geminate_reduction_recurrence]
+time = 750
+name = "an identical consonant geminate reduces to one (recurrence)"
+description = "Pope s366 — generalizes DiaCLEF2025's explicit enumerated list (now including palatalized/affricated pairs) via reference matching, as in the Middle Gallo-Roman version of this rule"
+definition = "1=[+consonantal] @1 → @1 / ([+consonantal]|#) _"
+
+[lgr_final_rr_degemination]
+time = 750
+name = "a word-final rr degeminates"
+description = "Pope s366 — extended to hit rr word-finally"
+definition = "r → ∅ / r _ #"
+
+[lgr_schwa_epenthesis_after_obstruent_r]
+time = 750
+name = "schwa is epenthesized word-finally after an obstruent + r"
+description = "Pope s258"
+definition = "∅ → ə / [-sonorant] r _ #"
+
+[lgr_schwa_epenthesis_after_e_glide_jr]
+time = 750
+name = "schwa is epenthesized word-finally after e̯ + j + r"
+definition = "∅ → ə / e̯ j r _ #"
+
+[lgr_schwa_epenthesis_after_low_vowel_jr]
+time = 750
+name = "schwa is epenthesized word-finally after a low vowel + j + r"
+definition = "∅ → ə / [aperture: low] j r _ #"
+
+[lgr_schwa_epenthesis_after_consonant_l]
+time = 750
+name = "schwa is epenthesized word-finally after a non-lateral consonant + l"
+description = "Pope s258 — CORRECTION: restricted to actual consonants before l, not glides"
+definition = "∅ → ə / [lateral: none, +consonantal] l _ #"
+
+# --- Old French I / Early Old French (Pope s16, 9th-11th centuries) ---
+
+[eof_schwa_to_e_before_yod]
+time = 1000
+name = "unstressed schwa becomes e before a yod-like sonorant (j, ʎ, ɲ)"
+description = "Pope s257, s252 — feeds the later ej > oj shift"
+definition = "ə → e / _ [+front, +sonorant, aperture: high, -syllabic]"
+
+[eof_e_to_i_before_palatal]
+time = 1000
+name = "intertonic e raises to i before a palatal consonant (ɲ, ʎ)"
+description = "Pope s422. Source context `[+hi,+son,+front,+cons]` picks out the sonorant palatals ɲ/ʎ — but NOT the glide j, which DiaSim treats as -sonorant. Fortis's j IS +sonorant, so the featural context over-matched it and wrongly raised the e of every ei diphthong (avoir/trois eir → *ir instead of the ei→oi→wa chain). Match ɲ/ʎ literally."
+definition = "e → i / _ (ɲ|ʎ)"
+
+[eof_ll_degemination_intervocalic]
+time = 1000
+name = "intervocalic geminate ll degeminates to a single l (before l-vocalization)"
+description = "A geminate ll that is still intervocalic when l-vocalization begins collapses to a plain l and stays /l/ (bella > belle /bɛl/), rather than its first half vocalizing. This must precede eof_l_vocalization_begins. Words where the following vowel has already dropped (mantellum > mantel > manteau) keep the geminate final and vocalize normally — they are past this context by now."
+definition = "l l → l / [+syllabic] _ [+syllabic]"
+
+[eof_l_vocalization_begins]
+time = 1000
+name = "l darkens before a consonant (beginnings of l-vocalization)"
+description = "Pope s166.9, s383-391 — first attested 9th century; simplified to /ɫ/ throughout rather than distinguishing dark-l/gamma. Only the plain (non-palatal) lateral darkens — `[+lateral]` alone also matches the palatal ʎ, which must stay palatal to become j (maille ...aʎ.d͡ʒ, not *aɫ)."
+definition = "[+lateral, +anterior] → ɫ / _ [+consonantal]"
+
+[eof_dark_l_to_ny_lateral]
+time = 1000
+name = "dark l becomes ʎ after a front unrounded high vowel"
+description = "Pope s382iv, s384"
+definition = "ɫ → ʎ / [aperture: high, +front, rounded: none] _"
+
+[eof_u_fronting_completes]
+time = 1000
+name = "high round back vowels front (completion of u-fronting)"
+description = "Pope s166.1, s183, s9, s36, s42 — spread slowly from the south, continuing into the 10th century"
+definition = "[aperture: high, +rounded, back: none] → [+front]"
+
+[eof_first_nasalization_glide]
+time = 1000
+name = "j nasalizes after a low vowel, before a nasal (first nasalization)"
+description = "Pope s166.6, s434, s441.1, s441.3 — 10th century; affects a and aj"
+definition = "j → [+nasal] / [aperture: low] _ [+nasal, -syllabic]"
+
+[eof_first_nasalization_vowel]
+time = 1000
+name = "a low vowel nasalizes before a nasal (first nasalization)"
+definition = "[aperture: low] → [+nasal] / _ [+nasal, -syllabic]"
+
+[eof_countertonic_e_to_schwa_open]
+time = 1000
+name = "secondary-stressed e reduces to schwa in an open syllable"
+description = "Pope s166.5, s223, s234-235 — attributed to the late 11th century via a letter of Anne of Russia (s235)"
+definition = "ˌe → ˌə / _ ([+consonantal])? [+syllabic]"
+
+[eof_countertonic_schwa_reverts_before_palatal]
+time = 1000
+name = "secondary-stressed schwa reverts to e before a palatal consonant"
+description = "Pope s665"
+definition = "ˌə → ˌe / _ [aperture: high, +front, +consonantal]"
+
+[eof_countertonic_schwa_to_e_before_l_vowel]
+time = 1000
+name = "secondary-stressed schwa becomes ɛ before l + a non-round vowel"
+description = "CORRECTION (pelerin, celle, celles); bleeds the following countertonic-e-to-schwa shift"
+definition = "ˌə → ˌɛ / _ l [+syllabic, rounded: none]"
+
+[eof_countertonic_schwa_to_e_before_r_nonlow]
+time = 1000
+name = "secondary-stressed schwa becomes e before r + a non-low vowel"
+description = "CORRECTION (peril, derriere, Jerome, paresse)"
+definition = "ˌə → ˌe / _ r [aperture: !low, +syllabic]"
+
+[eof_initial_countertonic_schwa_to_e_before_strident]
+time = 1000
+name = "word-initial secondary-stressed schwa becomes e before a strident"
+description = "CORRECTION (eveque(s), essai(s), essaim(s))"
+definition = "ˌə → ˌe / # _ [+strident]"
+
+[eof_schwa_to_e_in_closed_nasal_syllable]
+time = 1000
+name = "schwa becomes e in a closed nasal syllable, when not word-final"
+description = "CORRECTION (parente, jouvencelle); excludes final syllables so verb -ent endings stay nasalized schwa"
+definition = "ə → e / _ [+nasal] [nasal: none, +consonantal] ([-syllabic])* [+syllabic]"
+
+[eof_e_rounds_to_o_before_j_after_voiced_labial]
+time = 1000
+name = "stressed e rounds early to o before j, after a voiced labial consonant"
+definition = "ˈe → ˈo / [+labial, +voice] _ j"
+
+[eof_final_ny_ejects_nasalized_j]
+time = 1000
+name = "word-final ɲ ejects a nasalized j after a tense vowel"
+description = "Pope s405-406, called \"Early Old French\" by Pope (s406)"
+definition = "∅ → j̃ / [advancement: atr, +syllabic] _ ɲ #"
+
+[eof_glide_before_intervocalic_ny]
+time = 1000
+name = "a glide develops between a stressed mid front vowel and intervocalic ɲ"
+description = "Pope s407i — CORRECTION: also after ɛ, not just e"
+definition = "∅ → j̃ / [aperture: mid, rounded: none, +syllabic, stress: !none] _ ɲ [+syllabic]"
+
+[eof_second_nasalization_glide]
+time = 1000
+name = "j nasalizes after a mid front vowel, before a nasal (second nasalization)"
+description = "Pope s166.6, s434, s439, s441.2, s441.4 — 11th century; bleeds the later ei > oi shift; does not affect ie̯ (nasalized later, 13th c.)"
+definition = "j → [+nasal] / [+front, aperture: !high, +syllabic] _ [+nasal, -syllabic]"
+
+[eof_second_nasalization_vowel]
+time = 1000
+name = "a mid front vowel nasalizes before a nasal (second nasalization)"
+definition = "[+front, aperture: !high, +syllabic] → [+nasal] / _ [+nasal, -syllabic]"
+
+[eof_general_nasalization_before_nasal_consonant]
+time = 1000
+name = "any remaining vowel nasalizes before a nasal consonant (general nasalization)"
+description = "Pope, DiaCLEF source line 2705: [+syl] > [+nas] / __ [+nas,+cons]. The earlier waves only reached low and mid-front vowels; this catches high i/u and back vowels before a nasal consonant (matin, pin, un), feeding the ĩ→ẽ→ɛ̃ lowering."
+definition = "[+syllabic, nasal: none] → [+nasal] / _ [+nasal, +consonantal]"
+
+[eof_uo_to_ue]
+time = 1000
+name = "the diphthong uo becomes ue"
+description = "Pope s166.3, s226-7 — attested 1084 (Domesday Book); before the ei/ou mutations"
+definition = "o̯ → e̯"
+
+[eof_u_to_y_before_ej]
+time = 1000
+name = "stressed u fronts to y before e̯j"
+description = "Pope s411, s410, s514-5"
+definition = "ˈu → ˈy / _ e̯ j"
+
+[eof_e_glide_loss_after_stressed_i]
+time = 1000
+name = "the e-glide deletes after a stressed high front tense vowel, before a high non-round glide"
+definition = "e̯ → ∅ / [aperture: high, +front, advancement: atr, stress: primary, +syllabic] _ [-syllabic, -consonantal, aperture: high, rounded: none]"
+
+[eof_glide_loss_after_stressed_i_bare]
+time = 1000
+name = "a high non-round glide deletes after stressed i"
+definition = "[-syllabic, -consonantal, aperture: high, rounded: none] → ∅ / ˈi _"
+
+[eof_aj_to_long_e_before_w]
+time = 1000
+name = "aj levels to a long ɛː before w (early leveling, the aqua case)"
+description = "Pope s330 — 11th century; CORRECTION 2026: also for the nasal variant"
+definition = "ˈa j → ˈɛː / _ [-syllabic, +back, aperture: high, +rounded]"
+
+[eof_ou_to_u_before_labial_after_nonlabial]
+time = 1000
+name = "the diphthong ou simplifies to u before a labial consonant, after a non-labial consonant"
+description = "Pope s489 — bled when ow is also preceded by a voiced labial consonant (meuble); CORRECTION 2026: also for nasal w"
+definition = "[advancement: atr, +syllabic, +rounded, aperture: mid] [aperture: high, +back, +rounded, -syllabic] → [aperture: high] ∅ / [labial: none, +consonantal] _ [+labial, -syllabic]"
+
+[eof_ou_to_u_after_p]
+time = 1000
+name = "the diphthong ou simplifies to u before a labial consonant, after p"
+definition = "[advancement: atr, +syllabic, +rounded, aperture: mid] [aperture: high, +back, +rounded, -syllabic] → [aperture: high] ∅ / p _"
+
+[eof_countertonic_o_to_schwa_before_uy]
+time = 1000
+name = "secondary-stressed o reduces to schwa before tonic u-to-y"
+description = "Pope s490 — a \"tendency\" per Pope"
+definition = "ˌo → ˌə / _ [+syllabic, stress: primary, aperture: high, +rounded, back: none]"
+
+[eof_countertonic_o_to_schwa_before_nasal_ou]
+time = 1000
+name = "secondary-stressed o reduces to schwa before a nasal + tonic o-to-u"
+definition = "ˌo → ˌə / _ [-syllabic, +nasal, +consonantal] [+syllabic, advancement: atr, stress: primary, +rounded]"
+
+[eof_countertonic_o_to_schwa_before_affricate_ou]
+time = 1000
+name = "secondary-stressed o reduces to schwa before a non-anterior affricate + tonic o-to-u"
+definition = "ˌo → ˌə / _ (t͡ʃ|d͡ʒ) [+syllabic, advancement: atr, stress: primary, +rounded]"
+
+[eof_countertonic_o_opens_before_r_stop]
+time = 1000
+name = "secondary-stressed o opens to ɔ before r + an anterior non-labial stop + a vowel"
+description = "CORRECTION (not tourtre < torturella)"
+definition = "ˌo → ˌɔ / _ r [+anterior, labial: none, -continuant, nasal: none, trill: none] [+syllabic]"
+
+[eof_final_m_dentalizes]
+time = 1000
+name = "final m dentalizes after a vowel"
+description = "Pope s435 — accepted by the late 11th century"
+definition = "m → n̪ / [-consonantal] _ #"
+
+[eof_ng_to_n_before_nonvelar]
+time = 1000
+name = "ŋ simplifies to n before a non-velar segment"
+description = "CORRECTION — Pope misses this, though her table's \"luns\" for OF longs implies it (attested: lons, sans, bans, blans)"
+definition = "ŋ → n̪ / _ [back: none]"
+
+[ofi_o_opens_before_dh_secondary]
+time = 1000
+name = "secondary-stressed o opens to ɔ before ð, when the next vowel is tense and tonic"
+description = "CORRECTION 2026: applies also to palatalized ð (borne, boyau, prone, Rhone; unaffected: nouer, nourrice, vouer)"
+definition = "ˌo → ˌɔ / _ (ð|ðʲ) ([-syllabic])* (#|[stress: none, +syllabic]|[+syllabic, advancement: rtr])"
+
+[ofi_o_opens_before_dh_primary]
+time = 1000
+name = "primary-stressed o opens to ɔ before ð, when the next vowel is tense and tonic"
+definition = "ˈo → ˈɔ / _ (ð|ðʲ) ([-syllabic])* (#|[stress: none, +syllabic]|[+syllabic, advancement: rtr])"
+
+[ofi_final_l_labializes_after_short_mid_vowel]
+time = 1000
+name = "final l labializes after a short mid vowel"
+description = "CORRECTION — agneau, anneau, oiseau etc.; blocked after a (mal), long e (quel), i (mille), and inconsistent after u/o/ow"
+definition = "l → ɫ / [+syllabic, aperture: mid, length: short] _ #"
+
+[ofi_dh_loss_after_nonprimary]
+time = 1000
+name = "ð deletes before m, after a non-primary-stressed vowel"
+description = "Pope s372 — moved here from Later Old French, before z effacement"
+definition = "ð → ∅ / [stress: !primary, +syllabic] _ m"
+
+[ofi_dh_to_z_before_m]
+time = 1000
+name = "ð becomes z before m elsewhere"
+description = "rhythme > rîme, consuetudinem > coutûme, semaine, dimanche"
+definition = "ð → z / _ m"
+
+[ofi_dh_to_z_between_r_and_n]
+time = 1000
+name = "ð becomes z between r and n"
+definition = "ð → z / r [+syllabic] _ n̪"
+
+[ofi_dh_to_r_before_n]
+time = 1000
+name = "ð assimilates to r before n"
+description = "Pope s372 (butina > borne) — occasionally a Picard characteristic (s378i)"
+definition = "ð → r / _ n̪"
+
+[ofi_stressed_mid_unrounded_laxes_before_r_cons]
+time = 1000
+name = "a stressed mid unrounded vowel laxes and fronts before r + consonant"
+description = "Pope s492-3 — CORRECTION: restricted to r (not l), broadened to include secondary-stressed e"
+definition = "[stress: !none, aperture: mid, rounded: none, +syllabic] → [advancement: rtr, +front] / _ r [+consonantal]"
+
+[ofi_e_laxes_before_consonant_vowel]
+time = 1000
+name = "stressed e laxes to ɛ before a consonant + vowel"
+description = "Pope s575"
+definition = "ˈe → ˈɛ / _ [+consonantal] [+syllabic]"
+
+[ofi_e_laxes_before_obstruent_sonorant_vowel]
+time = 1000
+name = "stressed e laxes to ɛ before an obstruent + non-nasal coronal sonorant + vowel"
+definition = "ˈe → ˈɛ / _ [-sonorant] [+sonorant, +lingual, nasal: none] [+syllabic]"
+
+[ofi_e_laxes_before_noncoronal_final]
+time = 1000
+name = "stressed e laxes to ɛ before a non-coronal consonant, word-finally"
+description = "CORRECTION — excludes non-lateral coronals then # (except s)"
+definition = "ˈe → ˈɛ / _ [+consonantal, lingual: none] #"
+
+[ofi_e_laxes_before_final_s]
+time = 1000
+name = "stressed e laxes to ɛ before word-final s"
+definition = "ˈe → ˈɛ / _ s #"
+
+[ofi_length_reset]
+time = 1000
+name = "vowel length resets to short"
+description = "the distinctive length from ew>øː, ae̯>eː, aj>ɛː is leveled"
+definition = "[+syllabic] → [length: short]"
+
+[ofi_z_loss_before_d]
+time = 1000
+name = "z is lost before d"
+description = "Pope s166.10 — complete before the Norman Conquest (1066); z is simply absorbed here rather than lengthening the prior vowel"
+definition = "z → ∅ / _ d̪"
+
+[ofi_lengthening_before_z_cons_primary]
+time = 1000
+name = "a primary-stressed vowel lengthens before z + consonant"
+description = "Pope s166.10 — CORRECTION: for countertonics this only happens after exactly one consonant (see next rule); does not occur word-initially"
+definition = "[stress: primary, +syllabic] → [length: long] / _ z [+consonantal]"
+
+[ofi_lengthening_before_z_cons_syllabic_stressed]
+time = 1000
+name = "a stressed vowel lengthens before z + one consonant + a vowel"
+definition = "[stress: !none, +syllabic] → [length: long] / _ z [+consonantal] [+syllabic]"
+
+[ofi_z_loss_before_consonant]
+time = 1000
+name = "z is lost before a consonant (preconsonantal effacement)"
+description = "Pope s166.10 — compensatory lengthening handled by the two rules above"
+definition = "z → ∅ / _ [+consonantal]"
+
+[ofi_o_to_e_before_ow_glide]
+time = 1000
+name = "stressed o becomes e before a high back round glide"
+description = "Pope s166.4, s226-7 — ei > oi, ou > eu; she places this at the end of Early Old French"
+definition = "ˈo → ˈe / _ [-syllabic, +back, aperture: high, +rounded]"
+
+[ofi_e_backs_before_yod]
+time = 1000
+name = "a short tense front mid/high vowel backs and rounds before yod"
+description = "Pope s226-7 — the ei of a diphthong (e + off-glide yod) backs to oi. The yod must be a tautosyllabic off-glide (before a consonant or #), not the onset of the next syllable — otherwise `le.ja…` (lien) wrongly backs its `le`."
+definition = "[+front, advancement: atr, aperture: mid, +syllabic, length: short] → [+back, front: none, +rounded, +labial] / _ j // _ j [+syllabic]"
+
+[ofi_o_opens_before_stop_final]
+time = 1000
+name = "secondary-stressed o opens to ɔ before a pre-coda stop, word-finally"
+definition = "ˌo → ˌɔ / _ [-continuant, labial: none, nasal: none, trill: none] #"
+
+[ofi_o_opens_before_stop_final_primary]
+time = 1000
+name = "primary-stressed o opens to ɔ before a pre-coda stop, word-finally"
+description = "CORRECTION"
+definition = "ˈo → ˈɔ / _ [-continuant, labial: none, nasal: none, trill: none] #"
+
+[ofi_o_opens_before_r_or_l_then_stressed_a_or_e]
+time = 1000
+name = "secondary-stressed o opens to ɔ before r or l, then stressed a or ɛ"
+description = "CORRECTION (volage, foret, soleil)"
+definition = "ˌo → ˌɔ / _ [+consonantal, +lingual, +sonorant] (ˈa|ˈɛ)"
+
+[ofi_oj_lowers_before_r]
+time = 1000
+name = "j lowers to ɛ̯ before r, in a back round diphthong"
+description = "Pope s520 — early oj(uj), ɔj > oɛ̯, ɔɛ̯ before r"
+definition = "j → ɛ̯ / [+syllabic, +back, +rounded] _ r"
+
+[ofi_schwa_epenthesis_after_w_lateral]
+time = 1000
+name = "schwa is epenthesized word-finally after a back glide + lateral"
+description = "CORRECTION (velar l, then normal l)"
+definition = "∅ → ə / [+back, -syllabic] [+lateral] _ #"
+
+[ofi_schwa_epenthesis_moule_type]
+time = 1000
+name = "schwa is epenthesized word-finally in a monosyllable ending in a long round back vowel + lateral"
+description = "moule < musculum, coule < cucullum"
+definition = "∅ → ə / # ([+consonantal])* ([advancement: atr, +rounded, +back])* [+lateral] _ #"
+
+[ofi_ow_to_o_before_strident]
+time = 1000
+name = "ow simplifies to o before a strident consonant, not word-finally"
+description = "Pope s674, s673 — CORRECTION: the '@' (non-word-final) requirement is approximated by simply not anchoring to #, since Fortis has no direct \"non-boundary\" symbol"
+definition = ["ˌɔ w → ˌɔ / _ [+strident]", "ˌo w → ˌɔ / _ [+strident]", "ˈɔ w → ˈɔ / _ [+strident]"]
+
+[ofi_ow_to_o_before_coronal_sonorant]
+time = 1000
+name = "ow simplifies to o before any coronal sonorant"
+description = "CORRECTION — 'blocked and free' realization broadened to any coronal sonorant"
+definition = ["ˌɔ w → ˌɔ / _ [+lingual, +sonorant]", "ˌo w → ˌɔ / _ [+lingual, +sonorant]", "ˈɔ w → ˈɔ / _ [+lingual, +sonorant]"]
+
+[ofi_o_opens_before_r_voiced_stop_r]
+time = 1000
+name = "tonic o opens to ɔ before r + a voiced stop + r"
+description = "possibly analogical, per source"
+definition = "ˈo → ˈɔ / _ r [-continuant, +voice, nasal: none, trill: none] r"
+
+[ofi_o_to_u]
+time = 1000
+name = "round tense back vowels raise to u (o > u, oi > ui)"
+description = "Pope s166.2, s184 — 11th-12th centuries; bled by the earlier labial-context shift (s489) except before labials"
+definition = "[+rounded, advancement: atr, +back] → [aperture: high]"
+
+[ofi_oj_lowers_generally]
+time = 1000
+name = "the yod of a back-round diphthong lowers to ɛ̯ everywhere (oj/uj > oɛ̯/uɛ̯)"
+description = "Pope s519-521 (DiaCLEF source line 2669: `j > ɛ̯ / [+syl,+back,+round] __`). The general counterpart of the earlier before-r rule: after ei>oi and the o>u raising, the yod of an oj/uj diphthong lowers to ɛ̯, feeding oɛ̯/uɛ̯ > wɛ > wa (trois, soie, ardoise)."
+definition = "j → ɛ̯ / [+syllabic, +back, +rounded] _"
+
+[ofi_glide_before_ny_lateral]
+time = 1000
+name = "a glide develops between a stressed mid front unrounded vowel and intervocalic ʎ"
+description = "Pope s407i"
+definition = "∅ → j / [aperture: mid, rounded: none, +syllabic, stress: !none] _ ʎ [+syllabic]"
+
+[ofi_glide_before_ny_recurrence]
+time = 1000
+name = "a glide develops between a stressed mid front unrounded vowel and intervocalic ɲ (recurrence)"
+definition = "∅ → j̃ / [aperture: mid, rounded: none, +syllabic, stress: !none] _ ɲ [+syllabic]"
+
+[ofi_glide_before_ny_lateral_from_y]
+time = 1000
+name = "a glide develops between a stressed high front round vowel (y) and intervocalic ʎ"
+description = "Pope s407ii"
+definition = "∅ → j / [aperture: high, +front, +rounded, +syllabic, stress: !none] _ ʎ [+syllabic]"
+
+[ofi_glide_before_ny_from_y]
+time = 1000
+name = "a glide develops between a stressed high front round vowel (y) and intervocalic ɲ"
+definition = "∅ → j̃ / [aperture: high, +front, +rounded, +syllabic, stress: !none] _ ɲ [+syllabic]"
+
+[ofi_nasalized_e_lowers]
+time = 1000
+name = "nasalized front mid vowels begin to lower"
+description = "Pope s166.6, s439 — 11th century, first lowering of nasalized e-varieties"
+definition = "[+front, aperture: mid, +syllabic, +nasal] → [advancement: rtr]"
+
+[ofi_e_glide_rounds_before_back_sonorant]
+time = 1000
+name = "the e-glide rounds to ø before a back sonorant (or ɫ)"
+description = "Pope s556 — the middle element of ye̯w rounds and stresses; CORRECTION: also before ɫ, not yet fully vocalized"
+definition = "e̯ → ø̯ / [aperture: high, +rounded] _ [+sonorant, +back]"
+
+[ofi_nasal_e_to_a]
+time = 1000
+name = "nasalized front mid vowels become nasalized a"
+description = "Pope s441.2, s447-8 — 11th-12th centuries; CORRECTION 2026: front vowels only. Source outputs [+lo,+tense]; here rtr so it renders as `a` and later backs to ɑ̃ (Fortis's ɑ letter is rtr, unlike DiaSim's tense ɑ)."
+definition = "[+nasal, aperture: !high, +syllabic, +front] → [aperture: low, advancement: rtr] / _ (#|[+consonantal])"
+
+[ofi_k_voices_initial_before_liquid_a]
+time = 1000
+name = "word-initial k voices before r/l + a"
+description = "CORRECTION — conditioned on the following a (after aw > round, a > ae̯ > eː), covering craticula > graille, crassum > gras, classum > glas"
+definition = "k → g / # _ [+lingual, +sonorant] [aperture: low]"
+
+[ofi_ir_diphthongizes]
+time = 1000
+name = "ir diphthongizes to ie̯r when stressed, before a consonant"
+description = "Pope s500 — feeds the ie̯ > je shift in the 12th century, must precede it"
+definition = "∅ → e̯ / [+front, aperture: high, rounded: none, stress: primary, +syllabic] _ r [+consonantal]"
+
+[ofi_ny_lateral_loss_after_i]
+time = 1000
+name = "ʎ effaces between an i-variant and a consonant"
+definition = "ʎ → ∅ / [+front, aperture: high, rounded: none, +syllabic] _ [+consonantal]"
+
+[ofi_back_dark_l_to_w]
+time = 1000
+name = "back dark-l variants vocalize to w"
+description = "Pope s385-390 — attested in rhymes by the mid 12th century"
+definition = "[+lateral, +back] → w"
+
+[ofi_geminate_lateral_remnant_loss]
+time = 1000
+name = "the second half of a vocalized geminate l is lost"
+description = "In -ellu > -eau, the geminate ll darkens+vocalizes its first half to w (the eau glide); the surviving second l — split off by word-final schwa epenthesis — is the geminate's other half and is absorbed, so arcellum > arceau (not *arceaul). Only after w (the just-vocalized dark l), before the epenthetic schwa."
+definition = "[+lateral] → ∅ / w _ (ə|ə̯)"
+
+[ofi_schwa_to_o_before_w]
+time = 1000
+name = "schwa becomes o before a high back round glide"
+description = "CORRECTION 2024, 2026: also before the nasal variant"
+definition = "ə → o / _ [-syllabic, +back, aperture: high, +rounded]"
+
+[ofi_ue_monophthongizes_to_o_slash]
+time = 1000
+name = "the stressed diphthong ye̯ (from ue̯) monophthongizes to ø"
+description = "Pope s550-551 — attested 1137; stages ˈue̯ > ˈuø̯ > wˈø > ˈø, broadened since u had already fronted to y by this point"
+definition = "[aperture: high, +rounded, advancement: atr, stress: primary, +syllabic] e̯ → ˈø"
+
+[ofi_w_loss_after_high_round]
+time = 1000
+name = "w deletes immediately after a high round vowel (u or y)"
+description = "CORRECTION 2026: also for the nasal variant"
+definition = "[-syllabic, aperture: high, +back, +rounded] → ∅ / [+syllabic, aperture: high, +rounded] _"
+
+[ofi_ly_to_lj_before_vowel]
+time = 1000
+name = "palatalized l resolves to lj before a vowel"
+description = "Pope s382iv, s384 — CORRECTION 2024: if it somehow survives before vowels"
+definition = "lʲ → l j / _ [-consonantal]"
+
+[ofi_ly_loss]
+time = 1000
+name = "palatalized l effaces elsewhere"
+definition = "lʲ → ∅"
+
+[ofi_glide_between_e_and_w]
+time = 1000
+name = "a glide develops between a stressed or secondary-stressed lax front mid vowel and w"
+description = "Pope s330, s388, s538-540 (bellitatem > beaute, a secondary-stressed case)"
+definition = "∅ → a̯ / [aperture: mid, +front, advancement: rtr, stress: !none, +syllabic] _ w"
+
+[ofi_length_reset_before_aw_glide]
+time = 1000
+name = "vowel length resets to short before the new a-glide + w"
+definition = "[+syllabic] → [length: short] / _ a̯ w"
+
+[ofi_e_glide_after_long_e_before_dark_l]
+time = 1000
+name = "an e-glide develops after long e, before dark l"
+description = "Pope s388, s544 — only from primarily-stressed a (> ˈeː)"
+definition = "ˈeː → ˈe e̯ / _ ɫ"
+
+[ofi_nasalized_aj_to_ej]
+time = 1000
+name = "nasalized aj becomes ɛ̃j everywhere"
+description = "Pope s466-467 — 12th century"
+definition = "[aperture: low, +nasal] → [aperture: mid, advancement: rtr] / _ j̃"
+
+[ofi_e_raises_before_e_glide]
+time = 1000
+name = "stressed e raises to i before an e-glide"
+description = "Pope s388, s544 — ee̯w > ie̯w, 12th century"
+definition = "ˈe → ˈi / _ e̯"
+
+[ofi_countertonic_e_blocks_reduction_before_r]
+time = 1000
+name = "secondary-stressed e laxes to ɛ before r + vowel, blocking reduction to schwa"
+description = "CORRECTION — restricted to r (of r/z/v/ð)"
+definition = "ˌe → ˌɛ / _ r [+syllabic]"
+
+[ofi_ts_to_s_before_noncoronal]
+time = 1000
+name = "the affricate ts simplifies to s before a non-coronal consonant"
+description = "CORRECTION — feeds the s > x shift below (decimum > dime)"
+definition = "t͡s → s / _ [lingual: none, +consonantal]"
+
+[ofi_s_to_x_before_consonant]
+time = 1000
+name = "s becomes x after a vowel, before any consonant"
+description = "Pope s378ii — attested by the 1300 Orthographica Gallica; Walloon wrote this as h; CORRECTION: extended to before all consonants (not just dentals), and to include sʲ"
+definition = "(s|sʲ) → x / [-consonantal] _ [+consonantal]"
+
+[ofi_u_unrounds_before_j_dh_r_schwa]
+time = 1000
+name = "stressed u unrounds and lowers to ʌ before j + ð + optional r + schwa"
+description = "CORRECTION — late 12th century; source itself flags this as dubious (\"may have led us astray\" per later FranTEXT review), kept for fidelity to the port"
+definition = "ˈu → ˈʌ / _ j ð (r)? ə"
+
+[ofi_uh_rerounds_after_labial]
+time = 1000
+name = "ʌ rerounds to u after a labial, possibly separated by r"
+description = "via, korrigia, froide"
+definition = "ˈʌ → ˈu / [+labial] (r)* _"
+
+[ofi_diphthong_stress_shift]
+time = 1000
+name = "diphthongs shift their stress onto the second element (ie̯ > je, ɛa̯ > e̯a, yø̯ > ɥø)"
+description = "Pope s544, s508-510, s470-472, s538, s555-556 — 12th century; the leveling started in the south and west"
+definition = ["ˈi e̯ → j ˈe", "ˌɛ a̯ → e̯ ˌa", "ˈɛ a̯ → e̯ ˈa", "ˈy ø̯ → ɥ ˈø"]
+
+[ofi_countertonic_e_to_a_after_labial_before_r]
+time = 1000
+name = "secondary-stressed ɛ becomes a after a bilabial, before r, in a closed syllable"
+description = "CORRECTION — after bilabial (not labiodental) consonants, before voiceless p or tʃ"
+definition = "ˌɛ → ˌa / [+labial, strident: none, +consonantal] _ r (#|p|t͡ʃ)"
+
+[ofi_theta_edh_effacement]
+time = 1000
+name = "the interdental fricatives (plain and palatalized) efface"
+description = "Pope s172a, s346-7, s372 — finalized mid-12th century, began dialectally in the north and east in the 9th; CORRECTION 2026: applies also to palatalized variants"
+definition = "(θ|ð|θʲ|ðʲ) → ∅"
+
+[ofi_ew_to_oew]
+time = 1000
+name = "ew becomes øw"
+description = "Pope s541-545 — 12th century; fed by ie̯ > je, feeds øw > ø. The trigger is a high back round glide, spelled either w (from a consonantal source) or the semivowel u̯ (a diphthong off-glide, e.g. dieu jeu̯); match it by bundle, not the literal w."
+definition = "[aperture: mid, advancement: atr, +syllabic] → [+rounded, +labial] / _ [aperture: high, +back, +rounded, syllabic: -]"
+
+[ofi_oew_to_oe]
+time = 1000
+name = "øw becomes ø (the back-round glide is absorbed after ø)"
+description = "Pope s541-545 (DiaCLEF line 2611): a high back round glide is lost after a rounded front non-high vowel — øw/øu̯ > ø, dieu jøu̯ > jø."
+definition = "[aperture: high, +back, +rounded, syllabic: -] → ∅ / [+rounded, +front, aperture: !high, +syllabic] _"
+
+[ofi_countertonic_a_to_e_before_front_round]
+time = 1000
+name = "secondary-stressed a raises to e before a front round vowel"
+description = "Pope s421 — after the loss of the interdental fricatives; CORRECTION: also before ø (pavorem > pëor, 1176)"
+definition = "ˌa → ˌe / _ [+front, +rounded]"
+
+[ofi_countertonic_e_to_schwa_recurrence]
+time = 1000
+name = "secondary-stressed e reduces to schwa in an open syllable (recurrence)"
+description = "Pope s166.5, s223, s234-235, s421 — CORRECTION: only sonorant consonants may intervene"
+definition = "ˌe → ˌə / _ ([+consonantal, +sonorant])? [+syllabic]"
+
+[ofi_rr_degemination]
+time = 1000
+name = "the geminate rr degeminates"
+description = "CORRECTION — many centuries earlier than Pope states; accuracy improved by a full point after this change (barram > bar, karruːkam > charrue, karrum > char)"
+definition = "r r → r"
+
+[ofi_countertonic_e_to_e_before_continuant_vowel]
+time = 1000
+name = "secondary-stressed ɛ becomes e before r, z, or v, then a vowel"
+description = "CORRECTION — restricted to r/z/v (not lateral or nasal); r is listed explicitly since Fortis's narrower continuant excludes the trill"
+definition = "ˌɛ → ˌe / _ (r|[+continuant, lateral: none, nasal: none, +voice]) [+syllabic]"
+
+[ofi_uh_completes_to_a]
+time = 1000
+name = "ʌ completes its shift to a"
+description = "completes the early oi > ai shift attested before Middle French (cle:tam, cre:tam, mone:tam > claie, craie, taie)"
+definition = "ˈʌ → ˈa"
+
+[ofi_deaffrication]
+time = 1000
+name = "all affricates become sibilants (deaffrication)"
+description = "Pope s172b ~ s194 — before the end of the 13th century. Source [+delrel] > [+cont]: an affricate is a continuant contour (closure→release, `->+`), so collapsing it to plain [+continuant] turns every affricate into its fricative (t͡s→s, d͡ʒ→ʒ, …)."
+definition = "[continuant: ->+] → [+continuant]"
+
+[ofi_x_loss]
+time = 1000
+name = "the velar fricative x is lost"
+description = "Source `x > ∅` (DiaCLEF 2773) — general loss of the preconsonantal x (the s→x reflex, Walloon 'h'); the earlier x→k / x→∅/_# reflexes have already applied."
+definition = "x → ∅"
+
+# --- Old French II / Later Old French (Pope s16, end of 11th to 14th centuries) ---
+
+[of2_degemination]
+time = 1200
+name = "geminates simplify to single consonants"
+description = "By Old French, distinctive length is lost on consonants too (Pope s305, s618): every remaining geminate reduces to a single consonant — annum ann→an, abbatissa abb→ab, bella ell→el. Placed before the nasal-consonant/compensatory processing so a nn/mm feeds it as a single nasal."
+definition = "1=[+consonantal] @1 → @1"
+
+[of2_general_nasalization_recurrence]
+time = 1200
+name = "any remaining vowel nasalizes before a nasal consonant (recurrence)"
+description = "Pope s434/s439 — the nasalization recurs (source lines 2758-9) to catch vowels that only came to sit before a nasal consonant after the OF-I diphthong/ending shifts: lien je + n̪, whose e formed post-nasalization."
+definition = "[+syllabic, nasal: none] → [+nasal] / _ [+nasal, +consonantal]"
+
+[of2_final_ny_to_n]
+time = 1200
+name = "final ɲ becomes n"
+description = "Pope s435 — likely 13th century per rhymes, though \"ng\"/\"gn\" spellings persist till the 16th"
+definition = "ɲ → n̪ / _ #"
+
+[of2_final_consonant_loss_after_schwa]
+time = 1200
+name = "a single final consonant effaces after schwa"
+definition = "[+consonantal] → ∅ / ə _ #"
+
+[of2_stressless_schwa_desyllabifies_before_vowel]
+time = 1200
+name = "a stressless schwa desyllabifies before another vowel"
+description = "Pope s268-9 — began 13th c., not accepted till the 16th; kept as an intermediate ə̯ stage, with lengthening/effacement realized in later rules"
+definition = "ə → ə̯ / _ [-consonantal]"
+
+[of2_countertonic_schwa_to_a_before_stressed_low]
+time = 1200
+name = "secondary-stressed schwa assimilates to a before a stressed low vowel"
+description = "Pope s244 — precedes the later contraction/lengthening rule (s242a)"
+definition = "ˌə → ˌa / _ [aperture: low, stress: !none, +syllabic]"
+
+[of2_countertonic_schwa_desyllabifies_before_vowel]
+time = 1200
+name = "secondary-stressed schwa desyllabifies before another vowel"
+description = "Pope s243-245 — began 13th c., usual by the 16th"
+definition = "ˌə → ə̯ / _ [-consonantal]"
+
+[of2_schwa_desyllabifies_after_vowel]
+time = 1200
+name = "schwa desyllabifies after another vowel"
+description = "Pope s270 — began 14th c., not accepted until the 16th; source notes the Cj-exclusion correction was never actually implemented"
+definition = "ə → ə̯ / [-consonantal] _"
+
+[of2_e_rounds_to_o_slash_between_labials]
+time = 1200
+name = "e-sounds round to ø between two labial consonants (or after ʒ)"
+description = "Pope s486 — accepted early 15th century"
+definition = ["ə → ø / (ʒ|[+labial, +consonantal, +voice]) _ [+labial, +consonantal]", "ˌə → ˌø / (ʒ|[+labial, +consonantal, +voice]) _ [+labial, +consonantal]", "ˈɛ → ˈø / (ʒ|[+labial, +consonantal, +voice]) _ [+labial, +consonantal]"]
+
+[of2_e_rounds_to_o_slash_after_voiceless_labial]
+time = 1200
+name = "e-sounds round to ø after a voiceless labial, before a voiced labial"
+description = "CORRECTION — f/p only round before a voiced labial (v, m, b)"
+definition = ["ə → ø / [+labial, +consonantal, -voice] _ [+labial, +consonantal, +voice]", "ˌə → ˌø / [+labial, +consonantal, -voice] _ [+labial, +consonantal, +voice]", "ˈɛ → ˈø / [+labial, +consonantal, -voice] _ [+labial, +consonantal, +voice]"]
+
+[of2_nasalized_i_lowers_after_w]
+time = 1200
+name = "nasalized ĩ lowers after w"
+description = "CORRECTION — bleeds the later denasalization of wĩ, which denasalizes to wɛ ultimately"
+definition = "[+front, +nasal, +syllabic] → [aperture: mid] / w _"
+
+[of2_nasalized_i_denasalizes_before_nasal_glide]
+time = 1200
+name = "nasalized high front ĩ denasalizes before a nasal consonant + glide"
+description = "Pope s452 — before ĩ lowers, 15th century; ỹ (s440) and ɥ̃ĩ (s441.10) handled at the same time"
+definition = "[+nasal, +front, aperture: high, +syllabic] → [nasal: none] / _ [+nasal, +consonantal] [-consonantal]"
+
+[of2_nasalized_glide_denasalizes]
+time = 1200
+name = "a nasalized round front glide (ɥ̃) denasalizes before a non-nasal"
+description = "CORRECTION: can also happen when the next element is a glide"
+definition = "[-syllabic, -consonantal, +rounded, +front] → [nasal: none] / _ [nasal: none]"
+
+[of2_i_tilde_lowers_to_e_tilde]
+time = 1200
+name = "nasalized ĩ lowers to ẽ"
+description = "Pope s451 — 15th century (further to ɛ̃ not until the later 16th, per s452)"
+definition = "[+nasal, +front, rounded: none, aperture: !low, +syllabic] → [aperture: mid]"
+
+[of2_ny_tilde_loss_before_denasalization]
+time = 1200
+name = "j̃ deletes before a nasalized non-tense front vowel"
+description = "Pope s441.3, s466-467 — ɛ̃j̃ > ɛ̃; accepted by Villon (15th c.)"
+definition = "j̃ → ∅ / [+nasal, +front, advancement: rtr] _"
+
+[of2_initial_long_o_open_shortens_before_cluster]
+time = 1200
+name = "initial primary-stressed long ɔː shortens before a consonant cluster"
+definition = "ˈɔː → ˈɔ / _ [+consonantal] [+consonantal]"
+
+[of2_aw_to_long_o]
+time = 1200
+name = "aw becomes long oː"
+description = "Pope s534-538, s560 — 15th-16th centuries, complete by the early 16th (Ramus 1561)"
+definition = ["ˌa w → ˌoː", "ˈa w → ˈoː"]
+
+[of2_e_glide_to_schwa_glide_before_round_back]
+time = 1200
+name = "the e-glide becomes a schwa-glide before a non-high round back vowel"
+description = "Pope s535, s538-539 — fed by aw > o; reported by Erasmus, complete by Beze (1584)"
+definition = "e̯ → ə̯ / _ [+rounded, +back, aperture: !high]"
+
+[of2_je_to_e_after_palatal]
+time = 1200
+name = "je becomes e after a palatal consonant"
+description = "Pope s510 — late 15th-16th centuries; after ʎ ɲ ʃ ʒ and palatalized sʲ/tʲ/zʲ/dʲ; does not occur for nasal jẽ. The preceding consonant must be palatal/palatalized (`aperture: high`) — the bare `[+front, +consonantal]` also matched plain dentals (coronal place reuses the `front` node), so it wrongly ate the j of tierce t̪jer > *t̪er."
+definition = "j → ∅ / [+front, aperture: high, +consonantal] _ [+front, aperture: mid, rounded: none, +syllabic, nasal: none]"
+
+[of2_remaining_anterior_palatals_lost]
+time = 1200
+name = "the remaining anterior palatalized consonants depalatalize"
+description = "CORRECTION — the palatal sʲ/tʲ/zʲ/dʲ preserved since Gallo-Roman are finally lost"
+definition = "[+anterior, +front, aperture: high] → [front: none, aperture: none]"
+
+[of2_hw_to_i_unstressed]
+time = 1200
+name = "ɥ effaces in unstressed syllables, after a labiodental (possibly with r intervening)"
+description = "Pope s516 — early 16th century, still hesitation"
+definition = "ɥ → ∅ / [+labial, +continuant, +consonantal] (r)? _ [aperture: high, +front, stress: !primary]"
+
+[of2_oe_to_we_final]
+time = 1200
+name = "the diphthong oɛ̯ completes its shift to wɛ"
+description = "Pope s521 — 16th century, accepted by Meigret and Baif"
+definition = ["[+back, +rounded, +syllabic, stress: none] ɛ̯ → w ɛ", "[+back, +rounded, +syllabic, stress: primary] ɛ̯ → w ˈɛ", "[+back, +rounded, +syllabic, stress: secondary] ɛ̯ → w ˌɛ"]
+
+[of2_we_from_denasalization]
+time = 1200
+name = "a front unrounded non-low vowel laxes and lowers after w"
+description = "CORRECTION — includes /we/ resulting from denasalization"
+definition = "[+front, rounded: none, +syllabic, aperture: !low] → [aperture: mid, advancement: rtr] / w _"
+
+[of2_nasal_consonant_loss_praeconsonantal]
+time = 1200
+name = "a nasal consonant effaces praeconsonantally (or finally) after a nasal vowel, lengthening it"
+description = "Pope s436-437, s563 — before the mid-16th century; final n also lost (approximated here as unconditional, since this engine doesn't model cross-word context)"
+definition = "[+nasal, +syllabic] [+nasal, +consonantal] → [length: long] ∅ / _ ([+consonantal]|#)"
+
+[of2_nasal_consonant_loss_praeconsonantal_after_ny_tilde]
+time = 1200
+name = "a nasal consonant effaces after a nasalized j̃, praeconsonantally (or finally), lengthening the vowel"
+definition = "[+nasal, +syllabic] j̃ [+nasal, +consonantal] → [length: long] j̃ ∅ / _ ([+consonantal]|#)"
+
+[of2_final_l_loss_after_high_front_sibilant]
+time = 1200
+name = "final l effaces after a high front vowel, when preceded by a strident coronal"
+description = "Pope s392 — regular by Later Middle French; restoration for many cases is lexical/social, not phonological"
+definition = "[+lateral] → ∅ / [+strident, +lingual] [+syllabic, aperture: high, +front] _ #"
+
+[of2_final_l_loss_after_high_back]
+time = 1200
+name = "final l effaces after a high back vowel"
+description = "always happens after u"
+definition = "[+lateral] → ∅ / [+syllabic, aperture: high, +back] _ #"
+
+[of2_final_aje_to_long_e_open]
+time = 1200
+name = "final ajə (and aj before a consonant) becomes long ɛː"
+description = "Pope s530-532 — accepted only in the 17th c. per Pope, though FLLAPS places it here; CORRECTION 2024: also before consonants, not just word-finally"
+definition = "[aperture: low, +front] j → [aperture: mid, advancement: rtr, length: long] ∅ / _ (ə̯)? (#|[+consonantal])"
+
+[of2_schwa_glide_loss_after_stressed]
+time = 1200
+name = "a non-syllabic schwa effaces after a stressed syllable, lengthening it"
+description = "Pope s562"
+definition = "[stress: !none, +syllabic] ə̯ → [length: long] ∅"
+
+[of2_schwa_glide_loss_after_vowel]
+time = 1200
+name = "a non-syllabic schwa effaces after another vowel"
+definition = "ə̯ → ∅ / [-consonantal] _"
+
+[of2_intertonic_schwa_loss_after_coronal_sonorant]
+time = 1200
+name = "intertonic schwa effaces between a stressed coronal sonorant and a consonant, before a later stressed syllable"
+description = "Pope s272 — begins 12th-13th c., regular by the 16th with hesitation/doublets"
+definition = "ə → ∅ / [stress: !none, +syllabic] [+lingual, +sonorant, +consonantal] _ [+consonantal] ([-syllabic])* [+syllabic, stress: !none]"
+
+[of2_intertonic_schwa_loss_before_r_or_l]
+time = 1200
+name = "intertonic schwa effaces between a stressed consonant and r/l, before a later stressed syllable"
+definition = "ə → ∅ / [stress: !none, +syllabic] ([-syllabic])* [+consonantal] _ (r|l) ([-syllabic])* [+syllabic, stress: !none]"
+
+[of2_identical_vowels_contract_to_long]
+time = 1200
+name = "two adjacent vowels agreeing in height, backness, and rounding contract to one long vowel"
+description = "Pope s242a, s561 — accepted 16th c. (began 13th); CORRECTION 2026 unifies what were formerly three separate rules"
+definition = "[α aperture, γ front, δ rounded, +syllabic] [α aperture, γ front, δ rounded, +syllabic] → ∅ [length: long]"
+
+[of2_oo_to_long_u]
+time = 1200
+name = "two adjacent mid back round vowels contract to a long stressed u"
+definition = "[aperture: !high, +back, +rounded, +syllabic] [aperture: !high, +back, +rounded, +syllabic] → ˈuː"
+
+[of2_au_to_long_a_nasal_final]
+time = 1200
+name = "secondary-stressed a plus a primary-stressed nasalized back vowel becomes a long nasalized a, word-finally"
+description = "Pope s242b, s561 — CORRECTION: aũ only becomes ã word-finally"
+definition = "ˌa [stress: primary, +back, +nasal, +syllabic] → ˈãː / _ #"
+
+[of2_a_loss_before_stressed_high_back]
+time = 1200
+name = "secondary-stressed a effaces before a primary-stressed high back vowel"
+definition = "ˌa → ∅ / _ [stress: primary, +back, aperture: high, +syllabic]"
+
+[of2_ae_to_long_e_open]
+time = 1200
+name = "secondary-stressed a plus a primary-stressed lax front vowel becomes a long ɛː"
+description = "CORRECTION"
+definition = "ˌa [stress: primary, rounded: none, advancement: rtr, +front, +syllabic] → ˈɛː"
+
+[of2_ai_tilde_to_long_e_tilde_open]
+time = 1200
+name = "a low stressed vowel plus a primary-stressed nasalized high front vowel becomes a long ɛ̃ː"
+definition = "[aperture: low, stress: !none, +syllabic] [stress: primary, +front, aperture: high, rounded: none, +nasal, +syllabic] → ˈɛ̃ː"
+
+[of2_o_lengthens_before_z_v]
+time = 1200
+name = "lax back mid o lengthens before z or v"
+description = "Pope s579"
+definition = "[aperture: mid, +back, +syllabic, advancement: rtr] → [length: long] / _ (z|v)"
+
+[of2_long_o_tenses]
+time = 1200
+name = "a long back mid o tenses to oː"
+definition = "[aperture: mid, +back, +syllabic, length: long] → [advancement: atr]"
+
+[of2_yj_to_ui_glide]
+time = 1200
+name = "yj becomes ɥi (the y desyllabifies, the yod becomes the nucleus)"
+description = "Pope s503, s514-517 — yj > ɥi everywhere not already mutated (13th century). Source: [+front,+round,+syl,+hi,βstres,ɣprim][-round,-syl,-cons] > [-syl][+syl,βstres,ɣprim]. fruit fryj > frɥi. The syllabicity swaps between the two elements; stress rides onto the new nucleus."
+definition = ["ˈy j → ɥ ˈi", "ˌy j → ɥ ˌi", "y j → ɥ i"]
+
+[of2_ow_monophthongizes_to_u]
+time = 1200
+name = "the ow diphthong monophthongizes to u"
+description = "Pope s547-548 — ɔw > u in the thirteenth century (fou, mou, chou). Source: [-hi,-lo,+back,+round][+hi,+back,+round,-syl] > [+hi,+tense] ∅ — the back-mid nucleus raises/tenses to u and the round glide is absorbed."
+definition = "[aperture: mid, +back, +rounded, +syllabic] [aperture: high, +back, +rounded, -syllabic] → [aperture: high, advancement: atr, front: none] ∅"
+
+# --- Middle/Modern French (Pope; DiaCLEF2025 lines 3011-3301, the "~Middle French" stage
+# through Early Modern, marker at 1550) — the final period. Source-line order preserved. ---
+
+[mf_nasal_e_lowers_to_open]
+time = 1400
+name = "nasalized ẽ lowers to ɛ̃"
+description = "Pope s451-452 — later 16th century; attributed to Parisians by Bovelles (1533), accepted by Lyttelton (1566) and Tabourot (1587); the jẽ/wẽ clusters wait for the 17th century (handled later)"
+definition = ["[+front, aperture: !low, +nasal, +syllabic, rounded: none] → [aperture: mid, advancement: rtr] / # _", "[+front, aperture: !low, +nasal, +syllabic, rounded: none] → [aperture: mid, advancement: rtr] / [+consonantal] _", "[+front, aperture: !low, +nasal, +syllabic, rounded: none] → [aperture: mid, advancement: rtr] / [+syllabic] _"]
+
+[mf_open_front_nasal_denasalizes]
+time = 1400
+name = "the open front nasal ɛ̃ (and œ̃) denasalizes before a nasal consonant + vowel"
+description = "Pope s467-468 — mid-to-late 16th century, attested in Lyttelton (1566); run together with denasalization of jɛ̃, œ̃ (s477) and wɛ̃ (s474-476) for simplicity"
+definition = "[+front, aperture: !low, +nasal, +syllabic] → [nasal: none] / _ [+nasal, +consonantal] [-consonantal]"
+
+[mf_e_lowers_before_lateral]
+time = 1400
+name = "e lowers to ɛ before a lateral"
+description = "Pope s494 — second half of the 16th century (Beze has /ɛ/, Peletier still /e/)"
+definition = "[aperture: mid, +syllabic, +front, rounded: none] → [advancement: rtr] / _ [+lateral]"
+
+[mf_e_lowers_before_r_coda]
+time = 1400
+name = "e/ø lax before an r that closes the syllable"
+description = "Pope s495 — very late Middle French to early 17th century; word-final r only in monosyllables; ø also lowers to œ"
+definition = ["[aperture: mid, +syllabic, +front] → [advancement: rtr] / _ r [+consonantal, strident: none]", "[aperture: mid, +syllabic, +front, rounded: none] → [advancement: rtr] / # ([-syllabic])* _ r #", "[aperture: mid, +syllabic, +front, +rounded] → [advancement: rtr] / _ r #"]
+
+[mf_front_round_closes_to_y_before_labial]
+time = 1400
+name = "the new ø (from e/ɛ/ə) closes to y before a labial, except when primary-stressed"
+description = "Pope s486 — late 16th century; Ramus and Vaugelas both report variation in their lifetimes"
+definition = "[+front, +rounded, advancement: atr, stress: !primary] → [aperture: high] / _ [+labial, +consonantal]"
+
+[mf_stressed_lengthens_after_schwa_glide]
+time = 1400
+name = "a stressed vowel lengthens after a non-syllabic schwa"
+description = "Pope s562 — completion of the loss of schwa adjacent to vowels, with compensatory lengthening; widely accepted by the 16th century"
+definition = "[stress: !none, +syllabic] → [length: long] / ə̯ _"
+
+[mf_schwa_glide_loss_before_vowel]
+time = 1400
+name = "a non-syllabic schwa is lost before a vowel/glide"
+definition = "ə̯ → ∅ / _ [-consonantal]"
+
+[mf_a_lengthens_before_palatal_l_schwa]
+time = 1400
+name = "a lengthens before final ʎə"
+description = "Pope s570i — accepted by Beze (17th century)"
+definition = "[aperture: low] → [length: long] / _ ʎ ə #"
+
+[mf_long_tense_e_lowers]
+time = 1400
+name = "long e:/je: lower to ɛ:/jɛ: before a single consonant + coda (or ə)"
+description = "Pope s173.1b ~ s576 — 16th century (Peletier resists, Lanoue and Baif oscillate); CORRECTION: not before a coronal then coda; also ˌe and ˈe before two consonants"
+definition = ["[advancement: atr, aperture: mid, rounded: none, stress: !none, +syllabic] → [advancement: rtr] / _ [+consonantal] [-consonantal, back: none, front: none]", "ˈe → ˈɛ / _ [+consonantal, lingual: none] #", "ˈe → ˈɛ / _ [+consonantal] [+consonantal]"]
+
+[mf_final_schwa_becomes_offglide]
+time = 1400
+name = "final ə becomes a non-syllabic off-glide"
+description = "Pope s273 — reported by Beze (1564); does not bleed the length/quantity changes conditioned on final ə"
+definition = "ə → ə̯ / _ #"
+
+[mf_long_a_backs]
+time = 1400
+name = "long a becomes back ɑː"
+description = "Pope s586 ~ s173.1c — toward the end of the 16th century (first noted by Plantin, 1567); still palatal for Ronsard earlier"
+definition = "[aperture: low, length: long, +syllabic] → [+back, front: none]"
+
+[mf_a_stays_front_lexical]
+time = 1400
+name = "the long a stays front in words that lexically resisted backing"
+description = "The a/ɑ split is partly lexical diffusion, not fully rule-governed: maille (macula) backs to /mɑj/ but the phonologically identical ail (allium) stays /aj/, and malade stays /malad/. No phonological environment separates the minimal pair, so the front-stayers are marked lexically. This re-fronts the handful backed by mf_long_a_backs that attest front a."
+words = ["ail", "malade"]
+definition = "[aperture: low, +back, +syllabic] → [+front, back: none]"
+
+[mf_a_backs_lexical]
+time = 1400
+name = "the a backs to ɑ in words with a historical â (lost preconsonantal s)"
+description = "pâtre (pastor) has ɑ from the â left by the lost preconsonantal s — a compensatory-lengthening effect the general cascade drops the length for, so it is marked lexically. Runs after mf_long_a_backs; its short a would otherwise stay front."
+words = ["pâtre"]
+definition = "[aperture: low, +front, +syllabic] → [+back, front: none]"
+
+[mf_fosse_close_o_lexical]
+time = 1400
+name = "o stays close in fosse (lexical o/ɔ split)"
+description = "French o/ɔ distribution is loi-de-position with heavy lexical override: fosse /fos/ is close but bosse /bɔs/ open in the same frame. Marked lexically."
+words = ["fosse"]
+definition = "[aperture: mid, +back, +rounded, +syllabic] → [advancement: atr]"
+
+[mf_or_back_o_lexical]
+time = 1400
+name = "the tonic vowel of or is back ɔ (au monophthong), not front œ"
+description = "aurum > or /ɔʁ/: the au monophthong is back open-o; the general cascade closes this monosyllable to o (atr). Marked lexically."
+words = ["or"]
+definition = "[+front, +rounded, aperture: mid, +syllabic] → [+back, front: none, advancement: rtr]"
+
+[mf_six_final_s_lexical]
+time = 1500
+name = "six keeps its final s (numeral, pronounced in isolation)"
+description = "six < sex: the /ks/ simplifies but the s is retained in the isolation/counting form /sis/, resisting the regular final-consonant loss. Runs after the final glide-drop (sij>si) so the vowel is word-final and can take the s. Numeral-specific; marked lexically."
+words = ["six"]
+definition = "∅ → s / [+syllabic] _ #"
+
+[mf_cerf_final_f_loss_lexical]
+time = 1400
+name = "cerf loses its final f (silent, unlike boeuf)"
+description = "cerf /sɛʁ/ has a silent final f, but the phonologically identical -Vf of boeuf /bœf/ keeps it. Lexically split; marked here."
+words = ["cerf"]
+definition = "f → ∅ / _ #"
+
+[mf_graal_hiatus_lexical]
+time = 1400
+name = "graal levels its aɛ hiatus to a (learned word)"
+description = "graal is a learned/late borrowing whose aa/aɛ hiatus does not follow the inherited diphthong path; it surfaces as /ɡʁal/. Marked lexically."
+words = ["graal"]
+definition = "ɛ → ∅ / [aperture: low] _"
+
+[mf_diaeresis_i_epenthesis]
+time = 1400
+name = "je becomes ije (diaeresis) after a consonant + liquid"
+description = "Pope s511 — CORRECTION: moved a century earlier (it bleeds s241); goes to i j, not i.e"
+definition = "∅ → i / [+consonantal] [+anterior, +sonorant] _ j [+front, aperture: mid, advancement: atr, rounded: none, +syllabic]"
+
+[mf_j_epenthesis_after_hw]
+time = 1400
+name = "j is inserted between a back-conditioned ɥi and a following vowel"
+description = "CORRECTION — j inserted between i and a following vowel when the ɥi is after a back segment"
+definition = "∅ → j / [+back] ɥ [aperture: high, +front] _ [+syllabic]"
+
+[mf_r_glides_to_approximant]
+time = 1400
+name = "r loses its trill and becomes the approximant ɹ intervocalically/preconsonantally"
+description = "Pope s395 — Pope explicitly gives the destination as ɹ"
+definition = "r → ɹ / [-consonantal] _ (#|[+consonantal])"
+
+[mf_final_r_loss]
+time = 1400
+name = "final ɹ effaces after a monosyllabic e(ː) or a we(ː) nucleus"
+description = "Pope s400-401 — 16th century, later reversed by prestige restoration except for -er/-jer; CORRECTION 2026: relocated before the gliding of countertonic u, y"
+definition = ["ɹ → ∅ / [+syllabic] ([-syllabic])* [aperture: mid, +front, advancement: atr] _ #", "ɹ → ∅ / w [aperture: mid, +syllabic, advancement: atr] _ #"]
+
+[mf_countertonic_high_desyllabifies]
+time = 1400
+name = "a countertonic high vowel consonantalizes before a lower vowel, ceding stress"
+description = "Pope s241 — 16th century (\"Later Middle French\"), accepted by the early 17th (Vaugelas); CORRECTION: not before a low vowel"
+definition = "[aperture: high, stress: secondary, +syllabic] [aperture: mid, +syllabic] → [syllabic: -] [stress: secondary]"
+
+[mf_vowel_lengthens_before_intervocalic_z]
+time = 1400
+name = "a vowel lengthens before an intervocalic z"
+description = "Pope s569 (citing Beze) — early 17th century; placed after long-a velarization (cf. masure /mazyʁ/)"
+definition = "[+syllabic] → [length: long] / _ z [+syllabic]"
+
+[mf_a_lengthens_before_final_schwa_j]
+time = 1400
+name = "a lengthens in the ending aʒə̯"
+description = "Pope s570iii — placed after long-a velarization (cf. voyage /vwajaʒ/)"
+definition = "[aperture: low] → [length: long] / _ ʒ ə̯ #"
+
+[mf_back_mid_o_opens_before_cluster]
+time = 1400
+name = "back mid o opens before a consonant cluster"
+description = "CORRECTION — o opens when followed by two or more consonants (autre, votre, pauvre)"
+definition = "[aperture: mid, +back, +syllabic] → [advancement: rtr] / _ [+consonantal] [+consonantal]"
+
+[mf_precoda_t_supported_by_schwa]
+time = 1400
+name = "a pre-coda t is supported by an epenthetic off-glide in an onsetless monosyllable"
+description = "Early Modern French; CORRECTION — pre-coda t is preserved in the pre-coda-consonant loss series when preceded only by non-consonantal glides (ɥ, w, j)"
+definition = "∅ → ə̯ / # ([-consonantal, nasal: none])* t̪ _ #"
+
+[mf_open_o_raises_before_final_sibilant]
+time = 1400
+name = "primary-stressed open ɔ lengthens and raises to oː before a final sibilant about to delete"
+description = "Pope s580"
+definition = "[stress: primary, advancement: rtr, +back, +rounded, aperture: !high] → ˈoː / _ [+strident, -continuant] #"
+
+[mf_final_fricative_supported_by_schwa]
+time = 1400
+name = "final f/k/s are supported by an epenthetic off-glide (escaping the coming consonant loss)"
+description = "Pope s618-619 — counteraction preserving f (always), k (after a non-nasal single vowel), and s (in sibilant-initial monosyllables) from the liaison-driven final-consonant loss"
+definition = ["∅ → ə̯ / # [+syllabic, nasal: none] [-syllabic] k _ #", "∅ → ə̯ / # [-syllabic] [+syllabic, nasal: none] k _ #", "∅ → ə̯ / f _ #", "∅ → ə̯ / # [+strident] [rounded: none, aperture: high, +syllabic] s _ #"]
+
+[mf_final_obstruent_loss]
+time = 1400
+name = "final obstruents are lost"
+description = "Pope s611-620 — liaison-driven final-consonant loss; began 13th century, established by the 16th, accepted (grudgingly) after the early 17th"
+definition = "[-sonorant] → ∅ / _ #"
+
+[mf_final_offglide_reschwa]
+time = 1400
+name = "a final off-glide schwa re-syllabifies in a monosyllable"
+description = "Pope s273 — CORRECTION: the deletion of ə̯ does not occur in monosyllables"
+definition = "ə̯ → ə / # ([-syllabic])* _ ([-syllabic])* #"
+
+[mf_offglide_schwa_loss]
+time = 1400
+name = "the final off-glide schwa is deleted elsewhere"
+description = "Pope s273, s539 — final off-glide ə lost; grouped with ə̯o: > o:, accepted in the 17th century"
+definition = "ə̯ → ∅"
+
+[mf_e_lowers_before_r_coda_recurrence]
+time = 1400
+name = "e/ø lax before an r that closes the syllable (recurrence, after final ə deletion)"
+description = "Pope s495 (recurrence) — reapplies now that a final ə before r has been deleted; 17th century"
+definition = ["[aperture: mid, +syllabic, +front] → [advancement: rtr] / _ r [+consonantal, strident: none]", "[aperture: mid, +syllabic, +front, rounded: none] → [advancement: rtr] / # ([-syllabic])* _ r #", "[aperture: mid, +syllabic, +front, +rounded] → [advancement: rtr] / _ r #"]
+
+[mf_front_round_opens_before_coda]
+time = 1400
+name = "front round ø opens to œ before a coda consonant in the final syllable"
+description = "CORRECTION — the emergence of the new open œ; a final ə does not block it"
+definition = "[+front, +rounded, aperture: !high, +syllabic] → [advancement: rtr] / _ ([+consonantal])+ (ə)? #"
+
+[mf_nasal_front_lowers]
+time = 1400
+name = "nasalized front vowels lower (wẽ, jẽ, ø̃ open to wɛ̃, jɛ̃, œ̃)"
+description = "Pope s470-474 — final acceptance in the early 17th century; ø̃ > œ̃ handled together"
+definition = "[+nasal, +front, +syllabic, aperture: !low] → [aperture: mid, advancement: rtr]"
+
+[mf_nasal_front_round_lowers]
+time = 1400
+name = "nasalized ỹ lowers to ø̃"
+description = "Pope s457 — begins late 16th century, accepted in the 17th"
+definition = "[+nasal, +syllabic, +front, +rounded] → [aperture: mid]"
+
+[mf_nasal_front_denasalizes]
+time = 1400
+name = "nasalized ã (and wɛ̃, jɛ̃) denasalizes before a nasal consonant + vowel"
+description = "Pope s444, s440 — 16th-century beginning, accepted in the 17th (\"Early Modern French\")"
+definition = "[+front, rounded: none, +syllabic, +nasal] → [nasal: none] / _ [+consonantal, +nasal] [-consonantal]"
+
+[mf_aj_to_e_before_tonic]
+time = 1400
+name = "aj becomes e before a tense tonic vowel"
+description = "Pope s531.ii — late 17th century; CORRECTION: only before tense tonic vowels, resolving to e (not ɛj); CORRECTION 2024: can see through an intervening glide"
+definition = "[aperture: low, +front] j → [aperture: mid, advancement: rtr] ∅ / _ ([-consonantal, -syllabic])? [stress: primary, advancement: atr]"
+
+[mf_mid_vowel_laxes_before_yod]
+time = 1400
+name = "mid vowels lax before i/j"
+description = "CORRECTION"
+definition = "[+syllabic, aperture: mid] → [advancement: rtr] / _ [-consonantal, aperture: high, +front]"
+
+[mf_countertonic_schwa_after_labial_l_to_e]
+time = 1400
+name = "countertonic ə/ɛ becomes ˌe after a labial + l"
+description = "CORRECTION"
+definition = "[rounded: none, aperture: mid, back: none, stress: secondary] → ˌe / [+labial] l _"
+
+[mf_r_approximant_reverts_to_trill]
+time = 1400
+name = "the approximant ɹ reasserts as a trill r wherever it was not deleted"
+description = "per Pope s400-401"
+definition = "ɹ → r"
+
+[mf_h_deletion]
+time = 1400
+name = "h is deleted (second h-deletion)"
+description = "Pope s196 — accepted in the late 17th century; only affects Frankish/Germanic loans"
+definition = "h → ∅"
+
+[mf_r_becomes_uvular]
+time = 1400
+name = "r becomes uvular ʀ"
+description = "Pope s394 ~ s498 — 17th century"
+definition = "r → ʀ"
+
+[mf_stress_leveling]
+time = 1400
+name = "stress is leveled — no longer distinctive for vowels"
+description = "Pope s121 ~ s170 ~ s223 ~ s508 ~ s602"
+definition = "[+syllabic, stress: !none] → [stress: none]"
+
+[mf_long_nasal_u_denasalizes_to_o]
+time = 1400
+name = "long ũː denasalizes to o before a short nasal u"
+description = "CORRECTION — as o rather than ɔ (Saône, Jérôme). The trigger is a following nasal VOWEL (per the name); the bare `[+nasal]` context also matched a nasal consonant, wrongly denasalizing coin kũːn̪ > *kon̪ where the n̪ should instead nasalize+drop."
+definition = "[aperture: high, +back, +rounded, +nasal, +syllabic, length: long] → o / _ [+nasal, +syllabic]"
+
+[mf_length_neutralized]
+time = 1400
+name = "distinctive vowel length is lost entirely"
+description = "CORRECTION — by 1700 (perhaps begun in the 16th century, cf. Gess 2001); length survives in conservative dialects (Belgium, Quebec) but not Paris; CORRECTION 2026: any length deleted"
+definition = "[length: long] → [length: short]"
+
+[mf_nasal_u_opens]
+time = 1400
+name = "nasal ũ opens to ɔ̃"
+description = "Pope s460 — 17th century, still incomplete (s462) in 1696"
+definition = "[aperture: high, +back, +rounded, +nasal, +syllabic] → [aperture: mid, advancement: rtr]"
+
+[mf_round_nasal_denasalizes_open_syllable]
+time = 1400
+name = "ɔ̃ (and œ̃) denasalizes in an open syllable before a nasal consonant"
+description = "Pope s463 — first attested late 17th century, accepted in the 18th"
+definition = "[+rounded, +nasal] → [nasal: none] / _ [+nasal, +consonantal] [+syllabic]"
+
+[mf_nasal_vowel_denasalizes_before_final_nasal]
+time = 1400
+name = "a nasal vowel denasalizes before a surviving nasal consonant"
+description = "CORRECTION — handled whenever the nasal consonant has not been deleted (i.e. now word-final or pre-vowel)"
+definition = "[+syllabic, +nasal] → [nasal: none] / _ [+nasal, +consonantal]"
+
+[mf_final_open_o_to_o]
+time = 1400
+name = "word-final ɔ raises to o"
+description = "CORRECTION"
+definition = "ɔ → o / _ #"
+
+[mf_we_to_wa]
+time = 1400
+name = "wɛ becomes wa"
+description = "Pope s525 — first attested late 16th century, generalized only around the Revolution"
+definition = "ɛ → a / w _"
+
+[mf_uvular_trill_to_fricative]
+time = 1400
+name = "the uvular trill ʀ becomes a fricative ʁ"
+description = "CORRECTION"
+definition = "ʀ → ʁ"
+
+[mf_palatal_l_to_yod]
+time = 1400
+name = "ʎ becomes j"
+description = "Pope s381 ~ s687 — \"in the course of Modern French\""
+definition = "ʎ → j"
+
+[mf_high_front_absorbed_into_yod]
+time = 1400
+name = "a high front vowel after another vowel is absorbed into a following j"
+description = "CORRECTION — j and i after other vowels absorbed into j"
+definition = "[aperture: high, +front, rounded: none] → ∅ / [+syllabic] _ j"
+
+[mf_yod_absorbed_after_high_front]
+time = 1400
+name = "a yod is absorbed after a high front vowel word-finally or before a consonant"
+description = "The palatal glide left by e.g. ct-palatalization (lectum > lejt > lit) is redundant after a high front i and is lost — French /li/, not /lij/. Restricted to _ (C|#) so a pre-vocalic yod (which forms a real onset) is untouched."
+definition = "j → ∅ / [aperture: high, +front, +syllabic] _ ([+consonantal]|#)"
+
+[mf_schwa_deletion]
+time = 1400
+name = "ə is effaced wherever it does not bring three consonants together"
+description = "Pope s177.2 — CORRECTION: final-schwa deletion spares lexical citation monosyllables (despite l', m', qu' etc.); the three-consonant guard case is suppressed as it conflicted with Pope's later notations"
+definition = ["ə → ∅ / [+syllabic] ([-syllabic])* _ #", "ə → ∅ / _ [+syllabic]", "ə → ∅ / [+syllabic] _"]

@@ -1,6 +1,11 @@
-# Levels
-vowel     = { level = 7, bundle = "syllabic: +, consonantal: -"}
-glide     = { level = 6, bundle = "consonantal: -, sonorant: +" }
+# Levels — first-match in file order. Semivowels (i̯, u̯: -cons) outrank true glides,
+# which outrank rhotics. A glide is a consonantal approximant with a tongue-body
+# (aperture) place — any height: j/w are the high glides (i/u), and a pharyngeal ʕ̞
+# or uvular ʁ̞ would be the low/mid ones (ɑ/ʌ). Coronal/labial approximants (ɹ, ʋ)
+# carry no aperture and stay rhotic-level.
+vowel     = { level = 8, bundle = "syllabic: +, consonantal: -"}
+semivowel = { level = 7, bundle = "consonantal: -, sonorant: +" }
+glide     = { level = 6, bundle = "consonantal: +, sonorant: +, continuant: +, aperture: !none, nasal: none, lateral: none" }
 rhotic    = { level = 5, bundle = "consonantal: +, sonorant: +, nasal: none, lateral: none" }
 lateral   = { level = 4, bundle = "consonantal: +, sonorant: +, lateral: +" }
 nasal     = { level = 3, bundle = "sonorant: +, nasal: +" }

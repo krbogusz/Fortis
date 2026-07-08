@@ -91,12 +91,12 @@ definition = "1=[+consonantal] -> @1 @1 / _ j"
 [exception]                         # an exception environment (// …): blocked before a high vowel
 words      = ["exception"]
 name       = "Exception"
-definition = "s -> z / [+syllabic] _ [+syllabic] // _ [+syllabic, +high]"
+definition = "s -> z / [+syllabic] _ [+syllabic] // _ [+syllabic, aperture: high]"
 
 [regressive_raising]                # right-to-left iteration: raising cascades leftward across Cs
 words       = ["right-to-left"]
 name        = "Right-to-left raising"
-definition  = "[+syllabic, +front, !+high, !+low] -> [aperture, high] / _ [-syllabic]* [+syllabic, +high]"
+definition  = "[+syllabic, +front, aperture: mid] -> [aperture: high] / _ [-syllabic]* [+syllabic, aperture: high]"
 application = "right_to_left"
 
 # A timed chain: the medial consonant of *pata* lenites step by step through the centuries
@@ -129,19 +129,19 @@ definition = "[+syllabic] [+syllabic] -> [length: long] ∅"
 # Turkish vowel harmony, shown two equivalent ways on otine/utine (both → -unɤ).
 #
 # (1) By feature AGREEMENT: every vowel agrees in backness (α/β) with the preceding vowel;
-# rounding (γ/δ) is gated by the conditional <1: +high>, so it reaches only a high vowel.
+# rounding (γ/δ) is gated by the conditional <1: aperture: high>, so it reaches only a high vowel.
 [vowel_harmony]
 words       = ["vowel harmony (agreement)"]
 name        = "Vowel harmony (agreement)"
-definition  = "[+syllabic, <1: +high>] -> [α front, β back, <1: γ rounded>, <1: δ labial>] / [+syllabic, α front, β back, γ rounded, δ labial] [-syllabic]* _"
+definition  = "[+syllabic, <1: aperture: high>] -> [α front, β back, <1: γ rounded>, <1: δ labial>] / [+syllabic, α front, β back, γ rounded, δ labial] [-syllabic]* _"
 application = "left_to_right"
 
 # (2) By autosegmental SPREADING: each harmonic feature is copied from the preceding vowel by
 # node-spread (~n). Backness copies the `back` node (clearing `front`); rounding, gated by the
-# same <1: +high>, copies `rounded`/`labial`. A node-spread binds nodes the source must carry,
+# same <1: aperture: high>, copies `rounded`/`labial`. A node-spread binds nodes the source must carry,
 # so this fires from a back, round vowel — the same outcome as (1) by a different mechanism.
 [vowel_harmony_spread]
 words       = ["vowel harmony (spreading)"]
 name        = "Vowel harmony (spreading)"
-definition  = "[+syllabic, <1: +high>] -> [back: ~1, front: none, <1: rounded: ~2>, <1: labial: ~3>] / [+syllabic, back: ~1, rounded: ~2, labial: ~3] [-syllabic]* _"
+definition  = "[+syllabic, <1: aperture: high>] -> [back: ~1, front: none, <1: rounded: ~2>, <1: labial: ~3>] / [+syllabic, back: ~1, rounded: ~2, labial: ~3] [-syllabic]* _"
 application = "left_to_right"

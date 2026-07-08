@@ -26,8 +26,8 @@ Fortis makes no distinction between "historical sound change" and
 time; whether that time span is three millennia or a single derivation is
 determined entirely by what you put in `rules.toml`. The repository
 includes three example projects: a **feature showcase** (one rule per
-mechanism), **Proto-Indo-European → Modern English**, and **Old Chinese →
-Middle Mandarin**.
+mechanism), **Proto-Indo-European → Proto-Germanic**, and **Latin → Modern
+French**.
 
 ## Design philosophy
 
@@ -83,7 +83,7 @@ defaults, with any it omits falling back to them, so a project holds only what d
 
 ```
 python -m src.fortis.main --words my_words.toml --rules my_rules.toml
-python -m src.fortis.main --project projects/pie_to_english   # PIE → Modern English
+python -m src.fortis.main --project projects/pie_to_germanic   # PIE → Proto-Germanic
 ```
 
 Every run also writes two reports, alongside the printed trace: a Markdown report —
@@ -95,7 +95,7 @@ otherwise). By default both land in `<project>/output.md` / `<project>/output.cs
 name, `.csv`):
 
 ```
-python -m src.fortis.main --project projects/old_chinese --output
+python -m src.fortis.main --project projects/latin_to_french --output
 ```
 
 ### Web app
@@ -268,7 +268,7 @@ fortis/
 │   │   ├── features.toml  letters.csv  diacritics.toml
 │   │   ├── sonorities.toml  syllable_parts.toml  tiers.toml
 │   │   └── words.toml  rules.toml
-│   └── ...                      # other projects, e.g. old_chinese, pie_to_english
+│   └── ...                      # other projects, e.g. latin_to_french, pie_to_germanic
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
 ├── web/                         # browser playground (Pyodide) — see web/README.md
 ├── tests/

@@ -60,6 +60,7 @@ from collections.abc import Callable, Iterator, Mapping
 from dataclasses import dataclass, field, replace
 
 from src.fortis.application.combining import matches_exactly
+from src.fortis.general.utils import IdentityCache
 from src.fortis.models.bindings import Bindings
 from src.fortis.models.bundles import FeatureBundle, PatternBundle
 from src.fortis.models.elements import (
@@ -476,19 +477,34 @@ class Match:
 
 
 def _letter_matches(
-    letter: FeatureBundle, segment: FeatureBundle, syllable_features: frozenset[str] = frozenset()
+    letter: FeatureBundle,
+    segment: FeatureBundle,
+    syllable_features: frozenset[str] = frozenset(),
+    syllable: FeatureBundle | None = None,
 ) -> bool:
     """Whether *segment* IS this letter — its segmental features are exactly the letter's.
 
     Identity, not subset: the letter must account for every segmental feature the segment
     carries, so the dental-fricative letter ``ð̠`` no longer also matches the strident ``z``
-    (whose bundle merely adds ``strident``). Syllable-tier features (tone, stress) a lowered
-    vowel may carry are excluded — they live on the nucleus, not in a letter's identity.
+    (whose bundle merely adds ``strident``). Segmental identity **excludes** syllable-tier
+    features (tone, stress), which live on the nucleus, not in a letter's identity.
+
+    A syllable-tier feature the *letter* carries — from a ``ˈ``/``ˌ`` or tone diacritic on
+    a rule literal, lowered onto the resolved bundle — is instead an added *constraint*:
+    it must match the value on *syllable* (the segment's nucleus). So ``ˌɔ`` matches only a
+    secondary-stressed ɔ. A plain letter carries no syllable-tier feature and is unaffected.
     """
     seg = {f for f in segment.data if f not in syllable_features}
-    return seg == set(letter.data) and all(
-        segment[f].value == spec.value for f, spec in letter.items()
-    )
+    let = {f for f in letter.data if f not in syllable_features}
+    if seg != let or not all(segment[f].value == letter[f].value for f in let):
+        return False
+    for feature in letter.data:
+        if feature in syllable_features:
+            if syllable is None or feature not in syllable.data:
+                return False
+            if syllable[feature].value != letter[feature].value:
+                return False
+    return True
 
 
 def _match_element(
@@ -530,13 +546,15 @@ def _match_element(
         case LetterRef(symbol):
             if pos < len(segments) and symbol in letters:
                 feats = syllables.features if syllables else frozenset()
-                if _letter_matches(letters[symbol].bundle, segments[pos], feats):
+                syl = syllables.at(pos) if syllables else None
+                if _letter_matches(letters[symbol].bundle, segments[pos], feats, syl):
                     yield pos + 1, bindings
 
         case LetterBundle(bundle):
             if pos < len(segments):
                 feats = syllables.features if syllables else frozenset()
-                if _letter_matches(bundle, segments[pos], feats):
+                syl = syllables.at(pos) if syllables else None
+                if _letter_matches(bundle, segments[pos], feats, syl):
                     yield pos + 1, bindings
 
         case Wildcard():
@@ -880,8 +898,22 @@ def _required_counts(sd: StructuralDescription, letters: LetterInventory) -> Cou
     return counts
 
 
+_word_supply_cache = IdentityCache(maxsize=8)
+
+
 def _word_supply(segments: list[FeatureBundle]) -> Counter:
-    """How many segments carry each (feature, value)."""
+    """How many segments carry each (feature, value).
+
+    A rule sweep calls this for the same unchanged ``segments`` across every rule
+    that doesn't fire (``lower_tiers``'s own identity cache keeps handing back the
+    same list) — cached here too, by identity, for the same reason.
+    """
+    return _word_supply_cache.get_or_compute(
+        segments, None, lambda: _word_supply_uncached(segments)
+    )
+
+
+def _word_supply_uncached(segments: list[FeatureBundle]) -> Counter:
     supply: Counter = Counter()
     for segment in segments:
         for feature, spec in segment.items():

@@ -1,0 +1,5 @@
+# Nucleus only — no onset/coda constraints, so syllabification uses sonority + the Maximal Onset
+# Principle. Latin/French syllable structure is largely sonority-driven; revisit if a specific
+# cluster needs an explicit onset/coda pattern the default fallback gets wrong.
+[-100]
+nucleus = { definition = "+syllabic" }
