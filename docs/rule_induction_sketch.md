@@ -10,22 +10,20 @@ given an input form and an *ordered, time-keyed cascade of context-sensitive sou
 rules*, it derives the surface form step by step. Around that it already has an analysis
 layer:
 
-- **grading** (`analysis/grading.py`) — phone- and feature-level edit distance of a derived
+- **accuracy** (`analysis/accuracy.py`) — phone- and feature-level edit distance of a derived
   form against an attested target, per word and in aggregate.
 - **diagnosis** (`analysis/diagnosis.py`) — a phone **confusion matrix** (which target phone
   came out as which) plus a **context autopsy** that finds, for the most-wrong phones, the
-  environments most associated with the error (by phi coefficient); and a **timeline** that
-  buckets each error by the rule-time that produced it and re-runs the diagnosis at each
-  attested stage.
+  environments most associated with the error (by phi coefficient).
 - **blame** (`analysis/blame.py`) — attributes each wrong output to the specific rule (and
   position) that produced the wrong phone.
-- **what-if** (`--try` on the grading CLI) — derive + grade a *candidate* rule against the
+- **what-if** (`--try` on the accuracy CLI) — derive + measure a *candidate* rule against the
   whole lexicon and report the effect.
 
 Inputs live in `words.toml`: each word carries its input IPA, an attested `final` target,
 and optionally **intermediate attested `stages`** keyed by time (e.g. the Latin→French
 project attests forms at times −100, 750, 1000, 1200, 1400). Fortis can already snapshot a
-derivation at any time (`form_at_time`) and grade against a stage.
+derivation at any time (`form_at_time`) and measure against a stage.
 
 ## The problem
 
@@ -51,10 +49,10 @@ This works because Fortis already computes every term of the boosting loop:
 
 | boosting concept | existing Fortis machinery |
 |---|---|
-| loss `L(cascade)` | grading — total phone + feature edit distance over the lexicon |
+| loss `L(cascade)` | accuracy — total phone + feature edit distance over the lexicon |
 | pseudo-residual ("which way is down") | diagnosis — the most systematic remaining error **and its conditioning environment** → the next rule to fit |
 | which existing learner now hurts | blame — residual error attributed to a specific rule/position |
-| line search (evaluate a candidate step) | what-if / `--try` — derive + grade a candidate rule, report the loss delta |
+| line search (evaluate a candidate step) | what-if / `--try` — derive + measure a candidate rule, report the loss delta |
 | cheap repeated evaluation | identity caches + parallel derivation |
 
 So the loss, a genuine **gradient surrogate**, and the step evaluator all exist. The missing
@@ -84,8 +82,9 @@ tractable, and the inducer should be built around them from the start:
    interval converges faster and to simpler rules.
 
 Fortis already supports all of this: `form_at_time` snapshots the derivation at any stage,
-grading grades per stage, and the timeline diagnosis already reports errors *by stage* and
-*by producing-rule-time* — the exact signals a stage-aware inducer consumes.
+accuracy measures per stage, `diagnose_stages` already reports errors *by stage*
+(`errors.csv`), and `blame` attributes each error to its *producing rule-time* — the exact
+signals a stage-aware inducer consumes.
 
 ## Sketch of a v1 algorithm
 
@@ -136,7 +135,7 @@ which already depends on the engine but not vice versa). I'd like it concrete en
 from. Please cover:
 
 1. **Objective function, stated precisely** — the exact per-stage, MDL-regularized loss over
-   the lexicon (fit term from grading; rule-cost term; how the two are weighted without
+   the lexicon (fit term from accuracy; rule-cost term; how the two are weighted without
    per-dataset hand-tuning).
 2. **The search algorithm in full** — candidate-rule *generation* (how a diagnosis
    correspondence + its autopsied environment becomes a set of candidate rules at varying
@@ -146,7 +145,7 @@ from. Please cover:
    interval bucketing, per-interval boosting, composition across intervals, the final global
    refinement pass, and graceful degradation when only `final` is present (no stages).
 4. **Data + API** — any `words.toml` / loader changes; the new module(s) and their public
-   functions; how they reuse `grading`, `diagnosis`, `blame`, `form_at_time`, and the
+   functions; how they reuse `accuracy`, `diagnosis`, `blame`, `form_at_time`, and the
    parallel `derive_all`; CLI/report surface (by analogy to `--try` and the written reports).
 5. **Complexity and performance** — how many derivations the search evaluates and how to keep
    it affordable (caching, parallelism, candidate pruning).

@@ -16,7 +16,7 @@ The loop, per interval:
 
 1. Build a **mini-project**: the interval's words, with the _attested earlier-stage
    form_ as input and the _attested later-stage form_ as target (teacher forcing). The
-   whole existing pipeline — `derive_all`, `grade`, `align`, `confusions`, blame — runs
+   whole existing pipeline — `derive_all`, `measure_accuracy`, `align`, `confusions`, blame — runs
    on it unchanged.
 2. Score the current cascade: `L = fit_bits + rule_bits` (§1).
 3. Read the residual: the confusion tally, re-autopsied on the **derived side** (§2.1),
@@ -43,7 +43,7 @@ Everything maps onto existing machinery:
 
 | component            | reuses                                             | new code                                                |
 | -------------------- | -------------------------------------------------- | ------------------------------------------------------- |
-| loss                 | `grade_stages`, `align`, `feature_diff`            | the bits model (§1)                                     |
+| loss                 | `accuracy_by_stage`, `align`, `feature_diff`            | the bits model (§1)                                     |
 | residual → next rule | `confusions`, phi machinery from `diagnosis`       | derived-side contexts (§2.1), proposal generator (§2.2) |
 | step evaluation      | `derive_all(_parallel)`, `apply_rule`, `load_rule` | incremental scorer (§2.3)                               |
 | chronology           | `Word.stages`, `form_at_time`, `blame`             | interval bucketing, mini-projects (§3)                  |
@@ -60,8 +60,8 @@ fit_bits(R)  = Σ_{w ∈ W} freq(w) · Σ_{s ∈ checkpoints(w)} residual_bits(d
 rule_bits(R) = Σ_{r ∈ R} bits(r)
 ```
 
-`checkpoints(w)` is every attested form the word carries: each `Word.stages[T]` (graded
-against the snapshot at rule-time `T`, exactly as `grade_stages` does) plus `final`.
+`checkpoints(w)` is every attested form the word carries: each `Word.stages[T]` (measured
+against the snapshot at rule-time `T`, exactly as `accuracy_by_stage` does) plus `final`.
 During per-interval induction the sum collapses to the interval's single target; the
 full sum is the Phase-B (composition/refinement) objective.
 
@@ -73,7 +73,7 @@ corrections it makes unnecessary.
 ### 1.1 The fit term: residual bits
 
 `residual_bits(derived, attested)` is the cost of encoding the corrections that turn
-the derived form into the attested one, read off the existing `grading.align` op list
+the derived form into the attested one, read off the existing `accuracy.align` op list
 (the same deterministic alignment diagnosis uses):
 
 | op                                | correction encoded     | cost                                   |
@@ -98,7 +98,7 @@ Encoding substitutions as _feature deltas_ is deliberate: it makes `fit_bits` a 
 blend of phone-edit count and feature edit distance, so the objective has the gradient
 the sketch wants — a rule that moves ɛ→e when the target is i lowers `fit_bits` even
 though the phone distance is unchanged. `feature_diff` and the phone/feature machinery
-come straight from `grading`; the private `_segment`/`_specified` helpers get promoted
+come straight from `accuracy`; the private `_segment`/`_specified` helpers get promoted
 to public (`segment_form`, `specified_features`) rather than re-implemented. A phone
 that will not segment falls back to `b_feat · F̄` (spell it as an average-size segment),
 so unsegmentable notation degrades the estimate, never crashes it.
@@ -242,7 +242,7 @@ whole cost of the search (§5):
   after all current interval rules, so its input is the _cached current derived form_
   of each mini-lexicon word. Scoring is then one `apply_rule` per word — no derivation:
   `cannot_match` prunes most words for free (the identity contract makes a non-firing
-  sweep cheap), and only words whose form actually moves get re-graded. This yields an
+  sweep cheap), and only words whose form actually moves get re-measured. This yields an
   exact ΔL _for the append placement_.
 - **Placement search** (top `placement_candidates` by append-ΔL). Feeding/bleeding means
   append is not always the right slot. Each finalist is also evaluated at: interval
@@ -312,7 +312,7 @@ not the derived one — teacher forcing. Consequences, all load-bearing:
 - An attested stage can expose environments the final form erased (opacity relief) —
   the interval's residuals see them directly.
 
-In Latin→French: 299 of 447 graded words carry stage chains (−200, −100, 750, 1000,
+In Latin→French: 299 of 447 measured words carry stage chains (−200, −100, 750, 1000,
 1200, 1400), so Phase A trains on ~299-word mini-lexicons per interval; the other 148
 final-only words enter at Phase B.
 
@@ -322,7 +322,7 @@ An interval problem is literally a `Project`: `words` = `{attested_source_ipa:
 Word(ipa=source, final=attested_target, frequency=…)}`, `rules` = the induced list so
 far (times = list indices), everything else (features, letters, tiers, settings)
 shared with the parent. `induction/intervals.py` builds these; every downstream tool —
-`derive_all`, `grade`, `confusions`, `blame_all` — works on them without modification.
+`derive_all`, `measure_accuracy`, `confusions`, `blame_all` — works on them without modification.
 This is the single biggest reuse win in the design.
 
 One gate: the attested source form must segment (`string_to_sequence`) under the
@@ -391,7 +391,7 @@ Key public signatures:
 
 ```python
 # objective.py
-def residual_bits(grade: Grade, project: Project) -> float
+def residual_bits(distance: DistanceToTarget, project: Project) -> float
 def rule_bits(rule: Rule, project: Project) -> float
 @dataclass(frozen=True)
 class CascadeScore:  # fit_bits, rule_bits, total, exact, mean_distance — one snapshot
@@ -399,8 +399,8 @@ class CascadeScore:  # fit_bits, rule_bits, total, exact, mean_distance — one 
 # correspond.py
 @dataclass(frozen=True)
 class Correspondence:  # expected, got, count, delta (feature diff), sites
-def correspondences(grades, project, cap: int) -> list[Correspondence]
-def derived_contexts(corr, grades, project) -> FocusAutopsy   # derived-side phi table
+def correspondences(distances, project, cap: int) -> list[Correspondence]
+def derived_contexts(corr, distances, project) -> FocusAutopsy   # derived-side phi table
 
 # candidates.py
 @dataclass(frozen=True)
@@ -425,7 +425,7 @@ def refine(project, inventory, settings) -> tuple[RuleInventory, RefineTrace]
   everything the inducer consumes.
 - `settings.py`: add `InductionSettings` (§1.5) to `Settings`, with the
   default-mirror test extended to the new section.
-- `grading.py`: promote `_segment`/`_specified` to public names (used by the bits
+- `accuracy.py`: promote `_segment`/`_specified` to public names (used by the bits
   model); no behavior change.
 - `diagnosis.py`: extract the phi/support-floor core into a shared helper so
   `correspond.py` does not duplicate it. Reports unchanged.
@@ -443,7 +443,7 @@ python -m src.fortis.analysis.induction.main --project DIR
     [--serial | --workers N]
 ```
 
-By analogy with the grading CLI: progress and one-line summaries to stderr, reports to
+By analogy with the accuracy CLI: progress and one-line summaries to stderr, reports to
 the project directory. The webapp gets an Induction tab reading `induction.md` in a
 later milestone, not v1.
 
@@ -454,7 +454,7 @@ bits, exact and mean-distance before→after, words touched, placement), rejecte
 lines when the escape ladder fired, the shrink log, and the stuck report (§2.5) when
 induction stopped with residual structure left. Then the composition summary and the
 Phase-B trace in the same shape. `induced_rules.toml` is a normal loadable rules file
-(§3.3) — the round trip `induce → load → grade` is itself a test.
+(§3.3) — the round trip `induce → load → measure` is itself a test.
 
 ## 5. Complexity and performance
 

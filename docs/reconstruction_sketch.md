@@ -6,7 +6,7 @@ _A design sketch for discussion — deliberately incomplete, meant to be poked a
 
 **Fortis** is a general phonological derivation engine. Its normal job is **forward**:
 given a proto-form and an _ordered cascade of context-sensitive sound-change rules_, it
-derives the daughter forms, step by step, and can **grade** the result against attested
+derives the daughter forms, step by step, and can **measure** the result against attested
 targets (phone- and feature-level edit distance), **diagnose** systematic errors (a phone
 confusion matrix + a context autopsy that finds which environments an error correlates
 with, by phi coefficient), and **blame** each wrong output on the specific rule that
@@ -25,7 +25,7 @@ recovers which was which). So we do not _compute_ the ancestor — we **search**
 
 The key leverage: **Fortis is already the generator and the scorer for that search.** A
 reconstruction hypothesis _is_ a Fortis project (proto-lexicon + rules); running it forward
-and grading against the daughters _is_ the objective. Reconstruction becomes a search loop
+and measuring against the daughters _is_ the objective. Reconstruction becomes a search loop
 wrapped around machinery that already exists.
 
 ## The objective (the clean formulation)
@@ -38,7 +38,7 @@ cost = size(proto-lexicon) + Σ_daughter size(rule cascade_d) + Σ misfit(derive
 
 subject to the rules regenerating the daughters. This is Occam's razor made computable
 (equivalently, the Bayesian posterior: fit × a simplicity/naturalness prior). Fortis
-supplies the last two terms directly — the rules _are_ the model, grading _is_ the misfit.
+supplies the last two terms directly — the rules _are_ the model, measuring _is_ the misfit.
 The open design work is the first term's **prior** (what makes a rule set "small" or
 "natural") and the **search** that explores hypotheses.
 
@@ -81,7 +81,7 @@ exactly the reasoning to automate.
    `projects/romance/cognates.toml` already has the shape (gloss → {lang = form}), with
    attested Latin included as a held-out answer key.
 2. **Alignment** — column-align the phones within each cognate set.
-   _Have_ pairwise: `align()` (Damerau–Levenshtein op-trace) in `analysis/grading.py`.
+   _Have_ pairwise: `align()` (Damerau–Levenshtein op-trace) in `analysis/accuracy.py`.
    _Need_: multiple-sequence alignment for ≥3 daughters.
 3. **Correspondence sets** — tabulate which daughter phones co-occur per column, **and in
    what environment**.
@@ -96,7 +96,7 @@ exactly the reasoning to automate.
    but real typological frequencies are better.
 5. **Rule induction** — synthesize the minimal context-conditioned Fortis rules mapping
    proto → each daughter. **The hard, open part** (program synthesis over rule notation).
-   _Have as the verifier/critic_: forward derive + grade (fitness), `--try`/whatif (test a
+   _Have as the verifier/critic_: forward derive + measure (fitness), `--try`/whatif (test a
    candidate rule), and **`blame`** (localize exactly where a derivation diverges → tells
    the search _which_ rule to fix). Missing: the _proposer_ of candidate rules.
 6. **Joint optimization** — co-optimize ancestor and rules under the description-length
@@ -116,7 +116,7 @@ exactly the reasoning to automate.
 
 ## Validation methodology (the payoff of a known answer)
 
-- **Proto-form accuracy**: edit distance of reconstruction vs attested Latin (Fortis's grader,
+- **Proto-form accuracy**: edit distance of reconstruction vs attested Latin (Fortis's accuracy analysis,
   unchanged).
 - **Rule fidelity**: do induced rules match documented sound laws / the existing Latin→French
   oracle cascade?

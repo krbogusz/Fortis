@@ -69,7 +69,6 @@
   let rowH = $state(24); // measured body-row height (rows are uniform, single-line)
   const OVERSCAN = 10; // extra rows rendered above/below the viewport
   const COL_OVERSCAN = 6; // extra columns rendered left/right of the viewport
-  let seedNext = false; // caret to end (type-to-edit) rather than select-all
   let reverting = false; // an Escape in progress — discard the edit on blur
   let editOrig = ""; // the cell value when editing began, for Escape to restore
   let lastEmitted = " uninitialised";
@@ -123,7 +122,7 @@
   // metrics, no DOM render) and pin it with a <colgroup> + table-layout: fixed.
   const CTRL_W = 26; // the ⋮ handle column (editable only)
   const CELL_PAD = 16; // 7px l/r padding + 1px l/r border + a hair of slack
-  const HANDLE_W = 20; // header padding-right that makes room for its ⋮ handle
+  const HANDLE_W = 26; // editable header padding-right: room for the ⋮ handle + edge resize grip
   const MAX_COL_W = 320; // cap a column's measured width; over-long cells ellipsize (drag to widen)
   const MIN_COL_W = 44; // floor when dragging a column narrower
   // Fonts mirror the CSS below: headers are the sans face at --fs-body; the first (key) column
@@ -260,11 +259,10 @@
     sel = { r, c };
     editing = false;
   }
-  function startEdit(r, c, seed = false) {
+  function startEdit(r, c) {
     if (!editable) return;
     sel = { r, c };
     editOrig = rows[r][c] ?? "";
-    seedNext = seed;
     editing = true;
   }
   function setCell(r, c, value) {
@@ -280,18 +278,16 @@
     ensureVisible(r); // bring it into the virtualized window before the focus effect runs
   }
   function cellKey(event, r, c) {
+    if (editing) return; // while editing, keys belong to the <input> (caret nav, typing) — see inputKey
     const k = event.key;
     if (k === "ArrowUp") moveSel(-1, 0);
     else if (k === "ArrowDown") moveSel(1, 0);
     else if (k === "ArrowLeft") moveSel(0, -1);
     else if (k === "ArrowRight") moveSel(0, 1);
     else if (k === "Tab") moveSel(0, event.shiftKey ? -1 : 1);
-    else if (k === "Enter" || k === "F2") startEdit(r, c);
+    else if (k === "Enter" || k === "F2") startEdit(r, c); // edit is entered only here + double-click
     else if (k === "Backspace" || k === "Delete") setCell(r, c, "");
-    else if (k.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-      rows[r][c] = k;
-      startEdit(r, c, true);
-    } else return;
+    else return;
     event.preventDefault();
   }
   function inputKey(event) {
@@ -321,11 +317,8 @@
   }
   function focusCell(node) {
     node.focus();
-    if (seedNext) {
-      const n = node.value.length;
-      node.setSelectionRange(n, n);
-      seedNext = false;
-    } else node.select();
+    const n = node.value.length; // caret at the end for in-place editing, never select-all
+    node.setSelectionRange(n, n);
   }
   $effect(() => {
     if (!sel || editing || !tableEl) return;
@@ -465,7 +458,10 @@
                 tabindex={isSel(0, c) && !editing ? 0 : -1}
                 ondragover={(e) => overCol(e, c)}
                 ondrop={dropCol}
-                onclick={() => select(0, c)}
+                onclick={(e) => {
+                  select(0, c);
+                  e.currentTarget.focus();
+                }}
                 ondblclick={() => startEdit(0, c)}
                 onkeydown={(e) => cellKey(e, 0, c)}
               >
@@ -489,14 +485,13 @@
                     ondragend={endDrag}
                     onclick={(e) => openMenu("col", c, e)}>⋮</button
                   >
-                {:else}
-                  <span
-                    class="col-resizer"
-                    aria-hidden="true"
-                    title="Drag to resize this column"
-                    onpointerdown={(e) => startColResize(e, c)}
-                  ></span>
                 {/if}
+                <span
+                  class="col-resizer"
+                  aria-hidden="true"
+                  title="Drag to resize this column"
+                  onpointerdown={(e) => startColResize(e, c)}
+                ></span>
               </th>
             {/if}
           {/each}
@@ -545,7 +540,10 @@
                   tabindex={isSel(r, c) && !editing ? 0 : -1}
                   ondragover={(e) => overCol(e, c)}
                   ondrop={dropCol}
-                  onclick={() => select(r, c)}
+                  onclick={(e) => {
+                    select(r, c);
+                    e.currentTarget.focus(); // keystrokes reach cellKey even if the focus effect lags
+                  }}
                   ondblclick={() => startEdit(r, c)}
                   onkeydown={(e) => cellKey(e, r, c)}
                 >
@@ -646,7 +644,7 @@
     cursor: cell;
   }
   table.editable th {
-    padding-right: 20px; /* room for the ⋮ handle */
+    padding-right: 26px; /* room for the ⋮ handle plus the edge resize grip */
   }
   table.editable td.ctrl,
   table.editable th.ctrl {
@@ -689,7 +687,7 @@
   }
   th .handle {
     position: absolute;
-    right: 2px;
+    right: 10px; /* left of the edge resize grip (.col-resizer sits at right: 0) */
     top: 50%;
     transform: translateY(-50%);
   }

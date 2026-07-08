@@ -172,7 +172,7 @@ number of integer-keyed `stages`, the attested form at that derivation `time`.
 ```
 
 Only the IPA key feeds derivation; `final` and `stages` are ignored by the engine
-and read only by the grader.
+and read only by the accuracy analysis.
 
 A word may also carry a **floating lexical tone** — a melody with no host segment
 of its own (e.g. a grammatical floating H) — written `⟨◌́⟩`: a tone diacritic on a
@@ -666,13 +666,13 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
   `stage, segment, environment, assoc. (φ), F₁, err/ok · with, err/ok · without`
   (positive-φ predictors that clear the support floor; complete, no display cap).
 - **`blame.csv`** — every assessed word's per-step distance trajectory, worst first
-  (columns `gloss, step, t, form, target, d, fd`); exact words are included as short
+  (columns `gloss, step, regression, t, form, target, d, fd`); exact words are included as short
   `d=0` paths. The interactive Blame tab additionally shows each wrong phone's culprit rule.
 
 Two pattern filters scope this output (both take Fortis sequence notation — feature
 bundles, letters, quantifiers):
 
-- On the standalone grader, `--scope 'PATTERN'` writes **`scoped_output.md`** — accuracy
+- On the standalone accuracy CLI, `--scope 'PATTERN'` writes **`scoped_output.md`** — accuracy
   and blame recomputed over just the words whose attested target, or any attested stage,
   matches (the per-stage errors and error context stay CSV-only) — for debugging accuracy
   on a sub-population (e.g. words that carried an /s/ at some stage, even if it later
@@ -687,7 +687,7 @@ bundles, letters, quantifiers):
 The thresholds these analyses use are tunable per project in an optional
 `settings.toml` (the autopsy's support floor and how many phones to autopsy, the
 edit distance's metathesis cost); an absent file, or key, uses the built-in
-defaults. The standalone grader `python -m src.fortis.analysis.main` writes the
+defaults. The standalone accuracy CLI `python -m src.fortis.analysis.main` writes the
 same reports; its `--try 'RULE'` (optionally `--at TIME`) additionally previews a
 candidate rule against the lexicon and writes `whatif.md`.
 

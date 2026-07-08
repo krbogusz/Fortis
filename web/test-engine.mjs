@@ -165,7 +165,7 @@ try {
     throw new Error("errors.csv missing its header: " + errorsCsv.slice(0, 80));
   if (!ctxCsv.startsWith("stage,segment,environment,assoc. (φ),F₁,err/ok · with,err/ok · without"))
     throw new Error("error_context.csv missing its header: " + ctxCsv.slice(0, 90));
-  if (!blameCsv.startsWith("gloss,step,t,form,target,d,fd"))
+  if (!blameCsv.startsWith("gloss,step,regression,t,form,target,d,fd"))
     throw new Error("blame.csv missing its header: " + blameCsv.slice(0, 80));
   // The accuracy CSVs are written for a lexicon with attested forms.
   const overallCsv = py.runPython(`read_file("reports/accuracy.csv")`).toString();

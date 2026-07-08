@@ -109,7 +109,7 @@ gives the wide view (one row per word and one column per rule — each titled
 empty otherwise), and `rule_firings.csv` inverts it (one row per rule: the words it
 matched as `before → after` and the distinct segment changes it made, e.g. `d→t`).
 If the lexicon carries attested forms (`final` and/or
-intermediate `stages`), four more reports analyse the result: the **accuracy**
+intermediate `stages`), four more analyses run over it: the **accuracy**
 analysis writes `accuracy.csv` (per-stage exact-match accuracy + mean phone
 and feature distance) and `distance_to_target.csv` (per-word); the **errors**
 analysis writes `errors.csv` (which segments came out wrong, per stage) and the
@@ -131,7 +131,7 @@ processes **automatically** — a ~4–6× speedup on a multi-core machine, with
 byte-identical to a serial run. Small lexica stay in a single process (the pool's
 startup cost is not worth paying below a couple hundred words). Pass `--serial` to
 force one process, or `--workers N` to pin the pool size. The same flags apply to the
-accuracy/diagnosis CLI (`python -m src.fortis.analysis.main`), which derives the same way.
+standalone accuracy CLI (`python -m src.fortis.analysis.main`), which derives the same way.
 
 ### Web app
 
@@ -191,7 +191,7 @@ lexicon has them:
   the attested-form environments most associated with getting that segment wrong (by
   phi coefficient), with F₁ and the raw err/ok counts with vs. without each environment.
 - **`blame.csv`** — every assessed word's per-step distance trajectory (columns
-  `gloss, step, t, form, target, d, fd`), worst first, exact words included. The
+  `gloss, step, regression, t, form, target, d, fd`), worst first, exact words included. The
   interactive Blame tab additionally attributes each wrong phone (by stable segment
   id) to the rule that last set it.
 
@@ -442,12 +442,14 @@ fortis/
     │
     └── analysis/                # OUTPUT ANALYSIS       (depends on: models, application)
         ├── accuracy.py          #   phone + feature edit distance vs attested target forms
-        ├── diagnosis.py         #   confusions + context autopsy; errors-by-time; per-stage
+        ├── diagnosis.py         #   per-stage confusions (errors) + per-segment context autopsy
         ├── blame.py             #   attribute each wrong word to the rule that produced it
+        ├── filtering.py         #   --filter / --scope: select the words a pattern touches
+        ├── synthesis.py         #   bundle a scoped subset's reports into scoped_output.md
         ├── whatif.py            #   preview a candidate rule's accuracy delta before committing
         ├── warnings.py          #   syllabification-fallback warnings
         ├── reporting.py         #   render the accuracy CSVs (per-stage summary + per-word)
-        └── main.py              #   accuracy CLI: measure + diagnose + blame a project, no full run
+        └── main.py              #   accuracy CLI: measure accuracy + errors + blame, no full run
 ```
 
 ## Current limitations and future directions

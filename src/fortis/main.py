@@ -170,7 +170,7 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> None:
-    """Load inventories, derive every word, print the traces, and write the reports.
+    """Load inventories, derive every word, and write the reports (the trace is not printed).
 
     With no arguments, runs every shipped rule over every shipped word. ``--words`` and
     ``--rules`` override just the lexicon and the sound-change file; the feature system,
@@ -183,7 +183,7 @@ def main(argv: list[str] | None = None) -> None:
     A big lexicon is derived across worker processes automatically (identical output);
     ``--serial`` forces a single process and ``--workers N`` pins the pool size.
     Ends with a run summary on stderr: words derived, rules applied, per-phase
-    timing (init, apply, print), and the files saved.
+    timing (init, apply, write), and the files saved.
     """
     args = _parse_args(argv)
 

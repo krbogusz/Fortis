@@ -436,21 +436,24 @@ def _blame_section(blame: Blame) -> list[str]:
 def render_blame_csv(blames: list[Blame]) -> str:
     """The per-word distance trajectory as CSV — one row per word × trajectory point.
 
-    Columns: ``gloss, step, t, form, target, d, fd``. *step* is the trajectory label (``input``,
-    a firing rule's name, or ``surface``); *t* its rule-time (blank for the untimed ends);
-    *form*/*target* the rendered form and the attested form of the era it heads toward; *d*/*fd*
-    the phone and feature distances. Every assessed word appears — a wrong word as its full path,
-    an exact word (when blamed with ``include_exact``) as a short, ``d=0`` trajectory.
+    Columns: ``gloss, step, regression, t, form, target, d, fd``. *step* is the trajectory label
+    (``input``, a firing rule's name, or ``surface``); *regression* is ``true`` where this step's
+    distance rose against the same target (a lead, never the culprit) and blank otherwise; *t* its
+    rule-time (blank for the untimed ends); *form*/*target* the rendered form and the attested form
+    of the era it heads toward; *d*/*fd* the phone and feature distances. Every assessed word
+    appears — a wrong word as its full path, an exact word (when blamed with ``include_exact``) as
+    a short, ``d=0`` trajectory.
     """
     buffer = io.StringIO()
     writer = csv.writer(buffer)
-    writer.writerow(["gloss", "step", "t", "form", "target", "d", "fd"])
+    writer.writerow(["gloss", "step", "regression", "t", "form", "target", "d", "fd"])
     for blame in blames:
         gloss = blame.gloss or blame.ipa
         for point in blame.trajectory:
             writer.writerow([
                 gloss,
                 point.label,
+                "true" if point.regressed else "",
                 "" if point.time is None else point.time,
                 point.form,
                 point.target,

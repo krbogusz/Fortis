@@ -1669,8 +1669,10 @@
   }
 
   .view-tabs {
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
     gap: 4px;
+    min-width: 0; /* allow the group to shrink within .actions so the buttons wrap (like the file tabs) */
   }
   .view-tabs button {
     font-size: var(--fs-body);

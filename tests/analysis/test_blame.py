@@ -142,7 +142,9 @@ class TestStructure:
     def test_csv_has_header_and_a_row_per_trajectory_point(self, derivs, latin):
         blames = blame_all(derivs, latin, include_exact=True)
         rows = list(csv.reader(render_blame_csv(blames).splitlines()))
-        assert rows[0] == ["gloss", "step", "t", "form", "target", "d", "fd"]
+        assert rows[0] == ["gloss", "step", "regression", "t", "form", "target", "d", "fd"]
+        # `regression` is "true" only where a step's distance rose against the same target.
+        assert all(r[2] in ("true", "") for r in rows[1:])
         assert len(rows) == 1 + sum(len(b.trajectory) for b in blames)  # header + one row/point
         # Every data row carries a gloss and a step label.
         assert all(r[0] and r[1] for r in rows[1:])
