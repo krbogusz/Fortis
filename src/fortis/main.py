@@ -35,7 +35,7 @@ from src.fortis.analysis.accuracy import (
     ingest_targets,
     measure_accuracy,
 )
-from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame
+from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame_csv
 from src.fortis.analysis.diagnosis import (
     confusions,
     diagnose_stages,
@@ -276,10 +276,11 @@ def main(argv: list[str] | None = None) -> None:
                 file=sys.stderr,
             )
 
-        # Attribute each wrong word to the rule that produced it (blame.md).
-        blames = blame_all(derivations, project)
-        blame_path = path.parent / "blame.md"
-        blame_path.write_text(render_blame(blames, where), encoding="utf-8")
+        # Every assessed word's distance trajectory, worst first (blame.csv). Exact words are
+        # included as short d=0 paths; the residuals + culprit rules live in the web Blame tab.
+        blames = blame_all(derivations, project, include_exact=True)
+        blame_path = path.parent / "blame.csv"
+        blame_path.write_text(render_blame_csv(blames), encoding="utf-8")
         print(f"wrote {blame_path}", file=sys.stderr)
         saved.append(blame_path)
         print(blame_summary_line(blames))

@@ -157,12 +157,13 @@ try {
     throw new Error("trajectory point missing target/d/fd: " + JSON.stringify(step));
   const errorsCsv = py.runPython(`read_file("reports/errors.csv")`).toString();
   const ctxCsv = py.runPython(`read_file("reports/error_context.csv")`).toString();
-  const blameMd = py.runPython(`read_file("reports/blame.md")`).toString();
+  const blameCsv = py.runPython(`read_file("reports/blame.csv")`).toString();
   if (!errorsCsv.startsWith("stage,expected,got,count,kind,examples"))
     throw new Error("errors.csv missing its header: " + errorsCsv.slice(0, 80));
   if (!ctxCsv.startsWith("stage,segment,environment,assoc. (φ),F₁,err/ok · with,err/ok · without"))
     throw new Error("error_context.csv missing its header: " + ctxCsv.slice(0, 90));
-  if (!blameMd.startsWith("# Blame")) throw new Error("blame.md not written: " + blameMd.slice(0, 80));
+  if (!blameCsv.startsWith("gloss,step,t,form,target,d,fd"))
+    throw new Error("blame.csv missing its header: " + blameCsv.slice(0, 80));
   // The accuracy CSVs are written for a lexicon with attested forms.
   const overallCsv = py.runPython(`read_file("reports/accuracy.csv")`).toString();
   const dttCsv = py.runPython(`read_file("reports/distance_to_target.csv")`).toString();

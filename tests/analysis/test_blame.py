@@ -4,12 +4,19 @@ Uses the real Latin→French project — it has genuinely wrong words with attri
 residuals — rather than synthesising Derivations by hand.
 """
 
+import csv
 from pathlib import Path
 
 import pytest
 
 from src.fortis.analysis.accuracy import ingest_targets, measure_accuracy
-from src.fortis.analysis.blame import blame_all, blame_summary_line, blame_word, render_blame
+from src.fortis.analysis.blame import (
+    blame_all,
+    blame_summary_line,
+    blame_word,
+    render_blame,
+    render_blame_csv,
+)
 from src.fortis.application.deriving import derive_all
 from src.fortis.loaders.project import load_project
 
@@ -102,11 +109,19 @@ class TestProvenance:
 
 
 class TestStructure:
-    def test_exact_word_is_not_blamed(self, derivs, latin):
-        # Find an exactly-derived word (there are hundreds) — it gets no blame.
+    def test_exact_word_is_not_blamed_by_default(self, derivs, latin):
+        # By default an exactly-derived word (there are hundreds) gets no blame.
         blamed = {b.ipa for b in blame_all(derivs, latin)}  # ipa is unique; glosses can repeat
         exact = next(d for d in derivs if d.word.final and d.word.ipa not in blamed)
         assert blame_word(exact, latin) is None
+
+    def test_include_exact_blames_every_assessed_word(self, derivs, latin):
+        # include_exact adds the exact words (distance 0, no residual) to the wrong ones.
+        wrong = blame_all(derivs, latin)
+        every = blame_all(derivs, latin, include_exact=True)
+        assert len(every) > len(wrong)
+        exact = [b for b in every if b.distance == 0]
+        assert exact and all(not b.residuals for b in exact)  # exact ⇒ no residual
 
     def test_word_without_target_is_not_blamed(self, derivs, latin):
         target_less = next((d for d in derivs if d.word.final is None), None)
@@ -123,5 +138,13 @@ class TestStructure:
         md = render_blame([], "`proj`")
         assert "nothing to blame" in md.lower()
         assert "Residuals:" not in md
+
+    def test_csv_has_header_and_a_row_per_trajectory_point(self, derivs, latin):
+        blames = blame_all(derivs, latin, include_exact=True)
+        rows = list(csv.reader(render_blame_csv(blames).splitlines()))
+        assert rows[0] == ["gloss", "step", "t", "form", "target", "d", "fd"]
+        assert len(rows) == 1 + sum(len(b.trajectory) for b in blames)  # header + one row/point
+        # Every data row carries a gloss and a step label.
+        assert all(r[0] and r[1] for r in rows[1:])
 
 

@@ -662,8 +662,9 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
   segment, the attested-form environments most associated with getting it wrong —
   `stage, segment, environment, assoc. (φ), F₁, err/ok · with, err/ok · without`
   (positive-φ predictors that clear the support floor; complete, no display cap).
-- **`blame.md`** — each wrong word attributed to the rule that produced the wrong
-  phone, with a per-step trajectory toward each era's attested form.
+- **`blame.csv`** — every assessed word's per-step distance trajectory, worst first
+  (columns `gloss, step, t, form, target, d, fd`); exact words are included as short
+  `d=0` paths. The interactive Blame tab additionally shows each wrong phone's culprit rule.
 
 Two pattern filters scope this output (both take Fortis sequence notation — feature
 bundles, letters, quantifiers):

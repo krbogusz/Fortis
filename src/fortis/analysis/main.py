@@ -4,14 +4,14 @@ Loads a project (the same way the engine CLI does), derives every word, measures
 derived forms' distance to target against the attested ``final`` and intermediate
 ``stages`` in ``words.toml``, and writes the analysis reports into a ``reports/``
 subfolder of the project — ``accuracy.csv`` (per-stage accuracy summary) and
-``distance_to_target.csv`` (per-word), then ``diagnosis.md`` (confusions + autopsy),
-``timeline.md`` (errors by rule-time + per-stage), and ``blame.md`` (each wrong
-word attributed to a rule). With
+``distance_to_target.csv`` (per-word), then ``errors.csv`` (which segments came out
+wrong, per stage), ``error_context.csv`` (the environments most associated with each
+error), and ``blame.csv`` (each assessed word's distance trajectory). With
 ``--try 'RULE'`` it also writes ``whatif.md`` previewing a candidate rule. Run::
 
     python -m src.fortis.analysis.main --project projects/latin_to_french
 
-``--scope 'PATTERN'`` writes ``scoped_output.md`` — the four analyses recomputed over
+``--scope 'PATTERN'`` writes ``scoped_output.md`` — accuracy and blame recomputed over
 the words whose attested target, or any attested stage, matches a sequence pattern
 (Fortis notation, e.g. ``k [aperture: high]``) — for debugging accuracy on a
 sub-population, leaving the whole-lexicon reports intact.
@@ -28,7 +28,7 @@ import time
 from pathlib import Path
 
 from src.fortis.analysis.accuracy import accuracy_by_stage, ingest_targets
-from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame
+from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame_csv
 from src.fortis.analysis.diagnosis import (
     diagnose_stages,
     errors_summary_line,
@@ -181,10 +181,10 @@ def main(argv: list[str] | None = None) -> None:
         print(f"wrote {report_path}", file=sys.stderr)
     print(errors_summary_line(stage_diag))
 
-    # Attribute each wrong word to the rule that produced it.
-    blames = blame_all(derivations, project)
-    blame_path = path.parent / "blame.md"
-    blame_path.write_text(render_blame(blames, where), encoding="utf-8")
+    # Every assessed word's distance trajectory, worst first (blame.csv), exact words included.
+    blames = blame_all(derivations, project, include_exact=True)
+    blame_path = path.parent / "blame.csv"
+    blame_path.write_text(render_blame_csv(blames), encoding="utf-8")
     print(f"wrote {blame_path}", file=sys.stderr)
     print(blame_summary_line(blames))
     analysis_done = time.perf_counter()

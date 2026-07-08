@@ -27,6 +27,8 @@ tier cleanup), not the last step's ``after`` — so its distance equals the grad
 
 from __future__ import annotations
 
+import csv
+import io
 from dataclasses import dataclass
 
 from src.fortis.analysis.accuracy import (
@@ -294,12 +296,17 @@ def _trajectory(derivation: Derivation, project: Project) -> tuple[TrajectoryPoi
     return tuple(trajectory)
 
 
-def blame_word(derivation: Derivation, project: Project) -> Blame | None:
-    """Attribute one wrong word, or ``None`` if it has no target, is unsegmentable, or is exact.
+def blame_word(
+    derivation: Derivation, project: Project, include_exact: bool = False
+) -> Blame | None:
+    """Attribute one assessed word, or ``None`` if it has no target or is unsegmentable.
 
     Uses the ingested ``final_form`` (segment-based, so an affricate is one unit and the phone
     distance equals the grader's). Assumes :func:`src.fortis.analysis.accuracy.ingest_targets`
     has run; a word whose ``final`` the inventory could not segment is skipped (warned there).
+    An exact word (distance 0) returns ``None`` by default; pass ``include_exact=True`` to get a
+    residual-free ``Blame`` for it too, so a caller can list every assessed word, not only wrong
+    ones.
     """
     word = derivation.word
     if word.final is None or word.final_form is None:
@@ -309,7 +316,7 @@ def blame_word(derivation: Derivation, project: Project) -> Blame | None:
     distance = edit_distance(
         form_phones(word.final_form, project), form_phones(derivation.surface, project), swap
     )
-    if distance == 0:
+    if distance == 0 and not include_exact:
         return None
     return Blame(
         gloss=word.gloss,
@@ -323,27 +330,34 @@ def blame_word(derivation: Derivation, project: Project) -> Blame | None:
     )
 
 
-def blame_all(derivations: list[Derivation], project: Project) -> list[Blame]:
-    """Attribute every wrong word, worst (largest distance) first."""
-    blames = [b for d in derivations if (b := blame_word(d, project)) is not None]
+def blame_all(
+    derivations: list[Derivation], project: Project, include_exact: bool = False
+) -> list[Blame]:
+    """Attribute every wrong word (or every assessed word when *include_exact*), worst first."""
+    blames = [b for d in derivations if (b := blame_word(d, project, include_exact)) is not None]
     return sorted(blames, key=lambda b: (-b.distance, b.gloss.casefold()))
 
 
 def blame_summary_line(blames: list[Blame]) -> str:
-    """A one-line headline for stderr, naming the rule blamed for the most words."""
-    if not blames:
+    """A one-line headline for stderr, naming the rule blamed for the most wrong words.
+
+    Counts only the wrong words (distance > 0), so it reads the same whether *blames* holds
+    just the wrong words or every assessed word (exact ones carry distance 0).
+    """
+    wrong = [b for b in blames if b.distance > 0]
+    if not wrong:
         return "no wrong words to blame — every assessed word is exact"
     counts: dict[str, int] = {}
-    for blame in blames:
+    for blame in wrong:
         for residual in blame.residuals:
             if residual.culprit is not None:
                 counts[residual.culprit] = counts.get(residual.culprit, 0) + 1
     if not counts:
-        return f"{len(blames)} wrong word(s); no rule-level culprit found — see blame.md"
+        return f"{len(wrong)} wrong word(s); no rule-level culprit found — see blame.csv"
     worst = max(counts, key=lambda r: counts[r])
     return (
-        f"{len(blames)} wrong word(s); rule '{worst}' is behind {counts[worst]} wrong "
-        f"phone(s) — see blame.md"
+        f"{len(wrong)} wrong word(s); rule '{worst}' is behind {counts[worst]} wrong "
+        f"phone(s) — see blame.csv"
     )
 
 
@@ -360,7 +374,11 @@ def _residual_text(residual: Residual) -> str:
 
 
 def render_blame(blames: list[Blame], where: str) -> str:
-    """The full ``blame.md`` report: per wrong word, its residuals, stage, and path."""
+    """Blame as Markdown — per word, its residuals, stage, and path (for the --scope bundle).
+
+    The standalone blame output is ``blame.csv`` (:func:`render_blame_csv`); this Markdown
+    rendering is what the ``--scope`` synthesis carries into ``scoped_output.md``.
+    """
     lines = [
         f"# Blame — {where}",
         "",
@@ -388,10 +406,11 @@ def render_blame(blames: list[Blame], where: str) -> str:
 
 def _blame_section(blame: Blame) -> list[str]:
     name = blame.gloss or blame.ipa
+    residuals = "; ".join(_residual_text(r) for r in blame.residuals) or "none — exact at the final"
     lines = [
         f"## {name} — `{blame.surface}` for `{blame.target}` (distance {blame.distance})",
         "",
-        "Residuals: " + "; ".join(_residual_text(r) for r in blame.residuals),
+        "Residuals: " + residuals,
         "",
     ]
     if blame.stage_divergence is not None:
@@ -412,3 +431,30 @@ def _blame_section(blame: Blame) -> list[str]:
         )
     lines.append("")
     return lines
+
+
+def render_blame_csv(blames: list[Blame]) -> str:
+    """The per-word distance trajectory as CSV — one row per word × trajectory point.
+
+    Columns: ``gloss, step, t, form, target, d, fd``. *step* is the trajectory label (``input``,
+    a firing rule's name, or ``surface``); *t* its rule-time (blank for the untimed ends);
+    *form*/*target* the rendered form and the attested form of the era it heads toward; *d*/*fd*
+    the phone and feature distances. Every assessed word appears — a wrong word as its full path,
+    an exact word (when blamed with ``include_exact``) as a short, ``d=0`` trajectory.
+    """
+    buffer = io.StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(["gloss", "step", "t", "form", "target", "d", "fd"])
+    for blame in blames:
+        gloss = blame.gloss or blame.ipa
+        for point in blame.trajectory:
+            writer.writerow([
+                gloss,
+                point.label,
+                "" if point.time is None else point.time,
+                point.form,
+                point.target,
+                point.distance,
+                "" if point.feature_distance is None else point.feature_distance,
+            ])
+    return buffer.getvalue()

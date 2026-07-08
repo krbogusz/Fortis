@@ -49,7 +49,7 @@
   let scopeData = $state(null); // the last run_scope result, or null
   let scopeError = $state(null); // scope parse/resolve errors, or null
   let scopeBusy = $state(false); // a scope run is in flight
-  let timing = $state(null); // {words, deriveMs, accuracyMs, analysisMs} from the last run
+  let timing = $state(null); // {words, rules, deriveMs, accuracyMs, analysisMs} from the last run
   let tableCsv = $state(""); // derivation_table.csv content, for the right-pane Table view
   let resultView = $state("derivations"); // right-pane view: derivations | table | accuracy | errors | errorContext | blame | warnings
 
@@ -271,7 +271,7 @@
       progressText = "analysing…"; // accuracy + errors + error context + blame can be slow
       await paint();
       const fin = finalizeRun();
-      timing = { words: total, deriveMs, accuracyMs: fin?.accuracyMs ?? 0, analysisMs: fin?.analysisMs ?? 0 };
+      timing = { words: total, rules: prep.rules, deriveMs, accuracyMs: fin?.accuracyMs ?? 0, analysisMs: fin?.analysisMs ?? 0 };
       accuracy = fin?.accuracy ?? null;
       if (!accuracy && resultView === "accuracy") resultView = "derivations"; // no target ⇒ leave the (now hidden) tab
       errors = fin?.errors ?? null;
@@ -428,7 +428,7 @@
     accuracy: "accuracy.csv",
     errors: "errors.csv",
     errorContext: "error_context.csv",
-    blame: "blame.md",
+    blame: "blame.csv",
     warnings: "warnings.md",
     filter: "filtered_output.md",
     scope: "scoped_output.md",
@@ -756,7 +756,7 @@
                     class:active={resultView === "errorContext"}
                     onclick={() => (resultView = "errorContext")}
                     title="The attested-form environments most associated with each error, per stage"
-                    >Error context</button
+                    >Context</button
                   >
                 {/if}
                 {#if blame}
@@ -799,6 +799,19 @@
         </div>
       </div>
 
+      <!-- The last run's headline (words · rules · per-phase timing), shared by every result
+           view including the Table tab. -->
+      {#snippet timingLine()}
+        {#if timing}
+          <p class="muted timing-line">
+            {timing.words} words · {timing.rules} rules · derive
+            {(timing.deriveMs / 1000).toFixed(1)}s · accuracy
+            {(timing.accuracyMs / 1000).toFixed(1)}s · analysis
+            {(timing.analysisMs / 1000).toFixed(1)}s
+          </p>
+        {/if}
+      {/snippet}
+
       {#if busy}
         <div class="results">
           <div class="run-prompt">
@@ -830,6 +843,7 @@
           </div>
         </div>
       {:else if resultView === "table" && tableCsv}
+        <div class="table-timing">{@render timingLine()}</div>
         <CsvTable content={tableCsv} />
       {:else}
       <div class="results">
@@ -913,12 +927,7 @@
             </details>
           {/each}
         {/snippet}
-        {#if timing}
-          <p class="muted timing-line">
-            {timing.words} words · derive {(timing.deriveMs / 1000).toFixed(1)}s · accuracy
-            {(timing.accuracyMs / 1000).toFixed(1)}s · analysis {(timing.analysisMs / 1000).toFixed(1)}s
-          </p>
-        {/if}
+        {@render timingLine()}
         {#if resultView === "accuracy" && accuracy}
           <table class="report-summary">
             <thead>
@@ -1014,7 +1023,7 @@
             reads as an adjacent substitution pair.
           </p>
           {#each errorContext.stages as s}
-            <details class="report-detail" open={s.label === "final"}>
+            <details class="report-detail context-stage" open={s.label === "final"}>
               <summary>
                 <span class="tgt">stage {s.label}</span>
                 <span class="muted">{s.segments.length} segment(s)</span>
@@ -1024,11 +1033,12 @@
           {/each}
         {:else if resultView === "blame" && blame}
           <p class="caveat">
-            Each wrong word attributed to the rule that produced the wrong phone (the last
-            firing rule that set its segment). <strong>omission</strong> = no rule touched it;
-            <strong>unattributed</strong> = the surface didn’t map one phone per segment. The
-            stage line and trajectory are context — trust the stage only where the attested
-            forms are notationally comparable to the engine’s output.
+            Every assessed word, worst first (exact ones last, with no residual). Each wrong
+            phone is attributed to the rule that produced it (the last firing rule that set its
+            segment). <strong>omission</strong> = no rule touched it; <strong>unattributed</strong>
+            = the surface didn’t map one phone per segment. The stage line and trajectory are
+            context — trust the stage only where the attested forms are notationally comparable
+            to the engine’s output.
           </p>
           {#each blame.words as w}
             <details class="report-detail">
@@ -1039,9 +1049,26 @@
                 <span class="form">{w.target}</span>
                 <span class="muted">· d{w.distance}</span>
               </summary>
-              <p class="residuals">
-                {#each w.residuals as r, i}<span class="form">{r.expected ?? "∅"}</span>→<span class="form">{r.got ?? "∅"}</span> <span class="muted">({r.culprit ? r.culprit + (r.time != null ? ", t=" + r.time : "") : r.attributed ? r.kind : "unattributed"})</span>{#if i < w.residuals.length - 1}<span class="muted">;{" "}</span>{/if}{/each}
-              </p>
+              {#if w.residuals.length}
+                <ul class="residual-pills">
+                  {#each w.residuals as r}
+                    <li class="residual-pill">
+                      <span class="form">{r.expected ?? "∅"}</span>→<span class="form"
+                        >{r.got ?? "∅"}</span
+                      >
+                      <span class="muted"
+                        >({r.culprit
+                          ? r.culprit + (r.time != null ? ", t=" + r.time : "")
+                          : r.attributed
+                            ? r.kind
+                            : "unattributed"})</span
+                      >
+                    </li>
+                  {/each}
+                </ul>
+              {:else}
+                <p class="muted">exact — matches the target.</p>
+              {/if}
               {#if w.stage}
                 <p class="muted stage-line">
                   first diverges at stage t={w.stage.time}: attested
@@ -1748,6 +1775,24 @@
   .report-detail .report-summary {
     margin-top: 12px;
   }
+  /* The Context tab nests each segment's autopsy (a .report-detail) inside a per-stage
+     .report-detail. Distinguish the levels without a heavier stage rule (kept at the tabs'
+     standard 1px solid): the stage header gets more room below it, and its segments sit
+     indented under a left rule with a lighter dashed separator. */
+  .context-stage > summary {
+    padding-bottom: 10px;
+  }
+  .context-stage > .report-detail {
+    margin-left: 16px;
+    padding-left: 12px;
+    border-left: 2px solid var(--border);
+    border-bottom-style: dashed;
+  }
+  .context-stage > .report-detail:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
 
   /* Errors, Error context + Blame tabs (reuse the report-* tables above) */
   .section-head {
@@ -1761,7 +1806,27 @@
     line-height: 1.8;
     margin: 6px 0 4px;
   }
-  .residuals .form {
+  /* The blame residuals render as a wrapped list of static, button-styled pills — one per
+     wrong phone → its culprit rule — below each word's summary header. */
+  .residual-pills {
+    list-style: none;
+    margin: 8px 0 2px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .residual-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--accent-bg);
+    font-size: var(--fs-body);
+  }
+  .residual-pill .form {
     color: var(--text-h);
   }
   .stage-line {
@@ -1813,6 +1878,16 @@
     font-size: var(--fs-body);
     margin: 0 0 12px;
     font-variant-numeric: tabular-nums;
+  }
+  /* The Table tab renders CsvTable (flex: 1) directly in the flex-column pane, so the timing
+     line rides above it in a fixed-height, 16px-inset strip. Padding matches the .results
+     container (4px top) plus the timing line's usual 12px gap to the content below. */
+  .table-timing {
+    flex: none;
+    padding: 4px 16px 12px;
+  }
+  .table-timing .timing-line {
+    margin-bottom: 0;
   }
 
   .card {

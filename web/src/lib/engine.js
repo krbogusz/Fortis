@@ -54,7 +54,7 @@ from src.fortis.application.rendering import render_syllabified, describe_change
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.analysis.accuracy import accuracy_by_stage, measure_accuracy, distance_to_target, ingest_targets
 from src.fortis.analysis.diagnosis import confusions, diagnose_stages, render_errors_csv, render_error_context_csv
-from src.fortis.analysis.blame import blame_all, render_blame
+from src.fortis.analysis.blame import blame_all, render_blame_csv
 from src.fortis.analysis.filtering import filter_by_pattern, filter_attested
 from src.fortis.analysis.synthesis import render_scoped
 from src.fortis.analysis.reporting import render_accuracy_csv, render_distance_to_target_csv
@@ -230,8 +230,8 @@ def _error_context_summary(stages, project):
     return {"stages": staged} if staged else None
 
 def _blame_summary(blames):
-    # None when every assessed word is exact; else per wrong word its residuals (with
-    # the culprit rule), stage divergence, and distance trajectory.
+    # None when there are no assessed words; else per word its residuals (with the culprit
+    # rule; empty for an exact word), stage divergence, and distance trajectory.
     if not blames:
         return None
     return {"words": [{
@@ -275,9 +275,9 @@ def finalize_run():
     _write_or_clear(O/"error_context.csv", render_error_context_csv(stage_diag) if stage_diag is not None else None)
     errors = _errors_summary(stage_diag) if stage_diag is not None else None
     error_context = _error_context_summary(stage_diag, project) if stage_diag is not None else None
-    blames = blame_all(acc, project)
+    blames = blame_all(acc, project, include_exact=True)  # the Blame tab lists every assessed word
     blame = _blame_summary(blames)
-    _write_or_clear(O/"blame.md", render_blame(blames, "the current project") if blame else None)
+    _write_or_clear(O/"blame.csv", render_blame_csv(blames) if blame else None)
 
     warns = syllabification_warnings(acc, project)
     _write_or_clear(O/"warnings.md", render_warnings(warns, "the current project") if warns else None)

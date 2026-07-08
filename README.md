@@ -112,8 +112,8 @@ analysis writes `accuracy.csv` (per-stage exact-match accuracy + mean phone
 and feature distance) and `distance_to_target.csv` (per-word); the **errors**
 analysis writes `errors.csv` (which segments came out wrong, per stage) and the
 **error context** analysis `error_context.csv` (the attested-form environments most
-associated with each error, per stage and segment); and `blame.md` attributes each
-wrong word to the rule that produced it (see
+associated with each error, per stage and segment); and `blame.csv` records every
+assessed word's per-step distance trajectory, worst first (see
 [Diagnosing a rule set](#diagnosing-a-rule-set)). A run ends with a one-line
 summary on stderr — words derived, rules applied, per-phase timing, files saved —
 and shows a progress bar while deriving in a terminal. All reports land in
@@ -188,9 +188,10 @@ lexicon has them:
 - **`error_context.csv`** — per stage and per erroring segment, a **context autopsy**:
   the attested-form environments most associated with getting that segment wrong (by
   phi coefficient), with F₁ and the raw err/ok counts with vs. without each environment.
-- **`blame.md`** — each wrong word attributed to the specific rule that produced
-  the wrong phone, tracing (by stable segment id) which rule last set it, with a
-  per-step trajectory toward each era's attested form.
+- **`blame.csv`** — every assessed word's per-step distance trajectory (columns
+  `gloss, step, t, form, target, d, fd`), worst first, exact words included. The
+  interactive Blame tab additionally attributes each wrong phone (by stable segment
+  id) to the rule that last set it.
 
 To preview a change before committing it, `--try 'RULE'` splices a candidate rule
 into the cascade (optionally at `--at TIME`), re-derives, and writes `whatif.md` —
@@ -390,7 +391,7 @@ fortis/
 └── src/fortis/
     ├── config.py                # paths, value symbols, greek alphabet, special symbols
     ├── result.py                # Result / Ok / Err
-    ├── main.py                  # load → derive → write reports (+ distances/diagnosis/timeline/blame) → print trace + run summary
+    ├── main.py                  # load → derive → write reports (derivations + accuracy/errors/blame CSVs) → run summary
     │
     ├── general/                 # generic helpers, zero domain knowledge
     │   ├── file_handling.py     #   load_toml_file, load_csv_file
