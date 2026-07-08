@@ -25,10 +25,26 @@ def test_main_derives_every_word(project, capsys, tmp_path):
     assert "aŋ.ka" in trace  # place assimilation: n → ŋ (node spread copies the velar's place)
 
 
-def test_main_writes_derivation_table_csv(tmp_path):
-    # The rule×word matrix is written as derivation_table.csv, alongside the main report.
+def test_main_writes_derivation_matrix_csv(tmp_path):
+    # The rule×word matrix is written as derivation_matrix.csv, alongside the main report.
     main(["--output", str(tmp_path / "derivations.csv")])
-    assert (tmp_path / "derivation_table.csv").exists()
+    assert (tmp_path / "derivation_matrix.csv").exists()
+
+
+def test_main_writes_rule_firings_csv(tmp_path):
+    # One row per rule: the words it matched (before → after) and its distinct changes.
+    import csv
+
+    main(["--output", str(tmp_path / "derivations.csv")])
+    text = (tmp_path / "rule_firings.csv").read_text(encoding="utf-8")
+    rows = list(csv.reader(text.splitlines()))
+    assert rows[0] == ["rule", "t", "count", "matched", "changes"]
+    fired = [r for r in rows[1:] if int(r[2]) > 0]  # rules that changed at least one word
+    assert fired
+    for r in fired:
+        assert " → " in r[3]  # matched holds `before → after` entries
+        assert r[4]  # and the distinct changes are non-empty
+        assert len(r[3].split(", ")) == int(r[2])  # one matched entry per counted firing
 
 
 def test_main_writes_derivations_csv_long_format(tmp_path):
@@ -57,7 +73,7 @@ def test_main_writes_reports_into_subfolder(project, tmp_path):
     (tmp_path / "words.toml").write_text(f'"{ipa}" = "x"\n', encoding="utf-8")
     main(["--project", str(tmp_path)])
     assert (tmp_path / "reports" / "derivations.csv").exists()
-    assert (tmp_path / "reports" / "derivation_table.csv").exists()
+    assert (tmp_path / "reports" / "derivation_matrix.csv").exists()
     assert not (tmp_path / "derivations.csv").exists()  # not at the project root
 
 

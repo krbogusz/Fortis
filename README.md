@@ -103,10 +103,12 @@ Every run also writes reports into a `reports/` subfolder of the project: the
 main one is `derivations.csv`, a long-format trace with one row per word × firing
 rule (columns `word, rule, t, before, after, change`), each word bookended by two
 synthetic rules — `input` (its raw IPA and how the engine ingested it: syllabified,
-normalised) and `output` (the surface form). Alongside it, `derivation_table.csv`
+normalised) and `output` (the surface form). Alongside it, `derivation_matrix.csv`
 gives the wide view (one row per word and one column per rule — each titled
 `<time>: <rule>` — holding the word's resulting form wherever that rule fired,
-empty otherwise). If the lexicon carries attested forms (`final` and/or
+empty otherwise), and `rule_firings.csv` inverts it (one row per rule: the words it
+matched as `before → after` and the distinct segment changes it made, e.g. `d→t`).
+If the lexicon carries attested forms (`final` and/or
 intermediate `stages`), four more reports analyse the result: the **accuracy**
 analysis writes `accuracy.csv` (per-stage exact-match accuracy + mean phone
 and feature distance) and `distance_to_target.csv` (per-word); the **errors**

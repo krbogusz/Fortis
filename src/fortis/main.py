@@ -11,9 +11,11 @@ the main file's path, and everything else follows alongside it). The main
 report is ``derivations.csv``, a long-format trace: one row per word × firing
 rule (columns ``word, rule, t, before, after, change``), each word bookended by
 two synthetic rules — ``input`` (the raw IPA and how the engine ingested it)
-and ``output`` (the surface form). A wide ``derivation_table.csv`` (one row per
-word, one column per rule, holding the word's form wherever that rule fired) is
-written alongside it. When the lexicon carries attested forms (``final`` and/or
+and ``output`` (the surface form). A wide ``derivation_matrix.csv`` (one row per
+word, one column per rule, holding the word's form wherever that rule fired) and a
+``rule_firings.csv`` (one row per rule: the words it matched as ``before → after``
+and the distinct segment changes it made) are written alongside it. When the lexicon
+carries attested forms (``final`` and/or
 intermediate ``stages``), the accuracy analysis measures the derivation's distance
 to target and writes ``accuracy.csv`` (per-stage summary) and
 ``distance_to_target.csv`` (per-word) too.
@@ -135,7 +137,7 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         metavar="FILE",
         help=(
             "path for the main report — derivations.csv, the long-format firing-rule "
-            "trace (one row per word × rule). The other reports (derivation_table.csv, "
+            "trace (one row per word × rule). The other reports (derivation_matrix.csv, "
             "accuracy.csv, …) are written alongside it (default: "
             "<project>/reports/derivations.csv)"
         ),
@@ -175,7 +177,7 @@ def main(argv: list[str] | None = None) -> None:
     letters, sonority, tiers, etc. stay the shipped defaults unless ``--project`` points to
     a project directory (whose own files override the defaults, the rest falling back).
     Every run writes ``derivations.csv`` (the long-format trace, ``--output`` overrides the
-    path) and ``derivation_table.csv`` (one row per word, one column per rule) into a
+    path) and ``derivation_matrix.csv`` (one row per word, one column per rule) into a
     ``reports/`` subfolder of the project; if the lexicon has attested forms, the
     accuracy CSVs (``accuracy.csv`` + ``distance_to_target.csv``) too.
     A big lexicon is derived across worker processes automatically (identical output);
@@ -225,10 +227,15 @@ def main(argv: list[str] | None = None) -> None:
     print(f"wrote {path}", file=sys.stderr)
     saved = [path]
 
-    csv_path = path.parent / "derivation_table.csv"
-    csv_path.write_text(_build_csv_report(derivations, rules, project), encoding="utf-8")
+    csv_path = path.parent / "derivation_matrix.csv"
+    csv_path.write_text(_build_matrix_csv(derivations, rules, project), encoding="utf-8")
     print(f"wrote {csv_path}", file=sys.stderr)
     saved.append(csv_path)
+
+    firings_path = path.parent / "rule_firings.csv"
+    firings_path.write_text(_build_rule_firings_csv(derivations, rules, project), encoding="utf-8")
+    print(f"wrote {firings_path}", file=sys.stderr)
+    saved.append(firings_path)
     write_done = time.perf_counter()
 
     where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
@@ -309,7 +316,7 @@ def main(argv: list[str] | None = None) -> None:
             case Ok(result):
                 ftable_path = path.parent / "filtered_table.csv"
                 ftable_path.write_text(
-                    _build_csv_report([m.derivation for m in result.matched], rules, project),
+                    _build_matrix_csv([m.derivation for m in result.matched], rules, project),
                     encoding="utf-8",
                 )
                 foutput_path = path.parent / "filtered_output.md"
@@ -433,6 +440,60 @@ def _build_derivations_csv(derivations: list[Derivation], project: Project) -> s
     return buffer.getvalue()
 
 
+def _rule_rows(rules: RuleInventory) -> list[tuple[str, str, int | None]]:
+    """Each rule as ``(base_id, name, time)``, sub-rules merged, in firing order.
+
+    Like :func:`_rule_columns`, but keeping the name and time apart (the per-rule report
+    wants them in separate columns).
+    """
+    seen: dict[str, tuple[str, int | None]] = {}
+    for t in sorted(rules.keys(), key=lambda t: (t is None, t)):
+        for rule in rules[t]:
+            base = _SUBRULE_SUFFIX.sub("", rule.id)
+            if base not in seen:
+                seen[base] = (rule.name or base, t)
+    return [(base, name, t) for base, (name, t) in seen.items()]
+
+
+def _build_rule_firings_csv(
+    derivations: list[Derivation], rules: RuleInventory, project: Project
+) -> str:
+    """Per-rule firing report: one row per rule, what it matched and how it changed it.
+
+    Columns: ``rule, t, count, matched, changes``. ``count`` is how many words the rule
+    changed; ``matched`` is each such word as ``before → after`` (comma-separated, in
+    derivation order); ``changes`` is the *distinct* segment-level deltas it made (e.g.
+    ``d→t``), comma-separated. Every rule gets a row in firing order — one that never fired
+    shows ``count`` 0 with empty ``matched``/``changes``, so dead rules are visible. A
+    list-``definition`` rule's sub-rules are merged into one row, matching the other tables.
+    """
+    matched: dict[str, list[str]] = {}
+    changes: dict[str, dict[str, None]] = {}  # ordered set: first-seen order, deduped
+    for derivation in derivations:
+        for step in derivation.steps:
+            base = _SUBRULE_SUFFIX.sub("", step.rule.id)
+            before_bundles = lower_tiers(step.before)
+            after_bundles = lower_tiers(step.after)
+            before = render_syllabified(before_bundles, step.before_boundaries, project)
+            after = render_syllabified(after_bundles, step.after_boundaries, project)
+            change = describe_change(before_bundles, after_bundles, project)
+            matched.setdefault(base, []).append(f"{before} → {after}")
+            changes.setdefault(base, {})[change] = None
+    buffer = io.StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(["rule", "t", "count", "matched", "changes"])
+    for base, name, rule_time in _rule_rows(rules):
+        firings = matched.get(base, [])
+        writer.writerow([
+            name,
+            "" if rule_time is None else rule_time,
+            len(firings),
+            ", ".join(firings),
+            ", ".join(changes.get(base, {})),
+        ])
+    return buffer.getvalue()
+
+
 def _filtered_word_md(matched: MatchedWord, project: Project) -> list[str]:
     """One matched word for filtered_output.md: distance to target, match sites, and trace."""
     derivation = matched.derivation
@@ -531,7 +592,7 @@ def _rule_columns(rules: RuleInventory) -> list[tuple[str, str]]:
     return list(columns.items())
 
 
-def _build_csv_report(derivations: list[Derivation], rules: RuleInventory, project: Project) -> str:
+def _build_matrix_csv(derivations: list[Derivation], rules: RuleInventory, project: Project) -> str:
     """One row per word, one column per rule.
 
     A cell holds the word's resulting form right after that rule fired (its last

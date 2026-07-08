@@ -50,8 +50,9 @@
   let scopeError = $state(null); // scope parse/resolve errors, or null
   let scopeBusy = $state(false); // a scope run is in flight
   let timing = $state(null); // {words, rules, deriveMs, accuracyMs, analysisMs} from the last run
-  let tableCsv = $state(""); // derivation_table.csv content, for the right-pane Table view
-  let resultView = $state("derivations"); // right-pane view: derivations | table | accuracy | errors | errorContext | blame | warnings
+  let matrixCsv = $state(""); // derivation_matrix.csv content, for the right-pane Matrix view
+  let rulesCsv = $state(""); // rule_firings.csv content, for the right-pane Rules view
+  let resultView = $state("derivations"); // right-pane view: derivations | rules | matrix | accuracy | errors | errorContext | blame | warnings
 
   // A project with more than this many words OR rules is too costly to re-run on
   // every edit; it waits for the "Run project" button instead of auto-running.
@@ -226,7 +227,8 @@
     result = null; // clear the previous results so the pane doesn't show stale output under the bar
     accuracy = null; // and the previous accuracy summary
     warnings = []; // and the previous warnings
-    tableCsv = ""; // and the previous derivation table
+    matrixCsv = ""; // and the previous derivation table
+    rulesCsv = ""; // and the previous rule-firings table
     timing = null; // and the previous run's timing
     openDefs = {}; // reset per-card definition toggles (indices map to new words after a run)
     await paint(); // paint the (updated) left pane + cleared right pane before the first batch blocks
@@ -286,7 +288,8 @@
       filterError = null;
       scopeData = null;
       scopeError = null;
-      tableCsv = readFile("reports/derivation_table.csv"); // for the Table view
+      matrixCsv = readFile("reports/derivation_matrix.csv"); // for the Matrix view
+      rulesCsv = readFile("reports/rule_firings.csv"); // for the Rules view
       result = { derivations: acc };
     } catch (e) {
       if (myToken === runToken) result = { error: [e?.message ?? String(e)] };
@@ -424,7 +427,8 @@
   // the download named by the basename).
   const RESULT_FILE = {
     derivations: "derivations.csv",
-    table: "derivation_table.csv",
+    matrix: "derivation_matrix.csv",
+    rules: "rule_firings.csv",
     accuracy: "accuracy.csv",
     errors: "errors.csv",
     errorContext: "error_context.csv",
@@ -732,9 +736,14 @@
                   onclick={() => (resultView = "derivations")}>Derivations</button
                 >
                 <button
-                  class:active={resultView === "table"}
-                  title="Every word's form at each stage, in one table (derivation_table.csv)"
-                  onclick={() => (resultView = "table")}>Table</button
+                  class:active={resultView === "rules"}
+                  title="Each rule's firings: the words it matched (before → after) and the distinct segment changes it made (rule_firings.csv)"
+                  onclick={() => (resultView = "rules")}>Rules</button
+                >
+                <button
+                  class:active={resultView === "matrix"}
+                  title="Every word's form at each stage, in one wide matrix (derivation_matrix.csv)"
+                  onclick={() => (resultView = "matrix")}>Matrix</button
                 >
                 {#if accuracy}
                   <button
@@ -842,9 +851,12 @@
             {/if}
           </div>
         </div>
-      {:else if resultView === "table" && tableCsv}
+      {:else if resultView === "matrix" && matrixCsv}
         <div class="table-timing">{@render timingLine()}</div>
-        <CsvTable content={tableCsv} />
+        <CsvTable content={matrixCsv} />
+      {:else if resultView === "rules" && rulesCsv}
+        <div class="table-timing">{@render timingLine()}</div>
+        <CsvTable content={rulesCsv} />
       {:else}
       <div class="results">
         <!-- The firing-rule trace of one word, as a borderless table (rule · t · before → after

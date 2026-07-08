@@ -54,6 +54,7 @@
   }
 
   let rows = $state([]);
+  let colOverrides = $state({}); // colIndex → user-dragged width (px); overrides the measured cap
   let sel = $state(null); // {r, c} — the selected cell (r = 0 is the header row)
   let editing = $state(false); // whether the selected cell is in text-edit mode
   let menu = $state(null); // {kind:"row"|"col", index, x, y} — the open ⋮ menu
@@ -76,6 +77,7 @@
     if (content !== lastEmitted) {
       rows = content.trim() ? parseCsv(content.trim()) : [];
       lastEmitted = content;
+      colOverrides = {}; // new content ⇒ drop per-column width overrides (indices may remap)
       sel = null;
       editing = false;
     }
@@ -122,12 +124,15 @@
   const CTRL_W = 26; // the ⋮ handle column (editable only)
   const CELL_PAD = 16; // 7px l/r padding + 1px l/r border + a hair of slack
   const HANDLE_W = 20; // header padding-right that makes room for its ⋮ handle
-  // Fonts mirror the CSS below (16px == the --fs-content token): body is mono; the first
-  // (symbol) column is the IPA face; headers are the sans face, semibold. Keep the 16px here
-  // in sync with --fs-content if that token changes — canvas can't read CSS variables.
-  const MONO_FONT = "16px 'Noto Sans Mono', ui-monospace, 'SF Mono', Consolas, monospace";
-  const IPA_FONT = "600 16px 'Charis SIL', serif";
-  const HEAD_FONT = "600 16px system-ui, 'Segoe UI', Roboto, sans-serif";
+  const MAX_COL_W = 320; // cap a column's measured width; over-long cells ellipsize (drag to widen)
+  const MIN_COL_W = 44; // floor when dragging a column narrower
+  // Fonts mirror the CSS below: headers are the sans face at --fs-body; the first (key) column
+  // is the IPA face at --fs-content, semibold; every other body column is the IPA face at
+  // --fs-body. Keep the px sizes in sync with --fs-body (14) / --fs-content (16) — canvas can't
+  // read CSS variables.
+  const KEY_FONT = "600 16px 'Charis SIL', serif";
+  const BODY_FONT = "14px 'Charis SIL', serif";
+  const HEAD_FONT = "600 14px system-ui, 'Segoe UI', Roboto, sans-serif";
   let fontsReady = $state(false);
   $effect(() => {
     if (typeof document !== "undefined" && document.fonts) {
@@ -142,24 +147,47 @@
     ctx.font = font;
     return ctx.measureText(String(text)).width;
   }
-  const colWidths = $derived.by(() => {
+  // Each column's natural width, measured across the whole table and clamped to MAX_COL_W so a
+  // long cell (a descriptive rule name, a many-word `matched` list) can't stretch it off-screen.
+  const measuredWidths = $derived.by(() => {
     void fontsReady; // recompute after the IPA/webfonts finish loading
     const widths = [];
     for (let c = 0; c < cols; c++) {
-      const bodyFont = c === 0 ? IPA_FONT : MONO_FONT;
+      const bodyFont = c === 0 ? KEY_FONT : BODY_FONT;
       // The IPA face renders combining marks (tie-bars t͡s, stacked diacritics) that canvas
       // metrics under-count; extra slack keeps fixed layout from clipping them off.
-      const slack = c === 0 ? 14 : 0;
+      const slack = 12;
       const headW = textWidth(header[c] ?? "", HEAD_FONT) + (editable ? HANDLE_W : 0);
       let bodyW = 0;
       for (let r = 1; r < rows.length; r++) {
         const v = rows[r][c];
         if (v) bodyW = Math.max(bodyW, textWidth(v, bodyFont));
       }
-      widths.push(Math.ceil(Math.max(headW, bodyW)) + CELL_PAD + slack);
+      widths.push(Math.min(MAX_COL_W, Math.ceil(Math.max(headW, bodyW)) + CELL_PAD + slack));
     }
     return widths;
   });
+  // A user's drag-resize (colOverrides) wins over the measured cap; content change resets them.
+  const colWidths = $derived(measuredWidths.map((w, c) => colOverrides[c] ?? w));
+
+  // Drag a header cell's right-edge grip to resize that column (read-only tables — editable ones
+  // use the ⋮ handle to reorder instead). The drag sets an override that beats the measured cap.
+  function startColResize(event, c) {
+    event.preventDefault();
+    event.stopPropagation();
+    const startX = event.clientX;
+    const startW = colWidths[c];
+    const onMove = (e) => {
+      const w = Math.max(MIN_COL_W, Math.round(startW + e.clientX - startX));
+      colOverrides = { ...colOverrides, [c]: w };
+    };
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  }
   // The exact table width = sum of the column widths. A fixed-layout table with width:auto
   // instead FILLS its container and hands the leftover space to a column, so that column's
   // width shifts whenever the available width does (e.g. a scrollbar appearing) — the width
@@ -461,6 +489,13 @@
                     ondragend={endDrag}
                     onclick={(e) => openMenu("col", c, e)}>⋮</button
                   >
+                {:else}
+                  <span
+                    class="col-resizer"
+                    aria-hidden="true"
+                    title="Drag to resize this column"
+                    onpointerdown={(e) => startColResize(e, c)}
+                  ></span>
                 {/if}
               </th>
             {/if}
@@ -505,6 +540,7 @@
                   class:ins-left={insLeft(c)}
                   class:ins-right={insRight(c)}
                   class:col-dragging={dragCol(c)}
+                  title={!editable ? (row[c] ?? "") : null}
                   data-cell={`${r}-${c}`}
                   tabindex={isSel(r, c) && !editing ? 0 : -1}
                   ondragover={(e) => overCol(e, c)}
@@ -565,14 +601,15 @@
     flex: 1;
     overflow: auto;
     margin: 0 16px 16px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--code-bg);
   }
+  /* The grid matches the .report-summary analysis tables: the IPA/body face, roomier cells,
+     and a muted, panel-backed header — over the grid's fixed layout, column resizing, and
+     row virtualization. */
   table.csv {
     border-collapse: collapse;
-    font-family: var(--mono);
-    font-size: var(--fs-content);
+    font-family: var(--ipa);
+    font-size: var(--fs-body);
+    font-variant-numeric: tabular-nums;
     /* Fixed layout + measured <colgroup> widths: columns stay put as virtualization swaps
        the rendered rows (auto layout would re-fit them to the visible subset and jitter). */
     table-layout: fixed;
@@ -585,10 +622,24 @@
   .csv th,
   .csv td {
     border: 1px solid var(--border);
-    padding: 2px 7px;
+    padding: 4px 9px;
     text-align: left;
     white-space: nowrap;
     position: relative;
+  }
+  /* Read-only column resize: an invisible grip over each header cell's right edge. */
+  .col-resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7px;
+    height: 100%;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+  }
+  .col-resizer:hover {
+    background: var(--accent-border);
   }
   table.editable th,
   table.editable td {
@@ -676,7 +727,7 @@
     top: 0;
     z-index: 2;
     background: var(--panel);
-    color: var(--text-h);
+    color: var(--muted);
     font-weight: 600;
     font-family: var(--sans);
   }

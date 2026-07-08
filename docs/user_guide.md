@@ -641,9 +641,12 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
   written in the lexicon, `after` = the form the engine ingested it as: syllabified,
   diacritics normalised) and **`output`** (`after` = the surface form). A word on which
   no rule fired is just its `input` and `output` rows.
-- **`derivation_table.csv`** — the same run in wide format: one row per word, one column
+- **`derivation_matrix.csv`** — the same run in wide format: one row per word, one column
   per rule (each titled `<time>: <name>`), holding the word's form right after that rule
   fired (empty where it did not).
+- **`rule_firings.csv`** — the run inverted to one row per rule (`rule, t, count, matched,
+  changes`): the words it matched as `before → after` and the distinct segment-level
+  changes it made (e.g. `d→t`). A rule that never fired shows `count` 0 with empty cells.
 - **`accuracy.csv`** and **`distance_to_target.csv`** — the **accuracy**
   analysis, written only when the lexicon carries attested forms (`final`/`stages`,
   §4.1). It measures each derived form's distance to its target with two edit

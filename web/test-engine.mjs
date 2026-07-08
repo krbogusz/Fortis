@@ -38,11 +38,14 @@ try {
 
   // The reports are written into the virtual FS alongside the inventory files.
   const derivations = py.runPython(`read_file("reports/derivations.csv")`).toString();
-  const csv = py.runPython(`read_file("reports/derivation_table.csv")`).toString();
+  const csv = py.runPython(`read_file("reports/derivation_matrix.csv")`).toString();
+  const ruleFirings = py.runPython(`read_file("reports/rule_firings.csv")`).toString();
   if (!derivations.startsWith("word,rule,t,before,after,change"))
     throw new Error("derivations.csv missing its header row: " + derivations.slice(0, 80));
-  if (!csv.startsWith("ipa,gloss,")) throw new Error("derivation_table.csv missing its header row: " + csv.slice(0, 80));
-  log(`5. reports written: derivations.csv (${derivations.split("\n").length} rows), derivation_table.csv (${csv.split("\n").length} rows)`);
+  if (!csv.startsWith("ipa,gloss,")) throw new Error("derivation_matrix.csv missing its header row: " + csv.slice(0, 80));
+  if (!ruleFirings.startsWith("rule,t,count,matched,changes"))
+    throw new Error("rule_firings.csv missing its header row: " + ruleFirings.slice(0, 80));
+  log(`5. reports written: derivations.csv (${derivations.split("\n").length} rows), derivation_matrix.csv (${csv.split("\n").length} rows), rule_firings.csv (${ruleFirings.split("\n").length} rows)`);
 
   // Overlay model: empty overlay ⇒ all-default; write ⇒ project; remove ⇒ back to default.
   const FILES = [

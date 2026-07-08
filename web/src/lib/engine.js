@@ -34,7 +34,11 @@ export const FILES = [
 
 // Generated reports, read-only — written by run_derivations() into the overlay's
 // reports/ subfolder (mirroring the CLI's <project>/reports/) after each run.
-export const OUTPUT_FILES = ["reports/derivations.csv", "reports/derivation_table.csv"];
+export const OUTPUT_FILES = [
+  "reports/derivations.csv",
+  "reports/derivation_matrix.csv",
+  "reports/rule_firings.csv",
+];
 
 // Python helper loaded into the interpreter after the engine is importable.
 // Rendering mirrors ../src/fortis/main.py:_trace_lines.
@@ -59,7 +63,7 @@ from src.fortis.analysis.filtering import filter_by_pattern, filter_attested
 from src.fortis.analysis.synthesis import render_scoped
 from src.fortis.analysis.reporting import render_accuracy_csv, render_distance_to_target_csv
 from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
-from src.fortis.main import _build_derivations_csv, _build_csv_report, _build_filtered_report
+from src.fortis.main import _build_derivations_csv, _build_matrix_csv, _build_rule_firings_csv, _build_filtered_report
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
 OVERLAY = "/work/overlay"
@@ -258,7 +262,8 @@ def finalize_run():
     project, rules, acc = _SESSION["project"], _SESSION["rules"], _SESSION["acc"]
     O = _reports_dir()  # every report mirrors the CLI's <project>/reports/ subfolder
     (O/"derivations.csv").write_text(_build_derivations_csv(acc, project), encoding="utf-8")
-    (O/"derivation_table.csv").write_text(_build_csv_report(acc, rules, project), encoding="utf-8")
+    (O/"derivation_matrix.csv").write_text(_build_matrix_csv(acc, rules, project), encoding="utf-8")
+    (O/"rule_firings.csv").write_text(_build_rule_firings_csv(acc, rules, project), encoding="utf-8")
 
     _t0 = time.perf_counter()
     ingest_targets(acc, project)  # segment attested forms once before any analysis reads them
@@ -306,7 +311,7 @@ def run_filter(pattern):
     O.joinpath("filtered_output.md").write_text(
         _build_filtered_report(result, project, "the current project"), encoding="utf-8")
     O.joinpath("filtered_table.csv").write_text(
-        _build_csv_report(matched_derivs, rules, project), encoding="utf-8")
+        _build_matrix_csv(matched_derivs, rules, project), encoding="utf-8")
 
     report = measure_accuracy(matched_derivs, project)
     accuracy = None
