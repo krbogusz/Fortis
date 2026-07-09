@@ -241,7 +241,7 @@ _HTML_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8">
  html,body{margin:0;background:var(--bg);color:var(--text);font:13px/1.4 system-ui,sans-serif}
  header{padding:10px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;left:0;background:var(--bg);z-index:5}
  header b{color:var(--text-h)}
- .hint{color:var(--muted)}
+ .hint{color:var(--muted)} .hint .mgrp{white-space:nowrap} .hint .msep{opacity:.6}
  .k-dep{color:var(--dep);font-weight:600} .k-dependent{color:var(--dependent);font-weight:600}
  #wrap{overflow:auto;height:calc(100vh - 52px)}
  svg{display:block;font:11px system-ui,sans-serif}
@@ -264,9 +264,9 @@ _HTML_TEMPLATE = """<!doctype html><html><head><meta charset="utf-8">
  #tip .ids{color:var(--muted);font-size:11px;word-break:break-word}
 </style></head><body>
 <header><b>Rule dependence tree</b>
- &nbsp;<span class="hint">__NRULES__ rules · __NEDGES__ feeding edges · __NROOTS__ unconnected roots
- &nbsp;·&nbsp; x = time, +1 sub-column per same-time dependency &rarr; · hover a node:
- <span class="k-dep">blue</span> = fed by · <span class="k-dependent">orange</span> = feeds</span></header>
+ &nbsp;<span class="hint"><span class="mgrp">__NRULES__ rules · __NEDGES__ feeding edges · __NROOTS__ unconnected roots</span>
+ <span class="msep">·</span> <span class="mgrp">x = time, +1 sub-column per same-time dependency &rarr;</span>
+ <span class="msep">·</span> <span class="mgrp">hover a node: <span class="k-dep">blue</span> = fed by · <span class="k-dependent">orange</span> = feeds</span></span></header>
 <div id="wrap"><svg id="svg" width="__WIDTH__" height="__HEIGHT__"></svg></div>
 <div id="tip"></div>
 <script>

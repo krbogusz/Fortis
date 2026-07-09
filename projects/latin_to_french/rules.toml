@@ -23,10 +23,30 @@ description = "SPORADIC/lexical — the very high-frequency auxiliary j'ai reduc
 words = ["ai"]
 definition = "b → ∅"
 
+[lex_ja_final_m_loss]
+time = 300
+name = "ja: sporadic loss of final -m (function-word erosion)"
+description = "SPORADIC/lexical — jam 'already', a very high-frequency adverb, lost its final -m irregularly (attested LL ʝɑ). No environment separates it from the many words that KEEP final -m after a stressed vowel (aime ɛm, âme ɑm, femme fam, pomme pɔm), so the loss is word-scoped rather than a general rule."
+words = ["ja"]
+definition = "m → ∅ / _ #"
+
+[lex_connaitre_gn_dentalizes]
+time = 400
+name = "connaître: the etymological ŋ dentalizes to n̪ (lexically reformed, not palatalized)"
+description = "SPORADIC/lexical — cognoscere's ⟨gn⟩ gives ŋn̪ by the g→ŋ assimilation, matching the attested Late-Latin kɔŋn̪oscɛrɛ, but (per Pope s321) the word was reformed in Latin under the influence of nosco to *connoscere*, so it takes the geminate-n̪ path (connaître kɔn̪ɛt̪ʁ) rather than the regular ŋn̪→ɲ palatalization that agnellos/insignia undergo (agneau, enseigne, both ɲ). Word-scoped, since only this etymon deviates."
+words = ["connaître"]
+definition = "ŋ → n̪ / _ n̪"
+
 [cl_n_velar_assim]
 time = -100
 name = "n assimilates to a following velar stop"
 definition = "n̪ → ŋ / _ [aperture: high, +back, -continuant, nasal: none]"
+
+[cl_u_to_sonus_medius]
+time = -100
+name = "unstressed long u becomes a mid central vowel (sonus medius), not word-finally"
+description = "Diachronically equivalent to ɪ; does not bleed or feed prior yod formation. Target guarded to unstressed — a bare `uː` literal matches any stress, so it was eating the stressed ū of crus/durs/salut (which must survive to front to y). NOTE: fires only on manducare, where the gold-300 keeps `u` (mɑn̪d̪ukɑrɛ) — but the derivation NEEDS the fronted vowel for the later duk→dʒ palatalization (manger /mɑ̃ʒe/), so this attestation-vs-derivation conflict is left as DiaSim resolves it (both derive d̪e, missing the gold-u); deleting the rule fixes the 300 form but regresses 1500+final."
+definition = "[aperture: high, +back, +rounded, +syllabic, length: long, stress: none] → ɪ / _ [-syllabic] // _ [-syllabic] #"
 
 [cl_g_n_assim]
 time = -100
@@ -120,27 +140,16 @@ name = "unstressed short non-low vowels glide before another vowel (yod/w format
 description = "Pope s220, s156i — called for this early by s187. Output is a true glide (+consonantal): a pre-vocalic yod/w, not a diphthong off-glide semivowel — so it feeds yod strengthening (j→ʝ) and the palatalization chain, matching DiaSim's single [+hi,-syl] yod."
 definition = "[+syllabic, length: short, stress: none, aperture: !low] → [aperture: high, syllabic: -, +consonantal, advancement: atr] / _ [+syllabic]"
 
-[cl_u_to_sonus_medius]
-time = -100
-name = "unstressed long u becomes a mid central vowel (sonus medius), not word-finally"
-description = "Diachronically equivalent to ɪ; does not bleed or feed prior yod formation. Target guarded to unstressed — a bare `uː` literal matches any stress, so it was eating the stressed ū of crus/durs/salut (which must survive to front to y)."
-definition = "[aperture: high, +back, +rounded, +syllabic, length: long, stress: none] → ɪ / _ [-syllabic] // _ [-syllabic] #"
-
 [cl_l_darkening]
 time = -100
 name = "l darkens before a non-lateral consonant"
-definition = "l → ɫ / _ [+consonantal, lateral: none]"
+definition = "l → ɫ / _ [+consonantal, lateral: none] // _ [-syllabic, +front, aperture: high, +continuant]"
 
 [cl_yod_strengthening]
 time = -100
 name = "yod strengthens before a vowel"
 description = "Pope s105c, s106. Matches the yod by bundle (not the literal `j`): a derived pre-vocalic glide carries advancement: atr, so it is not letter-identical to `j` — but it is the same [+cons, +front, high, -syll] segment DiaSim strengthens."
 definition = "[+consonantal, +front, aperture: high, syllabic: -] → ʝ / _ [+syllabic]"
-
-[cl_round_glide_loss_before_yod]
-time = -100
-name = "the rounded glide is lost before the strengthened yod"
-definition = "(ɣʷ|w) → ∅ / _ ʝ"
 
 [cl_ghw_loss_lo_round]
 time = -100
@@ -152,8 +161,14 @@ time = -100
 name = "posttonic ʊ/o syncopates before l + vowel near the end of the word"
 definition = "(ʊ|o) → ∅ / [+syllabic, stress: primary] ([-syllabic])* ([-continuant, nasal: none]|m|r) _ [+lateral] [+syllabic] ([-syllabic])? #"
 
-[cl_syncope_between_n_r]
+[cl_syncope_i_before_l]
 time = -100
+name = "posttonic ɪ syncopates before l + vowel near the end of the word (-bile type)"
+description = "The -bile suffix loses its posttonic ɪ (culpabilem > coupable koɫpɑblɛ), parallel to the ʊ/o syncope above. Ordered before b-lenition so the b lands in a bl cluster and stays b (the lenition rule excludes laterals). DiaSim misses this word (it derives koɫpɑβelɛ)."
+definition = "ɪ → ∅ / [+syllabic, stress: primary] ([-syllabic])* ([-continuant, nasal: none]|m|r) _ [+lateral] [+syllabic] ([-syllabic])? #"
+
+[cl_syncope_between_n_r]
+time = 400
 name = "posttonic non-low vowel syncopates between n and r + vowel"
 definition = "[+syllabic, aperture: !low, stress: none] → ∅ / [+syllabic, stress: primary] ([-syllabic])* n̪ _ r [+syllabic]"
 
@@ -180,7 +195,7 @@ definition = "ɪ → ∅ / ɣʷ _ k"
 [cl_ghw_to_w_before_cons]
 time = -100
 name = "the labiovelar approximant simplifies to w before a consonant"
-definition = "ɣʷ → w / _ [+consonantal]"
+definition = "ɣʷ → w / _ [+consonantal] // _ [-syllabic, +front, aperture: high, +continuant]"
 
 [cl_ghw_remainder_to_bw]
 time = -100
@@ -190,7 +205,7 @@ definition = "ɣʷ → βʷ"
 [cl_b_lenition]
 time = -100
 name = "b lenites to β intervocalically / before a sonorant"
-definition = "b → β / [+syllabic] _ [+sonorant]"
+definition = "b → β / [+syllabic] _ [+sonorant, lateral: none]"
 
 [cl_ee_contraction_stressed_second]
 time = -100
@@ -538,6 +553,7 @@ definition = "ˈeː → ˈiː / [+consonantal, aperture: high, +front] _"
 [egr_prenasal_raising]
 time = 500
 name = "a round non-high vowel becomes tense, high, and nasalized before a nasal"
+description = "The +nasal here is LOAD-BEARING even though it makes the 1000 checkpoint show a nasal vowel one stage early (pomme pũmə vs attested pumə): nasalizing the raised u BLEEDS the later u→y fronting (nasal vowels don't front), which is what carries pomme/pont/somme to their correct nasal-back finals (pɔm). Decoupling nasalization to 1100 exposes the oral u to fronting → pʉ/pỹ, regressing 1200/1500/final by ~20-30 words. Do NOT strip the +nasal."
 definition = "[+rounded, aperture: !high, +syllabic] → [advancement: atr, aperture: high, +nasal] / _ [+nasal]"
 
 [egr_long_mid_diphthongization_1]
@@ -1366,7 +1382,7 @@ description = "Pope s257, s252 — feeds the later ej > oj shift"
 definition = "ə → e / _ [+front, +sonorant, aperture: high, -syllabic]"
 
 [eof_l_vocalization_begins]
-time = 1100
+time = 950
 name = "l darkens before a consonant (beginnings of l-vocalization)"
 description = "Pope s166.9, s383-391 — first attested 9th century; simplified to /ɫ/ throughout rather than distinguishing dark-l/gamma. Only the plain (non-palatal) lateral darkens — `[+lateral]` alone also matches the palatal ʎ, which must stay palatal to become j (maille ...aʎ.d͡ʒ, not *aɫ)."
 definition = "[+lateral] → ɫ / _ [+consonantal]"
@@ -1378,20 +1394,21 @@ description = "Pope s382iv, s384"
 definition = "ɫ → ʎ / [aperture: high, +front, rounded: none] _"
 
 [eof_u_fronting_completes]
-time = 1100
+time = 950
 name = "high round back vowels front (completion of u-fronting)"
 description = "Pope s166.1, s183, s9, s36, s42 — spread slowly from the south, continuing into the 10th century"
 definition = "[aperture: high, +rounded, back: none] → [+front]"
 
 [eof_first_nasalization_glide]
-time = 1100
+time = 950
 name = "j nasalizes after a low vowel, before a nasal (first nasalization)"
 description = "Pope s166.6, s434, s441.1, s441.3 — 10th century; affects a and aj"
 definition = "j → [+nasal] / [aperture: low] _ [+nasal, -syllabic]"
 
 [eof_first_nasalization_vowel]
-time = 1100
+time = 950
 name = "a low vowel nasalizes before a nasal (first nasalization)"
+description = "Retimed 1100→950: nasalization before a nasal GLIDE/consonant coda (the -ain/-aim/-ein diphthongs: faim fãj̃n̪, saint sãj̃n̪t̪, main) is attested BY the OF-I checkpoint. The GENERAL before-nasal-consonant rule stays at 1100 (moving it over-nasalizes i/y/u before onset n — lune/une/fin). Minor: bleeds meners countertonic schwa (net-0 at final)."
 definition = "[aperture: low] → [+nasal] / _ [+nasal, -syllabic]"
 
 [eof_countertonic_e_to_schwa_open]
@@ -1436,14 +1453,15 @@ description = "Pope s407i — CORRECTION: also after ɛ, not just e"
 definition = "∅ → j̃ / [aperture: mid, rounded: none, +syllabic, stress: !none] _ ɲ [+syllabic]"
 
 [eof_second_nasalization_glide]
-time = 1100
+time = 950
 name = "j nasalizes after a mid front vowel, before a nasal (second nasalization)"
 description = "Pope s166.6, s434, s439, s441.2, s441.4 — 11th century; bleeds the later ei > oi shift; does not affect ie̯ (nasalized later, 13th c.)"
 definition = "j → [+nasal] / [+front, aperture: !high, +syllabic] _ [+nasal, -syllabic]"
 
 [eof_second_nasalization_vowel]
-time = 1100
+time = 950
 name = "a mid front vowel nasalizes before a nasal (second nasalization)"
+description = "Retimed 1100→950: nasalization before a nasal GLIDE/consonant coda (the -ain/-aim/-ein diphthongs: faim fãj̃n̪, saint sãj̃n̪t̪, main) is attested BY the OF-I checkpoint. The GENERAL before-nasal-consonant rule stays at 1100 (moving it over-nasalizes i/y/u before onset n — lune/une/fin). Minor: bleeds meners countertonic schwa (net-0 at final)."
 definition = "[+front, aperture: !high, +syllabic] → [+nasal] / _ [+nasal, -syllabic]"
 
 [eof_general_nasalization_before_nasal_consonant]
@@ -1683,7 +1701,7 @@ description = "Source line 2727 (rule 625): [+front,-round,+syl] > [+long] / __ 
 definition = "[+front, rounded: none, +syllabic] → [length: long] / _ s ə #"
 
 [ofi_stressed_vowel_lengthens_before_final_s]
-time = 1100
+time = 1300
 name = "a primary-stressed vowel lengthens before word-final s"
 description = "Source line 2733 (rule 626): [+prim] > [+long] / __ s # — Pope s565-7, tonic vowel long before a pre-coda s but not a pre-coda ts (hence before deaffrication); feeds mf_long_a_backs (bas > bɑ)."
 definition = "[stress: primary, +syllabic] → [length: long] / _ s #"
@@ -1781,7 +1799,7 @@ description = "Pope s510 — late 15th-16th centuries; after ʎ ɲ ʃ ʒ and pal
 definition = "j → ∅ / ([+front, aperture: high, +consonantal]|[+front, anterior: none, +consonantal]) _ [+front, aperture: mid, rounded: none, +syllabic, nasal: none]"
 
 [of2_remaining_anterior_palatals_lost]
-time = 1300
+time = 1150
 name = "the remaining anterior palatalized consonants depalatalize"
 description = "CORRECTION — the palatal sʲ/tʲ/zʲ/dʲ preserved since Gallo-Roman are finally lost"
 definition = "[+anterior, +front, aperture: high] → [front: none, aperture: none]"

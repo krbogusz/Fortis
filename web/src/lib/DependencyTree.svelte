@@ -51,14 +51,16 @@
 </script>
 
 {#if data}
-  <div class="tree-wrap">
+  <div class="tree-outer">
     <div class="tree-meta">
-      {data.rules} rules · {data.edgeCount} feeding edges · {data.roots} unconnected roots
-      &nbsp;·&nbsp; x = time, +1 column per same-time dependency · hover a node:
-      <span class="k-dep">blue</span> = fed by ·
-      <span class="k-dependent">orange</span> = feeds
+      <span class="mgrp">{data.rules} rules · {data.edgeCount} feeding edges · {data.roots} unconnected roots</span>
+      <span class="msep">·</span>
+      <span class="mgrp">x = time, +1 column per same-time dependency</span>
+      <span class="msep">·</span>
+      <span class="mgrp">hover a node: <span class="k-dep">blue</span> = fed by · <span class="k-dependent">orange</span> = feeds</span>
     </div>
-    <svg width={data.width} height={data.height} onmouseleave={() => (hovered = null)} role="img" aria-label="rule dependence tree">
+    <div class="tree-wrap">
+      <svg width={data.width} height={data.height} onmouseleave={() => (hovered = null)} role="img" aria-label="rule dependence tree">
       {#each bands as b, i (i)}
         <rect x={b.x0} y="40" width={b.x1 - b.x0} height={data.height - 40} class={i % 2 ? "band odd" : "band"} />
         <text x={(b.x0 + b.x1) / 2} y="26" class="bandlbl">{b.label}</text>
@@ -87,27 +89,42 @@
         <div class="ids">{[...dependents].map((i) => byIndex.get(i).id).join(", ") || "—"}</div>
       </div>
     {/if}
+    </div>
   </div>
 {/if}
 
 <style>
+  .tree-outer {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    background: var(--bg);
+  }
   .tree-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow: auto;
-    height: 100%;
     background: var(--bg);
     position: relative;
   }
   .tree-meta {
-    position: sticky;
-    top: 0;
-    left: 0;
+    flex: none;
     padding: 6px 12px;
-    font: var(--fs-body) / 1.3 var(--sans);
+    font: var(--fs-body) / 1.4 var(--sans);
     color: var(--muted);
     background: var(--bg);
     border-bottom: 1px solid var(--border);
     z-index: 3;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  .tree-meta .mgrp {
     white-space: nowrap;
+  }
+  .tree-meta .msep {
+    margin: 0 0.5ch;
+    opacity: 0.6;
   }
   .k-dep {
     color: var(--tree-dep);
