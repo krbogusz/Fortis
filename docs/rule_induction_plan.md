@@ -3,8 +3,19 @@
 _The implementation document requested by `rule_induction_sketch.md`: automated
 supervised rule finding — given `words.toml` inputs and attested targets (final and
 intermediate stages), induce the rule cascade. This is the ancestor-given sub-problem of
-full reconstruction (`reconstruction_sketch.md`); everything here lives in the
-`analysis/` consumer layer and treats the engine as a fixed black box._
+full reconstruction (`reconstruction_sketch.md`); everything here treats the engine as a
+fixed black box._
+
+> **Status note (2026-07-09).** This is the plan as written; the inducer has since been
+> implemented (uncommitted, paused) as a **top-level `src/fortis/induction/` layer** — not
+> under `analysis/` as the design first proposed. The module tree and signatures below are
+> the plan-time design and have **drifted** from the implemented modules
+> (`boost`, `candidates`, `correspond`, `evaluate`, `intervals`, `main`, `notation`,
+> `objective`, `refine`, `report`, `scoreboard`) — treat the code as the source of truth.
+> Figures below reflect the **447-word / 704-rule** snapshot (stage chain −200…1400) from
+> when this was written; the Latin→French project is now **304 words / 387 rules** with the
+> stage chain **300, 1000, 1200, 1500**, so the fractions and timings here are illustrative,
+> not current.
 
 ## 0. Design in one page
 
@@ -373,7 +384,7 @@ for that experiment.
 ### 4.1 Modules
 
 ```
-src/fortis/analysis/induction/
+src/fortis/induction/      # top-level layer (the plan first placed this under analysis/)
   __init__.py
   objective.py    # bits model: residual_bits, rule_bits, CascadeScore
   correspond.py   # derived-side correspondences + phi contexts (§2.1)
@@ -384,6 +395,7 @@ src/fortis/analysis/induction/
   boost.py        # induce_interval: the greedy loop + escape ladder + shrink
   refine.py       # compose, Phase-B global refinement (§3.3–3.4)
   report.py       # induction.md + induced_rules.toml writers
+  scoreboard.py   # the M0 scoreboard: L of identity vs hand cascade (real + synthetic)
   main.py         # CLI
 ```
 
@@ -433,7 +445,7 @@ def refine(project, inventory, settings) -> tuple[RuleInventory, RefineTrace]
 ### 4.3 CLI
 
 ```
-python -m src.fortis.analysis.induction.main --project DIR
+python -m src.fortis.induction.main --project DIR
     [--out FILE]           # induced_rules.toml   (default: <project>/induced_rules.toml)
     [--report FILE]        # induction.md         (default: <project>/induction.md)
     [--ignore-stages]      # ablation mode (§3.5)

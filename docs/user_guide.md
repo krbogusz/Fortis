@@ -50,7 +50,7 @@ Derivation trace
 
 ### 2.1 Segmentation and parsing
 
-The parser consumes an IPA string left to right using greedy longest-match tokenisation against the user-defined inventories. At each position it takes the longest substring that matches a letter in `letters.csv`, then consumes any following substrings that match diacritics in `diacritics.toml`, buffering them onto the preceding base and applying their feature modifications. The result is a `Sequence` — an ordered list of `Segment` objects, each carrying a complete `FeatureBundle`.
+The parser consumes an IPA string left to right using greedy longest-match tokenisation against the user-defined inventories. At each position it first consumes any **preposed** diacritics (those declared `kind = "before"` in `diacritics.toml`, e.g. the stress marks `ˈ`/`ˌ`), buffering them for the base to come; then it takes the longest substring that matches a letter in `letters.csv`; then it consumes any following (`"after"`/`"combining"`) diacritics, buffering all of them onto that base and applying their feature modifications. The result is a `Sequence` — an ordered list of `Segment` objects, each carrying a complete `FeatureBundle`.
 
 The letter and diacritic tables are the sole authority on how a string is divided. There is no Unicode normalisation step: Fortis matches the code points exactly as written, against the entries exactly as the user authored them. If a string contains a substring that matches no letter (and no diacritic on a preceding base), that is a parse error, surfaced to the user rather than silently repaired — so the inventory and the lexicon must be written in the same form.
 
@@ -137,6 +137,7 @@ Every inventory Fortis uses is loaded from a file. All of them are user-authored
 | `diacritics.toml`     | Diacritic modifications to base segment bundles     |
 | `sonorities.toml`     | Sonority levels and the predicates that assign them |
 | `syllable_parts.toml` | Onset/nucleus/coda constraints, keyed by time       |
+| `tiers.toml`          | Autosegmental tier declarations (tone, stress; §4.3)|
 | `words.toml`          | The lexicon                                         |
 | `rules.toml`          | Phonological rules                                  |
 
@@ -187,11 +188,12 @@ schema, one word per row — chosen by the file's extension (`load_word_inventor
 canonical order follows the derivation timeline:
 
 ```
-word, gloss, <intermediate stage times, ascending>, final
+word, gloss, frequency, <intermediate stage times, ascending>, final
 ```
 
-e.g. `word, gloss, -200, -100, 750, 1000, 1200, 1400, final`. `word` is the IPA key
-(required); `gloss`/`final`/`frequency` are the reserved columns; every other column
+e.g. `word, gloss, frequency, -200, -100, 750, 1000, 1200, 1400, final`. `word` is the IPA key
+(required); `gloss`/`final`/`frequency` are the reserved columns (all optional except `word`);
+every other column
 whose name is an **integer** is a stage time, its cell the attested form then. An empty
 cell means "not present". Fields are read with the `csv` module, so a value containing a
 comma must be quoted (`"amère, bitter"`). A project may carry either form; if both
@@ -391,7 +393,7 @@ _Valid on any element, in any position._
 ([+syll][+cons]){3}   group repeated 3 times
 ```
 
-Corresponding target and result elements must carry **identical quantifiers** (the sole exception is `∅`, which carries none). A quantified target element paired with `∅` in the result deletes all matched segments.
+A **merge-bundle** result element must carry the **same quantifier** as its target. Full-replacement results are exempt: a letter-shorthand result may freely collapse or expand a span (`a{2} → b`), and `∅` (which carries no quantifier) pairs with a quantified target to delete all matched segments.
 
 ### 5.4 Negation
 
@@ -427,7 +429,7 @@ A disjunction in **result** position must correspond to a disjunction in **targe
 [!α high]    any value other than the bound value, the unspecified case (none) included
 ```
 
-Each Greek letter is an independent variable ranging over the legal values of its feature. A variable **binds** at its first occurrence during left-to-right evaluation of the structural description, evaluated in the order left context → target → right context. Later occurrences recall the bound value.
+Each Greek letter is an independent variable ranging over the legal values of its feature. A variable **binds** at its first occurrence during left-to-right evaluation of the structural description, evaluated in the order left context → target → right context → exception. Later occurrences recall the bound value.
 
 Position rules:
 
@@ -505,7 +507,7 @@ The default position depends on the shape of the value, not on any per-rule sett
 | multi-limb contour (`tone: 1>2`) | `@all`           | must be the whole contour, exact arity                                                                                                     |
 | whole-contour alpha (`tone: α`)  | —                | binds the entire contour, any length; a position suffix narrows it to the limb(s) there (`tone: α@initial` binds α to just the first limb) |
 
-An alpha variable can bind **per limb** or to the **whole contour**, and the two read differently: `tone: α>β` binds one variable to each of exactly two limbs (the multi-limb default `@all` applies, so the target contour must have exactly that arity), while `tone: α` (no `>`) binds a single variable to the entire contour regardless of its length. `tone: α>α` additionally constrains the two limbs to be equal.
+An alpha variable can bind **per limb** or to the **whole contour**, and the two read differently: `tone: α>β` binds one variable to each of exactly two limbs (the multi-limb default `@all` applies, so the target contour must have exactly that arity), while `tone: α` (no `>`) binds a single variable to the entire contour regardless of its length. Note that `tone: α>α` is **not** a two-limb pattern: a run of identical adjacent limbs folds at parse time (like `5>5` → `5`), so `α>α` collapses to a single whole-contour `α`, identical to `tone: α`.
 
 Contour reduction is 1:1:
 
@@ -584,13 +586,13 @@ The `application` field controls how the engine sweeps the form when multiple lo
 
 Rules fire in `time` order, and within a single time in file order. Rules interact through standard feeding and bleeding relations purely as a consequence of this ordering; counterfeeding and counterbleeding need no special mechanism. Because the derivation is recorded step by step, opacity can be read directly off the trace.
 
-Two rules sharing both a `time` and an adjacent file position with overlapping loci have an undefined interaction; give them distinct `time` values or reorder them to make the intended feeding relation explicit.
+Ordering is fully determined: rules are sorted by `time`, and within a single time by their order in the file. So when two rules share a `time`, the one earlier in the file applies first and can feed or bleed the later one exactly as a lower `time` would — change the relation by reordering them within the time or by giving them distinct `time` values.
 
 ---
 
 ## 7. Syllabification
 
-Syllabification places syllable boundaries on a form without inserting or deleting segments. It runs on the input and is refreshed before each rule that uses the `$` assertion, so `$` always reflects current structure. A word's two edges count as syllable boundaries; a word with no nucleus is unsyllabifiable and gets none.
+Syllabification places syllable boundaries on a form without inserting or deleting segments. It runs on the input and is refreshed before every rule, so `$` always reflects current structure. A word's two edges count as syllable boundaries; a word with no nucleus is unsyllabifiable and gets none.
 
 **Nuclei** are the segments matching the `nucleus` definition (§4). Between each adjacent pair of nuclei, the intervening consonants are divided into the preceding syllable's coda and the following syllable's onset:
 
@@ -644,9 +646,15 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
 - **`derivation_matrix.csv`** — the same run in wide format: one row per word, one column
   per rule (each titled `<time>: <name>`), holding the word's form right after that rule
   fired (empty where it did not).
-- **`rule_firings.csv`** — the run inverted to one row per rule (`rule, t, count, changes,
-  matched`): the distinct segment-level changes it made (e.g. `d→t`) and the words it
-  matched as `before → after`. A rule that never fired shows `count` 0 with empty cells.
+- **`rule_firings.csv`** — the run inverted to one row per rule (`rule, t, sporadic, count,
+  changes, matched`): its `words` scope in `sporadic` (blank for a general rule), the
+  distinct segment-level changes it made (e.g. `d→t`), and the words it matched as
+  `before → after`. A rule that never fired shows `count` 0 with empty cells.
+- **`rule_dependencies.html`** — the rule feeding graph, read off the actual firings:
+  which rule's output segment feeds which rule's input. A scrollable view with time on the
+  x-axis (period blocks, +1 sub-column per same-time dependency); hover a rule to see the
+  segments it consumes/produces and the rules it is fed by / feeds. The webapp's **Tree**
+  tab renders the same graph.
 - **`accuracy.csv`** and **`distance_to_target.csv`** — the **accuracy**
   analysis, written only when the lexicon carries attested forms (`final`/`stages`,
   §4.1). It measures each derived form's distance to its target with two edit
@@ -655,8 +663,12 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
   the number of features that differ, so `ɑ̃` is one edit from `ɑ` but eleven from
   `t`; an adjacent-segment swap counts as one). `accuracy.csv` is the
   per-stage summary (columns `stage, assessed, exact, within 1, mean phone dist, mean
-  feature dist`); `distance_to_target.csv` is the per-word long table (columns `stage,
-  gloss, derived, target, d, fd`). Both cover each stage and the final surface.
+  feature dist` — plus `token-wt exact/phone/feature` when the lexicon carries word
+  `frequency` weights, counting each word by its frequency); `distance_to_target.csv` is
+  the per-word long table (columns `stage,
+  gloss, derived, target, d, fd, matches at, closest at` — the last two scan the derived form
+  against the word's *other* attested stages, flagging a form that matches, or comes closest to,
+  a stage other than its own). Both cover each stage and the final surface.
 - **`errors.csv`** — the **errors** analysis, when there are wrong words: per attested
   stage (and the final), a ranked tally of the phone confusions — `stage, expected, got,
   count, kind, examples (gloss: derived vs. attested)`. `∅` marks the absent side (an

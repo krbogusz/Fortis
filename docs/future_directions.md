@@ -11,9 +11,9 @@ Derivation-model features
 Diachronic-specific
 
 - Multiple-daughter / tree derivation. The big one: one proto-lexicon → many daughters via a shared early cascade that branches into divergent later cascades (a phylogenetic tree). This is core comparative-method machinery and directly
-  serves the reconstruction sketch (projects/romance/). Fortis currently derives one lineage at a time.
+  serves the reconstruction sketch (docs/reconstruction_sketch.md). Fortis currently derives one lineage at a time.
 - Reverse / backward application. Applying rules in reverse to hypothesize earlier forms — Brassica does a constrained version. Squarely relevant to the reconstruction goal (abduction), and a natural companion to your rule induction.
-- Relative-chronology diagnostics. Automatic feeding/bleeding/counterbleeding detection and visualization. Your blame already localizes errors by the culprit rule and its time; a dedicated ordering-interaction report would extend this.
+- Relative-chronology diagnostics. The firing-based dependency graph (the Tree tab / `rule_dependencies.html`) now ships automatic *feeding* detection and visualization — each firing links to the earlier firing whose output it consumed. Still open: bleeding/counterbleeding detection (interactions where one rule *removes* another's input), which the current produce/consume graph does not surface.
 - Cognate correspondence tooling + multiple-sequence alignment. The reconstruction sketch names this explicitly — MSA over ≥3 daughters and conditioned correspondence sets. Your error-context phi-autopsy is already a conditioned-correspondence
   engine that could be re-pointed daughter-to-daughter.
 

@@ -211,7 +211,8 @@ The concrete departures from an SPE-style baseline:
   with no negative value (`nasal`, `labial`, `lingual`, `front`, `back`,
   `rounded`, `lateral`, `strident`, `anterior`, …). Only five
   are binary (`syllabic`, `consonantal`, `sonorant`, `continuant`, `voice`)
-  and the rest scalar. A pattern rule matches the absence of a unary feature
+  and six are scalar (`length`, `aperture`, `advancement`, `glottal_aperture`,
+  `tension`, `larynx_height`); the rest are unary. A pattern rule matches the absence of a unary feature
   with `[feature: none]`, and a binary's negative pole with `[-feature]` —
   these are **not** interchangeable (a binary feature like `syllabic` is
   always present with value `+` or `-`, never absent, so `[syllabic: none]`

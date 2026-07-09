@@ -77,11 +77,11 @@ exactly the reasoning to automate.
 ## The pipeline (with have / need against current Fortis)
 
 1. **Cognate data model + loader** — a lexicon of _sets_: one gloss → a form per daughter.
-   _Need_ (small): extend the `words.toml`-style loader to multi-daughter rows.
-   `projects/romance/cognates.toml` already has the shape (gloss → {lang = form}), with
-   attested Latin included as a held-out answer key.
+   _Need_ (small): extend the `words.csv`-style loader to multi-daughter rows —
+   a cognate set is one gloss mapping each daughter to its form (gloss → {lang = form}),
+   with the attested proto-form held out as an answer key.
 2. **Alignment** — column-align the phones within each cognate set.
-   _Have_ pairwise: `align()` (Damerau–Levenshtein op-trace) in `analysis/accuracy.py`.
+   _Have_ pairwise: `align()` (Levenshtein op-trace) in `analysis/accuracy.py`.
    _Need_: multiple-sequence alignment for ≥3 daughters.
 3. **Correspondence sets** — tabulate which daughter phones co-occur per column, **and in
    what environment**.

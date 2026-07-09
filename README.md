@@ -63,8 +63,11 @@ French**.
 
 - Rule notation is validated at load time, and every problem in a file is
   collected and reported together rather than stopping at the first one
-  found. An unsyllabifiable cluster or an ambiguous rule interaction (§6.3
-  of the user guide) is surfaced as an error rather than resolved silently.
+  found. A rule whose result feature-bundle has no unambiguous target to
+  merge with (§5.1 of the user guide) is surfaced as an error rather than
+  resolved silently; an unsyllabifiable cluster, by contrast, is a
+  *warning* — it falls back to a sonority-driven division and derivation
+  continues (§7).
 
 - Autosegmental tiers, onset/coda constraints, and a custom sonority scale
   are all optional. Without a `tiers.toml`, the tier machinery doesn't run
@@ -107,11 +110,15 @@ normalised) and `output` (the surface form). Alongside it, `derivation_matrix.cs
 gives the wide view (one row per word and one column per rule — each titled
 `<time>: <rule>` — holding the word's resulting form wherever that rule fired,
 empty otherwise), and `rule_firings.csv` inverts it (one row per rule: the distinct
-segment changes it made, e.g. `d→t`, and the words it matched as `before → after`).
+segment changes it made, e.g. `d→t`, the words it matched as `before → after`, and a
+`sporadic` column naming any word scope). `rule_dependencies.html` is the rule feeding
+graph — which rule's output segment feeds which rule's input, read off the actual
+firings — as a scrollable, time-columned view.
 If the lexicon carries attested forms (`final` and/or
 intermediate `stages`), four more analyses run over it: the **accuracy**
 analysis writes `accuracy.csv` (per-stage exact-match accuracy + mean phone
-and feature distance) and `distance_to_target.csv` (per-word); the **errors**
+and feature distance, plus token-weighted columns when the lexicon carries word
+frequencies) and `distance_to_target.csv` (per-word); the **errors**
 analysis writes `errors.csv` (which segments came out wrong, per stage) and the
 **error context** analysis `error_context.csv` (the attested-form environments most
 associated with each error, per stage and segment); and `blame.csv` records every
@@ -123,7 +130,7 @@ and shows a progress bar while deriving in a terminal. All reports land in
 follow into the same directory):
 
 ```
-python -m src.fortis.main --project projects/latin_to_french --output
+python -m src.fortis.main --project projects/latin_to_french --output /tmp/run/derivations.csv
 ```
 
 Deriving one word never touches another, so a large lexicon is fanned across worker
@@ -377,6 +384,7 @@ fortis/
     │   ├── project.py           #   Project (every inventory bundled together)
     │   ├── derivation.py        #   DerivationStep, Derivation
     │   ├── segment.py  form.py  #   Segment (bundle + stable id), Form (segments + tiers)
+    │   ├── syllable.py          #   Syllable (computed onset/nucleus/coda view — never stored)
     │   ├── autosegment.py       #   Autoseg, AutosegmentalTier (the tier representation)
     │   └── tier_declaration.py  #   TierDeclaration, TierInventory (from tiers.toml)
     │
@@ -406,6 +414,7 @@ fortis/
     └── analysis/                # OUTPUT ANALYSIS       (depends on: models, application)
         ├── accuracy.py          #   phone + feature edit distance vs attested target forms
         ├── diagnosis.py         #   per-stage confusions (errors) + per-segment context autopsy
+        ├── dependencies.py      #   firing-based rule feeding graph → rule_dependencies.html
         ├── blame.py             #   attribute each wrong word to the rule that produced it
         ├── warnings.py          #   syllabification-fallback warnings
         └── reporting.py         #   render the accuracy CSVs (per-stage summary + per-word)
@@ -417,15 +426,12 @@ fortis/
   description matches, or is restricted to specific words via `words`;
   there's no notion of a rule applying only some of the time (sporadic or
   gradient change beyond that word-level restriction).
-- **No morphological structure.** The lexicon is a flat list of IPA/gloss
-  pairs — there's no morpheme boundary, affixation, or reduplication, so a
-  process conditioned on morphological structure (or a reduplicative copy)
-  isn't expressible.
-- **Some rule interactions are undefined by design.** Two rules sharing
-  both a `time` and an adjacent file position, with overlapping loci, have
-  an undefined interaction (§6.3 of the user guide); the rule author is
-  responsible for distinct `time` values or an explicit order where it
-  matters.
+- **Limited morphological structure.** The lexicon is a flat list of
+  IPA/gloss pairs. A morpheme boundary (`-`) *is* a first-class, rule-editable
+  segment — it steers syllabification and blocks adjacency (§5.2 of the user
+  guide) — but there's no affixation or reduplication machinery, so an
+  affix-conditioned process or a reduplicative copy of a span isn't directly
+  expressible.
 - **Round-trip identity isn't guaranteed.** Only round-trip _stability_ is
   (parsing and re-rendering a form twice yields the same string both
   times) — an inventory's letters and diacritics may not spell a derived
@@ -447,11 +453,11 @@ fortis/
 
 None of these are commitments, but plausible directions if the project
 grows: richer (weighted or optional) rule application for gradient change,
-some notion of morphological structure to support reduplication and
-affix-conditioned rules, metrical foot structure alongside the existing
-tone/stress tiers, further accuracy work (frequency-weighted accuracy, and
-attribution of errors to morphological analogy rather than sound change — the
-segmental confusion diagnosis, per-stage divergence, and rule-level blame under
+richer morphological structure (beyond the morpheme boundary) to support
+reduplication and affix-conditioned rules, metrical foot structure alongside the existing
+tone/stress tiers, further accuracy work (attribution of errors to morphological
+analogy rather than sound change — the segmental confusion diagnosis, per-stage
+divergence, rule-level blame, and token-weighted accuracy under
 [Diagnosing a rule set](#diagnosing-a-rule-set) are already in place), and
 performance work on the browser build if it becomes more than a demo/playground.
 
