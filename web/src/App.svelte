@@ -21,6 +21,7 @@
   import { marked } from "marked";
   import userGuideMd from "../../docs/user_guide.md?raw";
   import defaultSystemMd from "../../docs/default_system.md?raw";
+  import acknowledgementsMd from "../../docs/acknowledgements.md?raw";
 
   let ready = $state(false);
   let status = $state("Starting…");
@@ -81,9 +82,8 @@
       const text = inner.replace(/<[^>]+>/g, ""); // plain text for the slug
       return `<${tag} id="${slugify(text)}">${inner}</${tag}>`;
     });
-  const docsHtml = $derived(
-    addHeadingIds(marked.parse(docsTab === "guide" ? userGuideMd : defaultSystemMd)),
-  );
+  const docsMd = { guide: userGuideMd, system: defaultSystemMd, acknowledgements: acknowledgementsMd };
+  const docsHtml = $derived(addHeadingIds(marked.parse(docsMd[docsTab] ?? userGuideMd)));
 
   // Intercept ToC clicks: scroll the target heading into view within the docs pane (a plain
   // #hash would jump the whole SPA, not this scroll container).
@@ -1319,6 +1319,10 @@
           <button
             class:active={docsTab === "system"}
             onclick={() => (docsTab = "system")}>Default system</button
+          >
+          <button
+            class:active={docsTab === "acknowledgements"}
+            onclick={() => (docsTab = "acknowledgements")}>Acknowledgements</button
           >
         </div>
         <button class="docs-close" title="Close (Esc)" onclick={() => (docsOpen = false)}

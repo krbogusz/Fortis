@@ -464,7 +464,23 @@ performance work on the browser build if it becomes more than a demo/playground.
 ## License
 
 Licensed under [CC BY-NC 4.0](LICENSE) — free for private and scientific/research
-use with attribution; commercial use is not permitted.
+use with attribution; commercial use is not permitted. Note that the Latin → French rule and
+lexicon data is derived from GPL-3.0 material (see Acknowledgements) and carries that licence.
+
+## Acknowledgements
+
+The engine is original, but the `projects/latin_to_french` example and its accuracy dataset
+draw on external work — full details, uses, and licences are in
+[docs/acknowledgements.md](docs/acknowledgements.md). In brief:
+
+- **Latin → French** — the rule cascade is a hand re-authoring, in Fortis notation, of the
+  **DiaCLEF2025** cascade from [**DiaSim**](https://github.com/clmarr/DiaSim) (Marr &
+  Mortensen; **GPL-3.0**); the per-stage accuracy targets in `words.csv` come from DiaSim's
+  attested **FLLAPS**/FLLexPlus datasets (also GPL-3.0). See
+  [`SOURCE.md`](projects/latin_to_french/SOURCE.md). Because it derives from GPL-3.0 data,
+  treat the Latin → French rules/lexicon as GPL-3.0, separately from the engine's licence below.
+- **Word frequencies** — [hermitdave/FrequencyWords](https://github.com/hermitdave/FrequencyWords)
+  (MIT), from OpenSubtitles 2018 via [OPUS](https://opus.nlpl.eu/).
 
 ## A note on generative AI
 
