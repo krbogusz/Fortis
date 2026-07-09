@@ -326,6 +326,15 @@ class DistanceToTarget:
     segmented into features. ``derived_phones``/``target_phones`` are the *inventory*
     segments (:func:`form_phones`) the distance and the error diagnosis align on — one
     entry per segment, so an affricate is one phone.
+
+    ``matches_at``/``closest_at`` look *across the word's other attested targets* at the
+    same ``derived`` form: ``matches_at`` lists every attested stage whose target this
+    derived form reproduces exactly (feature distance 0), comma-joined; ``closest_at`` is the
+    single attested stage whose target this derived form is closest to by feature distance.
+    Both hold ``derived`` fixed and scan the targets (:func:`_cross_time_columns`), so a row
+    whose derived form equals a *different* stage's attested target names that stage here. The
+    current row's own stage is a candidate too — it appears in ``matches_at`` when ``distance``
+    is 0 and can be ``closest_at`` when it is the closest.
     """
 
     gloss: str
@@ -337,6 +346,8 @@ class DistanceToTarget:
     frequency: int = 1
     derived_phones: tuple[str, ...] = ()
     target_phones: tuple[str, ...] = ()
+    matches_at: str = ""
+    closest_at: str = ""
 
     @property
     def exact(self) -> bool:
@@ -457,6 +468,7 @@ def distance_to_target(derivation: Derivation, project: Project) -> DistanceToTa
     derived_form = try_segment(derived_str, project)
     if derived_form is None:  # engine output that will not re-segment — vanishingly rare
         return None
+    matches_at, closest_at = _cross_time_columns(derived_form, word, project)
     return _measure(
         word.gloss,
         word.ipa,
@@ -466,7 +478,43 @@ def distance_to_target(derivation: Derivation, project: Project) -> DistanceToTa
         word.final_form,
         project,
         frequency=word.frequency,
+        matches_at=matches_at,
+        closest_at=closest_at,
     )
+
+
+def _cross_time_columns(derived_form: Form, word, project: Project) -> tuple[str, str]:
+    """The ``matches at`` / ``closest at`` labels for *derived_form* across the word's targets.
+
+    Holds *derived_form* fixed and scans it against every one of the word's ingested attested
+    forms — each :class:`StageAccuracy` time in ``word.stage_forms`` (label ``str(time)``),
+    in ascending time order, then ``word.final_form`` (label ``"final"``) if present. For each
+    target the feature edit distance to *derived_form* is computed; ``matches_at`` collects
+    every label at distance 0 (comma-joined, in scan order — the current row's own stage
+    appears when the row is itself an exact match), and ``closest_at`` is the label of the
+    minimum (ties broken by scan order, so the earliest stage wins and ``final`` only when it
+    is strictly closer than every stage). Returns ``("", "")`` when the word has no attested
+    target at all.
+    """
+    swap = project.settings.accuracy.transposition_cost
+    derived = comparable_bundles(derived_form)
+    # Chronological: stages ascending, then the final surface last.
+    targets: list[tuple[str, list[FeatureBundle]]] = [
+        (str(time), comparable_bundles(word.stage_forms[time]))
+        for time in sorted(word.stage_forms)
+    ]
+    if word.final_form is not None:
+        targets.append(("final", comparable_bundles(word.final_form)))
+
+    matches: list[str] = []
+    best_label, best_fd = "", None
+    for label, target in targets:
+        fd = feature_edit_distance(derived, target, swap)
+        if fd == 0:
+            matches.append(label)
+        if best_fd is None or fd < best_fd:  # strict <: first-seen wins a tie
+            best_fd, best_label = fd, label
+    return ",".join(matches), best_label
 
 
 def _measure(
@@ -478,6 +526,8 @@ def _measure(
     target_form: Form,
     project: Project,
     frequency: int = 1,
+    matches_at: str = "",
+    closest_at: str = "",
 ) -> DistanceToTarget:
     """Build a :class:`DistanceToTarget` by comparing two segmented forms.
 
@@ -485,6 +535,8 @@ def _measure(
     (:func:`comparable_bundles`), so phone-0 ⟺ feature-0 holds by construction; the phones
     are inventory segments (:func:`form_phones`), so an affricate is one unit and stress/tone
     is compared on its anchor. ``derived_str``/``target_str`` are kept only for display.
+    ``matches_at``/``closest_at`` are the cross-target scan results for *derived_form* against
+    the word's other attested forms (:func:`_cross_time_columns`), carried through unchanged.
     """
     swap = project.settings.accuracy.transposition_cost
     derived_phones = form_phones(derived_form, project)
@@ -501,6 +553,8 @@ def _measure(
         frequency=frequency,
         derived_phones=tuple(derived_phones),
         target_phones=tuple(target_phones),
+        matches_at=matches_at,
+        closest_at=closest_at,
     )
 
 
@@ -556,6 +610,7 @@ def accuracy_by_stage(derivations: Iterable[Derivation], project: Project) -> li
             derived_form = try_segment(derived_str, project)
             if derived_form is None:
                 continue
+            matches_at, closest_at = _cross_time_columns(derived_form, derivation.word, project)
             distances.append(
                 _measure(
                     derivation.word.gloss,
@@ -566,6 +621,8 @@ def accuracy_by_stage(derivations: Iterable[Derivation], project: Project) -> li
                     target_form,
                     project,
                     frequency=derivation.word.frequency,
+                    matches_at=matches_at,
+                    closest_at=closest_at,
                 )
             )
         stages.append(StageAccuracy(str(time), time, AccuracyReport(tuple(distances))))

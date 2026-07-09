@@ -62,6 +62,8 @@ from src.fortis.analysis.blame import blame_all, render_blame_csv
 from src.fortis.analysis.reporting import render_accuracy_csv, render_distance_to_target_csv
 from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
 from src.fortis.main import _build_derivations_csv, _build_matrix_csv, _build_rule_firings_csv
+from src.fortis.analysis.dependencies import build_dependency_graph, dependency_layout, render_dependency_html
+from src.fortis.models.inventories import Word
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
 OVERLAY = "/work/overlay"
@@ -126,7 +128,7 @@ def _card(d, project):
         time_header = s.rule.time if (s.rule.time is not None and s.rule.time != prev_time) else None
         prev, prev_time = base, s.rule.time
         steps.append({"timeHeader":time_header,"heading":heading,"definition":s.rule.raw_definition,
-                      "time":s.rule.time,"name":s.rule.name or base,
+                      "time":s.rule.time,"name":s.rule.name or base,"sporadic":bool(s.rule.words),
                       "before":R(s.before,s.before_boundaries),"after":R(s.after,s.after_boundaries),
                       "change":describe_change(lower_tiers(s.before),lower_tiers(s.after),project)})
     # A leading "input" pseudo-step: how the raw lexicon IPA is syllabified/normalised on import
@@ -187,7 +189,8 @@ def _accuracy_summary(acc, project):
             "meanPhone": round(s.report.mean_distance, 3),
             "meanFeature": round(s.report.mean_feature_distance, 3),
             "misses": [{"gloss": g.gloss or g.ipa, "derived": g.derived, "target": g.target,
-                        "d": g.distance, "fd": g.feature_distance}
+                        "d": g.distance, "fd": g.feature_distance,
+                        "matchesAt": g.matches_at, "closestAt": g.closest_at}
                        for g in sorted(s.report.distances, key=lambda g: (g.gloss or g.ipa).lower())
                        if not g.exact],
         } for s in stages],
@@ -250,45 +253,111 @@ def _write_or_clear(path, text):
     elif path.exists():
         path.unlink()  # remove a stale report from a run that produced one
 
+_EMPTY_ANALYSIS = {"accuracy": None, "errors": None, "errorContext": None, "blame": None,
+                   "warnings": [], "unfiredRules": [], "dependencies": None, "analysisMs": 0}
+
 def finalize_run():
-    if "project" not in _SESSION:  # superseded
-        return json.dumps({"accuracy": None, "errors": None, "errorContext": None, "blame": None, "warnings": [], "unfiredRules": []})
+    # Set up the post-derivation analysis so JS can drive it step by step (progress bar),
+    # yielding to the browser between steps. Returns the step labels; the results accumulate
+    # in _SESSION and come back from the final analysis_step().
+    if "project" not in _SESSION:  # superseded before we started
+        return json.dumps({"steps": [], "result": dict(_EMPTY_ANALYSIS)})
+    _SESSION["_out"] = dict(_EMPTY_ANALYSIS)
+    _SESSION["_step"] = 0
+    _SESSION["_t0"] = time.perf_counter()
+    _SESSION["_labels"] = ["derivations", "matrix", "rule firings", "feeding graph",
+                           "accuracy", "errors", "blame", "warnings"]
+    return json.dumps({"steps": _SESSION["_labels"], "result": None})
+
+def analysis_step():
+    # Run the next analysis step. JS calls this in a loop, painting the bar between calls.
+    # Returns {done,total,result}; result is the full analysis JSON only on the last step.
+    labels = _SESSION.get("_labels")
+    if labels is None:  # superseded mid-analysis (a newer run cleared the session)
+        return json.dumps({"done": 0, "total": 0, "result": dict(_EMPTY_ANALYSIS)})
     project, rules, acc = _SESSION["project"], _SESSION["rules"], _SESSION["acc"]
     O = _reports_dir()  # every report mirrors the CLI's <project>/reports/ subfolder
-    (O/"derivations.csv").write_text(_build_derivations_csv(acc, project), encoding="utf-8")
-    (O/"derivation_matrix.csv").write_text(_build_matrix_csv(acc, rules, project), encoding="utf-8")
-    (O/"rule_firings.csv").write_text(_build_rule_firings_csv(acc, rules, project), encoding="utf-8")
+    out = _SESSION["_out"]
+    k = _SESSION["_step"]
+    if k == 0:
+        (O/"derivations.csv").write_text(_build_derivations_csv(acc, project), encoding="utf-8")
+    elif k == 1:
+        (O/"derivation_matrix.csv").write_text(_build_matrix_csv(acc, rules, project), encoding="utf-8")
+    elif k == 2:
+        (O/"rule_firings.csv").write_text(_build_rule_firings_csv(acc, rules, project), encoding="utf-8")
+    elif k == 3:
+        _g = build_dependency_graph(acc, rules, project)  # the feeding graph (Tree tab)
+        (O/"rule_dependencies.html").write_text(render_dependency_html(_g), encoding="utf-8")
+        out["dependencies"] = dependency_layout(_g)
+    elif k == 4:
+        ingest_targets(acc, project)  # segment attested forms once before any analysis reads them
+        out["accuracy"] = _accuracy_summary(acc, project)
+        _stages = accuracy_by_stage(acc, project) if out["accuracy"] is not None else None
+        _write_or_clear(O/"accuracy.csv", render_accuracy_csv(_stages) if _stages is not None else None)
+        _write_or_clear(O/"distance_to_target.csv", render_distance_to_target_csv(_stages) if _stages is not None else None)
+    elif k == 5:
+        _diag = diagnose_stages(acc, project) if out["accuracy"] is not None else None
+        _write_or_clear(O/"errors.csv", render_errors_csv(_diag) if _diag is not None else None)
+        _write_or_clear(O/"error_context.csv", render_error_context_csv(_diag) if _diag is not None else None)
+        out["errors"] = _errors_summary(_diag) if _diag is not None else None
+        out["errorContext"] = _error_context_summary(_diag, project) if _diag is not None else None
+    elif k == 6:
+        _blames = blame_all(acc, project, include_exact=True)  # the Blame tab lists every assessed word
+        out["blame"] = _blame_summary(_blames)
+        _write_or_clear(O/"blame.csv", render_blame_csv(_blames) if out["blame"] else None)
+    elif k == 7:
+        _warns = syllabification_warnings(acc, project)
+        _write_or_clear(O/"warnings.md", render_warnings(_warns, "the current project") if _warns else None)
+        out["warnings"] = [{"word": w.ipa, "gloss": w.gloss, "form": w.form,
+                            "clusters": list(w.clusters), "syllabified": w.syllabified} for w in _warns]
+        out["unfiredRules"] = [{"rule": r, "word": w} for r, w in unfired_scoped_rules(rules, project.words)]
+    _SESSION["_step"] = k + 1
+    if _SESSION["_step"] >= len(labels):
+        out["analysisMs"] = round((time.perf_counter() - _SESSION["_t0"]) * 1000)
+        result = dict(out)
+        _SESSION.clear()
+        return json.dumps({"done": len(labels), "total": len(labels), "result": result})
+    return json.dumps({"done": _SESSION["_step"], "total": len(labels), "result": None})
 
-    _t0 = time.perf_counter()
-    ingest_targets(acc, project)  # segment attested forms once before any analysis reads them
+def _find_word(project, word_str):
+    # Locate word_str in the lexicon by IPA key or gloss; else a bare Word (no target).
+    for ipa, w in project.words.items():
+        if ipa == word_str or w.gloss == word_str:
+            return ipa, w, True
+    return word_str, Word(ipa=word_str), False
+
+def run_single(word_str):
+    # Derive one word (independent of the batched full-run session): find it in the lexicon
+    # by IPA key or gloss so it carries any attested/target forms, else derive it bare. Writes
+    # the single_*.csv reports and returns the same shapes the full run does, for one word.
+    res = load_project(Path(OVERLAY))
+    if res.is_err(): return json.dumps({"error": res.unwrap_err()})
+    project = res.unwrap()
+    try: rules = resolve_rule_letters(project.rules, project)
+    except ValueError as e: return json.dumps({"error":[str(e)]})
+    word_str = (word_str or "").strip()
+    if not word_str: return json.dumps({"error":["Enter a word to derive."]})
+    ipa, word, found = _find_word(project, word_str)
+    d, card = _derive_one(project, rules, ipa, word)
+    acc = [d]
+    O = _reports_dir()
+    (O/"single_derivations.csv").write_text(_build_derivations_csv(acc, project), encoding="utf-8")
+    ingest_targets(acc, project)  # segment the attested form (if any) before the analyses read it
     accuracy = _accuracy_summary(acc, project)
-    # Machine-readable distance tables (only when the lexicon carries attested forms);
-    # cleared otherwise so a run without targets leaves no stale CSV.
     stages = accuracy_by_stage(acc, project) if accuracy is not None else None
-    _write_or_clear(O/"accuracy.csv", render_accuracy_csv(stages) if stages is not None else None)
-    _write_or_clear(O/"distance_to_target.csv", render_distance_to_target_csv(stages) if stages is not None else None)
-    _t_accuracy = time.perf_counter()
-    # Errors + Error context, per attested stage (and the final); complete CSVs, capped JSON.
+    _write_or_clear(O/"single_accuracy.csv", render_accuracy_csv(stages) if stages is not None else None)
+    _write_or_clear(O/"single_distance_to_target.csv", render_distance_to_target_csv(stages) if stages is not None else None)
     stage_diag = diagnose_stages(acc, project) if accuracy is not None else None
-    _write_or_clear(O/"errors.csv", render_errors_csv(stage_diag) if stage_diag is not None else None)
-    _write_or_clear(O/"error_context.csv", render_error_context_csv(stage_diag) if stage_diag is not None else None)
+    _write_or_clear(O/"single_errors.csv", render_errors_csv(stage_diag) if stage_diag is not None else None)
+    _write_or_clear(O/"single_error_context.csv", render_error_context_csv(stage_diag) if stage_diag is not None else None)
     errors = _errors_summary(stage_diag) if stage_diag is not None else None
     error_context = _error_context_summary(stage_diag, project) if stage_diag is not None else None
-    blames = blame_all(acc, project, include_exact=True)  # the Blame tab lists every assessed word
+    blames = blame_all(acc, project, include_exact=True)
     blame = _blame_summary(blames)
-    _write_or_clear(O/"blame.csv", render_blame_csv(blames) if blame else None)
-
-    warns = syllabification_warnings(acc, project)
-    _write_or_clear(O/"warnings.md", render_warnings(warns, "the current project") if warns else None)
-    warnings = [{"word": w.ipa, "gloss": w.gloss, "form": w.form,
-                 "clusters": list(w.clusters), "syllabified": w.syllabified} for w in warns]
-    # Word-scoped rules pointing at a word not in the lexicon (a likely typo — they never fire).
-    unfired = [{"rule": r, "word": w} for r, w in unfired_scoped_rules(rules, project.words)]
-    _t_end = time.perf_counter()
-    _SESSION.clear()
-    return json.dumps({"accuracy": accuracy, "errors": errors, "errorContext": error_context,
-                       "blame": blame, "warnings": warnings, "unfiredRules": unfired,
-                       "accuracyMs": round((_t_accuracy - _t0) * 1000), "analysisMs": round((_t_end - _t_accuracy) * 1000)})
+    _write_or_clear(O/"single_blame.csv", render_blame_csv(blames) if blame else None)
+    return json.dumps({"found": found, "ipa": ipa, "gloss": word.gloss,
+                       "derivations": [card], "accuracy": accuracy, "errors": errors,
+                       "errorContext": error_context, "blame": blame})
 
 def run_derivations():
     prep = json.loads(prepare_run())
@@ -300,8 +369,8 @@ def run_derivations():
     return json.dumps({"derivations": out, "accuracy": fin.get("accuracy"),
                        "errors": fin.get("errors"), "errorContext": fin.get("errorContext"),
                        "blame": fin.get("blame"), "warnings": fin.get("warnings"),
-                       "unfiredRules": fin.get("unfiredRules"),
-                       "accuracyMs": fin.get("accuracyMs"), "analysisMs": fin.get("analysisMs")})
+                       "unfiredRules": fin.get("unfiredRules"), "dependencies": fin.get("dependencies"),
+                       "analysisMs": fin.get("analysisMs")})
 `;
 
 let py = null; // the Pyodide interpreter, set once initialised
@@ -438,6 +507,21 @@ export function runDerivations() {
   }
 }
 
+/**
+ * Derive a single word (by IPA key or gloss), independent of the batched full run.
+ * @returns {{found: boolean, ipa: string, gloss: string, derivations: Array,
+ *   accuracy: object|null, errors: object|null, errorContext: object|null,
+ *   blame: object|null}|{error: string[]}}
+ */
+export function runSingle(word) {
+  const fn = py.globals.get("run_single");
+  try {
+    return JSON.parse(fn(word));
+  } finally {
+    fn.destroy();
+  }
+}
+
 // Batched run API — lets the caller drive derivations in slices and paint a
 // progress bar between them (a single runDerivations() call would block the main
 // thread for the whole run, so the bar could never update).
@@ -469,15 +553,29 @@ export function deriveBatch(start, count) {
 }
 
 /**
- * Finish a run: write the reports from the accumulated derivations and measure them.
- * @returns {{accuracy: object|null, errors: object|null, errorContext: object|null, blame: object|null, warnings: Array<object>}}
- *   the accuracy summary, the errors (per-stage confusions), the error context
- *   (per-stage per-segment autopsy), the per-word blame, and any
- *   syllabification-fallback warnings — the first four are null when the lexicon carries
- *   no attested forms or every word is exact.
+ * Set up the post-derivation analysis so the caller can drive it step by step (and paint a
+ * progress bar between steps). The results accumulate in the session and come back from the
+ * final {@link analysisStep} call.
+ * @returns {{steps: string[], result: object|null}} the step labels (empty when superseded),
+ *   and a ready result only when there was nothing to run.
  */
 export function finalizeRun() {
   const fn = py.globals.get("finalize_run");
+  try {
+    return JSON.parse(fn());
+  } finally {
+    fn.destroy();
+  }
+}
+
+/**
+ * Run the next analysis step (call in a loop over {@link finalizeRun}'s steps).
+ * @returns {{done: number, total: number, result: object|null}} the full analysis summary
+ *   (accuracy, errors, errorContext, blame, warnings, unfiredRules, dependencies, analysisMs)
+ *   on the final step, otherwise null.
+ */
+export function analysisStep() {
+  const fn = py.globals.get("analysis_step");
   try {
     return JSON.parse(fn());
   } finally {

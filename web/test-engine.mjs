@@ -177,6 +177,36 @@ try {
   log(`12. errors + error context + blame (${diag.blame.words.length} word(s)) + accuracy CSVs through Pyodide`);
   py.runPython(`reset_overlay()`);
 
+  // 13. Single-word mode: one lexicon word with a wrong `final` (populates accuracy/errors/
+  //     blame + single_*.csv), one found by gloss (derives its IPA key), and one absent word
+  //     (card only, null accuracy — and the stale target report is cleared).
+  py.globals.set("_wd3", '"apa" = { gloss = "wrong", final = "xxx" }\n"ata" = { gloss = "ok", final = "ata" }\n');
+  py.runPython(`write_file("words.toml", _wd3)`);
+  const single = JSON.parse(py.runPython(`run_single("apa")`).toString());
+  if (single.error) throw new Error("run_single failed: " + JSON.stringify(single.error));
+  if (!single.found || single.ipa !== "apa") throw new Error("run_single did not find 'apa': " + JSON.stringify(single));
+  if (single.derivations.length !== 1) throw new Error("run_single should return exactly one derivation card");
+  if (!single.accuracy || !single.errors || !single.blame)
+    throw new Error("run_single(found, wrong target) should populate accuracy/errors/blame: "
+      + JSON.stringify({ a: !!single.accuracy, e: !!single.errors, b: !!single.blame }));
+  const singleByGloss = JSON.parse(py.runPython(`run_single("ok")`).toString());
+  if (!singleByGloss.found || singleByGloss.ipa !== "ata")
+    throw new Error("run_single by gloss 'ok' should resolve to ipa 'ata': " + JSON.stringify(singleByGloss));
+  const singleDeriv = py.runPython(`read_file("reports/single_derivations.csv")`).toString();
+  if (!singleDeriv.startsWith("word,rule,t,before,after,change"))
+    throw new Error("single_derivations.csv missing its header: " + singleDeriv.slice(0, 80));
+  const singleAcc = py.runPython(`read_file("reports/single_accuracy.csv")`).toString();
+  if (!singleAcc.startsWith("stage,assessed,exact")) throw new Error("single_accuracy.csv missing header: " + singleAcc.slice(0, 60));
+  const missing = JSON.parse(py.runPython(`run_single("zzz")`).toString());
+  if (missing.found) throw new Error("run_single('zzz') should be not-found");
+  if (missing.derivations.length !== 1 || missing.accuracy !== null)
+    throw new Error("run_single(absent) should give one card and null accuracy: "
+      + JSON.stringify({ d: missing.derivations.length, a: missing.accuracy }));
+  if (py.runPython(`read_file("reports/single_accuracy.csv")`).toString() !== "")
+    throw new Error("single_accuracy.csv should be cleared after a no-target single run");
+  log("13. single-word mode: found (accuracy+errors+blame), by-gloss, and absent (card only, stale report cleared)");
+  py.runPython(`reset_overlay()`);
+
   log("SMOKE TEST PASSED");
 } catch (e) {
   const m = (e && e.message) ? e.message : String(e);

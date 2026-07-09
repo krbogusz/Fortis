@@ -37,13 +37,13 @@ def test_main_writes_rule_firings_csv(tmp_path):
     main(["--output", str(tmp_path / "derivations.csv")])
     text = (tmp_path / "rule_firings.csv").read_text(encoding="utf-8")
     rows = list(csv.reader(text.splitlines()))
-    assert rows[0] == ["rule", "t", "count", "changes", "matched"]
-    fired = [r for r in rows[1:] if int(r[2]) > 0]  # rules that changed at least one word
+    assert rows[0] == ["rule", "t", "sporadic", "count", "changes", "matched"]
+    fired = [r for r in rows[1:] if int(r[3]) > 0]  # rules that changed at least one word
     assert fired
     for r in fired:
-        assert r[3]  # changes (distinct segment deltas) are non-empty
-        assert " → " in r[4]  # matched holds `before → after` entries
-        assert len(r[4].split(", ")) == int(r[2])  # one matched entry per counted firing
+        assert r[4]  # changes (distinct segment deltas) are non-empty
+        assert " → " in r[5]  # matched holds `before → after` entries
+        assert len(r[5].split(", ")) == int(r[3])  # one matched entry per counted firing
 
 
 def test_main_writes_derivations_csv_long_format(tmp_path):
@@ -74,6 +74,44 @@ def test_main_writes_reports_into_subfolder(project, tmp_path):
     assert (tmp_path / "reports" / "derivations.csv").exists()
     assert (tmp_path / "reports" / "derivation_matrix.csv").exists()
     assert not (tmp_path / "derivations.csv").exists()  # not at the project root
+
+
+def test_main_single_word_writes_single_reports(project, tmp_path, capsys):
+    # --single derives one word (found by IPA key) and writes single_*.csv, not the full run.
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(
+        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+    )
+    main(["--project", str(tmp_path), "--single", ipa])
+    reports = tmp_path / "reports"
+    assert (reports / "single_derivations.csv").exists()
+    assert (reports / "single_accuracy.csv").exists()  # the word carries a target
+    assert (reports / "single_blame.csv").exists()
+    assert not (reports / "derivations.csv").exists()  # the whole-project run did not happen
+    assert "Single" in capsys.readouterr().err
+
+
+def test_main_single_word_by_gloss(project, tmp_path):
+    # A word absent from the lexicon key but matched by gloss still derives (from its IPA).
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(f'"{ipa}" = "hello"\n', encoding="utf-8")
+    main(["--project", str(tmp_path), "--single", "hello"])
+    assert (tmp_path / "reports" / "single_derivations.csv").exists()
+
+
+def test_main_single_word_not_in_lexicon_has_no_target_reports(project, tmp_path):
+    # A word not in the lexicon derives bare: only single_derivations.csv, no target reports.
+    ipa = next(iter(project.words))
+    (tmp_path / "words.toml").write_text(
+        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+    )
+    # First a found run writes the target reports, then an absent word must clear them.
+    main(["--project", str(tmp_path), "--single", ipa])
+    assert (tmp_path / "reports" / "single_accuracy.csv").exists()
+    main(["--project", str(tmp_path), "--single", "ˈnot.a.word"])
+    reports = tmp_path / "reports"
+    assert (reports / "single_derivations.csv").exists()
+    assert not (reports / "single_accuracy.csv").exists()  # stale target report cleared
 
 
 def test_main_skips_accuracy_without_target(project, tmp_path):

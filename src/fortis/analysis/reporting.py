@@ -38,34 +38,53 @@ def render_accuracy_csv(stages: list[StageAccuracy]) -> str:
     """The per-stage accuracy summary as CSV — one row per attested stage plus the final.
 
     Columns: ``stage, assessed, exact, within 1, mean phone dist, mean feature dist``
-    (``assessed`` = words carrying a target to measure against).
+    (``assessed`` = words carrying a target to measure against). When the lexicon
+    carries non-default token ``frequency`` weights (so weighting is not a no-op),
+    three token-weighted columns are appended — ``token-wt exact`` (weighted
+    exact-match fraction), ``token-wt phone dist``, ``token-wt feature dist`` — each
+    word counting ``frequency`` times, matching the stderr headline and the webapp.
     """
+    final = next((s for s in stages if s.time is None), None)
+    weighted = final is not None and final.report.frequencies_vary
+    header = ["stage", "assessed", "exact", "within 1", "mean phone dist", "mean feature dist"]
+    if weighted:
+        header += ["token-wt exact", "token-wt phone dist", "token-wt feature dist"]
     buffer = io.StringIO()
     writer = csv.writer(buffer)
-    writer.writerow(
-        ["stage", "assessed", "exact", "within 1", "mean phone dist", "mean feature dist"]
-    )
+    writer.writerow(header)
     for stage in stages:
         r = stage.report
-        writer.writerow([
+        row = [
             stage.label, r.assessed, r.exact, r.within_one,
             f"{r.mean_distance:.3f}", f"{r.mean_feature_distance:.3f}",
-        ])
+        ]
+        if weighted:
+            row += [
+                f"{r.weighted_accuracy:.3f}",
+                f"{r.weighted_mean_distance:.3f}",
+                f"{r.weighted_mean_feature_distance:.3f}",
+            ]
+        writer.writerow(row)
     return buffer.getvalue()
 
 
 def render_distance_to_target_csv(stages: list[StageAccuracy]) -> str:
     """Every assessed word at every stage as CSV — the long-format distance-to-target detail.
 
-    Columns: ``stage, gloss, derived, target, d, fd`` (``d`` = phone distance,
-    ``fd`` = feature distance, empty when the form could not be segmented). Keeps every
+    Columns: ``stage, gloss, derived, target, d, fd, matches at, closest at`` (``d`` = phone
+    distance, ``fd`` = feature distance, empty when the form could not be segmented;
+    ``matches at``/``closest at`` scan the row's derived form across the word's other attested
+    targets — see :class:`src.fortis.analysis.accuracy.DistanceToTarget`). Keeps every
     assessed word (exact matches included), so the file is a complete table for analysis.
     """
     buffer = io.StringIO()
     writer = csv.writer(buffer)
-    writer.writerow(["stage", "gloss", "derived", "target", "d", "fd"])
+    writer.writerow(["stage", "gloss", "derived", "target", "d", "fd", "matches at", "closest at"])
     for stage in stages:
         for g in stage.report.distances:
             fd = "" if g.feature_distance is None else g.feature_distance
-            writer.writerow([stage.label, g.gloss or g.ipa, g.derived, g.target, g.distance, fd])
+            writer.writerow([
+                stage.label, g.gloss or g.ipa, g.derived, g.target, g.distance, fd,
+                g.matches_at, g.closest_at,
+            ])
     return buffer.getvalue()

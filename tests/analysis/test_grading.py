@@ -12,6 +12,7 @@ from src.fortis.analysis.accuracy import (
     ingest_targets,
     measure_accuracy,
 )
+from src.fortis.analysis.accuracy import _cross_time_columns
 from src.fortis.analysis.reporting import (
     accuracy_summary_line,
     render_accuracy_csv,
@@ -21,6 +22,8 @@ from src.fortis.application.deriving import derive_all, form_at_time
 from src.fortis.application.rendering import render_syllabified
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.models.bundles import FeatureBundle
+from src.fortis.models.form import Form
+from src.fortis.models.inventories import Word
 from src.fortis.models.specs import FeatureSpec
 
 
@@ -331,13 +334,122 @@ class TestRendering:
         assert rows[1] == ["300", "2", "1", "2", "0.500", "1.500"]
         assert rows[2][0] == "final" and rows[2][1] == "1" and rows[2][2] == "1"
 
+    def test_overall_csv_appends_token_weighted_columns_when_frequencies_vary(self):
+        import csv
+
+        # Same two words, but the exact one carries weight 9 and the miss weight 1.
+        exact = DistanceToTarget("alpha", "a", "x", "x", 0, 0, frequency=9)
+        miss = DistanceToTarget("beta", "b", "y", "z", 1, 3, frequency=1)
+        stages = [
+            StageAccuracy("300", 300, AccuracyReport((exact, miss))),
+            StageAccuracy("final", None, AccuracyReport((exact,), skipped=1)),
+        ]
+        rows = list(csv.reader(render_accuracy_csv(stages).splitlines()))
+        assert rows[0] == [
+            "stage", "assessed", "exact", "within 1", "mean phone dist", "mean feature dist",
+            "token-wt exact", "token-wt phone dist", "token-wt feature dist",
+        ]
+        # 300 weighted: exact 9/10 = 0.900, phone (9·0+1·1)/10 = 0.100, feature (9·0+1·3)/10 = 0.300.
+        assert rows[1] == ["300", "2", "1", "2", "0.500", "1.500", "0.900", "0.100", "0.300"]
+        # final is all-exact (weight 9) ⇒ token-weighted exact 1.000.
+        assert rows[2][6] == "1.000"
+
     def test_stages_csv_keeps_every_assessed_word(self):
         import csv
 
         rows = list(csv.reader(render_distance_to_target_csv(self._stages()).splitlines()))
-        assert rows[0] == ["stage", "gloss", "derived", "target", "d", "fd"]
+        assert rows[0] == ["stage", "gloss", "derived", "target", "d", "fd", "matches at", "closest at"]
         body = rows[1:]
-        # Every assessed word at every stage — exact matches included.
-        assert ["300", "alpha", "x", "x", "0", "0"] in body
-        assert ["300", "beta", "y", "z", "1", "3"] in body
-        assert ["final", "alpha", "x", "x", "0", "0"] in body
+        # Every assessed word at every stage — exact matches included. The synthetic
+        # DistanceToTargets here are built directly (not via _measure), so the cross-target
+        # scan columns default to empty.
+        assert ["300", "alpha", "x", "x", "0", "0", "", ""] in body
+        assert ["300", "beta", "y", "z", "1", "3", "", ""] in body
+        assert ["final", "alpha", "x", "x", "0", "0", "", ""] in body
+
+
+class TestCrossTimeColumns:
+    """The `matches at` / `closest at` scan: hold the derived form fixed, scan the word's targets.
+
+    Mirrors the user's worked example — attested T₂₀₀ = abba, T₄₀₀ = appa, derived D = appa —
+    where the row at 200 reports both columns as 400 (D matches T₄₀₀ exactly, and is closest
+    to it). Bundles carry arbitrary features; only the feature edit distance matters here.
+    """
+
+    @staticmethod
+    def _form(*phones: FeatureBundle) -> Form:
+        return Form.from_bundles(list(phones))
+
+    def test_match_and_closest_at_a_different_stage(self, project):
+        a = _bundle(vowel=1)
+        b = _bundle(cons=1, voice=0, lab=0)
+        p = _bundle(cons=1, voice=0, lab=1)  # one feature from b (lab)
+        word = Word(ipa="x")
+        word.stage_forms = {
+            200: self._form(a, b, b, a),  # "abba"
+            400: self._form(a, p, p, a),   # "appa"
+        }
+        derived = self._form(a, p, p, a)  # "appa" — matches T₄₀₀, not T₂₀₀
+        matches_at, closest_at = _cross_time_columns(derived, word, project)
+        assert matches_at == "400"
+        assert closest_at == "400"
+
+    def test_match_at_current_stage_is_listed_too(self, project):
+        a = _bundle(vowel=1)
+        b = _bundle(cons=1, voice=0, lab=0)
+        p = _bundle(cons=1, voice=0, lab=1)
+        word = Word(ipa="x")
+        word.stage_forms = {
+            200: self._form(a, b, b, a),  # "abba"
+            400: self._form(a, p, p, a),  # "appa"
+        }
+        derived = self._form(a, b, b, a)  # "abba" — matches T₂₀₀ only
+        matches_at, closest_at = _cross_time_columns(derived, word, project)
+        assert matches_at == "200"
+        assert closest_at == "200"
+
+    def test_match_at_multiple_stages_comma_joined_in_time_order(self, project):
+        a = _bundle(vowel=1)
+        b = _bundle(cons=1, voice=0, lab=0)
+        word = Word(ipa="x")
+        word.stage_forms = {
+            200: self._form(a, b, b, a),  # "abba"
+            400: self._form(a, b, b, a),  # also "abba"
+        }
+        derived = self._form(a, b, b, a)  # matches both targets
+        matches_at, closest_at = _cross_time_columns(derived, word, project)
+        assert matches_at == "200,400"
+        assert closest_at == "200"  # earliest on a tie (both fd 0)
+
+    def test_closest_at_picks_the_smaller_feature_distance(self, project):
+        a = _bundle(vowel=1)
+        b = _bundle(cons=1, voice=0, lab=0)
+        p = _bundle(cons=1, voice=0, lab=1)
+        m = _bundle(cons=1, voice=0, lab=0, nasal=1)  # one feature from b (nasal)
+        word = Word(ipa="x")
+        word.stage_forms = {
+            200: self._form(a, b, b, a),  # fd to derived = 2 (b→p twice)
+            400: self._form(a, m, m, a),  # fd to derived = 2 (m→p twice)
+            600: self._form(a, p, p, a),  # fd to derived = 0
+        }
+        derived = self._form(a, p, p, a)
+        matches_at, closest_at = _cross_time_columns(derived, word, project)
+        assert matches_at == "600"
+        assert closest_at == "600"
+
+    def test_final_target_is_scanned_last(self, project):
+        a = _bundle(vowel=1)
+        b = _bundle(cons=1, voice=0, lab=0)
+        p = _bundle(cons=1, voice=0, lab=1)
+        word = Word(ipa="x")
+        word.stage_forms = {200: self._form(a, b, b, a)}  # "abba", fd 2 to derived
+        word.final_form = self._form(a, p, p, a)          # "appa", fd 0 to derived
+        derived = self._form(a, p, p, a)
+        matches_at, closest_at = _cross_time_columns(derived, word, project)
+        assert matches_at == "final"
+        assert closest_at == "final"
+
+    def test_no_targets_yields_empty_columns(self, project):
+        word = Word(ipa="x")
+        derived = self._form(_bundle(vowel=1))
+        assert _cross_time_columns(derived, word, project) == ("", "")

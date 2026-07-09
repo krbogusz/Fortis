@@ -24,6 +24,24 @@ improving the rule translation, not just the final score. `tools/stagediff.py` a
 Fortis's per-period output to these columns (empirically: FLLAPS c1↔time 300, c2↔600/750,
 c3↔1000, c4↔1200, c5↔1400) and reports the first real divergence per word.
 
+## Word frequency (`words.csv` `frequency` column)
+
+The per-word token weights come from **hermitdave/FrequencyWords**, the modern
+French 2018 top-50k list.
+
+- **Upstream:** <https://github.com/hermitdave/FrequencyWords> — file
+  `content/2018/fr/fr_50k.txt` (format: `word count`, one per line, descending).
+- **License:** the FrequencyWords repo is MIT-licensed.
+- **Underlying corpus:** OpenSubtitles 2018 (subtitle token counts) via the OPUS
+  project (<https://opus.nlpl.eu/>) — so these are spoken-register frequencies.
+- **Method:** joined to each row's `gloss`, NFC-normalized and lower-cased (the
+  glosses are NFD on disk). **282 / 304 matched**; the 22 rare/archaic misses
+  (`git`, `aulx`, `effriter`, `moyeu`, `chaloir`, `pailler`, …) default to weight
+  **1**. Values are the raw subtitle counts. Fetched 2026-07-09.
+- **Use:** token-frequency-weighted accuracy, and prioritizing sporadic/lexical
+  change candidates (high-frequency words erode off the regular sound laws — e.g.
+  the auxiliary _ai_ < habeō → /e/, not the regular affricate reflex).
+
 ## Reading the source notation (for comparing against the Fortis port)
 
 - Stages are marked by `=`/`~` header lines (Classical Latin → Late Latin → Early/

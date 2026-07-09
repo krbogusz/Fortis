@@ -11,10 +11,13 @@
     prepareRun,
     deriveBatch,
     finalizeRun,
+    analysisStep,
+    runSingle,
     listExampleProjects,
     loadExampleProject,
   } from "./lib/engine.js";
   import CsvTable from "./lib/CsvTable.svelte";
+  import DependencyTree from "./lib/DependencyTree.svelte";
   import { marked } from "marked";
   import userGuideMd from "../../docs/user_guide.md?raw";
   import defaultSystemMd from "../../docs/default_system.md?raw";
@@ -40,8 +43,9 @@
   let blame = $state(null); // per-word blame, or null when all exact
   let warnings = $state([]); // syllabification-fallback warnings from the last run
   let unfiredRules = $state([]); // word-scoped rules naming a word absent from the lexicon: {rule, word}
-  let timing = $state(null); // {words, rules, deriveMs, accuracyMs, analysisMs} from the last run
+  let timing = $state(null); // {words, rules, deriveMs, analysisMs} from the last run (accuracy folded into analysis)
   let matrixCsv = $state(""); // derivation_matrix.csv content, for the right-pane Matrix view
+  let dependencies = $state(null); // rule feeding-graph layout, for the right-pane Tree view
   let rulesCsv = $state(""); // rule_firings.csv content, for the right-pane Rules view
   let resultView = $state("derivations"); // right-pane view: derivations | rules | matrix | accuracy | errors | errorContext | blame | warnings
 
@@ -49,8 +53,13 @@
   // every edit; it waits for the "Run project" button instead of auto-running.
   const AUTO_RUN_WORDS = 500;
   const AUTO_RUN_RULES = 100;
-  let needsRun = $state(false); // a large project is awaiting a manual run
+  let bigProject = $state(false); // project exceeds the auto-run limit — shows the manual Run button
+  let dirty = $state(false); // overlay edited since the last committed run (a big project needs re-running)
   let pendingSize = $state(null); // { words, rules } of the project awaiting a run
+  let single = $state(null); // last single-word run: {found, ipa, gloss, derivations, accuracy, …} | {error} | null
+  let singleInput = $state(""); // the Single tab's input-bar text
+  let singleBusy = $state(false); // a single-word derivation is in flight
+  let singleDefs = $state(false); // whether the single derivation card shows its rule definitions
 
   let fileInput; // single-file <input>
   let projectInput; // multi-file (folder) <input>
@@ -212,31 +221,42 @@
   async function rerun(force = false) {
     if (!ready) return;
     const myToken = ++runToken; // claim this run; a newer run bumps the token and supersedes us
-    busy = true;
-    progress = 0;
-    progressText = "";
-    result = null; // clear the previous results so the pane doesn't show stale output under the bar
-    accuracy = null; // and the previous accuracy summary
-    warnings = []; // and the previous warnings
-    unfiredRules = []; // and the previous never-fire flags
-    matrixCsv = ""; // and the previous derivation table
-    rulesCsv = ""; // and the previous rule-firings table
-    timing = null; // and the previous run's timing
-    openDefs = {}; // reset per-card definition toggles (indices map to new words after a run)
-    await paint(); // paint the (updated) left pane + cleared right pane before the first batch blocks
-    if (myToken !== runToken) return; // superseded while painting — a newer run owns the session now
     try {
+      // Probe the project first (synchronous — no await yet, so an in-flight run can't slip in
+      // between the token bump and this session reset). A too-large project bails here WITHOUT
+      // touching the current results, so the pane keeps showing the last run.
       const prep = prepareRun();
       if (prep.error) {
         result = { error: prep.error };
+        bigProject = false;
+        dirty = false;
         return;
       }
-      if (!force && (prep.words > AUTO_RUN_WORDS || prep.rules > AUTO_RUN_RULES)) {
+      bigProject = prep.words > AUTO_RUN_WORDS || prep.rules > AUTO_RUN_RULES;
+      if (bigProject && !force) {
+        // Too large to auto-run: wait for the manual Run button. Leave the current results (and
+        // the `dirty` flag the edit set) in place — the pane keeps showing the last run, the
+        // top-bar button flags "modified" until the user re-runs.
         pendingSize = { words: prep.words, rules: prep.rules };
-        needsRun = true; // too large to auto-run — wait for the Run project button
+        if (!result) resultView = "single"; // opening a large project defaults to the Single tab
         return;
       }
-      needsRun = false;
+      // Committing to a run: clear the previous output and paint the bar before the first batch.
+      dirty = false; // the results about to appear are current
+      busy = true;
+      progress = 0;
+      progressText = "";
+      result = null; // clear the previous results so the pane doesn't show stale output under the bar
+      accuracy = null; // and the previous accuracy summary
+      warnings = []; // and the previous warnings
+      unfiredRules = []; // and the previous never-fire flags
+      matrixCsv = ""; // and the previous derivation table
+    dependencies = null; // and the previous feeding graph
+      rulesCsv = ""; // and the previous rule-firings table
+      timing = null; // and the previous run's timing
+      openDefs = {}; // reset per-card definition toggles (indices map to new words after a run)
+      await paint(); // paint the (updated) left pane + cleared right pane before the first batch blocks
+      if (myToken !== runToken) return; // superseded while painting — a newer run owns the session now
       const total = prep.words;
       const acc = [];
       // Drive the run in slices, painting the bar between them. Batch size is
@@ -262,10 +282,23 @@
         }
       }
       const deriveMs = performance.now() - runStart;
-      progressText = "analysing…"; // accuracy + errors + error context + blame can be slow
-      await paint();
-      const fin = finalizeRun();
-      timing = { words: total, rules: prep.rules, deriveMs, accuracyMs: fin?.accuracyMs ?? 0, analysisMs: fin?.analysisMs ?? 0 };
+      // Analysis phase — a fresh progress bar, driven one step at a time so it repaints
+      // between the (individually slow) report/analysis chunks.
+      const plan = finalizeRun();
+      let fin = plan.result;
+      if (plan.steps?.length) {
+        progress = 0; // the derivation bar empties; the analysis bar fills from scratch
+        for (let k = 0; k < plan.steps.length; k++) {
+          if (myToken !== runToken) return; // a newer run took over
+          progress = k / plan.steps.length;
+          progressText = `analysing… ${plan.steps[k]}`;
+          await paint();
+          const step = analysisStep();
+          if (step?.result) fin = step.result;
+        }
+        progress = 1;
+      }
+      timing = { words: total, rules: prep.rules, deriveMs, analysisMs: fin?.analysisMs ?? 0 };
       accuracy = fin?.accuracy ?? null;
       if (!accuracy && resultView === "accuracy") resultView = "derivations"; // no target ⇒ leave the (now hidden) tab
       errors = fin?.errors ?? null;
@@ -280,6 +313,8 @@
         resultView = "derivations"; // none ⇒ leave the tab
       matrixCsv = readFile("reports/derivation_matrix.csv"); // for the Matrix view
       rulesCsv = readFile("reports/rule_firings.csv"); // for the Rules view
+      dependencies = fin?.dependencies ?? null; // for the Tree view
+      if (resultView === "single") resultView = "derivations"; // a full run shows the whole lexicon
       result = { derivations: acc };
     } catch (e) {
       if (myToken === runToken) result = { error: [e?.message ?? String(e)] };
@@ -291,6 +326,7 @@
   function onEdit() {
     writeFile(active, content);
     refreshStatus();
+    dirty = true; // overlay changed — a big project now needs re-running (flags "modified" at once)
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => rerun(), 400); // auto-run only if under the size limit
   }
@@ -346,10 +382,28 @@
     rerun(true); // force a run regardless of size (the Run project button)
   }
 
+  // Derive just the word in the input bar, independent of the full-run pipeline (it neither
+  // reads nor writes the batched session, so it's safe to run without touching `result`).
+  async function runSingleWord() {
+    const word = singleInput.trim();
+    if (!ready || singleBusy || !word) return;
+    singleBusy = true;
+    single = null; // clear the previous single result so the pane doesn't show stale output
+    await paint(); // paint "deriving…" before the synchronous Pyodide call blocks the thread
+    try {
+      single = runSingle(word);
+    } catch (e) {
+      single = { error: [e?.message ?? String(e)] };
+    } finally {
+      singleBusy = false;
+    }
+  }
+
   async function removeFileTab(name, ev) {
     ev.stopPropagation();
     removeFile(name);
     refreshStatus();
+    dirty = true; // removing a file mutates the overlay — a big project needs re-running
     if (active === name) content = readFile(name); // now shows the default content
     await rerun();
   }
@@ -406,6 +460,7 @@
     const text = await file.text();
     writeFile(target, text);
     refreshStatus();
+    dirty = true; // importing a file mutates the overlay — a big project needs re-running
     selectFile(target);
     await rerun();
     ev.target.value = "";
@@ -424,6 +479,11 @@
     progress = 0;
     progressText = "";
     result = null;
+    single = null; // a fresh project — drop the previous project's single-word result
+    singleInput = "";
+    warnings = []; // and its syllabification-fallback + never-fire warnings
+    unfiredRules = [];
+    dirty = false; // a freshly-loaded project hasn't been edited yet
     await paint();
     if (myToken !== runToken) return; // superseded while painting
     try {
@@ -498,6 +558,20 @@
         <span class="spinner"></span> {status}
       {:else}
         <span class="ok-dot"></span> Engine ready
+      {/if}
+      {#if ready && bigProject}
+        {@const current = !dirty && result?.derivations != null}
+        {#if dirty && result?.derivations != null}
+          <span class="run-note">modified — re-run to update</span>
+        {/if}
+        <button
+          class="run-top"
+          disabled={busy || current}
+          title={current
+            ? "Results are up to date"
+            : "Derive the whole lexicon and regenerate the reports"}
+          onclick={runProject}>Run project</button
+        >
       {/if}
       <div class="theme-toggle">
         <button
@@ -697,6 +771,11 @@
                   onclick={() => (resultView = "rules")}>Rules</button
                 >
                 <button
+                  class:active={resultView === "tree"}
+                  title="dependence tree — which rule's output segment feeds which rule's input (rule_dependencies.html)"
+                  onclick={() => (resultView = "tree")}>Tree</button
+                >
+                <button
                   class:active={resultView === "matrix"}
                   title="Every word's form at each stage, in one wide matrix (derivation_matrix.csv)"
                   onclick={() => (resultView = "matrix")}>Matrix</button
@@ -732,13 +811,21 @@
                     >Blame</button
                   >
                 {/if}
+                <button
+                  class:active={resultView === "single"}
+                  onclick={() => (resultView = "single")}
+                  title="Derive one word on demand — its full derivation, accuracy, errors, and blame"
+                  >Single</button
+                >
               </div>
-              <button
-                class="save-result"
-                disabled={!ready}
-                title="Download this view's report file"
-                onclick={saveResult}>Save</button
-              >
+              {#if resultView !== "single"}
+                <button
+                  class="save-result"
+                  disabled={!ready}
+                  title="Download this view's report file"
+                  onclick={saveResult}>Save</button
+                >
+              {/if}
             {/if}
           </div>
         </div>
@@ -749,9 +836,8 @@
       {#snippet timingLine()}
         {#if timing}
           <p class="muted timing-line">
-            {timing.words} words · {timing.rules} rules · derive
-            {(timing.deriveMs / 1000).toFixed(1)}s · accuracy
-            {(timing.accuracyMs / 1000).toFixed(1)}s · analysis
+            {timing.words} words · {timing.rules} rules · derivation
+            {(timing.deriveMs / 1000).toFixed(1)}s · analysis
             {(timing.analysisMs / 1000).toFixed(1)}s
           </p>
         {/if}
@@ -766,33 +852,14 @@
             <p class="muted progress-text">{progressText || "running…"}</p>
           </div>
         </div>
-      {:else if needsRun}
-        <div class="results">
-          <div class="run-prompt">
-            <button
-              class="run-project"
-              disabled={!ready || busy}
-              title="Derive the whole lexicon and regenerate the reports"
-              onclick={runProject}>Run project</button
-            >
-            {#if pendingSize}
-              <p class="muted">
-                {pendingSize.words} words × {pendingSize.rules} rules — too large to run on
-                every edit. Click to run.
-              </p>
-              <p class="muted cli-hint">
-                Running the project through the CLI offers a 10× or greater speedup over
-                in-browser derivation.
-              </p>
-            {/if}
-          </div>
-        </div>
+      {:else if resultView === "tree" && dependencies}
+        <DependencyTree data={dependencies} />
       {:else if resultView === "matrix" && matrixCsv}
         <div class="table-timing">{@render timingLine()}</div>
         <CsvTable content={matrixCsv} />
       {:else if resultView === "rules" && rulesCsv}
         <div class="table-timing">{@render timingLine()}</div>
-        <CsvTable content={rulesCsv} wideColumns={["changes", "matched"]} />
+        <CsvTable content={rulesCsv} wideColumns={["changes", "matched"]} italicColumn="sporadic" />
       {:else}
       <div class="results">
         <!-- The firing-rule trace of one word, as a borderless table (rule · t · before → after
@@ -807,7 +874,7 @@
             <tbody>
               {#each steps as s}
                 <tr>
-                  <td class="st-rule">{#if s.heading}{s.heading}{/if}</td>
+                  <td class="st-rule" class:sporadic={s.sporadic}>{#if s.heading}{s.heading}{/if}</td>
                   {#if hasTime}<td class="st-time">{s.time ?? ""}</td>{/if}
                   <td class="form">{s.before}</td>
                   <td class="form">{s.after}</td>
@@ -875,8 +942,10 @@
             </details>
           {/each}
         {/snippet}
-        {@render timingLine()}
-        {#if resultView === "accuracy" && accuracy}
+        <!-- The four analysis views, each as a snippet so the Single tab can stack the same
+             renders the whole-lexicon tabs show. The parameter shadows the same-named state,
+             so a body reads identically whether fed the full run's data or one word's. -->
+        {#snippet accuracyBlock(accuracy)}
           <table class="report-summary">
             <thead>
               <tr>
@@ -928,7 +997,11 @@
               {#if s.misses.length}
                 <table class="report-misses">
                   <thead>
-                    <tr><th>gloss</th><th>derived</th><th>target</th><th>d</th><th>fd</th></tr>
+                    <tr>
+                      <th>gloss</th><th>derived</th><th>target</th><th>d</th><th>fd</th>
+                      <th title="Attested stages whose target this derived form reproduces exactly (feature distance 0)">matches at</th>
+                      <th title="The attested stage whose target this derived form is closest to by feature distance">closest at</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {#each s.misses as m}
@@ -938,6 +1011,8 @@
                         <td class="form">{m.target}</td>
                         <td>{m.d}</td>
                         <td>{m.fd ?? "—"}</td>
+                        <td>{m.matchesAt || "—"}</td>
+                        <td>{m.closestAt || "—"}</td>
                       </tr>
                     {/each}
                   </tbody>
@@ -947,7 +1022,8 @@
               {/if}
             </details>
           {/each}
-        {:else if resultView === "errors" && errors}
+        {/snippet}
+        {#snippet errorsBlock(errors)}
           <p class="caveat">
             Which segments came out wrong at each attested stage (and the final): the phone
             confusions, most frequent first. <code>∅</code> on the <em>got</em> side is a
@@ -964,7 +1040,8 @@
               {@render confusionTable(s.confusions)}
             </details>
           {/each}
-        {:else if resultView === "errorContext" && errorContext}
+        {/snippet}
+        {#snippet contextBlock(errorContext)}
           <p class="caveat">
             For each erroring segment, the <strong>attested</strong>-form environments most
             associated with getting it wrong (by phi coefficient), per stage. A metathesis
@@ -979,7 +1056,8 @@
               {@render autopsyBlock(s.segments)}
             </details>
           {/each}
-        {:else if resultView === "blame" && blame}
+        {/snippet}
+        {#snippet blameBlock(blame, open = false)}
           <p class="caveat">
             Every assessed word, worst first (exact ones last, with no residual). Each wrong
             phone is attributed to the rule that produced it (the last firing rule that set its
@@ -989,7 +1067,7 @@
             to the engine’s output.
           </p>
           {#each blame.words as w}
-            <details class="report-detail">
+            <details class="report-detail" {open}>
               <summary>
                 <span class="tgt">{w.word}</span>
                 <span class="form">{w.surface}</span>
@@ -1043,6 +1121,100 @@
               </table>
             </details>
           {/each}
+        {/snippet}
+        <!-- The Single tab: an input bar to derive one word on demand, then that word's own
+             derivation, accuracy, errors, context, and blame — the same renders as the
+             whole-lexicon tabs, over a one-word run. -->
+        {#snippet singleView()}
+          <div class="single-view">
+            {#if bigProject && !result && pendingSize}
+              <p class="muted">
+                {pendingSize.words} words × {pendingSize.rules} rules — too large to run on every
+                edit. Either run the whole project with the <strong>Run project</strong> button
+                above, or derive one word at a time below. Running the full project through the CLI
+                offers a 10× or greater speedup over in-browser derivation.
+              </p>
+            {/if}
+            <form class="single-bar" onsubmit={(e) => { e.preventDefault(); runSingleWord(); }}>
+              <input
+                class="single-input"
+                type="text"
+                placeholder="a word to derive — its IPA, or a gloss from the lexicon"
+                bind:value={singleInput}
+                disabled={!ready || singleBusy}
+              />
+              <button
+                class="run-single"
+                disabled={!ready || singleBusy || !singleInput.trim()}
+                onclick={runSingleWord}>Run single word</button
+              >
+            </form>
+            {#if singleBusy}
+              <p class="muted">deriving…</p>
+            {:else if single?.error}
+              <div class="card error">
+                <h3>Error</h3>
+                {#each single.error as line}<pre>{line}</pre>{/each}
+              </div>
+            {:else if single}
+              {@const d = single.derivations[0]}
+              <p class="muted single-meta">
+                <span class="form tgt">{single.ipa}</span>{#if single.gloss}<span class="gloss"
+                    >{" ‘" + single.gloss + "’"}</span
+                  >{/if}{single.found
+                  ? " — from the lexicon"
+                  : " — not in the lexicon, derived without a target"}
+              </p>
+              <article class="card derivation">
+                <header class="word-head">
+                  <span class="word-ipa">{d.ipa}</span>
+                  {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
+                  {#if d.steps.some((s) => s.definition)}
+                    <button
+                      class="def-toggle"
+                      class:active={singleDefs}
+                      title="Show the rule definitions for this word"
+                      onclick={() => (singleDefs = !singleDefs)}>Definitions</button
+                    >
+                  {/if}
+                </header>
+                {@render traceSteps(d.steps, singleDefs)}
+                <div class="surface">
+                  <span class="muted" aria-hidden="true">→</span>
+                  <span class="form">{d.surface}</span>
+                </div>
+              </article>
+              {#if single.accuracy}
+                <h3 class="single-section">Accuracy</h3>
+                {@render accuracyBlock(single.accuracy)}
+              {/if}
+              {#if single.errors}
+                <h3 class="single-section">Errors</h3>
+                {@render errorsBlock(single.errors)}
+              {/if}
+              {#if single.errorContext}
+                <h3 class="single-section">Error context</h3>
+                {@render contextBlock(single.errorContext)}
+              {/if}
+              {#if single.blame}
+                <h3 class="single-section">Blame</h3>
+                {@render blameBlock(single.blame, true)}
+              {/if}
+            {/if}
+          </div>
+        {/snippet}
+        {#if resultView === "single" || (bigProject && !result)}
+          {@render singleView()}
+        {:else}
+        {@render timingLine()}
+        {#if resultView === "accuracy" && accuracy}
+          {@render accuracyBlock(accuracy)}
+        {:else if resultView === "errors" && errors}
+          {@render errorsBlock(errors)}
+        {:else if resultView === "errorContext" && errorContext}
+          {@render contextBlock(errorContext)}
+        {:else if resultView === "blame" && blame}
+          {@render blameBlock(blame)}
         {:else if resultView === "warnings" && (warnings.length || unfiredRules.length)}
           {#if unfiredRules.length}
             <p class="caveat">
@@ -1121,6 +1293,7 @@
               </div>
             </article>
           {/each}
+        {/if}
         {/if}
       </div>
       {/if}
@@ -1529,18 +1702,72 @@
     padding: 56px 16px;
     text-align: center;
   }
-  .run-project {
-    font-size: var(--fs-header);
-    padding: 8px 22px;
+  .run-top {
+    font-size: var(--fs-body);
+    padding: 4px 14px;
+    font-weight: 600;
     color: var(--accent);
     background: var(--accent-bg);
     border-color: var(--accent-border);
   }
+  .run-top:disabled {
+    color: var(--muted);
+    background: transparent;
+    font-weight: 400;
+  }
+  .run-note {
+    color: var(--warn-fg);
+    font-weight: 600;
+    white-space: nowrap;
+  }
   .run-prompt .muted {
     max-width: 30ch;
   }
-  .run-prompt .cli-hint {
-    margin-top: -4px;
+
+  .single-view {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .single-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .single-input {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--ipa);
+    font-size: var(--fs-emphasis);
+    padding: 6px 10px;
+    color: var(--text-h);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .single-input:focus {
+    outline: none;
+    border-color: var(--accent-border);
+  }
+  .run-single {
+    font-size: var(--fs-body);
+    padding: 6px 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+  }
+  .single-meta {
+    margin: 4px 0 0;
+  }
+  .single-section {
+    margin: 18px 0 2px;
+    font-size: var(--fs-header);
+    font-weight: 600;
+    color: var(--text-h);
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
   }
 
   .view-tabs {
@@ -1579,6 +1806,10 @@
   .report-misses th,
   .report-misses td:first-child {
     text-align: left;
+  }
+  /* Sporadic (word-scoped) rules read as italic in the derivation trace, like the Rules tab. */
+  .st-rule.sporadic {
+    font-style: italic;
   }
   /* Gloss is a translation, not IPA — muted (Sans is now the panel default, so no override). */
   .report-summary td.gloss-cell {

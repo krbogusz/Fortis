@@ -14,7 +14,9 @@ two synthetic rules — ``input`` (the raw IPA and how the engine ingested it)
 and ``output`` (the surface form). A wide ``derivation_matrix.csv`` (one row per
 word, one column per rule, holding the word's form wherever that rule fired) and a
 ``rule_firings.csv`` (one row per rule: the words it matched as ``before → after``
-and the distinct segment changes it made) are written alongside it. When the lexicon
+and the distinct segment changes it made) are written alongside it, plus a
+``rule_dependencies.html`` — the rule feeding graph (which rule's target needs a
+feature an earlier rule produced), as a scrollable timeline. When the lexicon
 carries attested forms (``final`` and/or
 intermediate ``stages``), the accuracy analysis measures the derivation's distance
 to target and writes ``accuracy.csv`` (per-stage summary) and
@@ -38,6 +40,7 @@ from src.fortis.analysis.accuracy import (
     ingest_targets,
 )
 from src.fortis.analysis.blame import blame_all, blame_summary_line, render_blame_csv
+from src.fortis.analysis.dependencies import build_dependency_graph, render_dependency_html
 from src.fortis.analysis.diagnosis import (
     diagnose_stages,
     error_context_omissions,
@@ -56,15 +59,18 @@ from src.fortis.analysis.warnings import (
     warnings_summary_line,
 )
 from src.fortis.application.deriving import (
+    derive,
     derive_all,
     derive_all_parallel,
     resolve_rule_letters,
 )
 from src.fortis.application.rendering import describe_change, render_syllabified
+from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.config import config
 from src.fortis.loaders.project import load_project, unfired_scoped_rules
 from src.fortis.models.derivation import Derivation, DerivationStep
+from src.fortis.models.inventories import Word
 from src.fortis.models.project import Project
 from src.fortis.models.rules import RuleInventory
 
@@ -99,7 +105,7 @@ def _print_scoped_warnings(unfired: list[tuple[str, str]]) -> None:
         return
     rules = list(dict.fromkeys(rule_id for rule_id, _ in unfired))  # distinct, first-seen order
     print(
-        f"{_sgr('⚠', '33')}  {_key(str(len(rules)))} rule(s) never fire — "
+        f"  {_sgr('⚠', '33')}  {_key(str(len(rules)))} rule(s) never fire — "
         "word-scoped to a word not in the lexicon:",
         file=sys.stderr,
     )
@@ -109,12 +115,13 @@ def _print_scoped_warnings(unfired: list[tuple[str, str]]) -> None:
     print(_dim(body), file=sys.stderr)
 
 
-def _progress_bar(done: int, total: int) -> None:
-    """Render an in-place derivation progress bar on stderr.
+def _progress_bar(done: int, total: int, label: str = "deriving") -> None:
+    """Render an in-place progress bar on stderr (``deriving``, ``analysing``, …).
 
     A no-op when stderr is not a terminal (piped or captured output stays clean).
-    Redraws on the same line via a carriage return; the final update emits a
-    trailing newline so the ``wrote …`` messages that follow start fresh.
+    Redraws on the same line via a carriage return (clearing to end-of-line so a
+    shorter redraw leaves no remnants); the final update emits a trailing newline so
+    the messages that follow start fresh.
     """
     if total == 0 or not sys.stderr.isatty():
         return
@@ -122,7 +129,7 @@ def _progress_bar(done: int, total: int) -> None:
     filled = round(width * done / total)
     bar = "█" * filled + "░" * (width - filled)
     end = "\n" if done == total else ""
-    print(f"\rderiving [{bar}] {done}/{total}{end}", end="", file=sys.stderr, flush=True)
+    print(f"\r  {label} [{bar}] {done}/{total}\033[K{end}", end="", file=sys.stderr, flush=True)
 
 
 def _parse_args(argv: list[str] | None) -> argparse.Namespace:
@@ -169,6 +176,14 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
             "accuracy.csv, …) are written alongside it (default: "
             "<project>/reports/derivations.csv)"
         ),
+    )
+    parser.add_argument(
+        "--single",
+        metavar="WORD",
+        help="derive a single word instead of the whole project — looked up in the lexicon by "
+        "its IPA key or gloss (so it carries any attested/target forms), else derived bare. "
+        "Writes single_*.csv reports (single_derivations.csv, and — with a target — "
+        "single_accuracy.csv, single_errors.csv, …) into the project's reports/ subfolder.",
     )
     parser.add_argument(
         "--serial",
@@ -221,8 +236,15 @@ def main(argv: list[str] | None = None) -> None:
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         raise SystemExit(1) from error
-    _print_scoped_warnings(unfired_scoped_rules(project.rules, project.words))
     init_done = time.perf_counter()
+
+    # Single-word mode: derive just one word and write single_*.csv, skipping the full run.
+    if args.single is not None:
+        output_dir = args.project or config.paths.default
+        default_path = output_dir / "reports" / "derivations.csv"
+        reports_dir = (default_path if args.output is _AUTO_OUTPUT else args.output).parent
+        _run_single(project, rules, args.single, reports_dir, start)
+        return
 
     # Phase 2 — rule application: derive every word (with a progress bar on a TTY).
     # Parallel by default — derive_all_parallel fans a big lexicon across worker
@@ -252,6 +274,13 @@ def main(argv: list[str] | None = None) -> None:
     firings_path = path.parent / "rule_firings.csv"
     firings_path.write_text(_build_rule_firings_csv(derivations, rules, project), encoding="utf-8")
     saved.append(firings_path)
+    # The rule dependency (feeding) graph — a static analysis over the rules themselves.
+    dep_path = path.parent / "rule_dependencies.html"
+    dep_path.write_text(
+        render_dependency_html(build_dependency_graph(derivations, rules, project)),
+        encoding="utf-8",
+    )
+    saved.append(dep_path)
     write_done = time.perf_counter()
 
     where = f"`{args.project}`" if args.project is not None else "the shipped `projects/default`"
@@ -259,9 +288,10 @@ def main(argv: list[str] | None = None) -> None:
     # Phase 4 — accuracy + errors + blame, when the lexicon carries attested forms. Each
     # analysis writes its CSV(s) and contributes a one-line headline to the run summary.
     has_targets = any(word.final is not None or word.stages for word in project.words.values())
-    accuracy_split = write_done  # split point between accuracy and the (costlier) analysis
+    _ANALYSIS_STEPS = 4  # accuracy · errors · blame · warnings — for the progress bar
     summaries: list[tuple[str, str, list[str]]] = []  # (label, headline, sub-lines) rows
     if has_targets:
+        _progress_bar(0, _ANALYSIS_STEPS, "analysing")  # accuracy is starting
         ingest_targets(derivations, project)  # segment attested forms once, in the main process
         stages = accuracy_by_stage(derivations, project)
         for name, render in (
@@ -275,7 +305,7 @@ def main(argv: list[str] | None = None) -> None:
         acc_head, _, stage_tail = acc.partition(" · stages ")
         acc_subs = [f"also at stages {stage_tail}"] if stage_tail else []
         summaries.append(("Accuracy", acc_head, acc_subs))
-        accuracy_split = time.perf_counter()  # accuracy done; what follows is analysis
+        _progress_bar(1, _ANALYSIS_STEPS, "analysing")  # accuracy done; errors next
 
         # Errors + Error context, per attested stage and the final.
         stage_diag = diagnose_stages(derivations, project)
@@ -298,6 +328,7 @@ def main(argv: list[str] | None = None) -> None:
             )
         err_head = errors_summary_line(stage_diag).removeprefix("final: ").split(" — see")[0]
         summaries.append(("Errors", err_head, err_subs))
+        _progress_bar(2, _ANALYSIS_STEPS, "analysing")  # errors done; blame next
 
         # Every assessed word's distance trajectory, worst first (blame.csv).
         blames = blame_all(derivations, project, include_exact=True)
@@ -305,6 +336,7 @@ def main(argv: list[str] | None = None) -> None:
         blame_path.write_text(render_blame_csv(blames), encoding="utf-8")
         saved.append(blame_path)
         summaries.append(("Blame", blame_summary_line(blames).split(" — see")[0], []))
+        _progress_bar(3, _ANALYSIS_STEPS, "analysing")  # blame done; warnings next
     accuracy_done = time.perf_counter()
 
     # Phase 4b — syllabification warnings: words whose onset/coda patterns admitted no
@@ -318,13 +350,16 @@ def main(argv: list[str] | None = None) -> None:
         syllab_line = warnings_summary_line(syllab_warnings)
     elif warn_path.exists():
         warn_path.unlink()  # a prior run warned but this one doesn't — clear the stale report
+    if has_targets:
+        _progress_bar(_ANALYSIS_STEPS, _ANALYSIS_STEPS, "analysing")  # done — clears the bar line
+    # Word-scoped rules that never fire — reported now, after the deriving/analysing bars.
+    _print_scoped_warnings(unfired_scoped_rules(project.rules, project.words))
 
     # Phase 5 — the run summary block on stderr.
     done = time.perf_counter()
     phases = {"init": init_done - start, "apply": derive_done - init_done}
-    if has_targets:  # accuracy = the distance CSVs; analysis = errors + error context + blame
-        phases["accuracy"] = accuracy_split - write_done
-        phases["analysis"] = accuracy_done - accuracy_split
+    if has_targets:  # analysis = accuracy + errors + error context + blame, timed as one phase
+        phases["analysis"] = accuracy_done - write_done
     phases["write"] = (write_done - derive_done) + (done - accuracy_done)
     _print_summary(
         derivations, rules, saved, phases, done - start,
@@ -360,8 +395,8 @@ def _print_summary(
 
     ``summaries`` are ``(label, headline, sub-lines)`` rows (Accuracy/Errors/Blame), the
     sub-lines shown dimmed under the headline; ``syllab_line`` is the syllabification-fallback
-    warning if any. ``phases`` maps each phase name (init, apply, accuracy, analysis, write —
-    accuracy and analysis only when the run assessed) to its elapsed seconds; ``total`` is the
+    warning if any. ``phases`` maps each phase name (init, apply, analysis, write — analysis
+    only when the run assessed) to its elapsed seconds; ``total`` is the
     whole run's seconds.
     """
     out = sys.stderr
@@ -387,6 +422,98 @@ def _print_summary(
     )
     print(f"  {_dim(breakdown)}", file=out)
 
+    print("", file=out)
+    print(f"  {_key(str(len(saved)))} reports {_dim('→ ' + str(reports_dir))}", file=out)
+    listing = textwrap.fill(
+        " · ".join(p.stem for p in saved), width=76, initial_indent="  ", subsequent_indent="  "
+    )
+    print(_dim(listing), file=out)
+
+
+def _find_word(project: Project, word_str: str) -> tuple[str, Word, bool]:
+    """Locate *word_str* in the lexicon by IPA key or gloss.
+
+    Returns ``(ipa, word, found)``. A hit yields the lexicon entry (its IPA key drives
+    derivation, so a gloss lookup still derives the right form, and its attested
+    ``final``/``stages`` come along). A miss yields a bare ``Word(ipa=word_str)`` — derived
+    with no target — and ``found`` False.
+    """
+    for ipa, word in project.words.items():
+        if ipa == word_str or word.gloss == word_str:
+            return ipa, word, True
+    return word_str, Word(ipa=word_str), False
+
+
+def _run_single(
+    project: Project,
+    rules: RuleInventory,
+    word_str: str,
+    reports_dir: Path,
+    start: float,
+) -> None:
+    """Derive one word and write the ``single_*.csv`` reports, then print a compact summary.
+
+    Only ``single_derivations.csv`` is unconditional; the target-based reports
+    (``single_accuracy.csv``, ``single_distance_to_target.csv``, ``single_errors.csv``,
+    ``single_error_context.csv``, ``single_blame.csv``) are written only when the word
+    carries an attested form, and any stale copies from a prior run are cleared otherwise.
+    """
+    ipa, word, found = _find_word(project, word_str)
+    derivation = derive(
+        word, string_to_sequence(ipa, project), rules, project.letters, project.features,
+        project.sonorities, project.syllable_parts, project.tiers,
+    )
+    derivations = [derivation]
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    saved: list[Path] = []
+
+    def write(name: str, text: str) -> None:
+        report_path = reports_dir / name
+        report_path.write_text(text, encoding="utf-8")
+        saved.append(report_path)
+
+    def write_or_clear(name: str, text: str | None) -> None:
+        report_path = reports_dir / name
+        if text is not None:
+            report_path.write_text(text, encoding="utf-8")
+            saved.append(report_path)
+        elif report_path.exists():
+            report_path.unlink()  # a prior single run wrote it but this word has no target
+
+    write("single_derivations.csv", _build_derivations_csv(derivations, project))
+    has_target = word.final is not None or bool(word.stages)
+    acc_line: str | None = None
+    if has_target:
+        ingest_targets(derivations, project)
+        stages = accuracy_by_stage(derivations, project)
+        write("single_accuracy.csv", render_accuracy_csv(stages))
+        write("single_distance_to_target.csv", render_distance_to_target_csv(stages))
+        stage_diag = diagnose_stages(derivations, project)
+        write("single_errors.csv", render_errors_csv(stage_diag))
+        write("single_error_context.csv", render_error_context_csv(stage_diag))
+        blames = blame_all(derivations, project, include_exact=True)
+        write("single_blame.csv", render_blame_csv(blames))
+        acc_line = accuracy_summary_line(stages).removeprefix("final: ")
+    else:
+        for name in (
+            "single_accuracy.csv", "single_distance_to_target.csv", "single_errors.csv",
+            "single_error_context.csv", "single_blame.csv",
+        ):
+            write_or_clear(name, None)
+
+    surface = render_syllabified(
+        lower_tiers(derivation.surface), derivation.surface_boundaries, project
+    )
+    out = sys.stderr
+    gloss = f" ‘{word.gloss}’" if word.gloss else ""
+    print("", file=out)
+    print(f"  {_label('Single'.ljust(8))}  {_key(ipa)}{gloss}  →  {_key(surface)}", file=out)
+    tag = "in the lexicon" if found else "not in the lexicon — derived without a target"
+    print(f"  {' ' * 8}  {_dim(tag)}", file=out)
+    if acc_line is not None:
+        print(f"  {_label('Accuracy')}  {acc_line}", file=out)
+    print("", file=out)
+    print(f"  {_key(f'{time.perf_counter() - start:.2f}s')}", file=out)
     print("", file=out)
     print(f"  {_key(str(len(saved)))} reports {_dim('→ ' + str(reports_dir))}", file=out)
     listing = textwrap.fill(
@@ -455,19 +582,20 @@ def _build_derivations_csv(derivations: list[Derivation], project: Project) -> s
     return buffer.getvalue()
 
 
-def _rule_rows(rules: RuleInventory) -> list[tuple[str, str, int | None]]:
-    """Each rule as ``(base_id, name, time)``, sub-rules merged, in firing order.
+def _rule_rows(rules: RuleInventory) -> list[tuple[str, str, int | None, tuple[str, ...]]]:
+    """Each rule as ``(base_id, name, time, words)``, sub-rules merged, in firing order.
 
-    Like :func:`_rule_columns`, but keeping the name and time apart (the per-rule report
-    wants them in separate columns).
+    Like :func:`_rule_columns`, but keeping the name, time, and word-scope apart (the
+    per-rule report wants them in separate columns). ``words`` is the rule's ``words``
+    scope — non-empty only for a sporadic/lexical, word-scoped rule.
     """
-    seen: dict[str, tuple[str, int | None]] = {}
+    seen: dict[str, tuple[str, int | None, tuple[str, ...]]] = {}
     for t in sorted(rules.keys(), key=lambda t: (t is None, t)):
         for rule in rules[t]:
             base = _SUBRULE_SUFFIX.sub("", rule.id)
             if base not in seen:
-                seen[base] = (rule.name or base, t)
-    return [(base, name, t) for base, (name, t) in seen.items()]
+                seen[base] = (rule.name or base, t, rule.words)
+    return [(base, name, t, words) for base, (name, t, words) in seen.items()]
 
 
 def _build_rule_firings_csv(
@@ -475,15 +603,18 @@ def _build_rule_firings_csv(
 ) -> str:
     """Per-rule firing report: one row per rule, what it matched and how it changed it.
 
-    Columns: ``rule, t, count, changes, matched``. ``count`` is how many words the rule
-    changed; ``changes`` is the *distinct* segment-level deltas it made (e.g. ``d→t``),
-    comma-separated; ``matched`` is each such word as ``before → after`` (comma-separated,
-    in derivation order). Every rule gets a row in firing order — one that never fired
-    shows ``count`` 0 with empty ``changes``/``matched``, so dead rules are visible. A
+    Columns: ``rule, t, sporadic, count, changes, matched``. ``sporadic`` is the rule's
+    ``words`` scope (comma-separated) — non-empty only for a word-scoped, lexical/sporadic
+    rule, empty for a general one. ``count`` is how many words the rule changed; ``changes``
+    is the *distinct individual* segment-level deltas it made (e.g. ``d→t``), comma-separated
+    and deduped per delta (so a word with two ``w→ɣʷ`` in one firing does not inflate the
+    list); ``matched`` is each such word as ``before → after`` (comma-separated, in
+    derivation order). Every rule gets a row in firing order — one that never fired shows
+    ``count`` 0 with empty ``changes``/``matched``, so dead rules are visible. A
     list-``definition`` rule's sub-rules are merged into one row, matching the other tables.
     """
     matched: dict[str, list[str]] = {}
-    changes: dict[str, dict[str, None]] = {}  # ordered set: first-seen order, deduped
+    changes: dict[str, dict[str, None]] = {}  # ordered set of individual deltas, deduped
     for derivation in derivations:
         for step in derivation.steps:
             base = _SUBRULE_SUFFIX.sub("", step.rule.id)
@@ -493,15 +624,21 @@ def _build_rule_firings_csv(
             after = render_syllabified(after_bundles, step.after_boundaries, project)
             change = describe_change(before_bundles, after_bundles, project)
             matched.setdefault(base, []).append(f"{before} → {after}")
-            changes.setdefault(base, {})[change] = None
+            # describe_change joins a firing's individual deltas with ", "; split them back
+            # out so the distinct set is per delta, not per firing (dedupes repeats like a
+            # two-w word's "w→ɣʷ, w→ɣʷ").
+            for delta in change.split(", "):
+                if delta:
+                    changes.setdefault(base, {})[delta] = None
     buffer = io.StringIO()
     writer = csv.writer(buffer)
-    writer.writerow(["rule", "t", "count", "changes", "matched"])
-    for base, name, rule_time in _rule_rows(rules):
+    writer.writerow(["rule", "t", "sporadic", "count", "changes", "matched"])
+    for base, name, rule_time, words in _rule_rows(rules):
         firings = matched.get(base, [])
         writer.writerow([
             name,
             "" if rule_time is None else rule_time,
+            ", ".join(words),
             len(firings),
             ", ".join(changes.get(base, {})),
             ", ".join(firings),

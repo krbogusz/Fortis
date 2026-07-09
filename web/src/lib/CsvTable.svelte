@@ -8,7 +8,9 @@
   // RFC4180 quoting: a quoted field may contain commas, newlines, and doubled `""`.
   // `wideColumns` is a list of header names that get a roomier default width (a higher cap and
   // a minimum), for content-heavy columns like the rule table's `changes`/`matched`.
-  let { content = "", onchange = null, wideColumns = [] } = $props();
+  // `italicColumn` names a header whose non-empty cells italicize the whole data row —
+  // used to flag sporadic (word-scoped) rules in the rule-firings table.
+  let { content = "", onchange = null, wideColumns = [], italicColumn = null } = $props();
   const editable = $derived(typeof onchange === "function");
 
   function parseCsv(text) {
@@ -85,6 +87,7 @@
   });
 
   const header = $derived(rows[0] ?? []);
+  const italicColIndex = $derived(italicColumn ? header.indexOf(italicColumn) : -1);
   const cols = $derived(header.length);
   const isSel = (r, c) => sel && sel.r === r && sel.c === c;
 
@@ -333,6 +336,30 @@
     tableEl.querySelector(`[data-cell="${sel.r}-${sel.c}"]`)?.focus();
   });
 
+  // ---- clipboard on the selected cell (not while editing) ------------------------------
+  // Handled as native copy/cut/paste events (no clipboard permission prompt, unlike
+  // navigator.clipboard). Only when this table's selected cell holds focus, so a copy meant
+  // for the read-only tables, the text editor, or another table is never hijacked.
+  const cellHasFocus = () =>
+    editable && sel && !editing && !!tableEl && tableEl.contains(document.activeElement);
+  function onCopy(event) {
+    if (!cellHasFocus()) return;
+    event.preventDefault();
+    event.clipboardData.setData("text/plain", rows[sel.r][sel.c] ?? "");
+  }
+  function onCut(event) {
+    if (!cellHasFocus()) return;
+    event.preventDefault();
+    event.clipboardData.setData("text/plain", rows[sel.r][sel.c] ?? "");
+    setCell(sel.r, sel.c, ""); // commits the cleared cell
+  }
+  function onPaste(event) {
+    if (!cellHasFocus()) return;
+    event.preventDefault();
+    const text = event.clipboardData.getData("text/plain").replace(/\r?\n$/, ""); // drop 1 trailing NL
+    setCell(sel.r, sel.c, text); // commits the pasted value
+  }
+
   // ---- row / column structure ----------------------------------------------------------
   function emptyRow() {
     return Array(cols || 1).fill("");
@@ -467,6 +494,8 @@
                 ondragover={(e) => overCol(e, c)}
                 ondrop={dropCol}
                 onclick={(e) => {
+                  if (!editable) return; // read-only: never steal the text selection
+                  if (editing && isSel(0, c)) return; // editing here — let the input keep its caret
                   select(0, c);
                   e.currentTarget.focus();
                 }}
@@ -516,6 +545,7 @@
             class:ins-top={insTop(r)}
             class:ins-bottom={insBottom(r)}
             class:row-dragging={dragRow(r)}
+            class:sporadic-row={italicColIndex >= 0 && (row[italicColIndex] ?? "") !== ""}
             ondragover={(e) => overRow(e, r)}
             ondrop={dropRow}
           >
@@ -549,6 +579,8 @@
                   ondragover={(e) => overCol(e, c)}
                   ondrop={dropCol}
                   onclick={(e) => {
+                    if (!editable) return; // read-only: never steal the text selection or focus-scroll
+                    if (editing && isSel(r, c)) return; // editing here — let the input keep its caret
                     select(r, c);
                     e.currentTarget.focus(); // keystrokes reach cellKey even if the focus effect lags
                   }}
@@ -632,6 +664,10 @@
     text-align: left;
     white-space: nowrap;
     position: relative;
+  }
+  /* Sporadic (word-scoped) rules are italicized across the whole row. */
+  .csv tr.sporadic-row td {
+    font-style: italic;
   }
   /* Read-only column resize: an invisible grip over each header cell's right edge. */
   .col-resizer {
