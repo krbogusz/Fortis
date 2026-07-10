@@ -138,30 +138,29 @@ def _change_diagrams(project, ipa):
 
 def test_render_change_reads_segmental_spreads_from_the_rule(project):
     # Rule-driven: a segmental spread is detected from the rule's ~n operations, not guessed from
-    # which features changed. Place assimilation (anka) spreads the oral node — one fork carrying
-    # the new place (┊) with the nasal's old place delinked (╪) below.
+    # which features changed. Place assimilation (anka) draws the two feature-geometry trees with
+    # the oral node spreading (◀ the dashed arrow) and the nasal's old place delinked (⧧).
     place = _change_diagrams(project, "anka")
     assert len(place) == 1  # exactly the one assimilated consonant
-    assert "┊" in place[0] and "╪" in place[0]  # the spread (dotted) and the delink bar
+    assert "◀" in place[0] and "⧧" in place[0]  # the spreading arrow and the delink mark
 
 
-def test_node_spread_labels_from_the_exchanged_feature_down(project):
-    # The rule exchanges the ``oral`` node ([oral: ~1]), so both the spread-in place and the
-    # delinked old place are named from ``oral`` down through their specified children — the same
-    # root, distinguished by what differs below it: the velar (``back``) that spread in vs the
-    # coronal (``front``) it replaced.
+def test_node_spread_shows_both_geometry_trees(project):
+    # The rule exchanges the ``oral`` node ([oral: ~1]); the diagram is the target's and trigger's
+    # geometry trees side by side, so the coronal that delinks (``front``) and the velar that
+    # spreads in (``back``) both appear, hung under their ``oral`` nodes with tree branches (┌┴┐).
     (place,) = _change_diagrams(project, "anka")
-    assert "oral" in place  # named from the exchanged feature itself
-    assert "back" in place  # the incoming velar place (above the fork)
-    assert "front" in place  # the delinked coronal place (below the ╪)
+    assert "oral" in place and "┌" in place  # geometry nodes drawn as a top-down tree
+    assert "back" in place  # the trigger's velar place (its tree)
+    assert "front" in place  # the target's coronal place (its tree)
 
 
 def test_harmony_spread_is_read_from_the_rule_but_agreement_is_not(project):
     # The two harmony rules reach the same surface, but only the *spreading* one (utine) performs
-    # a ~n operation, so only it draws forks; the *agreement* one (otine) draws nothing — the
-    # honest autosegmental difference between the two formulations.
+    # a ~n operation, so only it draws a spreading arrow; the *agreement* one (otine) draws nothing
+    # — the honest autosegmental difference between the two formulations.
     harmony = _change_diagrams(project, "utine")
-    assert any("back" in d and "┌" in d and "┊" in d for d in harmony)  # the [back] spread fork
+    assert any("back" in d and "◀" in d for d in harmony)  # the [back] spread, as an arrow
     assert _change_diagrams(project, "otine") == []  # α-agreement performs no ~n spread
 
 

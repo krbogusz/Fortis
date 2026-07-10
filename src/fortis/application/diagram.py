@@ -10,7 +10,7 @@ keep it readable in any monospace IPA font.
 """
 from __future__ import annotations
 
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 from src.fortis.application.rendering import render_segment, render_syllabified
@@ -25,8 +25,6 @@ from src.fortis.models.form import Form
 from src.fortis.models.project import Project
 from src.fortis.models.rules import Rule
 from src.fortis.models.values import AutosegRecall
-
-_SEP = 3  # blank display columns between segment slots
 
 
 @dataclass(frozen=True)
@@ -43,26 +41,12 @@ class _Spread:
     label: list[str]
     links: tuple[tuple[int, str], ...]
     replaced: tuple[int, list[str]] | None = None
+    focus: str = ""  # the feature the spread targets (its node), for the geometry-tree diagram
 
 
 def _dwidth(text: str) -> int:
     """Display width — combining marks occupy no column."""
     return sum(0 if is_combining(ch) else 1 for ch in text)
-
-
-def _lw(lines: list[str]) -> int:
-    """The widest display line of a stacked label."""
-    return max((_dwidth(line) for line in lines), default=0)
-
-
-def _margin(widths: Iterable[int], floor: int = 4) -> int:
-    """Side padding wide enough that a label centred over the first/last anchor never clips.
-
-    A centred label overhangs its anchor by half its width on each side, so the side margins must
-    cover that overhang — feature labels (``oral·lingual·back…``) are far wider than the old
-    glyphs. ``floor`` (≥4) keeps room for a floating autoseg even when there are no labels.
-    """
-    return max(floor, max(widths, default=0) // 2 + 1)
 
 
 def _label_from_bundle(bundle, project: Project) -> str:
@@ -80,24 +64,6 @@ def _put(row: list[str], col: int, text: str) -> None:
     for offset, ch in enumerate(text):
         if 0 <= col + offset < len(row):
             row[col + offset] = ch
-
-
-def _geometry(slot: int, step: int, margin: int, count: int) -> tuple[int, list[int]]:
-    """The row width and each segment's centre column — the shared coordinate system.
-
-    Both diagram paths (snapshot and change) derive their canvas here, so the geometry
-    can't drift between them.
-    """
-    total = margin + count * step - _SEP + margin
-    return total, [margin + i * step + slot // 2 for i in range(count)]
-
-
-def _segment_row(rendered: list[str], slot: int, step: int, margin: int, total: int) -> list[str]:
-    """The segment row: each rendered segment centred in its slot."""
-    row = [" "] * total
-    for i, text in enumerate(rendered):
-        _put(row, margin + i * step + (slot - _dwidth(text)) // 2, text)
-    return row
 
 
 def _syllables(form: Form, project: Project) -> list[tuple[str, int | None]]:
@@ -315,96 +281,6 @@ def _tier_changed(before: Form, after: Form) -> bool:
     return False
 
 
-def _draw(segments, spreads: list[_Spread], project: Project) -> str:
-    """The shared rendering core: an ``after`` segment row with each ``_Spread`` drawn over it.
-
-    Above the segments: a fork (label / ``┌─┴─┐`` / styled descenders) for a multi-anchor spread,
-    a single styled vertical for a one-anchor spread, and several one-anchor spreads sharing a
-    column fanned out as a contour. Below: a ``╪`` and old-label row for each spread's ``replaced``.
-    """
-    rendered = [render_segment(s.bundle, project) or "∅" for s in segments]
-    slot = max(max((_dwidth(r) for r in rendered), default=1), 3)  # ≥3 leaves room for a contour
-    step = slot + _SEP
-    labels = [s.label for s in spreads] + [s.replaced[1] for s in spreads if s.replaced]
-    # A contour change lays several labels side by side on one anchor — size the margin to that
-    # group's width (sum of labels + the gaps), not just a single label, so it doesn't overflow.
-    anchor_widths: dict[int, list[int]] = {}
-    for s in spreads:
-        if len(s.links) == 1:
-            anchor_widths.setdefault(s.links[0][0], []).append(_lw(s.label))
-    group_widths = [sum(ws) + len(ws) - 1 for ws in anchor_widths.values()]
-    margin = _margin([_lw(label) for label in labels] + group_widths)
-    total, centers = _geometry(slot, step, margin, len(segments))
-
-    def _centre(row: list[str], col: int, line: str) -> None:
-        _put(row, col - (_dwidth(line) - 1) // 2, line)
-
-    above: list[list[str]] = []
-    if spreads:
-        conn_row = [" "] * total
-        fork_row = [" "] * total  # the branch row (label above, descenders below)
-        # Stacked label rows: tall enough for the deepest label, each label bottom-aligned so its
-        # terminal line sits just above the fork (nearest the segments), the root node up top.
-        height = max([len(s.label) for s in spreads] + [1])
-        label_rows = [[" "] * total for _ in range(height)]
-
-        def stack(col: int, lines: list[str]) -> None:  # centre a stacked label on col
-            for k, line in enumerate(lines):
-                _centre(label_rows[height - len(lines) + k], col, line)
-
-        multi = [s for s in spreads if len(s.links) > 1]
-        singles: dict[int, list[tuple[list[str], str]]] = {}  # col → [(label, glyph)] — one anchor
-        for s in spreads:
-            if len(s.links) == 1:
-                idx, glyph = s.links[0]
-                singles.setdefault(centers[idx], []).append((s.label, glyph))
-        for s in multi:  # one autoseg, several anchors
-            cols_glyphs = [(centers[idx], glyph) for idx, glyph in s.links]
-            cols = sorted(col for col, _ in cols_glyphs)
-            mid = (cols[0] + cols[-1]) // 2
-            stack(mid, s.label)  # the label stack, above the fork
-            for x in range(cols[0], cols[-1] + 1):  # the branch line spanning the anchors
-                fork_row[x] = "─"
-            for c in cols:
-                fork_row[c] = "┬"
-            fork_row[cols[0]], fork_row[cols[-1]] = "┌", "┐"
-            fork_row[mid] = "┼" if mid in cols else "┴"  # the join, under the label
-            for col, glyph in cols_glyphs:  # styled descender: │ kept · ┊ added · ╪ delinked
-                conn_row[col] = glyph
-        for col, items in singles.items():  # autosegs sharing one anchor
-            if len(items) == 1:  # the common case: one spread on one anchor, centred
-                lines, glyph = items[0]
-                stack(col, lines)
-                conn_row[col] = glyph
-            else:  # a contour change ⇒ lay the (one-line tone) labels side by side, no overlap
-                flat = [("·".join(lines), glyph) for lines, glyph in items]
-                widths = [_dwidth(text) for text, _ in flat]
-                x = col - (sum(widths) + (len(flat) - 1)) // 2  # centre the group on the anchor
-                for (text, glyph), w in zip(flat, widths, strict=True):
-                    _put(label_rows[-1], x, text)
-                    conn_row[x + (w - 1) // 2] = glyph  # descender under each label's centre
-                    x += w + 1
-        above = [*label_rows, fork_row, conn_row] if multi else [*label_rows, conn_row]
-
-    seg_row = _segment_row(rendered, slot, step, margin, total)
-
-    below: list[list[str]] = []
-    for s in spreads:  # the delinked old value a node spread overwrote, under its anchor
-        if s.replaced is not None:
-            idx, old_label = s.replaced
-            col = centers[idx]
-            delink_row = [" "] * total
-            delink_row[col] = "╪"
-            below.append(delink_row)
-            for line in reversed(old_label):  # leaves nearest the ╪, the root node furthest below
-                row = [" "] * total
-                _centre(row, col, line)
-                below.append(row)
-
-    lines = [*above, seg_row, *below]
-    return "\n".join("".join(row).rstrip() for row in lines)
-
-
 def _result_bundles(elements: tuple) -> Iterator[ResultBundle]:
     """Yield each ``ResultElem``'s bundle in a result element sequence, descending into nesting."""
     for element in elements:
@@ -449,13 +325,9 @@ def _subtree(bundle: FeatureBundle, feature: str, project: Project) -> frozenset
 
 
 def _node_label(feature: str, bundle: FeatureBundle, project: Project) -> list[str]:
-    """The exchanged node's path as a stack of display lines — a little geometry, not one long
-    ``·`` run::
+    """Stack the exchanged node's path as display lines — a little geometry, not one long run.
 
-                    place
-             tongue_body
-        +high·-low·+back·dorsal
-
+    So ``place`` / ``tongue_body`` / ``+high·-low·+back·dorsal`` instead of the ``·``-joined lot.
     Naming starts at the rule's exchanged feature (the ``~n`` node — e.g. ``place``). Each node on
     the path that still has a present child gets its own line; the terminal features (the leaves)
     share the last line, joined by ``·``. So the spread-in place and the delinked old place are
@@ -482,10 +354,10 @@ def _lca(features: list[str], project: Project) -> str:
 
 
 def _spread_label(features: list[str], bundle: FeatureBundle, project: Project) -> list[str]:
-    """A stacked label for a SET of terminal features that spread together — their common ancestor
-    node up top, then the spreading leaves joined by ``·`` (``tongue_body`` / ``+high·-low·dorsal``).
+    """Stack a label for a SET of terminal features that spread together.
 
-    Only the nodes on a path from the common ancestor down to a spreading feature are shown, so a
+    Their common ancestor node up top, then the spreading leaves joined by ``·`` (``tongue_body`` /
+    ``+high·-low·dorsal``). Only nodes on a path from the ancestor down to a spreading feature, so a
     withheld sibling (Irish keeps ``back`` off Tongue Body) is visible by its absence from the set.
     """
     ancestor = _lca(features, project)
@@ -552,7 +424,7 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
                 was = before_by_id[segments[changed[0]].id]
                 label = _node_label(feature, now, project)
                 replaced = (changed[0], _node_label(feature, was, project))
-            entries.append((feature, bundle, _Spread(label, links, replaced)))
+            entries.append((feature, bundle, _Spread(label, links, replaced, focus=feature)))
 
     # Merge pure spreads (no delink) that share the exact same links into one fork over the whole
     # spreading feature set; keep place-style delinks (a single recalled node already) as they are.
@@ -571,10 +443,12 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
         items = by_links[links]
         if len(items) == 1:
             feature, bundle = items[0]
-            spreads.append(_Spread([_feature_label(feature, bundle, project)], links))
+            label = [_feature_label(feature, bundle, project)]
+            spreads.append(_Spread(label, links, focus=feature))
         else:
             feats = [feature for feature, _ in items]
-            spreads.append(_Spread(_spread_label(feats, items[0][1], project), links))
+            focus = _lca(feats, project)  # the node whose terminal set spreads (e.g. tongue_body)
+            spreads.append(_Spread(_spread_label(feats, items[0][1], project), links, focus=focus))
     return spreads
 
 
@@ -626,21 +500,130 @@ def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str
     return feature
 
 
+def _pad(line: str, width: int) -> str:
+    """Pad *line* to *width* display columns."""
+    return line + " " * max(0, width - _dwidth(line))
+
+
+def _block_width(lines: list[str]) -> int:
+    return max((_dwidth(line) for line in lines), default=0)
+
+
+def _tree_block(
+    node: str, bundle: FeatureBundle, project: Project, include: set[str], is_root: bool = False
+) -> tuple[list[str], int, dict[str, tuple[int, int, int, int]]]:
+    """A feature-geometry subtree drawn top-down (root above, leaves below), à la Halle-Vaux-Wolfe.
+
+    Returns ``(lines, root_column, positions)`` — the rendered block, the column of this node's
+    connector, and a map from each node to ``(row, mid, label_start, label_width)`` so the caller
+    can hang a spreading arrow clear of a label or a delink mark on a connector. Descends only into
+    features in *include*.
+    """
+    label = (
+        (render_segment(bundle, project) or "∅") if is_root
+        else _feature_label(node, bundle, project)
+    )
+    key = "root" if is_root else node
+    kids = [c for c in project.features.children(node) if c in include]
+    if not kids:
+        w = _dwidth(label)
+        return [label], w // 2, {key: (0, w // 2, 0, w)}
+    blocks = [_tree_block(c, bundle, project, include) for c in kids]
+    height = max(len(bl) for bl, _, _ in blocks)
+    rows, roots, positions, x = [""] * height, [], {}, 0
+    for bl, broot, pos in blocks:
+        for r in range(height):
+            rows[r] = _pad(rows[r], x) + (bl[r] if r < len(bl) else "")
+        roots.append(x + broot)
+        for name, (pr, mid, start, w) in pos.items():  # children two rows down (node + connector)
+            positions[name] = (pr + 2, mid + x, start + x, w)
+        x += _block_width(bl) + 3  # gap between sibling subtrees
+    width = max(x - 3, _dwidth(label))
+    mid = (roots[0] + roots[-1]) // 2
+    conn = [" "] * width
+    if len(roots) == 1:
+        conn[roots[0]] = "│"
+    else:
+        for c in range(roots[0], roots[-1] + 1):
+            conn[c] = "─"
+        for c in roots:
+            conn[c] = "┬"
+        conn[roots[0]], conn[roots[-1]] = "┌", "┐"
+        conn[mid] = "┼" if mid in roots else "┴"
+    node_line = [" "] * width
+    lw = _dwidth(label)
+    start = max(0, mid - (lw - 1) // 2)
+    _put(node_line, start, label)
+    positions[key] = (0, mid, start, lw)
+    return ["".join(node_line), "".join(conn), *(_pad(r, width) for r in rows)], mid, positions
+
+
+def _tree_diagram(
+    target: FeatureBundle, source: FeatureBundle, focus: str, project: Project, delink: bool
+) -> str:
+    """Draw the Halle-Vaux-Wolfe rule picture for one spread.
+
+    The target's and the trigger's feature-geometry trees side by side (segments on top), a dashed
+    arrow spreading the *focus* node from trigger to target, and — when the spread overwrote a
+    value — a ``⧧`` delink mark on the target's branch.
+    """
+    ancestry = (focus, *project.features.ancestors(focus))
+    # the top-level place-ish node the spread lives under (e.g. `place`)
+    top = next((a for a in ancestry if project.features.parent(a) == "root"), focus)
+
+    def include(bundle: FeatureBundle) -> set[str]:
+        return {top, *(d for d in project.features.descendants(top) if d in bundle)}
+
+    tlines, _, tpos = _tree_block("root", target, project, include(target), is_root=True)
+    slines, _, spos = _tree_block("root", source, project, include(source), is_root=True)
+    gap = 8
+    tw = _block_width(tlines)
+    height = max(len(tlines), len(slines))
+    tlines += [""] * (height - len(tlines))
+    slines += [""] * (height - len(slines))
+    grid = [list(_pad(tlines[i], tw) + " " * gap + _pad(slines[i], _block_width(slines)))
+            for i in range(height)]
+
+    # The spreading arrow: dashed, from the trigger's focus node leftward into the target's, on the
+    # focus row (both trees are top-aligned, so the node sits at the same depth in each). Start and
+    # end it clear of each focus label so it never overwrites the node names.
+    frow, tmid, tstart, twdt = tpos.get(focus, tpos["root"])
+    _, _, sstart, _ = spos.get(focus, spos["root"])
+    sstart += tw + gap
+    left, right = tstart + twdt + 1, sstart - 2
+    if left <= right and frow < len(grid):
+        for c in range(left, right + 1):
+            grid[frow][c] = "┈"
+        grid[frow][left] = "◀"
+
+    # The delink: strike the target's link into the focus node (the connector row just above it).
+    if delink and frow - 1 >= 0:
+        grid[frow - 1][tmid] = "⧧"
+
+    return "\n".join("".join(row).rstrip() for row in grid)
+
+
 def render_segmental_spreads(
     before: Form, after: Form, rule: Rule | None, project: Project
 ) -> list[tuple[str, str]]:
-    """One canonical rule diagram for each segmental spread (place, harmony, ``~n``).
+    """A Halle-Vaux-Wolfe rule diagram for each segmental spread (place, harmony, ``~n``).
 
-    The classic autosegmental single picture: the ``~n`` node forks over the **input** segments,
-    ``│`` its kept link on the trigger and ``┊`` the newly spread (dashed) link on the target, with
-    the target's overwritten old node struck out below (``╪``, the delink double-bar). Drawn over
-    ``before`` — the input the rule operates on — so the target segment's derived identity (``n``
-    becoming ``ŋ``) is left to fall out of the Place change rather than pre-empted in the picture.
-    Vowel harmony spreads several nodes at once (``back`` and ``labial``): one diagram each.
+    Two feature-geometry trees, segments on top: the target and the trigger, with a dashed arrow
+    spreading the recalled node from trigger to target and a ``⧧`` where the target's old node is
+    delinked. Drawn over the **input** segments, so the target's derived identity falls out of the
+    change. Vowel harmony spreads several nodes at once (``back``, ``labial``): one diagram each.
     """
     spreads = _rule_spreads(before, after, rule, project)
-    # The sublabel (the CLI md ``###`` heading) stays a flat one-liner; the diagram stacks it.
-    return [("·".join(s.label), _draw(before.segments, [s], project)) for s in spreads]
+    out: list[tuple[str, str]] = []
+    for s in spreads:
+        target_idx = next(i for i, glyph in s.links if glyph == "┊")
+        source_idx = next(i for i, glyph in s.links if glyph == "│")
+        target = before.segments[target_idx].bundle  # the input geometry the rule starts from
+        source = after.segments[source_idx].bundle  # the trigger (unchanged by the rule)
+        diagram = _tree_diagram(target, source, s.focus, project, s.replaced is not None)
+        # The sublabel (the CLI md ``###`` heading) stays a flat one-liner.
+        out.append(("·".join(s.label), diagram))
+    return out
 
 
 def render_change(
