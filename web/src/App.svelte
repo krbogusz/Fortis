@@ -2353,6 +2353,19 @@
       content-visibility: auto;
       contain-intrinsic-size: auto 600px;
     }
+
+    /* The Accuracy / Errors / Context tables can be wider than a phone (many columns, long
+       IPA examples). If they overflow .results, the horizontal scroll bleeds past iOS
+       Safari's leaky overflow-x: hidden and drags the whole page — header and all — sideways.
+       Make each such table its own horizontal-scroll box (display: block + overflow-x: auto)
+       so it scrolls in place and .results never overflows. There are only a handful of these
+       tables, so unlike the 300+ derivation cards this creates no memory pressure. The
+       derivation/blame traces are excluded — they already scroll via .trace-scroll. */
+    .results .report-summary,
+    .results .report-misses:not(.blame-traj) {
+      display: block;
+      overflow-x: auto;
+    }
   }
 
   /* Docs floating window */
