@@ -33,20 +33,26 @@ _SEP = 3  # blank display columns between segment slots
 class _Spread:
     """One autosegment fanning to its anchors — the common shape both change diagrams draw.
 
-    ``label`` is the spreading thing (a tone like ``˦`` or a place node like ``lingual·back``);
+    ``label`` is the spreading thing as a stack of display lines (a one-line tone ``[˦]``, or a
+    place path ``[place, tongue_body, +high·-low·+back·dorsal]`` drawn as a little geometry);
     ``links`` pairs each anchor's index in the ``after`` segment row with its association glyph
     (``│`` kept · ``┊`` added · ``╪`` delinked); ``replaced`` is an optional ``(index, old_label)``
     drawn *below* that anchor — the delinked old value a node spread overwrote (``None`` for tiers).
     """
 
-    label: str
+    label: list[str]
     links: tuple[tuple[int, str], ...]
-    replaced: tuple[int, str] | None = None
+    replaced: tuple[int, list[str]] | None = None
 
 
 def _dwidth(text: str) -> int:
     """Display width — combining marks occupy no column."""
     return sum(0 if is_combining(ch) else 1 for ch in text)
+
+
+def _lw(lines: list[str]) -> int:
+    """The widest display line of a stacked label."""
+    return max((_dwidth(line) for line in lines), default=0)
 
 
 def _margin(widths: Iterable[int], floor: int = 4) -> int:
@@ -325,18 +331,29 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
     anchor_widths: dict[int, list[int]] = {}
     for s in spreads:
         if len(s.links) == 1:
-            anchor_widths.setdefault(s.links[0][0], []).append(_dwidth(s.label))
+            anchor_widths.setdefault(s.links[0][0], []).append(_lw(s.label))
     group_widths = [sum(ws) + len(ws) - 1 for ws in anchor_widths.values()]
-    margin = _margin([_dwidth(label) for label in labels] + group_widths)
+    margin = _margin([_lw(label) for label in labels] + group_widths)
     total, centers = _geometry(slot, step, margin, len(segments))
+
+    def _centre(row: list[str], col: int, line: str) -> None:
+        _put(row, col - (_dwidth(line) - 1) // 2, line)
 
     above: list[list[str]] = []
     if spreads:
-        label_row = [" "] * total
         conn_row = [" "] * total
         fork_row = [" "] * total  # the branch row (label above, descenders below)
+        # Stacked label rows: tall enough for the deepest label, each label bottom-aligned so its
+        # terminal line sits just above the fork (nearest the segments), the root node up top.
+        height = max([len(s.label) for s in spreads] + [1])
+        label_rows = [[" "] * total for _ in range(height)]
+
+        def stack(col: int, lines: list[str]) -> None:  # centre a stacked label on col
+            for k, line in enumerate(lines):
+                _centre(label_rows[height - len(lines) + k], col, line)
+
         multi = [s for s in spreads if len(s.links) > 1]
-        singles: dict[int, list[tuple[str, str]]] = {}  # col → [(label, glyph)] — one anchor each
+        singles: dict[int, list[tuple[list[str], str]]] = {}  # col → [(label, glyph)] — one anchor
         for s in spreads:
             if len(s.links) == 1:
                 idx, glyph = s.links[0]
@@ -345,7 +362,7 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
             cols_glyphs = [(centers[idx], glyph) for idx, glyph in s.links]
             cols = sorted(col for col, _ in cols_glyphs)
             mid = (cols[0] + cols[-1]) // 2
-            _put(label_row, mid - (_dwidth(s.label) - 1) // 2, s.label)  # the label, above the fork
+            stack(mid, s.label)  # the label stack, above the fork
             for x in range(cols[0], cols[-1] + 1):  # the branch line spanning the anchors
                 fork_row[x] = "─"
             for c in cols:
@@ -356,17 +373,18 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
                 conn_row[col] = glyph
         for col, items in singles.items():  # autosegs sharing one anchor
             if len(items) == 1:  # the common case: one spread on one anchor, centred
-                label, glyph = items[0]
-                _put(label_row, col - (_dwidth(label) - 1) // 2, label)
+                lines, glyph = items[0]
+                stack(col, lines)
                 conn_row[col] = glyph
-            else:  # a contour change ⇒ lay the (wide feature) labels side by side, no overlap
-                widths = [_dwidth(label) for label, _ in items]
-                x = col - (sum(widths) + (len(items) - 1)) // 2  # centre the group on the anchor
-                for (label, glyph), w in zip(items, widths, strict=True):
-                    _put(label_row, x, label)
+            else:  # a contour change ⇒ lay the (one-line tone) labels side by side, no overlap
+                flat = [("·".join(lines), glyph) for lines, glyph in items]
+                widths = [_dwidth(text) for text, _ in flat]
+                x = col - (sum(widths) + (len(flat) - 1)) // 2  # centre the group on the anchor
+                for (text, glyph), w in zip(flat, widths, strict=True):
+                    _put(label_rows[-1], x, text)
                     conn_row[x + (w - 1) // 2] = glyph  # descender under each label's centre
                     x += w + 1
-        above = [label_row, fork_row, conn_row] if multi else [label_row, conn_row]
+        above = [*label_rows, fork_row, conn_row] if multi else [*label_rows, conn_row]
 
     seg_row = _segment_row(rendered, slot, step, margin, total)
 
@@ -374,11 +392,14 @@ def _draw(segments, spreads: list[_Spread], project: Project) -> str:
     for s in spreads:  # the delinked old value a node spread overwrote, under its anchor
         if s.replaced is not None:
             idx, old_label = s.replaced
+            col = centers[idx]
             delink_row = [" "] * total
-            delink_row[centers[idx]] = "╪"
-            old_row = [" "] * total
-            _put(old_row, max(0, centers[idx] - _dwidth(old_label) // 2), old_label)
-            below += [delink_row, old_row]
+            delink_row[col] = "╪"
+            below.append(delink_row)
+            for line in reversed(old_label):  # leaves nearest the ╪, the root node furthest below
+                row = [" "] * total
+                _centre(row, col, line)
+                below.append(row)
 
     lines = [*above, seg_row, *below]
     return "\n".join("".join(row).rstrip() for row in lines)
@@ -427,16 +448,30 @@ def _subtree(bundle: FeatureBundle, feature: str, project: Project) -> frozenset
     return frozenset((n, bundle[n].value) for n in names if n in bundle)
 
 
-def _node_label(feature: str, bundle: FeatureBundle, project: Project) -> str:
-    """The exchanged node and each of its present descendants, every one with its value —
-    ``oral·lingual·back·aperture: high``.
+def _node_label(feature: str, bundle: FeatureBundle, project: Project) -> list[str]:
+    """The exchanged node's path as a stack of display lines — a little geometry, not one long
+    ``·`` run::
 
-    Naming starts at the rule's exchanged feature (the ``~n`` node — e.g. ``oral``), so the
-    spread-in place and the delinked old place are named from the same root and the reader sees
-    exactly where the two diverge below it.
+                    place
+             tongue_body
+        +high·-low·+back·dorsal
+
+    Naming starts at the rule's exchanged feature (the ``~n`` node — e.g. ``place``). Each node on
+    the path that still has a present child gets its own line; the terminal features (the leaves)
+    share the last line, joined by ``·``. So the spread-in place and the delinked old place are
+    named from the same root and the reader sees where the two diverge, level by level.
     """
     names = [feature, *(d for d in project.features.descendants(feature) if d in bundle)]
-    return "·".join(_feature_label(n, bundle, project) for n in names)
+    present = set(names)
+    lines, leaves = [], []
+    for name in names:
+        if any(child in present for child in project.features.children(name)):
+            lines.append(_feature_label(name, bundle, project))  # an internal node on the path
+        else:
+            leaves.append(_feature_label(name, bundle, project))  # a terminal feature
+    if leaves:
+        lines.append("·".join(leaves))
+    return lines
 
 
 def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project) -> list[_Spread]:
@@ -467,7 +502,7 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
                 continue
             # By default label by the spread node itself (a harmony spread of ``back`` reads
             # ``back``): a unary node's bare name, a binary feature's sign, a scalar's value.
-            label = _feature_label(feature, segments[indices[0]].bundle, project)
+            label = [_feature_label(feature, segments[indices[0]].bundle, project)]
             links = tuple((i, "┊" if i in changed else "│") for i in indices)
             replaced = None
             if len(changed) == 1 and old[changed[0]]:  # one anchor over a non-empty old value
@@ -534,13 +569,18 @@ def _feature_label(feature: str, bundle: FeatureBundle, project: Project) -> str
 def render_segmental_spreads(
     before: Form, after: Form, rule: Rule | None, project: Project
 ) -> list[tuple[str, str]]:
-    """The spread node label + a fork diagram for each segmental spread (place, harmony, ``~n``).
+    """One canonical rule diagram for each segmental spread (place, harmony, ``~n``).
 
-    Vowel harmony spreads several nodes at once (``back`` and ``labial``), so the node label
-    distinguishes the otherwise same-named forks.
+    The classic autosegmental single picture: the ``~n`` node forks over the **input** segments,
+    ``│`` its kept link on the trigger and ``┊`` the newly spread (dashed) link on the target, with
+    the target's overwritten old node struck out below (``╪``, the delink double-bar). Drawn over
+    ``before`` — the input the rule operates on — so the target segment's derived identity (``n``
+    becoming ``ŋ``) is left to fall out of the Place change rather than pre-empted in the picture.
+    Vowel harmony spreads several nodes at once (``back`` and ``labial``): one diagram each.
     """
     spreads = _rule_spreads(before, after, rule, project)
-    return [(s.label, _draw(after.segments, [s], project)) for s in spreads]
+    # The sublabel (the CLI md ``###`` heading) stays a flat one-liner; the diagram stacks it.
+    return [("·".join(s.label), _draw(before.segments, [s], project)) for s in spreads]
 
 
 def render_change(

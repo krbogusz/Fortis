@@ -1262,7 +1262,7 @@
                         class="card-toggle"
                         class:active={singleAuto}
                         title="Show the autosegmental diagram for each rule that spreads, docks, or delinks"
-                        onclick={() => (singleAuto = !singleAuto)}>Autosegmental</button
+                        onclick={() => (singleAuto = !singleAuto)}>Graph</button
                       >
                     {/if}
                     {#if d.steps.some((s) => s.definition)}
@@ -1380,7 +1380,7 @@
                       class="card-toggle"
                       class:active={openAuto[i]}
                       title="Show the autosegmental diagram for each rule that spreads, docks, or delinks"
-                      onclick={() => (openAuto[i] = !openAuto[i])}>Autosegmental</button
+                      onclick={() => (openAuto[i] = !openAuto[i])}>Graph</button
                     >
                   {/if}
                   {#if d.steps.some((s) => s.definition)}
@@ -2171,8 +2171,8 @@
     color: var(--muted);
     font-style: italic;
   }
-  /* The card's toggle buttons (Autosegmental · Definitions) float to the right of the
-     word/gloss as a group; Autosegmental sits left of Definitions. */
+  /* The card's toggle buttons (Graph · Definitions) float to the right of the
+     word/gloss as a group; Graph sits left of Definitions. */
   .card-toggles {
     margin-left: auto;
     align-self: center;
