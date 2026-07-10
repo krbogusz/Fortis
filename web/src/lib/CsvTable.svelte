@@ -8,8 +8,8 @@
   // RFC4180 quoting: a quoted field may contain commas, newlines, and doubled `""`.
   // `wideColumns` is a list of header names that get a roomier default width (a higher cap and
   // a minimum), for content-heavy columns like the rule table's `changes`/`matched`.
-  // `italicColumn` names a header whose non-empty cells italicize the whole data row —
-  // used to flag sporadic (word-scoped) rules in the rule-firings table.
+  // `italicColumn` names a header whose non-empty cells italicize that row's title (its first,
+  // key column) — used to flag sporadic (word-scoped) rules in the rule-firings table.
   let { content = "", onchange = null, wideColumns = [], italicColumn = null } = $props();
   const editable = $derived(typeof onchange === "function");
 
@@ -665,8 +665,9 @@
     white-space: nowrap;
     position: relative;
   }
-  /* Sporadic (word-scoped) rules are italicized across the whole row. */
-  .csv tr.sporadic-row td {
+  /* Sporadic (word-scoped) rules are flagged by italicizing the rule title only (the first,
+     key column) — not the whole row, which made the numeric/content cells hard to read. */
+  .csv tr.sporadic-row td.sym {
     font-style: italic;
   }
   /* Read-only column resize: an invisible grip over each header cell's right edge. */
