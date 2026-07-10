@@ -1,9 +1,11 @@
 # Acknowledgements and data sources
 
 Fortis is a general engine and ships no built-in phonology. The engine code is original; the
-`projects/latin_to_french` example and its accuracy dataset draw on external work, recorded
-here for attribution. Per-project provenance also lives beside the data:
-[`projects/latin_to_french/SOURCE.md`](../projects/latin_to_french/SOURCE.md).
+`projects/latin_to_french` example and its accuracy dataset draw on external work (data with its
+own licence), and `projects/halle_vaux_wolfe` follows a published feature geometry (an academic
+citation) — both recorded here for attribution. Per-project provenance also lives beside the
+data: [`projects/latin_to_french/SOURCE.md`](../projects/latin_to_french/SOURCE.md),
+[`projects/halle_vaux_wolfe/SOURCE.md`](../projects/halle_vaux_wolfe/SOURCE.md).
 
 ## DiaSim / DiaCLEF2025 — the Latin → French rules
 
@@ -28,6 +30,18 @@ here for attribution. Per-project provenance also lives beside the data:
 - **Corpus:** OpenSubtitles 2018 via [OPUS](https://opus.nlpl.eu/) (spoken-register counts).
 - **Use:** the `frequency` column in `words.csv` (token-weighted accuracy; sporadic-change
   candidates). 282/304 matched; the rest default to weight 1.
+
+## Halle, Vaux & Wolfe (2000) — the halle_vaux_wolfe feature geometry
+
+- **Source:** Morris Halle, Bert Vaux & Andrew Wolfe (2000), *On Feature Spreading and the
+  Representation of Place of Articulation*, **Linguistic Inquiry** 31(3): 387–444.
+- **Use:** `projects/halle_vaux_wolfe/features.toml` encodes the paper's feature geometry
+  (their structure (1)), and the rules illustrate phenomena it discusses — place assimilation,
+  Irish dorsal assimilation, Uyghur raising, Sibe uvularization, Palestinian emphasis, Igbo
+  rounding. The inventory, lexicon, and rules are an original illustration built to exercise the
+  geometry, **not** the paper's data. Provenance beside the data:
+  [`projects/halle_vaux_wolfe/SOURCE.md`](../projects/halle_vaux_wolfe/SOURCE.md). An academic
+  citation, not a licensed dataset — it does not affect the engine's licence.
 
 ## Licensing note
 

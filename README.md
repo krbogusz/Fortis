@@ -114,6 +114,11 @@ segment changes it made, e.g. `d→t`, the words it matched as `before → after
 `sporadic` column naming any word scope). `rule_dependencies.html` is the rule feeding
 graph — which rule's output segment feeds which rule's input, read off the actual
 firings — as a scrollable, time-columned view.
+The optional `--autosegmental` flag additionally writes `autosegmental.md`, one
+canonical rule diagram per rule that spreads, docks, or delinks — a feature-geometry
+tree for a segmental node-spread (place assimilation) and Goldsmith's tonal notation
+for a tier change — with the spreading association dashed (`┊`) and the delinked one
+struck (`╪`/`⧧`). Rules that merely rewrite a feature in place are not drawn.
 If the lexicon carries attested forms (`final` and/or
 intermediate `stages`), four more analyses run over it: the **accuracy**
 analysis writes `accuracy.csv` (per-stage exact-match accuracy + mean phone
@@ -146,12 +151,16 @@ browser.
 
 `web/` is a browser front end that runs the same Python engine used by the CLI —
 compiled to WebAssembly and executed in-browser via [Pyodide](https://pyodide.org),
-rather than a separate JavaScript reimplementation. Edit any of the 9 project
-files (the eight inventories plus `settings.toml`, or load your own project) and
-the derivations re-run in a trace view, with **Accuracy**, **Errors**,
-**Error context**, and **Blame** tabs that score and analyse them against the lexicon's
-attested forms when it has them; see [`web/README.md`](web/README.md) for the full
-picture, including the type scale and theming. To run it locally:
+rather than a separate JavaScript reimplementation. Every project in `projects/` is
+auto-discovered into the picker (or load your own); edit any inventory file and the
+derivations re-run in a trace view. Each derivation card carries a **Definitions**
+toggle (the rule bodies) and — for a word touched by a rule that spreads, docks, or
+delinks — a **Graph** toggle that draws the same autosegmental diagram as
+`--autosegmental` inline. Result tabs (**Rules**, **Tree**, **Matrix**, **Accuracy**,
+**Errors**, **Context**, **Blame**) score and analyse the run against the lexicon's
+attested forms when it has them. The layout is responsive down to a phone. See
+[`web/README.md`](web/README.md) for the full picture, including the type scale and
+theming. To run it locally:
 
 ```
 cd web
@@ -331,6 +340,18 @@ behaviour fall out:
 - **Optional** — with no `tiers.toml` the tier machinery never runs; the engine behaves
   exactly as before, so a project that doesn't need tones pays nothing.
 
+The same `~n` recall works on a **segmental geometry node**, where it copies that node's whole
+subtree: `[+nasal] → [oral: ~1] / _ [+consonantal, oral: ~1]` is place assimilation (the nasal
+takes the following consonant's whole place). Plain `~n` matches only a source that _has_ the
+node; `~n?` is *presence-optional* (it also matches — and spreads — an absent node, so
+`[back: ~1?, front: ~2?]` copies backness both ways); and `~n=value` is a *bind-and-match* that
+binds only a source of that value (`high: ~1=-` binds a `[-high]` vowel, stepping over transparent
+`[+high]` ones). Both kinds of change — tier and segmental — render as a single autosegmental rule
+diagram in the CLI's `--autosegmental` report and the web app's **Graph** view. The
+`projects/halle_vaux_wolfe` project is a showcase: the Halle-Vaux-Wolfe (2000) feature geometry
+with place assimilation, Irish dorsal assimilation, Uyghur raising, Sibe uvularization, and more.
+See `docs/user_guide.md` §5.12.
+
 Internally a word is a `Form` (`models/form.py`): a list of `Segment`s (a feature bundle plus
 a stable id) alongside the tiers. The matcher and renderer read suprasegmentals back through a
 transient "lowered" view, so they keep working on plain bundles; `application/tiers.py` holds
@@ -484,6 +505,10 @@ draw on external work — full details, uses, and licences are in
   treat the Latin → French rules/lexicon as GPL-3.0, separately from the engine's licence below.
 - **Word frequencies** — [hermitdave/FrequencyWords](https://github.com/hermitdave/FrequencyWords)
   (MIT), from OpenSubtitles 2018 via [OPUS](https://opus.nlpl.eu/).
+- **Feature geometry (halle_vaux_wolfe project)** — the geometry and the phenomena it showcases
+  are after Halle, Vaux & Wolfe (2000), _On Feature Spreading and the Representation of Place of
+  Articulation_, *Linguistic Inquiry* 31:387–444. The inventory and rules are an original
+  illustration, not the paper's data. See [`SOURCE.md`](projects/halle_vaux_wolfe/SOURCE.md).
 
 ## A note on generative AI
 

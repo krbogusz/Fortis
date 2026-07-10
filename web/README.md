@@ -40,14 +40,16 @@ reflected on the next build — the glue only calls stable public functions
   view. The generated reports are in the right pane, not here.
 
 - **Right panel** shows the results, with a view switcher: **Derivations** (the
-  firing-rule trace, each word a card with a per-card **Definition** toggle),
-  **Table** (`derivation_table.csv` — one row per word, one column per rule), and,
-  when the lexicon carries attested forms, **Accuracy** (the distance-to-target summary),
-  **Errors** (which segments came out wrong, per stage), **Error context** (the
-  attested-form environments most associated with each error, per stage), and **Blame**
-  (each wrong word attributed to the rule that produced it). A **Save** button downloads
-  the active view's report (`derivations.csv` / `derivation_table.csv` / `accuracy.csv` /
-  `errors.csv` / `error_context.csv` / `blame.md`). Small projects re-run automatically on every edit; a
+  firing-rule trace, each word a card with per-card **Definition** and **Graph** toggles),
+  **Rules** (`rule_firings.csv` — one row per rule with its fire count), **Tree** (the
+  rule-feeding graph), **Matrix** (`derivation_table.csv` — one row per word, one column
+  per rule), and, when the lexicon carries attested forms, **Accuracy** (the
+  distance-to-target summary), **Errors** (which segments came out wrong, per stage),
+  **Context** (the attested-form environments most associated with each error, per stage),
+  and **Blame** (each wrong word attributed to the rule that produced it). A **Save** button
+  downloads the active view's report (`derivations.csv` / `rule_firings.csv` /
+  `derivation_table.csv` / `accuracy.csv` / `errors.csv` / `error_context.csv` / `blame.md`).
+  Small projects re-run automatically on every edit; a
   large one (over 500 words or 100 rules) waits for a **Run project** button instead.
 
   Example projects are built by `scripts/build-engine.mjs` into
@@ -59,7 +61,8 @@ reflected on the next build — the glue only calls stable public functions
   `document.baseURI`, so they resolve under a GitHub Pages project subpath.
 - **Results** (right) — the sound-change trace: each firing rule grouped under its
   `time:` heading, with `before → after (change)` per step and the surface form.
-  **Definition** toggles the rule bodies. A progress bar in the header fills as the
+  **Definition** toggles the rule bodies; **Graph** reveals, under each step whose rule
+  spreads a tier or geometry node, its canonical autosegmental diagram. A progress bar in the header fills as the
   words derive (the run is driven in batches so the bar can update between them).
 
 ## Typography
