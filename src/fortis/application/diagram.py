@@ -1,11 +1,12 @@
-"""Autosegmental diagrams as monospace Unicode text.
+"""Autosegmental diagrams as monospace Unicode text — one canonical rule picture per change.
 
-The classic autosegmental picture, in text. A **suprasegmental** change (tone, stress) is drawn
-as a *before* → *after* pair, one column per syllable (the tone-bearing units), with the tones on
-a tier **below** the segments joined by association lines: a tone forking up to several syllables
-is a **spread**, several tones stacked under one syllable a **contour**. A **segmental** node
-spread (place assimilation, vowel harmony) is drawn per segment with the spread node *above* the
-row. Association lines are styled ``│`` kept · ``┊`` added · ``╪`` delinked. Box-drawing characters
+A **suprasegmental** change (tone, stress) is Goldsmith's tonal notation: syllables in a row (the
+tone-bearing units) over their tones on a tier **below**, joined by association lines — a tone
+forking to several syllables is a **spread**, several tones stacked under one a **contour**. A
+**segmental** node spread (place assimilation, vowel harmony) is the Halle-Vaux-Wolfe feature
+geometry: the target's and trigger's trees side by side, segments on top, with a dashed arrow
+spreading the recalled node. Both style associations the same way — ``│`` kept · ``┊`` added
+(dashed) · ``╪`` / ``⧧`` delinked — and draw the rule as a single picture. Box-drawing characters
 keep it readable in any monospace IPA font.
 """
 from __future__ import annotations
@@ -237,19 +238,6 @@ def _tonal_block(form: Form, project: Project, before: Form | None = None) -> li
     return ["".join(r).rstrip() for r in rows]
 
 
-def _join_pair(left: list[str], right: list[str]) -> str:
-    """Two blocks side by side, joined by ``→`` on the segment row."""
-    width = max((_dwidth(r) for r in left), default=0)
-    height = max(len(left), len(right))
-    left = left + [""] * (height - len(left))
-    right = right + [""] * (height - len(right))
-    rows = []
-    for i in range(height):
-        padded = left[i] + " " * (width - _dwidth(left[i]))
-        rows.append((padded + ("  →  " if i == 0 else "     ") + right[i]).rstrip())
-    return "\n".join(rows)
-
-
 def render_autosegmental(form: Form, project: Project) -> str:
     """A form's suprasegmental tiers as a per-syllable diagram (syllables over their tones)."""
     if not form.segments:
@@ -258,14 +246,15 @@ def render_autosegmental(form: Form, project: Project) -> str:
 
 
 def render_autosegmental_change(before: Form, after: Form, project: Project) -> str:
-    """One rule's tier change as a *before* → *after* pair of per-syllable diagrams.
+    """One rule's tier change as a single canonical diagram (Goldsmith's tone-rule notation).
 
-    Each association is styled on the after side, the classic rule-as-diagram notation: ``│`` kept ·
-    ``┊`` added (a spread/dock) · ``╪`` delinked — read off the before/after tiers.
+    Syllables in a row over their tones, each association styled against the input: ``│`` kept ·
+    ``┊`` added (a spread/dock, the dashed line) · ``╪`` delinked. One picture, not a before→after
+    pair — matching the single-diagram feature-geometry graphs.
     """
     if not after.segments:
         return render_autosegmental(after, project)
-    return _join_pair(_tonal_block(before, project), _tonal_block(after, project, before=before))
+    return "\n".join(_tonal_block(after, project, before=before))
 
 
 def _tier_changed(before: Form, after: Form) -> bool:
