@@ -1151,12 +1151,14 @@
           </p>
           {#each blame.words as w}
             <details class="report-detail" {open}>
-              <summary>
-                <span class="tgt">{w.word}</span>
-                <span class="form">{w.surface}</span>
-                <span class="muted">for</span>
-                <span class="form">{w.target}</span>
-                <span class="muted">· d{w.distance}</span>
+              <summary class="blame-summary">
+                <span class="tgt blame-word">{w.word}</span>
+                <span class="blame-meta">
+                  <span class="form">{w.surface}</span>
+                  <span class="muted">for</span>
+                  <span class="form">{w.target}</span>
+                  <span class="muted">· d{w.distance}</span>
+                </span>
               </summary>
               {#if w.residuals.length}
                 <ul class="residual-pills">
@@ -2026,7 +2028,8 @@
   .report-detail summary {
     cursor: pointer;
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 4px 10px;
     align-items: baseline;
     padding: 4px 0;
     font-weight: 600;
@@ -2034,6 +2037,21 @@
   }
   .report-detail summary .muted {
     font-weight: 400;
+  }
+  /* Blame word row: the gloss/word label takes the available width; the derived-vs-target
+     metadata stays together as one unit (never splitting "· dN" mid-token) and sits to the
+     right, dropping to its own line only when the label leaves it no room. */
+  .blame-word {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .blame-meta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-left: auto;
+    white-space: nowrap;
   }
   .report-detail .report-misses {
     margin-top: 6px;
