@@ -941,7 +941,7 @@
           <div class="trace-scroll">
           <table class="report-misses blame-traj">
             <thead>
-              <tr><th>rule</th>{#if hasTime}<th>t</th>{/if}<th>before</th><th>after</th><th class="st-change">change</th></tr>
+              <tr><th>rule</th>{#if hasTime}<th>t</th>{/if}<th>before</th><th>after</th><th>change</th></tr>
             </thead>
             <tbody>
               {#each steps as s}
@@ -950,7 +950,7 @@
                   {#if hasTime}<td class="st-time">{s.time ?? ""}</td>{/if}
                   <td class="form">{s.before}</td>
                   <td class="form">{s.after}</td>
-                  <td class="form st-change">{s.change ?? ""}</td>
+                  <td class="form">{s.change ?? ""}</td>
                 </tr>
                 {#if showDefs && s.heading && s.definition}
                   <tr><td colspan={hasTime ? 5 : 4} class="def-cell">{s.definition}</td></tr>
@@ -2339,36 +2339,19 @@
     }
 
     /* The Derivations tab renders every word's trace card at once (300+ for
-       latin_to_french). Wrapping each card's table in an overflow-x scroll container
-       (the desktop approach) makes hundreds of scrollable containers, which exhausts
-       mobile browser memory and crashes/reloads the tab in both Chrome and Safari. So on
-       phones there's no per-card scroll — each table fits its card instead, returning to
-       the known-good "plain tables, no scroll containers" structure that worked before.
-       To fit five IPA columns into a phone's width without either shredding forms to one
-       glyph per line or overflowing: drop the redundant `change` column (it's just the
-       before→after delta), let the running forms wrap only when a single form is itself
-       too long (break-word keeps them atomic and readable), and shrink the rule column's
-       min-width so the forms get the room. */
-    .trace-scroll {
-      overflow-x: visible;
-    }
-    .st-change {
-      display: none;
-    }
-    .blame-traj td:not(:first-child),
-    .blame-traj th:not(:first-child) {
-      width: auto;
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
-    /* Give the IPA form columns priority width so a running form mostly stays on one or
-       two lines; the rule column (prose) absorbs the wrapping into the remaining space. */
-    .blame-traj .form {
-      min-width: 6ch;
-    }
-    .blame-traj td:first-child,
-    .blame-traj th:first-child {
-      min-width: 8ch;
+       latin_to_french). Each card's table is horizontally scrollable (.trace-scroll), and
+       on a phone hundreds of live scroll containers each get their own compositing layer —
+       which exhausts browser memory and crashes/reloads the tab. content-visibility: auto
+       makes the browser skip rendering (layout, paint, and compositing) of any card that's
+       off-screen, so only the handful in view ever allocate a scroll layer. The card list
+       stays lazily rendered: a card materialises as it scrolls into view and is released
+       when it leaves. contain-intrinsic-size gives an off-screen card a placeholder height
+       so the scrollbar stays sane; `auto` then remembers each card's real height once it
+       has rendered, so scrolling back is stable. Mobile only — desktop renders all 300+
+       cards fine and needs no change. */
+    .card.derivation {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 600px;
     }
   }
 
