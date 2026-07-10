@@ -1,15 +1,44 @@
-# Nasal place assimilation as Place-node spreading — the phenomenon Halle, Vaux & Wolfe
-# use to motivate the geometry. The nasal recalls (~1) the following consonant's whole
-# Place node, so a single spread carries every place feature (labial / coronal / dorsal
-# and their dependents) at once — the autosegmental point of a Place node.
+# Showcase rules for the Halle-Vaux-Wolfe geometry. Each is word-scoped (its `words` list) so
+# the languages share one inventory without interfering — a rule fires only on its own examples.
+
+# --- Nasal place assimilation: the WHOLE Place node spreads (labial/coronal/dorsal at once). ---
 [place_assimilation]
-name = "Nasal place assimilation (Place spreading)"
+words      = ["anka", "anpa", "anta"]
+name       = "Nasal place assimilation (Place spreading)"
 definition = "[+nasal] -> [place: ~1] / _ [+consonantal, place: ~1]"
 
-# Uyghur Raising (Hahn 1991:84, via HVW ex. 12): a low vowel raises to high in a medial
-# open syllable. "Open" = the vowel sits immediately before a syllable boundary ($, no coda).
-# "Medial" = non-initial (a preceding syllable — its nucleus, then the $ — sits to the left,
-# so a bare word-initial $ can't satisfy it) and non-final (an onset follows the $).
+# --- Uyghur Raising (Hahn 1991; HVW ex. 12): low -> high in a medial open syllable. ---
 [uyghur_raising]
-name = "Uyghur Raising"
+words      = ["kalalar"]
+name       = "Uyghur Raising"
 definition = "[-consonantal, +sonorant, +low] -> [+high, -low] / [-consonantal] [+consonantal]* $ [+consonantal]* _ $ [+consonantal]"
+
+# --- Sibe uvularization (HVW ex. 50-52): a dorsal C goes uvular ([-high]) when preceded ANYWHERE
+#     by a [-high] vowel; intervening [+high] vowels are transparent (spreading of [-high]). ---
+[sibe_uvularization]
+words      = ["dʒalukun", "bɔduxu", "ulukun"]
+name       = "Sibe uvularization"
+definition = "[+consonantal, dorsal, +high] -> [-high] / [-consonantal, -high] []* _"
+
+# --- Palestinian Arabic emphasis spread (HVW ex. 48): [RTR] spreads leftward across consonants,
+#     the vowels transparent. ---
+[emphasis_spread]
+words      = ["tatatˤ"]
+name       = "Emphasis spread (RTR)"
+definition = "[+consonantal] -> [guttural: +, tongue_root: +, rtr: +] / _ []* [+consonantal, tongue_root, rtr]"
+
+# --- Igbo labial assimilation (HVW ex. 32-33): a high prefix vowel rounds before a labial
+#     consonant (spreading of the Lips node's [round]). ---
+[igbo_rounding]
+words      = ["obibe", "ofife", "olile"]
+name       = "Igbo labial assimilation"
+definition = "[-consonantal, +high] -> [lips: +, round: +, back: +] / _ [labial]"
+
+# --- Irish dorsal assimilation (HVW ex. 63-67), the paper's flagship: a coronal nasal takes the
+#     following consonant's DORSAL articulation but keeps its OWN [back] (palatalization) — only
+#     [dorsal] (+ the height that realizes it) spreads, NOT [back]. Contrast place_assimilation,
+#     which copies the whole node including [back]. ---
+[irish_dorsal]
+words      = ["anʲga", "anˠgʲa"]
+name       = "Irish dorsal assimilation ([dorsal] spreads, [back] does not)"
+definition = "[+nasal] -> [dorsal: ~1, high: ~2, low: ~3, tongue_blade: none, coronal: none, anterior: none, distributed: none] / _ [+consonantal, dorsal: ~1, high: ~2, low: ~3]"

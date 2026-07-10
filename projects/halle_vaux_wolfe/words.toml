@@ -1,6 +1,27 @@
-# A tiny showcase: nasal place assimilation, HVW's illustration of Place-node spreading.
-# Each `final` is the attested target the derivation is graded against.
-"anka" = { gloss = "place assimilation → velar",  final = "aŋka" }
-"anpa" = { gloss = "place assimilation → labial",  final = "ampa" }
-"anta" = { gloss = "place assimilation → coronal (vacuous)", final = "anta" }
+# Showcase lexicon — each `final` is the attested target the derivation is graded against. Words
+# are grouped by the rule that fires on them (see rules.toml `words` scoping).
+
+# Nasal place assimilation (whole Place node)
+"anka" = { gloss = "place assimilation -> velar",   final = "aŋka" }
+"anpa" = { gloss = "place assimilation -> labial",  final = "ampa" }
+"anta" = { gloss = "place assimilation -> coronal (vacuous)", final = "anta" }
+
+# Uyghur Raising (low -> high in a medial open syllable)
 "kalalar" = { gloss = "Uyghur Raising: medial open syllable raises", final = "kalilar" }
+
+# Sibe uvularization (velar -> uvular after a [-high] vowel; [+high] transparent)
+"dʒalukun" = { gloss = "Sibe: a triggers uvular k->q (u transparent)", final = "dʒaluqun" }
+"bɔduxu"   = { gloss = "Sibe: ɔ triggers uvular x->χ", final = "bɔduχu" }
+"ulukun"   = { gloss = "Sibe: all-high, no uvularization", final = "ulukun" }
+
+# Palestinian emphasis spread ([RTR] leftward, vowels transparent)
+"tatatˤ" = { gloss = "Emphasis spread: final tˤ RTR-izes the word", final = "tˤatˤatˤ" }
+
+# Igbo labial assimilation (high prefix vowel rounds before a labial)
+"obibe" = { gloss = "Igbo: i rounds to u before b", final = "obube" }
+"ofife" = { gloss = "Igbo: i rounds to u before f", final = "ofufe" }
+"olile" = { gloss = "Igbo: i stays before l (non-labial)", final = "olile" }
+
+# Irish dorsal assimilation ([dorsal] spreads, [back] does not)
+"anʲga"  = { gloss = "Irish: palatalized nʲ takes [dorsal] from g, keeps -back -> ŋʲ", final = "aŋʲga" }
+"anˠgʲa" = { gloss = "Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ", final = "aŋgʲa" }
