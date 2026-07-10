@@ -474,6 +474,39 @@ def _node_label(feature: str, bundle: FeatureBundle, project: Project) -> list[s
     return lines
 
 
+def _lca(features: list[str], project: Project) -> str:
+    """The lowest node dominating every feature in *features* — their common ancestor."""
+    chains = [[f, *project.features.ancestors(f)] for f in features]  # each nearest-first
+    common = set.intersection(*(set(chain) for chain in chains))
+    return next((f for f in chains[0] if f in common), chains[0][-1])  # deepest shared
+
+
+def _spread_label(features: list[str], bundle: FeatureBundle, project: Project) -> list[str]:
+    """A stacked label for a SET of terminal features that spread together — their common ancestor
+    node up top, then the spreading leaves joined by ``·`` (``tongue_body`` / ``+high·-low·dorsal``).
+
+    Only the nodes on a path from the common ancestor down to a spreading feature are shown, so a
+    withheld sibling (Irish keeps ``back`` off Tongue Body) is visible by its absence from the set.
+    """
+    ancestor = _lca(features, project)
+    on_path = set(features)
+    for feature in features:  # add every node from each feature up to the common ancestor
+        node = feature
+        while node != ancestor:
+            node = project.features.parent(node)
+            on_path.add(node)
+    names = [ancestor, *(d for d in project.features.descendants(ancestor) if d in on_path)]
+    lines, leaves = [], []
+    for name in names:
+        if any(child in on_path for child in project.features.children(name)):
+            lines.append(_feature_label(name, bundle, project))  # an internal node on the path
+        else:
+            leaves.append(_feature_label(name, bundle, project))  # a spreading terminal feature
+    if leaves:
+        lines.append("·".join(leaves))
+    return lines
+
+
 def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project) -> list[_Spread]:
     """Every segmental spread the rule performed, as ``_Spread`` forks.
 
@@ -483,10 +516,14 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
     (one value = one shared autosegment); a group with both a changed anchor (the link the rule
     added → ``┊``) and an unchanged source (``│``) is a spread. A lone changed anchor that
     replaced a non-empty old subtree also shows that old value delinked (``╪``), as place does.
+
+    Several terminal features recalled from the same node onto the same anchors (Irish spreads
+    ``dorsal`` + ``high`` + ``low`` while withholding ``back``) are merged into one fork over the
+    whole spreading set, rather than one graph per feature.
     """
     before_by_id = {segment.id: segment.bundle for segment in before.segments}
     segments = after.segments
-    spreads: list[_Spread] = []
+    entries: list[tuple[str, FeatureBundle, _Spread]] = []  # feature, an anchor bundle, the spread
     for feature in sorted(_spread_features(rule, project)):
         groups: dict[frozenset, list[int]] = {}
         for i, segment in enumerate(segments):
@@ -500,9 +537,10 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
             changed = [i for i in indices if old[i] != value]
             if not changed or len(changed) == len(indices):  # need a stable source to spread from
                 continue
+            bundle = segments[indices[0]].bundle
             # By default label by the spread node itself (a harmony spread of ``back`` reads
             # ``back``): a unary node's bare name, a binary feature's sign, a scalar's value.
-            label = [_feature_label(feature, segments[indices[0]].bundle, project)]
+            label = [_feature_label(feature, bundle, project)]
             links = tuple((i, "┊" if i in changed else "│") for i in indices)
             replaced = None
             if len(changed) == 1 and old[changed[0]]:  # one anchor over a non-empty old value
@@ -510,11 +548,33 @@ def _rule_spreads(before: Form, after: Form, rule: Rule | None, project: Project
                 # the same exchanged feature (``oral``), so name each from that node down through
                 # its specified children — ``oral·lingual·back·aperture: high`` (spread in) vs
                 # ``oral·lingual·front·anterior`` (delinked) — showing where the two places differ.
-                now = segments[indices[0]].bundle
+                now = bundle
                 was = before_by_id[segments[changed[0]].id]
                 label = _node_label(feature, now, project)
                 replaced = (changed[0], _node_label(feature, was, project))
-            spreads.append(_Spread(label, links, replaced))
+            entries.append((feature, bundle, _Spread(label, links, replaced)))
+
+    # Merge pure spreads (no delink) that share the exact same links into one fork over the whole
+    # spreading feature set; keep place-style delinks (a single recalled node already) as they are.
+    spreads: list[_Spread] = []
+    by_links: dict[tuple, list[tuple[str, FeatureBundle]]] = {}
+    order: list[tuple] = []
+    for feature, bundle, s in entries:
+        if s.replaced is not None:
+            spreads.append(s)
+            continue
+        if s.links not in by_links:
+            by_links[s.links] = []
+            order.append(s.links)
+        by_links[s.links].append((feature, bundle))
+    for links in order:
+        items = by_links[links]
+        if len(items) == 1:
+            feature, bundle = items[0]
+            spreads.append(_Spread([_feature_label(feature, bundle, project)], links))
+        else:
+            feats = [feature for feature, _ in items]
+            spreads.append(_Spread(_spread_label(feats, items[0][1], project), links))
     return spreads
 
 
