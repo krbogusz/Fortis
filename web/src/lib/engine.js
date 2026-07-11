@@ -62,7 +62,7 @@ from src.fortis.analysis.diagnosis import confusions, diagnose_stages, render_er
 from src.fortis.analysis.blame import blame_all, render_blame_csv
 from src.fortis.analysis.reporting import render_accuracy_csv, render_distance_to_target_csv
 from src.fortis.analysis.warnings import syllabification_warnings, render_warnings
-from src.fortis.analysis.diagnostics import match_set
+from src.fortis.analysis.diagnostics import match_set, unsatisfiable_rules
 from src.fortis.main import _build_derivations_csv, _build_matrix_csv, _build_rule_firings_csv
 from src.fortis.analysis.dependencies import build_dependency_graph, dependency_layout, render_dependency_html
 from src.fortis.models.inventories import Word
@@ -260,7 +260,8 @@ def _write_or_clear(path, text):
         path.unlink()  # remove a stale report from a run that produced one
 
 _EMPTY_ANALYSIS = {"accuracy": None, "errors": None, "errorContext": None, "blame": None,
-                   "warnings": [], "unfiredRules": [], "dependencies": None, "analysisMs": 0}
+                   "warnings": [], "unfiredRules": [], "unsatisfiable": [], "dependencies": None,
+                   "analysisMs": 0}
 
 def finalize_run():
     # Set up the post-derivation analysis so JS can drive it step by step (progress bar),
@@ -317,6 +318,8 @@ def analysis_step():
         out["warnings"] = [{"word": w.ipa, "gloss": w.gloss, "form": w.form,
                             "clusters": list(w.clusters), "syllabified": w.syllabified} for w in _warns]
         out["unfiredRules"] = [{"rule": r, "word": w} for r, w in unfired_scoped_rules(rules, project.words)]
+        out["unsatisfiable"] = [{"rule": u.rule, "role": u.role, "label": u.label, "reason": u.reason}
+                                for u in unsatisfiable_rules(project)]
     _SESSION["_step"] = k + 1
     if _SESSION["_step"] >= len(labels):
         out["analysisMs"] = round((time.perf_counter() - _SESSION["_t0"]) * 1000)
@@ -387,8 +390,8 @@ def run_derivations():
     return json.dumps({"derivations": out, "accuracy": fin.get("accuracy"),
                        "errors": fin.get("errors"), "errorContext": fin.get("errorContext"),
                        "blame": fin.get("blame"), "warnings": fin.get("warnings"),
-                       "unfiredRules": fin.get("unfiredRules"), "dependencies": fin.get("dependencies"),
-                       "analysisMs": fin.get("analysisMs")})
+                       "unfiredRules": fin.get("unfiredRules"), "unsatisfiable": fin.get("unsatisfiable"),
+                       "dependencies": fin.get("dependencies"), "analysisMs": fin.get("analysisMs")})
 `;
 
 let py = null; // the Pyodide interpreter, set once initialised

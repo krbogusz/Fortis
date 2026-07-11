@@ -83,7 +83,7 @@ Below is the table displaying which values different types of features can take,
 | Absent        | -     | +      | -      |
 | Level         | -     | -      | +      |
 
-**Undefined applies to every feature, not only unary ones.** Any feature — binary, unary, or scalar — can be marked unspecified with the value `none`. For example, `[cor: none]` removes the coronal specification entirely; this is distinct from `[−cor]`, which specifies a negative value. Both differ from a feature simply being absent from a bundle: in a concrete segment an absent feature is unspecified (equivalent to none), but in a pattern an absent feature is unconstrained — it places no condition on the segment, whereas [cor: none] requires the segment to be unspecified for coronal. Within a single bundle, each feature may be specified at most once.
+**Undefined applies to every feature, not only unary ones.** Any feature — binary, unary, or scalar — can be marked unspecified with the value `none`. For example, `[cor: none]` removes the coronal specification entirely; this is distinct from `[−cor]`, which specifies a negative value. Both differ from a feature simply being absent from a bundle: in a concrete segment an absent feature is unspecified (equivalent to none), but in a pattern an absent feature is unconstrained — it places no condition on the segment, whereas [cor: none] requires the segment to be unspecified for coronal. Within a single bundle, each feature may be specified at most once — a repeat (`[aperture: high, aperture: low]`) is a parse error, not a silent last-wins.
 
 ### 3.2 Feature specification
 

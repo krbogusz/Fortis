@@ -161,8 +161,10 @@ delinks — a **Graph** toggle that draws the same autosegmental diagram as
 attested forms when it has them. A **Diagnostics** pane sits alongside results: its
 **Classes** query matches a feature bundle with the engine's own matcher against the
 current inventory — so you can see the real reach of a class (e.g. that `[+front]`
-also picks out every coronal) — and **Warnings** collects syllabification fallbacks
-and never-firing rules. The layout is responsive down to a phone. See
+also picks out every coronal); **Rule checks** flags rule positions whose bundle can
+never match (a feature required present under a node required absent); and **Warnings**
+collects syllabification fallbacks and never-firing rules. The layout is responsive
+down to a phone. See
 [`web/README.md`](web/README.md) for the full picture, including the type scale and
 theming. To run it locally:
 

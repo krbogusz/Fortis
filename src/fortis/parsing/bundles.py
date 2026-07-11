@@ -184,6 +184,10 @@ def _parse_bundle[S: _HasFeature, B: dict](
             case Err(err):
                 error_list.append(err)
             case Ok(result):
+                if result.feature in bundle:
+                    # A second value for one feature silently overwrote the first before this
+                    # guard — always an authoring slip (`[aperture: high, aperture: low]`).
+                    error_list.append(f"feature '{result.feature}' is specified more than once")
                 bundle[result.feature] = result
     if error_list:
         return Err(error_list)

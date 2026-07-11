@@ -145,6 +145,17 @@ class TestParseFeatureBundle:
         assert bundle["voice"].value == 1
         assert bundle["stress"].value == 1
 
+    def test_duplicate_feature_is_an_error(self, features):
+        # A second value for one feature silently overwrote the first before the guard — always
+        # an authoring slip, so it is now a parse error rather than a quiet last-wins.
+        result = parse_feature_bundle("+voice, -voice", features)
+        assert result.is_err()
+        assert "more than once" in result.unwrap_err()[0]
+
+    def test_duplicate_feature_error_also_in_pattern_bundles(self, features):
+        result = parse_pattern_bundle("aperture: high, aperture: low", features)
+        assert result.is_err()
+
 
 class TestParsePatternSpec:
     """Tests for pattern spec parsing."""

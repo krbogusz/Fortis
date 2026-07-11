@@ -48,8 +48,11 @@ of {results, diagnostics} then show side by side:
   **Classes** answers "which segments does this feature bundle pick out?" by matching
   it with the engine's own matcher against the current (even unsaved) inventory — so
   the surprise that `[+front]` also catches every coronal is visible, not latent.
-  **Warnings** lists syllabification fallbacks and never-firing rules from the last run.
-  The button carries a ⚠ badge when either warning is present.
+  **Rule checks** flags any rule position whose bundle can never match a segment — a
+  feature required present under a geometry node required absent (`[front, oral: none]`);
+  intent-free, so every finding is a real bug. **Warnings** lists syllabification
+  fallbacks and never-firing rules from the last run. The button carries a ⚠ badge with
+  the total count when any of these is present.
 - **Results** — the right panel described next.
 
 - **Right panel** shows the results, with a view switcher: **Derivations** (the

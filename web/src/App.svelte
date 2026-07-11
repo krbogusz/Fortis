@@ -46,7 +46,8 @@
   let blame = $state(null); // per-word blame, or null when all exact
   let warnings = $state([]); // syllabification-fallback warnings from the last run
   let unfiredRules = $state([]); // word-scoped rules naming a word absent from the lexicon: {rule, word}
-  const diagCount = $derived(warnings.length + unfiredRules.length); // diagnostics-pane alert badge
+  let unsatisfiable = $state([]); // rule positions whose bundle can never match: {rule, role, label, reason}
+  const diagCount = $derived(warnings.length + unfiredRules.length + unsatisfiable.length); // diagnostics badge
   let timing = $state(null); // {words, rules, deriveMs, analysisMs} from the last run (accuracy folded into analysis)
   let matrixCsv = $state(""); // derivation_matrix.csv content, for the right-pane Matrix view
   let dependencies = $state(null); // rule feeding-graph layout, for the right-pane Tree view
@@ -267,6 +268,7 @@
       accuracy = null; // and the previous accuracy summary
       warnings = []; // and the previous warnings
       unfiredRules = []; // and the previous never-fire flags
+      unsatisfiable = []; // and the previous unsatisfiable-bundle flags
       matrixCsv = ""; // and the previous derivation table
     dependencies = null; // and the previous feeding graph
       rulesCsv = ""; // and the previous rule-firings table
@@ -327,6 +329,7 @@
       if (!blame && resultView === "blame") resultView = "derivations"; // all exact ⇒ leave the tab
       warnings = fin?.warnings ?? []; // shown in the Diagnostics pane, not a result view
       unfiredRules = fin?.unfiredRules ?? [];
+      unsatisfiable = fin?.unsatisfiable ?? [];
       matrixCsv = readFile("reports/derivation_matrix.csv"); // for the Matrix view
       rulesCsv = readFile("reports/rule_firings.csv"); // for the Rules view
       dependencies = fin?.dependencies ?? null; // for the Tree view
@@ -511,6 +514,7 @@
     singleInput = "";
     warnings = []; // and its syllabification-fallback + never-fire warnings
     unfiredRules = [];
+    unsatisfiable = [];
     dirty = false; // a freshly-loaded project hasn't been edited yet
     await paint();
     if (myToken !== runToken) return; // superseded while painting
@@ -834,9 +838,6 @@
     <section class="panel right">
       <div class="panel-head results-head">
         <div class="head-row">
-          <div class="head-title">
-            <h2>Results</h2>
-          </div>
           <div class="actions">
             {#if result?.derivations}
               <div class="view-tabs">
@@ -1377,7 +1378,6 @@
          match-set query (Classes) plus the last run's warnings (syllabification fallbacks +
          never-firing rules). Rule lint lands here next. -->
     <section class="panel diagnostics">
-      <div class="panel-head"><h2>Diagnostics</h2></div>
       <div class="result-area">
         <div class="results">
           <!-- Classes: type a feature bundle, see which segments the engine matches — the real
@@ -1413,6 +1413,33 @@
               {/if}
             {/if}
           </section>
+
+          {#if unsatisfiable.length}
+            <!-- Rule checks: bundles that can never match a segment (a feature required present
+                 under a node required absent). Intent-free — every one is a real bug. -->
+            <section class="diag-checks">
+              <h3>Rule checks</h3>
+              <p class="caveat">
+                These rule positions can never match any segment — a feature is required present
+                while one of its parent nodes is removed. Fix the bundle or the rule won’t fire.
+              </p>
+              <table class="report-summary warnings-table">
+                <thead>
+                  <tr><th>rule</th><th>position</th><th>bundle</th><th>why</th></tr>
+                </thead>
+                <tbody>
+                  {#each unsatisfiable as u}
+                    <tr>
+                      <td class="form">{u.rule}</td>
+                      <td>{u.role}</td>
+                      <td class="form ipa">{u.label}</td>
+                      <td>{u.reason}</td>
+                    </tr>
+                  {/each}
+                </tbody>
+              </table>
+            </section>
+          {/if}
 
           <section class="diag-warnings">
             <h3>Warnings</h3>
@@ -1718,19 +1745,6 @@
     justify-content: space-between;
     gap: 12px;
   }
-  .head-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: none; /* keep the "Results" label + warning badge at content width — don't let
-                   space-between squeeze it so the badge overflows into the wrapping tabs */
-  }
-  .panel-head h2 {
-    margin: 0;
-    font-size: var(--fs-header);
-    font-weight: 600;
-    color: var(--text-h);
-  }
   .actions {
     display: flex;
     align-items: center;
@@ -1907,6 +1921,11 @@
     flex: 1;
     overflow: auto;
     padding: 4px 16px 24px;
+  }
+  /* The diagnostics pane has no header bar (the mode switch already names it), so its content
+     needs the top breathing room a panel-head would otherwise provide. */
+  .diagnostics .results {
+    padding-top: 16px;
   }
   /* IPA is opt-in: the results panel defaults to the Sans body face, and only the linguistic
      forms take the Charis (IPA) face — the computed forms (.form), the emphasised word/target
@@ -2114,10 +2133,12 @@
 
   /* Diagnostics pane: the Classes match-set query and the Warnings section beneath it. */
   .diag-classes,
+  .diag-checks,
   .diag-warnings {
     margin-bottom: 24px;
   }
   .diag-classes h3,
+  .diag-checks h3,
   .diag-warnings h3 {
     margin: 0 0 8px;
     font-size: var(--fs-header);
