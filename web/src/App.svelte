@@ -2466,6 +2466,20 @@
     gap: 10px;
     margin-bottom: 10px;
   }
+  /* The card header (headword · gloss · toggles) stays pinned to the top of the results
+     scroller while its own card scrolls by — sticky is bounded by the parent, so the card's
+     bottom edge pushes it out. It bleeds over the card's padding (negative margins, padding
+     restored inside) so passing rows slide under an opaque, full-width strip. */
+  .card.derivation .word-head {
+    position: sticky;
+    top: -4px; /* cover .results' 4px top padding, so no row-sliver shows above when stuck */
+    z-index: 2;
+    background: var(--panel);
+    margin: -14px -16px 10px;
+    padding: 14px 16px 8px;
+    border-bottom: 1px solid var(--border);
+    border-radius: 8px 8px 0 0; /* match the card's top corners when at rest */
+  }
   .word-ipa {
     font-size: var(--fs-emphasis);
     font-weight: 600;
