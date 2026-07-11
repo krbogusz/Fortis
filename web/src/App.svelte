@@ -378,14 +378,6 @@
   }
   const editorLines = $derived(content.split("\n").map(splitComment));
 
-  // Render a confusion cell's examples. Spaces inside each label are made non-breaking so a
-  // single example ("acheter: a.ʃa.t̪e/aʃ.t̪e") never wraps mid-way; the "  • " separator's
-  // two leading spaces are non-breaking too, so a line break can fall only after a bullet —
-  // between examples, never inside one.
-  const NBSP = String.fromCharCode(0xA0); // non-breaking space
-  const exampleList = (examples) =>
-    examples.map((e) => e.replaceAll(" ", NBSP)).join(NBSP + NBSP + "• ");
-
   function syncScroll() {
     if (hlEl && taEl) {
       hlEl.scrollTop = taEl.scrollTop;
@@ -1028,7 +1020,10 @@
                   <td class="form">{c.got ?? "∅"}</td>
                   <td>{c.count}</td>
                   <td>{c.kind}</td>
-                  <td class="form">{exampleList(c.examples)}</td>
+                  <td class="form">
+                    <!-- One example per line, never wrapped mid-example. -->
+                    {#each c.examples as example}<div class="example-line">{example}</div>{/each}
+                  </td>
                 </tr>
               {/each}
             </tbody>
@@ -2181,6 +2176,10 @@
   /* Gloss is a translation, not IPA — muted (Sans is now the panel default, so no override). */
   .report-summary td.gloss-cell {
     color: var(--muted);
+  }
+  /* Confusion-table examples: one per line, never wrapped mid-example. */
+  .example-line {
+    white-space: nowrap;
   }
   /* Warnings table: word/gloss/form/cluster (the first four columns) read left-to-right, so
      left-align their headers and cells (report-summary right-aligns by default). */
