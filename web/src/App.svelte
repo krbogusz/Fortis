@@ -2760,8 +2760,13 @@
       content: attr(data-ln);
       position: absolute;
       top: 0;
-      left: 0;
+      /* The line's box sits 12px in (the mirror's padding) while the divider sits at
+         --gutter-w from the wrap's edge: pulling the strip back by that padding starts it
+         at the wrap's edge and ends it 8px before the divider — the desktop gutter's gap —
+         with the full width kept, so multi-digit numbers never wrap. */
+      left: -12px;
       width: calc(var(--gutter-w) - 8px);
+      white-space: pre;
       text-align: right;
       color: var(--muted);
     }
