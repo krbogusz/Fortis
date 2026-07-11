@@ -358,6 +358,7 @@
   // metric + scroll lock-step so the coloured mirror sits exactly under what you type.
   let taEl = $state(null); // the textarea
   let hlEl = $state(null); // the highlight mirror
+  let gutterEl = $state(null); // the line-number gutter, scroll-synced with the textarea
   // Split a TOML line into its code and trailing-comment halves at the first `#` that is NOT
   // inside a string — TOML uses `#` as the word-boundary marker inside rule definitions
   // (e.g. `definition = "a -> e / _ #"`), which must not be dimmed as a comment.
@@ -377,6 +378,10 @@
     return { code: line, comment: "" };
   }
   const editorLines = $derived(content.split("\n").map(splitComment));
+  // Line numbers for the .toml editor gutter; its width tracks the digit count (in ch, so it
+  // resolves against the same font/size the editor itself uses and the offsets stay aligned).
+  const lineNumbers = $derived(editorLines.map((_, i) => i + 1).join("\n"));
+  const gutterCh = $derived(String(editorLines.length).length + 2);
 
   // Render a confusion cell's examples. Spaces inside each label are made non-breaking so a
   // single example ("acheter: a.ʃa.t̪e/aʃ.t̪e") never wraps mid-way; the "  • " separator's
@@ -391,6 +396,7 @@
       hlEl.scrollTop = taEl.scrollTop;
       hlEl.scrollLeft = taEl.scrollLeft;
     }
+    if (gutterEl && taEl) gutterEl.scrollTop = taEl.scrollTop;
   }
 
   // The editable CSV table edits `.csv` inventories (letters.csv, a CSV words file) in place;
@@ -805,8 +811,10 @@
         <CsvTable {content} onchange={onCsvEdit} />
       {:else if active?.endsWith(".toml")}
         <!-- Highlight overlay: the mirror colours comment lines; the textarea on top holds
-             the caret and real text (rendered transparent so only the mirror shows). -->
-        <div class="editor-wrap">
+             the caret and real text (rendered transparent so only the mirror shows). A
+             line-number gutter sits to the left, scroll-synced with the textarea. -->
+        <div class="editor-wrap" style:--gutter-w="{gutterCh}ch">
+          <pre class="editor-gutter ipa" aria-hidden="true" bind:this={gutterEl}>{lineNumbers}</pre>
           <pre class="editor editor-hl ipa" aria-hidden="true" bind:this={hlEl}>{#each editorLines as l, i}{#if i > 0}{"\n"}{/if}{l.code}<span
                 class="comment">{l.comment}</span>{/each}</pre>
           <textarea
@@ -1449,7 +1457,6 @@
           <!-- Classes: type a feature bundle, see which segments the engine matches — the real
                reach of a class, read live from the (possibly unsaved) inventory. -->
           <section class="diag-classes">
-            <h3>Classes</h3>
             <p class="caveat">
               Which segments does a feature bundle pick out? Enter one to see the engine’s own
               match against this project’s inventory.
@@ -1484,7 +1491,6 @@
           <!-- System: the feature geometry as the engine loads it, live from the overlay — the
                segmental tree under ROOT plus the suprasegmental tier features. -->
           <section class="diag-system">
-            <h3>System</h3>
             <p class="caveat">
               The feature geometry, as the engine loads it — every segmental feature under its
               parent node (scalars with their value scale), and the suprasegmental tier features
@@ -1968,11 +1974,31 @@
   .editor-wrap .editor {
     position: absolute;
     inset: 0;
+    left: var(--gutter-w, 0); /* leave room for the line-number gutter */
     flex: none;
     margin: 0;
     border: 0;
     border-radius: 0;
     background: transparent;
+  }
+  /* The line-number gutter: same font metrics as the editor (so lines align 1:1 — the editor
+     never wraps, white-space: pre), right-aligned digits, scrollTop synced by syncScroll(). */
+  .editor-gutter {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--gutter-w, 0);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 12px 8px 12px 0;
+    border-right: 1px solid var(--border);
+    font-size: var(--fs-content);
+    line-height: 1.55;
+    text-align: right;
+    color: var(--muted);
+    overflow: hidden;
+    user-select: none;
   }
   .editor-input {
     z-index: 1;
@@ -2237,8 +2263,6 @@
   .diag-warnings {
     margin-bottom: 24px;
   }
-  .diag-classes h3,
-  .diag-system h3,
   .diag-warnings h3 {
     margin: 0 0 8px;
     font-size: var(--fs-header);
@@ -2844,7 +2868,7 @@
     color: var(--accent);
   }
   .docs-body :global(code) {
-    font-family: var(--ipa), var(--mono);
+    font-family: var(--mono);
     font-size: 0.92em;
     background: var(--code-bg);
     padding: 1px 4px;
