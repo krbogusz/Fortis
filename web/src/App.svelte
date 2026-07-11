@@ -358,7 +358,6 @@
   // metric + scroll lock-step so the coloured mirror sits exactly under what you type.
   let taEl = $state(null); // the textarea
   let hlEl = $state(null); // the highlight mirror
-  let gutterEl = $state(null); // the line-number gutter, scroll-synced with the textarea
   // Split a TOML line into its code and trailing-comment halves at the first `#` that is NOT
   // inside a string — TOML uses `#` as the word-boundary marker inside rule definitions
   // (e.g. `definition = "a -> e / _ #"`), which must not be dimmed as a comment.
@@ -378,11 +377,6 @@
     return { code: line, comment: "" };
   }
   const editorLines = $derived(content.split("\n").map(splitComment));
-  // Line numbers for the .toml editor gutter; its width is exactly the digit count (in ch —
-  // one mono cell per digit, resolved against the editor's own font so offsets stay aligned)
-  // plus fixed breathing room: 4px left of the digits, 8px between digits and divider.
-  const lineNumbers = $derived(editorLines.map((_, i) => i + 1).join("\n"));
-  const gutterW = $derived(`calc(${String(editorLines.length).length}ch + 12px)`);
 
   // Render a confusion cell's examples. Spaces inside each label are made non-breaking so a
   // single example ("acheter: a.ʃa.t̪e/aʃ.t̪e") never wraps mid-way; the "  • " separator's
@@ -397,7 +391,6 @@
       hlEl.scrollTop = taEl.scrollTop;
       hlEl.scrollLeft = taEl.scrollLeft;
     }
-    if (gutterEl && taEl) gutterEl.scrollTop = taEl.scrollTop;
   }
 
   // The editable CSV table edits `.csv` inventories (letters.csv, a CSV words file) in place;
@@ -812,12 +805,10 @@
         <CsvTable {content} onchange={onCsvEdit} />
       {:else if active?.endsWith(".toml")}
         <!-- Highlight overlay: the mirror colours comment lines; the textarea on top holds
-             the caret and real text (rendered transparent so only the mirror shows). A
-             line-number gutter sits to the left, scroll-synced with the textarea. -->
-        <div class="editor-wrap" style:--gutter-w={gutterW}>
-          <pre class="editor-gutter" aria-hidden="true" bind:this={gutterEl}>{lineNumbers}</pre>
-          <pre class="editor editor-hl" aria-hidden="true" bind:this={hlEl}>{#each editorLines as l, i}<span class="hl-line" data-ln={i + 1}>{l.code}<span
-                class="comment">{l.comment}</span></span>{/each}</pre>
+             the caret and real text (rendered transparent so only the mirror shows). -->
+        <div class="editor-wrap">
+          <pre class="editor editor-hl" aria-hidden="true" bind:this={hlEl}>{#each editorLines as l, i}{#if i > 0}{"\n"}{/if}{l.code}<span
+                class="comment">{l.comment}</span>{/each}</pre>
           <textarea
             class="editor editor-input"
             spellcheck="false"
@@ -1978,32 +1969,11 @@
   .editor-wrap .editor {
     position: absolute;
     inset: 0;
-    left: var(--gutter-w, 0); /* leave room for the line-number gutter */
     flex: none;
     margin: 0;
     border: 0;
     border-radius: 0;
     background: transparent;
-  }
-  /* The line-number gutter: same font metrics as the editor (so lines align 1:1 — the editor
-     never wraps, white-space: pre), right-aligned digits, scrollTop synced by syncScroll(). */
-  .editor-gutter {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: var(--gutter-w, 0);
-    box-sizing: border-box;
-    margin: 0;
-    padding: 12px 8px 12px 0;
-    border-right: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: var(--fs-content);
-    line-height: 1.55;
-    text-align: right;
-    color: var(--muted);
-    overflow: hidden;
-    user-select: none;
   }
   .editor-input {
     z-index: 1;
@@ -2017,13 +1987,6 @@
   }
   .editor-hl::-webkit-scrollbar {
     display: none;
-  }
-  /* Each logical line of the mirror is its own block: under white-space: pre these stack
-     exactly like the newline-joined text did, but a soft-wrapped line (mobile) grows its own
-     box — the hook the per-line number hangs from. min-height keeps empty lines one line tall. */
-  .editor-hl .hl-line {
-    display: block;
-    min-height: 1.55em;
   }
   .editor-hl .comment {
     color: var(--muted);
@@ -2744,42 +2707,6 @@
     .editor {
       white-space: pre-wrap;
       overflow-wrap: break-word;
-    }
-    /* A wrapped logical line spans several visual lines, so the desktop gutter's one-number-
-       per-visual-line column can't align. Instead the number moves INTO the mirror: each
-       line's block carries its own number (position: absolute in a padding-left strip), so a
-       wrapped line keeps its single number however tall its box grows. The textarea shifts
-       right by the same width (the base .editor-wrap .editor rule), so both layers wrap at
-       the same width and stay aligned. */
-    .editor-gutter {
-      display: none;
-    }
-    .editor-wrap .editor-hl {
-      left: 0;
-    }
-    .editor-hl .hl-line {
-      position: relative;
-      padding-left: var(--gutter-w);
-    }
-    .editor-hl .hl-line::before {
-      content: attr(data-ln);
-      position: absolute;
-      top: 0;
-      /* The line's box sits 12px in (the mirror's padding) while the divider sits at
-         --gutter-w from the wrap's edge: pulling the strip back by that padding starts it
-         at the wrap's edge and ends it 8px before the divider — the desktop gutter's gap —
-         with the full width kept, so multi-digit numbers never wrap. */
-      left: -12px;
-      width: calc(var(--gutter-w) - 8px);
-      white-space: pre;
-      text-align: right;
-      color: var(--muted);
-    }
-    /* The desktop gutter's full-height divider, redrawn at the same boundary: an inset
-       shadow on the textarea's left edge — its box starts exactly at the gutter width and
-       spans the editor's full height, and a shadow can't disturb the wrap metrics. */
-    .editor-wrap .editor-input {
-      box-shadow: inset 1px 0 var(--border);
     }
 
     /* Drop the result actions onto their own full-width line (the tab row itself already
