@@ -333,7 +333,7 @@ In **target** position, letters and feature bundles both match by features. In *
 - A **feature bundle** merges into the matched segment — features it does not mention are preserved.
 - A **letter shorthand** replaces the matched segment entirely with the letter's full specification.
 
-**Stress and tone diacritics on a literal** (`ˈ`, `ˌ`, tone marks) are suprasegmentals — they live on their own tier (§5.12), apart from the segment's melody — so a literal that carries one does a different job on each side:
+**Suprasegmental diacritics on a literal** — any diacritic whose bundle sets a feature declared on a tier (§4.3; in the shipped inventory, the stress marks `ˈ`/`ˌ` and the tone marks) — live on their own tier (§5.12), apart from the segment's melody, so a literal that carries one does a different job on each side:
 
 - In the **target** (and contexts/exceptions) it _constrains_ the match to that value: `ˌɔ` matches only a secondary-stressed ɔ, whereas a bare `ɔ` matches at any stress. To constrain by a suprasegmental without spelling the vowel, put it in a bundle: `[+syllabic, stress: secondary]`.
 - In the **result** it _writes_, replacing the suprasegmental of the changed segment's syllable: `e → ˈa` stresses that syllable, `ˌa → ˈa` promotes secondary to primary, `ˈe → ˌe` demotes. A **bare** result literal writes nothing, so the syllable's stress persists from the input. The mark must land on a **nucleus** — on a non-nucleus result literal (`d → ˈt`) it has nowhere to attach and is dropped; write it on the syllable's vowel, or use a bundle (`[stress: primary]`).
@@ -353,7 +353,7 @@ A `none` value **delinks**. For a segmental feature it is geometry-aware — del
 
 #### Letter–tier interactions
 
-A letter's _segmental_ content sits in the bundle; a syllable-tier feature (stress, tone) sits on the nucleus's tier. How a literal touches that tier depends on the side. Taking `e` and stress as the example:
+A letter's _segmental_ content sits in the bundle; a tier feature (e.g. stress or tone) sits on the nucleus's tier. How a literal touches that tier depends on the side. Taking `e` and stress as the example:
 
 | Form                  | Target — matches           | Result — produces                          |
 | --------------------- | -------------------------- | ------------------------------------------ |
