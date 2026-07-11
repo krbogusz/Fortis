@@ -109,8 +109,8 @@ picks its role from the same handful of variables rather than a literal value.
 | Variable | Stack | Used for |
 |---|---|---|
 | `--sans` | system-ui, Segoe UI, Roboto | Default UI chrome (inherited by most elements) |
-| `--mono` | ui-monospace, SF Mono, Consolas | Tabs, the editor, CSV tables, rule ids/definitions, time headers |
-| `--ipa` | Gentium Plus, Charis SIL, Doulos SIL | Anything holding IPA text (`.ipa` utility class — the editor, results, CSV symbol column) |
+| `--mono` | Noto Sans Mono (bundled), ui-monospace, SF Mono | Tabs, the text editor (incl. its line-number gutter), CSV tables, rule ids/definitions, time headers |
+| `--ipa` | Charis SIL (bundled) | Anything holding IPA text (`.ipa` utility class — results, CSV symbol column) |
 
 **Weight**: 400 (default) for body text; 600 for headers/emphasis-adjacent labels
 (`h2`, `h3`, rule-heading, CSV table headers); 700 for the two

@@ -814,11 +814,11 @@
              the caret and real text (rendered transparent so only the mirror shows). A
              line-number gutter sits to the left, scroll-synced with the textarea. -->
         <div class="editor-wrap" style:--gutter-w="{gutterCh}ch">
-          <pre class="editor-gutter ipa" aria-hidden="true" bind:this={gutterEl}>{lineNumbers}</pre>
-          <pre class="editor editor-hl ipa" aria-hidden="true" bind:this={hlEl}>{#each editorLines as l, i}<span class="hl-line" data-ln={i + 1}>{l.code}<span
+          <pre class="editor-gutter" aria-hidden="true" bind:this={gutterEl}>{lineNumbers}</pre>
+          <pre class="editor editor-hl" aria-hidden="true" bind:this={hlEl}>{#each editorLines as l, i}<span class="hl-line" data-ln={i + 1}>{l.code}<span
                 class="comment">{l.comment}</span></span>{/each}</pre>
           <textarea
-            class="editor editor-input ipa"
+            class="editor editor-input"
             spellcheck="false"
             disabled={!ready}
             bind:value={content}
@@ -829,7 +829,7 @@
         </div>
       {:else}
         <textarea
-          class="editor ipa"
+          class="editor"
           spellcheck="false"
           disabled={!ready}
           bind:value={content}
@@ -1952,6 +1952,9 @@
     border-radius: 6px;
     background: var(--panel); /* match the derivation card background */
     color: var(--text-h);
+    /* Mono, not the IPA serif: these are config files. Noto Sans Mono (bundled, first in
+       the stack) still covers the IPA glyphs in words/letters entries. */
+    font-family: var(--mono);
     font-size: var(--fs-content);
     line-height: 1.55;
     resize: none;
@@ -1993,6 +1996,7 @@
     margin: 0;
     padding: 12px 8px 12px 0;
     border-right: 1px solid var(--border);
+    font-family: var(--mono);
     font-size: var(--fs-content);
     line-height: 1.55;
     text-align: right;
