@@ -1418,27 +1418,33 @@
          fallbacks), the bundle match-set query (Classes), and the feature-geometry tree
          (System). -->
     <section class="panel diagnostics">
+      <!-- Same header structure as the results pane, so the two panes' top paddings match. -->
+      <div class="panel-head results-head">
+        <div class="head-row">
+          <div class="actions">
+            <div class="view-tabs">
+              <button
+                class:active={diagView === "warnings"}
+                title="Rule checks, never-firing rules, and syllabification fallbacks from the last run"
+                onclick={() => openDiagView("warnings")}
+                >{#if diagCount}⚠ {/if}Warnings{#if diagCount}{" "}{diagCount}{/if}</button
+              >
+              <button
+                class:active={diagView === "classes"}
+                title="Which segments a feature bundle picks out, by the engine's own matcher"
+                onclick={() => openDiagView("classes")}>Classes</button
+              >
+              <button
+                class:active={diagView === "system"}
+                title="The feature geometry as loaded — the tree of the features"
+                onclick={() => openDiagView("system")}>System</button
+              >
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="result-area">
         <div class="results">
-          <div class="view-tabs diag-tabs">
-            <button
-              class:active={diagView === "warnings"}
-              title="Rule checks, never-firing rules, and syllabification fallbacks from the last run"
-              onclick={() => openDiagView("warnings")}
-              >{#if diagCount}⚠ {/if}Warnings{#if diagCount}{" "}{diagCount}{/if}</button
-            >
-            <button
-              class:active={diagView === "classes"}
-              title="Which segments a feature bundle picks out, by the engine's own matcher"
-              onclick={() => openDiagView("classes")}>Classes</button
-            >
-            <button
-              class:active={diagView === "system"}
-              title="The feature geometry as loaded — the tree of the features"
-              onclick={() => openDiagView("system")}>System</button
-            >
-          </div>
-
           {#if diagView === "classes"}
           <!-- Classes: type a feature bundle, see which segments the engine matches — the real
                reach of a class, read live from the (possibly unsaved) inventory. -->
@@ -2020,11 +2026,6 @@
     overflow: auto;
     padding: 4px 16px 24px;
   }
-  /* The diagnostics pane has no header bar (the mode switch already names it), so its content
-     needs the top breathing room a panel-head would otherwise provide. */
-  .diagnostics .results {
-    padding-top: 16px;
-  }
   /* IPA is opt-in: the results panel defaults to the Sans body face, and only the linguistic
      forms take the Charis (IPA) face — the computed forms (.form), the emphasised word/target
      cells (.word-ipa, .tgt), and code spans (which may carry an IPA pattern). This replaces the
@@ -2229,10 +2230,8 @@
     margin: 0 0 16px;
   }
 
-  /* Diagnostics pane: the Warnings / Classes / System tabs and their sections. */
-  .diag-tabs {
-    margin-bottom: 16px;
-  }
+  /* Diagnostics pane: the Warnings / Classes / System tab sections (the tab bar itself lives
+     in a panel-head identical to the results pane's, so the two panes align). */
   .diag-classes,
   .diag-system,
   .diag-warnings {
