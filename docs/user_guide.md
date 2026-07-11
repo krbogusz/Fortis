@@ -137,7 +137,7 @@ Every inventory Fortis uses is loaded from a file. All of them are user-authored
 | `diacritics.toml`     | Diacritic modifications to base segment bundles     |
 | `sonorities.toml`     | Sonority levels and the predicates that assign them |
 | `syllable_parts.toml` | Onset/nucleus/coda constraints, keyed by time       |
-| `tiers.toml`          | Autosegmental tier declarations (tone, stress; §4.3)|
+| `tiers.toml`          | Autosegmental tier declarations (e.g. tone, stress; §4.3)|
 | `words.toml`          | The lexicon                                         |
 | `rules.toml`          | Phonological rules                                  |
 | `settings.toml`       | Tunable analysis thresholds (optional; §8.3)        |
@@ -176,8 +176,9 @@ number of integer-keyed `stages`, the attested form at that derivation `time`.
 Only the IPA key feeds derivation; `final` and `stages` are ignored by the engine
 and read only by the accuracy analysis.
 
-A word may also carry a **floating lexical tone** — a melody with no host segment
-of its own (e.g. a grammatical floating H) — written `⟨◌́⟩`: a tone diacritic on a
+A word may also carry a **floating lexical autosegment** — a melody-tier value with
+no host segment of its own (the classic case: a grammatical floating H tone) —
+written `⟨◌́⟩`: a suprasegmental diacritic on a
 dotted-circle placeholder (◌, U+25CC), in float brackets. Its position in the
 string matters: `kata⟨◌́⟩` places a floating high _after_ the final segment (a
 suffixal tone that docks leftward onto it); `⟨◌́⟩kata` places one _before_ the
@@ -290,7 +291,7 @@ ocp    = false
 - `melody` _(required)_ — `true` for a melody tier (tone): an autosegment stranded by deletion floats and is carried to a neighbour (stability, §5.12). `false` for a metrical tier (stress): it stays put.
 - `ocp` _(optional, default `true`)_ — merge adjacent identical autosegments.
 - `stray_erase` _(optional, default `true`)_ — delete a still-floating autosegment at the surface.
-- `stability` _(optional, default `"left"`)_ — for a melody tier, which neighbour a tone stranded by deletion carries to: `"left"` (the preceding syllable) or `"right"` (the following).
+- `stability` _(optional, default `"left"`)_ — for a melody tier, which neighbour an autosegment stranded by deletion carries to: `"left"` (the preceding syllable) or `"right"` (the following).
 
 ---
 
@@ -336,7 +337,7 @@ In **target** position, letters and feature bundles both match by features. In *
 **Suprasegmental diacritics on a literal** — any diacritic whose bundle sets a feature declared on a tier (§4.3; in the shipped inventory, the stress marks `ˈ`/`ˌ` and the tone marks) — live on their own tier (§5.12), apart from the segment's melody, so a literal that carries one does a different job on each side:
 
 - In the **target** (and contexts/exceptions) it _constrains_ the match to that value: `ˌɔ` matches only a secondary-stressed ɔ, whereas a bare `ɔ` matches at any stress. To constrain by a suprasegmental without spelling the vowel, put it in a bundle: `[+syllabic, stress: secondary]`.
-- In the **result** it _writes_, replacing the suprasegmental of the changed segment's syllable: `e → ˈa` stresses that syllable, `ˌa → ˈa` promotes secondary to primary, `ˈe → ˌe` demotes. A **bare** result literal writes nothing, so the syllable's stress persists from the input. The mark must land on a **nucleus** — on a non-nucleus result literal (`d → ˈt`) it has nowhere to attach and is dropped; write it on the syllable's vowel, or use a bundle (`[stress: primary]`).
+- In the **result** it _writes_, replacing the suprasegmental of the changed segment's syllable: `e → ˈa` stresses that syllable, `ˌa → ˈa` promotes secondary to primary, `ˈe → ˌe` demotes. A **bare** result literal writes nothing, so the syllable's stress persists from the input. The mark must land on a **nucleus** — on a non-nucleus result literal (`d → ˈt`) it has nowhere to attach and is dropped; write it on the syllable's nucleus, or use a bundle (`[stress: primary]`).
 
 A **letter with a feature override** — `letter^[Δ]` — is a letter shorthand _modified_ by a concrete bundle Δ: the letter's full specification with Δ combined on top. It is a replacement (like a bare letter), not a merge, so Δ overrides only the features it names (a `none` value _delinks_). Δ is a **realized** bundle — concrete values only, no negation/alpha/conditional.
 
@@ -551,7 +552,7 @@ A feature declared on a tier in `tiers.toml` (e.g. `tone`, `stress`) is an _auto
 ```
 
 - **Spread** — `[+syll, tone: none] → [+syll, tone: ~1] / [+syll, tone: ~1=high] [-syll]* _` gives a toneless vowel the tone of a preceding vowel with high tone (one autosegment, now two anchors — not a copy). Adjacent elements match adjacent _segments_, so the `[-syll]*` is what spans the consonants between the two syllables — without it the two `[+syll]` would have to be a vowel hiatus. Under a directional mode (§6.2) the H spreads across a whole toneless run.
-- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality). A lexical floating tone (§4.1) is _positioned_ — it docks only where it sits in the string — while one stranded by a deletion (below) is position-blind and docks at any matching site, so a directional application mode or a narrowing context is usually needed to dock it exactly once.
+- **Dock** — `⟨tone: ~1=high⟩ [+syll, tone: none] → [+syll, tone: ~1]` matches a floating H and links it onto the toneless syllable. The `⟨…⟩` is zero-width (it consumes no segment, so it does not count toward cardinality). A lexical floating autosegment (§4.1) is _positioned_ — it docks only where it sits in the string — while one stranded by a deletion (below) is position-blind and docks at any matching site, so a directional application mode or a narrowing context is usually needed to dock it exactly once.
 - **Delink** — `[+syll] → [tone: none]` removes the association.
 - **Stability** — _automatic_: when a rule deletes a segment carrying a **melody** tier autosegment (`melody = true`, e.g. tone), it is carried onto the surviving neighbour (the tier's `stability` direction — `"left"` by default, or `"right"`) and re-docked to its nucleus, so a tone outlives its vowel. **Metrical** tiers (`melody = false`, e.g. stress) stay put. A word-initial deletion with no left neighbour leaves the autosegment floating; a still-floating autosegment is stray-erased at the surface.
 
@@ -606,7 +607,7 @@ Onset/coda patterns constrain only the interior division where there is a choice
 
 A **morpheme boundary** `-` (§5.2) in an interior cluster overrides all of the above: it forces the syllable split at its own position — everything before it is the preceding syllable's coda, everything after it the following syllable's onset — so `at-a` is `at.a` (coda _t_), where `ata` is `a.ta` (onset _t_). Deleting the `-` with a rule restores ordinary syllabification on the next pass.
 
-The `$` assertion matches at any syllable boundary (interior or word edge). Syllable-tier diacritics (tone, stress) attach to the nucleus of their syllable during segmentation, and render back to IPA in `render_syllabified`: stress at the syllable's left edge (`ˈ`, `ˌ`) and tone as Chao tone letters at the right edge (a contour as a tone-letter sequence).
+The `$` assertion matches at any syllable boundary (interior or word edge). Syllable-tier diacritics attach to the nucleus of their syllable during segmentation, and render back to IPA in `render_syllabified` positioned by their attachment `kind` (§4): a `before` mark at the syllable's left edge (the shipped stress marks `ˈ`/`ˌ`), a `combining` mark on the nucleus itself, and an `after` mark at the syllable's right edge (the shipped Chao tone letters; a contour renders as a tone-letter sequence).
 
 ---
 
