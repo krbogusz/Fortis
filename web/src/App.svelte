@@ -2765,6 +2765,12 @@
       text-align: right;
       color: var(--muted);
     }
+    /* The desktop gutter's full-height divider, redrawn at the same boundary: an inset
+       shadow on the textarea's left edge — its box starts exactly at the gutter width and
+       spans the editor's full height, and a shadow can't disturb the wrap metrics. */
+    .editor-wrap .editor-input {
+      box-shadow: inset 1px 0 var(--border);
+    }
 
     /* Drop the result actions onto their own full-width line (the tab row itself already
        scrolls horizontally — see the base .view-tabs). */
