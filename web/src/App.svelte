@@ -1301,6 +1301,9 @@
                   : " — not in the lexicon, derived without a target"}
               </p>
               <article class="card derivation">
+                <!-- Bounds the sticky header: it hands off at the trace's end, so the
+                     surface line below is never covered. -->
+                <div class="stick-bound">
                 <header class="word-head">
                   <span class="word-ipa">{d.ipa}</span>
                   {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
@@ -1324,6 +1327,7 @@
                   </div>
                 </header>
                 {@render traceSteps(d.steps, singleDefs, singleAuto)}
+                </div>
                 <div class="surface">
                   <span class="muted" aria-hidden="true">→</span>
                   <span class="form">{d.surface}</span>
@@ -1374,6 +1378,7 @@
         {:else}
           {#each result.derivations as d, i}
             <article class="card derivation">
+              <div class="stick-bound">
               <header class="word-head">
                 <span class="word-ipa">{d.ipa}</span>
                 {#if d.gloss}<span class="gloss">‘{d.gloss}’</span>{/if}
@@ -1397,6 +1402,7 @@
                 </div>
               </header>
               {@render traceSteps(d.steps, openDefs[i], openAuto[i])}
+              </div>
               <div class="surface">
                 <span class="muted" aria-hidden="true">→</span>
                 <span class="form">{d.surface}</span>
@@ -2472,7 +2478,7 @@
      restored inside) so passing rows slide under an opaque, full-width strip. */
   .card.derivation .word-head {
     position: sticky;
-    top: -4px; /* cover .results' 4px top padding, so no row-sliver shows above when stuck */
+    top: 0;
     z-index: 2;
     background: var(--panel);
     margin: -14px -16px 10px;
