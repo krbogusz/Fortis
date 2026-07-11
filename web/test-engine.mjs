@@ -43,7 +43,7 @@ try {
   if (!derivations.startsWith("word,rule,t,before,after,change"))
     throw new Error("derivations.csv missing its header row: " + derivations.slice(0, 80));
   if (!csv.startsWith("ipa,gloss,")) throw new Error("derivation_matrix.csv missing its header row: " + csv.slice(0, 80));
-  if (!ruleFirings.startsWith("rule,t,count,changes,matched"))
+  if (!ruleFirings.startsWith("rule,t,sporadic,count,changes,matched"))
     throw new Error("rule_firings.csv missing its header row: " + ruleFirings.slice(0, 80));
   log(`5. reports written: derivations.csv (${derivations.split("\n").length} rows), derivation_matrix.csv (${csv.split("\n").length} rows), rule_firings.csv (${ruleFirings.split("\n").length} rows)`);
 
@@ -148,8 +148,8 @@ try {
     throw new Error("expected populated errors, got: " + JSON.stringify(diag.errors));
   if (!diag.errors.stages.some((s) => s.label === "final" && s.confusions.length))
     throw new Error("errors missing the final stage confusions");
-  if (typeof diag.accuracyMs !== "number" || typeof diag.analysisMs !== "number")
-    throw new Error("run missing accuracy/analysis timing: " + JSON.stringify({a: diag.accuracyMs, n: diag.analysisMs}));
+  if (typeof diag.analysisMs !== "number")
+    throw new Error("run missing analysis timing: " + JSON.stringify({n: diag.analysisMs}));
   if (!diag.blame || !diag.blame.words.length)
     throw new Error("expected a populated blame, got: " + JSON.stringify(diag.blame));
   const blamedWord = diag.blame.words[0];

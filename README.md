@@ -6,6 +6,8 @@ The engine is **feature-system agnostic**: the features, their geometry, the seg
 inventory and its signs, the lexicon, and the rules are all user-provided data, not built
 in. Fortis ships no phonology of its own — the example projects are just sample data.
 
+You can use it in your browser, on desktop and mobile: <https://krbogusz.github.io/Fortis/>.
+
 ## What it is
 
 Fortis takes a lexicon and an ordered set of phonological rules and derives,
@@ -35,9 +37,11 @@ Fortis makes no distinction between "historical sound change" and
 "synchronic phonology" — both are an ordered set of rules applied over
 time; whether that time span is three millennia or a single derivation is
 determined entirely by what you put in `rules.toml`. The repository
-includes three example projects: a **feature showcase** (one rule per
-mechanism), **Proto-Indo-European → Proto-Germanic**, and **Latin → Modern
-French**.
+includes five example projects: a **feature showcase** (one rule per
+mechanism), **Proto-Indo-European → Proto-Germanic**, **Latin → Modern
+French**, the **Halle-Vaux-Wolfe feature geometry** (autosegmental
+spreading phenomena), and a flat **SPE** feature matrix (demonstrating
+that the engine requires no feature geometry at all).
 
 ## Design philosophy
 
@@ -83,7 +87,7 @@ French**.
 ### Command line
 
 Run the derivations — the shipped default is a **feature showcase**, one word-scoped rule per
-feature (voicing assimilation, i-umlaut, devoicing, deletion, epenthesis, degemination, tone spread):
+mechanism (voicing assimilation, i-umlaut, devoicing, deletion, epenthesis, degemination, tone spread):
 
 ```
 python -m src.fortis.main
@@ -152,11 +156,19 @@ The `--lint` flag runs a static check over the rules instead of deriving: it fla
 rule position whose feature bundle can never match a segment — a feature required present
 under a geometry node required absent, e.g. `[front, oral: none]` (`front` sits under
 `oral`, so no segment can satisfy both). It has no thresholds and no false positives, and
-exits non-zero when it finds one, so it works as a CI gate:
+exits non-zero when it finds one, so it works as a CI gate. (The shipped feature showcase
+deliberately carries one such rule — `contradictory_bundle` — as its demo of this check,
+so `--lint` on the default project reports exactly that finding.)
 
 ```
 python -m src.fortis.main --project projects/latin_to_french --lint
 ```
+
+`--single WORD` derives just one word instead of the whole project — looked up in the
+lexicon by its IPA key or gloss (so it carries any attested targets), or derived bare if
+absent — printing a compact summary and writing the same reports prefixed `single_`
+(`single_derivations.csv` always; `single_accuracy.csv`, `single_errors.csv`, … when the
+word has a target).
 
 ### Web app
 
@@ -172,13 +184,15 @@ toggle (the rule bodies) and — for a word touched by a rule that spreads, dock
 delinks — a **Graph** toggle that draws the same autosegmental diagram as
 `--autosegmental` inline. Result tabs (**Rules**, **Tree**, **Matrix**, **Accuracy**,
 **Errors**, **Context**, **Blame**) score and analyse the run against the lexicon's
-attested forms when it has them. A **Diagnostics** pane sits alongside results: its
-**Classes** query matches a feature bundle with the engine's own matcher against the
-current inventory — so you can see the real reach of a class (e.g. that `[+front]`
-also picks out every coronal); **Rule checks** flags rule positions whose bundle can
-never match (a feature required present under a node required absent); and **Warnings**
-collects syllabification fallbacks and never-firing rules. The layout is responsive
-down to a phone. See
+attested forms when it has them, and a **Single** tab derives one word on demand (the
+web counterpart of the CLI's `--single`). A **Diagnostics** pane sits alongside results,
+in three tabs: **Warnings** collects every finding from the last run — rule positions
+whose bundle can never match (a feature required present under a node required absent),
+never-firing rules, and syllabification fallbacks; **Classes** matches a feature bundle
+with the engine's own matcher against the current inventory — so you can see the real
+reach of a class (e.g. that `[+front]` also picks out every coronal); and **System**
+draws the feature geometry as a tree, exactly as the engine loads it. The layout is
+responsive down to a phone. See
 [`web/README.md`](web/README.md) for the full picture, including the type scale and
 theming. To run it locally:
 
@@ -529,6 +543,9 @@ draw on external work — full details, uses, and licences are in
   are after Halle, Vaux & Wolfe (2000), _On Feature Spreading and the Representation of Place of
   Articulation_, *Linguistic Inquiry* 31:387–444. The inventory and rules are an original
   illustration, not the paper's data. See [`SOURCE.md`](projects/halle_vaux_wolfe/SOURCE.md).
+- **SPE feature matrix (spe project)** — the flat binary feature system is after Chomsky &
+  Halle (1968), *The Sound Pattern of English*. The inventory and rules are an original
+  illustration, not the book's data. See [`SOURCE.md`](projects/spe/SOURCE.md).
 
 ## A note on generative AI
 

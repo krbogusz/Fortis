@@ -7,8 +7,8 @@
 # Most words carry a `final` — the attested target the engine is graded against (here,
 # its own correct derivation, so the showcase grades 100% exact). `pata`, the "sound
 # change over time" word, also carries intermediate `stages` keyed by rule time, to
-# demonstrate the per-stage distance summary. A run writes distances.md and, in the web
-# app, populates the Grading tab. A few words keep the bare `word = "gloss"` form (no
+# demonstrate the per-stage distance summary. A run writes accuracy.csv and, in the web
+# app, populates the Accuracy tab. A few words keep the bare `word = "gloss"` form (no
 # target) to show both lexicon styles are supported; those are simply left ungraded.
 
 "akba"   = {gloss = "voicing assimilation", final = "agba"}
@@ -35,3 +35,4 @@
 "at-a"   = {gloss = "morpheme boundary", final = "ata"}
 "tastsa" = {gloss = "syllabification fallback", final = "tastsa"}
 "táka" = {gloss = "tone spread", final = "ta˦ka˦"}
+"tita"   = {gloss = "contradictory bundle", final = "tita"}

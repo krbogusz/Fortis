@@ -32,10 +32,22 @@ def test_main_writes_derivation_matrix_csv(tmp_path):
     assert (tmp_path / "derivation_matrix.csv").exists()
 
 
-def test_lint_flag_passes_on_a_clean_project(capsys):
-    # The shipped showcase has no unsatisfiable bundle: --lint exits 0 and writes no reports.
-    main(["--project", "projects/default", "--lint"])
+def test_lint_flag_passes_on_a_clean_project(tmp_path, capsys):
+    # A project with no unsatisfiable bundle: --lint exits 0 and writes no reports.
+    (tmp_path / "words.toml").write_text('"anpa" = "w"\n')
+    (tmp_path / "rules.toml").write_text('[fine]\nwords = ["w"]\ndefinition = "a -> e"\n')
+    main(["--project", str(tmp_path), "--lint"])
     assert "0 unsatisfiable" in capsys.readouterr().err
+
+
+def test_lint_flags_the_showcase_contradiction(capsys):
+    # The shipped showcase deliberately carries ONE unsatisfiable rule — its demo of this very
+    # check — so --lint on projects/default exits 1 and names it.
+    with pytest.raises(SystemExit) as exc:
+        main(["--project", "projects/default", "--lint"])
+    assert exc.value.code == 1
+    err = capsys.readouterr().err
+    assert "1 unsatisfiable" in err and "Contradictory bundle" in err
 
 
 def test_lint_flag_fails_on_an_unsatisfiable_bundle(tmp_path, capsys):

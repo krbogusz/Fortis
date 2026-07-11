@@ -10,27 +10,15 @@ wheels/
 .venv
 
 # Generated analysis reports — written into the project's reports/ subfolder on
-# every CLI run and fully reproducible, so they are not tracked (this excludes only
-# these reserved report names; inventory files like letters.csv and docs like
-# SOURCE.md stay). The ** also covers the pre-reports/ root-level copies.
-projects/**/derivations.csv
-projects/**/output.md
-projects/**/output.csv
-projects/**/derivation_table.csv
-projects/**/distances.md
-projects/**/accuracy.md
-projects/**/accuracy.csv
-projects/**/distance_to_target.csv
-projects/**/diagnosis.md
-projects/**/timeline.md
-projects/**/errors.csv
-projects/**/error_context.csv
-projects/**/blame.md
-projects/**/whatif.md
-projects/**/warnings.md
-projects/**/filtered_output.md
-projects/**/filtered_table.csv
-projects/**/scoped_output.md
+# every run and fully reproducible, so the whole subfolder is untracked (inventory
+# files like letters.csv and docs like SOURCE.md live outside it and stay).
+projects/**/reports/
 
 # Other
 .DS_Store
+
+# Internal design/planning notes — local working documents, not user-facing docs
+docs/future_directions.md
+docs/reconstruction_sketch.md
+docs/rule_induction_plan.md
+docs/rule_induction_sketch.md

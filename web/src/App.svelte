@@ -14,6 +14,7 @@
     analysisStep,
     runSingle,
     queryClasses,
+    featureTree,
     listExampleProjects,
     loadExampleProject,
   } from "./lib/engine.js";
@@ -72,6 +73,8 @@
   let singleAuto = $state(false); // whether the single derivation card shows its autosegmental diagrams
   let classInput = $state(""); // the Diagnostics class-query bundle text
   let classResult = $state(null); // last class query: {matched, total} | {error} | null
+  let diagView = $state("warnings"); // Diagnostics tab: warnings | classes | system
+  let systemTree = $state(null); // Diagnostics ▸ System: {root, tiers} | {error} | null
 
   let fileInput; // single-file <input>
   let projectInput; // multi-file (folder) <input>
@@ -430,6 +433,33 @@
     }
   }
 
+  // Diagnostics ▸ System: the feature geometry as a tree. Recomputed every time the tab is
+  // opened (same live-overlay read as the class query), so it reflects unsaved edits.
+  function openDiagView(view) {
+    diagView = view;
+    if (view !== "system" || !ready) return;
+    try {
+      const tree = featureTree();
+      // The synthesised apex reads better as a bare "ROOT" (its kind is an implementation detail).
+      if (tree.root) tree.root = { ...tree.root, name: "ROOT", kind: null, values: null };
+      systemTree = tree;
+    } catch (e) {
+      systemTree = { error: e?.message ?? String(e) };
+    }
+  }
+
+  // Flatten a feature-tree node into monospace lines with box-drawing branch prefixes
+  // (├──/└──), each line carrying the feature's kind (and a scalar's value legend).
+  function treeLines(node, prefix = "", branch = "") {
+    const lines = [{ branch: prefix + branch, name: node.name, kind: node.kind, values: node.values }];
+    const cont = branch === "" ? "" : branch === "└── " ? "    " : "│   ";
+    node.children.forEach((child, i) => {
+      const last = i === node.children.length - 1;
+      lines.push(...treeLines(child, prefix + cont, last ? "└── " : "├── "));
+    });
+    return lines;
+  }
+
   async function removeFileTab(name, ev) {
     ev.stopPropagation();
     removeFile(name);
@@ -590,7 +620,7 @@
         class="diag-btn"
         class:active={mode === "diagnostics"}
         class:has-alert={diagCount > 0}
-        title="System diagnostics: syllabification fallbacks and never-firing rules"
+        title="System diagnostics: warnings (rule checks, never-firing rules, syllabification fallbacks), class queries, and the feature tree"
         onclick={() => (mode = mode === "diagnostics" ? "results" : "diagnostics")}
         >{#if diagCount}⚠ {/if}Diagnostics{#if diagCount}{" "}{diagCount}{/if}</button
       >
@@ -972,7 +1002,8 @@
                 {/if}
                 {#if showAuto && s.autosegmental?.length}
                   <tr><td colspan={hasTime ? 5 : 4} class="auto-cell">
-                    {#each s.autosegmental as [, diagram]}
+                    {#each s.autosegmental as [sublabel, diagram]}
+                      {#if sublabel}<div class="diagram-label">{sublabel}</div>{/if}
                       <pre class="diagram">{diagram}</pre>
                     {/each}
                   </td></tr>
@@ -1048,6 +1079,11 @@
                 <th title="Words within edit distance 1 of the target (an exact match, or one insertion/deletion/substitution away)">within 1</th>
                 <th title="Mean phone edit distance: Levenshtein distance over segments, averaged across assessed words">mean phone dist</th>
                 <th title="Mean feature distance: per-segment featural difference, averaged across assessed words">mean feature dist</th>
+                {#if accuracy.weighted}
+                  <th title="Exact-match rate with each word counted frequency times">token-wt exact</th>
+                  <th title="Mean phone edit distance with each word counted frequency times">token-wt phone</th>
+                  <th title="Mean feature distance with each word counted frequency times">token-wt feature</th>
+                {/if}
               </tr>
             </thead>
             <tbody>
@@ -1059,6 +1095,11 @@
                   <td>{s.withinOne}</td>
                   <td>{s.meanPhone.toFixed(3)}</td>
                   <td>{s.meanFeature.toFixed(3)}</td>
+                  {#if accuracy.weighted}
+                    <td>{(s.wtExact * 100).toFixed(1)}%</td>
+                    <td>{s.wtPhone.toFixed(3)}</td>
+                    <td>{s.wtFeature.toFixed(3)}</td>
+                  {/if}
                 </tr>
               {/each}
             </tbody>
@@ -1066,11 +1107,9 @@
 
           {#if accuracy.weighted}
             <p class="caveat">
-              <strong>Token-weighted</strong> (by <code>frequency</code>, total weight
-              {accuracy.weighted.weight}): final {(accuracy.weighted.accuracy * 100).toFixed(1)}%
-              exact, mean phone dist {accuracy.weighted.meanPhone.toFixed(3)}, mean feature dist
-              {accuracy.weighted.meanFeature.toFixed(3)}. Confusions and the autopsy stay
-              unweighted token counts.
+              The <strong>token-weighted</strong> columns count each word by its
+              <code>frequency</code> (total weight {accuracy.weighted.weight}); confusions and
+              the autopsy stay unweighted token counts.
             </p>
           {/if}
 
@@ -1374,12 +1413,33 @@
       </div>
     </section>
 
-    <!-- DIAGNOSTICS: statements about the authored system, independent of any run — the bundle
-         match-set query (Classes) plus the last run's warnings (syllabification fallbacks +
-         never-firing rules). Rule lint lands here next. -->
+    <!-- DIAGNOSTICS: statements about the authored system, independent of any run — one tab
+         each for the last run's warnings (rule checks, never-firing rules, syllabification
+         fallbacks), the bundle match-set query (Classes), and the feature-geometry tree
+         (System). -->
     <section class="panel diagnostics">
       <div class="result-area">
         <div class="results">
+          <div class="view-tabs diag-tabs">
+            <button
+              class:active={diagView === "warnings"}
+              title="Rule checks, never-firing rules, and syllabification fallbacks from the last run"
+              onclick={() => openDiagView("warnings")}
+              >{#if diagCount}⚠ {/if}Warnings{#if diagCount}{" "}{diagCount}{/if}</button
+            >
+            <button
+              class:active={diagView === "classes"}
+              title="Which segments a feature bundle picks out, by the engine's own matcher"
+              onclick={() => openDiagView("classes")}>Classes</button
+            >
+            <button
+              class:active={diagView === "system"}
+              title="The feature geometry as loaded — the tree of the features"
+              onclick={() => openDiagView("system")}>System</button
+            >
+          </div>
+
+          {#if diagView === "classes"}
           <!-- Classes: type a feature bundle, see which segments the engine matches — the real
                reach of a class, read live from the (possibly unsaved) inventory. -->
           <section class="diag-classes">
@@ -1414,10 +1474,56 @@
             {/if}
           </section>
 
-          {#if unsatisfiable.length}
-            <!-- Rule checks: bundles that can never match a segment (a feature required present
-                 under a node required absent). Intent-free — every one is a real bug. -->
-            <section class="diag-checks">
+          {:else if diagView === "system"}
+          <!-- System: the feature geometry as the engine loads it, live from the overlay — the
+               segmental tree under ROOT plus the suprasegmental tier features. -->
+          <section class="diag-system">
+            <h3>System</h3>
+            <p class="caveat">
+              The feature geometry, as the engine loads it — every segmental feature under its
+              parent node (scalars with their value scale), and the suprasegmental tier features
+              beneath. Re-read from the current files each time this tab opens.
+            </p>
+            {#if systemTree?.error}
+              <p class="class-error">{systemTree.error}</p>
+            {:else if systemTree}
+              <div class="feature-tree">
+                {#each treeLines(systemTree.root) as l}
+                  <div class="tree-line">
+                    <span class="tree-branch">{l.branch}</span><span class="tree-name">{l.name}</span>
+                    {#if l.kind}<span class="tree-meta">({l.kind}{l.values ? `: ${l.values}` : ""})</span>{/if}
+                  </div>
+                {/each}
+              </div>
+              {#if systemTree.tiers?.length}
+                <h4 class="tiers-head">Suprasegmental tiers</h4>
+                <div class="feature-tree">
+                  {#each systemTree.tiers as tier}
+                    {#each treeLines(tier) as l}
+                      <div class="tree-line">
+                        <span class="tree-branch">{l.branch}</span><span class="tree-name">{l.name}</span>
+                        <span class="tree-meta">({l.kind}{l.values ? `: ${l.values}` : ""})</span>
+                      </div>
+                    {/each}
+                  {/each}
+                </div>
+              {/if}
+            {:else}
+              <p class="muted">Loading the feature system…</p>
+            {/if}
+          </section>
+          {:else}
+          <section class="diag-warnings">
+            {#if !diagCount}
+              <p class="muted">
+                {result
+                  ? "Every rule can fire and every word syllabified cleanly."
+                  : "Run the project to check for unsatisfiable rule bundles, never-firing rules, and syllabification fallbacks."}
+              </p>
+            {/if}
+            {#if unsatisfiable.length}
+              <!-- Rule checks: bundles that can never match a segment (a feature required present
+                   under a node required absent). Intent-free — every one is a real bug. -->
               <h3>Rule checks</h3>
               <p class="caveat">
                 These rule positions can never match any segment — a feature is required present
@@ -1438,19 +1544,9 @@
                   {/each}
                 </tbody>
               </table>
-            </section>
-          {/if}
-
-          <section class="diag-warnings">
-            <h3>Warnings</h3>
-            {#if !diagCount}
-              <p class="muted">
-                {result
-                  ? "Every rule fires and every word syllabified cleanly."
-                  : "Run a project to check for syllabification fallbacks and never-firing rules."}
-              </p>
             {/if}
             {#if unfiredRules.length}
+              <h3>Never-firing rules</h3>
               <p class="caveat">
                 These rules are word-scoped to a word that isn’t in the lexicon, so they can never
                 fire. Fix the word name, or drop the scope.
@@ -1470,6 +1566,7 @@
               </table>
             {/if}
             {#if warnings.length}
+              <h3>Syllabification fallbacks</h3>
               <p class="caveat">
                 These words’ onset/coda patterns admitted no legal split for the listed cluster, so
                 syllabification fell back to the sonority Maximal Onset division. Loosen the patterns
@@ -1495,6 +1592,7 @@
               </table>
             {/if}
           </section>
+          {/if}
         </div>
       </div>
     </section>
@@ -2131,17 +2229,52 @@
     margin: 0 0 16px;
   }
 
-  /* Diagnostics pane: the Classes match-set query and the Warnings section beneath it. */
+  /* Diagnostics pane: the Warnings / Classes / System tabs and their sections. */
+  .diag-tabs {
+    margin-bottom: 16px;
+  }
   .diag-classes,
-  .diag-checks,
+  .diag-system,
   .diag-warnings {
     margin-bottom: 24px;
   }
   .diag-classes h3,
-  .diag-checks h3,
+  .diag-system h3,
   .diag-warnings h3 {
     margin: 0 0 8px;
     font-size: var(--fs-header);
+    font-weight: 600;
+    color: var(--text-h);
+  }
+  .diag-warnings h3 + .caveat {
+    margin-top: 0;
+  }
+  .diag-warnings h3:not(:first-child) {
+    margin-top: 20px;
+  }
+  /* The System feature tree: monospace box-drawing branches, feature names in the IPA face. */
+  .feature-tree {
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+  .tree-line {
+    white-space: pre;
+  }
+  .tree-branch {
+    color: var(--muted);
+  }
+  .tree-name {
+    color: var(--text-h);
+    font-weight: 600;
+  }
+  .tree-meta {
+    color: var(--muted);
+  }
+  .tiers-head {
+    margin: 16px 0 4px;
+    font-size: var(--fs-body);
     font-weight: 600;
     color: var(--text-h);
   }
@@ -2384,8 +2517,17 @@
     white-space: pre;
     overflow-x: auto;
   }
-  .diagram + .diagram {
-    margin-top: 10px;
+  /* A clear break between stacked diagrams (a multi-node spread draws one per node), and a
+     caption naming each segmental spread's node (back, labial, …) — the CLI md's sublabel. */
+  .diagram + .diagram,
+  .diagram + .diagram-label {
+    margin-top: 18px;
+  }
+  .diagram-label {
+    margin: 0 0 4px;
+    font-family: var(--mono);
+    font-size: var(--fs-body);
+    color: var(--muted);
   }
   .blame-traj thead th:first-child {
     text-align: left;

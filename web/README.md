@@ -15,8 +15,9 @@ There is no JavaScript copy of the engine to keep in sync. At `predev`/`prebuild
 bundle, puts it on `sys.path`, imports `src.fortis`, and calls the engine directly
 (`src/lib/engine.js`). So any change to the engine or the shipped inventories is
 reflected on the next build — the glue only calls stable public functions
-(`derive`, `render_syllabified`, `describe_change`, and `main.py`'s
-`_build_derivations_csv` / `_build_csv_report` for the two generated reports below).
+(`derive`, `render_syllabified`, `describe_change`, the report builders `main.py` itself
+uses — `_build_derivations_csv`, `_build_matrix_csv`, `_build_rule_firings_csv` — and the
+analysis renderers, so the generated reports below are byte-identical to the CLI's).
 
 ## Using it
 
@@ -44,29 +45,42 @@ on desktop, by the **Diagnostics** button centred in the top bar — the editor 
 of {results, diagnostics} then show side by side:
 
 - **Project** — the left panel (inventories/rules editor).
-- **Diagnostics** — statements about the authored system, independent of any run.
-  **Classes** answers "which segments does this feature bundle pick out?" by matching
-  it with the engine's own matcher against the current (even unsaved) inventory — so
-  the surprise that `[+front]` also catches every coronal is visible, not latent.
-  **Rule checks** flags any rule position whose bundle can never match a segment — a
-  feature required present under a geometry node required absent (`[front, oral: none]`);
-  intent-free, so every finding is a real bug. **Warnings** lists syllabification
-  fallbacks and never-firing rules from the last run. The button carries a ⚠ badge with
-  the total count when any of these is present.
+- **Diagnostics** — statements about the authored system, in three tabs.
+  **Warnings** (first) collects every finding from the last run: **rule checks** — any
+  rule position whose bundle can never match a segment, a feature required present under
+  a geometry node required absent (`[front, oral: none]`); intent-free, so every finding
+  is a real bug — plus never-firing rules and syllabification fallbacks. **Classes**
+  answers "which segments does this feature bundle pick out?" by matching it with the
+  engine's own matcher against the current (even unsaved) inventory — so the surprise
+  that `[+front]` also catches every coronal is visible, not latent. **System** draws
+  the feature geometry as a tree — every segmental feature under its parent node,
+  scalars with their value scale, and the suprasegmental tier features beneath — re-read
+  from the current files each time the tab opens. The Diagnostics button carries a ⚠
+  badge with the total finding count when any is present.
 - **Results** — the right panel described next.
 
 - **Right panel** shows the results, with a view switcher: **Derivations** (the
-  firing-rule trace, each word a card with per-card **Definition** and **Graph** toggles),
+  firing-rule trace — each firing rule grouped under its `time:` heading, with
+  `before → after (change)` per step and the surface form; each word a card with per-card
+  **Definition** and **Graph** toggles — **Definition** shows the rule bodies, **Graph**
+  draws, under each step whose rule spreads a tier or geometry node, its canonical
+  autosegmental diagram),
   **Rules** (`rule_firings.csv` — one row per rule with its fire count), **Tree** (the
-  rule-feeding graph), **Matrix** (`derivation_table.csv` — one row per word, one column
-  per rule), and, when the lexicon carries attested forms, **Accuracy** (the
-  distance-to-target summary), **Errors** (which segments came out wrong, per stage),
+  rule-feeding graph), **Matrix** (`derivation_matrix.csv` — one row per word, one column
+  per rule), then, when the lexicon carries attested forms, **Accuracy** (the
+  distance-to-target summary, with token-weighted columns when the lexicon carries word
+  frequencies), **Errors** (which segments came out wrong, per stage),
   **Context** (the attested-form environments most associated with each error, per stage),
-  and **Blame** (each wrong word attributed to the rule that produced it). A **Save** button
+  and **Blame** (each wrong word attributed to the rule that produced it), and finally
+  **Single** (derive one word on demand — its full derivation, accuracy, errors, and
+  blame; the CLI's `--single`, interactive). A **Save** button
   downloads the active view's report (`derivations.csv` / `rule_firings.csv` /
-  `derivation_table.csv` / `accuracy.csv` / `errors.csv` / `error_context.csv` / `blame.md`).
-  Small projects re-run automatically on every edit; a
-  large one (over 500 words or 100 rules) waits for a **Run project** button instead.
+  `derivation_matrix.csv` / `accuracy.csv` / `errors.csv` / `error_context.csv` /
+  `blame.csv`). Small projects re-run automatically on every edit; a
+  large one (over 500 words or 100 rules) waits for a **Run project** button instead —
+  and opens on the **Single** tab until that first full run. A progress bar in the
+  header fills as the words derive (the run is driven in batches so the bar can update
+  between them).
 
   Example projects are built by `scripts/build-engine.mjs` into
   `public/projects/<dir>/` (only the inventory files each one overrides) plus a
@@ -75,11 +89,6 @@ of {results, diagnostics} then show side by side:
   `../projects/`. Add a project by appending one row to `EXAMPLE_PROJECTS` in
   that script; nothing else changes. The picker fetches these relative to
   `document.baseURI`, so they resolve under a GitHub Pages project subpath.
-- **Results** (right) — the sound-change trace: each firing rule grouped under its
-  `time:` heading, with `before → after (change)` per step and the surface form.
-  **Definition** toggles the rule bodies; **Graph** reveals, under each step whose rule
-  spreads a tier or geometry node, its canonical autosegmental diagram. A progress bar in the header fills as the
-  words derive (the run is driven in batches so the bar can update between them).
 
 ## Typography
 

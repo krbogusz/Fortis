@@ -50,7 +50,7 @@ Derivation trace
 
 ### 2.1 Segmentation and parsing
 
-The parser consumes an IPA string left to right using greedy longest-match tokenisation against the user-defined inventories. At each position it first consumes any **preposed** diacritics (those declared `kind = "before"` in `diacritics.toml`, e.g. the stress marks `ˈ`/`ˌ`), buffering them for the base to come; then it takes the longest substring that matches a letter in `letters.csv`; then it consumes any following (`"after"`/`"combining"`) diacritics, buffering all of them onto that base and applying their feature modifications. The result is a `Sequence` — an ordered list of `Segment` objects, each carrying a complete `FeatureBundle`.
+The parser consumes an IPA string left to right using greedy longest-match tokenisation against the user-defined inventories. At each position it first consumes any **preposed** diacritics (those declared `kind = "before"` in `diacritics.toml`, e.g. the stress marks `ˈ`/`ˌ`), buffering them for the base to come; then it takes the longest substring that matches a letter in `letters.csv`; then it consumes any following (`"after"`/`"combining"`) diacritics, buffering all of them onto that base and applying their feature modifications. The result is a `Form` — an ordered list of `Segment` objects, each carrying a complete `FeatureBundle`, alongside any autosegmental tiers (§5.12).
 
 The letter and diacritic tables are the sole authority on how a string is divided. There is no Unicode normalisation step: Fortis matches the code points exactly as written, against the entries exactly as the user authored them. If a string contains a substring that matches no letter (and no diacritic on a preceding base), that is a parse error, surfaced to the user rather than silently repaired — so the inventory and the lexicon must be written in the same form.
 
@@ -140,6 +140,7 @@ Every inventory Fortis uses is loaded from a file. All of them are user-authored
 | `tiers.toml`          | Autosegmental tier declarations (tone, stress; §4.3)|
 | `words.toml`          | The lexicon                                         |
 | `rules.toml`          | Phonological rules                                  |
+| `settings.toml`       | Tunable analysis thresholds (optional; §8.3)        |
 
 **TOML and CSV are equally valid.** Four of these inventories — the lexicon (`words`), the
 rules (`rules`), the diacritics (`diacritics`), and the sonority scale (`sonorities`) — may be
@@ -690,7 +691,17 @@ edit distance's metathesis cost); an absent file, or key, uses the built-in defa
 A run ends with a one-line summary on stderr — words derived, rules applied,
 per-phase timing, and the files saved.
 
-### 8.4 Parallel derivation
+### 8.4 Single-word derivation
+
+`--single WORD` derives one word instead of the whole project. The word is looked up in
+the lexicon by its IPA key or gloss — so it carries any attested targets — and is
+otherwise derived bare. It prints a compact summary and writes the same reports
+prefixed `single_` into the project's `reports/` subfolder: `single_derivations.csv`
+always, and — when the word carries a target — `single_accuracy.csv`,
+`single_distance_to_target.csv`, `single_errors.csv`, `single_error_context.csv`, and
+`single_blame.csv`. The web app's **Single** tab is the same feature, interactive.
+
+### 8.5 Parallel derivation
 
 Because deriving one word never affects another, the CLI (`python -m src.fortis.main`)
 fans a large lexicon across worker processes **automatically**, giving a ~4–6× speedup

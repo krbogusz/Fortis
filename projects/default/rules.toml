@@ -170,3 +170,13 @@ definition = "- -> ∅"
 words      = ["a gloss no word carries"]
 name       = "Never-firing rule (showcase)"
 definition = "a -> e"
+
+# A deliberately unsatisfiable rule: its target requires `front` present while delinking the
+# `oral` node it sits under — no segment can satisfy both, so the rule can never match. The
+# static rule check flags it without running anything (the CLI's `--lint`, the web app's
+# Diagnostics ▸ Warnings) — the showcase for that check. Fix such a finding by dropping one
+# side of the contradiction.
+[contradictory_bundle]
+words      = ["contradictory bundle"]
+name       = "Contradictory bundle (showcase)"
+definition = "[front, oral: none] -> e"

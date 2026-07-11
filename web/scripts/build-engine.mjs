@@ -45,7 +45,7 @@ const INVENTORY = [
 // 1. Engine bundle (exact command from the task spec).
 mkdirSync(resolve(web, "public"), { recursive: true });
 execSync(
-  "COPYFILE_DISABLE=1 tar czf public/engine.tgz --exclude='__pycache__' --exclude='._*' -C .. src projects/default",
+  "COPYFILE_DISABLE=1 tar czf public/engine.tgz --exclude='__pycache__' --exclude='._*' --exclude='reports' -C .. src projects/default",
   { cwd: web, stdio: "inherit", shell: "/bin/bash" }
 );
 console.log("built public/engine.tgz");

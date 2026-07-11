@@ -177,13 +177,11 @@ def _accuracy_summary(acc, project):
         return None
     stages = accuracy_by_stage(acc, project)
     final = next((s for s in stages if s.time is None), None)
-    weighted = None  # a token-weighted final headline, only when frequencies vary
+    # Token-weighted numbers, only when frequencies vary (weighting is a no-op otherwise):
+    # per-stage columns for the summary table, plus the total weight for the footnote.
+    weighted = None
     if final is not None and final.report.frequencies_vary:
-        r = final.report
-        weighted = {"accuracy": round(r.weighted_accuracy, 4),
-                    "meanPhone": round(r.weighted_mean_distance, 3),
-                    "meanFeature": round(r.weighted_mean_feature_distance, 3),
-                    "weight": r.weight}
+        weighted = {"weight": final.report.weight}
     return {
         "hasStages": any(s.time is not None for s in stages),
         "weighted": weighted,
@@ -194,6 +192,9 @@ def _accuracy_summary(acc, project):
             "withinOne": s.report.within_one,
             "meanPhone": round(s.report.mean_distance, 3),
             "meanFeature": round(s.report.mean_feature_distance, 3),
+            "wtExact": round(s.report.weighted_accuracy, 4) if weighted else None,
+            "wtPhone": round(s.report.weighted_mean_distance, 3) if weighted else None,
+            "wtFeature": round(s.report.weighted_mean_feature_distance, 3) if weighted else None,
             "misses": [{"gloss": g.gloss or g.ipa, "derived": g.derived, "target": g.target,
                         "d": g.distance, "fd": g.feature_distance,
                         "matchesAt": g.matches_at, "closestAt": g.closest_at}
@@ -380,18 +381,43 @@ def query_classes(bundle_str):
     ms = r.unwrap()
     return json.dumps({"matched": ms.matched, "total": ms.total})
 
+def feature_tree():
+    # Diagnostics: the feature geometry as a tree — the segmental hierarchy under ROOT plus the
+    # suprasegmental tier features — read fresh from the overlay so it reflects the current
+    # (unsaved) feature system.
+    res = load_project(Path(OVERLAY))
+    if res.is_err():
+        err = res.unwrap_err()
+        return json.dumps({"error": "\\n".join(err) if isinstance(err, list) else str(err)})
+    features = res.unwrap().features
+    def node(name):
+        f = features[name]
+        values = None
+        if f.kind == "scalar":  # the scalar's levels, lowest first (binary/unary need no legend)
+            values = ", ".join(f"{k} {v}" for k, v in sorted(f.values.items()))
+        return {"name": name, "kind": str(f.kind), "values": values,
+                "children": [node(c) for c in (f.children or ())]}
+    tiers = [node(name) for name, f in features.items()
+             if not features.is_segmental(name) and f.parent is None]
+    return json.dumps({"root": node("root"), "tiers": tiers})
+
 def run_derivations():
+    # All-in-one convenience (the smoke test; the app drives the batched API itself):
+    # derive every word, then drive the step-wise analysis to completion.
     prep = json.loads(prepare_run())
     if "error" in prep: return json.dumps(prep)
     out = []
     for i in range(0, prep["words"], 64):
         out.extend(json.loads(derive_batch(i, 64)))
     fin = json.loads(finalize_run())
-    return json.dumps({"derivations": out, "accuracy": fin.get("accuracy"),
-                       "errors": fin.get("errors"), "errorContext": fin.get("errorContext"),
-                       "blame": fin.get("blame"), "warnings": fin.get("warnings"),
-                       "unfiredRules": fin.get("unfiredRules"), "unsatisfiable": fin.get("unsatisfiable"),
-                       "dependencies": fin.get("dependencies"), "analysisMs": fin.get("analysisMs")})
+    result = fin.get("result")
+    while result is None:
+        result = json.loads(analysis_step()).get("result")
+    return json.dumps({"derivations": out, "accuracy": result.get("accuracy"),
+                       "errors": result.get("errors"), "errorContext": result.get("errorContext"),
+                       "blame": result.get("blame"), "warnings": result.get("warnings"),
+                       "unfiredRules": result.get("unfiredRules"), "unsatisfiable": result.get("unsatisfiable"),
+                       "dependencies": result.get("dependencies"), "analysisMs": result.get("analysisMs")})
 `;
 
 let py = null; // the Pyodide interpreter, set once initialised
@@ -553,6 +579,21 @@ export function queryClasses(bundle) {
   const fn = py.globals.get("query_classes");
   try {
     return JSON.parse(fn(bundle));
+  } finally {
+    fn.destroy();
+  }
+}
+
+/**
+ * Diagnostics: the feature geometry as a tree — the segmental hierarchy under ROOT plus the
+ * suprasegmental tier features — read from the current overlay so it reflects unsaved edits.
+ * @returns {{root: object, tiers: object[]}|{error: string}} nodes are
+ *   {name, kind, values: string|null, children: node[]}
+ */
+export function featureTree() {
+  const fn = py.globals.get("feature_tree");
+  try {
+    return JSON.parse(fn());
   } finally {
     fn.destroy();
   }

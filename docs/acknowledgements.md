@@ -2,10 +2,11 @@
 
 Fortis is a general engine and ships no built-in phonology. The engine code is original; the
 `projects/latin_to_french` example and its accuracy dataset draw on external work (data with its
-own licence), and `projects/halle_vaux_wolfe` follows a published feature geometry (an academic
-citation) — both recorded here for attribution. Per-project provenance also lives beside the
-data: [`projects/latin_to_french/SOURCE.md`](../projects/latin_to_french/SOURCE.md),
-[`projects/halle_vaux_wolfe/SOURCE.md`](../projects/halle_vaux_wolfe/SOURCE.md).
+own licence), and `projects/halle_vaux_wolfe` and `projects/spe` follow published feature
+systems (academic citations) — all recorded here for attribution. Per-project provenance also
+lives beside the data: [`projects/latin_to_french/SOURCE.md`](../projects/latin_to_french/SOURCE.md),
+[`projects/halle_vaux_wolfe/SOURCE.md`](../projects/halle_vaux_wolfe/SOURCE.md),
+[`projects/spe/SOURCE.md`](../projects/spe/SOURCE.md).
 
 ## DiaSim / DiaCLEF2025 — the Latin → French rules
 
@@ -33,8 +34,8 @@ data: [`projects/latin_to_french/SOURCE.md`](../projects/latin_to_french/SOURCE.
 
 ## Halle, Vaux & Wolfe (2000) — the halle_vaux_wolfe feature geometry
 
-- **Source:** Morris Halle, Bert Vaux & Andrew Wolfe (2000), *On Feature Spreading and the
-  Representation of Place of Articulation*, **Linguistic Inquiry** 31(3): 387–444.
+- **Source:** Morris Halle, Bert Vaux & Andrew Wolfe (2000), _On Feature Spreading and the
+  Representation of Place of Articulation_, **Linguistic Inquiry** 31(3): 387–444.
 - **Use:** `projects/halle_vaux_wolfe/features.toml` encodes the paper's feature geometry
   (their structure (1)), and the rules illustrate phenomena it discusses — place assimilation,
   Irish dorsal assimilation, Uyghur raising, Sibe uvularization, Palestinian emphasis, Igbo
@@ -43,14 +44,24 @@ data: [`projects/latin_to_french/SOURCE.md`](../projects/latin_to_french/SOURCE.
   [`projects/halle_vaux_wolfe/SOURCE.md`](../projects/halle_vaux_wolfe/SOURCE.md). An academic
   citation, not a licensed dataset — it does not affect the engine's licence.
 
+## Chomsky & Halle (1968) — the spe feature system
+
+- **Source:** Noam Chomsky & Morris Halle (1968), _The Sound Pattern of English_. New York:
+  Harper & Row.
+- **Use:** `projects/spe/features.toml` encodes the book's flat binary distinctive-feature
+  matrix (no feature geometry), demonstrating that the engine requires none. The inventory,
+  lexicon, and rules are an original illustration, **not** the book's data. Provenance beside
+  the data: [`projects/spe/SOURCE.md`](../projects/spe/SOURCE.md). An academic citation, not a
+  licensed dataset — it does not affect the engine's licence.
+
 ## Licensing note
 
 Fortis (engine + original docs) is **CC BY-NC 4.0** ([`LICENSE`](../LICENSE)).
 
-| Material                                                                             | Licence                                          |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------ |
-| Fortis engine + docs                                                                 | CC BY-NC 4.0                                     |
+| Material                                                                                     | Licence                                 |
+| -------------------------------------------------------------------------------------------- | --------------------------------------- |
+| Fortis engine + docs                                                                         | CC BY-NC 4.0                            |
 | Derived Latin→French `rules.toml` + lexicon (from DiaSim's DiaCLEF2025 / FLLAPS / FLLexPlus) | GPL-3.0 (derivative of GPL-3.0 sources) |
-| French frequency list                                                                | MIT (hermitdave/FrequencyWords)                  |
+| French frequency list                                                                        | MIT (hermitdave/FrequencyWords)         |
 
 Descriptive, not a legal instrument — consult each upstream project's own licence.

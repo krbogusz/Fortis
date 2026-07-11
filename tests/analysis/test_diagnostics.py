@@ -83,9 +83,18 @@ def test_independent_node_absence_is_satisfiable():
 
 
 def test_real_projects_have_no_unsatisfiable_rules():
-    for name in ["default", "halle_vaux_wolfe", "spe", "latin_to_french"]:
+    for name in ["halle_vaux_wolfe", "spe", "latin_to_french"]:
         proj = load_project(Path(f"projects/{name}")).unwrap()
         assert unsatisfiable_rules(proj) == []
+
+
+def test_default_project_carries_exactly_the_showcase_contradiction():
+    # The shipped showcase deliberately includes one unsatisfiable rule — the demo of this check.
+    proj = load_project(Path("projects/default")).unwrap()
+    findings = unsatisfiable_rules(proj)
+    assert [f.rule for f in findings] == ["Contradictory bundle (showcase)"]
+    (finding,) = findings
+    assert finding.role == "target" and "front is required present" in finding.reason
 
 
 def test_unsatisfiable_rule_is_reported_with_rule_and_reason(tmp_path):
