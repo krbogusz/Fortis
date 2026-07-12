@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import {
     initEngine,
     listFiles,
@@ -97,19 +97,45 @@
       return `<${tag} id="${slugify(text)}">${inner}</${tag}>`;
     });
   const docsMd = { guide: userGuideMd, system: defaultSystemMd, acknowledgements: acknowledgementsMd };
-  const docsHtml = $derived(addHeadingIds(marked.parse(docsMd[docsTab] ?? userGuideMd)));
 
-  // Intercept ToC clicks: scroll the target heading into view within the docs pane (a plain
-  // #hash would jump the whole SPA, not this scroll container).
-  function docsAnchorClick(event) {
+  // The docs are written for the repo, so their relative links point at files on disk. In the
+  // app: a link to another doc becomes a tab switch (data-doc, handled below), any other repo
+  // file (../README.md, ../projects/…) opens on GitHub, and external links are left alone.
+  const REPO_BLOB = "https://github.com/krbogusz/Fortis/blob/main";
+  const DOC_TABS = {
+    "user_guide.md": "guide",
+    "default_system.md": "system",
+    "acknowledgements.md": "acknowledgements",
+  };
+  const rewriteDocLinks = (html) =>
+    html.replace(/<a href="([^"#][^"]*?)(#[^"]*)?"/g, (whole, path, hash = "") => {
+      // Absolute — keep the URL, but open it away from the app rather than navigating out of it.
+      if (/^[a-z][a-z0-9+.-]*:|^\/\//i.test(path)) return `${whole} target="_blank" rel="noopener"`;
+      const tab = DOC_TABS[path];
+      if (tab) return `<a href="${hash || "#"}" data-doc="${tab}"`;
+      const file = path.replace(/^(\.\.\/)+/, "");
+      return `<a href="${REPO_BLOB}/${file}${hash}" target="_blank" rel="noopener"`;
+    });
+  const docsHtml = $derived(
+    addHeadingIds(rewriteDocLinks(marked.parse(docsMd[docsTab] ?? userGuideMd))),
+  );
+
+  // Intercept ToC and cross-doc clicks: switch tabs and/or scroll the target heading into view
+  // within the docs pane (a plain #hash would jump the whole SPA, not this scroll container).
+  async function docsAnchorClick(event) {
     const anchor = event.target.closest?.('a[href^="#"]');
     if (!anchor || !docsBodyEl) return;
+    const tab = anchor.dataset.doc;
     const id = decodeURIComponent(anchor.getAttribute("href").slice(1));
-    const target = id && docsBodyEl.querySelector(`#${CSS.escape(id)}`);
-    if (target) {
-      event.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!tab && !(id && docsBodyEl.querySelector(`#${CSS.escape(id)}`))) return;
+    event.preventDefault();
+    if (tab && tab !== docsTab) {
+      docsTab = tab;
+      await tick(); // the other doc has to render before its headings exist
     }
+    const target = id && docsBodyEl.querySelector(`#${CSS.escape(id)}`);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    else if (tab) docsBodyEl.scrollTop = 0;
   }
 
   let debounceTimer = null;

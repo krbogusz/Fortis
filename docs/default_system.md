@@ -7,7 +7,7 @@ Fortis, not a fixed part of the engine: every field here lives in ordinary
 TOML/CSV files under `projects/default/`, and any project can override some
 or all of it (see the main [README](../README.md#design-philosophy)). For
 how to author your own feature system from scratch, see
-[`user_guide.md`](user_guide.md) §3–§4.
+[`user_guide.md` §3–§4](user_guide.md#3-the-feature-system).
 
 The letter inventory is a CSV table (`letters.csv`). The lexicon, the rule list, the
 diacritics, and the sonority scale each accept **either** form, chosen by file
@@ -15,7 +15,7 @@ extension: `words.toml`/`words.csv`, `rules.toml`/`rules.csv`,
 `diacritics.toml`/`diacritics.csv`, `sonorities.toml`/`sonorities.csv` (if both are
 present, TOML wins). The feature system (`features.toml`), tiers (`tiers.toml`), and
 syllable parameters (`syllable_parts.toml`) stay TOML, since they nest. The CSV forms
-are documented in [`user_guide.md`](user_guide.md) §4.1–§4.2.
+are documented in [`user_guide.md` §4.1–§4.2](user_guide.md#4-configuration-files).
 
 ## Feature geometry
 
@@ -59,7 +59,7 @@ ROOT
 ```
 
 Two suprasegmental features live on tiers instead (`tiers.toml`, not the
-segment bundle — see `user_guide.md` §4.3 and §5.12): `tone` (scalar,
+segment bundle — see [`user_guide.md` §4.3 and §5.12](user_guide.md#4-configuration-files)): `tone` (scalar,
 extra-low…extra-high) and `stress` (scalar, secondary/primary).
 
 Most nodes are unary (present/absent), reserving binary for the handful of
@@ -352,4 +352,4 @@ sonorant: +, nasal: none, lateral: none`; a glide adds `continuant: +` and
   consonant). Before that time, syllabification falls back to sonority and
   the Maximal Onset Principle, which is also what a project with no
   `syllable_parts.toml` onset/coda entries at all gets throughout. See
-  `user_guide.md` §7 for the general mechanism.
+  [`user_guide.md` §7](user_guide.md#7-syllabification) for the general mechanism.
