@@ -521,9 +521,12 @@ performance work on the browser build if it becomes more than a demo/playground.
 
 ## License
 
-Licensed under [CC BY-NC 4.0](LICENSE) — free for private and scientific/research
-use with attribution; commercial use is not permitted. Note that the Latin → French rule and
-lexicon data is derived from GPL-3.0 material (see Acknowledgements) and carries that licence.
+Licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE) — free for any
+noncommercial purpose, including personal study, hobby projects, and use by educational
+institutions, public research organizations, and other nonprofits (whatever their funding);
+commercial use is not permitted. Keep the copyright notice with any copy you pass on.
+Note that the Latin → French rule and lexicon data is derived from GPL-3.0 material
+(see Acknowledgements) and carries that licence.
 
 ## Acknowledgements
 

@@ -56,11 +56,12 @@ lives beside the data: [`projects/latin_to_french/SOURCE.md`](../projects/latin_
 
 ## Licensing note
 
-Fortis (engine + original docs) is **CC BY-NC 4.0** ([`LICENSE`](../LICENSE)).
+Fortis (engine + original docs) is **PolyForm Noncommercial 1.0.0** ([`LICENSE`](../LICENSE)) —
+noncommercial use only, with the copyright notice kept on any copy passed on.
 
 | Material                                                                                     | Licence                                 |
 | -------------------------------------------------------------------------------------------- | --------------------------------------- |
-| Fortis engine + docs                                                                         | CC BY-NC 4.0                            |
+| Fortis engine + docs                                                                         | PolyForm Noncommercial 1.0.0            |
 | Derived Latin→French `rules.toml` + lexicon (from DiaSim's DiaCLEF2025 / FLLAPS / FLLexPlus) | GPL-3.0 (derivative of GPL-3.0 sources) |
 | French frequency list                                                                        | MIT (hermitdave/FrequencyWords)         |
 
