@@ -138,7 +138,7 @@ definition = "[+syllabic, stress: primary] → [stress: secondary] / # ([-syllab
 time = -100
 name = "unstressed short non-low vowels glide before another vowel (yod/w formation)"
 description = "Pope s220, s156i — called for this early by s187. Output is a true glide (+consonantal): a pre-vocalic yod/w, not a diphthong off-glide semivowel — so it feeds yod strengthening (j→ʝ) and the palatalization chain, matching DiaSim's single [+hi,-syl] yod."
-definition = "[+syllabic, length: short, stress: none, aperture: !low] → [aperture: high, syllabic: -, +consonantal, advancement: atr] / _ [+syllabic]"
+definition = "[+syllabic, length: short, stress: none, aperture: !low] → [aperture: high, syllabic: -, +consonantal, advancement: none] / _ [+syllabic]"
 
 [cl_l_darkening]
 time = -100
@@ -1444,7 +1444,16 @@ definition = "∅ → j̃ / ([advancement: atr, +syllabic]|[aperture: low, +syll
 time = 1100
 name = "the nasal diphthong ũj̃ becomes wĩ (syllabicity swap before a nasal)"
 description = "Pope s670 (DiaCLEF source line 2648: {ũ j̃} > {w ĩ}), plus the front-round counterpart via the general yj→ɥi swap (rule 617) applied to the nasal ỹj̃ (juin ỹj̃ > ɥĩ > ɥɛ̃). The high rounded nucleus desyllabifies (back→w, front→ɥ) and the nasal yod becomes the nucleus ĩ, later lowered to ɛ̃. Must precede the ũj̃/ỹj̃ monophthongization."
-definition = ["[+back, +rounded, aperture: high, +syllabic] j̃ → w [+syllabic]", "[+front, +rounded, aperture: high, +syllabic] j̃ → ɥ [+syllabic]"]
+# The yod does not merely become SYLLABIC, it becomes a VOWEL — the description above already
+# says so ("the nasal yod becomes the nucleus ĩ"). A merge keeps every feature it does not
+# mention, and /j/ and /i/ differ in THREE: `syllabic` 0→1, `consonantal` 1→0, and
+# `advancement` (absent on the glide, atr on the vowel). Setting only `+syllabic` produced a
+# syllabic GLIDE j̩̃ — not the letter ĩ, and not any letter at all, so it surfaced as `�` and
+# every later rule written against a vowel looked straight through it.
+# The non-nasal twin (of2_yj_to_ui_glide) sidesteps this by writing the LETTER i outright;
+# here the segment is nasal, so the nasality has to be preserved and the merge must name the
+# three features itself.
+definition = ["[+back, +rounded, aperture: high, +syllabic] j̃ → w [+syllabic, consonantal: -, advancement: atr]", "[+front, +rounded, aperture: high, +syllabic] j̃ → ɥ [+syllabic, consonantal: -, advancement: atr]"]
 
 [eof_glide_before_intervocalic_ny]
 time = 1100
@@ -1760,7 +1769,7 @@ definition = "ə → ə̯ / ([-consonantal]|j|w|ɥ) _"
 time = 1300
 name = "nasalized ĩ lowers after w"
 description = "CORRECTION — bleeds the later denasalization of wĩ, which denasalizes to wɛ ultimately"
-definition = "[+front, +nasal, +syllabic] → [aperture: mid] / w _"
+definition = "[+front, +nasal, +syllabic] → [aperture: mid, consonantal: -, advancement: atr] / w _"
 
 [of2_nasalized_i_denasalizes_before_nasal_glide]
 time = 1300
@@ -1802,7 +1811,7 @@ definition = "j → ∅ / ([+front, aperture: high, +consonantal]|[+front, anter
 time = 1150
 name = "the remaining anterior palatalized consonants depalatalize"
 description = "CORRECTION — the palatal sʲ/tʲ/zʲ/dʲ preserved since Gallo-Roman are finally lost"
-definition = "[+anterior, +front, aperture: high] → [front: none, aperture: none]"
+definition = "[+anterior, +front, aperture: high] → [aperture: none]"
 
 [of2_oe_to_we_final]
 time = 1300
@@ -1814,7 +1823,7 @@ definition = ["[+back, +rounded, +syllabic, stress: none] ɛ̯ → w ɛ", "[+bac
 time = 1300
 name = "a front unrounded non-low vowel laxes and lowers after w"
 description = "CORRECTION — includes /we/ resulting from denasalization"
-definition = "[+front, rounded: none, +syllabic, aperture: !low] → [aperture: mid, advancement: rtr] / w _"
+definition = "[+front, rounded: none, +syllabic, aperture: !low] → [aperture: mid, advancement: rtr, consonantal: -] / w _"
 
 [of2_nasal_consonant_loss_praeconsonantal]
 time = 1300
@@ -2019,7 +2028,7 @@ definition = ["ɹ → ∅ / [+syllabic] ([-syllabic])* [aperture: mid, +front, a
 time = 1550
 name = "a countertonic high vowel consonantalizes before a lower vowel, ceding stress"
 description = "Pope s241 — 16th century (\"Later Middle French\"), accepted by the early 17th (Vaugelas); CORRECTION: not before a low vowel; the desyllabified high vowel is a +consonantal glide (w/j), not a -cons semivowel (louer/nouer → lwe/n̪we)"
-definition = "[aperture: high, stress: secondary, +syllabic] [aperture: mid, +syllabic] → [syllabic: -, +consonantal] [stress: secondary]"
+definition = "[aperture: high, stress: secondary, +syllabic] [aperture: mid, +syllabic] → [syllabic: -, +consonantal, advancement: none] [stress: secondary]"
 
 [mf_vowel_lengthens_before_intervocalic_z]
 time = 1550

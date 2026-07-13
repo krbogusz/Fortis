@@ -11,7 +11,7 @@ definition = "[+nasal] -> [place: ~1] / _ [+consonantal, place: ~1]"
 [uyghur_raising]
 words      = ["kalalar"]
 name       = "Uyghur Raising"
-definition = "[-consonantal, +sonorant, +low] -> [+high, -low] / [-consonantal] [+consonantal]* $ [+consonantal]* _ $ [+consonantal]"
+definition = "[-consonantal, +sonorant, +low] -> [+high, -low, -back] / [-consonantal] [+consonantal]* $ [+consonantal]* _ $ [+consonantal]"
 
 # --- Sibe uvularization (HVW ex. 50-52): a dorsal C goes uvular ([-high]) when preceded ANYWHERE
 #     by a [-high] vowel; intervening [+high] vowels are transparent. A real node-spread: the

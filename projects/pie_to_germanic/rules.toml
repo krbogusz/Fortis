@@ -191,7 +191,7 @@ definition = [
 time = -1000
 name = "Merging of non-high back vowels"
 description = "Merging of non-high back vowels"
-definition = "([+syll, aperture: !high, !fr, advancement: atr] |[+syll, aperture: !high, !fr, advancement: rtr]) → [aperture: low, fr:none, +bk, advancement: rtr, rnd: none]"
+definition = "([+syll, aperture: !high, !fr, advancement: atr] |[+syll, aperture: !high, !fr, advancement: rtr]) → [aperture: low, fr:none, +bk, advancement: rtr, rnd: none, labial: none]"
 
 [final_m_to_n]
 time = 0
@@ -215,7 +215,7 @@ definition = "[+syll, stress:none] n → [+nas] ∅ / _#"
 time = 0
 name = "Lowering of nasal */ẽː/ to */ɑ̃ː/"
 description = "Lowering of nasal */ẽː/ to */ɑ̃ː/"
-definition = "[+syll, aperture: !high, +fr, length: long, nasal] → [aperture: low, fr: none, +bk, advancement: rtr, rnd: none]"
+definition = "[+syll, aperture: !high, +fr, length: long, nasal] → [aperture: low, fr: none, +bk, advancement: rtr, rnd: none, labial: none]"
 
 [schwa_elimination]
 time = 0
