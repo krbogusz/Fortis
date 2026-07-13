@@ -465,16 +465,17 @@ fortis/
     │   ├── applying.py          #   apply_match: rewrite a matched locus
     │   ├── syllabifying.py      #   syllabify: sonority + onset/coda-pattern boundaries
     │   ├── segmentation.py      #   string_to_sequence: IPA → feature bundles
-    │   ├── rendering.py         #   sequence_to_string, render_syllabified, describe_change
+    │   ├── rendering.py         #   sequence_to_string, render_syllabified; render_residue → �
     │   ├── tiers.py             #   autosegmental tier ops: associate, cleanup/OCP, redock, spread/dock
     │   └── deriving.py          #   apply_rule per mode; derive_all → [Derivation]; form_at_time
     │
     └── analysis/                # OUTPUT ANALYSIS       (depends on: models, application)
-        ├── accuracy.py          #   phone + feature edit distance vs attested target forms
+        ├── accuracy.py          #   phone + feature edit distance vs attested targets (on BUNDLES)
         ├── diagnosis.py         #   per-stage confusions (errors) + per-segment context autopsy
         ├── dependencies.py      #   firing-based rule feeding graph → rule_dependencies.html
         ├── blame.py             #   attribute each wrong word to the rule that produced it
-        ├── warnings.py          #   syllabification-fallback warnings
+        ├── warnings.py          #   what the engine did silently: unspellable segments (�),
+        │                        #   syllabification fallbacks → warnings.md
         └── reporting.py         #   render the accuracy CSVs (per-stage summary + per-word)
 ```
 

@@ -54,7 +54,9 @@ The parser consumes an IPA string left to right using greedy longest-match token
 
 The letter and diacritic tables are the sole authority on how a string is divided. There is no Unicode normalisation step: Fortis matches the code points exactly as written, against the entries exactly as the user authored them. If a string contains a substring that matches no letter (and no diacritic on a preceding base), that is a parse error, surfaced to the user rather than silently repaired — so the inventory and the lexicon must be written in the same form.
 
-Round-trip identity (IPA → features → IPA) is not guaranteed and should not be assumed. The correct invariant is round-trip **stability**: parsing and re-rendering a form twice yields the same string both times.
+A **preposed** mark is buffered and handed to the first segment that turns out to be a syllable **nucleus** — and "turns out to be" is settled only once that segment's own diacritics have been applied. A diacritic can make a segment a nucleus (a syllabic `̩` on a consonant), and it can just as easily unmake one (a non-syllabic `̯` on the on-glide of a diphthong): in `ˈe̯a`, the `e` is a nucleus when its letter is read and would claim the stress, but the `̯` then takes that away, so the stress passes on to the `a`. Nothing is lost either way.
+
+Round-trip identity (IPA → features → IPA) is not guaranteed and should not be assumed. The correct invariant is round-trip **stability**: parsing and re-rendering a form twice yields the same string both times. Nothing downstream depends on the round trip: the derivation and the accuracy analysis both work on feature bundles from end to end (§8.3), and text appears only twice in the whole pipeline — when a string is parsed on the way in, and when a form is rendered for a report on the way out.
 
 ### 2.2 Rule application
 
@@ -63,6 +65,14 @@ Rules are applied in time order. Rules sharing a time fire in the order they app
 ### 2.3 Rendering
 
 The final sequence is converted back to an IPA string by looking up each segment's feature bundle against the letter inventory and emitting the canonical IPA symbol plus whatever diacritics are needed to recover the full specification.
+
+A segment whose features **no letter can express** — not even the nearest letter plus every diacritic that fits — renders as **`�`**, and the run raises a warning naming the letter it is a near-miss for, the features that letter cannot carry, and the rule that produced it (`warnings.md`, §8.3).
+
+This matters more than it looks, and it is worth understanding before you write rules. Rendering is *lossy and many-to-one*: it finds the closest letter it can. A letter **pattern** in a rule, by contrast, matches by *exact identity* — the segment's features must be exactly the letter's. So a bundle one feature away from `ɑ` would, if it were spelt `ɑ`, print as a perfectly ordinary `ɑ` in every trace and report **while no rule written `ɑ → …` would ever match it**: the rule fires on some words and passes silently over identical-looking others, with no error anywhere. `�` exists so that never happens quietly.
+
+The usual cause is a rule, and it is spelt out in §6.4: **a merge keeps every feature it does not mention.**
+
+Rendering is otherwise **injective** across the shipped projects — no two distinct bundles share a symbol — which is why the analysis can label phones with strings while still comparing them as bundles (§8.3).
 
 ---
 
@@ -289,6 +299,13 @@ ocp    = false
 - `kind`, `values`, `short` — the feature definition, exactly as a `features.toml` entry (§3.2); `kind` is required (and `values` for a `scalar`). The tier carries this single feature, named for the table.
 - `anchor` _(required)_ — a feature pattern; a segment matching it can bear an autosegment (typically the syllable nucleus, `+syllabic`).
 - `melody` _(required)_ — `true` for a melody tier (tone): an autosegment stranded by deletion floats and is carried to a neighbour (stability, §5.12). `false` for a metrical tier (stress): it stays put.
+
+  `melody` also decides whether a tier may put **two autosegments on one anchor**, which is the difference between a contour and a contradiction:
+
+  - A **melody** tier *may*. Many-to-one association is the point of an autosegmental melody: two tones on one tone-bearing unit **is** a contour. When a rule contracts two toned vowels (`ú` + `ù` → `ûː`), both tones survive on the single remaining anchor, and that is the tonal stability this tier exists to provide.
+  - A **metrical** tier *may not*. A syllable has one stress. When a rule contracts two vowels (`ˌu` + `ˈuː` → `ˈuː`), the survivor already bears its own stress, so the deleted vowel's is **dropped rather than stacked** — the incumbent wins. (Stacked, the two would fold into a contour `stress: (2, 1)` that no letter or diacritic can spell, and the segment would surface as `�`.)
+
+  The guard only declines to *stack*. Where the surviving anchor has no autosegment of its own (`ˈu` + `u` → `ˈuː`), a stranded one still migrates onto it, exactly as stability says. A language that genuinely **re-assigns** the stress of a lost syllable must say so in a rule — that is a claim about the language, not a default the engine should make for you.
 - `ocp` _(optional, default `true`)_ — merge adjacent identical autosegments.
 - `stray_erase` _(optional, default `true`)_ — delete a still-floating autosegment at the surface.
 - `stability` _(optional, default `"left"`)_ — for a melody tier, which neighbour an autosegment stranded by deletion carries to: `"left"` (the preceding syllable) or `"right"` (the following).
@@ -592,6 +609,31 @@ Rules fire in `time` order, and within a single time in file order. Rules intera
 
 Ordering is fully determined: rules are sorted by `time`, and within a single time by their order in the file. So when two rules share a `time`, the one earlier in the file applies first and can feed or bleed the later one exactly as a lower `time` would — change the relation by reordering them within the time or by giving them distinct `time` values.
 
+### 6.4 A merge keeps every feature it does not mention
+
+This is the single most important thing to know when writing a rule, and the source of the most common bug in the system.
+
+A rule whose result is a **feature bundle** *merges* onto the matched segment: the features you name are overwritten, and **every feature you do not name is kept**. That is what makes merges composable — but it means a rule that changes a segment's *quality* must clear the **whole set** of features that go with the old quality, not just the one that first comes to mind:
+
+```toml
+# WRONG — un-rounds PIE *o but says nothing about `labial`
+definition = "[+syll, +rounded] → [aperture: low, front: none, +back, rounded: none]"
+```
+
+Proto-Indo-European *o* is `[+rounded, +labial]`. Clearing only `rounded` yields a segment that is the letter `ɑ` **plus a stray `labial`** — a low back unrounded vowel that the feature system still thinks is labial. It is not the letter `ɑ`, so **every rule written `ɑ → …` silently skips it**, while it prints as an ordinary `ɑ` in every report. Three separate rules in the shipped PIE→English cascade were disabled this way, on most of their inputs, with no error.
+
+```toml
+# RIGHT — clear the whole quality
+definition = "[+syll, +rounded] → [aperture: low, front: none, +back, rounded: none, labial: none]"
+```
+
+Clear `rounded` **and** `labial`; `front` **and** `back`. The rule of thumb: after your rule fires, is the result *exactly* some letter in your inventory? If it isn't, it renders as `�` and `warnings.md` names the near-miss letter, the leftover features, and the rule — so you do not have to spot this by eye.
+
+Two related traps:
+
+- **Letter results replace; bundle results merge.** `ð̠ → d` swaps the segment wholesale for the letter `d`, so nothing is inherited. A one-to-two expansion (`æ → æɑ`) *must* take the replacement path — a bundle merge across unequal counts is ambiguous and the rule simply never fires.
+- **Letter *patterns* match by identity, not subset.** `[+syll, aperture: low]` matches any low vowel; `ɑ` matches only a segment that *is* the letter `ɑ`, feature for feature. Prefer features for vowel rules.
+
 ---
 
 ## 7. Syllabification
@@ -659,13 +701,29 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
   x-axis (period blocks, +1 sub-column per same-time dependency); hover a rule to see the
   segments it consumes/produces and the rules it is fed by / feeds. The webapp's **Tree**
   tab renders the same graph.
+- **`warnings.md`** — the things the engine did **silently**, written only when there is
+  something to report. Two kinds:
+  - **Unspellable segments** (§2.3): each segment no letter can express, given as the letter it
+    is a near-miss for, the features that letter cannot carry, the **rule that produced it**, and
+    example words. This is nearly always a merge that forgot to clear a feature (§6.4), and the
+    named rule is where the fix goes.
+  - **Syllabification fallback**: each word whose onset/coda patterns admitted no legal split, so
+    the sonority Maximal Onset division was used instead (§7).
+
+  The web app shows the same content in a **Warnings** tab.
 - **`accuracy.csv`** and **`distance_to_target.csv`** — the **accuracy**
   analysis, written only when the lexicon carries attested forms (`final`/`stages`,
   §4.1). It measures each derived form's distance to its target with two edit
-  distances: a **phone** distance (a base segment plus its combining marks is one
-  phone; an exact match is 0) and a finer **feature** distance (a substitution costs
+  distances: a **phone** distance (one inventory *segment* is one phone — an affricate `d͡ʒ` is
+  a single unit, not two codepoints — and an exact match is 0) and a finer **feature** distance
+  (a substitution costs
   the number of features that differ, so `ɑ̃` is one edit from `ɑ` but eleven from
-  `t`; an adjacent-segment swap counts as one). `accuracy.csv` is the
+  `t`; an adjacent-segment swap counts as one). Both compare **feature bundles**, not rendered
+  text — the derived form is taken straight off the derivation and the target is segmented once
+  at load — so two phones are the same exactly when their bundles are, and a feature distance of
+  0 coincides with a phone distance of 0 by construction. Suprasegmentals are compared on the
+  segment they anchor to, which makes the comparison placement-invariant (`ˈkon` and `kˈon` both
+  read as `k · ˈo · n`). `accuracy.csv` is the
   per-stage summary (columns `stage, assessed, exact, within 1, mean phone dist, mean
   feature dist` — plus `token-wt exact/phone/feature` when the lexicon carries word
   `frequency` weights, counting each word by its frequency); `distance_to_target.csv` is
@@ -717,6 +775,18 @@ Pyodide (CPython on WebAssembly) has no multiprocessing, so this applies to the 
 ---
 
 ## 9. Validation
+
+Fortis checks a rule set at three points, and it is worth knowing which catches what:
+
+| when | check | what it catches |
+| --- | --- | --- |
+| **load** | validation (below) | a rule that is *malformed* — it cannot be parsed into a coherent rewrite |
+| **`--lint`** | static analysis, no derivation | a rule that is *unsatisfiable* — a bundle no segment could ever match (e.g. `[front, oral: none]`, a feature required present under a node required absent). Exits non-zero, so it works as a CI gate. |
+| **run** | `warnings.md` (§8.3) | a rule that is *wrong* — it fired and produced a segment no letter can express (`�`), or the syllabification fell back. Neither is an error; both are things that would otherwise happen silently. |
+
+A rule can pass all three and still be bad phonology — that is what the accuracy analysis is for. But the run-time warnings are the ones that catch the failure you cannot see: a rule quietly matching only *some* of the segments it looks like it should (§2.3, §6.4).
+
+### 9.1 Load-time validation
 
 Rule definitions are validated at load time. Errors are collected rather than failing on the first one, so every problem in a file is reported together. The following are validation errors.
 

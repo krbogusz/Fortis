@@ -200,6 +200,19 @@ of vowel quality. Back consonants split by height exactly as back vowels do:
 | /h/ voiceless glottal fricative | -       | +1 spread          | 0         | 0               |
 | /ɦ/ breathy glottal             | +       | +1 spread          | -1 slack  | 0               |
 
+Read the first two aspirate rows together, because they are the difference between two
+diacritics that look alike and are not: **`ʰ` is `glottal_aperture: spread` alone; `ʱ` is
+spread _and_ `tension: slack` (and voiced)**. A rule that means to derive a breathy `gʱ` and
+writes only
+
+```toml
+definition = "… → [glottal_aperture: spread]"
+```
+
+produces a `g` that is spread but not slack — which spells `gʰ`, **not** the `gʱ` the lexicon
+writes. It is a different segment, so any rule written against the letter+diacritic `gʱ` looks
+straight through it (§6.4 of the user guide). Write `[glottal_aperture: spread, tension: slack]`.
+
 ## How this differs from standard (SPE) feature theory
 
 The inventory is closer to Feature Geometry and Dependency/Government
