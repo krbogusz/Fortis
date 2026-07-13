@@ -162,3 +162,62 @@ def test_stability_direction_is_per_tier(project):
 
     assert carried_position("left") == [1]  # the preceding syllable
     assert carried_position("right") == [4]  # the following syllable
+
+
+# A contraction: two adjacent vowels collapse into one long vowel. The FIRST is deleted (∅) and
+# the second is merged (kept, lengthened) — so the first's anchor is stranded while the survivor
+# already carries whatever suprasegmental it had.
+_CONTRACT = "[+syllabic] [+syllabic] → ∅ [length: long]"
+
+
+def _derive_contracting(form, project):
+    sd = parse_definition(_CONTRACT, project.features).unwrap()
+    rule = Rule(id="contract", time=0, raw_definition="contract", sd=sd)
+    return derive(
+        Word(ipa="tuu"),
+        form,
+        RuleInventory({0: (rule,)}),
+        project.letters,
+        project.features,
+        project.sonorities,
+        project.syllable_parts,
+        project.tiers,
+    ).surface
+
+
+def _carried(form, feature):
+    """Every value of *feature* borne by a segment of *form*, in order."""
+    return [
+        bundle[feature].value for bundle in lower_tiers(form) if feature in bundle.data
+    ]
+
+
+def test_a_melody_tier_STACKS_on_contraction_forming_a_contour(project):
+    """Tone is a melody: two tones on one anchor IS a contour, and a contraction makes one.
+
+    This is the whole point of many-to-one autosegmental association, and the guard below must
+    not touch it — *ú + *ù contracting to *ûː keeps both tones on the surviving anchor.
+    """
+    high, low = "u\u0301", "u\u0300"  # ◌́ = tone 4, ◌̀ = tone 2 (default diacritics.toml)
+    surface = _derive_contracting(string_to_sequence("t" + high + low, project), project)
+    tones = _carried(surface, "tone")
+    assert len(tones) == 1  # one surviving anchor…
+    assert isinstance(tones[0], tuple)  # …bearing a CONTOUR (both tones), not just one
+    assert len(tones[0]) == 2
+
+
+def test_a_metrical_tier_does_NOT_stack_the_incumbent_stress_wins(project):
+    """Stress is metrical, not melodic: a syllable has ONE stress.
+
+    A contraction strands the deleted vowel's stress, and re-anchoring it onto the survivor —
+    which already has its own — gave that segment TWO, folding into a contour `stress: (2, 1)`
+    no letter or diacritic can spell (it surfaced as `�`). The incumbent wins.
+    """
+    surface = _derive_contracting(string_to_sequence("tˌuˈuː", project), project)
+    assert _carried(surface, "stress") == [2]  # primary only — the secondary is dropped
+
+
+def test_a_stranded_stress_still_MIGRATES_when_the_survivor_has_none(project):
+    """The guard only declines to STACK. With no incumbent, stability still applies."""
+    surface = _derive_contracting(string_to_sequence("tˈuu", project), project)
+    assert _carried(surface, "stress") == [2]  # it moved onto the survivor rather than vanishing

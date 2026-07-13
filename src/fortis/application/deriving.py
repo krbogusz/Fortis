@@ -617,6 +617,23 @@ def _carry_stranded_suprasegmentals(
         )
         if new_anchor is None:
             continue  # no new nucleus in the replacement → leave to melody re-docking
+        # A MELODY tier may stack: two tones on one anchor is a CONTOUR, and many-to-one
+        # association is the whole point of an autosegmental melody — a contraction of *á + *à
+        # into *âː is exactly the tonal stability this function exists to provide.
+        #
+        # A METRICAL tier may not. A syllable has one stress. When a rule contracts two nuclei
+        # (ˌu + ˈuː > ˈuː) the survivor already carries its own, and re-anchoring the deleted
+        # vowel's on top gave it TWO — folding into a contour `stress: (2, 1)` that no letter or
+        # diacritic can spell, so it surfaced as `�`. The incumbent wins: the syllable keeps the
+        # stress it has. Note this only declines to STACK — where the new anchor has no stress of
+        # its own (ˈu + uː > ˈuː) the stranded one still migrates onto it, as it should. A
+        # language that genuinely re-assigns the stress of a lost syllable must say so in a rule.
+        #
+        # The `written_tiers` guard above catches the same collision when the rule's RESULT
+        # LITERAL sets the tier (ˌa → ˈa); it cannot see a stress the survivor inherited silently
+        # through a feature-merge, which is what a contraction does.
+        if not declaration.melody and any(anchor == new_anchor for (_, anchor) in tier.links):
+            continue
         tier.links = {
             (autoseg, new_anchor if anchor in stranded else anchor)
             for (autoseg, anchor) in tier.links

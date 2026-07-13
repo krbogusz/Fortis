@@ -37,6 +37,7 @@ from src.fortis.analysis.accuracy import (
     edit_distance,
     feature_edit_distance,
     form_phones,
+    phone_keys,
 )
 from src.fortis.application.deriving import form_at_time
 from src.fortis.application.rendering import render_segment, render_syllabified
@@ -200,7 +201,7 @@ def _stage_divergence(derivation: Derivation, project: Project) -> StageDivergen
         if target_form is None:  # attested stage the inventory could not segment — skip (warned)
             continue
         form, boundaries = form_at_time(derivation, time)
-        if edit_distance(form_phones(target_form, project), form_phones(form, project), swap) > 0:
+        if edit_distance(phone_keys(target_form, project), phone_keys(form, project), swap) > 0:
             return StageDivergence(
                 time=time,
                 attested=derivation.word.stages[time],
@@ -272,7 +273,7 @@ def _trajectory(derivation: Derivation, project: Project) -> tuple[TrajectoryPoi
     prev_target: str | None = None
     for label, time, form, boundaries, target_str, target_form in rows:
         distance = edit_distance(
-            form_phones(form, project), form_phones(target_form, project), swap
+            phone_keys(form, project), phone_keys(target_form, project), swap
         )
         feature_distance = feature_edit_distance(
             comparable_bundles(form), comparable_bundles(target_form), swap
@@ -314,7 +315,7 @@ def blame_word(
     swap = project.settings.accuracy.transposition_cost
     surface = _render(derivation.surface, derivation.surface_boundaries, project)
     distance = edit_distance(
-        form_phones(word.final_form, project), form_phones(derivation.surface, project), swap
+        phone_keys(word.final_form, project), phone_keys(derivation.surface, project), swap
     )
     if distance == 0 and not include_exact:
         return None

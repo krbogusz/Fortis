@@ -9,6 +9,7 @@ from src.fortis.models.bundles import FeatureBundle, morpheme_boundary_bundle
 from src.fortis.models.form import Form
 from src.fortis.models.project import Project
 from src.fortis.models.tier_declaration import TierInventory
+from src.fortis.models.tiers import Tier
 
 # A floating tone in the lexicon is written ⟨◌◌́⟩ — a tone diacritic on a dotted-circle
 # placeholder, in float brackets. The dotted circle (U+25CC) is the carrier and is ignored.
@@ -40,6 +41,27 @@ def _add_floating_autoseg(
     tier = form.tiers.setdefault(name, AutosegmentalTier())
     tier.autosegs.append(autoseg)
     tier.float_hosts[autoseg.id] = position
+
+
+def _split_suprasegmentals(
+    segment: FeatureBundle, project: Project
+) -> tuple[FeatureBundle, FeatureBundle]:
+    """Split *segment* into (segmental features, syllable-tier features).
+
+    Used to take the suprasegmentals back off a segment that a diacritic has just stopped being
+    a nucleus, so they can be re-offered to the syllable's real nucleus.
+    """
+    syllable = {
+        name
+        for name, feature in project.features.items()
+        if feature.tier == Tier.syllable and name in segment.data
+    }
+    if not syllable:
+        return segment, FeatureBundle()
+    return (
+        FeatureBundle({f: s for f, s in segment.items() if f not in syllable}),
+        FeatureBundle({f: s for f, s in segment.items() if f in syllable}),
+    )
 
 
 def _is_nucleus(segment: FeatureBundle, project: Project) -> bool:
@@ -157,6 +179,32 @@ def string_to_sequence(raw_string: str, project: Project) -> Form:
                                     segments[-1] = combine(segments[-1], syllable_buffer)
                                     syllable_buffer = FeatureBundle()
                                 last_nucleus_index = len(segments) - 1
+                            else:
+                                # …and it can do the reverse. A non-syllabic ̯ turns a diphthong's
+                                # on-glide back into a non-nucleus — but the LETTER was a nucleus
+                                # when it was appended, so it has already claimed the pending
+                                # stress above. Left there, the stress sits on a non-syllabic
+                                # segment, no tier can anchor it (`anchor: +syllabic`), and
+                                # `stray_erase` deletes it: `ˈɲaws` keeps its stress while
+                                # `ˈɲe̯aws` silently loses it — in the lexicon's ATTESTED forms as
+                                # much as in derived ones, since targets are ingested through here.
+                                # Hand the suprasegmentals BACK so the syllable's real nucleus
+                                # claims them. The exact mirror of the clause above: a diacritic
+                                # may make a nucleus, and it may just as well unmake one.
+                                segments[-1], returned = _split_suprasegmentals(
+                                    segments[-1], project
+                                )
+                                if returned:
+                                    syllable_buffer = combine(syllable_buffer, returned)
+                                if last_nucleus_index == len(segments) - 1:
+                                    last_nucleus_index = next(
+                                        (
+                                            j
+                                            for j in range(len(segments) - 2, -1, -1)
+                                            if _is_nucleus(segments[j], project)
+                                        ),
+                                        -1,
+                                    )
                         i += len(diacritic_symbol)
                         break
                 else:

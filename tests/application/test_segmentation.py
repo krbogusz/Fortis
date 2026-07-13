@@ -9,6 +9,7 @@ from src.fortis.application.combining import matches_exactly
 from src.fortis.application.rendering import sequence_to_string
 from src.fortis.application.segmentation import string_to_sequence
 from src.fortis.application.tiers import lower_tiers
+from src.fortis.models.tiers import Tier
 
 
 def _feature_equal(a, b) -> bool:
@@ -88,3 +89,32 @@ class TestFloatingTone:
     def test_unterminated_float_marker_rejected(self, project):
         with pytest.raises(ValueError, match="unterminated floating tone"):
             string_to_sequence("ka⟨◌́", project)
+
+
+def test_stress_survives_a_diacritic_that_unmakes_the_nucleus(project):
+    """A ˈ is not lost when the syllable's first vowel is made non-syllabic by a diacritic.
+
+    The mark is buffered and flushed onto the first segment that is a nucleus AT LETTER-APPEND
+    time. In `ˈe̯a`, the letter `e` IS syllabic when appended and so claims the stress — and then
+    the `̯` makes it non-syllabic, no tier can anchor the autoseg (`anchor: +syllabic`) and
+    `stray_erase` deleted it. `ˈɲaws` kept its stress; `ˈɲe̯aws` silently lost it, in the
+    lexicon's ATTESTED forms as much as in derived ones (targets are ingested through here).
+    The suprasegmentals must be handed back so the syllable's real nucleus claims them.
+    """
+    syllable = frozenset(
+        name for name, feature in project.features.items() if feature.tier == Tier.syllable
+    )
+
+    def carriers(text: str) -> list[dict]:
+        form = string_to_sequence(text, project)
+        return [
+            {f: bundle[f].value for f in syllable & set(bundle.data)}
+            for bundle in lower_tiers(form)
+            if syllable & set(bundle.data)
+        ]
+
+    plain = carriers("ˈnaws")  # control: no unmaking diacritic
+    assert plain == [{"stress": 2}]
+    # The on-glide is made non-syllabic; the stress must move on to the real nucleus, not vanish.
+    assert carriers("ˈne̯aws") == [{"stress": 2}]
+    assert carriers("ˈe̯aws") == [{"stress": 2}]

@@ -56,6 +56,7 @@ from src.fortis.analysis.reporting import (
 )
 from src.fortis.analysis.warnings import (
     render_warnings,
+    rendering_warnings,
     syllabification_warnings,
     warnings_summary_line,
 )
@@ -369,15 +370,20 @@ def main(argv: list[str] | None = None) -> None:
         _progress_bar(3, _ANALYSIS_STEPS, "analysing")  # blame done; warnings next
     accuracy_done = time.perf_counter()
 
-    # Phase 4b — syllabification warnings: words whose onset/coda patterns admitted no
-    # legal split and fell back to sonority. Only written when there is something to report.
+    # Phase 4b — warnings, the things the engine does silently: words whose onset/coda patterns
+    # admitted no legal split and fell back to sonority, and segments the letters cannot spell
+    # (rendered as the nearest letter, features dropped — invisible, and it stops letter
+    # patterns matching them). Only written when there is something to report.
     syllab_warnings = syllabification_warnings(derivations, project)
+    render_warns = rendering_warnings(derivations, project)
     warn_path = path.parent / "warnings.md"
     syllab_line = None
-    if syllab_warnings:
-        warn_path.write_text(render_warnings(syllab_warnings, where), encoding="utf-8")
+    if syllab_warnings or render_warns:
+        warn_path.write_text(
+            render_warnings(syllab_warnings, where, render_warns), encoding="utf-8"
+        )
         saved.append(warn_path)
-        syllab_line = warnings_summary_line(syllab_warnings)
+        syllab_line = warnings_summary_line(syllab_warnings, render_warns)
     elif warn_path.exists():
         warn_path.unlink()  # a prior run warned but this one doesn't — clear the stale report
     if has_targets:

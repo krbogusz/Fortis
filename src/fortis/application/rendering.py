@@ -146,6 +146,9 @@ def render_syllabified(
 
 
 _render_segment_cache: dict[tuple[int, frozenset[tuple[str, object]], frozenset[str]], str] = {}
+_residue_cache: dict[
+    tuple[int, frozenset[tuple[str, object]], frozenset[str]], frozenset[str]
+] = {}
 
 
 def render_segment(
@@ -175,15 +178,72 @@ def render_segment(
     return result
 
 
+def render_nearest(
+    segment: FeatureBundle, inventories: Project, exclude: frozenset[str] = frozenset()
+) -> str:
+    """The closest spelling for *segment* — what it ALMOST is, even when it renders as ``�``.
+
+    For a segment the inventory can spell this is just its rendering. For one it cannot, this
+    is the near-miss: the letter it is one or two features away from, and therefore the letter
+    it will be mistaken for. That is the useful half of the diagnostic — "renders as � (nearest
+    ``ɑ``), dropping ``labial``" tells you both that something is wrong and where to look.
+    """
+    return _best_fit(segment, inventories, exclude)[2]
+
+
+def render_residue(
+    segment: FeatureBundle, inventories: Project, exclude: frozenset[str] = frozenset()
+) -> frozenset[str]:
+    """The features *segment* carries that its rendered symbol cannot express.
+
+    Empty when the rendering is faithful — the segment IS some letter (plus diacritics that
+    spell every difference). Non-empty means the renderer fell back to the nearest letter and
+    **silently dropped** these features: the symbol you read is not the segment you have.
+
+    That gap is the engine's one genuinely invisible failure mode, because rendering and
+    matching disagree about it. Rendering is lossy and many-to-one (nearest letter wins);
+    ``_letter_matches`` is exact identity. So a bundle one feature away from ``ɑ`` still
+    *prints* ``ɑ`` while no rule written ``ɑ → …`` will ever match it — it fires on some words
+    and passes silently over identical-looking others, with no error anywhere.
+
+    The usual cause is a rule whose merge changed a segment's quality but left a feature of the
+    old quality behind: a merge keeps every feature it does not mention, so un-rounding *o with
+    ``rounded: none`` and forgetting ``labial: none`` yields an ``ɑ`` that is still labial.
+
+    Cached by value alongside ``render_segment``, and for the same reason: the warning pass asks
+    this of every segment of every step of every derivation, which is the same small, bounded set
+    of realized segments over and over.
+    """
+    if is_morpheme_boundary(segment):
+        return frozenset()
+    key = (id(inventories), frozenset((f, spec.value) for f, spec in segment.items()), exclude)
+    cached = _residue_cache.get(key)
+    if cached is None:
+        cached = _best_fit(segment, inventories, exclude)[1]
+        _residue_cache[key] = cached
+    return cached
+
+
 def _render_segment_uncached(
     segment: FeatureBundle, inventories: Project, exclude: frozenset[str]
 ) -> str:
+    return _best_fit(segment, inventories, exclude)[0]
+
+
+def _best_fit(
+    segment: FeatureBundle, inventories: Project, exclude: frozenset[str]
+) -> tuple[str, frozenset[str], str]:
+    """The rendering, the features it could not express, and the nearest spelling.
+
+    The rendering is ``�`` whenever the residue is non-empty; the nearest spelling is the
+    best-fit letter regardless, so a caller can report what the segment will be MISTAKEN for.
+    """
     if exclude:
         segment = FeatureBundle({f: spec for f, spec in segment.items() if f not in exclude})
     # 1. Try exact match first
     for letter_symbol, letter_def in inventories.letters.items():
         if matches_exactly(segment, letter_def.bundle):
-            return letter_symbol
+            return letter_symbol, frozenset(), letter_symbol
 
     # 2. Find the best letter: the one whose differences leave the
     #    fewest remaining features after applying diacritics.
@@ -191,6 +251,7 @@ def _render_segment_uncached(
     best_symbol = None
     best_remaining = float("inf")
     best_total_diffs = float("inf")
+    best_left: frozenset[str] = frozenset()
     best_diacritics: tuple[list[str], list[str], list[str]] | None = None
 
     # All diacritics, segment- and syllable-tier: a segment carrying syllable-tier
@@ -216,16 +277,27 @@ def _render_segment_uncached(
             best_symbol = letter_symbol
             best_remaining = len(remaining)
             best_total_diffs = len(total_diffs)
+            best_left = frozenset(remaining)
             best_diacritics = (before, combining, after)
 
-    if best_symbol is None:
-        return "�"
+    if best_symbol is None or best_diacritics is None:
+        return "�", frozenset(segment.data), "�"
 
-    if best_diacritics is None:
-        return "�"
-
+    # A segment the inventory cannot spell renders as �, NOT as the nearest letter. It used to
+    # fall back to the closest fit and quietly drop whatever features that letter could not
+    # express, which made the one failure the engine cannot otherwise show you invisible: the
+    # symbol in the trace was not the segment being held. Worse, it was a *plausible* symbol —
+    # an ɑ one feature away from the letter ɑ printed as ɑ, while no rule written `ɑ → …` would
+    # ever match it, because letter patterns match by exact identity. The rule fired on some
+    # words and passed silently over identical-looking others.
+    #
+    # So say so. � is loud, it survives into every report and the accuracy score, and
+    # `render_residue` names the missing features and the rule that produced them (warnings.md).
     before, combining, after = best_diacritics
-    return "".join(before) + best_symbol + "".join(combining) + "".join(after)
+    nearest = "".join(before) + best_symbol + "".join(combining) + "".join(after)
+    if best_left:
+        return "�", best_left, nearest
+    return nearest, best_left, nearest
 
 
 def _bucket_for(

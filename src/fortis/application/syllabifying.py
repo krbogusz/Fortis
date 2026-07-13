@@ -159,6 +159,27 @@ def _split(
 
 
 _syllabify_cache = IdentityCache(maxsize=8)
+_parts_cache: dict[tuple[int, int | None], tuple[object, object, object]] = {}
+
+
+def _parts_at(
+    syllable_parts: SyllablePartsInventory, time: int | None
+) -> tuple[object, object, object]:
+    """The nucleus/onset/coda in force at *time* — the ONLY way *time* reaches the result.
+
+    Memoized per (inventory, time) because ``get_part`` re-sorts the inventory's time keys on
+    every call and syllabification asks three times per form.
+    """
+    key = (id(syllable_parts), time)
+    parts = _parts_cache.get(key)
+    if parts is None:
+        parts = (
+            syllable_parts.get_nucleus(time),
+            syllable_parts.get_part(time, "onset"),
+            syllable_parts.get_part(time, "coda"),
+        )
+        _parts_cache[key] = parts
+    return parts
 
 
 def syllabify(
@@ -191,7 +212,19 @@ def syllabify(
     if not cache:
         return _syllabify_uncached(segments, sonorities, syllable_parts, time, letters)[0]
     letters_id = id(letters) if letters is not None else None
-    extra = (id(sonorities), id(syllable_parts), time, letters_id)
+    # Keyed on the PARTS in force, not on `time` — and that is exact, not an optimisation that
+    # assumes anything about the project. `time` reaches `_syllabify_uncached`'s result through
+    # exactly three lookups (the nucleus, onset and coda in force) and through nothing else, so
+    # (segments, sonorities, nucleus, onset, coda, letters) is the COMPLETE input set. A project
+    # that redefines its parts mid-cascade simply resolves to different part objects at those
+    # times and gets different entries, which is the correct behaviour, not a missed one.
+    #
+    # What this buys: keyed on the raw time, an unchanged form was re-syllabified at every new
+    # timestamp even when the parts had not moved — 80 real syllabifications for a word that only
+    # changes 15 times, because a rule sweep visits ~40 distinct times. Keyed on the parts, a
+    # sweep of non-firing rules over an unchanged form costs one.
+    nucleus, onset, coda = _parts_at(syllable_parts, time)
+    extra = (id(sonorities), id(nucleus), id(onset), id(coda), letters_id)
     return _syllabify_cache.get_or_compute(
         segments,
         extra,

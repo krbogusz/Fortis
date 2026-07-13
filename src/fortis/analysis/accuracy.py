@@ -93,9 +93,31 @@ def form_phones(form: Form, project: Project) -> list[str]:
     multi-codepoint segment (an affricate ``d͡ʒ``, a tie-barred ``k͡p``) is *one* phone, and
     stress/tone is compared on the segment it anchors to rather than dropped. Anchoring makes
     the comparison placement-invariant: ``ˈkon`` and ``kˈon`` both yield ``['k', 'ˈo', 'n']``.
-    This is the phone unit the accuracy and error analyses align on.
+    This is the phone unit the error analyses and the confusion matrix *label* with. It is not
+    what the DISTANCES compare — see :func:`phone_keys`.
     """
     return [render_segment(bundle, project) for bundle in comparable_bundles(form)]
+
+
+def phone_keys(form: Form, project: Project) -> list[frozenset[tuple[str, object]]]:
+    """A form's phones as BUNDLE identities — what the distances actually compare.
+
+    One key per segment, in order, exactly parallel to :func:`form_phones`. Two phones are the
+    same iff their feature bundles are the same, so the phone distance and the feature distance
+    are answering the same question about the same segments and ``phone-0 ⟺ feature-0`` holds
+    *by construction* rather than by coincidence.
+
+    It very nearly held on the rendered strings, because rendering is injective: across every
+    shipped project, no two distinct bundles share a label. The exception is ``�`` — the symbol
+    for a segment no letter can express (see analysis/warnings.py). Every unspellable segment
+    renders as the same ``�``, so compared as strings two *different* broken segments count as
+    the same phone and the distance understates. Compared as bundles they do not. The label
+    stays a label; identity is the bundle's business.
+    """
+    return [
+        frozenset((feature, spec.value) for feature, spec in bundle.items())
+        for bundle in comparable_bundles(form)
+    ]
 
 
 def try_segment(string: str, project: Project) -> Form | None:
@@ -465,9 +487,20 @@ def distance_to_target(derivation: Derivation, project: Project) -> DistanceToTa
     derived_str = render_syllabified(
         lower_tiers(derivation.surface), derivation.surface_boundaries, project
     )
-    derived_form = try_segment(derived_str, project)
-    if derived_form is None:  # engine output that will not re-segment — vanishingly rare
-        return None
+    # The surface's own bundles ARE the derived form. No string round-trip: the analysis is
+    # bundle-based on both sides — the target ingested once into a Form, the derived taken
+    # straight off the derivation — and text appears only where it belongs, in the report.
+    #
+    # This used to render the surface to a string and segment it back, which looked defensive and
+    # was in fact two bugs holding hands. It could not survive a `�` (a segment no letter can
+    # express): `try_segment` rightly refused it, this returned None, and the word dropped out of
+    # `assessed` altogether — quietly INFLATING the exact-match percentage, which is the very
+    # thing `�` exists to stop. And it silently laundered a bug in the other direction:
+    # `string_to_sequence` was DROPPING the stress of any syllable whose first vowel a diacritic
+    # makes non-syllabic (`ˈɲe̯aws`), so re-segmenting broke the derived form in exactly the way
+    # ingestion had already broken the target, and the two agreed by both being wrong.
+    # With that fixed at the source, removing this is a no-op — proven byte-identical.
+    derived_form = derivation.surface
     matches_at, closest_at = _cross_time_columns(derived_form, word, project)
     return _measure(
         word.gloss,
@@ -532,21 +565,25 @@ def _measure(
     """Build a :class:`DistanceToTarget` by comparing two segmented forms.
 
     Both the phone distance and the feature distance come off the *same* segments
-    (:func:`comparable_bundles`), so phone-0 ⟺ feature-0 holds by construction; the phones
-    are inventory segments (:func:`form_phones`), so an affricate is one unit and stress/tone
-    is compared on its anchor. ``derived_str``/``target_str`` are kept only for display.
+    (:func:`comparable_bundles`) and compare them the same way — by BUNDLE (:func:`phone_keys`),
+    not by rendered label — so phone-0 ⟺ feature-0 holds by construction. The phones are
+    inventory segments, so an affricate is one unit and stress/tone is compared on its anchor.
+    ``derived_str``/``target_str`` and the ``*_phones`` labels are kept only for display.
     ``matches_at``/``closest_at`` are the cross-target scan results for *derived_form* against
     the word's other attested forms (:func:`_cross_time_columns`), carried through unchanged.
     """
     swap = project.settings.accuracy.transposition_cost
-    derived_phones = form_phones(derived_form, project)
+    derived_phones = form_phones(derived_form, project)   # labels, for display
     target_phones = form_phones(target_form, project)
     return DistanceToTarget(
         gloss=gloss,
         ipa=ipa,
         derived=derived_str,
         target=target_str or "",
-        distance=edit_distance(derived_phones, target_phones, swap),
+        # On BUNDLE keys, not the labels: two segments are the same phone iff their bundles are.
+        distance=edit_distance(
+            phone_keys(derived_form, project), phone_keys(target_form, project), swap
+        ),
         feature_distance=feature_edit_distance(
             comparable_bundles(derived_form), comparable_bundles(target_form), swap
         ),
@@ -607,9 +644,11 @@ def accuracy_by_stage(derivations: Iterable[Derivation], project: Project) -> li
                 continue
             form, boundaries = form_at_time(derivation, time)
             derived_str = render_syllabified(lower_tiers(form), boundaries, project)
-            derived_form = try_segment(derived_str, project)
-            if derived_form is None:
-                continue
+            # The form at this time, as bundles (see `distance_to_target`). This one used to
+            # `continue` when the re-segmentation failed, which bit harder: a word the engine got
+            # so wrong it could not even spell simply LEFT the stage it was wrong at, and that
+            # stage's percentage went up. The denominator must not move.
+            derived_form = form
             matches_at, closest_at = _cross_time_columns(derived_form, derivation.word, project)
             distances.append(
                 _measure(
