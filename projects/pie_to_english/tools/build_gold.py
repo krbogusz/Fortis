@@ -188,6 +188,15 @@ PREFORM_FIXES = {
     # Same reasoning as round one: Verner's Law is independently established, so the VOICING of
     # the attested Germanic fricative reads the accent straight off. Nothing is taken from our
     # derivation.
+    "fergunją": "perkʷúnyom",  # *fergunją — the attested *ɣ is a Verner-voiced labiovelar, so the
+                            # cited *w cannot be right: *perkʷ- is the well-known root (cf. Perkūnas)
+    "hahtuz": "kóḱtus",     # *hahtuz — the attested initial is a PLAIN *h. A labiovelar *kʷ gives
+                            # *hw, so the cited *kʷ is refuted by the very consonant it would make.
+    "staþlaz": "sth₂̥́tlos",  # *staþlaz — VOICELESS *þ ⇒ Verner did not fire ⇒ root accent. The
+                            # cited oxytone *sth₂tlós voices it, and *ðl then assimilates to *ll,
+                            # giving **stallaz — which is a DIFFERENT word (Kroonen's *sth₂-dʰlo-,
+                            # OE steall beside staþol), and it is already in the lexicon.
+    "sundraz": "sn̥Htrós",   # *sundraz — the *d is a hardened *ð ⇒ Verner fired ⇒ oxytone
     "furhnō": "pŕ̥ḱneh₂",   # *furhnō — VOICELESS *x ⇒ Verner did not fire ⇒ root accent
     "hurhaz": "kŕ̥ḱos",     # *hurhaz — VOICELESS *x ⇒ root accent, against the cited oxytone
     "anadz": "h₂enh₂éts",   # *anadz — BOTH consonants voiced (*d and *z) ⇒ Verner fired twice ⇒

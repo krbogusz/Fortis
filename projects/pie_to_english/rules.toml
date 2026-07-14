@@ -522,9 +522,18 @@ definition = [
     "1=n w → @1 @1",     # nw > nn
     "1=l n → @1 @1",     # ln > ll
     "z → @1 / _ 1=m",    # zm > mm
-    # …and *þl > *ll, which is what separates the attested *stallaz from its doublet *staþlaz
-    # (OE steall beside staþol). The *-dʰlo- suffix of Kroonen's *sth₂-dʰlo- lands here.
-    "ð̠ → @1 / _ 1=l",   # ðl > ll
+    # …and *ðl > *ll — but only after a SHORT vowel. A geminate cannot stand after a heavy
+    # nucleus, and the gold says so directly: *sth₂dʰlós has a short *a and gives *stallaz, while
+    # *h₂éydʰlom has the diphthong *ai and gives *ailą with a SINGLE *l. Without the length
+    # condition the diphthong word comes out **aillą.
+    "ð̠ → @1 / [+syll, length: short] _ 1=l",   # ðl > ll, after a SHORT vowel
+    # After a heavy nucleus there is no room for the geminate, and the *ð simply goes:
+    # *h₂éydʰlom > *ailą, with a single *l and no trace of the *ð.
+    "ð̠ → ∅ / [+syll, length: !short] _ l",
+    # …or after the glide half of a diphthong. Matched as the LETTERS *j and *w: in this feature
+    # system a glide is [+cons] (it is a consonant that happens to be non-syllabic), so a
+    # `[-syll, +son, -cons]` pattern — the obvious way to write "glide" — matches nothing at all.
+    "ð̠ → ∅ / (j | w) _ l",
 ]
 
 # The velar fricative drops out of a *-ɣm- cluster after a sonorant: *drowgʱmos > *drɑwmɑz
@@ -660,6 +669,10 @@ nominative ending at all: *mū́s 'mouse' is a monosyllabic root noun whose *s b
 and *kʷésyo > *hwes, *tósyo > *þas are pronouns. All three came out with a spurious *z. An
 unstressed vowel before the *s is what identifies the ending — a thematic nominative never carries
 the accent on its own suffix."""
+# NOT after a consonant, though *tríns > *þrinz makes it tempting: *sehs, *fōts, *tanþs, *gans,
+# *aiks, *wrōts, *nahts and *drōs all keep their *s in exactly that position. The *-z of *þrinz is
+# the numeral's PLURAL ending, a different morpheme from the nominative singular this rule levels,
+# and one levelling cannot be read off the other. *þrinz stays a miss.
 definition = "s → z / [+syll, stress: none] _ #"
 
 # A nasal is lost before */x/, nasalising the vowel and lengthening it: *wonkos > *wɑ̃ːxɑz.
