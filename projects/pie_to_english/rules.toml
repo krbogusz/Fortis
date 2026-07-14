@@ -960,22 +960,26 @@ definition = "x → k / _ s"
 #
 # Pre-Germanic: it feeds Grimm's Law, which then takes the new *p to *f.
 [pgmc_labial_jump]
-time = -1100
-name = "Artikulatorischer Sprung: kʷ > p near another labial"
+time = -950
+name = "Artikulatorischer Sprung: xʷ > ɸ near another labial"
 description = "Assimilation at a distance — five, wolf, four; *kʷekʷlos (wheel) has no plain labial and keeps its labiovelar. Treated as ONE bidirectional rule: Wiktionary instead calls four analogical (the p- of *pénkʷe pulling on the neighbouring numeral *kʷetwṓr, expected **hwedwōr), but a single phonological rule covering all three — with wheel as the control that correctly does not fire — is the stronger account, and the direction of the trigger is the only thing that separates them."
 definition = [
-    "kʷ → p / [+labial, lingual: none, -syll] []* _",
-    "kʷ → p / [+labial, +sonorant, -syll] []* _",
+    "xʷ → ɸ / [+labial, lingual: none, -syll] []* _",
+    "xʷ → ɸ / [+labial, +sonorant, -syll] []* _",
     # The FOLLOWING trigger excludes nasals. Four's trigger is the glide *w; a labial nasal in an
     # ending is not a trigger — with the neuter *kʷekʷlóm the /m/ of *-om would otherwise fire the
     # rule and give **feβlą for wheel, which is the control this rule is supposed to leave alone.
-    "kʷ → p / _ []* [+labial, lingual: none, -syll, nasal: none]",
-    "kʷ → p / _ []* [+labial, +sonorant, -syll, nasal: none]",
+    "xʷ → ɸ / _ []* [+labial, lingual: none, -syll, nasal: none]",
+    "xʷ → ɸ / _ []* [+labial, +sonorant, -syll, nasal: none]",
 ]
 
 # A nasal takes the place of a following labial: *pémpe (the p-form above) has m, not n.
+# t = -940, AFTER the labial jump: a nasal assimilates to what the jump LEAVES, not to what it
+# started with. *pénkʷe > (Grimm) *fenxʷe > (jump) *fenɸe > *fimf, with the *n going LABIAL; but
+# *penkʷrós > (Verner) *fenɣʷros, which the jump does not touch, and the *n goes VELAR: *fingraz.
+# Run the assimilation first and five comes out **fiŋf.
 [pgmc_nasal_place_assimilation]
-time = -1090
+time = -940
 name = "n assimilates to a following labial"
 description = "*penpe > *pempe > *fimf"
 definition = "n → m / _ [+labial, -syll, lingual: none]"

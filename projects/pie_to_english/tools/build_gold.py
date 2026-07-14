@@ -153,6 +153,37 @@ PREFORM_FIXES = {
                             # them apart: *mundiz has a voiced *d (Verner fired), *munþaz a
                             # voiceless *þ (it did not). That is the whole doctrine in one pair.
 
+    # The attested form has NEITHER length NOR the laryngeal's colour, so the laryngeal is not
+    # there. Wiktionary writes it where a cognate's long vowel suggests one; Germanic says no.
+    "faimaz": "póymos",     # *faimaz — cited *póHymos. The *H would lengthen (**fōmaz); the
+                            # attested *ai is the plain *oy diphthong, short.
+    "hajaz": "káyos",       # *hajaz — cited *kéHyos. Attested *a + *j, with no length.
+
+    "wurdą": "wr̥dʰóm",     # *wurdą — attested *ur ⇒ syllabic *r̥, AND a neuter *-ą ⇒ *-om. Both
+                            # wrong in the cited *wérdʰom, and each is named by the attested form.
+    "kustiz": "ǵústis",     # *kustiz — attested *u ⇒ zero grade, exactly as *kustuz : *ǵústus
+    "dustą": "dʰustóm",     # *dustą — NEUTER (*-ą), not the cited masculine *-ós
+    "haþuz": "kátus",       # *haþuz — RINGE writes *kátus. The cited *kéh₃tus has an *h₃ that
+                            # colours and lengthens to *ō, giving **hōþuz against an attested *a.
+
+    # ── The ending is NASAL, so the PIE ending had a nasal ───────────────────────────────────
+    # Proto-Germanic *-ǭ and *-ō are different endings, and Wiktionary's own headwords keep them
+    # apart: *-eh₂ gives a plain *-ō in 23 of our words (*banjō, *ahwō, *skalō) and a NASALISED
+    # *-ǭ in five. No sound change can do both, so the nasal is not phonology — it is inherited,
+    # and the PIE ending these five continue is the one WITH the nasal (*-eh₂m, whence *-ām >
+    # *-ǭ). Exactly the same move as the neuter *-ą < *-om entries below: the attested ending
+    # names the declension, and the ending is the evidence.
+    "dailǭ": "dʰáyleh₂m",
+    "aldǭ": "Hóldʰeh₂m",
+    "fruþǭ": "prútHeh₂m",
+    "spōlǭ": "spéh₂tleh₂m",
+
+    # ── S-MOBILE: the attested *s- says the preform had it ───────────────────────────────────
+    # The s-mobile is a genuine PIE alternation — both variants existed — so the daughter decides
+    # which one it continues, and here the daughter is unambiguous. Same as *skarō : *skoréh₂ below.
+    "skaduz": "sḱh₃tús",    # *skaduz — cited *(s)ḱh₃tús; the attested *sk- keeps the s
+    "smeltō": "sméldoh₂",   # *smeltō — cited *méldoh₂; the attested *sm- keeps the s
+
     # ── The Verner pass, round two ───────────────────────────────────────────────────────────
     # Same reasoning as round one: Verner's Law is independently established, so the VOICING of
     # the attested Germanic fricative reads the accent straight off. Nothing is taken from our
