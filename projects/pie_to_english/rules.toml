@@ -1844,15 +1844,20 @@ definition = "b → ∅ / m _ #"
 
 
 [oe_back_mutation]
-time = 425
+time = 470
 name = "Back mutation: e diphthongises before a back vowel across a liquid"
 description = """Minkova §3.4 (u-umlaut). A short *e becomes *eo when a BACK vowel stands in the
 next syllable and a single liquid separates them: *heruz > heoru, *gelu > ġeolu, *seofon.
 
 The liquid is the condition — *bebruz keeps its plain *e (OE befer, not **beofor) because the
-consonant between is an *f. Dated 425, after i-mutation (420): the two are in complementary
-environments (a FRONT vowel in the next syllable fronts, a BACK one breaks) and neither can see
-what the other has done."""
+consonant between is an *f. And so is the SINGLE: written with `[-syll]*`, to reach across the
+*lw of *gelwaz, it reaches across *helma, *hagjō and *swegrō too and gives **heolma, **heoġġ,
+**sweoġer.
+
+Dated 470, and *gelwaz is why: its back vowel arrives only when oe_final_w_vocalisation (468)
+turns the *w into one. The sequence is *gelwaz > *gelu > ġeolu, and at that point the *u is
+adjacent and no widened environment is needed. It is also after i-mutation, with which it is in
+complementary distribution — a FRONT vowel in the next syllable fronts, a BACK one breaks."""
 definition = "[+syll, -cons, aperture: mid, +front, length: short] → e o / _ [+son, -syll, +cons, nasal: none] [+syll, +back]"
 
 [oe_final_w_vocalisation]
@@ -1864,3 +1869,13 @@ a consonant + *w, and Old English writes the *w as a vowel: fealu, salu, ġeolu,
 Dated 468, beside oe_parasite_vowel (466) — both repair a final cluster the apocope has just
 created, and both need every ending already gone."""
 definition = "w → u / [-syll] _ #"
+
+
+[oe_unstressed_i_to_e]
+time = 472
+name = "An unstressed short *i lowers to *e"
+description = """OE yfel, hafen, æcer: the second syllable of *ubilaz, *habanō, *akraz has a lax
+*e, not the *i Proto-Germanic left there. `oe_final_i_to_e` (470) already says this for a WORD-FINAL
+*i; the vowel does it wherever it is unstressed, and *ubilaz > **yfil showed the restriction was
+an accident of the words that first exercised the rule."""
+definition = "[+syll, -cons, aperture: high, +front, length: short, stress: none] → e"

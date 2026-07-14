@@ -485,6 +485,11 @@ def normalise(ipa: str, *, reconstructed: bool) -> str:
     # stands for, and the two are the same segment. This is a notational identity of exactly the
     # kind θ/θ̠ already is, and it applies to EVERY column: it is a fact about the transcription,
     # not about the form, so it does not touch what the attested columns actually attest.
+    # The SYLLABLE DOTS have to go FIRST: Wiktionary writes OE finger /ˈfin.ɡer/, inca /ˈin.kɑ/,
+    # anga /ˈɑn.gɛ/ — with the boundary standing between the *n and the velar that conditions it.
+    # Run the regex before stripping them and it sees `n.` and does not fire, and the ŋ the engine
+    # correctly derives scores as a miss on the very words the allophone is about.
+    s = s.replace(".", "")             # syllable dots
     s = re.sub(r"n(?=[gk])", "ŋ", s)
     # The tie bar BELOW (U+035C) binds the OE diphthongs, e͜o — two vowel segments, so it goes.
     # The tie bar ABOVE (U+0361) binds the AFFRICATES, t͡ʃ and d͡ʒ — ONE segment, and the engine's
@@ -493,7 +498,6 @@ def normalise(ipa: str, *, reconstructed: bool) -> str:
     # derives three. Palatalisation was scoring as a miss on words it had got exactly right.
     s = s.replace("͜", "")                    # U+035C, below: the OE diphthongs
     s = re.sub(r"\(.*?\)", "", s)      # optional segments: (i)janą
-    s = s.replace(".", "")             # syllable dots
     s = ud.normalize("NFD", s)
     for mark in ("̝", "̞", "̥"):        # raised / lowered / voiceless
         s = s.replace(mark, "")
