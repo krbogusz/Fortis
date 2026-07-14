@@ -744,7 +744,16 @@ description = "Minkova §3.4 n.9. Held before a lateral — *fullaz > full, *wul
 # *nestą our Wiktionary gold gives — so there may be no regular a-umlaut of *i in Germanic at all.
 # Ringe's bibliography cites Lloyd, "Is there an a-umlaut of i in Germanic?", on exactly this.
 # The *u half is not in doubt (*kurną > corn, *þurnaz > þorn), so that is what this rule keeps.
-definition = "[+syll, aperture: high, length: short, +back] → [aperture: mid] / _ [-syll, lateral: none]* [+syll, aperture: !high]"
+# Held before a NASAL as well — but only one standing IMMEDIATELY after the vowel, and the gold
+# draws that line itself:
+#
+#     *hundą > OE hund, *mundō > mund, *gumô > guma, *sundraz > sundor   — nasal next: HELD
+#     *hurną > OE horn, *kurną > corn, *þurnaz > þorn                    — an *r intervenes: LOWERS
+#
+# Block on a nasal ANYWHERE in the cluster and horn, corn and thorn go with it; block on none at
+# all and hund, mund, guma and sundor come out **hond, **mond, **goma, **sondor. The first
+# consonant is the one that decides.
+definition = "[+syll, aperture: high, length: short, +back] → [aperture: mid] / _ [-syll, lateral: none, nasal: none] [-syll, lateral: none]* [+syll, aperture: !high]"
 
 [wg_final_z_loss]
 time = 400
