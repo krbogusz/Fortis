@@ -77,6 +77,33 @@ def _units(form: str):
     return out
 
 
+def has_accent(form: str) -> bool:
+    """Does *form* carry a PIE accent?
+
+    The acute is ambiguous in NFD: on `k`/`g` it makes the PALATOVELAR (ḱ, ǵ), and only elsewhere
+    does it mark the accent — the same test :func:`to_tokens` makes.
+    """
+    return any(ACUTE in marks and base not in ("k", "g") for base, marks, _ in _units(form))
+
+
+def accent_first_nucleus(form: str) -> str:
+    """Put the acute on *form*'s first nucleus. Returns it unchanged if it has no nucleus.
+
+    A nucleus is a vowel OR a ringed syllabic consonant (`l̥ r̥ m̥ n̥`, and a vocalised laryngeal) —
+    the same set :func:`to_tokens` will read as one, so the accent lands where the engine will
+    look for it. Written by re-emitting the parsed units rather than by patching the string,
+    because a naive "insert after the first vowel letter" would put the acute on the `h` of a
+    laryngeal, or miss a syllabic consonant entirely.
+    """
+    out, done = [], False
+    for base, marks, mods in _units(form):
+        nucleus = base in VOWELS or (RING in marks and base in SYLLABIC)
+        if nucleus and not done:
+            marks, done = marks + ACUTE, True
+        out.append(base + marks + mods)
+    return ud.normalize("NFC", "".join(out))
+
+
 def to_tokens(form: str) -> tuple[list[str], int]:
     """Return (one IPA string per segment, index of the accented segment).
 

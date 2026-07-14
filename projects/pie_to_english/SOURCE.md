@@ -347,29 +347,85 @@ book text or extract belongs in the repo.
 
 ## Where it stands
 
-269 words.
+448 words.
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 260 | 222 | 246 |
-| 900 Old English | 199 | 84 | 130 |
-| 1400 Middle English | 145 | 27 | 63 |
-| final Modern (RP) | 113 | 6 | 26 |
+| 200 Proto-Germanic | 425 | 310 | 348 |
+| 900 Old English | 335 | 121 | 190 |
+| 1400 Middle English | 225 | 39 | 92 |
+| final Modern (RP) | 175 | 9 | 40 |
 
-Proto-Germanic is **222/260 (85.4%)** exact, token-weighted **85%**. *fee*, *goose* and *doom*
-derive exactly from PIE all the way to modern RP. The cascade runs end to end, but thinly: the
-Middle English and Early Modern legs are a first pass (a dozen rules where the period needs
-scores), so the low numbers there still measure absence more than failure.
+Proto-Germanic is **310/425 (72.9%)** exact. Report the **count and the denominator**, never the
+percentage alone: the last expansion took it from 222/260 (85.4%) to 310/425 — **+88 exact** while
+the rate *fell 12 points*, because 165 new and entirely untuned words entered the denominator. The
+old 260 still score exactly 222; nothing regressed.
 
-The 19 verbs score **16 exact** — the same rate as the nouns, which is the check that the 3sg
-pairing above is sound rather than merely convenient. All three misses are rule signals worth
-chasing:
+The split is the number that means anything:
 
-- `*itidi` derives as `*issi`: Wiktionary links the **athematic** `*h₁édti` where Germanic
-  continues a thematic `*h₁édeti`, so the `*dt` cluster that assibilates should never have been
-  formed at all. A `PREFORM_FIXES` candidate.
-- `*wēidi` derives as `*wēþi` — Verner does not fire, and the suffix vowel is lost.
-- `*riutidi` loses its suffix vowel to an over-eager syncope.
+| | exact | |
+|---|---|---|
+| the 260 curated words | 222 / 260 (85%) | tuned against, `PREFORM_FIXES` applied |
+| the 165 new words | 88 / 165 (53%) | **untuned** — not one `PREFORM_FIXES` entry |
+
+A coin-flip hit rate on words the rules have never seen is the evidence that the cascade
+generalises rather than having been fitted to the gold. **Do not curate them to pull the rate back
+up.** Their value is that they are untuned.
+
+### Where the 165 new words came from: two filters that were too blunt
+
+Neither pool needed new data — both were already in the extracts, being thrown away.
+
+**A hyphen in the middle of a PIE form is not a bare root.** The builder dropped every hyphenated
+form as "a root", but Wiktionary writes morpheme boundaries inside forms that are perfectly
+complete: `*gʷʰon-yeh₂` 'wound', `*kort-ús` 'hard', `*mn̥-tó-s` 'mouth', `*ǵnéw-o-m` 'knee'. A root
+is *truncated* — it ends (or begins) with the hyphen (`*nem-`, `*gʰeldʰ-`). Only those are dropped
+now; the rest have their hyphens stripped. **142 forms, 86 usable.**
+
+**An unaccented form gets initial stress, and that is not a guess.** Proto-Germanic fixes the
+stress on the first syllable, so the PIE accent reaches the output through exactly one door:
+**Verner's Law**. Where a word has no Verner-eligible fricative the accent cannot affect the 200
+form *at all* — and that is measurable, not assumed. Of the 49 unaccented nouns and adjectives,
+**40 give a byte-identical Proto-Germanic form under every possible placement of the accent**.
+Initial is simply one of them, and it is where Germanic puts the stress anyway.
+
+For the other 9 the accent does change the outcome, and those are honest untuned misses. Reading
+the accent off the attested Germanic consonant is legitimate — a voiced fricative proves Verner
+fired — but that is the `PREFORM_FIXES` move, a separate and deliberate curation pass. **Admission
+is not curation, and the two must not blur.**
+
+### A gloss collision is no longer a reason to lose a word
+
+`*angô` is TWO etyma — `*h₂énk-ō` 'a bend, crook' and `*h₂én(h₁)ǵʰō` 'smell'. Neither has a modern
+reflex to be named after, so both fall back to the Proto-Germanic headword and collide. They are
+not the same word, they have different preforms, and each is a real test of the cascade; dropping
+one to keep the name unique threw away evidence to satisfy a naming constraint. They are now told
+apart by their Wiktionary sense (`angô-bend`, `angô-smell`) — the job the `id` was introduced to do.
+
+A **word-key** collision is different and still fatal: two etyma that transliterate to the *same*
+PIE input are one input to the engine. It derives one form, and no id can make that two answers.
+
+### What the expansion found in the rules
+
+The point of an untuned expansion is that it exercises environments the old lexicon never had, and
+it paid immediately.
+
+**Kluge's law was firing on word-initial onset clusters.** Kroonen §2.2.5.2 states it as a voiced
+stop geminated by the assimilation of a following `*n` in a stressed syllable — and written that
+way it also fires on a `*Cn-` that *begins* the word, where the `*n` is part of the root and no
+suffix is in sight. `*ǵnéwom` came out as `**kkewą`, against an attested `*knewą` 'knee' whose
+`*kn` is intact.
+
+The law assimilates a **suffixal** `*n` to a **root-final** stop (`*bʰudʰ-nós` > `*buttaz`), and a
+root-final stop always has the root's vowel before it. Requiring a preceding vowel fixes it:
+`*knewą` now derives exactly and `*buttaz` — the law's own example — still does.
+
+Note what this cost on the old gold: **nothing**. Not one of the 260 curated words has a `*Cn-`
+onset, so the bug was completely invisible until 165 new words walked into it. That is the case for
+expanding a gold lexicon, in one line.
+
+**Still open:** `*penkʷrós` derives `**fimbraz` against an attested `*fingraz` — the labiovelar is
+coming out labial and dragging the nasal with it. Logged, not chased.
 
 ### What the gold found in the inherited PIE→PGmc rules
 

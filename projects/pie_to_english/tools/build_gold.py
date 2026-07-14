@@ -35,7 +35,13 @@ from pathlib import Path
 sys.path.insert(0, "src")
 sys.path.insert(0, str(Path(__file__).parent))
 
-from pie_ipa import PieError, to_ipa  # noqa: E402
+from pie_ipa import (  # noqa: E402
+    ACUTE,
+    PieError,
+    accent_first_nucleus,
+    has_accent,
+    to_ipa,
+)
 
 from fortis.analysis.accuracy import try_segment  # noqa: E402
 from fortis.loaders.project import load_project  # noqa: E402
@@ -63,6 +69,11 @@ PGMC, OE, ME = 200, 900, 1400
 # The seed's time: the PIE form is the earliest attested form, and the earliest IS the input.
 # At or before the first rule (the cascade opens at −2000), so the seed sees every rule.
 SEED_TIME = -2000
+
+
+def _bare(form: str) -> str:
+    """*form* with its accents stripped, for testing what ending it has."""
+    return ud.normalize("NFC", "".join(c for c in ud.normalize("NFD", form) if c != ACUTE))
 
 # Preform corrections, keyed by the PROTO-GERMANIC headword.
 #
@@ -420,10 +431,42 @@ def main() -> None:
         if re.search(r"\bof\b.*\*", c["gloss"]):
             drop("PIE form is an inflected cell, not the preform")
             continue
-        if not c["pie"] or "-" in c["pie"] or " " in c["pie"]:
+        if not c["pie"] or " " in c["pie"]:
             drop("PIE form is a bare root, not a preform")
             continue
+        # A ROOT is truncated — it ends (or begins) with a hyphen: *nem-, *gʰeldʰ-. A hyphen in
+        # the MIDDLE is something else entirely: Wiktionary's morpheme boundaries inside a form
+        # that is perfectly complete (*gʷʰon-yeh₂ 'wound', *kort-ús 'hard', *mn̥-tó-s 'mouth').
+        # Dropping every hyphen alike threw away 142 whole words to catch the roots.
         pie_form = PREFORM_FIXES.get(c["pgmc"], c["pie"])
+        if pie_form.startswith("-") or pie_form.endswith("-"):
+            drop("PIE form is a bare root, not a preform")
+            continue
+        pie_form = pie_form.replace("-", "")
+        # ...but a complete form can still be the WRONG CELL. Wiktionary links the 3sg present
+        # *wénh₁-e-ti against the NOUN *wēniz; no sound change turns a finite verb into a noun,
+        # so the row would be a permanent miss however good the rules were. Same trap the verbs
+        # set, one word class over — and note it is a trap only for a NON-verb: a verb's PIE form
+        # ends in *-eti because it IS the 3sg present, which is the whole point of the cell match
+        # `build_chains` makes for it.
+        if c["pos"] != "verb" and _bare(pie_form).endswith("eti"):
+            drop("PIE form is an inflected cell, not the preform")
+            continue
+        # An unaccented form gets INITIAL stress — which is not a guess.
+        #
+        # Proto-Germanic fixes the stress on the first syllable (`stress_change`), so the PIE
+        # accent reaches the output through exactly one door: VERNER'S LAW. Where a word has no
+        # Verner-eligible fricative the accent cannot affect the 200 form at all — and that is
+        # measurable, not assumed: of the 49 unaccented nouns/adjectives, 40 give a BYTE-IDENTICAL
+        # Proto-Germanic form under every possible placement of the accent. Initial is simply one
+        # of them, and it is where Germanic puts the stress anyway.
+        #
+        # For the other 9 the accent does change the outcome, and those become honest untuned
+        # misses. Reading the accent off the attested Germanic consonant is legitimate — a voiced
+        # fricative proves Verner fired — but that is the PREFORM_FIXES move, a separate and
+        # deliberate curation pass. Admission is not curation, and the two must not blur.
+        if not has_accent(pie_form):
+            pie_form = accent_first_nucleus(pie_form)
         try:
             word = to_ipa(pie_form, project)
         except PieError as exc:
@@ -470,7 +513,9 @@ def main() -> None:
             OE: oe,
             ME: me,
             "final": final,
-            "_pie": pie_form, "_pgmc": c["pgmc"], "_oe": c["oe"], "_me": c["me"],
+            "_pie": pie_form, "_cited": c["pie"],  # _cited keeps the hyphens: see richness()
+            "_sense": c["gloss"],                   # the Wiktionary sense: see sense()
+            "_pgmc": c["pgmc"], "_oe": c["oe"], "_me": c["me"],
             "_variants": " ".join(reflexes[1:]), "_pos": c["pos"],
         })
 
@@ -485,8 +530,47 @@ def main() -> None:
     # both are frequency 1. The richer row must win on purpose, not by accident — three
     # checkpoints test more of the cascade than one. Where a word is genuinely frequent, that
     # still dominates, so no common reflex is ever displaced by a new frequency-1 homophone.
+    # The last key is the CITATION form, and it settles a tie the first two cannot. Two etyma can
+    # land on one Germanic word: *angô is both *h₂énk-ō 'a crook' and *h₂én(h₁)ǵʰō 'smell', and
+    # with no modern reflex both are frequency 1 with the same checkpoints. The one that survives
+    # is the one Wiktionary writes as a plain lemma rather than as a morphological ANALYSIS (the
+    # hyphens), so the winner is chosen rather than decided by list order.
     def richness(r) -> tuple:
-        return (-r["frequency"], -sum(bool(r[col]) for col in (PGMC, OE, ME, "final")))
+        analysed = "-" in r["_cited"]
+        return (
+            -r["frequency"],
+            -sum(bool(r[col]) for col in (PGMC, OE, ME, "final")),
+            analysed,
+        )
+
+    # A GLOSS collision is no longer a reason to lose a word, and that is what ids are for.
+    # *angô is TWO etyma — *h₂énk-ō 'a bend, crook' and *h₂én(h₁)ǵʰō 'smell' — and neither has a
+    # modern reflex to be named after, so both fall back to the Proto-Germanic headword and
+    # collide. They are not the same word, they have different preforms, and each is a real test
+    # of the cascade; dropping one to keep the name unique threw away evidence to satisfy a
+    # naming constraint. They are now told apart by their Wiktionary sense (*angô-crook,
+    # *angô-smell), which is exactly the job the id was introduced to do.
+    #
+    # A WORD KEY collision is different and still fatal: two etyma that transliterate to the SAME
+    # PIE input are one input to the engine. It will derive one form, and no id can make that two
+    # answers — so the richer row wins and the other is reported, not silently dropped.
+    def sense(r) -> str:
+        """A short discriminator from the Wiktionary sense: 'a bend; crook' -> 'crook'."""
+        words = re.findall(r"\w+", r["_sense"].split(";")[0].split(",")[0], re.UNICODE)
+        skip = {"a", "an", "the", "to", "of"}
+        pick = [w for w in words if w.lower() not in skip]
+        return (pick[-1] if pick else "").lower()
+
+    by_gloss: dict[str, list] = {}
+    for row in rows:
+        by_gloss.setdefault(row["gloss"], []).append(row)
+    for gloss, group in by_gloss.items():
+        if len(group) < 2:
+            continue
+        for row in group:
+            tag = sense(row)
+            if tag and tag != gloss:
+                row["gloss"] = f"{gloss}-{tag}"
 
     seen_gloss, seen_word, unique, collisions = set(), set(), [], []
     for row in sorted(rows, key=richness):
