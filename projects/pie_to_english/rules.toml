@@ -748,9 +748,27 @@ definition = "[+syll, aperture: high, length: short, +back] → [aperture: mid] 
 
 [wg_final_z_loss]
 time = 400
-name = "Final -z is lost in West Germanic"
-description = "PGmc *wulfaz > *wulfa"
-definition = "z → ∅ / _ #"
+name = "Final -z and -s are lost in West Germanic"
+description = """PGmc *wulfaz > *wulfa.
+
+The VOICELESS *s goes the same way, and it has to be said separately because `lvl_nominative_z`
+never reached it: that rule levels the *-az of the thematic nouns, whose vowel is unstressed, and
+a ROOT noun's *s sits straight after a stressed vowel or a consonant — *fōts, *tanþs, *aiks,
+*nahts, *wrōts. They keep the *s at Proto-Germanic, exactly as attested, and lose it here:
+OE fōt, tōþ, āc, niht, wyrt.
+
+Only after an OBSTRUENT, and that is not arbitrary. Every word that loses the *s has it standing
+after one — *fōts, *tanþs, *aiks, *nahts, *wrōts — because there the *s is the nominative ENDING
+bolted onto a consonant-final root. *gans has its *s after a NASAL, and there the *s belongs to the
+root itself (*ǵʰh₂éns): OE keeps it, gōs. The obstruent is the phonological correlate of the
+morphological fact, and without the condition goose comes out **gō.
+
+Dated 400, which also matters: it is BEFORE the apocope, so a word whose *s is not yet final keeps
+it. *hūsą still has its ending here, so its *s is medial and survives — OE hūs, not **hū."""
+definition = [
+    "z → ∅ / _ #",
+    "s → ∅ / [-son] _ #",
+]
 
 # Rhotacism: the *z left over becomes /r/ (Minkova §3.4.1 — "original /z/, an allophone of /s/
 # between vowels, became /r/ … the OE form lār 'lore' corresponds to PrG *laiz- 'to teach'").
@@ -899,6 +917,38 @@ time = 406
 name = "Anglo-Frisian brightening: a > æ, except before a nasal"
 description = "Minkova §3.4 — blocked before a nasal (*and stays and, not *ænd)"
 definition = "[+syll, -cons, aperture: low, +back, length: short] → [+front, back: none, advancement: atr] / _ [nasal: none]"
+
+[oe_a_restoration]
+time = 407
+name = "A-restoration: the brightened æ goes back to a before a BACK vowel"
+description = """Minkova §3.4. Anglo-Frisian brightening fronts *a to *æ, but it is undone where a
+BACK vowel follows in the next syllable — the fronting never survives in front of one:
+
+    *sagu   > OE sagu  (not **sægu)      *talu   > OE talu
+    *skadu  > OE sceadu                  *laguz  > OE lagu
+
+EXACTLY ONE consonant may stand between, and that is what keeps restoration and breaking apart —
+they are in complementary environments. Breaking wants *r/*l/*h plus ANOTHER consonant; restoration
+wants a single one:
+
+    *sagu    æ-g-u     one consonant   -> restored:  OE sagu
+    *harduz  æ-r-d-u   a CLUSTER       -> broken:    OE heard
+
+Written `[-syll]*` — any number of consonants — the rule reaches *harduz too and gives **hard,
+taking death, cold, dream, arm and a dozen more with it. Dated 407: after `oe_a_fronting` (406),
+which makes the *æ, and before `oe_breaking` (408)."""
+definition = "[+syll, -cons, aperture: low, +front, length: short] → [+back, front: none, advancement: rtr] / _ [-syll] [+syll, +back]"
+
+[oe_unstressed_long_e_to_o]
+time = 404
+name = "Unstressed */ē/ > */o/"
+description = """The kinship suffix *-ēr does not survive as such: PGmc *brōþēr, *mōdēr, *dohtēr,
+*swestēr all give an Old English *-or — brōþor, mōdor, dohtor, sweostor. The vowel of an unstressed
+syllable lowers and shortens, and *ē lands on *o.
+
+Dated 404, before the fronting and apocope machinery: the *o it makes is a BACK vowel, and it has
+to be there in time for `oe_a_restoration` (407) to see it."""
+definition = "[+syll, -cons, aperture: mid, +front, length: long, stress: none] → [aperture: mid, +back, front: none, length: short, advancement: rtr]"
 
 [oe_unstressed_ae_to_e]
 time = 410
