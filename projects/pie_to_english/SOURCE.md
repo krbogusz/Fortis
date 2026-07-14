@@ -441,6 +441,42 @@ For the other 9 the accent does change the outcome. Those were admitted as hones
 and then corrected in a **separate, deliberate curation pass** — because admission is not curation
 and the two must not blur. See below.
 
+### Unstressed \*e lowers to \*a before \*r — and the same passage settles a bad target
+
+The biggest remaining cluster was six words where we derived `*e` and the attestation wanted `*a`,
+all of them before `*r`: `*undar`, `*ubar`, `*anþaraz`, `*hwaþaraz`. The cascade already knew that
+the raising of unstressed `*e` to `*i` is **blocked** before `*r` (Ringe §5.3.2 (iii)) — but it had
+the `*e` simply *staying*, and that is only half of what he says. The `*e` then **lowers**:
+
+> "The regular Gothic and ON reflex is **a**. The OS and OHG spellings are variable, but *a* is a
+> frequent variant. Only in northern WGmc ('Anglo-Frisian') do we typically find *e* — and that is
+> precisely the area in which PGmc \*a was fronted and typically appears as *e* when unstressed.
+> **It is reasonable to infer from this pattern of evidence that unstressed \*e was lowered to \*a
+> before \*r already in PGmc.**"
+
+`unstressed_e_to_a_before_r` (t = −950) is dated after the raising, whose exception is what leaves
+the `*e` standing for it to find. **+4 exact at 200.**
+
+#### The rule and a bad target, from one paragraph
+
+Adding it broke exactly one word — `other` — and that turned out to be the point. The lexicon
+holds the same word twice, from two sources, and they disagree:
+
+| | PIE | Proto-Germanic | |
+|---|---|---|---|
+| Wiktionary | `*h₂énteros` | `*anþ**e**raz` | now a miss |
+| **Ringe** | `*ánteros` | `*anþ**a**raz` | **exact** |
+
+Ringe's paragraph *is* the argument that Wiktionary's `*e` is the **Anglo-Frisian innovation read
+back into the protoform** — it is the one form that would refute a rule the rest of the daughters
+support. So `ATTESTED_FIXES` corrects the target, which is precisely the case that table is fenced
+to allow: a cited reference work correcting a **reconstruction**, never an attestation.
+
+And the same sentence pays a third time. Ringe's aside — PGmc `*a` "typically appears as *e* when
+unstressed" in Anglo-Frisian — is the missing Old English rule (`oe_unstressed_ae_to_e`, t = 410):
+the brightened `*æ` does not survive unstressed. `*anþaraz` > `*anþæraz` > OE `ōþer`, **exact at
+900 as well**.
+
 ### Ringe as a SOURCE, not just a reference
 
 `tools/ringe.py` harvests Ringe's own cited derivations straight out of the book. He states them

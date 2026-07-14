@@ -351,6 +351,21 @@ PREFORM_FIXES = {
 #   3. The entry must be defensible with the derivation switched off. If the only argument for it
 #      is "the cascade would then land", it does not go in.
 ATTESTED_FIXES = {
+    # Ringe writes *anþaraz where Wiktionary writes *anþeraz, and he argues the point at length —
+    # it is the very example he uses to establish that unstressed *e LOWERED to *a before *r in
+    # Proto-Germanic (§5.3.2 (iii), and `unstressed_e_to_a_before_r` in rules.toml):
+    #
+    #   "The regular Gothic and ON reflex is a. The OS and OHG spellings are variable, but a is a
+    #    frequent variant. Only in northern WGmc ('Anglo-Frisian') do we typically find e — and
+    #    that is precisely the area in which PGmc *a was fronted and typically appears as e when
+    #    unstressed. It is reasonable to infer from this pattern of evidence that unstressed *e
+    #    was lowered to *a before *r already in PGmc."
+    #
+    # So Wiktionary's *e is the Anglo-Frisian INNOVATION read back into the protoform, and its
+    # *anþeraz is the one form that would refute a rule the rest of the daughters support. The
+    # source hierarchy (Ringe > Wiktionary) settles it, and this is exactly the case ATTESTED_FIXES
+    # is fenced to allow: a cited reference work correcting a RECONSTRUCTION, never an attestation.
+    "anþeraz": "ˈɑnθɑrɑz",
     # Kroonen's headword is *nista- 'nest' <= *ni-zd-o- — with an /i/, not the /e/ of Wiktionary's
     # *nestą. He also has *fiska- <= *pisk-o- (cf. Lat. piscis) with /i/, and Ringe's bibliography
     # cites Lloyd, "Is there an a-umlaut of i in Germanic?" — so the lowering of *i is doubtful AT

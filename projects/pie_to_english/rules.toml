@@ -319,6 +319,26 @@ definition = [
     "[+syll, aperture: mid, +fr, length: short, stress: none]j → iː // _ r"
 ]
 
+[unstressed_e_to_a_before_r]
+time = -950
+name = "Unstressed */e/ > */a/ before */r/"
+description = """Ringe §5.3.2 (iii). The raising of unstressed *e to *i is blocked before *r — but
+the *e does not simply stay. It LOWERS:
+
+  "It is reasonable to infer from this pattern of evidence that unstressed *e was lowered to *a
+   before *r already in PGmc."
+
+His evidence is the daughters: Gothic and Old Norse have *a regularly, Old Saxon and Old High
+German vary with *a common, and only Anglo-Frisian shows *e — which is precisely the area where
+PGmc *a was fronted and appears as *e when unstressed. So the *e is the innovation and the *a the
+inheritance, not the other way round.
+
+Dated after `unstressed_e_to_i_except_before_r`, whose exception is what leaves the *e standing
+for this rule to find: *ánteros > *anþeraz > *anþaraz, *upér > *uber > *ubar, *n̥tér > *under >
+*undar. Ringe cites *anþaraz and *undar himself, and flags the alternative (*-eraz?, *under?) as
+the thing this inference resolves."""
+definition = "[+syll, aperture: mid, +fr, length: short, stress: none] → ɑ / _ r"
+
 [sievers_law]
 time = -900
 name = "Sievers' law: the *j suffix is *-ij- after a heavy syllable, *-j- after a light one"
@@ -775,6 +795,19 @@ time = 406
 name = "Anglo-Frisian brightening: a > æ, except before a nasal"
 description = "Minkova §3.4 — blocked before a nasal (*and stays and, not *ænd)"
 definition = "[+syll, -cons, aperture: low, +back, length: short] → [+front, back: none, advancement: atr] / _ [nasal: none]"
+
+[oe_unstressed_ae_to_e]
+time = 410
+name = "Unstressed */æ/ > */e/"
+description = """The brightened *æ does not survive unstressed. Ringe §5.3.2 (iii), arguing that
+Proto-Germanic had *a before *r and not *e, notes in passing exactly what happens to it afterwards:
+
+  "...that is precisely the area in which PGmc *a was fronted (except before nasals) and typically
+   appears as e when unstressed."
+
+So *anþaraz > (brightening) *anþæraz > OE ōþer, with the *æ of an unstressed syllable levelled to
+*e. Dated immediately after `oe_a_fronting`, which is what creates the *æ for it to lower."""
+definition = "[+syll, -cons, aperture: low, +front, length: short, stress: none] → [aperture: mid]"
 
 # West Germanic hardens the Proto-Germanic bilabial fricative to a labiodental: *fōts > fōt,
 # *fuhsaz > fox, *fullaz > full (Minkova §4.1 — OE has /f/, not /ɸ/).
