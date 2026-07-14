@@ -152,6 +152,21 @@ PREFORM_FIXES = {
                             # them apart: *mundiz has a voiced *d (Verner fired), *munþaz a
                             # voiceless *þ (it did not). That is the whole doctrine in one pair.
 
+    # ── ZERO GRADE: the attested *u refutes the cited full grade ─────────────────────────────
+    # Germanic *ur, *ul, *un before a consonant come from PIE's SYLLABIC *r̥, *l̥, *n̥ (the *u is
+    # epenthetic — `u_epenthesis`). So an attested *u standing where the source cites an *e or *o
+    # is the same wrong-grade problem as *mundiz : *mn̥tís already in this table, and the vowel is
+    # the evidence. Nothing here is read off the derivation.
+    "þursuz": "tŕ̥sus",     # *þursuz — attested *ur ⇒ zero grade; and the *s is VOICELESS, so
+                            # Verner did not fire and the accent sits on the root
+    "mundō": "mn̥téh₂",     # *mundō — attested *un ⇒ syllabic *n̥, exactly as *mundiz : *mn̥tís;
+                            # the *d is voiced, so Verner fired and the accent follows (oxytone)
+
+    # ── STEM CLASS again: the attested ENDING names the declension ───────────────────────────
+    "kwastuz": "gʷósdus",   # *kwastuz — a U-STEM (*-uz), not the cited thematic *-os
+    "wulkną": "wl̥gnóm",    # *wulkną — NEUTER (*-ą), not the cited masculine *-ós
+    "fulką": "pl̥h₁góm",    # *fulką — NEUTER
+
     # ── ABLAUT again: the attested DIPHTHONG refutes the cited grade ─────────────────────────
     # PIE *ey and *oy do not fall together in Germanic, and Ringe is explicit about which is which:
     # *ey RAISES to *ī (*deywós > *Tīwaz, *bʰéydʰonti > *bīdandi, §5.3.2 (iv)), while *oy gives the
