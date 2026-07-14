@@ -1984,9 +1984,18 @@ definition = "[+syll, length: short, +rounded] → u / w _ r"
 
 [pde_nurse_vowel]
 time = 1740
-name = "NURSE: a short vowel before coda /ɹ/ becomes /ɜː/"
-description = "ME wurd, herd, first, bird > RP /wɜːd/, /hɜːd/, /fɜːst/, /bɜːd/."
-definition = "[+syll, length: short, aperture: !low] → ɜː / _ r [-syll]* $"
+name = "NURSE: a stressed short vowel before coda /r/ becomes /ɜː/"
+description = """ME wurd, herd, first, bird > RP /wɜːd/, /hɜːd/, /fɜːst/, /bɜːd/.
+
+STRESSED, and the gold is blunt about it. The unstressed *-er of acre, beaver, finger, brother,
+daughter is the very same short-vowel-before-coda-/r/, and RP has a plain schwa there: an
+unrestricted rule gave **eɪkɜː, **biːvɜː, **fɪŋgɜː. It also reached into the OFFGLIDE of sour's
+/aʊ/ and gave **saɜː — an unstressed vowel again, and the same restriction rules it out.
+
+It is not the NORTH vowel either: ME corn, horn, thorn, stork have RP /ɔː/, not /ɜː/. They are kept
+out by DATE rather than by a clause — pde_north_vowel (1735) has already lengthened their /ɔ/, and
+this rule asks for a SHORT vowel."""
+definition = "[+syll, length: short, stress: primary, aperture: !low] → ɜː / _ r [-syll]* $"
 
 [pde_centring_diphthongs]
 time = 1745
@@ -2002,12 +2011,16 @@ definition = [
 ]
 
 [pde_force_vowel]
-time = 1550
-name = "FORCE: a long /oː/ before /ɹ/ lowers instead of raising"
-description = """ME flōr, hōr, bōrd do not join the Great Vowel Shift's ō > uː — they lower, and RP
-has floor /flɔː/, whore /hɔː/, board /bɔːd/. Dated 1550, before the shift (1600), so that the
-vowel is no longer an /oː/ when the shift comes looking for one."""
-definition = "oː → ɔː / _ r"
+time = 1650
+name = "FORCE: a long back vowel before /r/ lowers to /ɔː/"
+description = """ME flōr, hōr, bōrd end at RP floor /flɔː/, whore /hɔː/, board /bɔːd/ — the /r/
+lowers the vowel instead of letting it raise.
+
+AFTER the Great Vowel Shift (1600), and written on the shift's OUTPUT. Dated before it, as
+`oː → ɔː / _ r`, the shift then finds the /ɔː/ it has just made and raises it right back to /oː/,
+and eme_goat_diphthongisation finishes the job: floor came out **fləʊ. So the rule takes the /uː/
+the shift leaves and lowers THAT. The /uː/ of sour is already an /aʊ/ by now and is not touched."""
+definition = "uː → ɔː / _ r"
 
 [pde_meat_merger]
 time = 1700
@@ -2047,3 +2060,14 @@ SHORT vowel, and it is short before the Great Vowel Shift arrives, which is why 
 It is not exceptionless — ME mēd keeps its length (RP mead /miːd/) in the same environment — but
 the shortened set is much the larger."""
 definition = "ɛː → ɛ / _ [-syll, +ant] #"
+
+
+[pde_north_vowel]
+time = 1735
+name = "NORTH: a short /ɔ/ before coda /r/ lengthens"
+description = """ME corn, horn, thorn, stork, ford > RP /kɔːn/, /hɔːn/, /θɔːn/, /stɔːk/, /fɔːd/.
+
+Dated 1735, just before pde_nurse_vowel (1740), and that ordering is what keeps the two apart: this
+one leaves a LONG vowel, and NURSE asks for a short one, so the NORTH words are out of its reach
+without a clause naming them."""
+definition = "ɔ → ɔː / _ r [-syll]* $"
