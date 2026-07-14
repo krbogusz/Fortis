@@ -1241,14 +1241,25 @@ definition = "[+syll, length: long, aperture: mid, advancement: atr] → [advanc
 time = 1100
 name = "OE aː rounds to ɔː"
 description = "Minkova §7.3 — hāl > hool, stān > stoon"
-definition = "[+syll, length: long, aperture: low] → ɔː"
+# BACK only. OE ǣ (þrǣd, dǣd, slǣpan) is a LOW vowel too, and an unrestricted rule rounds it —
+# *þrǣd came out **þrɔːd against an attested ME *þrɛːd. Only the back ā rounds; the front ǣ
+# raises, one rule down.
+definition = "[+syll, length: long, aperture: low, +back] → ɔː"
 
 # The OE diphthongs smooth out in early ME (§7.4): eo, æɑ monophthongise.
 [me_diphthong_smoothing]
-time = 1150
+time = 1000
 name = "The OE diphthongs smooth"
-description = "Minkova §7.4 — heorte > herte, earm > arm"
-definition = ["e o → e ∅", "æ ɑ → a ∅"]
+description = """Minkova §7.4 — heorte > herte, earm > arm, bēor > beer, dēor > deer.
+
+t = 1000, BEFORE the homorganic lengthening at 1050, and this is the whole reason the OE
+diphthongs were coming out wrong. In *heard, *ċeald, *eald the diphthong's SECOND element sits
+in front of a homorganic *rd / *ld — so lengthening ran first and lengthened it, rounding
+carried it to *ɔː, and the ēa rule then read the *æ + *ɔː as the long diphthong and smoothed it
+to *ɛː: **hɛːrd, **t͡ʃɛːld, **ɛːld for attested *hard, *kɔːld, *ɔːld. Smooth first and the
+sequence is a plain short *ɑ, which lengthens and rounds exactly as *ald should. It is left BACK
+here on purpose — me_low_vowel_merger fronts it at 1150, after the rounding has had its look."""
+definition = ["e oː → eː ∅", "e o → e ∅", "æ ɑ → ɑ ∅"]
 
 # Unstressed vowels reduce to schwa (§7.6), the great levelling of the ME inflections.
 [me_unstressed_reduction]
@@ -1260,9 +1271,13 @@ definition = "[+syll, stress: none, length: short] → ə"
 # The velar fricative is lost with compensatory lengthening: niht > night /naɪt/, miht >
 # might (§5.3 — the KNIGHT-NIGHT cluster simplifications).
 [me_x_loss]
-time = 1400
+time = 1450
 name = "x is lost, lengthening the vowel before it"
-description = "Minkova §5.3 — niht > nīt, then the Vowel Shift takes it to /naɪt/"
+description = """Minkova §5.3 — niht > nīt, then the Vowel Shift takes it to /naɪt/.
+
+t = 1450, AFTER the Middle English checkpoint, for the same reason as me_ng_simplification:
+Middle English still HAS the fricative (dohter is /ˈdɔxtər/, wiht /ˈwixt/, liht /ˈlixt/), and a
+rule at 1400 takes it away from the column that records it."""
 definition = ["[+syll] → [length: long] / _ x", "x → ∅ / [+syll, length: long] _"]
 
 # Final schwa is lost (§7.6) — the silent -e of ME spelling.
@@ -1361,7 +1376,11 @@ definition = "[-son, +voice] → [-voice] / _ [-son, -voice]"
 time = 1050
 name = "Vowel lengthens before a homorganic sonorant + voiced stop"
 description = "Minkova §6.4 — CHILD-CHILDREN, HOUND; *ald > āld, *kind > kīnd"
-definition = "[+syll, length: short] → [length: long] / _ [+son, -syll, +cons] [-son, +voice, -cont] $"
+# Two restrictions the gold forces, both of them standard:
+#   the sonorant is a NASAL or a LATERAL, not *r — ME hard, arm, barm keep their short vowel;
+#   the stop is NOT VELAR — ME long and young keep a short vowel before their *ŋg (/lɔŋg/,
+#   /juŋg/), which is homorganic phonetically but takes no part in the change.
+definition = "[+syll, length: short] → [length: long] / _ [+son, -syll, +cons, trill: none] [-son, +voice, -cont, back: none] $"
 
 # Middle English short o is open [ɔ] — fox /fɔks/, corn /kɔrn/, yoke /jɔk/ (§7.3).
 [me_short_o_opening]
@@ -1752,3 +1771,55 @@ time = 1900
 name = "ME /a/ is RP /æ/"
 description = "The TRAP vowel: slack, black, gnat."
 definition = "a → æ"
+
+
+[me_ae_raising]
+time = 1100
+name = "OE ǣ raises to ME /ɛː/"
+description = """The long front low vowel of þrǣd, dǣd, slǣpan does not round with its back
+counterpart (see me_a_rounding) — it raises, and Middle English has *þrɛːd, *dɛːd, *slɛːpen."""
+definition = "æː → ɛː"
+
+[me_y_unrounding]
+time = 1150
+name = "OE y unrounds to i"
+description = """The rounded front vowel of cynn, dyne, fyllan is not kept in the East Midland
+dialect Middle English is written in: kin, din, fillen. Long and short alike (mȳs > mice)."""
+definition = [
+    "y → i",
+    "yː → iː",
+]
+
+[me_syllabic_schwa]
+time = 1260
+name = "A syllabic sonorant takes a schwa"
+description = """Middle English has no syllabic consonants: OE swefn, wolcn, tācn give sweven,
+welken, token — with a vowel written before the final sonorant.
+
+t = 1260, and after an OBSTRUENT, and both are forced:
+
+  AFTER DEGEMINATION (1250) — *kynn ends in a sonorant preceded by a consonant, so an earlier
+  rule reads its geminate as a cluster and gives **kinen. Requiring an obstruent before the
+  sonorant says the same thing a second way, and is the real generalisation.
+
+  AFTER OPEN-SYLLABLE LENGTHENING (1200) — the schwa opens the syllable before it. *swefn is
+  closed by its *fn cluster and does NOT lengthen; insert the vowel first and it does, giving
+  **swɛːvən."""
+definition = "∅ → ə / [-syll, -son] _ [+son, +cons, -syll] #"
+
+[me_f_voicing]
+time = 1200
+name = "The fricative *f voices between voiced sounds"
+description = """OE nefa, swefn, hēafod are pronounced with a [v] — Old English writes one letter
+for the pair and the fricative is voiced between voiced sounds. Middle English writes the two
+apart (neve, sweven, heved), and the ME column is transcribed with the /v/.
+
+Ordered AFTER me_syllabic_schwa (1150), which gives swefn its second vowel: the *f is then
+plainly intervocalic and no separate clause is needed for the sonorant environment."""
+definition = "f → v / [+voice] _ [+voice]"
+
+[me_mb_simplification]
+time = 1350
+name = "Final /mb/ loses its stop"
+description = "OE camb, lamb, climban > ME coom, lomb, climben — the silent b of comb and climb."
+definition = "b → ∅ / m _ #"
