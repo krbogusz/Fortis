@@ -1136,9 +1136,20 @@ definition = [
 # with ɔː/ɛː and OE with oː/eː — so this is a change to derive, not a convention to normalise.
 [wg_long_mid_raising]
 time = 250
-name = "Long ɔː, ɛː raise to oː, eː"
-description = "PGmc ō [ɔː] > OE ō [oː]; ē [ɛː] > [eː]"
-definition = "[+syll, length: long, aperture: mid, advancement: !atr] → [advancement: atr]"
+name = "Long ɔː raises to oː; long ɛː LOWERS to æː"
+description = """PGmc *ō [ɔː] > OE ō [oː] — that half is a raising, and it stands.
+
+The front half goes the OTHER WAY. PGmc *ē₁ [ɛː] does not raise to [eː]; it LOWERS to OE ǣ [æː],
+and the gold says so without exception: *sēdiz > OE sǣd, *dēdiz > dǣd, *þrēduz > þrǣd, *mēkijaz
+> mǣċe. (Old English *ē has a different source — the i-umlaut of *ō and of *ai — so raising *ē₁
+into it merged two vowels the language keeps apart.)"""
+definition = [
+    "[+syll, length: long, aperture: mid, +back, advancement: !atr] → [advancement: atr]",
+    # STRESSED only. An UNSTRESSED *ē has its own fate — it lowers and shortens to *o in the
+    # kinship suffix (*brōþēr > brōþor, `oe_unstressed_long_e_to_o`) — and that rule reads it as a
+    # MID vowel, so lowering it to *æ here first takes its input away.
+    "[+syll, length: long, aperture: mid, +front, stress: primary] → [aperture: low, advancement: atr]",
+]
 
 # Proto-Germanic's long mid vowels are open: *ō is [ɔː] and *ē is [ɛː] (which is why the gold
 # transcribes them so). The cascade above merges *ā into a close *oː, so lower both here — and
