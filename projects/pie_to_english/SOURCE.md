@@ -395,19 +395,72 @@ book text or extract belongs in the repo.
 
 ## Where it stands
 
-448 words.
+553 words.
 
-| checkpoint | assessed | exact | within 1 phone |
-|---|---|---|---|
-| 200 Proto-Germanic | 425 | 310 | 348 |
-| 900 Old English | 335 | 121 | 190 |
-| 1400 Middle English | 225 | 39 | 92 |
-| final Modern (RP) | 175 | 9 | 40 |
+| checkpoint | assessed | exact | within 1 phone | rules reaching it |
+|---|---|---|---|---|
+| 200 Proto-Germanic | 528 | 443 | 462 | 67 |
+| 900 Old English | 337 | 190 | 229 | 39 |
+| 1400 Middle English | 226 | 99 | 145 | 23 |
+| final Modern (RP) | 177 | 71 | 105 | 21 |
 
-Proto-Germanic is **310/425 (72.9%)** exact. Report the **count and the denominator**, never the
-percentage alone: the last expansion took it from 222/260 (85.4%) to 310/425 — **+88 exact** while
-the rate *fell 12 points*, because 165 new and entirely untuned words entered the denominator. The
-old 260 still score exactly 222; nothing regressed.
+### The later legs were not broken — they were UNBUILT
+
+The single most useful thing to know about this cascade's shape. For a long time the four legs had
+**67 / 33 / 7 / 3** rules, and the accuracy fell off a cliff after Old English (1400 at 39/225,
+RP at 9/175). That reads like a hard problem and it was not one: Middle English had seven rules
+standing in for the open-syllable lengthening, the æ/ɑ merger, the diphthong smoothings, the
+short-vowel openings and the quantity changes, and the modern leg had *three* for the whole of
+Early Modern English. The misses were not wrong rules. They were absent ones.
+
+Building them out (**23** and **21**) moved 1400 from 39 to 99 and RP from 9 to 71, and — this is
+the part worth generalising — **most of the gain was ORDERING, not new phonology**:
+
+* the OE diphthongs were smoothing *after* the homorganic lengthening, so *heard*, *ċeald*, *eald*
+  had their second element lengthened and rounded before the diphthong could collapse;
+* `eme_th_voicing` was written for the DENTAL θ, which the engine does not have until 1900 — so it
+  named a segment that did not exist at its date and **never fired at all**;
+* every pre-/r/ vowel rule (START, NURSE, NEAR, SQUARE) was written with the approximant `ɹ`, which
+  `eme_rhotic_approximant` does not create until 1900, long after they run — same trap, four more
+  rules, none of them matching anything;
+* the Vowel Shift's last step is a SEPARATE step: ME *ɛː* reaches /eː/ in the shift and goes on to
+  /iː/ a century later, but written as another clause of the same rule the two fire in one pass and
+  *drēm* stops at **/dreːm/. **A chain of raisings needs one date per link.**
+
+If a rule looks right and buys nothing, check the two dates around it before you touch what it says.
+
+### What is left at 900, and why it is not a rule gap
+
+Old English is the leg that gates everything below it — 1400 and RP are scored only on words that
+reached them — and it stalls at 190/337. The residue is **not** made of missing sound changes, and
+two things in the gold put a ceiling on it. Both are worth knowing before anyone spends a week
+hunting rules for them.
+
+**1. The Old English column MIXES DIALECTS.** Wiktionary lemmatises at whatever spelling is best
+attested, and that is not one dialect. *rehtaz* and *nahts* come out Anglian (`riht`, `niht` — no
+breaking, smoothed), while *skaljō* and *gastiz* come out West Saxon (`sċiell`, `ġiest` — with the
+`ie` diphthong that only West Saxon has). **No breaking-and-smoothing rule set fits both at once**:
+every clause added for one dialect's words takes the other's away. Two of our own words say it
+outright — OE *sǣd* gives ME `seːd` with a CLOSE vowel (the Anglian reflex of ǣ) while OE *þrǣd*
+gives ME `θrɛːd` with an OPEN one (the West Saxon), and the two are the same Old English vowel.
+The fix, if it is ever worth it, is to **normalise the column to one dialect at build time** — not
+to chase it in rules.
+
+**2. Ten of the misses are a CITATION FORM, not a sound.** OE *þynne*, *swēte*, *ange*, *rǣde*,
+*ġemǣne* end in an `-e` we correctly do not derive: their Proto-Germanic is *þunnuz, *swōtuz,
+*anguz — u-stem adjectives, and Old English cites them as i-stems. The `-e` is a MORPHOLOGICAL
+reanalysis (u-stem → i-stem, a West Germanic paradigm shift), and the attested i-mutation in
+*þynne* proves an *i* was there to cause it. No sound change adds a morpheme. This is the same line
+`KEEP_WEAK_PRESENTS = False` draws for the verbs, and it is drawn in the same place.
+
+Between them these two account for most of the 147 remaining. **A cascade of sound laws cannot go
+much past this on this gold**, and the way to find out otherwise is to fix the gold, not to add
+rules that fit it.
+
+Proto-Germanic is **443/528 (83.9%)** exact. Report the **count and the denominator**, never the
+percentage alone: an earlier expansion took it from 222/260 (85.4%) to 310/425 — **+88 exact**
+while the rate *fell 12 points*, because 165 new and entirely untuned words entered the
+denominator. The old 260 still scored exactly 222; nothing regressed.
 
 The split is the number that means anything:
 
