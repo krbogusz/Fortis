@@ -233,14 +233,20 @@ definition = [
 [kluges_law]
 time = -1100
 name = "Kluge's law: a voiced stop geminates before a stressed *n"
-description = "Kroonen §2.2.5.2 — *bʰudʰnós > *buddos > (Grimm) *buttaz 'bottom'"
+description = """Kroonen §2.2.5.2 — *bʰudʰnós > *buddos > (Grimm) *buttaz 'bottom'.
+
+The stop must be preceded by a VOWEL, and that is not decoration. Kluge's law assimilates a
+SUFFIXAL *n to a ROOT-FINAL stop (*bʰudʰ-nós), and a root-final stop always has the root's vowel
+before it. Without that condition the rule also fires on a word-initial onset cluster, where the
+*n is part of the root and no suffix is in sight: *ǵnéwom came out as **kkewą, geminating a *ǵ
+that begins the word, against an attested *knewą 'knee' whose *kn is intact."""
 definition = [
-    "bʱ n → b b / _ [+syll, stress: primary]",
-    "dʱ n → d d / _ [+syll, stress: primary]",
-    "gʱ n → g g / _ [+syll, stress: primary]",
-    "b n → b b / _ [+syll, stress: primary]",
-    "d n → d d / _ [+syll, stress: primary]",
-    "g n → g g / _ [+syll, stress: primary]",
+    "bʱ n → b b / [+syll] _ [+syll, stress: primary]",
+    "dʱ n → d d / [+syll] _ [+syll, stress: primary]",
+    "gʱ n → g g / [+syll] _ [+syll, stress: primary]",
+    "b n → b b / [+syll] _ [+syll, stress: primary]",
+    "d n → d d / [+syll] _ [+syll, stress: primary]",
+    "g n → g g / [+syll] _ [+syll, stress: primary]",
 ]
 
 [grimms_law]
