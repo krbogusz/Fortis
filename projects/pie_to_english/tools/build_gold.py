@@ -153,6 +153,19 @@ PREFORM_FIXES = {
                             # them apart: *mundiz has a voiced *d (Verner fired), *munþaz a
                             # voiceless *þ (it did not). That is the whole doctrine in one pair.
 
+    # ── The Verner pass, round two ───────────────────────────────────────────────────────────
+    # Same reasoning as round one: Verner's Law is independently established, so the VOICING of
+    # the attested Germanic fricative reads the accent straight off. Nothing is taken from our
+    # derivation.
+    "furhnō": "pŕ̥ḱneh₂",   # *furhnō — VOICELESS *x ⇒ Verner did not fire ⇒ root accent
+    "hurhaz": "kŕ̥ḱos",     # *hurhaz — VOICELESS *x ⇒ root accent, against the cited oxytone
+    "anadz": "h₂enh₂éts",   # *anadz — BOTH consonants voiced (*d and *z) ⇒ Verner fired twice ⇒
+                            # oxytone, against the cited barytone *h₂énh₂ets
+    "fraiþaz": "proh₁ítos", # *fraiþaz — VOICELESS *þ ⇒ Verner did not fire, so the syllable before
+                            # it carried the accent. Ringe writes *pró-h₁itos with a hyphen: *pró-
+                            # is a PREFIX, and a Germanic prefix is unstressed — the root takes the
+                            # accent, which is exactly where the *þ needs it.
+
     # ── ZERO GRADE: the attested *u refutes the cited full grade ─────────────────────────────
     # Germanic *ur, *ul, *un before a consonant come from PIE's SYLLABIC *r̥, *l̥, *n̥ (the *u is
     # epenthetic — `u_epenthesis`). So an attested *u standing where the source cites an *e or *o
