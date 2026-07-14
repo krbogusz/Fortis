@@ -96,15 +96,10 @@ name = "Overlong vowels creation"
 description = "Word-final long vowels are lengthened to 'overlong' vowels"
 definition = "[length: long]# → [length: overlong]"
 
-# NO *ts > *s RULE, though Ringe §5.2.1 (i) states one ("simplified to *s when a long vowel, a
-# diphthong, or a consonant immediately preceded") and *weydsós > *wīsaz, *swḗdʰh₁sos > *swēsaz
-# both want it. It cannot be had: *pṓds > *fōts and *wrōds > *wrōts have the SAME long vowel and
-# the SAME *ts, and they KEEP it (OE fōt, wyrt). The two are phonologically indistinguishable.
-#
-# Ringe himself settles which side is wrong — footnote 9 to that very passage: "PGmc *wīsaz
-# 'wise', adduced here in the first edition, is unlikely to have contained a 'double dental'
-# cluster". So the preform is the doubtful thing, not the rule's absence, and a rule written to
-# make *wīsaz land would cost *fōts and *wyrt to do it.
+# The *ts > *s rule is `ts_simplification`, at the END of this file. It was long thought to be
+# unstateable — *fōts and *wrōts keep the cluster that *wīsaz and *swēsaz lose — and the answer is
+# that the environment is completed by what FOLLOWS: word-final in the first pair, before a vowel
+# in the second.
 
 [loss_of_initial_laryngeals]
 time = -2000
@@ -2099,3 +2094,24 @@ Germanic gemination has just made, and *hagjō > heċġ came out **heċ."""
 definition = "j → ∅ / [+syll] _ #"
 
 
+
+[ts_simplification]
+time = -950
+name = "The double-dental cluster *ts simplifies to *s before a vowel"
+description = """Ringe §5.2.1 (i): *ts "simplified to *s when a long vowel, a diphthong, or a
+consonant immediately preceded". *weydsós > *wīsaz, *swḗdʰh₁sos > *swēsaz.
+
+THE ENVIRONMENT IS COMPLETED BY WHAT FOLLOWS, and that is what an earlier pass missed. Written as
+Ringe states it — on what precedes alone — the rule cannot be had: *pṓds > *fōts and *wrōds >
+*wrōts have the same long vowel and the same *ts and they KEEP it (OE fōt, wyrt). But they are not
+indistinguishable at all. In *fōts and *wrōts the cluster is WORD-FINAL; in *wīsaz and *swēsaz a
+vowel follows it. Say "before a vowel" and both sides come out right, and Ringe's footnote 9 — the
+doubt about whether *wīsaz ever had the cluster — is not needed to explain the exception.
+
+t = -950, AFTER Grimm (-1000). The *ts does not exist before then: it is Grimm devoicing the *d of
+PIE *weyd-s-, and a rule dated earlier has nothing to match. Which is also why the DIPHTHONG clause
+is not redundant with the long-vowel one — at this date *wīsaz is still *wejtsos, with the glide."""
+definition = [
+    "t → ∅ / [+syll, length: long] _ s [+syll]",
+    "t → ∅ / [-syll] _ s [+syll]",
+]
