@@ -441,6 +441,67 @@ For the other 9 the accent does change the outcome. Those were admitted as hones
 and then corrected in a **separate, deliberate curation pass** — because admission is not curation
 and the two must not blur. See below.
 
+### Ringe as a SOURCE, not just a reference
+
+`tools/ringe.py` harvests Ringe's own cited derivations straight out of the book. He states them
+in a fixed format, which is what makes them machine-readable at all:
+
+> PIE \*dr̥ḱtós 'visible' (cf. Skt dr̥ṣṭás 'seen') **>** PGmc \*turhtaz 'bright' (cf. OE torht);
+
+**247 distinct pairs**, of which **142 are usable word-to-word**; 35 were words we did not already
+have, and those are now in the lexicon. They are scored at **200 only** — Ringe gives the Germanic
+form, not an Old English chain, so there is nothing to score the later columns against.
+
+**And they are better gold, measurably.** Ringe sits at the top of the source hierarchy, and it
+shows in the one number that is not tunable:
+
+| | exact, untuned |
+|---|---|
+| Wiktionary-sourced words | **~50%** |
+| **Ringe-sourced words** | **60%** (21/35) |
+
+Four filters throw away more than half of what he offers, and each one is a trap we have already
+been caught by:
+
+- **40 pairs he marks `>!`** — his own notation for a step that is *not* a sound change. They can
+  never be derived, so they are not gold. They are kept in `ringe.json` as a **warning**, so that
+  nobody hunts a rule for a change that never happened.
+- **68 are a stem or a root**, not a word (`*deḱs-`, `*hleuman-`).
+- **27 are a Proto-Germanic infinitive** — the wrong-cell trap the verbs already taught us.
+- **10 are a weak present** (`*-iþi`), which is levelled and not derived (see above).
+
+#### The PDF fights back, and every repair is load-bearing
+
+The extractor is mostly a list of defences against the PDF's own damage, and each one silently
+corrupts the data if you skip it:
+
+- it **splits a diacritic off its base** — `*h₂stér-` renders as `*h 2stér-`, `ḱ` as `k ´`,
+  `*fadēr` as `*fad ēr`. Matching on whitespace truncates a form at its first diacritic, which is
+  how an early pass produced "PGmc \*fad" and "PGmc \*hund".
+- Ringe separates examples with `;`, and an **unfenced match pairs the PIE of one example with the
+  PGmc of the next** — it produced `*pah₂ > *wrōt` ('protect' > 'root'). **127 such phantoms**,
+  every one of which would have entered the gold as an underivable miss.
+- a **trailing `-` marks a stem**, and stripping it as punctuation — the obvious thing to do —
+  silently promotes every root to a word. It is kept, and it is what the root filter reads.
+
+#### Kroonen cannot be harvested, and the reason is the scan
+
+Kroonen has far more material (≈3,700 headwords, ≈990 with an explicit PIE preform), but it is a
+**scanned** book, and its OCR destroys precisely the diacritics the derivation runs on:
+
+| Kroonen prints | the OCR gives | what is lost |
+|---|---|---|
+| `*ḱeuk-` | `*keuk-` | the palatovelar — **centumization** |
+| `*pr̥d-u-` | `*prd-u-` | the syllabic ring — **u-epenthesis** |
+| `*h₂elḱ-` | `*h₂el{H-` | the laryngeal — **colouring** |
+| `*flauja-` | `*Jlauja-` | the Germanic headword itself |
+
+Only about a third of its captured PIE forms survive as valid orthography, and the losses are not
+random — they are concentrated in exactly the features our rules key on. Bulk-importing it would
+poison the gold with inputs whose critical features had been erased, **silently**. It stays a
+**lookup** source, hand-consulted one word at a time, which is how every `PREFORM_FIXES` citation
+in this project was made.
+
 ### The Verner pass
 
 Six words whose Germanic consonant flatly contradicts the accent their input carried. **All six

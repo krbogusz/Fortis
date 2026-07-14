@@ -453,7 +453,10 @@ def main() -> None:
 
     for c in chains:
 
-        if c["pos"] not in KEEP_POS:
+        # A Ringe pair carries no part of speech — he cites a form and a gloss, not a lexicon
+        # entry — so the word-class filter, which exists to catch Wiktionary's wrong-cell links,
+        # has nothing to read and nothing to catch. Ringe's own citation IS the guarantee.
+        if c.get("source") != "Ringe" and c["pos"] not in KEEP_POS:
             drop("not a noun-like word class (verb/affix)")
             continue
         if not c["pgmc"] or c["pgmc"].startswith("-") or c["pgmc"].endswith("-"):
@@ -546,6 +549,7 @@ def main() -> None:
             "final": final,
             "_pie": pie_form, "_cited": c["pie"],  # _cited keeps the hyphens: see richness()
             "_sense": c["gloss"],                   # the Wiktionary sense: see sense()
+            "_source": c.get("source", "Wiktionary"),
             "_cell": c.get("cell", ""),             # a verb's paradigm cell: 1sg / 3sg
             "_pgmc": c["pgmc"], "_oe": c["oe"], "_me": c["me"],
             "_variants": " ".join(reflexes[1:]), "_pos": c["pos"],
@@ -628,7 +632,7 @@ def main() -> None:
     def category_of(row) -> str:
         pos = row["_pos"]
         if pos != "verb":
-            return pos
+            return pos          # "" for a Ringe pair: he gives no word class, so we claim none
         # The cell is part of what the word IS — the 1sg and the 3sg of one verb are two
         # different words here, with different preforms and different targets, and a rule that
         # wants one and not the other can now say so.

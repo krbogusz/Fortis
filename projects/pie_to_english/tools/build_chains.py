@@ -337,6 +337,34 @@ def main() -> None:
         if prev is None or rank(cand) >= rank(prev):
             by_etymon[(pie, d["word"])] = cand
 
+    # RINGE, folded in beside the Wiktionary chains — and he outranks them (Ringe > Kroonen >
+    # Wiktionary). Only words we do NOT already have are added, so nothing existing is disturbed:
+    # using him to OVERRIDE a preform we already carry is a bigger and separate question.
+    #
+    # A Ringe pair is scored at 200 and nowhere else. He gives the Germanic form, not an OE/ME/PDE
+    # chain, so there is nothing to score the later columns against — exactly like a word that
+    # died before Old English.
+    ringe_file = CACHE / "ringe.json"
+    if ringe_file.exists():
+        have = {c["pgmc"] for c in by_etymon.values()}
+        for p in json.load(open(ringe_file, encoding="utf-8")):
+            if p["analogical"] or p["root"] or p["infinitive"] or p["weak_present"]:
+                continue
+            if p["pgmc"] in have:
+                continue
+            ipa = pgmc_ipa.transcribe(p["pgmc"])
+            if not ipa:
+                continue
+            have.add(p["pgmc"])
+            stats["from Ringe (new word, scored at 200)"] += 1
+            by_etymon[(p["pie"], p["pgmc"])] = {
+                "pie": p["pie"], "pgmc": p["pgmc"], "pgmc_ipa": f"/{ipa}/", "cell": "",
+                "oe": "", "oe_ipa": "", "me": "", "me_ipa": "", "me_variants": 0, "pde": [],
+                "pos": "", "gloss": "", "source": "Ringe",
+            }
+    else:
+        print("no ringe.json — run tools/ringe.py first (Ringe pairs skipped)", file=sys.stderr)
+
     chains = list(by_etymon.values())
     json.dump(chains, open(CACHE / "chains.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)

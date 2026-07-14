@@ -46,6 +46,12 @@ def ident(row: dict) -> str:
 def pie_provenance(row: dict) -> tuple[str, str]:
     """(source, note) for the PIE input — the one column that several authorities can touch."""
     pgmc = row["_pgmc"]
+    if row.get("_source") == "Ringe":
+        return (
+            "Ringe, From Proto-Indo-European to Proto-Germanic",
+            "the pair is Ringe's own cited derivation — he outranks Wiktionary "
+            "(Ringe > Kroonen > Wiktionary), and scores ~60% untuned against their ~50%",
+        )
     if pgmc in BG.PREFORM_FIXES:
         return (
             "PREFORM_FIXES (Ringe / Kroonen, or the attested Germanic as independent evidence)",
