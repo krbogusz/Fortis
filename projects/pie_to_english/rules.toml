@@ -1678,7 +1678,7 @@ arm, barm, hard.
 t = 1740, BEFORE pde_r_loss (1750) — and that is the whole point. Dated in the 1900 block it looked
 for an /ɹ/ that the r-loss had already deleted, and arm, barm, hard came out **aːm, **baːm, **haːd
 with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there."""
-definition = "a → ɑ / _ r"
+definition = "[+syll, length: short] a → ɑ / _ r"
 
 [eme_goat_diphthongisation]
 time = 1900
@@ -2050,16 +2050,6 @@ name = "A final *f voices after a vowel"
 description = "ME fīf, hōf, wīf > RP five, hoof, wive — and the -ve of the spelling records it."
 definition = "f → v / [+syll] _ #"
 
-[eme_dental_shortening]
-time = 1550
-name = "A long /ɛː/ shortens before a dental"
-description = """ME dēth, stēd, thrēd, brēd, dēd give RP death, stead, thread, bread, dead — with a
-SHORT vowel, and it is short before the Great Vowel Shift arrives, which is why they are not
-/diːθ/, /stiːd/, /θriːd/. Dated 1550, before the shift (1600).
-
-It is not exceptionless — ME mēd keeps its length (RP mead /miːd/) in the same environment — but
-the shortened set is much the larger."""
-definition = "ɛː → ɛ / _ [-syll, +ant] #"
 
 
 [pde_north_vowel]
@@ -2071,3 +2061,12 @@ Dated 1735, just before pde_nurse_vowel (1740), and that ordering is what keeps 
 one leaves a LONG vowel, and NURSE asks for a short one, so the NORTH words are out of its reach
 without a clause naming them."""
 definition = "ɔ → ɔː / _ r [-syll]* $"
+
+
+
+[pde_mother_shortening]
+time = 1750
+name = "A long /uː/ shortens to /ʌ/ before /ð̠/"
+description = """The Great Vowel Shift takes ME ōther, brōther, mōther to /uː/, and RP has the STRUT
+vowel: /ˈʌðə/, /ˈbɹʌðə/, /ˈmʌðə/. Dated 1750, before the FOOT–STRUT split would have to see it."""
+definition = "uː → ʌ / _ ð̠"
