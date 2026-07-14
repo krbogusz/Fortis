@@ -1632,3 +1632,38 @@ description = """After the Great Vowel Shift the long open *ɔː of Middle Engli
 (ghost, oath, oak, dole, loath). Received Pronunciation does not have a long monophthong there —
 it has the GOAT diphthong, and the modern column is transcribed in it."""
 definition = "oː → ə ʊ"
+
+[me_h_cluster_loss]
+time = 1300
+name = "Initial /h/ is lost before a sonorant"
+description = """OE hwīt, hlūd, hnutu, hring lose their *h in Middle English: white, loud, nut,
+ring. The cluster *hC- is not tolerated, and the *h simply goes."""
+definition = "x → ∅ / # _ [+son, -syll]"
+
+[me_degemination]
+time = 1250
+name = "Geminates simplify"
+description = """Middle English has no long consonants: OE full, sċiell, stall, wull, þynne, cynn
+give full, shell, stall, wool, thin, kin with a SINGLE consonant."""
+definition = "1=[-syll] @1 → @1"
+
+[me_ng_simplification]
+time = 1450
+name = "Final /ŋg/ loses its stop"
+description = """OE lang, ġeong, mearg > long, young, marrow — the velar nasal stands alone.
+
+t = 1450, AFTER the Middle English checkpoint: ME still HAS the stop (long is /lɔŋg/ there), and
+dating this at 1400 takes it away before the column that records it."""
+definition = "g → ∅ / ŋ _ #"
+
+[eme_short_e_opens]
+time = 1900
+name = "Short /e/ opens to /ɛ/"
+description = "RP's DRESS vowel: bed, nest, elk, helm."
+definition = "e → ɛ"
+
+[eme_foot_vowel]
+time = 1900
+name = "Short /u/ laxes to /ʊ/"
+description = "RP's FOOT vowel: full, wolf, wool."
+definition = "u → ʊ"
