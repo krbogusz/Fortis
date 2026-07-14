@@ -1583,3 +1583,52 @@ description = "*nistaz > OE nest, but *fiskaz > OE fisc keeps its i; blocked bef
 # then lowered it straight back again, giving **ɑɣeθ̠ɔː for the attested *ɑɣiθ̠ɔː. The /i/ of
 # *nisdós is the ROOT vowel and still lowers to the *nestɑ̃ the gold wants — nothing is lost.
 definition = "[+syll, aperture: high, +front, length: short, stress: primary] → [aperture: mid] / _ [-syll, lateral: none, aperture: !high]* [+syll, aperture: !high] // _ [+nas]$"
+
+
+# ─── Modern English realisation ───────────────────────────────────────────────────────────────
+# The last block. These are not sound changes in the interesting sense — they are the phonetic
+# realisations that make Received Pronunciation what it is — but the modern column is transcribed
+# in them, so the cascade has to arrive there.
+
+[eme_dentalisation]
+time = 1900
+name = "The fricatives *þ, *ð become DENTAL"
+description = """The engine's *θ̠/*ð̠ are non-dental because they inherit PIE *t's alveolar coding
+(see docs/default_system.md). Modern English /θ ð/ are dental, and the modern column is transcribed
+that way — so the shift has to be stated. It is real: the place of articulation moved."""
+definition = [
+    "θ̠ → θ",
+    "ð̠ → ð",
+]
+
+[eme_rhotic_approximant]
+time = 1900
+name = "The trill *r becomes the approximant /ɹ/"
+description = "Modern English /ɹ/ is an approximant, not the trill the cascade has carried since PIE."
+definition = "r → ɹ"
+
+[eme_short_i_laxes]
+time = 1900
+name = "Short /i/ laxes to /ɪ/"
+description = "RP has the lax KIT vowel where the cascade still carries a tense short *i: quick, fish, finger."
+definition = "i → ɪ"
+
+[eme_short_o_opens]
+time = 1900
+name = "Short /ɔ/ opens to /ɒ/"
+description = "RP's LOT vowel: fox, ox, otter."
+definition = "ɔ → ɒ"
+
+[eme_short_a_backs]
+time = 1900
+name = "Short /a/ backs to /ɑ/ before /ɹ/"
+description = "RP's START vowel, in the non-rhotic pattern the modern column is transcribed in: arm, barm."
+definition = "a → ɑ / _ ɹ"
+
+[eme_goat_diphthongisation]
+time = 1900
+name = "The GOAT vowel: /oː/ diphthongises to /əʊ/"
+description = """After the Great Vowel Shift the long open *ɔː of Middle English has become *oː
+(ghost, oath, oak, dole, loath). Received Pronunciation does not have a long monophthong there —
+it has the GOAT diphthong, and the modern column is transcribed in it."""
+definition = "oː → ə ʊ"
