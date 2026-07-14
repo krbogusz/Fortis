@@ -96,6 +96,21 @@ name = "Overlong vowels creation"
 description = "Word-final long vowels are lengthened to 'overlong' vowels"
 definition = "[length: long]# → [length: overlong]"
 
+[coronal_cluster_simplification]
+time = -1050
+name = "*ts > *s after a long vowel, a diphthong, or a consonant"
+description = """Ringe §5.2.1 (i), on the outcome of the coronal clusters: "The outcome of this
+sound change was simplified to *s when a long vowel, a diphthong, or a consonant immediately
+preceded" — *káydstis > *haisiz, *pn̥tstós > *funsaz, *(h₁)ēdstos > *ēsaz.
+
+Our *TsT rule leaves a *ts, and after a heavy nucleus it must lose the stop: *weydsós > *wīsaz,
+*swḗdʰh₁sos > *swēsaz. After a SHORT vowel the geminate stands, which is why *wissaz, *sessaz and
+*hwassaz keep theirs."""
+# ONLY after a long vowel or a diphthong. Ringe's third environment — "or a consonant" — is about
+# the *ts that the CORONAL CLUSTER makes, not about any *t standing before an *s: written that way
+# the rule also eats the *t of *nahts and *tanþs, which Old English keeps (niht, tōþ).
+definition = "t → ∅ / [+syll, length: !short] _ s"
+
 [loss_of_initial_laryngeals]
 time = -2000
 name = "Loss of initial laryngeals"
@@ -126,6 +141,17 @@ definition = "ʁʷ → g / [+syll] _ w"
 #     > *jungaz — both attested with a short /u/.
 # Run the other way round (the file's original order), the lengthening rule takes these first
 # and the loss never sees them.
+[w_gemination_before_laryngeal]
+time = -2000
+name = "A laryngeal after */w/ geminates it"
+description = """*dʰówh₂om > PGmc *dawwą 'dew', *lowHéh₂ > *lawwō. The laryngeal does not vocalise
+and does not simply drop — it is absorbed into the *w, which comes out long. The Germanic *ww of
+these words has no other source.
+
+t = -2000, and placed ahead of the laryngeal-loss rules at the same time: they run first and there
+is nothing left for this one to absorb."""
+definition = "[+cons, advancement: rtr] → w / w _"
+
 [loss_of_laryngeals_before_vowels]
 time = -2000
 name = "Loss of laryngeals before a vowel or a resonant, without lengthening"
@@ -313,8 +339,11 @@ definition = "[-son, -cont, +voice, glottal_aperture: spread] → [glottal_apert
 time = -1010
 name = "*/sm/ > */mm/"
 description = """*h₁ésmi 'I am' > PGmc *immi (Goth. im, OE eom) — Ringe cites the pair. The *s
-assimilates completely to the following nasal."""
-definition = "s → m / _ m"
+assimilates completely to the following nasal.
+
+AFTER A VOWEL only. Word-initial *sm- is a perfectly good onset and stays: without the condition
+*sméldoh₂ came out **mmeltō."""
+definition = "s → m / [+syll] _ m"
 
 [grimms_law]
 time = -1000
@@ -454,6 +483,17 @@ definition = [
 # and the diphthong shift all fired on words whose ɑ came from the segmenter and silently skipped
 # the ones whose ɑ came from *o, which print identically. Un-round the vowel completely and the
 # two are the same segment again.
+[mr_epenthesis]
+time = -900
+name = "A stop is epenthesised between */m/ and */r/"
+description = """*amrós > PGmc *ampraz. A nasal and a liquid do not stand together: an oral stop of
+the nasal's own place is inserted between them, exactly as in *þumraz > thumb.
+
+t = -900, AFTER Grimm and Verner. The epenthetic *p is a NEW stop and must not be swept into the
+chain shift: run it before, and Grimm makes it *ɸ, Verner voices that to *β, and the *β hardens to
+*b after the nasal — *ampraz came out **ambraz."""
+definition = "∅ → p / m _ r"
+
 [non_high_back_merger]
 time = -1000
 name = "Merging of non-high back vowels"
