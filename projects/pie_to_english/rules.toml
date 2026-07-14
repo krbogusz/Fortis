@@ -1,0 +1,1212 @@
+# Laryngeal colouring, in one rule per direction via conditionals. The context is the
+# laryngeal natural class — a guttural [+cons, advancement: rtr] (= *h₁ χ, *h₂ ħ, *h₃ ʁʷ here).
+# Two conditional labels then pick the colour from the laryngeal's own quality:
+# label 1 fires next to an [aperture: low] guttural (*h₂ ħ) and lowers *e to *a; label 2 fires
+# next to a [+rounded] guttural (*h₃ ʁʷ) and backs/rounds *e to *o. *h₁ (χ) is neither
+# [aperture: low] nor [+rounded], so neither label fires and *e is left alone — its neutrality
+# falls out. A merge result keeps a stressed /e/'s stress; the target *e is the mid
+# front vowel [+syll, -cons, +front, aperture: mid]: -cons excludes syllabic consonants
+# (r̩, l̩, …) and aperture: mid picks out mid *e (not high *i or low *a).
+# Two rules, not one: the notation can't put the laryngeal on "either" side at once.
+[laryngeal_colouring_after]
+time = -2000
+name = "Laryngeal colouring after a laryngeal"
+description = "*h₂e > *h₂a, *h₃e > *h₃o (h₁ leaves e)"
+definition = "[+syll, -cons, +front, aperture: mid] → [<1: aperture: low>, <1: advancement: rtr>, <2: back: 1>, <2: rounded: 1>, <2: labial: 1>, <2: front: none>] / [+cons, advancement: rtr, <1: aperture: low>, <2: +rounded>] _"
+
+[laryngeal_colouring_before]
+time = -2000
+name = "Laryngeal colouring before a laryngeal"
+description = "*eh₂ > *ah₂, *eh₃ > *oh₃"
+definition = "[+syll, -cons, +front, aperture: mid] → [<1: aperture: low>, <1: advancement: rtr>, <2: back: 1>, <2: rounded: 1>, <2: labial: 1>, <2: front: none>] / _ [+cons, advancement: rtr, <1: aperture: low>, <2: +rounded>]"
+
+[centumization]
+time = -2000
+name = "Centumization"
+description = "Merging of PIE 'palatovelar' and 'velar' plosives"
+definition = "[+cons, -sonorant, +back, +front] → [front: none]"
+
+[u_epenthesis]
+time = -2000
+name = "'u' epenthesis"
+description = "Epenthesis of /u/ before the syllabic sonorants"
+# `+son`: the epenthesis is for the syllabic SONORANTS (*l̥ r̥ m̥ n̥ > ul ur um un). A syllabic
+# LARYNGEAL is also [+cons, +syll] and was being caught by it — but a laryngeal does not take an
+# epenthetic *u, it vocalises to *ə (`laryngeal_vocalization`). Written without the restriction,
+# Kroonen's *n̥h₂-s-eh₂- came out **unsō.
+definition = "∅ [+cons, +syll, +son] → u [-syll]"
+
+# A dental stop + epenthetic s + dental stop collapses to ss (*TsT > ss): the dental
+# stops ([+cons,-continuant,+anterior,-sonorant], i.e. t/d) become s, the span
+# shrinking 3→2. The result is letters (replacement path) so the lengths may differ.
+# The bare *TT cluster does the same thing and needs its own clause: Wiktionary writes the
+# epenthetic *s only sometimes, so *widtós, *sedtós and *kʷχdtos arrive with the two dentals
+# simply adjacent, and the 3→2 clause above cannot see them. Without it Grimm's third clause
+# turns the *d into a *t and the words end in **wettaz, **settaz, **hwattaz for the attested
+# *wissaz, *sessaz, *hwassaz. This is the dental half of Primärberührung; the velar half (a
+# stop before *t going to a fricative) is the clause added to Grimm's law below.
+[dental_cluster]
+time = -2000
+name = "Dental cluster simplification"
+description = "*TsT, *TT > ss — *wid-tós > *wissós 'certain', *sedtós > *sessaz"
+definition = [
+    "[+cons, -continuant, +anterior, -sonorant] s [+cons, -continuant, +anterior, -sonorant] → s s",
+    "[+cons, -continuant, +anterior, -sonorant] [+cons, -continuant, +anterior, -sonorant] → s s",
+]
+
+# A geminate is one consonant doubled, so match it as `1=[+cons] @1` (capture, then
+# the same consonant again) — not `[+cons]{2}`, which is any two consonants AND whose
+# single quantified element can't pair with the two-element result. The first copy
+# stays ([+cons] is a no-op merge), the second is deleted (∅); counts match, 2:2.
+#
+# Dated AFTER the laryngeals resolve (-1900, not -2000), because the rule asks whether a
+# CONSONANT precedes the geminate and a laryngeal is not yet the thing it will be. In *kʷχdtos
+# the *χ still looks like a consonant, so the *ss the dental cluster has just made was being
+# shortened away — **xʷɑzɑz for the attested *xʷɑssɑz. But that *χ vocalises to a VOWEL, and a
+# short vowel is exactly the environment where a geminate is kept. Let the laryngeals settle
+# first and the question answers itself.
+[geminate_shortening]
+time = -1900
+name = "Geminate shortening"
+description = "A geminate shortens after a consonant or a long vowel"
+definition = "1=[+cons] @1 → [+cons] ∅ / ([+cons]|[length: long]) _"
+
+[overlong_vowels]
+time = -2000
+name = "Overlong vowels creation"
+description = "Word-final long vowels are lengthened to 'overlong' vowels"
+definition = "[length: long]# → [length: overlong]"
+
+[loss_of_initial_laryngeals]
+time = -2000
+name = "Loss of initial laryngeals"
+description = "Word-initial laryngeals are lost before a consonant"
+definition = "#[+cons, advancement: rtr][+cons] → ∅[+cons]"
+
+[cowgills_law]
+time = -2000
+name = "Cowgill's law"
+description = "*/h₃/ (and possibly */h₂/) is strengthened to */g/ between a sonorant and */w/"
+# `[+syll]`, not `[+son]`. Ringe states the environment as "between a sonorant and *w (in that
+# order)" — but BOTH of his examples have that sonorant as a NUCLEUS: *n̥h₃wé (a syllabic *n̥) and
+# *gʷih₃wós 'alive' (a vowel *i) > *kwikwós > PGmc *kwikwaz. Read as any sonorant, the law also
+# fires after a consonantal *l — and *gʰelh₃wos then comes out **gelkwaz against an attested
+# *gelwaz with a plain *w. Kroonen keeps the laryngeal in the root (*gʰelh₃- 'yellow'), so the
+# preform is not the problem; the environment is. Post-vocalic, as the examples have it.
+definition = "ʁʷ → g / [+syll] _ w"
+
+# Post-vocalic loss runs *before* pre-vocalic loss so that an intervocalic laryngeal
+# lengthens its preceding vowel (VHV > VːV) instead of being deleted pre-vocalically.
+# Only a laryngeal with no preceding vowel (#HV, CHV) then falls through to the
+# pre-vocalic rule.
+# Laryngeal loss WITHOUT lengthening comes first — before the post-vocalic loss below, which
+# lengthens the vowel it follows. Order matters and the gold settles it:
+#   * between two vowels the laryngeal simply drops, leaving a diphthong: *kéh₂ilos > *hailaz,
+#     not the long vowel **hālaz that the lengthening rule would give;
+#   * before a resonant it drops too, and the vowel stays SHORT: *suHnús > *sunuz, *h₂yuHn̥ḱós
+#     > *jungaz — both attested with a short /u/.
+# Run the other way round (the file's original order), the lengthening rule takes these first
+# and the loss never sees them.
+[loss_of_laryngeals_before_vowels]
+time = -2000
+name = "Loss of laryngeals before a vowel or a resonant, without lengthening"
+description = "*h₁ésti > *ésti > *isti; *kéh₂ilos > *hailaz; *suHnús > *sunuz"
+definition = [
+    "[+cons, advancement: rtr] [+syll, -cons] → ∅ [+syll, -cons]",
+    # Before a resonant the laryngeal drops WITHOUT lengthening — but only after an UNSTRESSED
+    # vowel. Stress is what separates the two outcomes: barytone *dʰóh₁mos lengthens its stressed
+    # root vowel (> *dōmaz), while oxytone *suHnús and *h₂yuHn̥ḱós have the laryngeal in a pretonic
+    # syllable and stay short (> *sunuz, *jungaz). Without the stress condition, doom comes out
+    # **damaz. The second clause repeats it for a SYLLABIC resonant (*n̥ is [+syll, +cons], so it
+    # matches neither the vowel clause above nor the consonant clause here).
+    "[+cons, advancement: rtr] → ∅ / [+syll, stress: none] _ [+son, -syll, +cons]",
+    "[+cons, advancement: rtr] → ∅ / [+syll, stress: none] _ [+syll, +cons]",
+]
+
+[loss_of_laryngeals_after_vowels]
+time = -2000
+name = "Loss of laryngeals after vowels"
+description = "Laryngeals are lost after vowels but lengthen the preceding vowel"
+definition = "[+syll, -cons] [+cons, advancement: rtr] → [+syll, -cons, length: long] ∅"
+
+# The long vowel left by post-vocalic laryngeal loss then absorbs a following short
+# vowel in hiatus: Vː V > V̂. The overlong takes the long first vowel's quality (the
+# merge keeps it, and any stress); the short second vowel is deleted. The first must
+# be [length: long], so only laryngeal-lengthened hiatus contracts — *-oHom (> *oːom)
+# > *-ôm; *-eh₂es (> *aːas) > *-âs.
+[vowel_contraction]
+time = -2000
+name = "Vowel contraction in hiatus"
+description = "A long vowel absorbs a following short vowel into an overlong — *-oHom > *-ôm"
+definition = "[+syll, -cons, length: long] [+syll, -cons] → [length: overlong] ∅"
+
+# A laryngeal after a STOP that already has a vowel before it does not vocalise either — it
+# ASPIRATES the stop and disappears: *dʱugħteːr > *dʱugʱteːr. The vowel is what makes the
+# difference. In *dʱugħteːr the /u/ is the nucleus, so the laryngeal cannot be one; in *kħponeħ
+# the word-initial /k/ has no vowel to lean on and the laryngeal must vocalise (> *xɑβɑnɔː), so
+# the context demands the preceding vowel rather than firing on any stop.
+# Sanskrit spells the aspirate out: *dʱugħteːr is duhitā́, with the -h- straight from the *gʱ.
+# Without this, the laryngeal became a schwa, the schwa fed Verner's Law, and the *t voiced —
+# **dukð̠eːr for the attested *duxtɛːr. The same hole as the sonorant clause below, one manner up.
+[laryngeal_aspiration]
+time = -2000
+name = "A laryngeal aspirates a preceding stop"
+description = "*dʱugħteːr > *dʱugʱteːr > *duxtɛːr 'daughter' — the *gʱ is Sanskrit duhitā́'s -h-"
+# `tension: slack` as well as `glottal_aperture: spread`, because the aspirate PIE actually has is
+# the BREATHY one. The two diacritics are not the same segment: `ʰ` is `1 glap` (plain aspiration)
+# and `ʱ` is `+vc, 1 glap, -1 tns` (breathy voice — spread glottis AND slack tension). Setting only
+# the glottal aperture made a *g* that was spread but not slack, which spells `gʰ`, not the `gʱ`
+# the lexicon writes. It worked only by luck: Grimm's first clause matches on FEATURES
+# ([+voice, glottal_aperture: spread]) and caught it anyway — but any rule written against the
+# letter+diacritic `gʱ` would have looked straight through it, exactly as with the `ɑ` that was
+# still labial. Make the segment the thing it is supposed to be.
+definition = "[-son, -cont] [+cons, advancement: rtr] → [glottal_aperture: spread, tension: slack] ∅ / [+syll] _"
+
+# A laryngeal between a sonorant CONSONANT and an obstruent is LOST, not vocalised. If it
+# vocalised, its schwa would be an unaccented vowel standing before the obstruent — which feeds
+# Verner's Law and voices it. *ǵénh₁tis would then give **kinðiz, but the attested Proto-Germanic
+# is *kinþiz, with a voiceless þ: the /t/ is still protected by the root accent, which means no
+# vowel ever intervened. The loss is written as the first clause of the same rule so that it is
+# ordered before the general vocalisation.
+[laryngeal_vocalization]
+time = -2000
+name = "Vocalisation of remaining laryngeals (with loss between a resonant and an obstruent)"
+description = "*ǵénh₁tis > *kenþis (no schwa, so Verner cannot fire) > *kinþiz"
+definition = [
+    # The `[+syll]` at the front is what keeps the loss out of a word-initial cluster, and it is
+    # the same condition the aspiration rule above turns on: a laryngeal only declines to be a
+    # nucleus when the syllable already HAS one. *ǵénh₁tis has its *e, so the laryngeal goes.
+    # *mh₂ḱrós does not — the *m is word-initial — and dropping the laryngeal there left **mxrɑz,
+    # a word with no vowel in it at all, for the attested *mɑɣrɑz. With no vowel to lean on the
+    # laryngeal must vocalise, which is what the last clause then does.
+    "[+cons, advancement: rtr] → ∅ / [+syll] [+son, -syll, +cons] _ [-son]",
+    # ...and after a SYLLABIC resonant too: *ǵn̥h₃tós has its laryngeal between *n̥ and *t. If it
+    # vocalises there, the schwa feeds Verner and the *t voices — but the attested *kunþaz has a
+    # voiceless *þ. Same hole that gave **kinðiz for kind.
+    "[+cons, advancement: rtr] → ∅ / [+syll, +cons] _ [-son]",
+    "[+cons, advancement: rtr] → ə",
+]
+
+# A laryngeal before a resonant is lost WITHOUT lengthening the vowel: *suHnús > *sunuz and
+# *h₂yuHn̥ḱós > *jungaz both have a SHORT /u/ in the attested Proto-Germanic, so the general
+# "loss after a vowel", which lengthens, must not reach them.
+
+[velar_labialization]
+time = -2000
+name = "Velar labialization"
+description = "Velars are labialised by following */w/, which is deleted"
+definition = "[+bk, aperture: high] w → [+rounded] ∅ "
+
+[labiovelar_delabialization]
+time = -2000
+name = "Labiovelar delabialization"
+description = "Labiovelars are delabialised next to */u/ (or */un/) or before */t/"
+definition = "[+bk, aperture: high, +rnd, -son] → [labial: none] / _ (u|t)"
+
+[final_non_high_short_vowel_loss]
+time = -1000
+name = "Word-final non-high short vowel loss"
+description = "Word-final non-high short vowels are lost, along with preceding /j/ or /w/ (single syllables not affected)"
+definition = [
+    "[+syll] → [stress: primary] / _ [-syll]* [+syll, stress: primary, -cons, aperture: !high, length: short] #",
+    "j?w?[+syll, -cons, aperture: !high, length: short] → ∅ / [+syll] []* _ #"
+]
+
+# KLUGE'S LAW. Kroonen §2.2.5.2: "voiced *b, *d and *g were geminated to *bb, *dd and *gg by the
+# assimilation of a following *n IN A STRESSED SYLLABLE. These geminates were then devoiced to
+# *pp, *tt and *kk together with old Proto-Indo-European *b, *d, *g during STAGE 2 of Grimm's
+# law." His worked example is one of ours: "*budmo, gen. *buttaz m. 'bottom' < *bʰudʰ-men, gen.
+# *bʰudʰ-n-ós".
+#
+# Two things fix its date, and both point here — immediately BEFORE Grimm:
+#   * it must precede Grimm's FIRST clause, or the *dʰ of *bʰudʰnós is already a fricative *ð and
+#     there is no stop left to geminate;
+#   * it must precede Grimm's THIRD clause, which is what devoices the *dd it makes to the *tt the
+#     attested *buttaz shows. Kroonen says so outright ("during stage 2 of Grimm's law").
+#
+# The geminate is a PLAIN voiced stop, which is why the aspirates are written out to plain b/d/g
+# here rather than recalled with @1: recalled, they would keep their breathiness, Grimm's first
+# clause would turn both halves into fricatives, and the word would come out **buððaz.
+#
+# "In a stressed syllable" is the accent condition, and it is what the `/ _ [+syll, stress:
+# primary]` context says: the *n must belong to the stressed syllable, i.e. stand before its vowel.
+[kluges_law]
+time = -1100
+name = "Kluge's law: a voiced stop geminates before a stressed *n"
+description = "Kroonen §2.2.5.2 — *bʰudʰnós > *buddos > (Grimm) *buttaz 'bottom'"
+definition = [
+    "bʱ n → b b / _ [+syll, stress: primary]",
+    "dʱ n → d d / _ [+syll, stress: primary]",
+    "gʱ n → g g / _ [+syll, stress: primary]",
+    "b n → b b / _ [+syll, stress: primary]",
+    "d n → d d / _ [+syll, stress: primary]",
+    "g n → g g / _ [+syll, stress: primary]",
+]
+
+[grimms_law]
+time = -1000
+name = "Grimm's law"
+description = "The chain shift of the three plosive series. The order of the clauses is not free, and the gold settles it: the ASPIRATES must go to fricatives first, so that *mógʰtis has an obstruent /ɣ/ standing before its *t (which therefore does not fricativise) and devoices to the attested *mɑxtiz. The PLAIN voiced stops must go last, so that the /k/ *h₂éyǵs makes out of *ǵ is not fricativised in its turn — the attested form is *aiks, not **aixs. Run the other way round, each order breaks the other's word."
+definition = [
+    # 1. bʱ dʱ gʱ → β ð ɣ. The third series lands on voiced FRICATIVES, not stops: Proto-Germanic
+    #    has *beβruz, *lɑɣuz, *ɣarðaz, and [b d g] are its allophones word-initially and after a
+    #    nasal (pgmc_voiced_fricative_hardening). Deriving stops here makes every medial one wrong.
+    "[-son, -cont, +voice, glottal_aperture: spread] → [glottal_aperture: neutral, tension: neutral, +cont]",
+    # 2. p t k → ɸ θ x, except after an obstruent — ANY obstruent, including the voiced fricatives
+    #    clause 1 has just made, which is what protects the *t of *mógʰtis.
+    "[-son, -cont, -voice] → [+cont] // [-son] _",
+    # 2b. …but a plain voiced stop standing BEFORE *t fricativises instead of hardening — the
+    #     velar half of Primärberührung. *jugtós is *juxtɑz and *regʲtós is *rextɑz, with an /x/,
+    #     where clause 3 alone would harden the *g to /k/ and give **juktɑz, **rektɑz. It sits
+    #     before clause 3 precisely to get there first; the /t/ itself is already protected by
+    #     clause 2, which will not fricativise a stop standing after an obstruent. The aspirates
+    #     need no clause here — clause 1 has already made them fricatives, so [-cont] misses them.
+    "[-son, -cont, +voice] → [+cont, -voice] / _ t",
+    # 3. b d g → p t k. Last, so the new stops are not caught by clause 2.
+    "[-son, -cont, +voice, glottal_aperture: neutral] → [-voice]",
+]
+
+[verners_law]
+time = -1000
+name = "Verner's law"
+description = "Voiceless fricatives are voiced when preceded by an unaccented vowel, including cases where the vowel and fricative are separated by a sonorant (n, m, r, l, j, w)"
+definition = "[-son, +cont, -voice] → [+vc] / [+syll, stress: none] [+son, -syll]? _ "
+
+[stress_change]
+time = -1000
+name = "Stress change to first syllable"
+description = "All words become stressed on their first syllable. The PIE contrastive accent is lost, phonemicising the voicing distinction created by Verner's law"
+definition = [
+    "[+syll] → [stress: primary] / # [-syll]* _ []* [+syll, stress: primary]",
+    "[+syll] → [stress: none] / [+syll] []* _",
+]
+
+[word_initial_gw_to_b]
+time = -1000
+name = "Word-initial */gʷ/ > */b/"
+description = "Word-initial */gʷ/ > */b/"
+definition = "gʷ → b / # _"
+
+[unstressed_owo_to_long_o]
+time = -1000
+name = "Unstressed */owo/ > */oː/"
+description = "Unstressed */owo/ > */oː/"
+definition = "[+syll, +bk, length: short, stress: none] w [+syll, +bk, length: short, stress: none] → oː"
+
+[unstressed_ew_to_ow_before_consonant_or_finally]
+time = -1000
+name = "Unstressed */ew/ > */ow/ before a consonant or word-finally"
+description = "Unstressed */ew/ > */ow/ before a consonant or word-finally"
+definition = "[+syll, aperture: !high, +fr, length: short, stress: none] w → ow / _ ([-syll]|#)"
+
+[unstressed_e_to_i_except_before_r]
+time = -1000
+name = "Unstressed */e/ > */i/ except before */r/"
+description = "Unstressed */e/ > */i/ except before */r/. Unstressed */ej/ contracts to */iː/"
+# `aperture: mid`, not `aperture: !high`. The change is unstressed *e > *i — a MID vowel raising
+# one step. "Not high" also takes in the LOW front *a, which laryngeal colouring makes out of *e
+# (*h₂e > *a, a FRONT low vowel until `Low a backs to ɑ` later on). So *h₂enh₂ets was raising its
+# second *a straight past *e to *i and coming out **anidz for the attested *anadz. An unstressed
+# *a stays *a.
+definition = [
+    "[+syll, aperture: mid, +fr, length: short, stress: none] → i // _ r",
+    "[+syll, aperture: mid, +fr, length: short, stress: none]j → iː // _ r"
+]
+
+[unstressed_ji_to_i]
+time = -1000
+name = "Unstressed */ji/ > */i/"
+description = "Unstressed */ji/ > */i/"
+definition = [
+    "[+syll, aperture: high, +fr, length: short, stress: none]j[+syll, aperture: high, +fr, length: short, stress: none]  → iː",
+    "j[+syll, aperture: high, +fr, length: short, stress: none] → i",
+
+]
+
+# `labial: none` matters as much as `rnd: none`, and leaving it off was the source of a whole
+# class of silent bugs. A merge keeps every feature it does not mention. PIE *o is [+rounded,
+# +labial]; this rule un-rounds it but said nothing about labial, so the *a it produced was the
+# letter ɑ's bundle PLUS a stray `labial: 1`.
+#
+# That segment RENDERS as ɑ — the renderer falls back to the nearest letter and quietly drops the
+# feature it cannot spell — but it is not the LETTER ɑ, and letter patterns match by identity. So
+# every rule written `ɑ → …` looked straight through it. Anglo-Frisian brightening, OE breaking
+# and the diphthong shift all fired on words whose ɑ came from the segmenter and silently skipped
+# the ones whose ɑ came from *o, which print identically. Un-round the vowel completely and the
+# two are the same segment again.
+[non_high_back_merger]
+time = -1000
+name = "Merging of non-high back vowels"
+description = "Merging of non-high back vowels"
+definition = "([+syll, aperture: !high, !fr, advancement: atr] |[+syll, aperture: !high, !fr, advancement: rtr]) → [aperture: low, fr:none, +bk, advancement: rtr, rnd: none, labial: none]"
+
+[final_m_to_n]
+time = 0
+name = "Word-final */m/ > */n/"
+description = "Word-final */m/ > */n/"
+definition = "m → n / _#"
+
+# NOT before /s/, though *ħemsus > *ansuz makes it tempting: *ħomsos is the attested *amsaz
+# 'shoulder', which KEEPS its /ms/. One and the same cluster cannot both assimilate and not, so
+# the /n/ of *ansuz is not a sound change operating on /ms/ — it belongs to its preform, and that
+# is a question for PREFORM_FIXES. Adding /s/ here buys *ansuz and loses *amsaz, dead even, and
+# leaves a rule the corpus contradicts. The stops only.
+[m_to_n_before_t_d]
+time = 0
+name = "*/m/ > */n/ before */t/, */d/, */θ̠/, */ð̠/"
+description = "*/m/ > */n/ before */t/, */d/, */θ̠/, */ð̠/"
+definition = "m → n / _ (t | d | θ̠ | ð̠)"
+
+[final_n_loss]
+time = 0
+name = "Final /n/ loss"
+description = "Word-final */n/ is lost after an unstressed NON-HIGH vowel, nasalising it: *-am > *-ą, *-ōn > *-ǭ. After a high vowel the /n/ stands: the numerals *tehun, *newun, *sebun all keep it, and without the aperture condition they come out **tehũ."
+definition = "[+syll, stress: none, aperture: !high] n → [+nas] ∅ / _#"
+
+[lowering_of_nasal_long_e]
+time = 0
+name = "Lowering of nasal */ẽː/ to */ɑ̃ː/"
+description = "Lowering of nasal */ẽː/ to */ɑ̃ː/"
+definition = "[+syll, aperture: !high, +fr, length: long, nasal] → [aperture: low, fr: none, +bk, advancement: rtr, rnd: none, labial: none]"
+
+[schwa_elimination]
+time = 0
+name = "Elimination of */ə/"
+description = "Unstressed */ə/ is lost between consonants; */ə/ > */ɑ/ elsewhere"
+definition = [
+    "[+syll, aperture: none, stress: none] → ∅ / _ [-syll]",
+    "[+syll, aperture: none] → ɑ"
+]
+
+[assimilation_of_sonorants]
+time = 0
+name = "Assimilation of sonorants"
+description = "Assimilation of sonorants"
+definition = [
+    "1=n w → @1 @1",     # nw > nn
+    "1=l n → @1 @1",     # ln > ll
+    "z → @1 / _ 1=m",    # zm > mm
+    # …and *þl > *ll, which is what separates the attested *stallaz from its doublet *staþlaz
+    # (OE steall beside staþol). The *-dʰlo- suffix of Kroonen's *sth₂-dʰlo- lands here.
+    "ð̠ → @1 / _ 1=l",   # ðl > ll
+]
+
+# The velar fricative drops out of a *-ɣm- cluster after a sonorant: *drowgʱmos > *drɑwmɑz
+# 'dream', *rewgʱmn̥ > *rɑwmɑz 'ream'. Grimm has already turned *gʱ into ɣ by here, so the rule
+# is stated on the fricative, not on the aspirate. The [+son] context is what keeps it out of a
+# word-initial cluster, where the ɣ survives and a vowel is epenthesised instead
+# (*gʲʱmoː > *ɣumɔːː 'gome', not **mɔː).
+[velar_fricative_loss_before_m]
+time = 0
+name = "*/ɣ/ is lost before */m/"
+description = "*-ɣm- > *-m- after a sonorant — *drowgʱmos > *drɑwmɑz 'dream'"
+definition = "ɣ → ∅ / [+son] _ m"
+
+# Ringe §5.3.4 (iv), "Loss of word-final *t": PGmc *tehun has lost the final *-d of PIE *déḱm̥d,
+# and he dates the loss of word-final CORONAL STOPS after the loss of word-final *-n.
+#
+# It has to reach the FRICATIVES too, not just the letter *t. By the time this fires, Grimm has
+# already turned PIE *t into *þ and Verner may have voiced that to *ð — so *mélit arrives here as
+# *milið̠, and a rule looking for a *t walks straight past it. (The *t of *tehun is a different
+# animal: it comes from PIE *d, which Grimm hardens INTO a stop, so that one the rule always saw.)
+# Both are the same coronal, and both are lost: PGmc *mili has no final consonant at all.
+[final_t_loss]
+time = 0
+name = "Final coronal obstruent loss"
+description = "Ringe §5.3.4(iv) — *déḱm̥d > *tehun, *mélit > *mili"
+definition = [
+    "[+syll, stress:none][-syll]*t → [+syll, stress:none][-syll]*∅ / _# ",
+    "[+syll, stress:none][-syll]*θ̠ → [+syll, stress:none][-syll]*∅ / _# ",
+    "[+syll, stress:none][-syll]*ð̠ → [+syll, stress:none][-syll]*∅ / _# ",
+]
+
+[gw_to_w]
+time = 0
+name = "*/gʷ/ > */w/"
+description = "*/gʷ/ > */w/"
+definition = "gʷ → w"
+
+# The same exit, for the FRICATIVE labiovelar that Grimm's first clause makes out of *gʷʱ. It had
+# none, so *snojgʷʱos kept it to the end and came out **snɑjɣʷɑz for the attested *snɑjwɑz.
+# PIE *gʷʱ splits by position in Proto-Germanic: after a nasal it is the stop (*luŋgrɑz), and
+# everywhere else it is *w. The nasal clause simply delabialises it and lets the voiced-fricative
+# hardening below turn the plain *ɣ into the *g the attested form shows.
+[gwh_to_w]
+time = 0
+name = "*/ɣʷ/ > */w/, but */g/ after a nasal"
+description = "*snojgʷʱos > *snɑjwɑz 'snow'; *lengʷʱros > *luŋgrɑz 'lungs'"
+definition = [
+    "ɣʷ → ɣ / [+cons, nasal: 1] _",
+    "ɣʷ → w",
+]
+
+[long_a_raising]
+time = 0
+name = "Long /ɑ/ raising"
+description = "*/ɑː/ > */ɔː/ "
+definition = "[aperture: low, fr:none, +bk, advancement: rtr, !length: short] → [aperture: mid, rnd]"
+
+[early_i_mutation]
+time = 0
+name = "Early i-mutation"
+description = "*/e/ > */i/ before */i j/ in the same or next syllable; also eliminates */ei/ > */iː/"
+# Short *e only. Long *ē₁ does not raise here — *dʰeh₁tís gives *dēdiz, not **dīdiz — so the
+# target carries [length: short]; without it the laryngeal-lengthened *ē of deed/stead raised.
+definition = [
+    "[+syll, -cons, +front, aperture: mid, length: short] → [aperture: high] / _ [-syll]* [aperture: high, +front]",   # e > i / _ (C) {i,j}
+    "[+syll, aperture: high, +front] [+syll, aperture: high, +front] → [length: long] ∅",            # ii > iː
+    # …and *ij > *iː, which is what actually delivers the */ei/ > */iː/ the description promises.
+    # Clause 1 raises the *e of *dejwós to *i, but the second half of the old diphthong is the
+    # GLIDE *j, and the clause above only contracts two SYLLABIC vowels — so it never fired and
+    # *dejwós came out **tijwɑz for the attested *tiːwɑz (likewise *hliːðɔː, *hriːðrɔ̃ː).
+    # The `_ ([-syll]|#)` context is what saves *frijaz 'free': there the *j is PREVOCALIC, the
+    # onset of the next syllable rather than the tail of a diphthong, and it must survive.
+    "[+syll, aperture: high, +front] [aperture: high, +front, -syll] → [length: long] ∅ / _ ([-syll]|#)",
+]
+
+[e_to_i_before_syllable_final_nasal]
+time = 0
+application = "right_to_left"
+name = "/e/ to /i/ before a syllable-final nasal"
+description = "/e/ to /i/ before a syllable-final nasal"
+definition = "e → i / _ [+nas]$"
+
+[intervocalic_j_loss]
+time = 0
+name = "Loss of intervocalic *j"
+description = "*/j/ is lost between vowels except after *i* (and, automatically, after *w*). The two vowels then contract — same quality to a long vowel, otherwise a diphthong."
+definition = [
+    "j → ∅ / [+syll] _ [+syll] // [+syll, aperture: high, +front] _",   # j-loss (kept after i; w handled by the context)
+    "[+syll, aperture: low] [+syll, aperture: low] → [length: long] ∅",          # aa > aː  (same quality, e.g. aja > stānti)
+    "[+syll, aperture: high, stress: none] → [-syll] / [+syll] _",       # Vi, Vu > diphthong  (offglide)
+]
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Common Germanic (Proto-Germanic) — final stage
+# This project derives Proto-Indo-European to Proto-Germanic and stops here; the
+# aː → oː change below is the last Proto-Germanic change (Index Diachronica §17.7).
+# ═══════════════════════════════════════════════════════════════════════════
+
+# §17.7  aː → oː: the long low vowel (older *ā/*ǣ) rounds and backs to */oː/ — the
+# Proto-Germanic change that gives *mōdēr 'mother' its Germanic /oː/.
+[long_a_to_long_o]
+time = 160
+name = "*/aː/ > */oː/"
+description = "*maːder > *moːder 'mother'"
+definition = "[+syll, aperture: low, length: long] → [back, rounded, labial, advancement: atr, front: none, aperture: mid]"
+
+# ANALOGY, not a sound law. Verner's Law voices the nominative's *-s only after an unaccented
+# vowel, so PIE's mobile accent splits the thematic nouns in two: barytone *wĺ̥kʷos gives
+# *-az (the engine derives it correctly), but oxytone *tr̥nós gives *-as. Germanic has *-az
+# throughout — the ending was levelled across the paradigm, erasing the accentual split. The
+# levelling is stated here because no sound law produces it.
+[lvl_nominative_z]
+time = 150
+name = "The nominative *-az is levelled across the thematic nouns"
+description = "ANALOGICAL — Verner leaves oxytones with *-as (*þurnas); Germanic levels the *-az of the barytone type (*wulfaz) onto them"
+definition = "s → z / [+syll] _ #"
+
+# A nasal is lost before */x/, nasalising the vowel and lengthening it: *wonkos > *wɑ̃ːxɑz.
+#
+# This is PROTO-GERMANIC and belongs here, before the 200 checkpoint — it is not the West
+# Germanic nasal-spirant law (t=300) further down, which does the same thing before *f, *θ and
+# *s. The two were one rule, targeting any voiceless fricative, and the gold says they are not:
+# the only 200 form with a nasalised vowel before */x/ is *wɑ̃ːxɑz, and NOT ONE has a nasalised
+# vowel before *f, *θ or *s — Proto-Germanic still says *ɸimɸ 'five', and only later West
+# Germanic makes it *fīf. Same change, two different centuries; *x simply goes first.
+# Dated 180: after `long_a_to_long_o` (160), not before it. The long *ɑ̃ː this rule makes is a LOW
+# vowel, and run any earlier that rule rounds it to *ɔ̃ː — **wɔ̃ːxɑz for the attested *wɑ̃ːxɑz. The
+# rounding cannot simply skip the nasals, because a nasal *ɑ̃ː rounding to *ɔ̃ː is exactly how the
+# *-ǭ ending is derived. So the vowel must be lengthened after the rounding has already gone by.
+[pgmc_nasal_loss_before_x]
+time = 180
+name = "A nasal is lost before */x/, nasalising and lengthening the vowel"
+description = "*wonkos > *wɑ̃ːxɑz 'wough' — the Proto-Germanic half of the nasal-spirant law"
+definition = [
+    "[+syll] → [length: long, +nas] / _ [+cons, nasal: 1] x",
+    "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ x",
+]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Proto-Germanic → Old English. Minkova, A Historical Phonology of English.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# The Ingvaeonic nasal-spirant law: a nasal is lost before a voiceless fricative and the
+# vowel lengthens to compensate — Gothic munþs vs OE mūþ 'mouth', Gothic uns vs OE ūs
+# (Minkova §3.4, n. 8). Two rules, as in latin_to_french's ns-loss: lengthen, then delete,
+# so the deletion can require the length it is compensating for.
+[wg_nasal_spirant_lengthening]
+time = 300
+name = "Vowel lengthens before a nasal + voiceless fricative"
+description = "Minkova §3.4 n.8 — the first half of the Ingvaeonic nasal-spirant law"
+definition = "[+syll] → [length: long] / _ [+cons, nasal: 1] [-son, +cont, -voice]"
+
+[wg_nasal_spirant_loss]
+time = 310
+name = "Nasal lost before a voiceless fricative"
+description = "*gans > gōs, *tanþs > tōþ, *fimf > fīf — the compensating length is already in place"
+definition = "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ [-son, +cont, -voice]"
+
+# West Germanic loses final *-z (PGmc *wulfaz > *wulfa), and the final short vowel then
+# apocopates (*wulfa > OE wulf). The apocope needs an earlier vowel in the word, or it would
+# eat the vowel of a monosyllable (*kū 'cow').
+# The vowel the nasal-spirant law lengthened is also rounded when it is /a/: *gans > gōs,
+# *tanþs > tōþ (Minkova §3.4). Only that vowel — the context is the fricative it lengthened
+# before, which is still standing — so other long /aː/ is untouched.
+[wg_nasal_spirant_rounding]
+time = 320
+name = "The lengthened a rounds to oː before the fricative"
+description = "*gans > gaːs > gōs; *fimf > fīf and *uns > ūs keep their vowel, being high already"
+definition = "[+syll, length: long, aperture: low, rounded: none] → oː / _ [-son, +cont, -voice]"
+
+# West Germanic a-umlaut: a short high vowel lowers before a non-high vowel in the next
+# syllable — PrG *gulþam > OE gold, *kurną > corn (Minkova §3.4 n.9). It must run before the
+# apocope below, which destroys the conditioning vowel.
+[wg_a_umlaut]
+time = 350
+name = "a-umlaut: short u, i lower before a non-high vowel"
+description = "Minkova §3.4 n.9. Held before a lateral — *fullaz > full, *wulfaz > wulf keep their u, while *kurną > corn and *þurnaz > þorn lower across r. (OE gold < *gulþam is a known counterexample to the l-blocking; the change is irregular.)"
+# The *u half ONLY. The lowering of *i is `pgmc_i_lowering` (t=50) and has already run; repeating
+# it here, with no restriction on the intervening consonants, lowered the /i/ of words Old English
+# keeps it in — OE fisc, cwic, niġon against our **fesc, **cwec, **neġon.
+#
+# And the *i-lowering is doubtful even in principle. Kroonen reconstructs BOTH *fiska- (< *pisk-o-,
+# cf. Lat. piscis) and *nista- 'nest' (< *ni-zd-o-) with an /i/ — his 'nest' is *nista-, not the
+# *nestą our Wiktionary gold gives — so there may be no regular a-umlaut of *i in Germanic at all.
+# Ringe's bibliography cites Lloyd, "Is there an a-umlaut of i in Germanic?", on exactly this.
+# The *u half is not in doubt (*kurną > corn, *þurnaz > þorn), so that is what this rule keeps.
+definition = "[+syll, aperture: high, length: short, +back] → [aperture: mid] / _ [-syll, lateral: none]* [+syll, aperture: !high]"
+
+[wg_final_z_loss]
+time = 400
+name = "Final -z is lost in West Germanic"
+description = "PGmc *wulfaz > *wulfa"
+definition = "z → ∅ / _ #"
+
+# Rhotacism: the *z left over becomes /r/ (Minkova §3.4.1 — "original /z/, an allophone of /s/
+# between vowels, became /r/ … the OE form lār 'lore' corresponds to PrG *laiz- 'to teach'").
+# Old English has no /z/ phoneme at all, so every surviving one had to go somewhere, and *bewzą
+# was still coming out **beowz against an attested *beoːr.
+#
+# Ordered AFTER the final *-z loss above, and that is the whole difficulty: run it first and the
+# nominative *-az of *anþeraz rhotacises to **-ar instead of dropping, wrecking every a-stem in
+# the lexicon. The ending must be gone before the rule is allowed to look.
+[wg_rhotacism]
+time = 405
+name = "Rhotacism: *z > *r"
+description = "PrG *laiz- > OE lār; *bewzą > *beoːr 'beer'; *mazgą > *mæɑrx 'marrow'"
+definition = "z → r"
+
+# Final *-a and *-i are lost outright (*wulfa > wulf, *wara > wær). Final *-u is not: it
+# survives after a light syllable (*sunu > sunu, *medu > medu) and goes only after a heavy one
+# — Old English high-vowel deletion. A heavy syllable is one with a long vowel or a closing
+# consonant, hence the two contexts.
+# The Proto-Germanic feminine ō-stem ending *-ō becomes *-u, and then the light/heavy split the
+# language already has takes over: `oe_high_vowel_deletion` (460) keeps it after a light syllable
+# and deletes it after a heavy one. The gold shows exactly that — *skɑrɔː > ʃɑru and *snuzɔː >
+# snoru (light), against *wullɔː > wull, *mizdɔː > meːd, *θewð̠ɔː > θeoːd (heavy). Nothing else
+# was carrying the ending across, so it survived to Old English as a full *-ɔː.
+[oe_final_long_o_to_u]
+time = 440
+name = "The ō-stem ending *-ō becomes *-u"
+description = "*skɑrɔː > ʃɑru, *wullɔː > wull — the high-vowel deletion then splits them"
+definition = "[+syll, aperture: mid, +back, +rounded, length: long, nasal: none] → u / [+syll] []* _ #"
+
+[wg_final_apocope]
+time = 450
+name = "Final short a, i apocopate in a polysyllable"
+description = "*wulfa > wulf, *wara > wær. Rounded -u is spared here and handled next"
+# `aperture: !high` — the final short HIGH vowels (*i, *u) are not this rule's business. Ringe &
+# Taylor §6.8.1: "short *i and *u were lost word-finally after a HEAVY syllable", which is a
+# weight-sensitive change and belongs to `oe_high_vowel_deletion` below. Deleting them here, in any
+# polysyllable, took the *-i of *stædi with it — where Ringe has *stædi > OE stedi > stede.
+definition = "[+syll, length: short, rounded: none, aperture: !high] → ∅ / [+syll] []* _ #"
+
+# Ringe & Taylor, *The Development of Old English* §3.1.3: "In PWGmc labiovelars were resolved
+# into sequences of velar + *w" — Proto-Germanic's single *kʷ and *xʷ become the CLUSTERS the
+# gold's Old English column writes (*kʷikʷɑz > cwic ˈkwik, *xʷɑlɑz > hwæl ˈxwæl). PGmc is
+# transcribed with the labiovelar and OE with the cluster, so this is a change to derive, not a
+# convention to normalise.
+#
+# The word-final ones DELABIALISE instead, and Ringe is explicit that this comes FIRST:
+# "originally word-final labiovelars simply lost their labialization before the resolution of
+# labiovelars into velar + *w sequences". Hence two rules, the loss ordered before the split —
+# which is what gives *kʷikʷɑz its two different outcomes, `kw…k`, in one word.
+#
+# Dated after the apocope (450), which is what makes the second *kʷ of *kʷikʷɑz word-final in the
+# first place; and after OE palatalisation (410), or the *k freed by the resolution would stand
+# before a front vowel and affricate — **chwic for cwic.
+[oe_final_labiovelar_delabialisation]
+time = 470
+name = "A word-final labiovelar loses its labialisation"
+description = "Ringe & Taylor §3.1.3 — *kʷikʷ > *kʷik, before the resolution below"
+definition = [
+    "kʷ → k / _ #",
+    "xʷ → x / _ #",
+]
+
+[oe_labiovelar_resolution]
+time = 480
+name = "Labiovelars resolve into velar + w"
+description = "Ringe & Taylor §3.1.3 — PWGmc *kʷ, *xʷ > *kw, *xw (cwic, hwæl)"
+definition = [
+    "kʷ → k w",
+    "xʷ → x w",
+]
+
+# The n-stem nominative *-ô becomes Old English *-a: *uxsɔːː > oxa, *neɸɔːː > nefa, *ɣumɔːː >
+# guma, and every ordinal (*feð̠urθ̠ɔːː > feorþa). It is the OVERLONG that identifies it — the
+# ō-stem *-ō is merely long and becomes *-u instead (t=440 above) — so this rule has to run while
+# the two are still distinguishable, and `oe_overlong_shortening` has been moved from 250 to 465
+# to keep them apart until they have each been dealt with. Merged early, the n-stems were taking
+# the ō-stem's *-u and coming out **nefu, **guma-less oks.
+#
+# And it must run AFTER the apocope (450), which deletes a final short unrounded vowel in a
+# polysyllable and would take this *-a straight back off again. That ordering is why the ending
+# arrives as an overlong and leaves as a short *-a rather than being made short any earlier.
+[oe_final_overlong_to_a]
+time = 455
+name = "The n-stem ending *-ô becomes *-a"
+description = "*uxsɔːː > oxa, *neɸɔːː > nefa, *feð̠urθ̠ɔːː > feorþa"
+definition = "[+syll, length: overlong] → ɑ / [+syll] []* _ #"
+
+# The weak (ōn-stem) feminine *-ǭ becomes Old English *-e: *xɔːrɔ̃ː > hōre, *wið̠uwɔ̃ː > widuwe,
+# *kʷenɔ̃ː > cwene. The NASAL is what tells it apart from the strong ō-stem *-ō, which is oral
+# and becomes *-u (t=440) — the same two declensions that the Proto-Germanic column keeps apart
+# with its tilde. After the apocope (450), like the *-a above, or it would be deleted again.
+[oe_final_nasal_o_to_e]
+time = 456
+name = "The weak ōn-stem ending *-ǭ becomes *-e"
+description = "*xɔːrɔ̃ː > hōre, *wið̠uwɔ̃ː > widuwe, *kʷenɔ̃ː > cwene"
+definition = "[+syll, nasal, length: long] → e / [+syll] []* _ #"
+
+[oe_high_vowel_deletion]
+time = 460
+name = "Final -u is deleted after a heavy syllable, kept after a light one"
+description = "*wulfu-type > wulf, but *sunu, *medu keep it — the OE light/heavy split"
+# Ringe & Taylor §6.8.1: "short *i AND *u were lost word-finally after a heavy syllable." It was
+# written for *u alone (`rounded: 1`), so every final *-i escaped it and fell to the general
+# apocope instead, which is weight-blind — *stædi lost its ending outright where OE has stede.
+definition = [
+    "[+syll, length: short, aperture: high] → ∅ / [+syll, length: long] [-syll]* _ #",
+    "[+syll, length: short, aperture: high] → ∅ / [+syll] [-syll] [-syll]+ _ #",
+]
+
+# Anglo-Frisian brightening: Germanic /a/ fronts to /æ/, but not before a nasal, where it
+# stays back (Minkova p. 7749: "the fronting of /a/ was prevented by a following nasal").
+# Stated on FEATURES, for the same reason as the diphthong shift above: written `ɑ → æ` the rule
+# matched the LETTER ɑ, and most of the /ɑ/ in the lexicon is not the letter — it is a feature
+# bundle `non_high_back_merger` made out of PIE *o. So the brightening fired on some words and
+# passed silently over *bɑraz, *xɑslaz, *kɑldaz, *ɣɑrdaz, which look identical on the page. It
+# was the largest single error class left at Old English, and it was never a phonological
+# question at all: the rule was simply looking for the wrong kind of thing.
+#
+# SHORT only. The long ɑː that `oe_diphthong_shift` has just made out of *ai must not be fronted
+# — that is Minkova's whole point in ordering the two (stān, not **stæn).
+# The thematic *-a (what is left of *-az once `wg_final_z_loss` has taken the *z) goes EARLY —
+# before palatalisation — while the *-i of an i-stem must survive to trigger i-mutation at 420 and
+# only apocopates later (`wg_final_apocope`, 450). One rule cannot do both, and running them
+# together at 450 kept *ainaga's *g company until long after palatalisation had looked at it: the
+# *g was intervocalic before a BACK vowel, which correctly blocks, so ǣniġ came out **ǣnag.
+# Lose the *-a first and the *g is word-final after a front vowel, which is exactly Ringe &
+# Taylor's environment (4) — the clause added to `oe_palatalisation` below.
+[wg_final_a_apocope]
+time = 402
+name = "The thematic final *-a apocopates"
+description = "*ɑjnɑɣɑ > *ɑjnɑɣ — early, so the *ɣ is word-final when palatalisation looks"
+definition = "[+syll, length: short, +back, rounded: none] → ∅ / [+syll] []* _ #"
+
+# A final short *-i that survives the weight test above lowers to *-e — Ringe & Taylor's own
+# chain is *stadiz > *stædi > OE stedi > *stede*. This is what puts the final vowel on mere, here,
+# stede and the rest of the light-stemmed i-stems.
+[oe_final_i_to_e]
+time = 470
+name = "A surviving final *-i lowers to *-e"
+description = "R&T §6.6.2 — *stædi > stedi > stede; *mari > mere"
+definition = "[+syll, length: short, aperture: high, +front] → e / [+syll] []* _ #"
+
+[oe_a_fronting]
+time = 406
+name = "Anglo-Frisian brightening: a > æ, except before a nasal"
+description = "Minkova §3.4 — blocked before a nasal (*and stays and, not *ænd)"
+definition = "[+syll, -cons, aperture: low, +back, length: short] → [+front, back: none, advancement: atr] / _ [nasal: none]"
+
+# West Germanic hardens the Proto-Germanic bilabial fricative to a labiodental: *fōts > fōt,
+# *fuhsaz > fox, *fullaz > full (Minkova §4.1 — OE has /f/, not /ɸ/).
+[wg_f_hardening]
+time = 250
+name = "ɸ becomes f"
+definition = "ɸ → f"
+
+
+# I-Mutation (Minkova §6.3): a back vowel fronts when the next syllable holds /i/ or /j/ —
+# *mahtiz > miht, *kinþiz > cynd, the change behind FOOT-FEET and FULL-FILL. It has to run
+# before the apocope above, which is what destroys the conditioning /i/.
+[oe_i_mutation]
+time = 420
+name = "I-Mutation: a back vowel fronts before i or j in the next syllable"
+description = "Minkova §6.3 — FOOT-FEET, FULL-FILL, SELL-SALE"
+# The /j/ must be in the NEXT syllable, so the span before it cannot be empty — written
+# `[-syll]*` the wildcard matched nothing at all, and the OFFGLIDE of the vowel's own diphthong
+# triggered the mutation. *hailaz has no /i/ anywhere in its ending and must not front: it is OE
+# hāl, not **hæl. Written `[-syll][-syll]*` a real consonant has to intervene, which is what
+# "next syllable" means, and *hagjō (OE hecg) still mutates across its /ɣ/ exactly as before.
+# Ringe & Taylor §6.6.2, "Raising of *æ": "In addition to the back vowels treated above, one
+# FRONT vowel was affected by i-umlaut: low front *æ was raised to e. There are fifty-odd examples
+# of raising by *i, *ī, or *j in the following syllable." Their own example is one of ours —
+# PGmc *stadiz > *stædi > OE stedi > stede — and it is what gives mere, heċġ and here their /e/.
+# The two clauses above only front a BACK vowel; æ is already front, so nothing reached it.
+definition = [
+    "[+syll, +back] → [+front, back: none] / _ [-syll]* [+syll, aperture: high, +front]",
+    "[+syll, +back] → [+front, back: none] / _ [-syll][-syll]* j",
+    "[+syll, aperture: low, +front] → [aperture: mid] / _ [-syll]* [+syll, aperture: high, +front]",
+    "[+syll, aperture: low, +front] → [aperture: mid] / _ [-syll][-syll]* j",
+]
+
+# West Germanic hardens the voiced velar fricative to a stop: *trugaz > trog, *jungaz > jung.
+[wg_g_hardening]
+time = 405
+name = "ɣ becomes g"
+definition = "ɣ → g"
+
+# The velar fricative becomes a stop before /s/: PGmc *fuhsaz > OE fox /foks/.
+[oe_x_before_s]
+time = 440
+name = "x becomes k before s"
+definition = "x → k / _ s"
+
+# Artikulatorischer Sprung — assimilation at a distance. A labiovelar *kʷ becomes *p when the
+# word holds another PLAIN labial, on either side of it:
+#   *pénkʷe   > *pémpe  > *fimf   (five)   — trigger *p, before
+#   *wúlkʷos  > *wúlpos > *wulfaz (wolf)   — trigger *w, before
+#   *kʷetwṓr            > *fedwōr (four)   — trigger *w, AFTER (see the note in `description`)
+# Without it these would be **finhw, **wulhwaz — the regular /xʷ/ Grimm's Law gives, which is
+# what the engine derived before this rule existed.
+#
+# The trigger must be a plain labial, not another labiovelar, or *kʷekʷlos (wheel, PGmc
+# *hwehwlaz) would be dragged in too. In this feature system w and kʷ share every place feature
+# (labial, lingual, back, rounded) and part only on sonorant/continuant, so the trigger is
+# written as "labial with no lingual node" (p, b, m, f) or "labial and sonorant" (w, m) — both
+# of which exclude the labiovelar obstruents.
+#
+# Pre-Germanic: it feeds Grimm's Law, which then takes the new *p to *f.
+[pgmc_labial_jump]
+time = -1100
+name = "Artikulatorischer Sprung: kʷ > p near another labial"
+description = "Assimilation at a distance — five, wolf, four; *kʷekʷlos (wheel) has no plain labial and keeps its labiovelar. Treated as ONE bidirectional rule: Wiktionary instead calls four analogical (the p- of *pénkʷe pulling on the neighbouring numeral *kʷetwṓr, expected **hwedwōr), but a single phonological rule covering all three — with wheel as the control that correctly does not fire — is the stronger account, and the direction of the trigger is the only thing that separates them."
+definition = [
+    "kʷ → p / [+labial, lingual: none, -syll] []* _",
+    "kʷ → p / [+labial, +sonorant, -syll] []* _",
+    # The FOLLOWING trigger excludes nasals. Four's trigger is the glide *w; a labial nasal in an
+    # ending is not a trigger — with the neuter *kʷekʷlóm the /m/ of *-om would otherwise fire the
+    # rule and give **feβlą for wheel, which is the control this rule is supposed to leave alone.
+    "kʷ → p / _ []* [+labial, lingual: none, -syll, nasal: none]",
+    "kʷ → p / _ []* [+labial, +sonorant, -syll, nasal: none]",
+]
+
+# A nasal takes the place of a following labial: *pémpe (the p-form above) has m, not n.
+[pgmc_nasal_place_assimilation]
+time = -1090
+name = "n assimilates to a following labial"
+description = "*penpe > *pempe > *fimf"
+definition = "n → m / _ [+labial, -syll, lingual: none]"
+
+
+# West Germanic hardens the voiced fricatives that Verner's Law and Grimm's Law left behind:
+# *ð > d (*fader, *ealdaz > eald), *β > f (*ubilaz > yfel). The velar ɣ > g is already above.
+[wg_dh_hardening]
+time = 260
+name = "ð becomes d"
+description = "Minkova §4.1 — the Verner/Grimm voiced fricative hardens in West Germanic"
+definition = "ð̠ → d"
+
+[wg_b_hardening]
+time = 260
+name = "β becomes f"
+description = "*ubilaz > OE yfel"
+definition = "β → f"
+
+# The three Proto-Germanic diphthongs reach Old English, and NOTHING was carrying them there:
+# *ai, *au and *eu were surviving to the 900 checkpoint untouched, so *hailaz came out **hajl for
+# the attested hāl, *dauþuz **dɑwθ for dēaþ, *bewzą **beowr for bēor. This was the single largest
+# hole in the cascade — the 200→900 rules were breaking 110 words that were already exact at
+# Proto-Germanic, and these three account for a good share of them.
+#
+#   *ai > ā   (Gmc *stain-, *haim-, *aigan- > OE stān, hām, āgan)
+#   *au > ēa
+#   *eu > ēo
+#
+# The DATE is Minkova's, and it is the whole point of the rule (§6.5.2): the monophthongisation
+# of *ai is "held to have occurred AFTER the fronting of /aː/ to /æː/" — so the long vowel it
+# makes must come out the far side of the fronting still BACK. That is why Old English has a low
+# back ā at all, and why stān is not **stæn.
+#
+# Which puts it at 480, BEFORE `oe_a_fronting` (500) rather than after — because that rule is the
+# short-a brightening (a > æ), not the long-ā fronting Minkova is ordering against, and letters
+# match by identity here, so it cannot touch the long ɑː this rule produces. Dated 520 instead,
+# the rule simply never fires: the brightening has already turned the *ɑ of *ɑj into *æ and there
+# is no *ɑj left to match. Same relative chronology, read off the right rule.
+# It must also stay before `oe_breaking` (550), which would otherwise take the *eu of *bewzą for
+# a plain /e/ and break it a second time.
+[oe_diphthong_shift]
+time = 404
+name = "The Proto-Germanic diphthongs: *ai > ā, *au > ēa, *eu > ēo"
+description = "Minkova §6.5.2 — Gmc *stain- > OE stān; *dauþuz > dēaþ; *bewzą > bēor"
+# Stated on FEATURES, not on the letter ɑ. Letter patterns match by identity here, and the /ɑ/
+# these diphthongs carry is not always the letter — *ɑjnɑɣɑz has one the segmenter read straight
+# from the input, while *ojtos got its own from `non_high_back_merger`, a feature merge. Written
+# `ɑ j` the rule fired on *hailaz and silently passed over *aiþaz, which looks identical on the
+# page. The low back vowel is what the change is about, so that is what the rule asks for.
+definition = [
+    "[+syll, -cons, aperture: low, +back] j → [length: long] ∅",
+    "[+syll, -cons, aperture: low, +back] w → [+front, back: none, advancement: atr] ɑː",
+    "[+syll, -cons, aperture: mid, +front] w → [+syll] oː",
+]
+
+# Old English breaking: a front vowel diphthongises before /r/ or /l/ + consonant, and before
+# /x/ — *arm > earm, *ald > eald, *hert > heorte, *dauþ > dēaþ (Minkova §6, the OE diphthongs).
+[oe_breaking]
+time = 408
+name = "Breaking: front vowels diphthongise before r/l + C and before x"
+description = "æ > æɑ, e > eo — the source of OE's eald, earm, heorte"
+# On features again — the æ that `oe_a_fronting` now makes is a merged bundle, not the letter,
+# so a letter-matching `æ → æɑ` looked straight past *kæld and *ɣærd. Third rule with the same
+# defect; they were all written when most of these vowels still arrived as letters.
+# The vowel is matched on FEATURES but the result is written as LETTERS: a one-to-two expansion
+# has to take the replacement path, because a bundle merge across unequal counts is ambiguous and
+# the rule simply never fires. So the left side asks for a front vowel (however it was made) and
+# the right side spells the diphthong out.
+definition = [
+    "[+syll, -cons, aperture: low, +front] → æ ɑ / _ [+son, -syll, +cons, nasal: none] [+cons]",
+    "[+syll, -cons, aperture: mid, +front] → e o / _ [+son, -syll, +cons, nasal: none] [+cons]",
+    "[+syll, -cons, aperture: low, +front] → æ ɑ / _ x",
+    "[+syll, -cons, aperture: mid, +front] → e o / _ x",
+]
+
+# The Proto-Germanic long mid vowels raise on the way to Old English: ō [ɔː] > [oː] (*dōmaz >
+# dōm, *flōduz > flōd) and ē [ɛː] > [eː]. The gold keeps the two apart — PGmc is transcribed
+# with ɔː/ɛː and OE with oː/eː — so this is a change to derive, not a convention to normalise.
+[wg_long_mid_raising]
+time = 250
+name = "Long ɔː, ɛː raise to oː, eː"
+description = "PGmc ō [ɔː] > OE ō [oː]; ē [ɛː] > [eː]"
+definition = "[+syll, length: long, aperture: mid, advancement: !atr] → [advancement: atr]"
+
+# Proto-Germanic's long mid vowels are open: *ō is [ɔː] and *ē is [ɛː] (which is why the gold
+# transcribes them so). The cascade above merges *ā into a close *oː, so lower both here — and
+# `wg_long_mid_raising` then lifts them again on the way to Old English, where ō really is
+# [oː]. The two rules together are the ō/ē history, and each checkpoint sees its own value.
+[pgmc_long_mid_lowering]
+time = 170
+name = "The long mid vowels are open in Proto-Germanic: oː > ɔː, eː > ɛː"
+description = "PGmc *ō = [ɔː], *ē = [ɛː] — *brōþēr is [brɔːθɛːr]"
+definition = "[+syll, length: long, aperture: mid, advancement: atr] → [advancement: rtr]"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Old English → Middle English → Modern. Minkova chs. 5, 7–8.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# OE ā rounds to ME open ɔː — the change behind stān > stone, bāt > boat (§7.3).
+[me_a_rounding]
+time = 1100
+name = "OE aː rounds to ɔː"
+description = "Minkova §7.3 — hāl > hool, stān > stoon"
+definition = "[+syll, length: long, aperture: low] → ɔː"
+
+# The OE diphthongs smooth out in early ME (§7.4): eo, æɑ monophthongise.
+[me_diphthong_smoothing]
+time = 1150
+name = "The OE diphthongs smooth"
+description = "Minkova §7.4 — heorte > herte, earm > arm"
+definition = ["e o → e ∅", "æ ɑ → a ∅"]
+
+# Unstressed vowels reduce to schwa (§7.6), the great levelling of the ME inflections.
+[me_unstressed_reduction]
+time = 1200
+name = "Unstressed vowels reduce to schwa"
+description = "Minkova §7.6 — sunu > sone, oþer > other"
+definition = "[+syll, stress: none, length: short] → ə"
+
+# The velar fricative is lost with compensatory lengthening: niht > night /naɪt/, miht >
+# might (§5.3 — the KNIGHT-NIGHT cluster simplifications).
+[me_x_loss]
+time = 1400
+name = "x is lost, lengthening the vowel before it"
+description = "Minkova §5.3 — niht > nīt, then the Vowel Shift takes it to /naɪt/"
+definition = ["[+syll] → [length: long] / _ x", "x → ∅ / [+syll, length: long] _"]
+
+# Final schwa is lost (§7.6) — the silent -e of ME spelling.
+# Dated BEFORE the 1400 checkpoint, not after it. Chaucer still scans a final -e, but the gold's
+# Middle English column is Wiktionary's editorial IPA, and not one of its 109 forms ends in a
+# schwa — it transcribes the loss as already complete. A rule at 1500 fires after the column is
+# scored, which left *hōrǭ deriving ˈhoːroː against an attested ˈhoːr.
+[me_final_e_loss]
+time = 1350
+name = "Final schwa is lost"
+definition = "ə → ∅ / _ #"
+
+# The Great Vowel Shift (Minkova ch. 8, which treats it as a series rather than one event):
+# the long vowels raise, and the two already-high ones diphthongise.
+[emode_vowel_shift]
+time = 1600
+name = "The Great Vowel Shift"
+description = "Minkova ch. 8 — iː > aɪ, uː > aʊ, eː > iː, oː > uː, ɛː > eː, ɔː > oː, aː > ɛː"
+definition = [
+    "iː → aj", "uː → aw",
+    "eː → iː", "oː → uː",
+    "ɛː → eː", "ɔː → oː",
+    "aː → ɛː",
+]
+
+# RP is non-rhotic: /r/ is lost in the coda, leaving a lengthened or centring vowel (§5.2).
+# The initial velar fricative weakens to /h/ — OE hām, heorte are [x-] in the engine's
+# transcription but [h-] from Middle English on (Minkova §5.1, the h-histories).
+[me_x_to_h]
+time = 1300
+name = "Initial x weakens to h"
+description = "Minkova §5.1 — hām, heorte, hāl"
+definition = "x → h / # _"
+
+# RP is non-rhotic: /r/ is lost in the CODA, and the vowel before it lengthens to compensate —
+# arm /ɑːm/, four /fɔː/ (Minkova §5.2). The generalisation is the syllable position, so it is
+# written with the syllable boundary `$` rather than by enumerating the environments it shows
+# up in (before a consonant, before a word edge) — the form re-syllabifies before every rule,
+# so `$` always reflects current structure. "In the coda" is `_ [-syll]* $`, not `_ $`: in arm
+# and corn the /r/ sits inside the coda with a consonant after it, so it is not adjacent to the
+# boundary. An onset /r/ (red, arrow) is untouched, the boundary falling before it, not after.
+[pde_r_loss]
+time = 1750
+name = "Coda r is lost with compensatory lengthening (non-rhotic RP)"
+description = "Minkova §5.2 — arm /ɑːm/, four /fɔː/"
+definition = [
+    "[+syll] → [length: long] / _ r [-syll]* $",
+    "r → ∅ / _ [-syll]* $",
+]
+
+# Germanic raises short *e to *i before a nasal in the CODA — *femf > *fimf, *wenda > *winda
+# (Minkova §3.4). Stated with `$`, like the existing e_to_i_before_syllable_final_nasal, which
+# says the same thing but fires at t=0 — too late for the *pempe > *fimf path above, where the
+# raising has to precede the Germanic consonant changes.
+[pgmc_e_raising_before_coda_nasal]
+time = -900
+name = "e raises to i before a syllable-final nasal"
+description = "Minkova §3.4 — *femf > *fimf. Coda position is `[-syll]* $`, not `$`: in *femf the nasal is in the coda but a fricative stands between it and the boundary."
+definition = "[+syll, aperture: mid, +front, length: short] → [aperture: high] / _ [+cons, nasal: 1] [-syll]* $"
+
+# TODO — West Germanic gemination (Minkova §3.4): a consonant doubles before *j (*hagjō >
+# heċġ, *satjaną > settan). Tried as a bare "C → CC / _ j" and it LOST an exact match: the
+# real change is blocked after a heavy syllable and never applies to /r/ (*niwjaz keeps its
+# single w), so it needs those conditions before it earns its place. It is also the honest fix
+# for chin (*kinnuz), whose geminate is what makes its nasal syllable-final.
+
+# Proto-Germanic's overlong (trimoric) vowels are gone by Old English — they fall in with the
+# ordinary long ones.
+#
+# Dated 250, not 120: the rule's own comment says "by Old English", but 120 is before the
+# PROTO-GERMANIC checkpoint at 200, so it was shortening the vowels a stage before anyone looked.
+# The overlong is not an artefact — it is what Proto-Germanic has, and the gold transcribes it:
+# *arɔːː, *aŋgɔːː, *ausɔːː, *uxsɔːː, *namɔːː all end in a trimoric vowel. We built it correctly in
+# `overlong_vowels` and then threw it away unread, missing the whole n-stem class by one mora.
+[oe_overlong_shortening]
+time = 465
+name = "Overlong vowels become long"
+definition = "[+syll, length: overlong] → [length: long]"
+
+# A voiced obstruent devoices before a voiceless one: *nezt > nest.
+[wg_obstruent_devoicing]
+time = 50
+name = "A voiced obstruent devoices before a voiceless one"
+definition = "[-son, +voice] → [-voice] / _ [-son, -voice]"
+
+# Homorganic-cluster lengthening (Minkova §6.4): a vowel lengthens before a sonorant + voiced
+# homorganic stop — ld, nd, mb, rd, rn — which is why CHILD has a long vowel and CHILDREN, with
+# a third consonant, does not. It feeds the a-rounding below (eald > ald > āld > ōld > old).
+[oe_homorganic_lengthening]
+time = 1050
+name = "Vowel lengthens before a homorganic sonorant + voiced stop"
+description = "Minkova §6.4 — CHILD-CHILDREN, HOUND; *ald > āld, *kind > kīnd"
+definition = "[+syll, length: short] → [length: long] / _ [+son, -syll, +cons] [-son, +voice, -cont] $"
+
+# Middle English short o is open [ɔ] — fox /fɔks/, corn /kɔrn/, yoke /jɔk/ (§7.3).
+[me_short_o_opening]
+time = 1150
+name = "Short o opens to ɔ"
+description = "Minkova §7.3 — the ME short-vowel qualities"
+definition = "[+syll, length: short, aperture: mid, +back, +rounded] → [advancement: rtr]"
+
+# Palatalisation and affrication of the velars (Minkova §4.3): before a front vowel /k/ becomes
+# /t͡ʃ/ and /g/ becomes /j/ — ċinn 'chin', ġeard 'yard' — and /sk/ becomes /ʃ/ everywhere
+# (fisċ 'fish', sċearu 'share'). It runs after Anglo-Frisian brightening, whose new /æ/ is one
+# of the front vowels that triggers it.
+#
+# It must run BEFORE i-mutation (t=420): the front vowels i-mutation creates do NOT trigger
+# palatalisation, which is exactly why OE cynd keeps its /k/ — its /y/ is younger than the
+# change. Ordered after i-mutation instead, the rule turns cynd into **t͡ʃynd and loses ground.
+[oe_palatalisation]
+time = 410
+name = "Velars palatalise before a front vowel; sk becomes ʃ"
+description = "Minkova §4.3 — ċinn > chin, heċġ > hedge, fisċ > fish. NOTE: this currently costs one exact match, but the fault is upstream, not here — cost and kind reach it with a front vowel they should not have (OE cost has back /o/; we derive ke.owst), so the rule correctly palatalises a vowel that an earlier rule got wrong. Kept because it is a real change and its damage localises the upstream bug."
+# Ringe & Taylor, *The Development of Old English* §4: palatalisation happens in FOUR
+# environments, not one. We had only the first — a velar before a front vowel — and were missing
+# the one that fires on a PRECEDING front vowel:
+#
+#   (4) "preconsonantal and word-final *g were palatalized by any preceding front vowel,
+#        but word-final *k was palatalized only by a preceding *i or *ī, and it cannot be
+#        demonstrated that preconsonantal *k was palatalized at all."
+#
+# That clause is what gives *ainag > ǣniġ (ˈæːnij), *wagnaz > wæġn (ˈwæjn) and *magraz > mæġer
+# (ˈmæjer) their /j/ — a *g with no vowel after it at all, which a "before a front vowel" rule can
+# never reach. Note *k gets no preconsonantal clause: Ringe says it cannot be shown to happen.
+#
+# (`wg_g_hardening` was moved to 405, ahead of this rule, for the same reason: at 430 the PGmc *ɣ
+# was still a fricative when palatalisation looked, so no *g existed for it to find.)
+definition = [
+    "s k → ʃ ∅",
+    "k → t͡ʃ / _ [+syll, +front]",
+    "g → j / _ [+syll, +front]",
+    "g → j / [+syll, +front] _ #",
+    "g → j / [+syll, +front] _ [-syll]",
+    "k → t͡ʃ / [+syll, aperture: high, +front] _ #",
+]
+
+# *ð hardens to *d after a nasal already in Proto-Germanic — *mundiz, not *munðiz. (The general
+# West Germanic ð > d is later, at t=260.)
+[pgmc_dh_hardening_after_nasal]
+time = 100
+name = "ð becomes d after a nasal"
+description = "*munðiz > *mundiz"
+definition = "ð̠ → d / [+cons, nasal: 1] _"
+
+# The boukólos rule: a labiovelar loses its labialisation beside a rounded vowel — *gʷōws >
+# *kōz 'cow', where a *kʷ would be left with nothing to round against.
+# TODO — the boukólos rule (a labiovelar delabialises next to a rounded vowel): *gʷōws > *kōz
+# 'cow'. Written as "next to ANY rounded vowel" it is too broad: it fixes cow but breaks quick
+# (*gʷih₃wós > *kʷikʷaz), whose second labiovelar stands next to the rounded *h₃ and wrongly
+# delabialises — a net loss of one exact match. The real rule is restricted to *u and *w, so it
+# needs that narrower environment (and it must be ordered BEFORE the back-vowel merger, which
+# unrounds *ō to *ɑː and leaves nothing to trigger on).
+
+# A nasal takes the place of a following velar: *jungaz, not *jungaz with a plain /n/.
+[pgmc_nasal_velar_assimilation]
+time = -880
+name = "n becomes ŋ before a velar"
+description = "*junkós > *jungaz — the ŋ of young, long, sing"
+definition = "n → ŋ / _ [+cons, -son, +back, front: none]"
+
+# ɣ hardens to g after a nasal already in Proto-Germanic — *jungaz, not *junɣaz. (The general
+# West Germanic ɣ > g is later, at t=430.)
+[pgmc_g_hardening_after_nasal]
+time = 100
+name = "ɣ becomes g after a nasal"
+description = "*junɣaz > *jungaz"
+definition = "ɣ → g / [+cons, nasal: 1] _"
+
+# The Proto-Germanic voiced fricatives *β ð ɣ (from Grimm's third series and from Verner) are
+# realised as the STOPS b, d, g word-initially and after a homorganic nasal — and, for *ð, after
+# /l/ too: *kaldaz, *mundiz. Elsewhere they stay fricatives, which is why the attested forms show
+# *beβruz, *lɑɣuz, *ɣarðaz. Note *ɣ does NOT harden initially (*ɣans 'goose'), so it is not listed.
+[pgmc_voiced_fricative_hardening]
+time = 100
+name = "β, ð harden to b, d word-initially and after a nasal or l"
+description = "*βeβruz > *beβruz; *kalðaz > *kaldaz; *ɣans keeps its initial fricative"
+definition = [
+    "β → b / # _",
+    "ð̠ → d / # _",
+    "β → b / [+cons, nasal: 1] _",
+    "ð̠ → d / [+cons, nasal: 1] _",
+    # *ɣ hardens after a nasal like the other two — *luŋgrɑz, *ɑŋgɔːː. It is only the WORD-INITIAL
+    # position it stays out of (*ɣans), which is what the note above is about; the nasal context
+    # was left off with it by oversight.
+    "ɣ → g / [+cons, nasal: 1] _",
+    # …and after *z. The stop allophone of *ð appears after *l, *n AND *z — the attested *mizdō
+    # 'reward' (Kroonen: *mizdō(n)- f. <= *misdʰ-eh₂-) has a plain *d, not a *ð, and nothing else
+    # in the cascade could have hardened it there.
+    "ð̠ → d / z _",
+    "ð̠ → d / l _",
+]
+
+# Proto-Germanic *a is the back vowel [ɑ] — including the *a that laryngeal colouring made from
+# *e (*h₂érmos > *armaz). Without this the root keeps a front [a] while the endings already have
+# [ɑ], and every h₂-coloured word misses by one phone.
+[pgmc_a_backing]
+time = 0
+name = "Low a backs to ɑ"
+description = "*armaz, *akraz, *anþeraz — PGmc *a is [ɑ]"
+definition = "a → ɑ"
+
+# Grimm's Law leaves the aspiration of the voiceless series on the new fricatives: *mógʰtis
+# surfaces as *mɑxʰtiz with a stray /ʰ/. The Germanic obstruents are plain, so neutralise it.
+[pgmc_deaspiration]
+time = 10
+name = "The obstruents lose their aspiration"
+description = "*mɑxʰtiz > *mɑxtiz"
+definition = "[-son, glottal_aperture: spread] → [glottal_aperture: neutral]"
+
+# Two identical short vowels left in hiatus by laryngeal loss collapse into one — *h₂yuHn̥ḱós
+# loses its laryngeal between the root /u/ and the /u/ epenthesised into *n̥, and the *uu that
+# results is a single /u/ in the attested *jungaz. (The long+short case is `vowel_contraction`.)
+[pgmc_identical_vowel_hiatus]
+time = -1900
+name = "Identical short vowels in hiatus merge"
+description = "*juuŋkós > *jungaz"
+definition = "1=[+syll, -cons, length: short] @1 → ∅ @1"
+
+# A glide is inserted to break the hiatus left by laryngeal loss: *priHós > *frijaz, not
+# **friaz. Germanic fills a i_V gap with /j/.
+[pgmc_j_epenthesis]
+time = -1850
+name = "j is inserted between i and a following vowel"
+description = "*priHós > *frijaz"
+definition = "∅ → j / [+syll, aperture: high, +front] _ [+syll]"
+
+# A post-vocalic glide is the offglide of a diphthong, not a consonant: *Hóytos > *aiþaz is
+# [ɑi̯θɑz], and *h₂éyǵs > *aiks is [ɑi̯ks] — written with a non-syllabic vowel, not with /j/.
+# Wiktionary spells the second half of a Germanic diphthong both ways — *ainagaz as [ɑjnɑɣɑz]
+# but *aiþaz as [ɑi̯θɑz] — and so does the engine, depending on whether the glide came from PIE
+# *y or from a vowel left in hiatus. Neither is a phonological difference, so both sides are
+# normalised to /j/: the gold by CONVENTIONS, the derivation by this rule.
+[pgmc_diphthong_offglide]
+time = 150
+name = "The offglide of a diphthong is written j"
+description = "*ɑi̯θɑz and *ɑjnɑɣɑz are the same diphthong, spelt two ways in the source"
+definition = "i̯ → j / [+syll] _"
+
+# Germanic a-umlaut, the /i/ half only: short *i lowers to *e before a non-high vowel in the
+# next syllable — *nisdós > *nestaz. Blocked before /j/, which is why *midjaz keeps its /i/.
+#
+# Only the /i/ half, and only at this date. The parallel lowering of *u (wg_a_umlaut, t=350) is
+# a later and much less regular change: run at Proto-Germanic date it lowers *wulfaz to **wolfaz
+# and a dozen others, costing 12 exact matches. The two halves are not one rule.
+# RE-DATED out of Proto-Germanic (was 50, now 300 — West Germanic), and renamed with it.
+#
+# Kroonen's Proto-Germanic 'nest' is *nista-, with an /i/ — not the *nestą our Wiktionary gold
+# gives — and his *fiska- (<= *pisk-o-, cf. Lat. piscis) has one too. Ringe's bibliography cites
+# Lloyd, "Is there an a-umlaut of i in Germanic?" So the lowering is doubtful AT Proto-Germanic,
+# and the 200 gold has been corrected to *nistą accordingly (ATTESTED_FIXES in build_gold.py).
+#
+# But the change is REAL, just later: Old English has nest with an /e/ while fisc keeps its /i/,
+# and those are ATTESTATIONS, not reconstructions — there is no arguing with them. So the rule
+# moves rather than goes. At 200 the /i/ now survives (*nistą, *wissaz); by 900 it has lowered
+# where Old English says it lowered.
+#
+# The condition stays as irregular as the facts are. *nistaz lowers and *fiskaz does not, on the
+# same shape (i + cluster + a); what separates them here is the aperture of the intervening
+# consonants, which is a description of the split rather than an explanation of it. Ringe's
+# bibliography suggests the field has not explained it either.
+[pgmc_i_lowering]
+time = 300
+name = "Short i lowers to e before a non-high vowel (West Germanic)"
+description = "*nistaz > OE nest, but *fiskaz > OE fisc keeps its i; blocked before j (*midjaz)"
+# The intervening span excludes high segments, which is what actually blocks /j/: written
+# [-syll, lateral: none]* the wildcard simply skips over the j of *midjaz and lowers it.
+#
+# Blocked before a syllable-final NASAL, the other standard exception. *lentéh₂ raises its *e to
+# *i before the coda *n (`e_to_i_before_syllable_final_nasal`, t=-900) and this rule then lowered
+# it straight back, handing **lendɔː to a gold that reads *lindɔː. A nasal coda protects the /i/;
+# it is the same environment that created it, and the two must not fight. *nisdós is untouched —
+# its /i/ stands before an /s/, not a nasal — so *nestaz still lowers as before.
+# And only the STRESSED vowel. a-umlaut is a root-vowel change; an unstressed medial /i/ is not
+# in its reach. *h₂oḱéteh₂ raises its medial *e to *i (unstressed_e_to_i, t=-1000) and this rule
+# then lowered it straight back again, giving **ɑɣeθ̠ɔː for the attested *ɑɣiθ̠ɔː. The /i/ of
+# *nisdós is the ROOT vowel and still lowers to the *nestɑ̃ the gold wants — nothing is lost.
+definition = "[+syll, aperture: high, +front, length: short, stress: primary] → [aperture: mid] / _ [-syll, lateral: none, aperture: !high]* [+syll, aperture: !high] // _ [+nas]$"

@@ -1,0 +1,987 @@
+id,time,ipa,category,gloss,frequency
+any,-2000,ojnoˈkos,adj,any,767968
+any,200,ˈɑjnɑɣɑz,adj,,
+any,900,ˈæːnij,adj,,
+any,final,ˈɛni,adj,,
+two,-2000,ˈdwoχ,num,two,764564
+two,200,ˈtwɑj,num,,
+two,900,ˈtweːjen,num,,
+two,1400,ˈtwæj,num,,
+other,-2000,ˈħenteros,adj,other,577197
+other,200,ˈɑnθ̠erɑz,adj,,
+other,900,ˈoːθ̠er,adj,,
+other,1400,ˈuð̠ər,adj,,
+other,final,ˈʌðə,adj,,
+new,-2000,ˈnewjos,adj,new,508486
+new,200,ˈniwjɑz,adj,,
+new,900,ˈniyːwe,adj,,
+new,1400,ˈniw,adj,,
+new,final,ˈnjuː,adj,,
+old,-2000,ħelˈtos,adj,old,431911
+old,200,ˈɑldɑz,adj,,
+old,900,ˈæɑld,adj,,
+old,1400,ˈɔːld,adj,,
+old,final,ˈəʊld,adj,,
+kind,-2000,ˈgʲenχtis,noun,kind,392242
+kind,200,ˈkinθ̠iz,noun,,
+kind,900,ˈkynd,noun,,
+kind,1400,ˈkiːnd,noun,,
+kind,final,ˈkaɪnd,noun,,
+might,-2000,ˈmogʱtis,noun,might,367145
+might,200,ˈmɑxtiz,noun,,
+might,900,ˈmixt,noun,,
+might,1400,ˈmixt,noun,,
+might,final,ˈmaɪt,noun,,
+three,-2000,ˈtrejes,num,three,366626
+three,200,ˈθ̠riːz,num,,
+three,900,ˈθ̠riː,num,,
+three,1400,ˈθ̠reː,num,,
+three,final,ˈθɹiː,num,,
+son,-2000,suˈχnus,noun,son,325997
+son,200,ˈsunuz,noun,,
+son,900,ˈsunu,noun,,
+son,1400,ˈsun,noun,,
+son,final,ˈsʌn,noun,,
+mind,-2000,mn̩ˈtis,noun,mind,312927
+mind,200,ˈmundiz,noun,,
+mind,1400,ˈmuːnd,noun,,
+mind,final,ˈmaɪnd,noun,,
+brother,-2000,ˈbʱreħteːr,noun,brother,259877
+brother,200,ˈbrɔːθ̠ɛːr,noun,,
+brother,900,ˈbroːθ̠or,noun,,
+brother,1400,ˈbroːð̠ər,noun,,
+brother,final,ˈbɹʌðə,noun,,
+haven,-2000,ˈkħponeħ,noun,haven,258463
+haven,200,ˈxɑβɑnɔː,noun,,
+haven,900,ˈxæfen,noun,,
+haven,1400,ˈhaːvən,noun,,
+haven,final,ˈheɪvən,noun,,
+whole,-2000,ˈkeħilos,adj,whole,257109
+whole,200,ˈxɑjlɑz,adj,,
+whole,900,ˈxɑːl,adj,,
+whole,final,ˈhəʊl,adj,,
+end,-2000,ħenˈtios,noun,end,237387
+end,200,ˈɑndijɑz,noun,,
+end,900,ˈende,noun,,
+end,1400,ˈeːnd,noun,,
+end,final,ˈɛnd,noun,,
+heart,-2000,ˈkʲerdoː,noun,heart,213914
+heart,200,ˈxertɔːː,noun,,
+heart,900,ˈxeorte,noun,,
+heart,1400,ˈhɛrt,noun,,
+heart,final,ˈhɑːt,noun,,
+young,-2000,ħjuχn̩ˈkʲos,adj,young,194810
+young,200,ˈjuŋgɑz,adj,,
+young,900,ˈjung,adj,,
+young,1400,ˈjung,adj,,
+young,final,ˈjʌŋ,adj,,
+death,-2000,ˈdʱowtus,noun,death,189000
+death,200,ˈdɑwθ̠uz,noun,,
+death,900,ˈdæɑːθ̠,noun,,
+death,1400,ˈdɛːθ̠,noun,,
+death,final,ˈdɛθ,noun,,
+five,-2000,ˈpenkʷe,num,five,183626
+five,200,ˈɸimɸ,num,,
+five,900,ˈfiːf,num,,
+five,1400,ˈfiːf,num,,
+five,final,ˈfaɪ̯v,num,,
+four,-2000,kʷeˈtwores,num,four,166957
+four,200,ˈɸeð̠wɔːr,num,,
+four,900,ˈfeoːwer,num,,
+four,1400,ˈfɔwr,num,,
+four,final,ˈfɔː,num,,
+daughter,-2000,dʱugħˈteːr,noun,daughter,163071
+daughter,200,ˈduxtɛːr,noun,,
+daughter,900,ˈdoxtor,noun,,
+daughter,1400,ˈdɔxtər,noun,,
+daughter,final,ˈdɔːtə,noun,,
+fire,-2000,pħuˈoːr,noun,fire,157532
+fire,200,ˈɸɔːr,noun,,
+fire,900,ˈfyːr,noun,,
+fire,1400,ˈfiːr,noun,,
+fire,final,ˈfaɪə,noun,,
+sister,-2000,ˈswesteːr,noun,sister,154095
+sister,200,ˈswestɛːr,noun,,
+sister,900,ˈsweostor,noun,,
+sister,1400,ˈsustər,noun,,
+free,-2000,priˈχos,adj,free,137598
+free,200,ˈɸrijɑz,adj,,
+free,900,ˈfreoː,adj,,
+free,1400,ˈfrøː,adj,,
+free,final,ˈfɹiː,adj,,
+full,-2000,pl̩ˈχnos,adj,full,129735
+full,200,ˈɸullɑz,adj,,
+full,900,ˈfull,adj,,
+full,1400,ˈfoːl,adj,,
+full,final,ˈfʊl,adj,,
+six,-2000,ˈsekʲs,num,six,124087
+six,200,ˈsexs,num,,
+six,900,ˈsiks,num,,
+six,1400,ˈsiks,num,,
+six,final,ˈsɪks,num,,
+ten,-2000,ˈdekʲm̩,num,ten,100133
+ten,200,ˈtexun,num,,
+ten,900,ˈtiyːn,num,,
+ten,1400,ˈtɛn,num,,
+ten,final,ˈtɛn,num,,
+cold,-2000,golˈtos,adj,cold,99032
+cold,200,ˈkɑldɑz,adj,,
+cold,900,ˈt͡ʃæɑld,adj,,
+cold,1400,ˈkɔːld,adj,,
+cold,final,ˈkəʊld,adj,,
+dream,-2000,ˈdʱrowgʱmos,noun,dream,95089
+dream,200,ˈdrɑwmɑz,noun,,
+dream,900,ˈdræɑːm,noun,,
+dream,1400,ˈdrɛːm,noun,,
+dream,final,ˈdɹiːm,noun,,
+sweet,-2000,ˈsweħdus,adj,sweet,94057
+sweet,200,ˈswɔːtuz,adj,,
+sweet,900,ˈsweːte,adj,,
+sweet,1400,ˈsweːt,adj,,
+sweet,final,ˈswiːt,adj,,
+quick,-2000,gʷiˈʁʷwos,adj,quick,81548
+quick,200,ˈkʷikʷɑz,adj,,
+quick,900,ˈkwik,adj,,
+quick,1400,ˈkwik,adj,,
+quick,final,ˈkwɪk,adj,,
+seven,-2000,sepˈtm̩,num,seven,70968
+seven,200,ˈseβun,num,,
+seven,900,ˈseofon,num,,
+seven,1400,ˈsɛvən,num,,
+seven,final,ˈsɛvən,num,,
+fish,-2000,ˈpiskos,noun,fish,61813
+fish,200,ˈɸiskɑz,noun,,
+fish,900,ˈfiʃ,noun,,
+fish,1400,ˈfiʃ,noun,,
+fish,final,ˈfɪʃ,noun,,
+eight,-2000,okʲˈtoːw,num,eight,61400
+eight,200,ˈɑxtɔːw,num,,
+eight,900,ˈæɑxtɑ,num,,
+eight,1400,ˈæjxt,num,,
+eight,final,ˈeɪt,num,,
+star,-2000,ħsterˈnoːn,noun,star,60903
+star,200,ˈsternɔ̃ː,noun,,
+star,900,ˈsteorrɑ,noun,,
+star,1400,ˈstɛr,noun,,
+share,-2000,skoˈreħ,noun,share,56854
+share,200,ˈskɑrɔː,noun,,
+share,900,ˈʃɑru,noun,,
+share,1400,ˈʃaːr,noun,,
+share,final,ˈʃɛə,noun,,
+evil,-2000,ħuˈpelos,adj,evil,52175
+evil,200,ˈuβilɑz,adj,,
+evil,900,ˈyfel,adj,,
+evil,1400,ˈivəl,adj,,
+evil,final,ˈiːvəl,adj,,
+beer,-2000,bʱewˈsom,noun,beer,48641
+beer,200,ˈbewzɑ̃,noun,,
+beer,900,ˈbeoːr,noun,,
+beer,1400,ˈbeːr,noun,,
+beer,final,ˈbɪə̯,noun,,
+wind,-2000,ˈħweχn̩ts,noun,wind,48063
+wind,200,ˈwindɑz,noun,,
+wind,900,ˈwind,noun,,
+wind,1400,ˈwiːnd,noun,,
+wind,final,ˈwɪnd,noun,,
+foot,-2000,ˈpoːds,noun,foot,44588
+foot,200,ˈɸɔːts,noun,,
+foot,900,ˈfoːt,noun,,
+foot,1400,ˈfoːt,noun,,
+nine,-2000,ˈχnewn̩,num,nine,42538
+nine,200,ˈnewun,num,,
+nine,900,ˈnigon,num,,
+nine,1400,ˈniːn,num,,
+nine,final,ˈnaɪn,num,,
+arm,-2000,ˈħermos,noun,arm,41726
+arm,200,ˈɑrmɑz,noun,,
+arm,900,ˈæɑrm,noun,,
+arm,1400,ˈarm,noun,,
+arm,final,ˈɑːm,noun,,
+cost,-2000,ˈgʲustus,noun,cost,39485
+cost,200,ˈkustuz,noun,,
+cost,900,ˈkost,noun,,
+cost,final,ˈkɒst,noun,,
+lay,-2000,loˈkus,noun,lay,36984
+lay,200,ˈlɑɣuz,noun,,
+lay,900,ˈlɑgu,noun,,
+lay,1400,ˈlaɣə,noun,,
+lay,final,ˈleɪ,noun,,
+loud,-2000,kʲluˈtos,adj,loud,32757
+loud,200,ˈxluːð̠ɑz,adj,,
+loud,900,ˈxluːd,adj,,
+loud,1400,ˈluːd,adj,,
+loud,final,ˈlaʊ̯d,adj,,
+winter,-2000,ˈħweχn̩tos,noun,winter,24005
+winter,200,ˈwintruz,noun,,
+winter,900,ˈwinter,noun,,
+winter,1400,ˈwintər,noun,,
+winter,final,ˈwɪntə,noun,,
+whore,-2000,ˈkʲeħroːn,noun,whore,20444
+whore,200,ˈxɔːrɔ̃ː,noun,,
+whore,900,ˈxoːre,noun,,
+whore,1400,ˈhoːr,noun,,
+whore,final,ˈhɔː,noun,,
+ear,-2000,ˈħekʲos,noun,ear,19950
+ear,200,ˈɑxɑz,noun,,
+ear,900,ˈæɑːr,noun,,
+ear,1400,ˈɛːr,noun,,
+ear,final,ˈɪə̯,noun,,
+wolf,-2000,ˈwl̩kʷos,noun,wolf,18566
+wolf,200,ˈwulɸɑz,noun,,
+wolf,900,ˈwulf,noun,,
+wolf,1400,ˈwulf,noun,,
+wolf,final,ˈwʊlf,noun,,
+cow,-2000,ˈgʷoːws,noun,cow,18392
+cow,200,ˈkɔːz,noun,,
+cow,900,ˈkuː,noun,,
+cow,1400,ˈkuː,noun,,
+cow,final,ˈkaʊ,noun,,
+fourth,-2000,kʷetwr̩ˈtoː,adj,fourth,18301
+fourth,200,ˈɸeð̠urθ̠ɔːː,adj,,
+fourth,900,ˈfeoːrθ̠ɑ,adj,,
+fourth,1400,ˈfeːrð̠,adj,,
+fourth,final,ˈfɔːθ,adj,,
+wheel,-2000,ˈkʷekʷlom,noun,wheel,17795
+wheel,200,ˈxʷexʷlɑ̃,noun,,
+wheel,900,ˈxweoːl,noun,,
+wheel,1400,ˈhweːl,noun,,
+wheel,final,ˈwiːl,noun,,
+yard,-2000,ˈgʱordʱos,noun,yard,16138
+yard,200,ˈɣɑrð̠ɑz,noun,,
+yard,900,ˈjæɑrd,noun,,
+yard,1400,ˈjɛːrd,noun,,
+yard,final,ˈjɑːd,noun,,
+thin,-2000,tn̩ˈħwus,adj,thin,15296
+thin,200,ˈθ̠unnuz,adj,,
+thin,900,ˈθ̠ynne,adj,,
+thin,1400,ˈθ̠in,adj,,
+thin,final,ˈθɪn,adj,,
+fifth,-2000,penkʷˈtoː,adj,fifth,13690
+fifth,200,ˈɸimɸtɔːː,adj,,
+fifth,900,ˈfiːftɑ,adj,,
+fifth,1400,ˈfift,adj,,
+fox,-2000,ˈpukʲsos,noun,fox,13409
+fox,200,ˈɸuxsɑz,noun,,
+fox,900,ˈfoks,noun,,
+fox,1400,ˈfɔks,noun,,
+fox,final,ˈfɒks,noun,,
+thick,-2000,ˈtegus,adj,thick,12143
+thick,200,ˈθ̠ekuz,adj,,
+thick,900,ˈθ̠ikke,adj,,
+thick,1400,ˈθ̠ik,adj,,
+thick,final,ˈθɪk,adj,,
+widow,-2000,χwidʱeˈwoːn,noun,widow,10080
+widow,200,ˈwið̠uwɔ̃ː,noun,,
+widow,900,ˈwiduwe,noun,,
+widow,final,ˈwɪdəʊ,noun,,
+corn,-2000,gʲr̩ˈħnom,noun,corn,9781
+corn,200,ˈkurnɑ̃,noun,,
+corn,900,ˈkorn,noun,,
+corn,1400,ˈkɔrn,noun,,
+corn,final,ˈkɔːn,noun,,
+tooth,-2000,ˈʁʷdonts,noun,tooth,9408
+tooth,200,ˈtɑnθ̠s,noun,,
+tooth,900,ˈtoːθ̠,noun,,
+tooth,1400,ˈtoːθ̠,noun,,
+tooth,final,ˈtuːθ,noun,,
+chin,-2000,ˈgʲenwus,noun,chin,9359
+chin,200,ˈkinnuz,noun,,
+chin,900,ˈt͡ʃinn,noun,,
+chin,1400,ˈt͡ʃin,noun,,
+chin,final,ˈt͡ʃɪn,noun,,
+nest,-2000,nisˈdom,noun,nest,8803
+nest,200,ˈnistɑ̃,noun,,
+nest,900,ˈnest,noun,,
+nest,1400,ˈnɛst,noun,,
+nest,final,ˈnɛst,noun,,
+ford,-2000,pr̩ˈtus,noun,ford,8320
+ford,200,ˈɸurð̠uz,noun,,
+ford,900,ˈford,noun,,
+ford,final,ˈfɔːd,noun,,
+fee,-2000,ˈpekʲu,noun,fee,8109
+fee,200,ˈɸexu,noun,,
+fee,900,ˈfeox,noun,,
+fee,final,ˈfiː,noun,,
+oath,-2000,ˈχojtos,noun,oath,7758
+oath,200,ˈɑjθ̠ɑz,noun,,
+oath,900,ˈɑːθ̠,noun,,
+oath,1400,ˈɔːθ̠,noun,,
+oath,final,ˈəʊθ,noun,,
+sixth,-2000,ˈsekʲtoː,adj,sixth,7566
+sixth,200,ˈsextɔːː,adj,,
+sixth,900,ˈsikstɑ,adj,,
+sixth,1400,ˈsikst,adj,,
+sixth,final,ˈsɪksθ,adj,,
+mere,-2000,ˈmori,noun,mere,7287
+mere,200,ˈmɑri,noun,,
+mere,900,ˈmere,noun,,
+mere,final,ˈmɪə̯,noun,,
+whale,-2000,ˈkʷalos,noun,whale,7087
+whale,200,ˈxʷɑlɑz,noun,,
+whale,900,ˈxwæl,noun,,
+whale,1400,ˈhwal,noun,,
+whale,final,ˈweɪl,noun,,
+goose,-2000,ˈgʲʱħens,noun,goose,7019
+goose,200,ˈɣɑns,noun,,
+goose,900,ˈgoːs,noun,,
+goose,1400,ˈgoːs,noun,,
+goose,final,ˈguːs,noun,,
+bare,-2000,bʱoˈsos,adj,bare,6720
+bare,200,ˈbɑzɑz,adj,,
+bare,900,ˈbær,adj,,
+bare,1400,ˈbaːr,adj,,
+bare,final,ˈbɛə,adj,,
+deed,-2000,dʱeχˈtis,noun,deed,6333
+deed,200,ˈdɛːð̠iz,noun,,
+deed,900,ˈdæːd,noun,,
+deed,final,ˈdiːd,noun,,
+flood,-2000,ploʁʷˈtus,noun,flood,6263
+flood,200,ˈɸlɔːð̠uz,noun,,
+flood,900,ˈfloːd,noun,,
+flood,1400,ˈfloːd,noun,,
+flood,final,ˈflʌd,noun,,
+seventh,-2000,septm̩ˈmoː,adj,seventh,5814
+seventh,200,ˈseβunð̠ɔːː,adj,,
+seventh,900,ˈseofoθ̠ɑ,adj,,
+seventh,1400,ˈsɛvəð̠,adj,,
+seventh,final,ˈsɛvnθ,adj,,
+stall,-2000,ˈstħdʱlos,noun,stall,5456
+stall,200,ˈstɑllɑz,noun,,
+stall,900,ˈstæɑll,noun,,
+stall,final,ˈstɔːl,noun,,
+oak,-2000,ˈħejgʲs,noun,oak,5200
+oak,200,ˈɑjks,noun,,
+oak,900,ˈɑːk,noun,,
+oak,1400,ˈɔːk,noun,,
+oak,final,ˈəʊk,noun,,
+sour,-2000,ˈsuχros,adj,sour,4765
+sour,200,ˈsuːrɑz,adj,,
+sour,900,ˈsuːr,adj,,
+sour,1400,ˈsuːr,adj,,
+sour,final,ˈsaʊə,adj,,
+frost,-2000,prusˈtos,noun,frost,4455
+frost,200,ˈɸrustɑz,noun,,
+frost,900,ˈforst,noun,,
+frost,1400,ˈfrɔst,noun,,
+frost,final,ˈfɹɒst,noun,,
+eighth,-2000,okʲtoˈwoː,adj,eighth,4350
+eighth,200,ˈɑxtuð̠ɔːː,adj,,
+eighth,900,ˈæɑxtoθ̠ɑ,adj,,
+eighth,1400,ˈæjxtəð̠,adj,,
+eighth,final,ˈeɪtθ,adj,,
+lid,-2000,kʲliˈtom,noun,lid,4166
+lid,900,ˈxlid,noun,,
+lid,1400,ˈlid,noun,,
+lid,final,ˈlɪd,noun,,
+doom,-2000,ˈdʱoχmos,noun,doom,3937
+doom,200,ˈdɔːmɑz,noun,,
+doom,900,ˈdoːm,noun,,
+doom,1400,ˈdoːm,noun,,
+doom,final,ˈduːm,noun,,
+steer,-2000,ˈtawros,noun,steer,3892
+steer,200,ˈstewrɑz,noun,,
+steer,900,ˈsteoːr,noun,,
+steer,1400,ˈsteːr,noun,,
+steer,final,ˈstɪə,noun,,
+comb,-2000,ˈgʲombʱos,noun,comb,3715
+comb,200,ˈkɑmbɑz,noun,,
+comb,900,ˈkɑmb,noun,,
+comb,1400,ˈkɔːm,noun,,
+comb,final,ˈkəʊm,noun,,
+ninth,-2000,χnewn̩ˈtoː,adj,ninth,3578
+ninth,200,ˈnewundɔːː,adj,,
+ninth,1400,ˈniəð̠,adj,,
+ninth,final,ˈnaɪnθ,adj,,
+ox,-2000,uˈksoː,noun,ox,3217
+ox,200,ˈuxsɔːː,noun,,
+ox,900,ˈoksɑ,noun,,
+ox,1400,ˈɔks,noun,,
+ox,final,ˈɒks,noun,,
+wool,-2000,ħwl̩ˈχneħ,noun,wool,3091
+wool,200,ˈwullɔː,noun,,
+wool,900,ˈwull,noun,,
+wool,1400,ˈwul,noun,,
+wool,final,ˈwʊl,noun,,
+beaver,-2000,ˈbʱebʱrus,noun,beaver,2862
+beaver,200,ˈbeβruz,noun,,
+beaver,900,ˈbefer,noun,,
+beaver,1400,ˈbɛːvər,noun,,
+beaver,final,ˈbiːvə,noun,,
+hazel,-2000,ˈkoslos,noun,hazel,2638
+hazel,200,ˈxɑslɑz,noun,,
+hazel,900,ˈxæsl,noun,,
+hazel,1400,ˈhaːzəl,noun,,
+hazel,final,ˈheɪzəl,noun,,
+thorn,-2000,tr̩ˈnos,noun,thorn,2338
+thorn,200,ˈθ̠urnɑz,noun,,
+thorn,900,ˈθ̠orn,noun,,
+thorn,1400,ˈθ̠ɔrn,noun,,
+thorn,final,ˈθɔːn,noun,,
+mid,-2000,ˈmedʱjos,adj,mid,2031
+mid,200,ˈmið̠jɑz,adj,,
+mid,900,ˈmidd,adj,,
+mid,final,ˈmɪd,adj,,
+marrow,-2000,mosˈgʱom,noun,marrow,2009
+marrow,200,ˈmɑzɣɑ̃,noun,,
+marrow,900,ˈmæɑrx,noun,,
+marrow,1400,ˈmarɔw,noun,,
+marrow,final,ˈmæɹəʊ,noun,,
+hedge,-2000,kaˈgʱjeħ,noun,hedge,1777
+hedge,200,ˈxɑɣjɔː,noun,,
+hedge,900,ˈxejj,noun,,
+hedge,1400,ˈhɛd͡ʒ,noun,,
+hedge,final,ˈhɛd͡ʒ,noun,,
+seventy,-2000,sepˈtm̩dkʲomt,num,seventy,1653
+seventy,200,ˈseβuntɛːˌxundɑ̃,num,,
+seventy,900,xundˈseofontij,num,,
+seventy,1400,ˈsɛvəntiː,num,,
+seventy,final,ˈsɛvənti,num,,
+ey,-2000,ˈħegʱos,noun,ey,1258
+ey,200,ˈɑɣɑz,noun,,
+ey,900,ˈeje,noun,,
+ey,1400,ˈeːɣə,noun,,
+ey,final,ˈeɪ,noun,,
+acre,-2000,ˈħegʲros,noun,acre,1142
+acre,200,ˈɑkrɑz,noun,,
+acre,900,ˈæker,noun,,
+acre,1400,ˈaːkər,noun,,
+acre,final,ˈeɪkə,noun,,
+elk,-2000,ˈχelkʲos,noun,elk,1116
+elk,200,ˈelxɑz,noun,,
+elk,900,ˈeolx,noun,,
+elk,1400,ˈɛlk,noun,,
+elk,final,ˈɛlk,noun,,
+hoof,-2000,ˈkʲoħpos,noun,hoof,1039
+hoof,200,ˈxɔːɸɑz,noun,,
+hoof,900,ˈxoːf,noun,,
+hoof,1400,ˈhuːv,noun,,
+trough,-2000,druˈkos,noun,trough,1011
+trough,900,ˈtrog,noun,,
+trough,1400,ˈtrɔx,noun,,
+trough,final,ˈtɹɒf,noun,,
+mead,-2000,ˈmedʱus,noun,mead,967
+mead,200,ˈmeð̠uz,noun,,
+mead,900,ˈmedu,noun,,
+mead,1400,ˈmɛːd,noun,,
+mead,final,ˈmiːd,noun,,
+otter,-2000,uˈdros,noun,otter,903
+otter,200,ˈutrɑz,noun,,
+otter,900,ˈotr,noun,,
+otter,1400,ˈɔtər,noun,,
+otter,final,ˈɒtə,noun,,
+farrow,-2000,ˈporkʲos,noun,farrow,667
+farrow,200,ˈɸɑrxɑz,noun,,
+farrow,900,ˈfæɑrx,noun,,
+farrow,final,ˈfæɹəʊ,noun,,
+stead,-2000,ˈstħtis,noun,stead,643
+stead,200,ˈstɑð̠iz,noun,,
+stead,900,ˈstede,noun,,
+stead,1400,ˈstɛːd,noun,,
+stead,final,ˈstɛd,noun,,
+yoke,-2000,juˈgom,noun,yoke,585
+yoke,200,ˈjukɑ̃,noun,,
+yoke,900,ˈjok,noun,,
+yoke,1400,ˈjɔk,noun,,
+yoke,final,ˈjəʊk,noun,,
+ware,-2000,woˈros,adj,ware,585
+ware,200,ˈwɑrɑz,adj,,
+ware,900,ˈwær,adj,,
+ware,final,ˈwɛə,adj,,
+ebb,-2000,ħeˈpjoːn,noun,ebb,374
+ebb,200,ˈɑβjɔ̃ː,noun,,
+ebb,900,ˈebbɑ,noun,,
+ebb,1400,ˈɛb,noun,,
+ebb,final,ˈɛb,noun,,
+bough,-2000,bʱeħˈgʲʱus,noun,bough,356
+bough,200,ˈbɔːɣuz,noun,,
+bough,900,ˈboːg,noun,,
+bough,final,ˈbaʊ̯,noun,,
+lather,-2000,ˈlowʁʷtrom,noun,lather,346
+lather,200,ˈlɑwθ̠rɑ̃,noun,,
+lather,900,ˈlæɑːθ̠or,noun,,
+lather,final,ˈlɑːðə,noun,,
+wort,-2000,ˈwreħds,noun,wort,247
+wort,200,ˈwrɔːts,noun,,
+wort,900,ˈwyrt,noun,,
+wort,1400,ˈwirt,noun,,
+wort,final,ˈwɜːt,noun,,
+fallow,-2000,polˈχwos,adj,fallow,235
+fallow,200,ˈɸɑlwɑz,adj,,
+fallow,900,ˈfæɑlu,adj,,
+neve,-2000,ˈnepoː,noun,neve,233
+neve,200,ˈneɸɔːː,noun,,
+neve,900,ˈnefɑ,noun,,
+neve,1400,ˈnɛːv,noun,,
+neve,final,ˈniːv,noun,,
+ream,-2000,ˈrewgʱmn̩,noun,ream,203
+ream,200,ˈrɑwmɑz,noun,,
+ream,900,ˈræɑːm,noun,,
+ream,1400,ˈrɛːm,noun,,
+ream,final,ˈɹiːm,noun,,
+gome,-2000,gʲʱm̩ˈoː,noun,gome,1
+gome,200,ˈɣumɔːː,noun,,
+gome,900,ˈgumɑ,noun,,
+gome,1400,ˈgoːm,noun,,
+gome,final,ˈgʌm,noun,,
+lede,-2000,ˈχlewdʱis,noun,lede,1
+lede,200,ˈliwð̠iz,noun,,
+lede,900,ˈleoːd,noun,,
+lede,1400,ˈleːd,noun,,
+lede,final,ˈliːd,noun,,
+theed,-2000,tewˈteħ,noun,theed,1
+theed,200,ˈθ̠ewð̠ɔː,noun,,
+theed,900,ˈθ̠eoːd,noun,,
+theed,1400,ˈθ̠øːd,noun,,
+theed,final,ˈθiːd,noun,,
+sweven,-2000,ˈswepnos,noun,sweven,1
+sweven,200,ˈsweɸnɑz,noun,,
+sweven,900,ˈswefn,noun,,
+sweven,1400,ˈswɛvən,noun,,
+sweven,final,ˈswɛvən,noun,,
+quean,-2000,gʷeˈnoːn,noun,quean,1
+quean,200,ˈkʷenɔ̃ː,noun,,
+quean,900,ˈkwene,noun,,
+quean,1400,ˈkweːn,noun,,
+quean,final,ˈkwiːn,noun,,
+meed,-2000,misˈdʱeħ,noun,meed,1
+meed,200,ˈmizdɔː,noun,,
+meed,900,ˈmeːd,noun,,
+meed,1400,ˈmɛːd,noun,,
+meed,final,ˈmiːd,noun,,
+nift,-2000,ˈneptis,noun,nift,1
+nift,200,ˈniɸtiz,noun,,
+nift,900,ˈnift,noun,,
+nift,1400,ˈnift,noun,,
+nift,final,ˈnɪft,noun,,
+sallow,-2000,soˈlwos,adj,sallow,1
+sallow,200,ˈsɑlwɑz,adj,,
+sallow,900,ˈsɑlu,adj,,
+sallow,1400,ˈsalɔw,adj,,
+sallow,final,ˈsæləʊ,adj,,
+gudą,-2000,gʲʱuˈtom,noun,gudą,1
+gudą,200,ˈɣuð̠ɑ̃,noun,,
+gudą,900,ˈgoːd,noun,,
+gudą,1400,ˈgɔd,noun,,
+segaz,-2000,ˈsegʲʱos,noun,segaz,1
+segaz,200,ˈseɣɑz,noun,,
+segaz,900,ˈsije,noun,,
+segaz,1400,ˈsig,noun,,
+ainaz,-2000,ˈχojnos,num,ainaz,1
+ainaz,200,ˈɑjnɑz,num,,
+ainaz,900,ˈɑːn,num,,
+ainaz,1400,ˈɔːn,num,,
+hundą,-2000,kʲm̩ˈtom,noun,hundą,1
+hundą,200,ˈxundɑ̃,noun,,
+hundą,900,ˈxund,noun,,
+hundą,1400,ˈhund,noun,,
+fadēr,-2000,ˈpħteːr,noun,fadēr,1
+fadēr,200,ˈɸɑð̠ɛːr,noun,,
+fadēr,900,ˈfæder,noun,,
+fadēr,1400,ˈfadər,noun,,
+mōdēr,-2000,meħˈteːr,noun,mōdēr,1
+mōdēr,200,ˈmɔːð̠ɛːr,noun,,
+mōdēr,900,ˈmoːdor,noun,,
+mōdēr,1400,ˈmoːdər,noun,,
+tehundô,-2000,ˈdekʲm̩toː,adj,tehundô,1
+tehundô,200,ˈtexundɔːː,adj,,
+tehundô,900,ˈteoːθ̠ɑ,adj,,
+tehundô,1400,ˈtɛnð̠,adj,,
+snaiwaz,-2000,ˈsnojgʷʱos,noun,snaiwaz,1
+snaiwaz,200,ˈsnɑjwɑz,noun,,
+snaiwaz,900,ˈsnɑːw,noun,,
+snaiwaz,1400,ˈsnɑw,noun,,
+harjaz,-2000,ˈkorjos,noun,harjaz,1
+harjaz,200,ˈxɑrjɑz,noun,,
+harjaz,900,ˈxere,noun,,
+harjaz,1400,ˈhɛːr,noun,,
+raudaz,-2000,χrowˈdʱos,adj,raudaz,1
+raudaz,200,ˈrɑwð̠ɑz,adj,,
+raudaz,900,ˈræɑːd,adj,,
+raudaz,1400,ˈrɛːd,adj,,
+watōr,-2000,ˈwodoːr,noun,watōr,1
+watōr,200,ˈwɑtɔːr,noun,,
+watōr,900,ˈwæter,noun,,
+watōr,1400,ˈwatər,noun,,
+ahwō,-2000,ˈħekʷeħ,noun,ahwō,1
+ahwō,200,ˈɑxʷɔː,noun,,
+ahwō,900,ˈæɑː,noun,,
+ahwō,1400,ˈɛː,noun,,
+ausô,-2000,ˈħoːws,noun,ausô,1
+ausô,200,ˈɑwsɔːː,noun,,
+ausô,900,ˈæɑːre,noun,,
+ausô,1400,ˈɛːr,noun,,
+nahts,-2000,ˈnokʷts,noun,nahts,1
+nahts,200,ˈnɑxts,noun,,
+nahts,900,ˈnixt,noun,,
+nahts,1400,ˈnixt,noun,,
+couth,-2000,ˈgʲn̩ʁʷtos,adj,couth,1
+couth,200,ˈkunθ̠ɑz,adj,,
+couth,900,ˈkuːθ̠,adj,,
+couth,final,ˈkuːθ,adj,,
+werką,-2000,ˈwergʲom,noun,werką,1
+werką,200,ˈwerkɑ̃,noun,,
+werką,900,ˈweork,noun,,
+werką,1400,ˈwɛrk,noun,,
+anguz,-2000,ˈħengʲʱus,adj,anguz,1
+anguz,200,ˈɑŋguz,adj,,
+anguz,900,ˈɑnge,adj,,
+anguz,1400,ˈang,adj,,
+arbaidiz,-2000,ˈʁʷorbʱos,noun,arbaidiz,1
+arbaidiz,200,ˈɑrβɑjð̠iz,noun,,
+arbaidiz,900,ˈæɑrfoθ̠e,noun,,
+arbaidiz,1400,ˈarvəð̠,noun,,
+namô,-2000,ˈχnomoː,noun,namô,1
+namô,200,ˈnɑmɔːː,noun,,
+namô,900,ˈnɑmɑ,noun,,
+namô,1400,ˈnaːm,noun,,
+garfish,-2000,gʲʱojˈsos,noun,garfish,1
+garfish,200,ˈɣɑjzɑz,noun,,
+garfish,900,ˈgɑːr,noun,,
+garfish,1400,ˈgɔːr,noun,,
+rehtaz,-2000,ʁʷregʲˈtos,adj,rehtaz,1
+rehtaz,200,ˈrextɑz,adj,,
+rehtaz,900,ˈrixt,adj,,
+rehtaz,1400,ˈrixt,adj,,
+haimaz,-2000,ˈkʲojmos,noun,haimaz,1
+haimaz,200,ˈxɑjmɑz,noun,,
+haimaz,900,ˈxɑːm,noun,,
+haimaz,1400,ˈhɔːm,noun,,
+weraz,-2000,wiˈχros,noun,weraz,1
+weraz,200,ˈwirɑz,noun,,
+weraz,900,ˈwer,noun,,
+weraz,1400,ˈwɛr,noun,,
+wagnaz,-2000,ˈwogʲʱnos,noun,wagnaz,1
+wagnaz,200,ˈwɑɣnɑz,noun,,
+wagnaz,900,ˈwæjn,noun,,
+wagnaz,1400,ˈwæjn,noun,,
+arsaz,-2000,ˈχorsos,noun,arsaz,1
+arsaz,200,ˈɑrsɑz,noun,,
+arsaz,900,ˈæɑrs,noun,,
+arsaz,1400,ˈars,noun,,
+tharm,-2000,ˈtormos,noun,tharm,1
+tharm,200,ˈθ̠ɑrmɑz,noun,,
+tharm,900,ˈθ̠æɑrm,noun,,
+tharm,1400,ˈθ̠arm,noun,,
+ajją,-2000,ħoːwˈjom,noun,ajją,1
+ajją,200,ˈɑjjɑ̃,noun,,
+ajją,900,ˈæːj,noun,,
+ajją,1400,ˈæj,noun,,
+anadz,-2000,ˈħenħets,noun,anadz,1
+anadz,200,ˈɑnɑdz,noun,,
+anadz,900,ˈened,noun,,
+anadz,1400,ˈeːnd,noun,,
+lauhaz,-2000,ˈlowkos,noun,lauhaz,1
+lauhaz,200,ˈlɑwxɑz,noun,,
+lauhaz,900,ˈlæɑːx,noun,,
+lauhaz,1400,ˈlæj,noun,,
+gelwaz,-2000,gʲʱelˈʁʷwos,adj,gelwaz,1
+gelwaz,200,ˈɣelwɑz,adj,,
+gelwaz,900,ˈjeolu,adj,,
+gelwaz,1400,ˈjɛlɔw,adj,,
+snuzō,-2000,snuˈseħ,noun,snuzō,1
+snuzō,200,ˈsnuzɔː,noun,,
+snuzō,900,ˈsnoru,noun,,
+snuzō,1400,ˈsnɔːr,noun,,
+wihtiz,-2000,ˈwekʷtis,noun,wihtiz,1
+wihtiz,200,ˈwixtiz,noun,,
+wihtiz,900,ˈwixt,noun,,
+wihtiz,1400,ˈwixt,noun,,
+alaz,-2000,ˈχolos,noun,alaz,1
+alaz,200,ˈɑlɑz,noun,,
+alaz,900,ˈæl,noun,,
+alaz,1400,ˈal,noun,,
+ferhuz,-2000,ˈperkus,noun,ferhuz,1
+ferhuz,200,ˈɸerxuz,noun,,
+ferhuz,900,ˈfeorx,noun,,
+ferhuz,1400,ˈfɛːr,noun,,
+lindō,-2000,lenˈteħ,noun,lindō,1
+lindō,200,ˈlindɔː,noun,,
+lindō,900,ˈlind,noun,,
+lindō,1400,ˈliːn,noun,,
+kwernō,-2000,gʷerˈħneħ,noun,kwernō,1
+kwernō,200,ˈkʷernɔː,noun,,
+kwernō,900,ˈkweorn,noun,,
+kwernō,1400,ˈkwɛrn,noun,,
+funsaz,-2000,ˈpn̩tstos,adj,funsaz,1
+funsaz,200,ˈɸunsɑz,adj,,
+funsaz,900,ˈfuːs,adj,,
+funsaz,1400,ˈfuːs,adj,,
+faihaz,-2000,ˈpojkʲos,adj,faihaz,1
+faihaz,200,ˈɸɑjxɑz,adj,,
+faihaz,900,ˈfɑːx,adj,,
+faihaz,1400,ˈfɔw,adj,,
+buttaz,-2000,bʱuˈdʱnos,noun,buttaz,1
+buttaz,200,ˈbuttɑz,noun,,
+buttaz,900,ˈbytt,noun,,
+buttaz,1400,ˈbut,noun,,
+wapsō,-2000,ˈwobʱseħ,noun,wapsō,1
+wapsō,200,ˈwɑpsɔː,noun,,
+wapsō,900,ˈwæps,noun,,
+wapsō,1400,ˈwasp,noun,,
+gastiz,-2000,ˈgʱostis,noun,gastiz,1
+gastiz,200,ˈɣɑstiz,noun,,
+gastiz,900,ˈjiyst,noun,,
+ansuz,-2000,ˈħemsus,noun,ansuz,1
+ansuz,200,ˈɑnsuz,noun,,
+ansuz,900,ˈoːs,noun,,
+tiw,-2000,dejˈwos,noun,Tiw,1
+tiw,200,ˈtiːwɑz,noun,,
+tiw,900,ˈtiːw,noun,,
+ehwaz,-2000,ˈχekʲwos,noun,ehwaz,1
+ehwaz,200,ˈexʷɑz,noun,,
+ehwaz,900,ˈeox,noun,,
+gunþiz,-2000,ˈgʷʱn̩tis,noun,gunþiz,1
+gunþiz,200,ˈɣunθ̠iz,noun,,
+gunþiz,900,ˈguːθ̠,noun,,
+halsaz,-2000,ˈkolsos,noun,halsaz,1
+halsaz,200,ˈxɑlsɑz,noun,,
+halsaz,900,ˈxæɑls,noun,,
+wissaz,-2000,widˈtos,adj,wissaz,1
+wissaz,200,ˈwissɑz,adj,,
+wissaz,900,ˈwiːs,adj,,
+bergaz,-2000,ˈbʱergʲʱos,noun,bergaz,1
+bergaz,200,ˈberɣɑz,noun,,
+bergaz,900,ˈbeorg,noun,,
+kundaz,-2000,gʲn̩χˈtos,adj,kundaz,1
+kundaz,200,ˈkundɑz,adj,,
+kundaz,900,ˈkund,adj,,
+sessaz,-2000,sedˈtos,noun,sessaz,1
+sessaz,200,ˈsessɑz,noun,,
+sessaz,900,ˈsess,noun,,
+hwassaz,-2000,ˈkʷχdtos,adj,hwassaz,1
+hwassaz,200,ˈxʷɑssɑz,adj,,
+hwassaz,900,ˈxwæs,adj,,
+hleuþrą,-2000,ˈkʲlewtrom,noun,hleuþrą,1
+hleuþrą,200,ˈxlewθ̠rɑ̃,noun,,
+hleuþrą,900,ˈxleoːθ̠or,noun,,
+niþjaz,-2000,ˈnitjos,noun,niþjaz,1
+niþjaz,200,ˈniθ̠jɑz,noun,,
+niþjaz,900,ˈniθ̠θ̠ɑs,noun,,
+swehuraz,-2000,ˈswekʲuros,noun,swehuraz,1
+swehuraz,200,ˈswexurɑz,noun,,
+swehuraz,900,ˈsweoːr,noun,,
+marhaz,-2000,ˈmarkos,noun,marhaz,1
+marhaz,200,ˈmɑrxɑz,noun,,
+marhaz,900,ˈmæɑrx,noun,,
+haftaz,-2000,ˈkħptos,adj,haftaz,1
+haftaz,200,ˈxɑɸtɑz,adj,,
+haftaz,900,ˈxæft,adj,,
+swegrō,-2000,sweˈkʲreħ,noun,swegrō,1
+swegrō,200,ˈsweɣrɔː,noun,,
+swegrō,900,ˈswejer,noun,,
+hafraz,-2000,ˈkapros,noun,hafraz,1
+hafraz,200,ˈxɑɸrɑz,noun,,
+hafraz,900,ˈxæfer,noun,,
+nasō,-2000,ˈnħ̩seħ,noun,nasō,1
+nasō,200,ˈnɑsɔː,noun,,
+nasō,900,ˈnɑsu,noun,,
+neurô,-2000,neˈgʷʱroː,noun,neurô,1
+neurô,200,ˈnewrɔːː,noun,,
+neurô,1400,ˈneːr,noun,,
+aiwaz,-2000,ˈħoju,noun,aiwaz,1
+aiwaz,200,ˈɑjwɑz,noun,,
+aiwaz,900,ˈɑː,noun,,
+heruz,-2000,ˈkʲerus,noun,heruz,1
+heruz,200,ˈxeruz,noun,,
+heruz,900,ˈxeoru,noun,,
+tulguz,-2000,dl̩χˈgʱus,adj,tulguz,1
+tulguz,200,ˈtulɣuz,adj,,
+tulguz,900,ˈtulge,adj,,
+sengreen,-2000,ˈsenis,adj,sengreen,1
+sengreen,200,ˈsiniz,adj,,
+sengreen,900,ˈsin,adj,,
+magraz,-2000,ˈmħkʲros,adj,magraz,1
+magraz,200,ˈmɑɣrɑz,adj,,
+magraz,900,ˈmæjer,adj,,
+murth,-2000,ˈmr̩tom,noun,murth,1
+murth,200,ˈmurθ̠ɑ̃,noun,,
+murth,900,ˈmorθ̠,noun,,
+sīmô,-2000,sħiˈmoː,noun,sīmô,1
+sīmô,200,ˈsiːmɔːː,noun,,
+sīmô,900,ˈsiːmɑ,noun,,
+farmaz,-2000,ˈpormos,noun,farmaz,1
+farmaz,200,ˈɸɑrmɑz,noun,,
+farmaz,900,ˈfæɑrm,noun,,
+fetą,-2000,peˈdom,noun,fetą,1
+fetą,200,ˈɸetɑ̃,noun,,
+fetą,900,ˈsiːθ̠ˌfæt,noun,,
+abuhaz,-2000,ˈħepoʁʷkʷos,adj,abuhaz,1
+abuhaz,200,ˈɑβuxɑz,adj,,
+abuhaz,900,ˈɑfuxliːt͡ʃ,adj,,
+snood,-2000,snoχˈteħ,noun,snood,1
+snood,200,ˈsnɔːð̠ɔː,noun,,
+snood,final,ˈsnuːd,noun,,
+berkō,-2000,bʱerχˈgʲeħ,noun,berkō,1
+berkō,200,ˈberkɔː,noun,,
+berkō,900,ˈbeork,noun,,
+wurhtiz,-2000,wr̩gʲˈtis,noun,wurhtiz,1
+wurhtiz,200,ˈwurxtiz,noun,,
+wurhtiz,900,ˈwyrxt,noun,,
+juhtaz,-2000,jugˈtos,adj,juhtaz,1
+juhtaz,200,ˈjuxtɑz,adj,,
+juhtaz,900,jeˈixt,adj,,
+frijō,-2000,priˈχeħ,noun,frijō,1
+frijō,200,ˈɸrijɔː,noun,,
+frijō,900,ˈfreoː,noun,,
+hrīdrǭ,-2000,krejˈdʱroːn,noun,hrīdrǭ,1
+hrīdrǭ,200,ˈxriːð̠rɔ̃ː,noun,,
+hrīdrǭ,900,ˈxridder,noun,,
+dross,-2000,ˈdʱraːks,noun,dross,1
+dross,200,ˈdrɔːxs,noun,,
+dross,final,ˈdɹɒs,noun,,
+twifōtijaz,-2000,ˈdwipoːds,adj,twifōtijaz,1
+twifōtijaz,200,ˈtwiˌɸɔːtijɑz,adj,,
+twifōtijaz,900,ˈtwiˌfeːte,adj,,
+elmaz,-2000,ˈχelem,noun,elmaz,1
+elmaz,900,ˈelm,noun,,
+elmaz,1400,ˈɛlm,noun,,
+wough,-2000,ˈwonkos,adj,wough,1
+wough,200,ˈwɑ̃ːxɑz,adj,,
+wough,900,ˈwoːx,adj,,
+reudaz,-2000,χrewˈdʱos,adj,reudaz,1
+reudaz,200,ˈrewð̠ɑz,adj,,
+reudaz,900,ˈreoːd,adj,,
+hersô,-2000,ˈkʲerħsoː,noun,hersô,1
+hersô,900,ˈxærn,noun,,
+hersô,1400,ˈhɛrns,noun,,
+muldô,-2000,ml̩χˈdʱoː,noun,muldô,1
+muldô,900,ˈmoldɑ,noun,,
+muldô,1400,ˈmɔld,noun,,
+mili,-2000,ˈmelit,noun,mili,1
+mili,200,ˈmili,noun,,
+biridi,-2000,ˈbʱereti,verb.pres.3sg,biridi,1
+biridi,200,ˈbirið̠i,verb.pres.3sg,,
+itidi,-2000,ˈχedti,verb.pres.3sg,itidi,1
+itidi,200,ˈitið̠i,verb.pres.3sg,,
+rīdidi,-2000,ˈʁʷrejdʱχeti,verb.pres.3sg,rīdidi,1
+rīdidi,200,ˈriːð̠ið̠i,verb.pres.3sg,,
+biudidi,-2000,ˈbʱewdʱeti,verb.pres.3sg,biudidi,1
+biudidi,200,ˈbiwð̠ið̠i,verb.pres.3sg,,
+wēidi,-2000,ˈħweːχti,verb.pres.3sg,wēidi,1
+wēidi,200,ˈwɛːið̠i,verb.pres.3sg,,
+rēdidi,-2000,ˈχreχdʱeti,verb.pres.3sg,rēdidi,1
+rēdidi,200,ˈrɛːð̠ið̠i,verb.pres.3sg,,
+bīdidi,-2000,ˈbʱejdʱeti,verb.pres.3sg,bīdidi,1
+bīdidi,200,ˈbiːð̠ið̠i,verb.pres.3sg,,
+snīwidi,-2000,ˈsnejgʷʱeti,verb.pres.3sg,snīwidi,1
+snīwidi,200,ˈsniːwið̠i,verb.pres.3sg,,
+wigidi,-2000,ˈwegʲʱeti,verb.pres.3sg,wigidi,1
+wigidi,200,ˈwiɣið̠i,verb.pres.3sg,,
+akidi,-2000,ˈħegʲeti,verb.pres.3sg,akidi,1
+akidi,200,ˈɑkið̠i,verb.pres.3sg,,
+alidi,-2000,ˈħeleti,verb.pres.3sg,alidi,1
+alidi,200,ˈɑlið̠i,verb.pres.3sg,,
+apaliją,-2000,ˈħeboːl,noun,apaliją,1
+apaliją,200,ˈɑpɑlijɑ̃,noun,,
+hilidi,-2000,ˈkʲeleti,verb.pres.3sg,hilidi,1
+hilidi,200,ˈxilið̠i,verb.pres.3sg,,
+sēmô,-2000,ˈseχmoː,noun,sēmô,1
+sēmô,200,ˈsɛːmɔːː,noun,,
+arô,-2000,ˈʁʷeroː,noun,arô,1
+arô,200,ˈɑrɔːː,noun,,
+rekwaz,-2000,ˈχregʷos,noun,rekwaz,1
+rekwaz,200,ˈrekʷɑz,noun,,
+ferþuz,-2000,ˈpertus,noun,ferþuz,1
+ferþuz,200,ˈɸerθ̠uz,noun,,
+kuruz,-2000,gʷr̩ˈħus,adj,kuruz,1
+kuruz,200,ˈkuruz,adj,,
+haþuz,-2000,ˈkeʁʷtus,noun,haþuz,1
+haþuz,200,ˈxɑθ̠uz,noun,,
+þahsuz,-2000,ˈtaksus,noun,þahsuz,1
+þahsuz,200,ˈθ̠ɑxsuz,noun,,
+lungraz,-2000,χln̩ˈgʷʱros,adj,lungraz,1
+lungraz,200,ˈluŋgrɑz,adj,,
+astaz,-2000,ˈʁʷosdos,noun,astaz,1
+astaz,200,ˈɑstɑz,noun,,
+hleumô,-2000,ˈkʲlewmoː,noun,hleumô,1
+hleumô,200,ˈxlewmɔːː,noun,,
+mīgidi,-2000,ˈʁʷmejgʲʱeti,verb.pres.3sg,mīgidi,1
+mīgidi,200,ˈmiːɣið̠i,verb.pres.3sg,,
+stīgidi,-2000,ˈstejgʱeti,verb.pres.3sg,stīgidi,1
+stīgidi,200,ˈstiːɣið̠i,verb.pres.3sg,,
+ankwô,-2000,ˈʁʷengʷoː,noun,ankwô,1
+ankwô,200,ˈɑŋkʷɔːː,noun,,
+wulgī,-2000,wl̩ˈkʷiħs,noun,wulgī,1
+wulgī,200,ˈwulɣiː,noun,,
+amsaz,-2000,ˈʁʷemsos,noun,amsaz,1
+amsaz,200,ˈɑmsɑz,noun,,
+haihaz,-2000,keˈħikos,adj,haihaz,1
+haihaz,200,ˈxɑjxɑz,adj,,
+fadiz,-2000,poˈtis,noun,fadiz,1
+fadiz,200,ˈɸɑð̠iz,noun,,
+himinaz,-2000,ˈħekʲmoː,noun,himinaz,1
+himinaz,200,ˈximinɑz,noun,,
+fersnō,-2000,ˈtpeːrsneħ,noun,fersnō,1
+fersnō,900,ˈfiyrsn,noun,,
+nadraz,-2000,ˈnħtros,noun,nadraz,1
+nadraz,200,ˈnɑð̠rɑz,noun,,
+brimidi,-2000,ˈbʱremeti,verb.pres.3sg,brimidi,1
+brimidi,200,ˈbrimið̠i,verb.pres.3sg,,
+algiz,-2000,χolˈkʲis,noun,algiz,1
+algiz,200,ˈɑlɣiz,noun,,
+wiþiz,-2000,ˈweχitis,noun,wiþiz,1
+wiþiz,200,ˈwiθ̠iz,noun,,
+barō,-2000,bʱoˈreħ,noun,barō,1
+barō,200,ˈbɑrɔː,noun,,
+kwernuz,-2000,gʷerˈħnus,noun,kwernuz,1
+kwernuz,200,ˈkʷernuz,noun,,
+hūnaz,-2000,kʲuˈχnos,noun,hūnaz,1
+hūnaz,200,ˈxuːnɑz,noun,,
+tīhidi,-2000,ˈdejkʲeti,verb.pres.3sg,tīhidi,1
+tīhidi,200,ˈtiːxið̠i,verb.pres.3sg,,
+turþiz,-2000,ˈdr̩tis,noun,turþiz,1
+turþiz,200,ˈturθ̠iz,noun,,
+saidaz,-2000,sojˈtos,noun,saidaz,1
+saidaz,200,ˈsɑjð̠ɑz,noun,,
+draugaz,-2000,ˈdʱrowgʱos,noun,draugaz,1
+draugaz,200,ˈdrɑwɣɑz,noun,,
+kumþiz,-2000,ˈgʷm̩tis,noun,kumþiz,1
+kumþiz,200,ˈkumθ̠iz,noun,,
+tehwō,-2000,ˈdekʲweħ,noun,tehwō,1
+tehwō,200,ˈtexʷɔː,noun,,
+laisō,-2000,ˈlojseħ,noun,laisō,1
+laisō,200,ˈlɑjsɔː,noun,,
+stadaz,-2000,ˈstħtos,adj,stadaz,1
+stadaz,200,ˈstɑð̠ɑz,adj,,
+rikidi,-2000,ˈʁʷregʲeti,verb.pres.3sg,rikidi,1
+rikidi,200,ˈrikið̠i,verb.pres.3sg,,
+arþrą,-2000,ˈħerʁʷtrom,noun,arþrą,1
+arþrą,200,ˈɑrθ̠rɑ̃,noun,,
+awô,-2000,ˈħewħoː,noun,awô,1
+awô,200,ˈɑwɔːː,noun,,
+angô,-2000,ˈħengʲʱoː,noun,angô,1
+angô,200,ˈɑŋgɔːː,noun,,
+sparwaz,-2000,ˈspeːr,noun,sparwaz,1
+sparwaz,200,ˈspɑrwɑz,noun,,
+riutidi,-2000,ˈχrewdχti,verb.pres.3sg,riutidi,1
+riutidi,200,ˈriwtið̠i,verb.pres.3sg,,
+agiþō,-2000,ħoˈkʲeteħ,noun,agiþō,1
+agiþō,200,ˈɑɣiθ̠ɔː,noun,,
+hlīdō,-2000,kʲlejˈteħ,noun,hlīdō,1
+hlīdō,200,ˈxliːð̠ɔː,noun,,
+hlīþrō,-2000,ˈkʲlejtreħ,noun,hlīþrō,1
+hlīþrō,200,ˈxliːθ̠rɔː,noun,,
+hulisō,-2000,ˈkʲeloːs,noun,hulisō,1
+hulisō,200,ˈxulisɔː,noun,,
+aitaz,-2000,ˈħojdos,noun,aitaz,1
+aitaz,200,ˈɑjtɑz,noun,,
+laudaz,-2000,ˈχlowdʱos,noun,laudaz,1
+laudaz,200,ˈlɑwð̠ɑz,noun,,
+wididi,-2000,ˈwedʱeti,verb.pres.3sg,wididi,1
+wididi,200,ˈwið̠ið̠i,verb.pres.3sg,,
+lunaz,-2000,luˈχnos,noun,lunaz,1
+lunaz,200,ˈlunɑz,noun,,
+jeuką,-2000,ˈjewgom,noun,jeuką,1
+jeuką,200,ˈjewkɑ̃,noun,,
+wastijō,-2000,ˈwestis,noun,wastijō,1
+wastijō,900,ˈwæstling,noun,,
+hallaz,-2000,ˈkχlnos,adj,hallaz,1
+hallaz,200,ˈxɑllɑz,adj,,
+gesteraz,-2000,ˈdʱgʲʱjesteros,adj,gesteraz,1
+gesteraz,900,ˈjiystrɑn,adj,,
+andō,-2000,ħenχˈteħ,noun,andō,1
+andō,200,ˈɑndɔː,noun,,
+hlewaz,-2000,ˈkʲlewos,noun,hlewaz,1
+hlewaz,200,ˈxlewɑz,noun,,
+aunaz,-2000,ħeˈgʷnos,noun,aunaz,1
+aunaz,900,jeˈæɑːn,noun,,
