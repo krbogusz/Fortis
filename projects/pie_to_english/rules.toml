@@ -295,6 +295,27 @@ definition = [
     "g n → g g / [+syll] _ [+syll, stress: primary]",
 ]
 
+[deaspiration_before_s]
+time = -1010
+name = "A voiced aspirate deaspirates before */s/"
+description = """A PIE obstruent cluster agrees in voicing and aspiration with its LAST member, so
+*bʰ before *s is simply *b: *wóbʰseh₂ 'wasp' has *bs, not *bʰs.
+
+The pay-off is in Grimm's ordering. Deaspirated, the *b is no longer input to clause 1 (aspirates →
+fricatives) and falls to clause 3 (plain voiced stops → voiceless stops), which runs LAST precisely
+so that its output is not fricativised in turn — the same protection that gives *h₂éyǵs > *aiks and
+not **aixs. Result: *wapsō, with the attested STOP.
+
+Without it the *bʰ becomes *β, West Germanic devoices it, and the word comes out **wafsō."""
+definition = "[-son, -cont, +voice, glottal_aperture: spread] → [glottal_aperture: neutral, tension: neutral] / _ s"
+
+[s_to_m_before_m]
+time = -1010
+name = "*/sm/ > */mm/"
+description = """*h₁ésmi 'I am' > PGmc *immi (Goth. im, OE eom) — Ringe cites the pair. The *s
+assimilates completely to the following nasal."""
+definition = "s → m / _ m"
+
 [grimms_law]
 time = -1000
 name = "Grimm's law"
