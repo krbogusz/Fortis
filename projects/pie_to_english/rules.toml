@@ -1281,8 +1281,11 @@ definition = "ə → ∅ / _ #"
 time = 1600
 name = "The Great Vowel Shift"
 description = "Minkova ch. 8 — iː > aɪ, uː > aʊ, eː > iː, oː > uː, ɛː > eː, ɔː > oː, aː > ɛː"
+# The two new diphthongs are written with the LAX second element the modern column uses — RP's
+# PRICE is /aɪ/ and MOUTH /aʊ/, not /aj/ and /aw/. The glide letters are different segments from
+# the lax vowels, so writing them as glides misses every long-*i and long-*u word in the lexicon.
 definition = [
-    "iː → aj", "uː → aw",
+    "iː → a ɪ", "uː → a ʊ",
     "eː → iː", "oː → uː",
     "ɛː → eː", "ɔː → oː",
     "aː → ɛː",
@@ -1308,8 +1311,11 @@ definition = "x → h / # _"
 time = 1750
 name = "Coda r is lost with compensatory lengthening (non-rhotic RP)"
 description = "Minkova §5.2 — arm /ɑːm/, four /fɔː/"
+# The compensatory lengthening is for a STRESSED vowel only. An unstressed *-er gives a plain
+# short schwa in RP — other /ˈʌðə/, brother /ˈbɹʌðə/, weather /ˈwɛðə/ — and lengthening it there
+# produced **ʌðəː, with a long schwa no English word has.
 definition = [
-    "[+syll] → [length: long] / _ r [-syll]* $",
+    "[+syll, stress: primary] → [length: long] / _ r [-syll]* $",
     "r → ∅ / _ [-syll]* $",
 ]
 
@@ -1634,10 +1640,13 @@ it has the GOAT diphthong, and the modern column is transcribed in it."""
 definition = "oː → ə ʊ"
 
 [me_h_cluster_loss]
-time = 1300
+time = 1250
 name = "Initial /h/ is lost before a sonorant"
 description = """OE hwīt, hlūd, hnutu, hring lose their *h in Middle English: white, loud, nut,
-ring. The cluster *hC- is not tolerated, and the *h simply goes."""
+ring. The cluster *hC- is not tolerated, and the *h simply goes.
+
+t = 1250, BEFORE `me_x_to_h` (1300). That rule turns the initial *x into an *h, and at the same
+date it wins on file order and leaves this one nothing to match."""
 definition = "x → ∅ / # _ [+son, -syll]"
 
 [me_degemination]
@@ -1662,8 +1671,26 @@ name = "Short /e/ opens to /ɛ/"
 description = "RP's DRESS vowel: bed, nest, elk, helm."
 definition = "e → ɛ"
 
-[eme_foot_vowel]
+[eme_foot_strut_split]
 time = 1900
-name = "Short /u/ laxes to /ʊ/"
-description = "RP's FOOT vowel: full, wolf, wool."
-definition = "u → ʊ"
+name = "The FOOT–STRUT split: short /u/ is /ʊ/ after a labial before /l/, else /ʌ/"
+description = """The most famous split in the history of English. Short *u stays FOOT where a
+LABIAL precedes and an *l follows, and unrounds to STRUT everywhere else:
+
+    FOOT : *full > full,  *wulf > wolf,  *wull > wool
+    STRUT: *sunu > son,   *guma > gome
+
+Written as a single unconditioned lowering it takes full, wolf and wool with it."""
+definition = [
+    "u → ʊ / [+labial, -syll] _ l",
+    "u → ʌ",
+]
+
+[eme_th_voicing]
+time = 1200
+name = "The dental fricative voices between vowels"
+description = """other /ˈʌðə/, brother /ˈbɹʌðə/, weather /ˈwɛðə/ — the Old English /θ/ is voiced here.
+
+t = 1200, before the Middle English checkpoint: ME already HAS the voiced fricative (other is
+/ˈuðər/ there), so dating it in the modern block misses the column that records it."""
+definition = "θ → ð / [+syll] _ [+syll]"
