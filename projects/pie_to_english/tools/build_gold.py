@@ -501,6 +501,13 @@ def normalise(ipa: str, *, reconstructed: bool) -> str:
     s = ud.normalize("NFD", s)
     for mark in ("̝", "̞", "̥"):        # raised / lowered / voiceless
         s = s.replace(mark, "")
+    if not reconstructed:
+        # The NON-SYLLABIC mark on the second half of a modern diphthong. Wiktionary is not
+        # consistent about it — it writes RP boat /bəʊ̯t/ and five /faɪ̯v/ but sour /saʊə/ and
+        # otter /ˈɒtə/, the same segment spelled two ways in the same column — so it is a fact
+        # about the transcription, not about the vowel. The reconstructed columns keep it: there
+        # *ɑi̯ is how the source tells a diphthong from two syllables, and CONVENTIONS reads it.
+        s = s.replace("̯", "")
     s = ud.normalize("NFC", s)
     if reconstructed:
         for theirs, ours in CONVENTIONS:

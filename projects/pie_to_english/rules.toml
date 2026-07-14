@@ -1670,9 +1670,14 @@ description = "RP's LOT vowel: fox, ox, otter."
 definition = "ɔ → ɒ"
 
 [eme_short_a_backs]
-time = 1900
+time = 1740
 name = "Short /a/ backs to /ɑ/ before /ɹ/"
-description = "RP's START vowel, in the non-rhotic pattern the modern column is transcribed in: arm, barm."
+description = """RP's START vowel, in the non-rhotic pattern the modern column is transcribed in:
+arm, barm, hard.
+
+t = 1740, BEFORE pde_r_loss (1750) — and that is the whole point. Dated in the 1900 block it looked
+for an /ɹ/ that the r-loss had already deleted, and arm, barm, hard came out **aːm, **baːm, **haːd
+with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there."""
 definition = "a → ɑ / _ ɹ"
 
 [eme_goat_diphthongisation]
@@ -1809,8 +1814,12 @@ definition = "[+syll, length: short, stress: primary, aperture: !high] → [leng
 [eme_trap_vowel]
 time = 1900
 name = "ME /a/ is RP /æ/"
-description = "The TRAP vowel: slack, black, gnat."
-definition = "a → æ"
+description = """The TRAP vowel: slack, black, gnat.
+
+NOT the *a of a DIPHTHONG. The Great Vowel Shift has just made RP's PRICE /aɪ/ and MOUTH /aʊ/ out
+of the ME long high vowels, and their first element is the same low *a this rule is looking for:
+five came out **fæɪf and sour **sæʊə."""
+definition = "a → æ / _ [-syll]"
 
 
 [me_ae_raising]
@@ -1959,3 +1968,56 @@ description = """OE word, wyrm, worold > ME wurd, wurm, wurld — the *w rounds 
 the *r keeps it back. The vowel is already ROUNDED (OE o and y): ME werk, wer, kwern keep their
 unrounded *e in the same environment, and a rule written for any short vowel gave **wurk, **wur."""
 definition = "[+syll, length: short, +rounded] → u / w _ r"
+
+
+# ─── The pre-/r/ vowels, all of them dated BEFORE pde_r_loss (1750) ───────────────────────────
+# Non-rhotic RP does not simply drop the /r/ — the vowel in front of it went its own way first,
+# and each of these has to be stated while the /r/ that conditions it is still on the page.
+
+[pde_nurse_vowel]
+time = 1740
+name = "NURSE: a short vowel before coda /ɹ/ becomes /ɜː/"
+description = "ME wurd, herd, first, bird > RP /wɜːd/, /hɜːd/, /fɜːst/, /bɜːd/."
+definition = "[+syll, length: short, aperture: !low] → ɜː / _ ɹ [-syll]* $"
+
+[pde_centring_diphthongs]
+time = 1745
+name = "NEAR, SQUARE, CURE: a long vowel before /ɹ/ takes a schwa offglide"
+description = """RP's centring diphthongs. The Great Vowel Shift has already raised the vowel; the
+/ɹ/ then breaks into a schwa as it goes — beer /bɪə/, deer /dɪə/, share /ʃɛə/, sour /saʊə/.
+
+Dated 1745: after the shift (1600), which decides WHICH vowel is there, and before pde_r_loss."""
+definition = [
+    "iː → ɪ ə / _ ɹ",
+    "ɛː → ɛ ə / _ ɹ",
+    "uː → ʊ ə / _ ɹ",
+]
+
+[pde_force_vowel]
+time = 1550
+name = "FORCE: a long /oː/ before /ɹ/ lowers instead of raising"
+description = """ME flōr, hōr, bōrd do not join the Great Vowel Shift's ō > uː — they lower, and RP
+has floor /flɔː/, whore /hɔː/, board /bɔːd/. Dated 1550, before the shift (1600), so that the
+vowel is no longer an /oː/ when the shift comes looking for one."""
+definition = "oː → ɔː / _ r"
+
+[pde_meat_merger]
+time = 1700
+name = "The MEAT vowel joins MEET: /eː/ raises to /iː/"
+description = """The last step of the Great Vowel Shift, and it is a SEPARATE step — ME ɛː reaches
+/eː/ in the shift itself (1600) and only then goes on to /iː/, in the eighteenth century. Written
+inside emode_vowel_shift the two clauses fire in the same pass and *drɛːm stops at **dreːm: the
+rule list applies once, so a chain of raisings needs one date per link.
+
+    ME drēm, strēm, mēd, bēver  >  RP dream, stream, mead, beaver — all /iː/."""
+definition = "eː → iː"
+
+[pde_face_vowel]
+time = 1750
+name = "FACE: /ɛː/ diphthongises to /eɪ/"
+description = """ME nāme, bāne, ācre, hāven reach /ɛː/ in the Great Vowel Shift and RP has the FACE
+diphthong: /neɪm/, /beɪn/, /eɪkə/, /heɪvən/.
+
+Dated 1750, AFTER pde_meat_merger (1700) — otherwise its /eː/ output is raised straight on to /iː/
+and bane comes out **biːn."""
+definition = "ɛː → e ɪ"
