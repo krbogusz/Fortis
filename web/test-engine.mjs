@@ -140,7 +140,7 @@ try {
   // 12. Errors + Error context + blame populated: a word with a deliberately-wrong `final`
   //     makes one assessed miss, so finalize_run's errors (per-stage confusions), error
   //     context (per-stage autopsy), and blame branches all fill through the real Pyodide path.
-  py.globals.set("_wd2", '"apa" = { gloss = "wrong", final = "xxx" }\n"ata" = { gloss = "ok", final = "ata" }\n');
+  py.globals.set("_wd2", '[[words]]\nid = "apa"\ngloss = "wrong"\nforms = [{ time = 0, ipa = "apa" }, { time = "final", ipa = "xxx" }]\n\n[[words]]\nid = "ata"\ngloss = "ok"\nforms = [{ time = 0, ipa = "ata" }, { time = "final", ipa = "ata" }]\n');
   py.runPython(`write_file("words.toml", _wd2)`);
   const diag = JSON.parse(py.runPython("run_derivations()").toString());
   if (diag.error) throw new Error("errors run failed: " + JSON.stringify(diag.error));
@@ -180,7 +180,7 @@ try {
   // 13. Single-word mode: one lexicon word with a wrong `final` (populates accuracy/errors/
   //     blame + single_*.csv), one found by gloss (derives its IPA key), and one absent word
   //     (card only, null accuracy — and the stale target report is cleared).
-  py.globals.set("_wd3", '"apa" = { gloss = "wrong", final = "xxx" }\n"ata" = { gloss = "ok", final = "ata" }\n');
+  py.globals.set("_wd3", '[[words]]\nid = "apa"\ngloss = "wrong"\nforms = [{ time = 0, ipa = "apa" }, { time = "final", ipa = "xxx" }]\n\n[[words]]\nid = "ata"\ngloss = "ok"\nforms = [{ time = 0, ipa = "ata" }, { time = "final", ipa = "ata" }]\n');
   py.runPython(`write_file("words.toml", _wd3)`);
   const single = JSON.parse(py.runPython(`run_single("apa")`).toString());
   if (single.error) throw new Error("run_single failed: " + JSON.stringify(single.error));

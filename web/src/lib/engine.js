@@ -65,7 +65,7 @@ from src.fortis.analysis.warnings import syllabification_warnings, render_warnin
 from src.fortis.analysis.diagnostics import match_set, unsatisfiable_rules
 from src.fortis.main import _build_derivations_csv, _build_matrix_csv, _build_rule_firings_csv
 from src.fortis.analysis.dependencies import build_dependency_graph, dependency_layout, render_dependency_html
-from src.fortis.models.inventories import Word
+from src.fortis.models.inventories import Attestation, Word
 _SUB = re.compile(r"#\\d+$")
 DEFAULT = "/work/projects/default"
 OVERLAY = "/work/overlay"
@@ -164,8 +164,8 @@ def derive_batch(start, count):
     if "project" not in _SESSION: return json.dumps([])  # session superseded/cleared — caller aborts
     project, rules = _SESSION["project"], _SESSION["rules"]
     out = []
-    for ipa, word in _SESSION["words"][start:start+count]:
-        d, rendered = _derive_one(project, rules, ipa, word)
+    for _id, word in _SESSION["words"][start:start+count]:
+        d, rendered = _derive_one(project, rules, word.seed.ipa, word)
         _SESSION["acc"].append(d)
         out.append(rendered)
     return json.dumps(out)
@@ -330,11 +330,11 @@ def analysis_step():
     return json.dumps({"done": _SESSION["_step"], "total": len(labels), "result": None})
 
 def _find_word(project, word_str):
-    # Locate word_str in the lexicon by IPA key or gloss; else a bare Word (no target).
-    for ipa, w in project.words.items():
-        if ipa == word_str or w.gloss == word_str:
-            return ipa, w, True
-    return word_str, Word(ipa=word_str), False
+    # Locate word_str by id, gloss or seed IPA; else a bare seed-only Word (no target).
+    for word_id, w in project.words.items():
+        if word_str in (word_id, w.gloss, w.seed.ipa):
+            return w.seed.ipa, w, True
+    return word_str, Word(id=word_str, forms={0: Attestation(ipa=word_str)}), False
 
 def run_single(word_str):
     # Derive one word (independent of the batched full-run session): find it in the lexicon
