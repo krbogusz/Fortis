@@ -152,6 +152,17 @@ PREFORM_FIXES = {
                             # them apart: *mundiz has a voiced *d (Verner fired), *munþaz a
                             # voiceless *þ (it did not). That is the whole doctrine in one pair.
 
+    # ── ABLAUT again: the attested DIPHTHONG refutes the cited grade ─────────────────────────
+    # PIE *ey and *oy do not fall together in Germanic, and Ringe is explicit about which is which:
+    # *ey RAISES to *ī (*deywós > *Tīwaz, *bʰéydʰonti > *bīdandi, §5.3.2 (iv)), while *oy gives the
+    # diphthong *ai. So an attested Germanic *ai standing against a cited *ey is not a rule failure
+    # — it is the wrong ablaut grade, and the diphthong says so. The cascade derives *gīstaz,
+    # *līþaz, *hītaz from the e-grade forms below, which is exactly right and exactly not what is
+    # attested. Same move as *algiz : *h₁olḱís above, one vowel over.
+    "gaistaz": "ǵʰóysdos",  # *gaistaz — attested *ai ⇒ o-grade; the cited *ǵʰéysdos would give *gīstaz
+    "laiþaz": "h₂lóytos",   # *laiþaz — attested *ai ⇒ o-grade
+    "haitaz": "kóh₂idos",   # *haitaz — attested *ai ⇒ o-grade
+
     # ── STEM CLASS: the attested ENDING names the declension ─────────────────────────────────
     # *-ą is neuter, *-ǭ / *-ō feminine, *-az a masculine a-stem, *-uz a u-stem, *-iz an i-stem.
     # Wiktionary cites each of these in a class its Germanic reflex does not continue; the ending
