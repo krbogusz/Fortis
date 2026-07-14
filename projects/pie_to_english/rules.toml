@@ -2086,3 +2086,16 @@ a stop after an *l — and only after an *l:
 
 t = 315, immediately after the nasal-spirant loss, for exactly that reason."""
 definition = "θ̠ → d / [+lat] _"
+
+[oe_final_j_loss]
+time = 471
+name = "A word-final *j after a vowel is lost"
+description = """The *-ijaz nouns end in a stranded *j once the ending is gone — *andijaz > *andij,
+*mēkijaz > *mēkij — and Old English has ende, mēċe. The *j simply goes, and the *i before it is the
+*-e of the citation form (oe_unstressed_i_to_e, 472).
+
+AFTER A VOWEL. Written unrestricted it also takes the second half of the GEMINATE *jj that West
+Germanic gemination has just made, and *hagjō > heċġ came out **heċ."""
+definition = "j → ∅ / [+syll] _ #"
+
+
