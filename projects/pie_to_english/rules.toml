@@ -2070,3 +2070,19 @@ name = "A long /uː/ shortens to /ʌ/ before /ð̠/"
 description = """The Great Vowel Shift takes ME ōther, brōther, mōther to /uː/, and RP has the STRUT
 vowel: /ˈʌðə/, /ˈbɹʌðə/, /ˈmʌðə/. Dated 1750, before the FOOT–STRUT split would have to see it."""
 definition = "uː → ʌ / _ ð̠"
+
+[wg_th_hardening_after_l]
+time = 315
+name = "*þ hardens to *d after *l"
+description = """*hulþaz > OE hold, *gulþīnaz > golden, *felþuz > feld. The dental fricative becomes
+a stop after an *l — and only after an *l:
+
+  after *r it does NOT — *murþą is OE morþ, *werþaz is weorþ;
+  after a NASAL there is no *þ left to harden — the nasal-spirant loss (310) has just taken *tanþs,
+  *munþaz, *kunþaz, *anþeraz to *tōþ, *mūþ, *cūþ, *ōþer, lengthening the vowel and keeping the
+  fricative. Written for any sonorant AND dated before that rule, this hardened the *þ while the
+  nasal was still in front of it and gave **tand, **mund, **kund, **ander for five of Old English's
+  most ordinary words.
+
+t = 315, immediately after the nasal-spirant loss, for exactly that reason."""
+definition = "θ̠ → d / [+lat] _"
