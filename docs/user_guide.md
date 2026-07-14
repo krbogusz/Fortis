@@ -824,7 +824,7 @@ per-phase timing, and the files saved.
 ### 8.4 Single-word derivation
 
 `--single WORD` derives one word instead of the whole project. The word is looked up in
-the lexicon by its IPA key or gloss — so it carries any attested targets — and is
+the lexicon by its `id`, gloss or seed IPA — so it carries any attested targets — and is
 otherwise derived bare. It prints a compact summary and writes the same reports
 prefixed `single_` into the project's `reports/` subfolder: `single_derivations.csv`
 always, and — when the word carries a target — `single_accuracy.csv`,

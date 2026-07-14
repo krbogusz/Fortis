@@ -28,7 +28,7 @@ onset/coda constraints decide where the boundaries fall, and rules can refer
 to them directly.
 
 When the lexicon records the forms a word is *meant* to reach — its attested
-final reflex, and optionally its form at intermediate historical stages — Fortis
+final reflex, and optionally its form at intermediate historical checkpoints — Fortis
 measures its own output's distance to them: a phone-level and a finer feature-weighted
 edit distance, per stage and for the final surface, so a rule set's accuracy can
 be tracked as it is built.
@@ -165,7 +165,7 @@ python -m src.fortis.main --project projects/latin_to_french --lint
 ```
 
 `--single WORD` derives just one word instead of the whole project — looked up in the
-lexicon by its IPA key or gloss (so it carries any attested targets), or derived bare if
+lexicon by its id, gloss or seed IPA (so it carries any attested targets), or derived bare if
 absent — printing a compact summary and writing the same reports prefixed `single_`
 (`single_derivations.csv` always; `single_accuracy.csv`, `single_errors.csv`, … when the
 word has a target).
@@ -204,15 +204,31 @@ npm run dev
 
 ### Accuracy against attested forms
 
-A lexicon entry may record the form the engine should reproduce — its `final`
-reflex, and optionally its form at intermediate historical `stages` keyed by rule
-time. Both the table form (with targets) and the bare `word = "gloss"` form
-(unassessed) are accepted:
+**A word is a series of attested forms through time.** The earliest is the derivation
+**seed** — the input — and every later one is a **target** the derived form is scored
+against at that time. `final` is the surface, after every rule. Each form may also carry
+a grammatical **category**, which a rule can be scoped to.
 
 ```toml
-"ˈɑmɑt" = {gloss = "aime", final = "ɛm", 600 = "ˈãj̃məθ", 1400 = "ɛm"}
-"tag"   = "final devoicing"
+[[words]]
+id = "aime"                                  # a stable id, NOT the gloss and not the IPA
+gloss = "aime"
+forms = [
+  { time = -100,    ipa = "ˈɑmɑt", category = "verb.pres.3sg" },   # the seed: the input
+  { time = 600,     ipa = "ˈãj̃məθ" },                              # a target at t=600
+  { time = "final", ipa = "ɛm" },                                  # the modern surface
+]
 ```
+
+A word that is only a seed — nothing to score — takes the concise form:
+
+```toml
+"tag" = "final devoicing"
+```
+
+The id matters because an IPA string is a poor identifier: French *porte* continues both
+Latin *portam* 'door' and *portat* '(s)he carries', and the gloss cannot tell them apart
+either. `porte-n` / `porte-v` can.
 
 Each derived form is compared to its target with two edit distances: a **phone**
 distance (a base segment plus its combining marks is one phone; an exact match is
@@ -222,9 +238,9 @@ metathesis counts as one). Both are reported per word and in aggregate, per stag
 and for the final surface, in `accuracy.csv` / `distance_to_target.csv` — written on
 every run that has attested forms.
 
-Intermediate `stages` are measured by matching the derived snapshot at rule-time T
-against the attested form at stage T, so those rows are only meaningful when the
-rule times are calibrated to the stage timescale — the `final` score never
+Intermediate targets are measured by matching the derived snapshot at rule-time T
+against the attested form at time T, so those rows are only meaningful when the
+rule times are calibrated to the same timescale as the lexicon — the `final` score never
 depends on that alignment.
 
 ### Diagnosing a rule set
@@ -482,15 +498,23 @@ fortis/
 ## Current limitations and future directions
 
 - **Deterministic only.** A rule either fires everywhere its structural
-  description matches, or is restricted to specific words via `words`;
-  there's no notion of a rule applying only some of the time (sporadic or
-  gradient change beyond that word-level restriction).
-- **Limited morphological structure.** The lexicon is a flat list of
-  IPA/gloss pairs. A morpheme boundary (`-`) *is* a first-class, rule-editable
-  segment — it steers syllabification and blocks adjacency (§5.2 of the user
-  guide) — but there's no affixation or reduplication machinery, so an
-  affix-conditioned process or a reduplicative copy of a span isn't directly
-  expressible.
+  description matches, or is restricted — to named words via `words`, or to a
+  word class via `categories`. There's no notion of a rule applying only *some
+  of the time* (sporadic or gradient change beyond those restrictions).
+- **Morphology is an annotation, not a structure.** A word carries a
+  grammatical `category` at each point in its history — an opaque,
+  project-defined string — and a rule can be scoped to it, so a
+  morphologically conditioned change (one that applies to the verbs but not
+  the nouns) *is* expressible, as is a reanalysis (give a different category
+  at a later time). But the category is **given, not derived**: the engine
+  predicts only the IPA, and never the category. A morpheme boundary (`-`) is
+  likewise a first-class, rule-editable segment — it steers syllabification
+  and blocks adjacency (§5.2 of the user guide) — but there is no affixation
+  or reduplication machinery, so an affix-conditioned process or a
+  reduplicative copy of a span is not directly expressible.
+
+  Worth keeping in view: a category-scoped rule is **not a sound law**, and a
+  cascade that needs one is making a weaker claim about the words it lands.
 - **Round-trip identity isn't guaranteed.** Only round-trip _stability_ is
   (parsing and re-rendering a form twice yields the same string both
   times) — an inventory's letters and diacritics may not spell a derived
