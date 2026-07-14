@@ -1074,11 +1074,15 @@ description = "Minkova §6.3 — FOOT-FEET, FULL-FILL, SELL-SALE"
 # The raising is of the SHORT *æ. Ringe & Taylor's fifty-odd examples are all short, and the long
 # ǣ does not take part: OE dǣd, sǣd, hǣs (< *dēdiz, *sēdiz, *haisiz) keep it, and an unrestricted
 # clause raised all three to **dēd, **sēd, **hēs.
+# FRONT IS NOT ENOUGH — the result is ADVANCED as well, exactly as oe_a_fronting already says. The
+# front vowels come in pairs on this axis (æ low front atr vs a low front, e mid front atr vs ɛ
+# mid front rtr), and a rule that moves only the lingual node lands on the wrong member of each:
+# *haisiz came out **hās for hǣs, and *banjō **benn with an ɛ for the e of benn, stede, here, mere.
 definition = [
-    "[+syll, +back] → [+front, back: none] / _ [-syll]* [+syll, aperture: high, +front]",
-    "[+syll, +back] → [+front, back: none] / _ [-syll][-syll]* j",
-    "[+syll, aperture: low, +front, length: short] → [aperture: mid] / _ [-syll]* [+syll, aperture: high, +front]",
-    "[+syll, aperture: low, +front, length: short] → [aperture: mid] / _ [-syll][-syll]* j",
+    "[+syll, +back] → [+front, back: none, advancement: atr] / _ [-syll]* [+syll, aperture: high, +front]",
+    "[+syll, +back] → [+front, back: none, advancement: atr] / _ [-syll][-syll]* j",
+    "[+syll, aperture: low, +front, length: short] → [aperture: mid, advancement: atr] / _ [-syll]* [+syll, aperture: high, +front]",
+    "[+syll, aperture: low, +front, length: short] → [aperture: mid, advancement: atr] / _ [-syll][-syll]* j",
 ]
 
 # West Germanic hardens the voiced velar fricative to a stop: *trugaz > trog, *jungaz > jung.
@@ -1898,3 +1902,14 @@ definition = [
     "øː → eː",
     "ø → e",
 ]
+
+
+[oe_final_long_high_shortening]
+time = 458
+name = "A final long high vowel shortens"
+description = """*wulbī, *albī end in a long *ī, and Old English has wylf, ælf — the ending is gone
+altogether. It gets there in two steps, and only the first is stated here: the long vowel shortens
+word-finally, and `oe_high_vowel_deletion` (460) then deletes it as the short *-i it now is, under
+the same heavy-syllable condition as every other final high vowel. Stated as one rule it would say
+the weight condition twice."""
+definition = "[+syll, length: long, aperture: high] → [length: short] / _ #"
