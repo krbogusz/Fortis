@@ -515,6 +515,7 @@ def main() -> None:
             "final": final,
             "_pie": pie_form, "_cited": c["pie"],  # _cited keeps the hyphens: see richness()
             "_sense": c["gloss"],                   # the Wiktionary sense: see sense()
+            "_cell": c.get("cell", ""),             # a verb's paradigm cell: 1sg / 3sg
             "_pgmc": c["pgmc"], "_oe": c["oe"], "_me": c["me"],
             "_variants": " ".join(reflexes[1:]), "_pos": c["pos"],
         })
@@ -595,7 +596,12 @@ def main() -> None:
     # can name, rather than something a build flag has to hold apart.
     def category_of(row) -> str:
         pos = row["_pos"]
-        return "verb.pres.3sg" if pos == "verb" else pos
+        if pos != "verb":
+            return pos
+        # The cell is part of what the word IS — the 1sg and the 3sg of one verb are two
+        # different words here, with different preforms and different targets, and a rule that
+        # wants one and not the other can now say so.
+        return f"verb.pres.{row['_cell']}"
 
     # The id is derived from the gloss, not from the IPA. An IPA string is a poor identifier —
     # unreadable in a report, and two etyma can transliterate alike — and the rows above are

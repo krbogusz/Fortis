@@ -25,6 +25,7 @@ import collections
 import json
 import os
 import sys
+import unicodedata as ud
 
 from pathlib import Path
 
@@ -177,7 +178,75 @@ def finite_verb(d: dict, pie: str) -> dict | None:
     # INFINITIVE, so it cannot supply the 3sg; and the modern 3sg -s is Northumbrian analogy, not
     # the phonological continuation of -þ. A verb is scored at Proto-Germanic and nowhere else.
     return {
-        "pie": pie, "pgmc": third, "pgmc_ipa": f"/{ipa}/",
+        "pie": pie, "pgmc": third, "pgmc_ipa": f"/{ipa}/", "cell": "3sg",
+        "oe": "", "oe_ipa": "", "me": "", "me_ipa": "", "me_variants": 0, "pde": [],
+        "pos": "verb", "gloss": gloss_of(d),
+    }
+
+
+def first_singular(d: dict) -> str:
+    """The Proto-Germanic 1sg present active indicative, from the inflection table."""
+    want = {"active", "indicative", "singular", "first-person"}
+    for f in d.get("forms", []):
+        if want <= set(f.get("tags") or []) and f.get("form") not in (None, "", "-"):
+            return f["form"]
+    return ""
+
+
+def load_pie_first_singulars() -> dict[str, str]:
+    """{PIE lemma -> its 1sg present}. The PIE record carries a full paradigm, same as the PGmc one.
+
+    Needed because the chain only carries the PIE *lemma* (from the Germanic record's etymology
+    template), and the lemma is the 3sg. The 1sg has to be read out of the PIE record itself.
+    """
+    want = {"first-person", "singular", "indicative"}
+    out: dict[str, str] = {}
+    for line in open(K / "pie.jsonl", encoding="utf-8"):
+        d = json.loads(line)
+        if d.get("pos") != "verb":
+            continue
+        for f in d.get("forms", []):
+            if want <= set(f.get("tags") or []) and f.get("form") not in (None, "", "-"):
+                out.setdefault(d["word"], f["form"])
+                break
+    return out
+
+
+def finite_verb_1sg(d: dict, pie: str, pie_1sg: str) -> dict | None:
+    """A verb chain in the 1sg present — the cell that gets the WEAK verbs back.
+
+    The 3sg had to exclude the 30 weak presents because Ringe reaches their *-iþi by an explicit
+    ANALOGY (see `is_weak_present`), which no sound change can produce. The 1sg has no such
+    problem, and the reason is structural: **its ending has no consonant.** Ringe's own paradigm
+    gives 1sg *līhwō, *werþō, *kwemō, *bidjō, *lētō — and *bidjō sits right beside the *bidiþi he
+    marks as analogical. Verner's Law needs a fricative to voice; *-ō offers none, so the cell the
+    analogy ruined in the 3sg is untouched in the 1sg, and the weak verbs are scorable again.
+
+    It is also a genuine second test of the roots we already have, not a duplicate of them:
+
+        3sg *b-i-ridi   — *e RAISED to *i before the following *i
+        1sg *b-e-rō     — no following *i, so the raising must NOT fire
+
+    A minimal pair, and the 1sg is the negative control.
+
+    The filters mirror the 3sg's, one cell over: the PIE end must be a THEMATIC present 1sg
+    (*-oh₂), which rejects the perfect (*wóydh₂e) and the athematic (*h₁édmi); and the Germanic
+    end must carry the present *-ō, which rejects the preterite-presents (*wait, *kann, *þarf)
+    whose 1sg is a perfect.
+    """
+    first = first_singular(d)
+    if not first or not first.endswith("ō"):
+        return None
+    bare = "".join(c for c in ud.normalize("NFD", pie_1sg) if c not in "́̀")
+    if not bare.endswith("oh₂"):
+        return None
+    if any(x in pie_1sg for x in "-(") or " " in pie_1sg:
+        return None
+    ipa = pgmc_ipa.transcribe(first)
+    if not ipa:
+        return None
+    return {
+        "pie": pie_1sg, "pgmc": first, "pgmc_ipa": f"/{ipa}/", "cell": "1sg",
         "oe": "", "oe_ipa": "", "me": "", "me_ipa": "", "me_variants": 0, "pde": [],
         "pos": "verb", "gloss": gloss_of(d),
     }
@@ -197,7 +266,9 @@ def main() -> None:
     """Walk every Proto-Germanic record into a chain and write chains.json."""
     oe_ipa = load_ipa(K / "oe.jsonl")
     me_ipa = load_ipa(K / "me.jsonl")
-    print(f"OE IPA keys: {len(oe_ipa)}   ME IPA keys: {len(me_ipa)}", file=sys.stderr)
+    pie_1sg = load_pie_first_singulars()
+    print(f"OE IPA keys: {len(oe_ipa)}   ME IPA keys: {len(me_ipa)}   "
+          f"PIE 1sg cells: {len(pie_1sg)}", file=sys.stderr)
 
     stats: collections.Counter[str] = collections.Counter()
     by_etymon: dict[tuple[str, str], dict] = {}
@@ -210,12 +281,20 @@ def main() -> None:
         stats["has_pie_parent"] += 1
 
         if d.get("pos") == "verb":
-            # Verbs are scored in the 3sg present, where PIE and Germanic name the same cell.
-            verb = finite_verb(d, pie)
-            if verb:
-                stats["verb (3sg present)"] += 1
-                by_etymon[(pie, verb["pgmc"])] = verb
-            else:
+            # A verb is scored in the finite cells where PIE and Germanic name the SAME one — the
+            # 3sg and the 1sg. They are not duplicates of each other: the 1sg is a negative control
+            # on the *e > *i raising (*berō vs *biridi), and it is the only cell in which the WEAK
+            # verbs are scorable at all, their 3sg ending being analogical (see finite_verb_1sg).
+            got = False
+            for cell, chain in (
+                ("3sg", finite_verb(d, pie)),
+                ("1sg", finite_verb_1sg(d, pie, pie_1sg.get(pie, ""))),
+            ):
+                if chain:
+                    stats[f"verb ({cell} present)"] += 1
+                    by_etymon[(chain["pie"], chain["pgmc"])] = chain
+                    got = True
+            if not got:
                 stats["verb rejected (wrong cell)"] += 1
             continue
 

@@ -239,6 +239,31 @@ Two filters keep the pair honest, and between them they reject more verbs than t
   `*þarf`) continue PIE perfects and take perfect endings, so `*ǵn̥néh₃ti > *kann` is the same
   wrong-cell pairing one tense over.
 
+#### The 1sg gets the weak verbs back
+
+A verb is scored in **two** cells, the 3sg and the 1sg, and they are not duplicates of each other.
+
+The 3sg has to exclude the 30 weak presents (below): Ringe reaches their `*-iþi` by an explicit
+**analogy**, and no sound change produces it. **The 1sg has no such problem, and the reason is
+structural — its ending has no consonant.** Ringe's own paradigm gives 1sg `*līhwō`, `*werþō`,
+`*kwemō`, `*bidjō`, `*lētō` — and `*bidjō` sits right beside the `*bidiþi` he marks analogical.
+Verner's Law needs a fricative to voice; `*-ō` offers none. The cell the analogy ruined in the 3sg
+is untouched in the 1sg, so the weak verbs are scorable again — `*satjō`, `*bidjō`, `*ligjō`.
+
+It is also a genuine second test of the roots, not a repeat of them:
+
+| | | |
+|---|---|---|
+| 3sg | \*b**i**ridi | \*e RAISED to \*i before the following \*i |
+| 1sg | \*b**e**rō | no following \*i, so the raising must NOT fire |
+
+A minimal pair, with the 1sg as the negative control.
+
+The filters mirror the 3sg's, one cell over: the PIE end must be a **thematic** present 1sg
+(`*-oh₂`), which rejects the perfect (`*wóydh₂e`) and the athematic (`*h₁édmi`); and the Germanic
+end must carry the present `*-ō`, which rejects the preterite-presents (`*wait`, `*kann`, `*þarf`),
+whose 1sg is a perfect. **37 verbs, 23 exact (62%), untuned.**
+
 #### The weak presents are excluded, because Ringe reaches them by analogy
 
 The surviving 49 verbs split cleanly in two on their **Germanic ending**:
