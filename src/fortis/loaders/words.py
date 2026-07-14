@@ -4,22 +4,29 @@ import csv
 from pathlib import Path
 
 from src.fortis.general.file_handling import load_toml_file
-from src.fortis.models.inventories import Word, WordInventory
+from src.fortis.models.inventories import Attestation, Word, WordInventory
 from src.fortis.result import Err, Ok, Result
 
-_RESERVED_KEYS = ("gloss", "final", "frequency")
+# The literal spelling of the untimed slot in both formats. It is not a year: an untimed rule
+# runs after every timed one, so the form after it cannot be given a date. See
+# :func:`~src.fortis.models.inventories.time_order`.
+FINAL = "final"
+
+_WORD_KEYS = ("id", "gloss", "frequency", "forms")
+_CSV_COLUMNS = ("id", "time", "ipa", "category", "gloss", "frequency")
 
 
 def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
     """Load words from a TOML or CSV lexicon file, dispatched by extension.
 
-    Both formats carry the same schema — an IPA key with an optional ``gloss``, ``final``
-    (attested surface), ``frequency`` (positive-integer token weight, default 1), and any
-    number of integer-keyed *stage* forms (the attested form at that time). ``final`` and the
-    stages are target annotations for accuracy; only the IPA key feeds derivation.
+    Both formats carry the same model: a word is an ``id``, a ``gloss``, a ``frequency``, and a
+    series of **attested forms through time**, each an IPA transcription with an optional
+    grammatical ``category``. The EARLIEST form is the derivation seed (the input); every later
+    one is a target the derived form is scored against at that time. The time ``"final"`` means
+    "after every rule, including the untimed ones" — the surface.
 
-    A ``.csv`` path is read as a lexicon table (see :func:`load_word_inventory_csv`); any other
-    path is read as TOML (:func:`load_word_inventory_toml`).
+    A ``.csv`` path is read as a lexicon table (:func:`load_word_inventory_csv`); any other path
+    is read as TOML (:func:`load_word_inventory_toml`).
 
     Args:
         path: Path to the lexicon file (``.csv`` for CSV, else TOML).
@@ -30,83 +37,101 @@ def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
 
 
 def load_word_inventory_toml(path: Path) -> Result[WordInventory, list[str]]:
-    """Load words from a TOML file.
+    """Load words from a TOML file — an array of ``[[words]]`` tables.
 
-    Keys are IPA transcription strings. A value is either:
+    ::
 
-    - a **string** — the gloss (the concise form): ``"ˌɑbˈɑnte" = "avant"``; or
-    - a **table** with an optional ``gloss``, an optional ``final`` (the attested
-      surface form), an optional ``frequency`` (a positive-integer token weight for
-      frequency-weighted accuracy, default 1), and any number of integer-keyed
-      *stage* forms (the attested form at that time), e.g.::
+        [[words]]
+        id = "bear-v"
+        gloss = "to bear"
+        frequency = 1200
+        forms = [
+          { time = -2000,   ipa = "ˈbʱereti", category = "verb.pres.3sg" },
+          { time = 200,     ipa = "ˈbirið̠i", category = "verb.pres.3sg.strong" },
+          { time = "final", ipa = "beəz" },
+        ]
 
-          "ˈɑmɑt̪" = {gloss = "aime – loves", final = "ɛm", frequency = 240,
-                     100 = "ˈɑ.mɑt̪", 600 = "ˈãj̃.məθ", 1400 = "ˈɛ̃.mə"}
-
-      ``final`` and the stage forms are target annotations for accuracy; only the
-      IPA key feeds derivation.
+    ``id`` is the key and must be unique — it is deliberately not the gloss, because identity and
+    human label are different concerns (``lay`` is both a verb and a noun, and a word with no
+    modern reflex has nothing to gloss it with). ``category`` is an opaque, project-defined
+    string; the engine never parses it, and only compares it against a rule's ``categories``.
 
     Args:
         path: Path to the TOML file.
     """
-    error_list: list[str] = []
-
     match load_toml_file(path):
         case Err(err):
             return Err([err])
         case Ok(result):
             data = result
 
+    error_list: list[str] = []
     inventory = WordInventory()
-    for ipa, value in data.items():
-        ipa = ipa.strip()
-        if not ipa:
-            error_list.append("Word has an empty IPA key")
+
+    entries = data.get("words", [])
+    if not isinstance(entries, list):
+        return Err([f"'{path}': 'words' must be an array of [[words]] tables"])
+    for index, table in enumerate(entries):
+        if not isinstance(table, dict):
+            error_list.append(f"words[{index}] is not a table")
             continue
-        if ipa in inventory:
-            error_list.append(f"Word '{ipa}' is already defined")
+        word = _parse_word_table(index, table, error_list)
+        if word is None:
             continue
-        if isinstance(value, str):
-            inventory[ipa] = Word(ipa=ipa, gloss=value.strip())
-        elif isinstance(value, dict):
-            word = _parse_word_table(ipa, value, error_list)
-            if word is not None:
-                inventory[ipa] = word
-        else:
+        if word.id in inventory:
+            error_list.append(f"Word '{word.id}' is already defined")
+            continue
+        inventory[word.id] = word
+
+    # The CONCISE form, for a word that is only a seed — no targets, no category::
+    #
+    #     "ata" = "intervocalic voicing"
+    #
+    # The key is both the id and the seed IPA (which is what they are for such a word), and the
+    # value is the gloss. It exists because a lexicon used only to *watch* a rule fire — every
+    # hand-written showcase project, and most of the test lexicons — has nothing else to say, and
+    # spelling out a [[words]] table with a one-entry `forms` list for each would be noise.
+    for key, value in data.items():
+        if key == "words":
+            continue
+        if not isinstance(value, str):
             error_list.append(
-                f"Word '{ipa}' must be a gloss string or a table, not {type(value).__name__}"
+                f"Word '{key}' must be a gloss string (the concise form); a word with targets "
+                "goes in a [[words]] table"
             )
+            continue
+        if key.strip() in inventory:
+            error_list.append(f"Word '{key.strip()}' is already defined")
+            continue
+        inventory[key.strip()] = Word(
+            id=key.strip(), forms={0: Attestation(ipa=key.strip())}, gloss=value.strip()
+        )
 
     if error_list:
         return Err(error_list)
-
     return validate_word_inventory(inventory).map(lambda _: inventory)
 
 
 def load_word_inventory_csv(path: Path) -> Result[WordInventory, list[str]]:
-    """Load words from a CSV file — the same schema as the TOML form, one word per row.
+    """Load words from a CSV file — **one row per attested form**, not per word.
 
-    A header row names the columns; the columns are read **by name**, so any order works.
-    The **canonical order follows the derivation timeline** — the input, then the target
-    annotations from earliest to latest::
+    ::
 
-        word, gloss, <intermediate stage times, ascending>, final
+        id,time,ipa,category,gloss,frequency
+        bear-v,-2000,ˈbʱereti,verb.pres.3sg,to bear,1200
+        bear-v,200,ˈbirið̠i,verb.pres.3sg.strong,,
+        bear-v,final,beəz,,,
 
-    e.g. ``word, gloss, -200, -100, 750, 1000, 1200, 1400, final``.
+    Rows sharing an ``id`` are one word; they need not be adjacent, and their order does not
+    matter (times are sorted). ``gloss`` and ``frequency`` belong to the word rather than to any
+    one time, so they are taken from whichever of its rows supplies them — conventionally the
+    first — and it is an error for two rows to disagree.
 
-    Columns in detail:
+    This is the long ("tidy") shape rather than one-column-per-checkpoint, because a category
+    varies with time and a wide table has nowhere to put it. It also means a lexicon of any depth
+    has a fixed set of columns.
 
-    - ``word`` — the IPA transcription (the derivation input); required, the row's key.
-    - ``gloss`` — an optional gloss/translation.
-    - ``final`` — the optional attested final surface form (the last checkpoint).
-    - an optional ``frequency`` — a positive-integer token weight (default 1).
-    - every other column whose name is an **integer** is a *stage* time; its cell is the
-      attested form at that stage.
-
-    ``final`` and the stages are target annotations for accuracy; only ``word`` feeds
-    derivation. An empty cell means "not present" (no gloss, no final, no form at that
-    stage). Fields are read with the ``csv`` module, so a value containing a comma must be
-    quoted (``"amère, bitter"``).
+    ``time`` is an integer, or ``final`` for the surface after every rule.
 
     Args:
         path: Path to the CSV file.
@@ -116,112 +141,156 @@ def load_word_inventory_csv(path: Path) -> Result[WordInventory, list[str]]:
     except OSError as error:
         return Err([f"could not read '{path}': {error}"])
 
-    error_list: list[str] = []
     reader = csv.DictReader(text.splitlines())
     if reader.fieldnames is None:
         return Err([f"'{path}' is empty (no header row)"])
-    if "word" not in reader.fieldnames:
-        return Err([f"'{path}' must have a 'word' column (the IPA key)"])
+    missing = [c for c in ("id", "time", "ipa") if c not in reader.fieldnames]
+    if missing:
+        return Err([f"'{path}' is missing required column(s): {', '.join(missing)}"])
+    unknown = [c for c in reader.fieldnames if c not in _CSV_COLUMNS]
+    if unknown:
+        return Err([f"'{path}' has unknown column(s): {', '.join(unknown)}"])
 
-    stage_columns: dict[str, int] = {}
-    for column in reader.fieldnames:
-        if column in _RESERVED_KEYS or column == "word":
-            continue
-        try:
-            stage_columns[column] = int(column)
-        except ValueError:
-            error_list.append(
-                f"column '{column}' is neither 'word'/'gloss'/'final'/'frequency' nor a stage time"
-            )
-    if error_list:
-        return Err(error_list)
-
+    error_list: list[str] = []
     inventory = WordInventory()
-    for row in reader:
-        ipa = (row.get("word") or "").strip()
-        if not ipa:
-            error_list.append("Word has an empty IPA key")
-            continue
-        if ipa in inventory:
-            error_list.append(f"Word '{ipa}' is already defined")
+    for line, row in enumerate(reader, start=2):
+        word_id = (row.get("id") or "").strip()
+        if not word_id:
+            error_list.append(f"line {line}: row has an empty 'id'")
             continue
 
-        final = (row.get("final") or "").strip() or None
-        raw_frequency = (row.get("frequency") or "").strip()
-        frequency = 1
-        if raw_frequency:
+        time = _parse_time((row.get("time") or "").strip(), f"line {line}", error_list)
+        if time is _INVALID:
+            continue
+
+        ipa = (row.get("ipa") or "").strip()
+        if not ipa:
+            error_list.append(f"line {line}: word '{word_id}' has an empty 'ipa'")
+            continue
+
+        word = inventory.get(word_id)
+        if word is None:
+            word = inventory[word_id] = Word(id=word_id)
+        if time in word.forms:
+            error_list.append(f"line {line}: word '{word_id}' already has a form at {time}")
+            continue
+        word.forms[time] = Attestation(ipa=ipa, category=(row.get("category") or "").strip())
+
+        gloss = (row.get("gloss") or "").strip()
+        if gloss:
+            if word.gloss and word.gloss != gloss:
+                error_list.append(f"line {line}: word '{word_id}' has two different glosses")
+            word.gloss = gloss
+
+        raw = (row.get("frequency") or "").strip()
+        if raw:
             try:
-                frequency = int(raw_frequency)
+                frequency = int(raw)
             except ValueError:
                 frequency = 0  # forces the positive-integer check below to fail
             if frequency <= 0:
-                error_list.append(f"Word '{ipa}' has a 'frequency' that is not a positive integer")
+                error_list.append(
+                    f"line {line}: word '{word_id}' has a 'frequency' that is not a "
+                    "positive integer"
+                )
                 continue
-
-        stages = {
-            time: form.strip()
-            for column, time in stage_columns.items()
-            if (form := (row.get(column) or "").strip())
-        }
-        inventory[ipa] = Word(
-            ipa=ipa, gloss=(row.get("gloss") or "").strip(),
-            final=final, stages=stages, frequency=frequency,
-        )
+            if word.frequency != 1 and word.frequency != frequency:
+                error_list.append(f"line {line}: word '{word_id}' has two different frequencies")
+            word.frequency = frequency
 
     if error_list:
         return Err(error_list)
     return validate_word_inventory(inventory).map(lambda _: inventory)
 
 
-def _parse_word_table(ipa: str, table: dict, error_list: list[str]) -> Word | None:
-    """Parse the table form of a word: ``gloss``/``final`` + integer stage keys.
+class _Invalid:
+    """Sentinel: a time cell that failed to parse (distinct from the valid time ``None``)."""
 
-    Appends to ``error_list`` and returns ``None`` on any error.
-    """
-    gloss = table.get("gloss", "")
-    if not isinstance(gloss, str):
-        error_list.append(f"Word '{ipa}' has a gloss that is not a string")
+
+_INVALID = _Invalid()
+
+
+def _parse_time(raw: str, where: str, error_list: list[str]) -> int | None | _Invalid:
+    """``"final"`` → ``None`` (the untimed slot); an integer string → that int."""
+    if raw == FINAL:
+        return None
+    try:
+        return int(raw)
+    except ValueError:
+        error_list.append(f"{where}: time {raw!r} is neither an integer nor '{FINAL}'")
+        return _INVALID
+
+
+def _parse_word_table(index: int, table: dict, error_list: list[str]) -> Word | None:
+    """Parse one ``[[words]]`` table. Appends to *error_list* and returns None on any error."""
+    word_id = table.get("id")
+    if not isinstance(word_id, str) or not word_id.strip():
+        error_list.append(f"words[{index}] has no 'id'")
+        return None
+    word_id = word_id.strip()
+    where = f"Word '{word_id}'"
+
+    unknown = [k for k in table if k not in _WORD_KEYS]
+    if unknown:
+        # Almost always a concise entry written BELOW a [[words]] table. TOML binds a bare
+        # key/value to the table above it, so `"atta" = "eight"` after [[words]] silently becomes
+        # a key OF that word rather than a word of its own. Say so — the bare "unknown key" that
+        # this used to report sends you looking in the wrong place entirely.
+        strings = [k for k in unknown if isinstance(table[k], str)]
+        hint = (
+            f" — a concise entry ({strings[0]!r}) must go ABOVE every [[words]] table, or TOML "
+            "reads it as a key of the word above it"
+            if strings else ""
+        )
+        error_list.append(f"{where} has unknown key(s): {', '.join(sorted(unknown))}{hint}")
         return None
 
-    final = table.get("final")
-    if final is not None and not isinstance(final, str):
-        error_list.append(f"Word '{ipa}' has a 'final' that is not a string")
+    gloss = table.get("gloss", "")
+    if not isinstance(gloss, str):
+        error_list.append(f"{where} has a gloss that is not a string")
         return None
 
     # bool is an int subclass — reject it so `frequency = true` cannot become 1.
     frequency = table.get("frequency", 1)
     if type(frequency) is not int or frequency <= 0:
-        error_list.append(f"Word '{ipa}' has a 'frequency' that is not a positive integer")
+        error_list.append(f"{where} has a 'frequency' that is not a positive integer")
         return None
 
-    stages: dict[int, str] = {}
-    ok = True
-    for key, form in table.items():
-        if key in _RESERVED_KEYS:
-            continue
-        try:
-            time = int(key)
-        except ValueError:
-            error_list.append(
-                f"Word '{ipa}' has key '{key}' that is neither 'gloss'/'final' nor a stage time"
-            )
-            ok = False
-            continue
-        if not isinstance(form, str):
-            error_list.append(f"Word '{ipa}' stage {key} has a form that is not a string")
-            ok = False
-            continue
-        stages[time] = form.strip()
-
-    if not ok:
+    raw_forms = table.get("forms")
+    if not isinstance(raw_forms, list) or not raw_forms:
+        error_list.append(f"{where} has no 'forms' (a word needs at least its seed)")
         return None
-    return Word(
-        ipa=ipa,
-        gloss=gloss.strip(),
-        final=final.strip() if isinstance(final, str) else None,
-        stages=stages,
-        frequency=frequency,
-    )
+
+    forms: dict[int | None, Attestation] = {}
+    for entry in raw_forms:
+        if not isinstance(entry, dict):
+            error_list.append(f"{where} has a form that is not a table")
+            return None
+        raw_time = entry.get("time")
+        if isinstance(raw_time, str):
+            time = _parse_time(raw_time, where, error_list)
+            if time is _INVALID:
+                return None
+        elif type(raw_time) is int:
+            time = raw_time
+        else:
+            error_list.append(f"{where} has a form with no integer (or '{FINAL}') 'time'")
+            return None
+
+        ipa = entry.get("ipa")
+        if not isinstance(ipa, str) or not ipa.strip():
+            error_list.append(f"{where} has a form at {raw_time} with no 'ipa'")
+            return None
+        category = entry.get("category", "")
+        if not isinstance(category, str):
+            error_list.append(f"{where} has a form at {raw_time} whose category is not a string")
+            return None
+        if time in forms:
+            error_list.append(f"{where} has two forms at {raw_time}")
+            return None
+        forms[time] = Attestation(ipa=ipa.strip(), category=category.strip())
+
+    return Word(id=word_id, forms=forms, gloss=gloss.strip(), frequency=frequency)
 
 
 def validate_word_inventory(inventory: WordInventory) -> Result[None, list[str]]:

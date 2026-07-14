@@ -28,6 +28,11 @@ from src.fortis.parsing.bundles import parse_pattern_bundle
 from src.fortis.parsing.notation import parse_definition, parse_sequence
 
 
+def _word(ipa: str) -> Word:
+    """A seed-only word: the id is the IPA, and there are no targets."""
+    return Word.from_series(id=ipa, seed=ipa)
+
+
 def _fb(**features: Value) -> FeatureBundle:
     return FeatureBundle({f: FeatureSpec(feature=f, value=v) for f, v in features.items()})
 
@@ -115,7 +120,7 @@ class TestApplicationModes:
 
 class TestDerive:
     def test_records_only_firing_steps_in_order(self, features, letters):
-        word = Word(ipa="test")
+        word = _word("test")
         # rule A (time 0) voices the nasal; rule B (time 1) never matches (no lateral).
         a = _rule("[+nasal] -> [+voice]", features, time=0)
         b = _rule("[+lateral] -> [+high]", features, time=1)
@@ -128,7 +133,7 @@ class TestDerive:
         assert _values(result.input.bundles()) == [{"nasal": 1, "voice": 0}]
 
     def test_cross_time_feeding(self, features, letters):
-        word = Word(ipa="feed")
+        word = _word("feed")
         # A (time 0) voices the nasal; only then does B (time 1) — which targets
         # [+voice] — have anything to apply to. Order creates the feeding relation.
         a = _rule("[+nasal] -> [+voice]", features, time=0)
@@ -140,7 +145,7 @@ class TestDerive:
         assert _values(result.surface.bundles()) == [{"nasal": 1, "voice": 1, "high": 1}]
 
     def test_non_firing_rule_threads_form_forward(self, features, letters):
-        word = Word(ipa="thread")
+        word = _word("thread")
         # B does not match, but the form it passes forward must still reach C.
         a = _rule("[+lateral] -> [+high]", features, time=0)  # never matches
         b = _rule("[+nasal] -> [+voice]", features, time=1)  # fires
@@ -156,7 +161,7 @@ class TestDerive:
         # apta → ap.ta (boundary at 2). A coda rule voices the consonant before a
         # syllable boundary: the p (coda) voices, the t (onset) does not. Exercises
         # syllabify → boundaries → matcher $ → derive end to end.
-        word = Word(ipa="apta")
+        word = _word("apta")
         rule = _rule("[+cons] -> [+voice] / _ $", features)
         rules = RuleInventory({0: (rule,)})
         V = _fb(syllabic=1, consonantal=0)
@@ -184,7 +189,7 @@ class TestDerive:
     ):
         # Per-step structure is display-only, so it appears even when the rule does
         # not use $ (the matcher gate does not suppress it).
-        word = Word(ipa="apa")
+        word = _word("apa")
         rule = _rule("[+cons] -> [+voice]", features)  # no $
         rules = RuleInventory({0: (rule,)})
         segs = [_fb(syllabic=1, consonantal=0), _fb(consonantal=1, sonorant=0, voice=0),
@@ -200,7 +205,7 @@ class TestDerive:
         # A rule set that never uses $ must derive identically with or without
         # syllabification supplied — syllabification only enables $, it never
         # perturbs unrelated derivations.
-        word = Word(ipa="amna")
+        word = _word("amna")
         rule = _rule("[+nasal] -> [+voice]", features)
         rules = RuleInventory({0: (rule,)})
         segs = [_fb(syllabic=1, consonantal=0), _fb(nasal=1, voice=0), _fb(syllabic=1)]
@@ -229,7 +234,7 @@ class TestDerive:
         rules = RuleInventory({0: (rule,)})
         segs = [_fb(syllabic=1, consonantal=0), _fb(nasal=1, voice=0), _fb(syllabic=1)]
         result = derive(
-            Word(ipa="ana"), Form.from_bundles(segs), rules, letters, features, sonorities, parts
+            _word("ana"), Form.from_bundles(segs), rules, letters, features, sonorities, parts
         )
         assert _values(result.surface.bundles())[1]["voice"] == 1  # rule fired
         # Sonority fallback: the lone medial consonant is the onset of the 2nd syllable (a.na).
@@ -246,14 +251,14 @@ class TestDerive:
         cons = _fb(consonantal=1, sonorant=0, voice=0)
         vowel = _fb(syllabic=1, consonantal=0, tone=3)
         result = derive(
-            Word(ipa="CV"), Form.from_bundles([cons, vowel]), rules, letters, features,
+            _word("CV"), Form.from_bundles([cons, vowel]), rules, letters, features,
             sonorities, syllable_parts
         )
         assert _values(result.surface.bundles())[0]["voice"] == 1  # voiced via its syllable's tone
         # The same consonant in a tone-4 syllable is left alone.
         vowel4 = _fb(syllabic=1, consonantal=0, tone=4)
         result4 = derive(
-            Word(ipa="CV"), Form.from_bundles([cons, vowel4]), rules, letters, features,
+            _word("CV"), Form.from_bundles([cons, vowel4]), rules, letters, features,
             sonorities, syllable_parts
         )
         assert _values(result4.surface.bundles())[0]["voice"] == 0
@@ -262,7 +267,7 @@ class TestDerive:
         # Writing a syllable-tier feature whose target is the nucleus works (in-span merge).
         rule = _rule("[+syll] -> [tone: 3]", features)
         rules = RuleInventory({0: (rule,)})
-        result = derive(Word(ipa="a"), Form.from_bundles([_fb(syllabic=1, consonantal=0)]), rules,
+        result = derive(_word("a"), Form.from_bundles([_fb(syllabic=1, consonantal=0)]), rules,
                         letters, features, sonorities, syllable_parts)
         assert _values(result.surface.bundles())[0]["tone"] == 3
 
@@ -276,7 +281,7 @@ class TestDerive:
         rules = RuleInventory({0: (rule,)})
         segs = [_fb(consonantal=1, sonorant=0), _fb(syllabic=1, consonantal=0)]
         result = derive(
-            Word(ipa="CV"), Form.from_bundles(segs), rules, letters, features, sonorities,
+            _word("CV"), Form.from_bundles(segs), rules, letters, features, sonorities,
             syllable_parts, tiers,
         )
         surface = lower_tiers(result.surface)
@@ -297,7 +302,7 @@ class TestDerive:
         # path is not what carries it across).
         form = associate_tiers(Form.from_bundles([stressed_l]), tiers)
         result = derive(
-            Word(ipa="l̩"), form, rules, letters, features, sonorities, syllable_parts, tiers,
+            _word("l̩"), form, rules, letters, features, sonorities, syllable_parts, tiers,
         )
         surface = lower_tiers(result.surface)
         nuclei = [s for s in surface if s.get("syllabic") and s["syllabic"].value == 1]
@@ -306,7 +311,7 @@ class TestDerive:
         assert all("stress" not in s for s in others)  # no longer stranded on l
 
     def test_input_snapshot_unchanged_by_derivation(self, features, letters):
-        word = Word(ipa="snap")
+        word = _word("snap")
         a = _rule("[+nasal] -> [+voice]", features, time=0)
         rules = RuleInventory({0: (a,)})
         segs = [_fb(nasal=1, voice=0)]
@@ -343,11 +348,11 @@ class TestResolveRuleLetters:
         rules = self._cowgill(project)
         seq = string_to_sequence("gʷiʁʷwos", project)
         # The unresolved LetterRef('ʁʷ') matches nothing.
-        bare = derive(Word(ipa="gʷiʁʷwos"), seq, rules, project.letters, project.features)
+        bare = derive(_word("gʷiʁʷwos"), seq, rules, project.letters, project.features)
         assert bare.steps == ()
         # After resolution, Cowgill's law fires: ʁʷ → g.
         resolved = resolve_rule_letters(rules, project)
-        fired = derive(Word(ipa="gʷiʁʷwos"), seq, resolved, project.letters, project.features)
+        fired = derive(_word("gʷiʁʷwos"), seq, resolved, project.letters, project.features)
         assert [step.rule.id for step in fired.steps] == ["r"]
 
     def test_multisegment_run_fires_and_collapses_the_span(self, project):
@@ -356,7 +361,7 @@ class TestResolveRuleLetters:
         bare = RuleInventory({0: (_rule("au → o", project.features),)})
         rules = resolve_rule_letters(bare, project)
         seq = string_to_sequence("kaut", project)
-        d = derive(Word(ipa="kaut"), seq, rules, project.letters, project.features)
+        d = derive(_word("kaut"), seq, rules, project.letters, project.features)
         assert [step.rule.id for step in d.steps] == ["r"]
         assert len(d.surface.bundles()) == 3  # k a u t (4) → k o t (3)
         assert d.surface.bundles()[1] == project.letters["o"].bundle
@@ -370,7 +375,7 @@ def test_word_scoped_rule_fires_only_on_named_words(project):
 
     def fired(ipa, gloss=""):
         d = derive(
-            Word(ipa=ipa, gloss=gloss),
+            Word.from_series(id=ipa, seed=ipa, gloss=gloss),
             string_to_sequence(ipa, project),
             inv,
             project.letters,

@@ -14,8 +14,13 @@ from src.fortis.application.tiers import lower_tiers
 from src.fortis.induction.boost import induce_interval
 from src.fortis.induction.intervals import Interval, build_interval, synthetic_project
 from src.fortis.loaders.rules import load_rule
-from src.fortis.models.inventories import Word, WordInventory
+from src.fortis.models.inventories import Attestation, Word, WordInventory
 from src.fortis.models.rules import RuleInventory
+
+
+def _word(ipa: str) -> Word:
+    """A seed-only word: the id is the IPA, and there are no targets."""
+    return Word.from_series(id=ipa, seed=ipa)
 
 
 @pytest.fixture(scope="module")
@@ -84,7 +89,7 @@ class TestExpressibleRecovery:
         sources = [w.stages[-100] for w in synth.words.values() if -100 in w.stages][:120]
         generator = replace(
             synth,
-            words=WordInventory({s: Word(ipa=s) for s in sources}),
+            words=WordInventory({s: _word(s) for s in sources}),
             rules=RuleInventory({r.time: (r,) for r in rules}),
         )
         mini = {}
@@ -92,7 +97,8 @@ class TestExpressibleRecovery:
             target = render_syllabified(
                 lower_tiers(derivation.surface), derivation.surface_boundaries, synth
             )
-            mini[derivation.word.ipa] = Word(ipa=derivation.word.ipa, final=target)
+            seed = derivation.word.ipa
+            mini[seed] = Word.from_series(id=seed, seed=seed, final=target)
         interval = Interval(
             start=-100, end=750,
             project=replace(synth, words=WordInventory(mini), rules=RuleInventory()),
@@ -141,7 +147,7 @@ class TestDegenerateInterval:
         interval = build_interval(synth, 750, 1000)
         # Point every target at its own source: nothing to learn.
         for word in interval.project.words.values():
-            word.final = word.ipa
+            word.forms[None] = Attestation(word.ipa)
         result = induce_interval(interval)
         assert result.rules == []
         assert result.stopped == "fit_zero"

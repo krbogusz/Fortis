@@ -20,7 +20,7 @@ def _rule(definition, features):
 
 def _derive(form, project):
     return derive(
-        Word(ipa="ta"),
+        Word.from_series(id="ta", seed="ta"),
         form,
         RuleInventory({0: (_rule(_DOCK, project.features),)}),
         project.letters,
@@ -58,7 +58,7 @@ def test_positioned_float_docks_at_its_own_gap(project):
     ).unwrap()
     rule = Rule(id="dock", time=0, raw_definition="dock", sd=sd)
     surface = derive(
-        Word(ipa="kata"),
+        Word.from_series(id="kata", seed="kata"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,

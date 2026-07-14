@@ -28,11 +28,13 @@ from src.fortis.result import Err, Ok, Result
 def unfired_scoped_rules(rules: RuleInventory, words: WordInventory) -> list[tuple[str, str]]:
     """Word-scoped rules naming a word absent from the lexicon — ``(rule_id, word)`` pairs.
 
-    A ``words`` entry matches a word by ipa or gloss; one that matches neither makes the rule
+    A ``words`` entry matches a word by id, gloss or seed IPA; one that matches none makes the rule
     silently never fire, which is almost always a typo. Non-fatal — the project still loads —
     so it is returned rather than raised; the CLI and web app surface the list for the author.
     """
-    known = set(words.keys()) | {word.gloss for word in words.values() if word.gloss is not None}
+    known = set(words.keys()) | {w.gloss for w in words.values() if w.gloss} | {
+        w.seed.ipa for w in words.values()
+    }
     return [
         (rule.id, name)
         for rules_at_time in rules.values()

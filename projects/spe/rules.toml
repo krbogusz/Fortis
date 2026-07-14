@@ -5,26 +5,26 @@
 # place node, done purely by agreeing the flat [coronal, anterior, high, back] features.
 
 [intervocalic_voicing]                 # natural-class target, environment either side
-words      = ["ata"]
+words      = ["intervocalic-voicing"]
 name       = "Intervocalic voicing"
 definition = "[-sonorant] -> [+voice] / [+syllabic] _ [+syllabic]"
 
 [final_devoicing]                      # a merge conditioned by the word edge (#)
-words      = ["tad"]
+words      = ["final-devoicing"]
 name       = "Final devoicing"
 definition = "[-sonorant] -> [-voice] / _ #"
 
 [nasal_place_assimilation]             # flat-place assimilation: four α-variables, no place node
-words      = ["anpa", "anka"]
+words      = ["nasal-assim-labial", "nasal-assim-velar"]
 name       = "Nasal place assimilation"
 definition = "[+nasal] -> [α coronal, β anterior, γ high, δ back] / _ [-syllabic, α coronal, β anterior, γ high, δ back]"
 
 [backness_rounding_harmony]            # tongue-body features on VOWELS, agreeing across a consonant
-words      = ["uti"]
+words      = ["backness-rounding-harmony"]
 name       = "Backness & rounding harmony"
 definition = "[+syllabic] -> [α back, β round] / [+syllabic, α back, β round] [-syllabic]* _"
 
 [metaphony_raising]                    # [+high] spreads leftward onto a mid vowel (e -> i before i)
-words      = ["beti"]
+words      = ["metaphony-raising"]
 name       = "Metaphony (raising)"
 definition = "[+syllabic, -high, -low] -> [+high] / _ [-syllabic]* [+syllabic, +high]"

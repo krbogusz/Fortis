@@ -128,10 +128,10 @@ class TestSyllablePartsInventory:
 class TestWordInventory:
     def test_basic_access(self):
         inv = WordInventory()
-        inv["xenti"] = Word(ipa="xenti", gloss="in front")
+        inv["xenti"] = Word.from_series(id="xenti", seed="xenti", gloss="in front")
         assert inv["xenti"].gloss == "in front"
 
     def test_default_gloss(self):
         inv = WordInventory()
-        inv["test"] = Word(ipa="test")
+        inv["test"] = Word.from_series(id="test", seed="test")
         assert inv["test"].gloss == ""

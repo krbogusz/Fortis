@@ -2,26 +2,108 @@
 # are grouped by the rule that fires on them (see rules.toml `words` scoping).
 
 # Nasal place assimilation (whole Place node)
-"anka" = { gloss = "place assimilation -> velar",   final = "aŋka" }
-"anpa" = { gloss = "place assimilation -> labial",  final = "ampa" }
-"anta" = { gloss = "place assimilation -> coronal (vacuous)", final = "anta" }
 
-# Uyghur Raising (low -> high in a medial open syllable)
-"kalalar" = { gloss = "Uyghur Raising: medial open syllable raises", final = "kalilar" }
+[[words]]
+id = "assim-velar"
+gloss = "place assimilation -> velar"
+forms = [
+  { time = 0, ipa = "anka" },
+  { time = "final", ipa = "aŋka" },
+]
 
-# Sibe uvularization (velar -> uvular after a [-high] vowel; [+high] transparent)
-"dʒalukun" = { gloss = "Sibe: a triggers uvular k->q (u transparent)", final = "dʒaluqun" }
-"bɔduxu"   = { gloss = "Sibe: ɔ triggers uvular x->χ", final = "bɔduχu" }
-"ulukun"   = { gloss = "Sibe: all-high, no uvularization", final = "ulukun" }
+[[words]]
+id = "assim-labial"
+gloss = "place assimilation -> labial"
+forms = [
+  { time = 0, ipa = "anpa" },
+  { time = "final", ipa = "ampa" },
+]
 
-# Palestinian emphasis spread ([RTR] leftward, vowels transparent)
-"tatatˤ" = { gloss = "Emphasis spread: final tˤ RTR-izes the word", final = "tˤatˤatˤ" }
+[[words]]
+id = "assim-coronal-vacuous"
+gloss = "place assimilation -> coronal (vacuous)"
+forms = [
+  { time = 0, ipa = "anta" },
+  { time = "final", ipa = "anta" },
+]
 
-# Igbo labial assimilation (high prefix vowel rounds before a labial)
-"obibe" = { gloss = "Igbo: i rounds to u before b", final = "obube" }
-"ofife" = { gloss = "Igbo: i rounds to u before f", final = "ofufe" }
-"olile" = { gloss = "Igbo: i stays before l (non-labial)", final = "olile" }
+[[words]]
+id = "uyghur-raising"
+gloss = "Uyghur Raising: medial open syllable raises"
+forms = [
+  { time = 0, ipa = "kalalar" },
+  { time = "final", ipa = "kalilar" },
+]
 
-# Irish dorsal assimilation ([dorsal] spreads, [back] does not)
-"anʲga"  = { gloss = "Irish: palatalized nʲ takes [dorsal] from g, keeps -back -> ŋʲ", final = "aŋʲga" }
-"anˠgʲa" = { gloss = "Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ", final = "aŋgʲa" }
+[[words]]
+id = "sibe-uvular-k"
+gloss = "Sibe: a triggers uvular k->q (u transparent)"
+forms = [
+  { time = 0, ipa = "dʒalukun" },
+  { time = "final", ipa = "dʒaluqun" },
+]
+
+[[words]]
+id = "sibe-uvular-x"
+gloss = "Sibe: ɔ triggers uvular x->χ"
+forms = [
+  { time = 0, ipa = "bɔduxu" },
+  { time = "final", ipa = "bɔduχu" },
+]
+
+[[words]]
+id = "sibe-all-high"
+gloss = "Sibe: all-high, no uvularization"
+forms = [
+  { time = 0, ipa = "ulukun" },
+  { time = "final", ipa = "ulukun" },
+]
+
+[[words]]
+id = "emphasis-spread"
+gloss = "Emphasis spread: final tˤ RTR-izes the word"
+forms = [
+  { time = 0, ipa = "tatatˤ" },
+  { time = "final", ipa = "tˤatˤatˤ" },
+]
+
+[[words]]
+id = "igbo-rounding-b"
+gloss = "Igbo: i rounds to u before b"
+forms = [
+  { time = 0, ipa = "obibe" },
+  { time = "final", ipa = "obube" },
+]
+
+[[words]]
+id = "igbo-rounding-f"
+gloss = "Igbo: i rounds to u before f"
+forms = [
+  { time = 0, ipa = "ofife" },
+  { time = "final", ipa = "ofufe" },
+]
+
+[[words]]
+id = "igbo-no-rounding-l"
+gloss = "Igbo: i stays before l (non-labial)"
+forms = [
+  { time = 0, ipa = "olile" },
+  { time = "final", ipa = "olile" },
+]
+
+[[words]]
+id = "irish-palatal-dorsal"
+gloss = "Irish: palatalized nʲ takes [dorsal] from g, keeps -back -> ŋʲ"
+forms = [
+  { time = 0, ipa = "anʲga" },
+  { time = "final", ipa = "aŋʲga" },
+]
+
+[[words]]
+id = "irish-velar-dorsal"
+gloss = "Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ"
+forms = [
+  { time = 0, ipa = "anˠgʲa" },
+  { time = "final", ipa = "aŋgʲa" },
+]
+

@@ -2,9 +2,51 @@
 # so every rule is shown in isolation. Each `final` is the attested target the derivation
 # is graded against — here, its own intended output, so the run grades 100% exact.
 
-"ata"  = { gloss = "intervocalic voicing",              final = "ada" }
-"tad"  = { gloss = "final devoicing",                   final = "tat" }
-"anpa" = { gloss = "nasal place assimilation (labial)", final = "ampa" }
-"anka" = { gloss = "nasal place assimilation (velar)",  final = "aŋka" }
-"uti"  = { gloss = "backness & rounding harmony",       final = "utu" }
-"beti" = { gloss = "metaphony (raising)",               final = "biti" }
+[[words]]
+id = "intervocalic-voicing"
+gloss = "intervocalic voicing"
+forms = [
+  { time = 0, ipa = "ata" },
+  { time = "final", ipa = "ada" },
+]
+
+[[words]]
+id = "final-devoicing"
+gloss = "final devoicing"
+forms = [
+  { time = 0, ipa = "tad" },
+  { time = "final", ipa = "tat" },
+]
+
+[[words]]
+id = "nasal-assim-labial"
+gloss = "nasal place assimilation (labial)"
+forms = [
+  { time = 0, ipa = "anpa" },
+  { time = "final", ipa = "ampa" },
+]
+
+[[words]]
+id = "nasal-assim-velar"
+gloss = "nasal place assimilation (velar)"
+forms = [
+  { time = 0, ipa = "anka" },
+  { time = "final", ipa = "aŋka" },
+]
+
+[[words]]
+id = "backness-rounding-harmony"
+gloss = "backness & rounding harmony"
+forms = [
+  { time = 0, ipa = "uti" },
+  { time = "final", ipa = "utu" },
+]
+
+[[words]]
+id = "metaphony-raising"
+gloss = "metaphony (raising)"
+forms = [
+  { time = 0, ipa = "beti" },
+  { time = "final", ipa = "biti" },
+]
+

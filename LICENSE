@@ -1,9 +1,10 @@
 Required Notice: Copyright (c) 2026 Krzysztof Bogusz (https://github.com/krbogusz/Fortis)
 
 This license covers Fortis itself — the engine, the web app, the documentation, and
-the original project data. Some bundled third-party material carries its own licence
-(notably the Latin → French rules and lexicon, derived from GPL-3.0 sources); see
-docs/acknowledgements.md.
+the original project data. Some bundled third-party material carries its own licence:
+notably the Latin → French rules and lexicon (derived from GPL-3.0 sources) and the
+PIE → English lexicon projects/pie_to_english/words.csv (derived from Wiktionary, and
+therefore CC BY-SA 4.0 share-alike). See docs/acknowledgements.md.
 
 # PolyForm Noncommercial License 1.0.0
 

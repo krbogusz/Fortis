@@ -26,7 +26,8 @@ def _surface(tmp_path, definition):
     (tmp_path / "words.toml").write_text('"ˌteˈte" = "x"\n', encoding="utf-8")
     proj = load_project(tmp_path).unwrap()
     rules = resolve_rule_letters(proj.rules, proj)
-    ipa, word = next(iter(proj.words.items()))
+    word = next(iter(proj.words.values()))
+    ipa = word.seed.ipa
     d = derive(
         word, string_to_sequence(ipa, proj), rules, proj.letters, proj.features,
         proj.sonorities, proj.syllable_parts, proj.tiers,

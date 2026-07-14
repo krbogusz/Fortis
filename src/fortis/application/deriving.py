@@ -799,8 +799,13 @@ def derive(
 
     for time in sorted(rules.keys(), key=lambda t: (t is None, t)):  # untimed (None) rules last
         for rule in rules[time]:
-            if rule.words and word.ipa not in rule.words and word.gloss not in rule.words:
-                continue  # a word-scoped rule that does not list this word
+            # A word-scoped rule names its words by id, gloss, or seed IPA — whichever the author
+            # reached for. (The seed IPA is not an identifier: two words can share one, and such
+            # a scope then names them both. That is what "scope by IPA" ought to mean.)
+            if rule.words and not {word.id, word.gloss, word.seed.ipa} & set(rule.words):
+                continue
+            if rule.categories and word.category_at(rule.time) not in rule.categories:
+                continue  # a category-scoped rule; the category IN FORCE at this rule's time
             before = current  # Form
             after = apply_rule(rule, current, letters, features, sonorities, syllable_parts, tiers)
             # `after is before` ⇔ no locus (apply_rule's identity contract); _fired then
@@ -865,11 +870,11 @@ def derive_all(
     items = list(project.words.items())
     total = len(items)
     derivations: list[Derivation] = []
-    for done, (ipa, word) in enumerate(items, start=1):
+    for done, (_id, word) in enumerate(items, start=1):
         derivations.append(
             derive(
                 word,
-                string_to_sequence(ipa, project),
+                string_to_sequence(word.seed.ipa, project),
                 rules,
                 project.letters,
                 project.features,
@@ -942,7 +947,7 @@ def _parallel_derive_chunk(
     return [
         derive(
             word,
-            string_to_sequence(ipa, project),
+            string_to_sequence(word.seed.ipa, project),
             rules,
             project.letters,
             project.features,
@@ -950,7 +955,7 @@ def _parallel_derive_chunk(
             project.syllable_parts,
             project.tiers,
         )
-        for ipa, word in chunk
+        for _id, word in chunk
     ]
 
 

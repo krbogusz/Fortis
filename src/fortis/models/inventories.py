@@ -183,43 +183,190 @@ class SyllablePartsInventory(UserDict[int, dict[str, SyllablePart]]):
         return self.get_part(time, "nucleus")
 
 
-@dataclass
-class Word:
-    """A word with its IPA transcription and optional gloss + attested forms.
+def time_order(time: int | None) -> tuple[bool, int]:
+    """Sort key putting the untimed slot (``None``) last — the engine's convention throughout.
 
-    Only ``ipa`` feeds derivation. ``final`` and ``stages`` are optional *target*
-    annotations co-located with the input — attested surface forms a grader can
-    compare the derived output against — and are ignored by the engine itself.
+    ``None`` means "after everything" in both inventories, and for the same reason: a
+    :class:`~src.fortis.models.rules.RuleInventory` applies its untimed rules after every timed
+    one, so a word's ``None`` attestation is its surface after every rule has run — the old
+    ``final`` column. A year cannot express that, because the untimed rules have no year.
+    """
+    return (time is None, 0 if time is None else time)
+
+
+@dataclass
+class Attestation:
+    """A word's form at one point in time.
+
+    The same object serves as the derivation *seed* (the earliest one) and as a *target* (every
+    later one). That is the point: an input is not a different kind of thing from an attested
+    form, it is simply the earliest one we have, and the old model's split into ``ipa`` (the
+    input) plus ``final`` (the last target) plus ``stages`` (the middle ones) was three names for
+    one relation.
 
     Attributes:
-        ipa: The IPA transcription string (the derivation input).
-        gloss: An optional gloss or translation.
-        final: The attested final/target surface form, if known (for accuracy).
-        stages: Attested forms keyed by time stage (for per-period accuracy);
-            keys are stage times, values the attested form at that stage.
-        frequency: A token frequency (a positive integer weight; default 1) for
-            frequency-weighted accuracy — a word counts this many times toward the
-            weighted accuracy and mean distances. Ignored by the engine.
+        ipa: The IPA transcription at this time.
+        category: The word's grammatical category here — an opaque, project-defined string
+            (``"verb.pres.3sg.weak"``, ``"noun.acc.sg"``, ``"n-stem"``; the engine has no
+            vocabulary of its own and never parses it). A rule may be scoped to a set of these
+            (:attr:`~src.fortis.models.rules.Rule.categories`), which is how a change is
+            restricted to one word class.
+
+            It is **given, not derived** — an annotation supplied by the analyst, exactly like
+            the seed IPA, and never predicted by the engine. That is what keeps it out of
+            circularity: the engine still predicts only the *IPA*, and the category conditions
+            the sound laws the way "this is a weak class-1 verb" conditions them in a handbook.
+            Giving a *different* category at a later time is therefore how a REANALYSIS is
+            expressed (PGmc ``*hwehwlą`` is neuter where its PIE source is masculine): rules
+            after that time see the new category. See :meth:`Word.category_at`.
+        form: The IPA segmented against the project inventory — the *ingested* record the
+            accuracy/errors analyses compare against, kept as a ``Form`` so it retains the full
+            autosegmental structure (a segment is one inventory unit — an affricate ``d͡ʒ`` is
+            one, not split by codepoint — and any tone/stress tiers survive). Populated by a
+            post-load pass (:func:`src.fortis.analysis.accuracy.ingest_targets`); ``None`` when
+            the IPA uses a symbol the inventory cannot segment (that form is then skipped, with
+            a warning) — so ``ipa`` present but ``form`` None means UNSEGMENTABLE, not "absent".
     """
 
     ipa: str
+    category: str = ""
+    form: Form | None = None
+
+
+@dataclass
+class Word:
+    """A word as a series of attested forms through time.
+
+    Attributes:
+        id: Stable identifier, and the inventory key. Deliberately NOT the gloss: identity and
+            human-label are different concerns, glosses collide (``lay`` is both a verb and a
+            noun), and a generated lexicon's gloss is often not even a gloss — where a word has
+            no modern reflex there is nothing to gloss it with. Write ``bear-v``/``bear-n``.
+        forms: Attested forms keyed by time. The EARLIEST is the derivation seed (the input);
+            every later one is a target the derived form is scored against at that time. A seed
+            is not scored against itself.
+        gloss: A human label. Free text; never load-bearing.
+        frequency: A token frequency (a positive integer weight; default 1) for
+            frequency-weighted accuracy — a word counts this many times toward the weighted
+            accuracy and mean distances. A property of the word, not of any one time. Ignored by
+            the engine.
+    """
+
+    id: str
+    forms: dict[int | None, Attestation] = field(default_factory=dict)
     gloss: str = ""
-    final: str | None = None
-    stages: dict[int, str] = field(default_factory=dict)
     frequency: int = 1
-    # The attested forms segmented against the project inventory — the *ingested* record
-    # the accuracy/errors analyses compare against, stored as a ``Form`` so it keeps the full
-    # autosegmental structure (a segment is one inventory unit — an affricate ``d͡ʒ`` is one,
-    # not split by codepoint — and any tone/stress tiers survive). Populated by a post-load
-    # pass (:func:`src.fortis.analysis.accuracy.ingest_targets`); left empty when the attested
-    # form is absent OR uses a symbol the inventory cannot segment (that form is then skipped,
-    # with a warning). ``final`` present but ``final_form`` None ⇒ unsegmentable, not "no target".
-    final_form: Form | None = None
-    stage_forms: dict[int, Form] = field(default_factory=dict)
+
+    @classmethod
+    def from_series(
+        cls,
+        id: str,  # noqa: A002 — matches the field name
+        seed: str,
+        *,
+        seed_time: int | None = 0,
+        stages: dict[int, str] | None = None,
+        final: str | None = None,
+        gloss: str = "",
+        frequency: int = 1,
+        category: str = "",
+    ) -> Word:
+        """Build a word from a seed plus the old-style ``stages``/``final`` targets.
+
+        A convenience for callers that synthesise a lexicon (the inducer's interval projects),
+        where the forms arrive as separate source/target strings rather than as a series.
+        """
+        # The seed is "the earliest form", so a seed_time that is NOT earliest would silently
+        # demote it to a target and promote a stage to the input. Fail loudly instead: the
+        # default (0) is wrong the moment a project has negative stage times.
+        too_early = [t for t in (stages or {}) if time_order(t) <= time_order(seed_time)]
+        if too_early:
+            raise ValueError(
+                f"word {id!r}: seed_time {seed_time} is not before every stage "
+                f"({', '.join(map(str, sorted(too_early)))}) — the earliest form is the seed, "
+                "so this would make a stage the derivation input"
+            )
+        forms: dict[int | None, Attestation] = {seed_time: Attestation(seed, category)}
+        for time, ipa in (stages or {}).items():
+            forms[time] = Attestation(ipa, category)
+        if final is not None:
+            forms[None] = Attestation(final, category)
+        return cls(id=id, forms=forms, gloss=gloss, frequency=frequency)
+
+    @property
+    def seed_time(self) -> int | None:
+        """The time the derivation starts from: the earliest attested form."""
+        return min(self.forms, key=time_order)
+
+    @property
+    def seed(self) -> Attestation:
+        """The derivation input — the earliest attested form."""
+        return self.forms[self.seed_time]
+
+    @property
+    def targets(self) -> dict[int | None, Attestation]:
+        """Every form the derivation is scored against: all but the seed."""
+        return {t: a for t, a in self.forms.items() if t != self.seed_time}
+
+    def category_at(self, time: int | None) -> str:
+        """The category in force at *time* — from the latest attestation at or before it.
+
+        A rule at time T asks this, so a category given at a LATER time takes effect for every
+        rule from that time on: that is how a reanalysis is expressed. A rule earlier than any
+        attestation sees the seed's category.
+        """
+        at_or_before = [t for t in self.forms if time_order(t) <= time_order(time)]
+        if not at_or_before:
+            return self.seed.category
+        return self.forms[max(at_or_before, key=time_order)].category
+
+    def set_stages(self, stages: dict[int, str], category: str = "") -> None:
+        """Replace every TIMED target with *stages*, leaving the seed and the surface alone."""
+        for time in list(self.forms):
+            if time is not None and time != self.seed_time:
+                del self.forms[time]
+        for time, ipa in stages.items():
+            self.forms[time] = Attestation(ipa, category)
+
+    # --- Views onto `forms`, for the analysis layer -------------------------------------------
+    # These are the questions the accuracy/blame/diagnosis code actually asks — "the seed", "the
+    # surface target", "the timed targets" — so they stay as named accessors rather than making
+    # every caller re-derive them. They are READ-ONLY: `forms` is the single source of truth.
+
+    @property
+    def ipa(self) -> str:
+        """The derivation input: the seed's IPA."""
+        return self.seed.ipa
+
+    @property
+    def final(self) -> str | None:
+        """The attested surface — the target at the untimed slot — or None if absent."""
+        attestation = self.forms.get(None)
+        return attestation.ipa if attestation is not None else None
+
+    @property
+    def final_form(self) -> Form | None:
+        """The surface target, segmented. None if absent OR unsegmentable."""
+        attestation = self.forms.get(None)
+        return attestation.form if attestation is not None else None
+
+    @property
+    def stages(self) -> dict[int, str]:
+        """The TIMED targets, by time — every attestation but the seed and the surface."""
+        return {
+            time: attestation.ipa
+            for time, attestation in self.forms.items()
+            if time is not None and time != self.seed_time
+        }
+
+    @property
+    def stage_forms(self) -> dict[int, Form]:
+        """The timed targets, segmented. A target the inventory could not segment is absent."""
+        return {
+            time: attestation.form
+            for time, attestation in self.forms.items()
+            if time is not None and time != self.seed_time and attestation.form is not None
+        }
 
 
 class WordInventory(UserDict[str, Word]):
-    """Words keyed by their IPA form, loaded from TOML.
-
-    The key is the IPA string itself (same as ``Word.ipa``).
-    """
+    """Words keyed by :attr:`Word.id`."""

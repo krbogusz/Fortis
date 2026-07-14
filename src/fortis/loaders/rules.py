@@ -32,24 +32,45 @@ def load_time(rule_id: str, rule_def: dict[str, Any]) -> Result[int | None, str]
     return Ok(value)
 
 
-def load_words(rule_id: str, rule_def: dict[str, Any]) -> Result[tuple[str, ...], str]:
-    """Parse the optional 'words' field: which words the rule is restricted to.
-
-    Accepts a single string or a list of strings, each matched against a word's ipa or
-    gloss. Empty (the default) ⇒ the rule applies to every word.
-
-    Args:
-        rule_id: Rule slug (for error messages).
-        rule_def: Raw dictionary from the TOML file.
-    """
-    value = rule_def.get("words")
+def _load_string_list(
+    rule_id: str, rule_def: dict[str, Any], field: str
+) -> Result[tuple[str, ...], str]:
+    """Parse an optional scope field that is a string or a list of strings. Empty ⇒ unrestricted."""
+    value = rule_def.get(field)
     if value is None:
         return Ok(())
     if isinstance(value, str):
         return Ok((value,))
     if isinstance(value, list) and all(isinstance(item, str) for item in value):
         return Ok(tuple(value))
-    return Err(f"Rule '{rule_id}' has a 'words' that is not a string or list of strings")
+    return Err(f"Rule '{rule_id}' has a '{field}' that is not a string or list of strings")
+
+
+def load_words(rule_id: str, rule_def: dict[str, Any]) -> Result[tuple[str, ...], str]:
+    """Parse the optional 'words' field: which words the rule is restricted to.
+
+    Accepts a single string or a list of strings, each matched against a word's id or
+    gloss. Empty (the default) ⇒ the rule applies to every word.
+
+    Args:
+        rule_id: Rule slug (for error messages).
+        rule_def: Raw dictionary from the TOML file.
+    """
+    return _load_string_list(rule_id, rule_def, "words")
+
+
+def load_categories(rule_id: str, rule_def: dict[str, Any]) -> Result[tuple[str, ...], str]:
+    """Parse the optional 'categories' field: which word CLASSES the rule is restricted to.
+
+    The class-wide counterpart of ``words``. Each string is matched literally against the
+    word's category in force at this rule's time; the engine has no vocabulary of categories
+    and never parses one, so a project chooses its own scheme. Empty ⇒ every word.
+
+    Args:
+        rule_id: Rule slug (for error messages).
+        rule_def: Raw dictionary from the TOML file.
+    """
+    return _load_string_list(rule_id, rule_def, "categories")
 
 
 def load_application(rule_id: str, rule_def: dict[str, Any]) -> Result[ApplicationMode, str]:
@@ -118,6 +139,7 @@ def load_rule(
         error_list, load_application(rule_id, rule_def), ApplicationMode.simultaneous
     )
     words = collect(error_list, load_words(rule_id, rule_def), ())
+    categories = collect(error_list, load_categories(rule_id, rule_def), ())
 
     name = rule_def.get("name")
     if name is not None and not isinstance(name, str):
@@ -154,6 +176,7 @@ def load_rule(
             name=name,
             description=description,
             words=words,
+            categories=categories,
         )
         for index, (definition, sd) in enumerate(zip(definitions, sds, strict=True), start=1)
     ]
@@ -235,7 +258,9 @@ def load_rule_inventory_toml(
 
 # Columns the CSV loader understands; anything else is an error. ``definition`` is required,
 # ``id`` names the rule; the rest are optional and mirror the TOML fields.
-_RULE_COLUMNS = ("id", "time", "name", "description", "definition", "application", "words")
+_RULE_COLUMNS = (
+    "id", "time", "name", "description", "definition", "application", "words", "categories",
+)
 # List-valued cells (``definition`` sub-steps, ``words`` scope) are ';'-separated. '|' is
 # reserved by alternation inside definitions (e.g. ``(j|w)``), so ';' is the safe delimiter.
 _LIST_SEP = ";"
@@ -249,7 +274,7 @@ def load_rule_inventory_csv(
     A header row names the columns; they are read **by name**, so any order works. The
     canonical order mirrors a rule table top-to-bottom::
 
-        id, time, name, description, definition, application, words
+        id, time, name, description, definition, application, words, categories
 
     Columns in detail:
 
@@ -261,8 +286,10 @@ def load_rule_inventory_csv(
       the one cell (they share the row's time/name/description and mint ``id#1``, ``id#2``, …),
       matching a TOML list ``definition``.
     - ``application`` — optional mode (``simultaneous`` default, ``iterative``, …).
-    - ``words`` — optional ``;``-separated word-scope, each matched against a word's ipa or
+    - ``words`` — optional ``;``-separated word-scope, each matched against a word's id or
       gloss. Empty ⇒ the rule applies to every word.
+    - ``categories`` — optional ``;``-separated CLASS scope, each matched against the word's
+      category in force at this rule's time. Empty ⇒ the rule applies to every word.
 
     Fields are read with the ``csv`` module, so a value containing a comma must be quoted.
     A gloss used as a word-scope cannot itself contain ``;`` (the list delimiter).
@@ -316,9 +343,10 @@ def load_rule_inventory_csv(
             if value:
                 rule_def[field] = value
 
-        words_cell = (row.get("words") or "").strip()
-        if words_cell:
-            rule_def["words"] = [w.strip() for w in words_cell.split(_LIST_SEP) if w.strip()]
+        for scope in ("words", "categories"):
+            cell = (row.get(scope) or "").strip()
+            if cell:
+                rule_def[scope] = [s.strip() for s in cell.split(_LIST_SEP) if s.strip()]
 
         ordered.append((rule_id, rule_def))
 

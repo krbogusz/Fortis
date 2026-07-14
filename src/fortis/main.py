@@ -73,7 +73,7 @@ from src.fortis.application.tiers import lower_tiers
 from src.fortis.config import config
 from src.fortis.loaders.project import load_project, unfired_scoped_rules
 from src.fortis.models.derivation import Derivation, DerivationStep
-from src.fortis.models.inventories import Word
+from src.fortis.models.inventories import Attestation, Word
 from src.fortis.models.project import Project
 from src.fortis.models.rules import RuleInventory
 
@@ -467,17 +467,16 @@ def _print_summary(
 
 
 def _find_word(project: Project, word_str: str) -> tuple[str, Word, bool]:
-    """Locate *word_str* in the lexicon by IPA key or gloss.
+    """Locate *word_str* in the lexicon by id, seed IPA or gloss.
 
-    Returns ``(ipa, word, found)``. A hit yields the lexicon entry (its IPA key drives
-    derivation, so a gloss lookup still derives the right form, and its attested
-    ``final``/``stages`` come along). A miss yields a bare ``Word(ipa=word_str)`` — derived
-    with no target — and ``found`` False.
+    Returns ``(ipa, word, found)``. A hit yields the lexicon entry (its seed drives derivation,
+    so an id or gloss lookup still derives the right form, and its attested targets come along).
+    A miss yields a bare one-form ``Word`` — derived with no target — and ``found`` False.
     """
-    for ipa, word in project.words.items():
-        if ipa == word_str or word.gloss == word_str:
-            return ipa, word, True
-    return word_str, Word(ipa=word_str), False
+    for word_id, word in project.words.items():
+        if word_str in (word_id, word.seed.ipa, word.gloss):
+            return word.seed.ipa, word, True
+    return word_str, Word(id=word_str, forms={0: Attestation(ipa=word_str)}), False
 
 
 def _run_lint(project: Project, start: float) -> None:
@@ -649,7 +648,7 @@ def _build_derivations_csv(derivations: list[Derivation], project: Project) -> s
     writer.writerow(["word", "rule", "t", "before", "after", "change"])
     for derivation in derivations:
         word = derivation.word
-        name = word.ipa  # the lexicon key — the one unambiguous per-word identifier
+        name = word.id  # the lexicon key — the one unambiguous per-word identifier
         # input.after — how the engine ingested the raw IPA. With no steps the input is
         # the surface, so its boundaries stand in (the same fallback the blame trace uses).
         input_boundaries = (

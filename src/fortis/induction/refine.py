@@ -220,8 +220,8 @@ def _final_residual_interval(
         )
         words.setdefault(
             surface,
-            Word(
-                ipa=surface, gloss=derivation.word.gloss,
+            Word.from_series(
+                id=surface, seed=surface, gloss=derivation.word.gloss,
                 final=derivation.word.final, frequency=derivation.word.frequency,
             ),
         )
@@ -313,8 +313,8 @@ def _stage_residual_interval(
             string_to_sequence(source, project)
         except ValueError:
             continue
-        words[source] = Word(
-            ipa=source, gloss=derivation.word.gloss, final=target,
+        words[source] = Word.from_series(
+            id=source, seed=source, gloss=derivation.word.gloss, final=target,
             frequency=derivation.word.frequency,
         )
     mini = replace(project, words=WordInventory(words), rules=RuleInventory())

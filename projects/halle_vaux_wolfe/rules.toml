@@ -3,13 +3,13 @@
 
 # --- Nasal place assimilation: the WHOLE Place node spreads (labial/coronal/dorsal at once). ---
 [place_assimilation]
-words      = ["anka", "anpa", "anta"]
+words      = ["assim-velar", "assim-labial", "assim-coronal-vacuous"]
 name       = "Nasal place assimilation (Place spreading)"
 definition = "[+nasal] -> [place: ~1] / _ [+consonantal, place: ~1]"
 
 # --- Uyghur Raising (Hahn 1991; HVW ex. 12): low -> high in a medial open syllable. ---
 [uyghur_raising]
-words      = ["kalalar"]
+words      = ["uyghur-raising"]
 name       = "Uyghur Raising"
 definition = "[-consonantal, +sonorant, +low] -> [+high, -low, -back] / [-consonantal] [+consonantal]* $ [+consonantal]* _ $ [+consonantal]"
 
@@ -19,21 +19,21 @@ definition = "[-consonantal, +sonorant, +low] -> [+high, -low, -back] / [-conson
 #     AND-match that only binds a [-high] vowel, so the transparent `[]*` gap steps over the nearer
 #     [+high] vowels to reach it (a plain `high: ~1` would bind whichever vowel is nearest). ---
 [sibe_uvularization]
-words      = ["dʒalukun", "bɔduxu", "ulukun"]
+words      = ["sibe-uvular-k", "sibe-uvular-x", "sibe-all-high"]
 name       = "Sibe uvularization"
 definition = "[+consonantal, dorsal, +high] -> [high: ~1] / [-consonantal, high: ~1=-] []* _"
 
 # --- Palestinian Arabic emphasis spread (HVW ex. 48): [RTR] spreads leftward across consonants,
 #     the vowels transparent. ---
 [emphasis_spread]
-words      = ["tatatˤ"]
+words      = ["emphasis-spread"]
 name       = "Emphasis spread (RTR)"
 definition = "[+consonantal] -> [guttural: +, tongue_root: +, rtr: +] / _ []* [+consonantal, tongue_root, rtr]"
 
 # --- Igbo labial assimilation (HVW ex. 32-33): a high prefix vowel rounds before a labial
 #     consonant (spreading of the Lips node's [round]). ---
 [igbo_rounding]
-words      = ["obibe", "ofife", "olile"]
+words      = ["igbo-rounding-b", "igbo-rounding-f", "igbo-no-rounding-l"]
 name       = "Igbo labial assimilation"
 definition = "[-consonantal, +high] -> [lips: +, round: +, back: +] / _ [labial]"
 
@@ -42,6 +42,6 @@ definition = "[-consonantal, +high] -> [lips: +, round: +, back: +] / _ [labial]
 #     [dorsal] (+ the height that realizes it) spreads, NOT [back]. Contrast place_assimilation,
 #     which copies the whole node including [back]. ---
 [irish_dorsal]
-words      = ["anʲga", "anˠgʲa"]
+words      = ["irish-palatal-dorsal", "irish-velar-dorsal"]
 name       = "Irish dorsal assimilation ([dorsal] spreads, [back] does not)"
 definition = "[+nasal] -> [dorsal: ~1, high: ~2, low: ~3, tongue_blade: none, coronal: none, anterior: none, distributed: none] / _ [+consonantal, dorsal: ~1, high: ~2, low: ~3]"

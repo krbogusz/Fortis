@@ -29,7 +29,7 @@ def test_place_assimilation_spreads_the_oral_node(tmp_path):
     )
     proj = load_project(tmp_path).unwrap()
     rules = resolve_rule_letters(proj.rules, proj)
-    surface = {word.gloss: _surface(proj, ipa, word, rules) for ipa, word in proj.words.items()}
+    surface = {w.gloss: _surface(proj, w.seed.ipa, w, rules) for w in proj.words.values()}
     assert surface["labial"] == "am.pa"  # n → m (copies the labial place)
     assert surface["coronal"] == "an.ta"  # n → n (already coronal; replace is a no-op)
     assert surface["velar"] == "aŋ.ka"  # n → ŋ (copies the velar/dorsal place)
@@ -49,7 +49,7 @@ def test_spread_copies_a_childless_leaf_for_vowel_harmony(tmp_path):
     )
     proj = load_project(tmp_path).unwrap()
     rules = resolve_rule_letters(proj.rules, proj)
-    surface = {word.gloss: _surface(proj, ipa, word, rules) for ipa, word in proj.words.items()}
+    surface = {w.gloss: _surface(proj, w.seed.ipa, w, rules) for w in proj.words.values()}
     # After back, round /u/: high /i/ takes backness + rounding (→ u); non-high /e/ takes only
     # backness (→ ɤ), the conditional gating its rounding off. The second vowel harmonising to
     # the first (already-changed) one is the cascade that needs the captured node to persist.
@@ -69,7 +69,7 @@ def test_presence_optional_spread_clears_the_target(tmp_path):
     )
     proj = load_project(tmp_path).unwrap()
     rules = resolve_rule_letters(proj.rules, proj)
-    surface = {word.gloss: _surface(proj, ipa, word, rules) for ipa, word in proj.words.items()}
+    surface = {w.gloss: _surface(proj, w.seed.ipa, w, rules) for w in proj.words.values()}
     assert surface["back-trigger"] == "u.tɯ"  # /i/ takes back, its front cleared → ɯ
     assert surface["front-trigger"] == "i.ty"  # /u/ takes front, its back cleared → y
 
@@ -85,7 +85,7 @@ def test_plain_recall_still_requires_the_node_present(tmp_path):
     )
     proj = load_project(tmp_path).unwrap()
     rules = resolve_rule_letters(proj.rules, proj)
-    surface = {word.gloss: _surface(proj, ipa, word, rules) for ipa, word in proj.words.items()}
+    surface = {w.gloss: _surface(proj, w.seed.ipa, w, rules) for w in proj.words.values()}
     assert surface["placeless"] == "an.ha"  # h has no oral node → rule does not fire, n unchanged
     assert surface["labial"] == "am.pa"  # p has a place → the nasal assimilates as usual
 
@@ -97,7 +97,7 @@ def test_bind_and_match_recall_skips_non_matching_sources():
     # vowels transparent — a plain `high: ~1` would instead bind whichever vowel is nearest.
     proj = load_project(Path("projects/halle_vaux_wolfe")).unwrap()
     rules = resolve_rule_letters(proj.rules, proj)
-    surface = {ipa: _surface(proj, ipa, w, rules) for ipa, w in proj.words.items()}
+    surface = {w.seed.ipa: _surface(proj, w.seed.ipa, w, rules) for w in proj.words.values()}
     assert surface["dʒalukun"] == "dʒa.lu.qun"  # a ([-high]) uvularizes k across the transparent u
     assert surface["bɔduxu"] == "bɔ.du.χu"  # ɔ ([-high]) uvularizes x across the transparent u
     assert surface["ulukun"] == "u.lu.kun"  # all [+high]: no [-high] to bind, so no uvularization

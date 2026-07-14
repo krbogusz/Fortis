@@ -119,8 +119,8 @@ def build_interval(project: Project, start: int | None, end: int | None) -> Inte
             continue
         if source in mini:
             collisions += 1
-        mini[source] = Word(
-            ipa=source, gloss=word.gloss, final=target, frequency=word.frequency
+        mini[source] = Word.from_series(
+            id=source, seed=source, gloss=word.gloss, final=target, frequency=word.frequency
         )
     mini_project = replace(project, words=WordInventory(mini), rules=RuleInventory())
     return Interval(
@@ -167,8 +167,10 @@ def synthetic_words(project: Project) -> WordInventory:
         stages = {
             time: _render_at(derivation, time, project) for time in sorted(word.stages)
         }
-        words[key] = Word(
-            ipa=word.ipa,
+        words[key] = Word.from_series(
+            id=word.id,
+            seed=word.ipa,
+            seed_time=word.seed_time,
             gloss=word.gloss,
             final=_render_at(derivation, None, project),
             stages=stages,

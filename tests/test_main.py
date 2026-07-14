@@ -114,7 +114,9 @@ def test_main_single_word_writes_single_reports(project, tmp_path, capsys):
     # --single derives one word (found by IPA key) and writes single_*.csv, not the full run.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(
-        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+        f'[[words]]\nid = "{ipa}"\ngloss = "x"\n'
+        f'forms = [{{ time = 0, ipa = "{ipa}" }}, {{ time = "final", ipa = "zzz" }}]\n',
+        encoding="utf-8",
     )
     main(["--project", str(tmp_path), "--single", ipa])
     reports = tmp_path / "reports"
@@ -137,7 +139,9 @@ def test_main_single_word_not_in_lexicon_has_no_target_reports(project, tmp_path
     # A word not in the lexicon derives bare: only single_derivations.csv, no target reports.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(
-        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+        f'[[words]]\nid = "{ipa}"\ngloss = "x"\n'
+        f'forms = [{{ time = 0, ipa = "{ipa}" }}, {{ time = "final", ipa = "zzz" }}]\n',
+        encoding="utf-8",
     )
     # First a found run writes the target reports, then an absent word must clear them.
     main(["--project", str(tmp_path), "--single", ipa])
@@ -161,7 +165,9 @@ def test_main_writes_accuracy_with_target(project, tmp_path):
     # back to the default inventory) triggers the accuracy CSVs, in reports/.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(
-        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+        f'[[words]]\nid = "{ipa}"\ngloss = "x"\n'
+        f'forms = [{{ time = 0, ipa = "{ipa}" }}, {{ time = "final", ipa = "zzz" }}]\n',
+        encoding="utf-8",
     )
     main(["--project", str(tmp_path)])
     reports = tmp_path / "reports"
@@ -183,7 +189,9 @@ def test_main_run_summary_splits_out_analysis(project, tmp_path, capsys):
     # blame) separately, so each cost is visible.
     ipa = next(iter(project.words))
     (tmp_path / "words.toml").write_text(
-        f'"{ipa}" = {{gloss = "x", final = "zzz"}}\n', encoding="utf-8"
+        f'[[words]]\nid = "{ipa}"\ngloss = "x"\n'
+        f'forms = [{{ time = 0, ipa = "{ipa}" }}, {{ time = "final", ipa = "zzz" }}]\n',
+        encoding="utf-8",
     )
     main(["--project", str(tmp_path)])
     err = capsys.readouterr().err
@@ -192,7 +200,7 @@ def test_main_run_summary_splits_out_analysis(project, tmp_path, capsys):
 
 def _derive(word, rules, project):
     return derive(
-        Word(ipa=word),
+        Word.from_series(id=word, seed=word),
         string_to_sequence(word, project),
         rules,
         project.letters,

@@ -11,28 +11,202 @@
 # app, populates the Accuracy tab. A few words keep the bare `word = "gloss"` form (no
 # target) to show both lexicon styles are supported; those are simply left ungraded.
 
-"akba"   = {gloss = "voicing assimilation", final = "agba"}
-"taki"   = {gloss = "i-umlaut", final = "teki"}
-"tag"    = {gloss = "final devoicing", final = "tak"}
-"seke"   = {gloss = "feature override", final = "sekə"}
-"asta"   = {gloss = "coda lenition, early", final = "ahta"}
-"aspa"   = {gloss = "coda lenition, late", final = "aspa"}
-"maha"   = "intervocalic loss"
-"katr"   = {gloss = "epenthesis", final = "katər"}
-"atta"   = "degemination"
-"anka"   = {gloss = "place assimilation", final = "aŋka"}
-"katá"  = {gloss = "tone stability", final = "kat˦"}
-"kará"  = {gloss = "tone delinking", final = "kara"}
-"pátà"  = {gloss = "contour tone", final = "pa˦ta˦˨"}
-"kata"   = {gloss = "stress", final = "ˈkata"}
-"kaj"    = "disjunction"
-"bidja"  = {gloss = "gemination", final = "biddja"}
-"asasi"  = "exception"
-"tepei"  = {gloss = "right-to-left", final = "tipii"}
-"pata"   = {gloss = "sound change over time", final = "paː", 100 = "pada", 200 = "pað̠a", 300 = "paː"}
-"otine"  = {gloss = "vowel harmony (agreement)", final = "otunɤ"}
-"utine"  = {gloss = "vowel harmony (spreading)", final = "utunɤ"}
-"at-a"   = {gloss = "morpheme boundary", final = "ata"}
-"tastsa" = {gloss = "syllabification fallback", final = "tastsa"}
-"táka" = {gloss = "tone spread", final = "ta˦ka˦"}
-"tita"   = {gloss = "contradictory bundle", final = "tita"}
+[[words]]
+id = "voicing-assimilation"
+gloss = "voicing assimilation"
+forms = [
+  { time = 0, ipa = "akba" },
+  { time = "final", ipa = "agba" },
+]
+
+[[words]]
+id = "i-umlaut"
+gloss = "i-umlaut"
+forms = [
+  { time = 0, ipa = "taki" },
+  { time = "final", ipa = "teki" },
+]
+
+[[words]]
+id = "final-devoicing"
+gloss = "final devoicing"
+forms = [
+  { time = 0, ipa = "tag" },
+  { time = "final", ipa = "tak" },
+]
+
+[[words]]
+id = "feature-override"
+gloss = "feature override"
+forms = [
+  { time = 0, ipa = "seke" },
+  { time = "final", ipa = "sekə" },
+]
+
+[[words]]
+id = "coda-lenition-early"
+gloss = "coda lenition, early"
+forms = [
+  { time = 0, ipa = "asta" },
+  { time = "final", ipa = "ahta" },
+]
+
+[[words]]
+id = "coda-lenition-late"
+gloss = "coda lenition, late"
+forms = [
+  { time = 0, ipa = "aspa" },
+  { time = "final", ipa = "aspa" },
+]
+
+[[words]]
+id = "intervocalic-loss"
+gloss = "intervocalic loss"
+forms = [
+  { time = 0, ipa = "maha" },
+]
+
+[[words]]
+id = "epenthesis"
+gloss = "epenthesis"
+forms = [
+  { time = 0, ipa = "katr" },
+  { time = "final", ipa = "katər" },
+]
+
+[[words]]
+id = "degemination"
+gloss = "degemination"
+forms = [
+  { time = 0, ipa = "atta" },
+]
+
+[[words]]
+id = "place-assimilation"
+gloss = "place assimilation"
+forms = [
+  { time = 0, ipa = "anka" },
+  { time = "final", ipa = "aŋka" },
+]
+
+[[words]]
+id = "tone-stability"
+gloss = "tone stability"
+forms = [
+  { time = 0, ipa = "katá" },
+  { time = "final", ipa = "kat˦" },
+]
+
+[[words]]
+id = "tone-delinking"
+gloss = "tone delinking"
+forms = [
+  { time = 0, ipa = "kará" },
+  { time = "final", ipa = "kara" },
+]
+
+[[words]]
+id = "contour-tone"
+gloss = "contour tone"
+forms = [
+  { time = 0, ipa = "pátà" },
+  { time = "final", ipa = "pa˦ta˦˨" },
+]
+
+[[words]]
+id = "stress"
+gloss = "stress"
+forms = [
+  { time = 0, ipa = "kata" },
+  { time = "final", ipa = "ˈkata" },
+]
+
+[[words]]
+id = "disjunction"
+gloss = "disjunction"
+forms = [
+  { time = 0, ipa = "kaj" },
+]
+
+[[words]]
+id = "gemination"
+gloss = "gemination"
+forms = [
+  { time = 0, ipa = "bidja" },
+  { time = "final", ipa = "biddja" },
+]
+
+[[words]]
+id = "exception"
+gloss = "exception"
+forms = [
+  { time = 0, ipa = "asasi" },
+]
+
+[[words]]
+id = "right-to-left"
+gloss = "right-to-left"
+forms = [
+  { time = 0, ipa = "tepei" },
+  { time = "final", ipa = "tipii" },
+]
+
+[[words]]
+id = "sound-change-over-time"
+gloss = "sound change over time"
+forms = [
+  { time = 0, ipa = "pata" },
+  { time = 100, ipa = "pada" },
+  { time = 200, ipa = "pað̠a" },
+  { time = 300, ipa = "paː" },
+  { time = "final", ipa = "paː" },
+]
+
+[[words]]
+id = "vowel-harmony-agreement"
+gloss = "vowel harmony (agreement)"
+forms = [
+  { time = 0, ipa = "otine" },
+  { time = "final", ipa = "otunɤ" },
+]
+
+[[words]]
+id = "vowel-harmony-spreading"
+gloss = "vowel harmony (spreading)"
+forms = [
+  { time = 0, ipa = "utine" },
+  { time = "final", ipa = "utunɤ" },
+]
+
+[[words]]
+id = "morpheme-boundary"
+gloss = "morpheme boundary"
+forms = [
+  { time = 0, ipa = "at-a" },
+  { time = "final", ipa = "ata" },
+]
+
+[[words]]
+id = "syllabification-fallback"
+gloss = "syllabification fallback"
+forms = [
+  { time = 0, ipa = "tastsa" },
+  { time = "final", ipa = "tastsa" },
+]
+
+[[words]]
+id = "tone-spread"
+gloss = "tone spread"
+forms = [
+  { time = 0, ipa = "táka" },
+  { time = "final", ipa = "ta˦ka˦" },
+]
+
+[[words]]
+id = "contradictory-bundle"
+gloss = "contradictory bundle"
+forms = [
+  { time = 0, ipa = "tita" },
+  { time = "final", ipa = "tita" },
+]
+

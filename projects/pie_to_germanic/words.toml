@@ -5,46 +5,297 @@
 # even though that root left no English word (it was tabooed in Germanic).
 # Format: IPA = "Modern English descendant (label)"
 
-"meħˈteːr"    = "mother"
-"ˈbʱleʁʷmoː"  = "bloom"
-"ˈwergʲom"    = "work"
-"n̩ˈter"       = "under"
-"ˈwl̩kʷos"     = "wolf"
-"ˈwr̩mis"      = "worm"
-"ˈχdontm̩"     = "tooth"
-"ˈχesti"      = "is"
-"gʷiˈʁʷwos"   = "quick"
-"ˈpħteːr"     = "father"
-"ˈsamħdʱos"   = "sand"
-"ˈnokʷts"     = "night"
-"n̩ˈswe"       = "us"
-"ˈtod"        = "that"
-"ˈħekʲsleħ"   = "axle"
-"ˈkʷod"       = "what"
-"okʲˈtoːw"    = "eight"
-"ˈħeboːl"     = "apple"
-"ˈdʰoχmos"    = "doom"
-"ˈgʰans"      = "goose"
-"ˈsongʷʰos"   = "song"
-"uˈperi"      = "over"
-"ħjuħn̩ˈkʲos"  = "young"
-"kʷeˈkʷleħ"   = "wheel"
-"χesmi"       = "am"
-"ˈtrejes"     = "three"
-"ˈgʰostejes"  = "guest"
-"ˈdekʲm̩d"     = "ten"
-"pl̩χˈnos"     = "full"
-"ˈsnojgʷʰos"  = "snow"
-"ˈmedʰjos"    = "mid"
-"ˈnewjos"     = "new"
-"ˈen"         = "in"
-"ˈmuħs"        = "mouse"
-"ˈbʰreħteːr"   = "brother"
-"ˈsuħnus"      = "son"
-"ˈpoːds"       = "foot"
-"ˈswekʲs"      = "six"
-"dʰugħˈteːr"   = "daughter"
-"ˈkʲerd"       = "heart"
-"ˈgʲonu"       = "knee"
+[[words]]
+id = "mother"
+gloss = "mother"
+forms = [
+  { time = -2000, ipa = "meħˈteːr" },
+]
 
-"ˈħr̩tkʲos"    = "bear (no English descendant — kept to show the bare sound laws)"
+[[words]]
+id = "bloom"
+gloss = "bloom"
+forms = [
+  { time = -2000, ipa = "ˈbʱleʁʷmoː" },
+]
+
+[[words]]
+id = "work"
+gloss = "work"
+forms = [
+  { time = -2000, ipa = "ˈwergʲom" },
+]
+
+[[words]]
+id = "under"
+gloss = "under"
+forms = [
+  { time = -2000, ipa = "n̩ˈter" },
+]
+
+[[words]]
+id = "wolf"
+gloss = "wolf"
+forms = [
+  { time = -2000, ipa = "ˈwl̩kʷos" },
+]
+
+[[words]]
+id = "worm"
+gloss = "worm"
+forms = [
+  { time = -2000, ipa = "ˈwr̩mis" },
+]
+
+[[words]]
+id = "tooth"
+gloss = "tooth"
+forms = [
+  { time = -2000, ipa = "ˈχdontm̩" },
+]
+
+[[words]]
+id = "is"
+gloss = "is"
+forms = [
+  { time = -2000, ipa = "ˈχesti" },
+]
+
+[[words]]
+id = "quick"
+gloss = "quick"
+forms = [
+  { time = -2000, ipa = "gʷiˈʁʷwos" },
+]
+
+[[words]]
+id = "father"
+gloss = "father"
+forms = [
+  { time = -2000, ipa = "ˈpħteːr" },
+]
+
+[[words]]
+id = "sand"
+gloss = "sand"
+forms = [
+  { time = -2000, ipa = "ˈsamħdʱos" },
+]
+
+[[words]]
+id = "night"
+gloss = "night"
+forms = [
+  { time = -2000, ipa = "ˈnokʷts" },
+]
+
+[[words]]
+id = "us"
+gloss = "us"
+forms = [
+  { time = -2000, ipa = "n̩ˈswe" },
+]
+
+[[words]]
+id = "that"
+gloss = "that"
+forms = [
+  { time = -2000, ipa = "ˈtod" },
+]
+
+[[words]]
+id = "axle"
+gloss = "axle"
+forms = [
+  { time = -2000, ipa = "ˈħekʲsleħ" },
+]
+
+[[words]]
+id = "what"
+gloss = "what"
+forms = [
+  { time = -2000, ipa = "ˈkʷod" },
+]
+
+[[words]]
+id = "eight"
+gloss = "eight"
+forms = [
+  { time = -2000, ipa = "okʲˈtoːw" },
+]
+
+[[words]]
+id = "apple"
+gloss = "apple"
+forms = [
+  { time = -2000, ipa = "ˈħeboːl" },
+]
+
+[[words]]
+id = "doom"
+gloss = "doom"
+forms = [
+  { time = -2000, ipa = "ˈdʰoχmos" },
+]
+
+[[words]]
+id = "goose"
+gloss = "goose"
+forms = [
+  { time = -2000, ipa = "ˈgʰans" },
+]
+
+[[words]]
+id = "song"
+gloss = "song"
+forms = [
+  { time = -2000, ipa = "ˈsongʷʰos" },
+]
+
+[[words]]
+id = "over"
+gloss = "over"
+forms = [
+  { time = -2000, ipa = "uˈperi" },
+]
+
+[[words]]
+id = "young"
+gloss = "young"
+forms = [
+  { time = -2000, ipa = "ħjuħn̩ˈkʲos" },
+]
+
+[[words]]
+id = "wheel"
+gloss = "wheel"
+forms = [
+  { time = -2000, ipa = "kʷeˈkʷleħ" },
+]
+
+[[words]]
+id = "am"
+gloss = "am"
+forms = [
+  { time = -2000, ipa = "χesmi" },
+]
+
+[[words]]
+id = "three"
+gloss = "three"
+forms = [
+  { time = -2000, ipa = "ˈtrejes" },
+]
+
+[[words]]
+id = "guest"
+gloss = "guest"
+forms = [
+  { time = -2000, ipa = "ˈgʰostejes" },
+]
+
+[[words]]
+id = "ten"
+gloss = "ten"
+forms = [
+  { time = -2000, ipa = "ˈdekʲm̩d" },
+]
+
+[[words]]
+id = "full"
+gloss = "full"
+forms = [
+  { time = -2000, ipa = "pl̩χˈnos" },
+]
+
+[[words]]
+id = "snow"
+gloss = "snow"
+forms = [
+  { time = -2000, ipa = "ˈsnojgʷʰos" },
+]
+
+[[words]]
+id = "mid"
+gloss = "mid"
+forms = [
+  { time = -2000, ipa = "ˈmedʰjos" },
+]
+
+[[words]]
+id = "new"
+gloss = "new"
+forms = [
+  { time = -2000, ipa = "ˈnewjos" },
+]
+
+[[words]]
+id = "in"
+gloss = "in"
+forms = [
+  { time = -2000, ipa = "ˈen" },
+]
+
+[[words]]
+id = "mouse"
+gloss = "mouse"
+forms = [
+  { time = -2000, ipa = "ˈmuħs" },
+]
+
+[[words]]
+id = "brother"
+gloss = "brother"
+forms = [
+  { time = -2000, ipa = "ˈbʰreħteːr" },
+]
+
+[[words]]
+id = "son"
+gloss = "son"
+forms = [
+  { time = -2000, ipa = "ˈsuħnus" },
+]
+
+[[words]]
+id = "foot"
+gloss = "foot"
+forms = [
+  { time = -2000, ipa = "ˈpoːds" },
+]
+
+[[words]]
+id = "six"
+gloss = "six"
+forms = [
+  { time = -2000, ipa = "ˈswekʲs" },
+]
+
+[[words]]
+id = "daughter"
+gloss = "daughter"
+forms = [
+  { time = -2000, ipa = "dʰugħˈteːr" },
+]
+
+[[words]]
+id = "heart"
+gloss = "heart"
+forms = [
+  { time = -2000, ipa = "ˈkʲerd" },
+]
+
+[[words]]
+id = "knee"
+gloss = "knee"
+forms = [
+  { time = -2000, ipa = "ˈgʲonu" },
+]
+
+[[words]]
+id = "bear-no-english-descendant-kept-to-show-the-bare-sound-laws"
+gloss = "bear (no English descendant — kept to show the bare sound laws)"
+forms = [
+  { time = -2000, ipa = "ˈħr̩tkʲos" },
+]
+

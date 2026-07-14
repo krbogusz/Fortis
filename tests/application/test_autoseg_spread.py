@@ -21,7 +21,7 @@ def _rule(definition, features):
 
 def _derive(form, rule, project):
     return derive(
-        Word(ipa="x"),
+        Word.from_series(id="x", seed="x"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,
@@ -107,7 +107,7 @@ def test_spread_propagates_across_a_run_left_to_right(project):
         application=ApplicationMode.left_to_right,
     )
     surface = derive(
-        Word(ipa="akaka"),
+        Word.from_series(id="akaka", seed="akaka"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,

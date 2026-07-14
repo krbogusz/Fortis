@@ -3,47 +3,619 @@
 # the same stage-time schema as the Latin benchmark. Generated, not hand-typed; do not edit
 # by hand — regenerate if rules.toml changes. NOT real data.
 
-"popo" = { gloss = "w0", "-200" = "po.po", "-100" = "po.bo", "750" = "pu.bu", "1000" = "pu.bu", "1200" = "pu.bu", "1400" = "pu.bu", final = "pu.bu" }
-"popa" = { gloss = "w1", "-200" = "po.pa", "-100" = "po.ba", "750" = "pu.ba", "1000" = "pu.ba", "1200" = "pu.ba", "1400" = "pu.ba", final = "pu.ba" }
-"pope" = { gloss = "w2", "-200" = "po.pe", "-100" = "po.be", "750" = "pu.be", "1000" = "pu.be", "1200" = "pu.be", "1400" = "pu.bi", final = "pu.bi" }
-"popos" = { gloss = "w3", "-200" = "po.pos", "-100" = "po.bos", "750" = "pu.bus", "1000" = "pu.bus", "1200" = "pu.bu", "1400" = "pu.bu", final = "pu.bu" }
-"popas" = { gloss = "w4", "-200" = "po.pas", "-100" = "po.bas", "750" = "pu.bas", "1000" = "pu.bas", "1200" = "pu.ba", "1400" = "pu.ba", final = "pu.ba" }
-"popes" = { gloss = "w5", "-200" = "po.pes", "-100" = "po.bes", "750" = "pu.bes", "1000" = "pu.bes", "1200" = "pu.be", "1400" = "pu.bi", final = "pu.bi" }
-"poko" = { gloss = "w6", "-200" = "po.ko", "-100" = "po.ko", "750" = "pu.ku", "1000" = "pu.tu", "1200" = "pu.tu", "1400" = "pu.tu", final = "pu.tu" }
-"poka" = { gloss = "w7", "-200" = "po.ka", "-100" = "po.ka", "750" = "pu.ka", "1000" = "pu.ta", "1200" = "pu.ta", "1400" = "pu.ta", final = "pu.ta" }
-"poke" = { gloss = "w8", "-200" = "po.ke", "-100" = "po.ke", "750" = "pu.ke", "1000" = "pu.te", "1200" = "pu.te", "1400" = "pu.ti", final = "pu.ti" }
-"pokos" = { gloss = "w9", "-200" = "po.kos", "-100" = "po.kos", "750" = "pu.kus", "1000" = "pu.tus", "1200" = "pu.tu", "1400" = "pu.tu", final = "pu.tu" }
-"pokas" = { gloss = "w10", "-200" = "po.kas", "-100" = "po.kas", "750" = "pu.kas", "1000" = "pu.tas", "1200" = "pu.ta", "1400" = "pu.ta", final = "pu.ta" }
-"pokes" = { gloss = "w11", "-200" = "po.kes", "-100" = "po.kes", "750" = "pu.kes", "1000" = "pu.tes", "1200" = "pu.te", "1400" = "pu.ti", final = "pu.ti" }
-"poto" = { gloss = "w12", "-200" = "po.to", "-100" = "po.to", "750" = "pu.tu", "1000" = "pu.tu", "1200" = "pu.tu", "1400" = "pu.tu", final = "pu.tu" }
-"pota" = { gloss = "w13", "-200" = "po.ta", "-100" = "po.ta", "750" = "pu.ta", "1000" = "pu.ta", "1200" = "pu.ta", "1400" = "pu.ta", final = "pu.ta" }
-"pote" = { gloss = "w14", "-200" = "po.te", "-100" = "po.te", "750" = "pu.te", "1000" = "pu.te", "1200" = "pu.te", "1400" = "pu.ti", final = "pu.ti" }
-"potos" = { gloss = "w15", "-200" = "po.tos", "-100" = "po.tos", "750" = "pu.tus", "1000" = "pu.tus", "1200" = "pu.tu", "1400" = "pu.tu", final = "pu.tu" }
-"potas" = { gloss = "w16", "-200" = "po.tas", "-100" = "po.tas", "750" = "pu.tas", "1000" = "pu.tas", "1200" = "pu.ta", "1400" = "pu.ta", final = "pu.ta" }
-"potes" = { gloss = "w17", "-200" = "po.tes", "-100" = "po.tes", "750" = "pu.tes", "1000" = "pu.tes", "1200" = "pu.te", "1400" = "pu.ti", final = "pu.ti" }
-"pomo" = { gloss = "w18", "-200" = "po.mo", "-100" = "po.mo", "750" = "pu.mu", "1000" = "pu.nu", "1200" = "pu.nu", "1400" = "pu.nu", final = "pu.nu" }
-"poma" = { gloss = "w19", "-200" = "po.ma", "-100" = "po.ma", "750" = "pu.ma", "1000" = "pu.na", "1200" = "pu.na", "1400" = "pu.na", final = "pu.na" }
-"pome" = { gloss = "w20", "-200" = "po.me", "-100" = "po.me", "750" = "pu.me", "1000" = "pu.ne", "1200" = "pu.ne", "1400" = "pu.ni", final = "pu.ni" }
-"pomos" = { gloss = "w21", "-200" = "po.mos", "-100" = "po.mos", "750" = "pu.mus", "1000" = "pu.nus", "1200" = "pu.nu", "1400" = "pu.nu", final = "pu.nu" }
-"pomas" = { gloss = "w22", "-200" = "po.mas", "-100" = "po.mas", "750" = "pu.mas", "1000" = "pu.nas", "1200" = "pu.na", "1400" = "pu.na", final = "pu.na" }
-"pomes" = { gloss = "w23", "-200" = "po.mes", "-100" = "po.mes", "750" = "pu.mes", "1000" = "pu.nes", "1200" = "pu.ne", "1400" = "pu.ni", final = "pu.ni" }
-"papo" = { gloss = "w24", "-200" = "pa.po", "-100" = "pa.bo", "750" = "pa.bu", "1000" = "pa.bu", "1200" = "pa.bu", "1400" = "pa.bu", final = "pa.bu" }
-"papa" = { gloss = "w25", "-200" = "pa.pa", "-100" = "pa.ba", "750" = "pa.ba", "1000" = "pa.ba", "1200" = "pa.ba", "1400" = "pa.ba", final = "pa.ba" }
-"pape" = { gloss = "w26", "-200" = "pa.pe", "-100" = "pa.be", "750" = "pa.be", "1000" = "pa.be", "1200" = "pa.be", "1400" = "pa.bi", final = "pa.bi" }
-"papos" = { gloss = "w27", "-200" = "pa.pos", "-100" = "pa.bos", "750" = "pa.bus", "1000" = "pa.bus", "1200" = "pa.bu", "1400" = "pa.bu", final = "pa.bu" }
-"papas" = { gloss = "w28", "-200" = "pa.pas", "-100" = "pa.bas", "750" = "pa.bas", "1000" = "pa.bas", "1200" = "pa.ba", "1400" = "pa.ba", final = "pa.ba" }
-"papes" = { gloss = "w29", "-200" = "pa.pes", "-100" = "pa.bes", "750" = "pa.bes", "1000" = "pa.bes", "1200" = "pa.be", "1400" = "pa.bi", final = "pa.bi" }
-"pako" = { gloss = "w30", "-200" = "pa.ko", "-100" = "pa.ko", "750" = "pa.ku", "1000" = "pa.tu", "1200" = "pa.tu", "1400" = "pa.tu", final = "pa.tu" }
-"paka" = { gloss = "w31", "-200" = "pa.ka", "-100" = "pa.ka", "750" = "pa.ka", "1000" = "pa.ta", "1200" = "pa.ta", "1400" = "pa.ta", final = "pa.ta" }
-"pake" = { gloss = "w32", "-200" = "pa.ke", "-100" = "pa.ke", "750" = "pa.ke", "1000" = "pa.te", "1200" = "pa.te", "1400" = "pa.ti", final = "pa.ti" }
-"pakos" = { gloss = "w33", "-200" = "pa.kos", "-100" = "pa.kos", "750" = "pa.kus", "1000" = "pa.tus", "1200" = "pa.tu", "1400" = "pa.tu", final = "pa.tu" }
-"pakas" = { gloss = "w34", "-200" = "pa.kas", "-100" = "pa.kas", "750" = "pa.kas", "1000" = "pa.tas", "1200" = "pa.ta", "1400" = "pa.ta", final = "pa.ta" }
-"pakes" = { gloss = "w35", "-200" = "pa.kes", "-100" = "pa.kes", "750" = "pa.kes", "1000" = "pa.tes", "1200" = "pa.te", "1400" = "pa.ti", final = "pa.ti" }
-"pato" = { gloss = "w36", "-200" = "pa.to", "-100" = "pa.to", "750" = "pa.tu", "1000" = "pa.tu", "1200" = "pa.tu", "1400" = "pa.tu", final = "pa.tu" }
-"pate" = { gloss = "w37", "-200" = "pa.te", "-100" = "pa.te", "750" = "pa.te", "1000" = "pa.te", "1200" = "pa.te", "1400" = "pa.ti", final = "pa.ti" }
-"patos" = { gloss = "w38", "-200" = "pa.tos", "-100" = "pa.tos", "750" = "pa.tus", "1000" = "pa.tus", "1200" = "pa.tu", "1400" = "pa.tu", final = "pa.tu" }
-"patas" = { gloss = "w39", "-200" = "pa.tas", "-100" = "pa.tas", "750" = "pa.tas", "1000" = "pa.tas", "1200" = "pa.ta", "1400" = "pa.ta", final = "pa.ta" }
-"pates" = { gloss = "w40", "-200" = "pa.tes", "-100" = "pa.tes", "750" = "pa.tes", "1000" = "pa.tes", "1200" = "pa.te", "1400" = "pa.ti", final = "pa.ti" }
-"pamo" = { gloss = "w41", "-200" = "pa.mo", "-100" = "pa.mo", "750" = "pa.mu", "1000" = "pa.nu", "1200" = "pa.nu", "1400" = "pa.nu", final = "pa.nu" }
-"pama" = { gloss = "w42", "-200" = "pa.ma", "-100" = "pa.ma", "750" = "pa.ma", "1000" = "pa.na", "1200" = "pa.na", "1400" = "pa.na", final = "pa.na" }
-"pame" = { gloss = "w43", "-200" = "pa.me", "-100" = "pa.me", "750" = "pa.me", "1000" = "pa.ne", "1200" = "pa.ne", "1400" = "pa.ni", final = "pa.ni" }
+[[words]]
+id = "popo"
+gloss = "w0"
+forms = [
+  { time = -1000, ipa = "popo" },
+  { time = -200, ipa = "po.po" },
+  { time = -100, ipa = "po.bo" },
+  { time = 750, ipa = "pu.bu" },
+  { time = 1000, ipa = "pu.bu" },
+  { time = 1200, ipa = "pu.bu" },
+  { time = 1400, ipa = "pu.bu" },
+  { time = "final", ipa = "pu.bu" },
+]
+
+[[words]]
+id = "popa"
+gloss = "w1"
+forms = [
+  { time = -1000, ipa = "popa" },
+  { time = -200, ipa = "po.pa" },
+  { time = -100, ipa = "po.ba" },
+  { time = 750, ipa = "pu.ba" },
+  { time = 1000, ipa = "pu.ba" },
+  { time = 1200, ipa = "pu.ba" },
+  { time = 1400, ipa = "pu.ba" },
+  { time = "final", ipa = "pu.ba" },
+]
+
+[[words]]
+id = "pope"
+gloss = "w2"
+forms = [
+  { time = -1000, ipa = "pope" },
+  { time = -200, ipa = "po.pe" },
+  { time = -100, ipa = "po.be" },
+  { time = 750, ipa = "pu.be" },
+  { time = 1000, ipa = "pu.be" },
+  { time = 1200, ipa = "pu.be" },
+  { time = 1400, ipa = "pu.bi" },
+  { time = "final", ipa = "pu.bi" },
+]
+
+[[words]]
+id = "popos"
+gloss = "w3"
+forms = [
+  { time = -1000, ipa = "popos" },
+  { time = -200, ipa = "po.pos" },
+  { time = -100, ipa = "po.bos" },
+  { time = 750, ipa = "pu.bus" },
+  { time = 1000, ipa = "pu.bus" },
+  { time = 1200, ipa = "pu.bu" },
+  { time = 1400, ipa = "pu.bu" },
+  { time = "final", ipa = "pu.bu" },
+]
+
+[[words]]
+id = "popas"
+gloss = "w4"
+forms = [
+  { time = -1000, ipa = "popas" },
+  { time = -200, ipa = "po.pas" },
+  { time = -100, ipa = "po.bas" },
+  { time = 750, ipa = "pu.bas" },
+  { time = 1000, ipa = "pu.bas" },
+  { time = 1200, ipa = "pu.ba" },
+  { time = 1400, ipa = "pu.ba" },
+  { time = "final", ipa = "pu.ba" },
+]
+
+[[words]]
+id = "popes"
+gloss = "w5"
+forms = [
+  { time = -1000, ipa = "popes" },
+  { time = -200, ipa = "po.pes" },
+  { time = -100, ipa = "po.bes" },
+  { time = 750, ipa = "pu.bes" },
+  { time = 1000, ipa = "pu.bes" },
+  { time = 1200, ipa = "pu.be" },
+  { time = 1400, ipa = "pu.bi" },
+  { time = "final", ipa = "pu.bi" },
+]
+
+[[words]]
+id = "poko"
+gloss = "w6"
+forms = [
+  { time = -1000, ipa = "poko" },
+  { time = -200, ipa = "po.ko" },
+  { time = -100, ipa = "po.ko" },
+  { time = 750, ipa = "pu.ku" },
+  { time = 1000, ipa = "pu.tu" },
+  { time = 1200, ipa = "pu.tu" },
+  { time = 1400, ipa = "pu.tu" },
+  { time = "final", ipa = "pu.tu" },
+]
+
+[[words]]
+id = "poka"
+gloss = "w7"
+forms = [
+  { time = -1000, ipa = "poka" },
+  { time = -200, ipa = "po.ka" },
+  { time = -100, ipa = "po.ka" },
+  { time = 750, ipa = "pu.ka" },
+  { time = 1000, ipa = "pu.ta" },
+  { time = 1200, ipa = "pu.ta" },
+  { time = 1400, ipa = "pu.ta" },
+  { time = "final", ipa = "pu.ta" },
+]
+
+[[words]]
+id = "poke"
+gloss = "w8"
+forms = [
+  { time = -1000, ipa = "poke" },
+  { time = -200, ipa = "po.ke" },
+  { time = -100, ipa = "po.ke" },
+  { time = 750, ipa = "pu.ke" },
+  { time = 1000, ipa = "pu.te" },
+  { time = 1200, ipa = "pu.te" },
+  { time = 1400, ipa = "pu.ti" },
+  { time = "final", ipa = "pu.ti" },
+]
+
+[[words]]
+id = "pokos"
+gloss = "w9"
+forms = [
+  { time = -1000, ipa = "pokos" },
+  { time = -200, ipa = "po.kos" },
+  { time = -100, ipa = "po.kos" },
+  { time = 750, ipa = "pu.kus" },
+  { time = 1000, ipa = "pu.tus" },
+  { time = 1200, ipa = "pu.tu" },
+  { time = 1400, ipa = "pu.tu" },
+  { time = "final", ipa = "pu.tu" },
+]
+
+[[words]]
+id = "pokas"
+gloss = "w10"
+forms = [
+  { time = -1000, ipa = "pokas" },
+  { time = -200, ipa = "po.kas" },
+  { time = -100, ipa = "po.kas" },
+  { time = 750, ipa = "pu.kas" },
+  { time = 1000, ipa = "pu.tas" },
+  { time = 1200, ipa = "pu.ta" },
+  { time = 1400, ipa = "pu.ta" },
+  { time = "final", ipa = "pu.ta" },
+]
+
+[[words]]
+id = "pokes"
+gloss = "w11"
+forms = [
+  { time = -1000, ipa = "pokes" },
+  { time = -200, ipa = "po.kes" },
+  { time = -100, ipa = "po.kes" },
+  { time = 750, ipa = "pu.kes" },
+  { time = 1000, ipa = "pu.tes" },
+  { time = 1200, ipa = "pu.te" },
+  { time = 1400, ipa = "pu.ti" },
+  { time = "final", ipa = "pu.ti" },
+]
+
+[[words]]
+id = "poto"
+gloss = "w12"
+forms = [
+  { time = -1000, ipa = "poto" },
+  { time = -200, ipa = "po.to" },
+  { time = -100, ipa = "po.to" },
+  { time = 750, ipa = "pu.tu" },
+  { time = 1000, ipa = "pu.tu" },
+  { time = 1200, ipa = "pu.tu" },
+  { time = 1400, ipa = "pu.tu" },
+  { time = "final", ipa = "pu.tu" },
+]
+
+[[words]]
+id = "pota"
+gloss = "w13"
+forms = [
+  { time = -1000, ipa = "pota" },
+  { time = -200, ipa = "po.ta" },
+  { time = -100, ipa = "po.ta" },
+  { time = 750, ipa = "pu.ta" },
+  { time = 1000, ipa = "pu.ta" },
+  { time = 1200, ipa = "pu.ta" },
+  { time = 1400, ipa = "pu.ta" },
+  { time = "final", ipa = "pu.ta" },
+]
+
+[[words]]
+id = "pote"
+gloss = "w14"
+forms = [
+  { time = -1000, ipa = "pote" },
+  { time = -200, ipa = "po.te" },
+  { time = -100, ipa = "po.te" },
+  { time = 750, ipa = "pu.te" },
+  { time = 1000, ipa = "pu.te" },
+  { time = 1200, ipa = "pu.te" },
+  { time = 1400, ipa = "pu.ti" },
+  { time = "final", ipa = "pu.ti" },
+]
+
+[[words]]
+id = "potos"
+gloss = "w15"
+forms = [
+  { time = -1000, ipa = "potos" },
+  { time = -200, ipa = "po.tos" },
+  { time = -100, ipa = "po.tos" },
+  { time = 750, ipa = "pu.tus" },
+  { time = 1000, ipa = "pu.tus" },
+  { time = 1200, ipa = "pu.tu" },
+  { time = 1400, ipa = "pu.tu" },
+  { time = "final", ipa = "pu.tu" },
+]
+
+[[words]]
+id = "potas"
+gloss = "w16"
+forms = [
+  { time = -1000, ipa = "potas" },
+  { time = -200, ipa = "po.tas" },
+  { time = -100, ipa = "po.tas" },
+  { time = 750, ipa = "pu.tas" },
+  { time = 1000, ipa = "pu.tas" },
+  { time = 1200, ipa = "pu.ta" },
+  { time = 1400, ipa = "pu.ta" },
+  { time = "final", ipa = "pu.ta" },
+]
+
+[[words]]
+id = "potes"
+gloss = "w17"
+forms = [
+  { time = -1000, ipa = "potes" },
+  { time = -200, ipa = "po.tes" },
+  { time = -100, ipa = "po.tes" },
+  { time = 750, ipa = "pu.tes" },
+  { time = 1000, ipa = "pu.tes" },
+  { time = 1200, ipa = "pu.te" },
+  { time = 1400, ipa = "pu.ti" },
+  { time = "final", ipa = "pu.ti" },
+]
+
+[[words]]
+id = "pomo"
+gloss = "w18"
+forms = [
+  { time = -1000, ipa = "pomo" },
+  { time = -200, ipa = "po.mo" },
+  { time = -100, ipa = "po.mo" },
+  { time = 750, ipa = "pu.mu" },
+  { time = 1000, ipa = "pu.nu" },
+  { time = 1200, ipa = "pu.nu" },
+  { time = 1400, ipa = "pu.nu" },
+  { time = "final", ipa = "pu.nu" },
+]
+
+[[words]]
+id = "poma"
+gloss = "w19"
+forms = [
+  { time = -1000, ipa = "poma" },
+  { time = -200, ipa = "po.ma" },
+  { time = -100, ipa = "po.ma" },
+  { time = 750, ipa = "pu.ma" },
+  { time = 1000, ipa = "pu.na" },
+  { time = 1200, ipa = "pu.na" },
+  { time = 1400, ipa = "pu.na" },
+  { time = "final", ipa = "pu.na" },
+]
+
+[[words]]
+id = "pome"
+gloss = "w20"
+forms = [
+  { time = -1000, ipa = "pome" },
+  { time = -200, ipa = "po.me" },
+  { time = -100, ipa = "po.me" },
+  { time = 750, ipa = "pu.me" },
+  { time = 1000, ipa = "pu.ne" },
+  { time = 1200, ipa = "pu.ne" },
+  { time = 1400, ipa = "pu.ni" },
+  { time = "final", ipa = "pu.ni" },
+]
+
+[[words]]
+id = "pomos"
+gloss = "w21"
+forms = [
+  { time = -1000, ipa = "pomos" },
+  { time = -200, ipa = "po.mos" },
+  { time = -100, ipa = "po.mos" },
+  { time = 750, ipa = "pu.mus" },
+  { time = 1000, ipa = "pu.nus" },
+  { time = 1200, ipa = "pu.nu" },
+  { time = 1400, ipa = "pu.nu" },
+  { time = "final", ipa = "pu.nu" },
+]
+
+[[words]]
+id = "pomas"
+gloss = "w22"
+forms = [
+  { time = -1000, ipa = "pomas" },
+  { time = -200, ipa = "po.mas" },
+  { time = -100, ipa = "po.mas" },
+  { time = 750, ipa = "pu.mas" },
+  { time = 1000, ipa = "pu.nas" },
+  { time = 1200, ipa = "pu.na" },
+  { time = 1400, ipa = "pu.na" },
+  { time = "final", ipa = "pu.na" },
+]
+
+[[words]]
+id = "pomes"
+gloss = "w23"
+forms = [
+  { time = -1000, ipa = "pomes" },
+  { time = -200, ipa = "po.mes" },
+  { time = -100, ipa = "po.mes" },
+  { time = 750, ipa = "pu.mes" },
+  { time = 1000, ipa = "pu.nes" },
+  { time = 1200, ipa = "pu.ne" },
+  { time = 1400, ipa = "pu.ni" },
+  { time = "final", ipa = "pu.ni" },
+]
+
+[[words]]
+id = "papo"
+gloss = "w24"
+forms = [
+  { time = -1000, ipa = "papo" },
+  { time = -200, ipa = "pa.po" },
+  { time = -100, ipa = "pa.bo" },
+  { time = 750, ipa = "pa.bu" },
+  { time = 1000, ipa = "pa.bu" },
+  { time = 1200, ipa = "pa.bu" },
+  { time = 1400, ipa = "pa.bu" },
+  { time = "final", ipa = "pa.bu" },
+]
+
+[[words]]
+id = "papa"
+gloss = "w25"
+forms = [
+  { time = -1000, ipa = "papa" },
+  { time = -200, ipa = "pa.pa" },
+  { time = -100, ipa = "pa.ba" },
+  { time = 750, ipa = "pa.ba" },
+  { time = 1000, ipa = "pa.ba" },
+  { time = 1200, ipa = "pa.ba" },
+  { time = 1400, ipa = "pa.ba" },
+  { time = "final", ipa = "pa.ba" },
+]
+
+[[words]]
+id = "pape"
+gloss = "w26"
+forms = [
+  { time = -1000, ipa = "pape" },
+  { time = -200, ipa = "pa.pe" },
+  { time = -100, ipa = "pa.be" },
+  { time = 750, ipa = "pa.be" },
+  { time = 1000, ipa = "pa.be" },
+  { time = 1200, ipa = "pa.be" },
+  { time = 1400, ipa = "pa.bi" },
+  { time = "final", ipa = "pa.bi" },
+]
+
+[[words]]
+id = "papos"
+gloss = "w27"
+forms = [
+  { time = -1000, ipa = "papos" },
+  { time = -200, ipa = "pa.pos" },
+  { time = -100, ipa = "pa.bos" },
+  { time = 750, ipa = "pa.bus" },
+  { time = 1000, ipa = "pa.bus" },
+  { time = 1200, ipa = "pa.bu" },
+  { time = 1400, ipa = "pa.bu" },
+  { time = "final", ipa = "pa.bu" },
+]
+
+[[words]]
+id = "papas"
+gloss = "w28"
+forms = [
+  { time = -1000, ipa = "papas" },
+  { time = -200, ipa = "pa.pas" },
+  { time = -100, ipa = "pa.bas" },
+  { time = 750, ipa = "pa.bas" },
+  { time = 1000, ipa = "pa.bas" },
+  { time = 1200, ipa = "pa.ba" },
+  { time = 1400, ipa = "pa.ba" },
+  { time = "final", ipa = "pa.ba" },
+]
+
+[[words]]
+id = "papes"
+gloss = "w29"
+forms = [
+  { time = -1000, ipa = "papes" },
+  { time = -200, ipa = "pa.pes" },
+  { time = -100, ipa = "pa.bes" },
+  { time = 750, ipa = "pa.bes" },
+  { time = 1000, ipa = "pa.bes" },
+  { time = 1200, ipa = "pa.be" },
+  { time = 1400, ipa = "pa.bi" },
+  { time = "final", ipa = "pa.bi" },
+]
+
+[[words]]
+id = "pako"
+gloss = "w30"
+forms = [
+  { time = -1000, ipa = "pako" },
+  { time = -200, ipa = "pa.ko" },
+  { time = -100, ipa = "pa.ko" },
+  { time = 750, ipa = "pa.ku" },
+  { time = 1000, ipa = "pa.tu" },
+  { time = 1200, ipa = "pa.tu" },
+  { time = 1400, ipa = "pa.tu" },
+  { time = "final", ipa = "pa.tu" },
+]
+
+[[words]]
+id = "paka"
+gloss = "w31"
+forms = [
+  { time = -1000, ipa = "paka" },
+  { time = -200, ipa = "pa.ka" },
+  { time = -100, ipa = "pa.ka" },
+  { time = 750, ipa = "pa.ka" },
+  { time = 1000, ipa = "pa.ta" },
+  { time = 1200, ipa = "pa.ta" },
+  { time = 1400, ipa = "pa.ta" },
+  { time = "final", ipa = "pa.ta" },
+]
+
+[[words]]
+id = "pake"
+gloss = "w32"
+forms = [
+  { time = -1000, ipa = "pake" },
+  { time = -200, ipa = "pa.ke" },
+  { time = -100, ipa = "pa.ke" },
+  { time = 750, ipa = "pa.ke" },
+  { time = 1000, ipa = "pa.te" },
+  { time = 1200, ipa = "pa.te" },
+  { time = 1400, ipa = "pa.ti" },
+  { time = "final", ipa = "pa.ti" },
+]
+
+[[words]]
+id = "pakos"
+gloss = "w33"
+forms = [
+  { time = -1000, ipa = "pakos" },
+  { time = -200, ipa = "pa.kos" },
+  { time = -100, ipa = "pa.kos" },
+  { time = 750, ipa = "pa.kus" },
+  { time = 1000, ipa = "pa.tus" },
+  { time = 1200, ipa = "pa.tu" },
+  { time = 1400, ipa = "pa.tu" },
+  { time = "final", ipa = "pa.tu" },
+]
+
+[[words]]
+id = "pakas"
+gloss = "w34"
+forms = [
+  { time = -1000, ipa = "pakas" },
+  { time = -200, ipa = "pa.kas" },
+  { time = -100, ipa = "pa.kas" },
+  { time = 750, ipa = "pa.kas" },
+  { time = 1000, ipa = "pa.tas" },
+  { time = 1200, ipa = "pa.ta" },
+  { time = 1400, ipa = "pa.ta" },
+  { time = "final", ipa = "pa.ta" },
+]
+
+[[words]]
+id = "pakes"
+gloss = "w35"
+forms = [
+  { time = -1000, ipa = "pakes" },
+  { time = -200, ipa = "pa.kes" },
+  { time = -100, ipa = "pa.kes" },
+  { time = 750, ipa = "pa.kes" },
+  { time = 1000, ipa = "pa.tes" },
+  { time = 1200, ipa = "pa.te" },
+  { time = 1400, ipa = "pa.ti" },
+  { time = "final", ipa = "pa.ti" },
+]
+
+[[words]]
+id = "pato"
+gloss = "w36"
+forms = [
+  { time = -1000, ipa = "pato" },
+  { time = -200, ipa = "pa.to" },
+  { time = -100, ipa = "pa.to" },
+  { time = 750, ipa = "pa.tu" },
+  { time = 1000, ipa = "pa.tu" },
+  { time = 1200, ipa = "pa.tu" },
+  { time = 1400, ipa = "pa.tu" },
+  { time = "final", ipa = "pa.tu" },
+]
+
+[[words]]
+id = "pate"
+gloss = "w37"
+forms = [
+  { time = -1000, ipa = "pate" },
+  { time = -200, ipa = "pa.te" },
+  { time = -100, ipa = "pa.te" },
+  { time = 750, ipa = "pa.te" },
+  { time = 1000, ipa = "pa.te" },
+  { time = 1200, ipa = "pa.te" },
+  { time = 1400, ipa = "pa.ti" },
+  { time = "final", ipa = "pa.ti" },
+]
+
+[[words]]
+id = "patos"
+gloss = "w38"
+forms = [
+  { time = -1000, ipa = "patos" },
+  { time = -200, ipa = "pa.tos" },
+  { time = -100, ipa = "pa.tos" },
+  { time = 750, ipa = "pa.tus" },
+  { time = 1000, ipa = "pa.tus" },
+  { time = 1200, ipa = "pa.tu" },
+  { time = 1400, ipa = "pa.tu" },
+  { time = "final", ipa = "pa.tu" },
+]
+
+[[words]]
+id = "patas"
+gloss = "w39"
+forms = [
+  { time = -1000, ipa = "patas" },
+  { time = -200, ipa = "pa.tas" },
+  { time = -100, ipa = "pa.tas" },
+  { time = 750, ipa = "pa.tas" },
+  { time = 1000, ipa = "pa.tas" },
+  { time = 1200, ipa = "pa.ta" },
+  { time = 1400, ipa = "pa.ta" },
+  { time = "final", ipa = "pa.ta" },
+]
+
+[[words]]
+id = "pates"
+gloss = "w40"
+forms = [
+  { time = -1000, ipa = "pates" },
+  { time = -200, ipa = "pa.tes" },
+  { time = -100, ipa = "pa.tes" },
+  { time = 750, ipa = "pa.tes" },
+  { time = 1000, ipa = "pa.tes" },
+  { time = 1200, ipa = "pa.te" },
+  { time = 1400, ipa = "pa.ti" },
+  { time = "final", ipa = "pa.ti" },
+]
+
+[[words]]
+id = "pamo"
+gloss = "w41"
+forms = [
+  { time = -1000, ipa = "pamo" },
+  { time = -200, ipa = "pa.mo" },
+  { time = -100, ipa = "pa.mo" },
+  { time = 750, ipa = "pa.mu" },
+  { time = 1000, ipa = "pa.nu" },
+  { time = 1200, ipa = "pa.nu" },
+  { time = 1400, ipa = "pa.nu" },
+  { time = "final", ipa = "pa.nu" },
+]
+
+[[words]]
+id = "pama"
+gloss = "w42"
+forms = [
+  { time = -1000, ipa = "pama" },
+  { time = -200, ipa = "pa.ma" },
+  { time = -100, ipa = "pa.ma" },
+  { time = 750, ipa = "pa.ma" },
+  { time = 1000, ipa = "pa.na" },
+  { time = 1200, ipa = "pa.na" },
+  { time = 1400, ipa = "pa.na" },
+  { time = "final", ipa = "pa.na" },
+]
+
+[[words]]
+id = "pame"
+gloss = "w43"
+forms = [
+  { time = -1000, ipa = "pame" },
+  { time = -200, ipa = "pa.me" },
+  { time = -100, ipa = "pa.me" },
+  { time = 750, ipa = "pa.me" },
+  { time = 1000, ipa = "pa.ne" },
+  { time = 1200, ipa = "pa.ne" },
+  { time = 1400, ipa = "pa.ni" },
+  { time = "final", ipa = "pa.ni" },
+]
+

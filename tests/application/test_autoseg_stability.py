@@ -25,7 +25,7 @@ def _derive_deleting_first_vowel(form, project):
     sd = parse_definition(_DELETE_FIRST_VOWEL, project.features).unwrap()
     rule = Rule(id="del", time=0, raw_definition="del", sd=sd)
     return derive(
-        Word(ipa="taka"),
+        Word.from_series(id="taka", seed="taka"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,
@@ -64,7 +64,7 @@ def _derive_replacing_first_vowel(form, project):
     sd = parse_definition("a → e / # [-syllabic] _", project.features).unwrap()
     rule = Rule(id="rep", time=0, raw_definition="rep", sd=sd)
     return derive(
-        Word(ipa="taka"),
+        Word.from_series(id="taka", seed="taka"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,
@@ -116,7 +116,7 @@ def test_rewrite_anchors_tone_to_the_new_nucleus_not_the_neighbour(project):
         sd=parse_definition("a → e / # [-syllabic] _", project.features).unwrap(),
     )
     surface = derive(
-        Word(ipa="taka"),
+        Word.from_series(id="taka", seed="taka"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,
@@ -149,7 +149,7 @@ def test_stability_direction_is_per_tier(project):
         tiers["tone"] = replace(project.tiers["tone"], stability=direction)
         tiers["stress"] = project.tiers["stress"]
         surface = derive(
-            Word(ipa="takata"),
+            Word.from_series(id="takata", seed="takata"),
             form,
             RuleInventory({0: (rule,)}),
             project.letters,
@@ -174,7 +174,7 @@ def _derive_contracting(form, project):
     sd = parse_definition(_CONTRACT, project.features).unwrap()
     rule = Rule(id="contract", time=0, raw_definition="contract", sd=sd)
     return derive(
-        Word(ipa="tuu"),
+        Word.from_series(id="tuu", seed="tuu"),
         form,
         RuleInventory({0: (rule,)}),
         project.letters,

@@ -1,216 +1,192 @@
 """Tests for the words loader."""
 
+import pytest
+
 from src.fortis.loaders.words import load_word_inventory
 
 
-class TestLoadWordInventory:
+def _toml(tmp_path, text):
+    (tmp_path / "words.toml").write_text(text, encoding="utf-8")
+    return load_word_inventory(tmp_path / "words.toml")
+
+
+def _csv(tmp_path, text):
+    (tmp_path / "words.csv").write_text(text, encoding="utf-8")
+    return load_word_inventory(tmp_path / "words.csv")
+
+
+class TestConciseForm:
+    """``"<ipa>" = "<gloss>"`` — a word that is only a seed, with no targets."""
+
     def test_valid(self, tmp_path):
-        toml_content = '"xenti" = "in front"\n"mexteːr" = "mother"\n'
-        path = tmp_path / "words.toml"
-        path.write_text(toml_content)
-        result = load_word_inventory(path)
-        assert result.is_ok()
-        inv = result.unwrap()
-        assert "xenti" in inv
-        assert inv["xenti"].gloss == "in front"
-        assert inv["mexteːr"].gloss == "mother"
+        inventory = _toml(tmp_path, '"anpa" = "before"\n"atta" = "eight"\n').unwrap()
+        assert list(inventory) == ["anpa", "atta"]
+        assert inventory["anpa"].seed.ipa == "anpa"
+        assert inventory["anpa"].gloss == "before"
+        assert inventory["anpa"].targets == {}  # a seed is not something to score against
 
     def test_empty_gloss(self, tmp_path):
-        toml_content = '"test" = ""\n'
-        path = tmp_path / "words.toml"
-        path.write_text(toml_content)
-        result = load_word_inventory(path)
-        assert result.is_ok()
-        inv = result.unwrap()
-        assert inv["test"].gloss == ""
+        assert _toml(tmp_path, '"anpa" = ""\n').unwrap()["anpa"].gloss == ""
+
+    def test_a_table_value_is_rejected(self, tmp_path):
+        # The old ipa-keyed table form. A word with targets now goes in a [[words]] table.
+        errors = _toml(tmp_path, '"anpa" = {gloss = "x", final = "y"}\n').unwrap_err()
+        assert "must be a gloss string" in errors[0]
 
     def test_missing_file(self, tmp_path):
-        path = tmp_path / "nonexistent.toml"
-        result = load_word_inventory(path)
-        assert result.is_err()
-
-    def test_wrong_extension(self, tmp_path):
-        path = tmp_path / "words.json"
-        path.write_text("{}")
-        result = load_word_inventory(path)
-        assert result.is_err()
+        assert load_word_inventory(tmp_path / "nope.toml").is_err()
 
 
-class TestWordTableForm:
-    """The richer table form: gloss/final + integer-keyed stage forms."""
+class TestWordsArray:
+    """``[[words]]`` — id, gloss, frequency, and a series of forms through time."""
 
-    def _load(self, tmp_path, content):
-        path = tmp_path / "words.toml"
-        path.write_text(content, encoding="utf-8")
-        return load_word_inventory(path)
+    LEXICON = """
+[[words]]
+id = "bear-v"
+gloss = "to bear"
+frequency = 1200
+forms = [
+  { time = -2000,   ipa = "bʱereti", category = "verb.pres.3sg" },
+  { time = 200,     ipa = "biriði",  category = "verb.pres.3sg.strong" },
+  { time = "final", ipa = "beəz" },
+]
+"""
 
-    def test_full_table(self, tmp_path):
-        content = (
-            '"ˈɑmɑt̪" = {gloss = "aime – loves", final = "ɛm", '
-            '100 = "ˈɑ.mɑt̪", 300 = " ˈɑ.mɑt̪", 600 = "ˈãj̃.məθ", '
-            '1000 = "ˈɛ̃j̃.mə", 1400 = "ˈɛ̃.mə", 1700 = "ɛm"}\n'
-        )
-        result = self._load(tmp_path, content)
-        assert result.is_ok(), result.unwrap_err() if result.is_err() else None
-        w = result.unwrap()["ˈɑmɑt̪"]
-        assert w.ipa == "ˈɑmɑt̪"
-        assert w.gloss == "aime – loves"
-        assert w.final == "ɛm"
-        assert w.stages == {
-            100: "ˈɑ.mɑt̪",
-            300: "ˈɑ.mɑt̪",  # leading space stripped
-            600: "ˈãj̃.məθ",
-            1000: "ˈɛ̃j̃.mə",
-            1400: "ˈɛ̃.mə",
-            1700: "ɛm",
-        }
+    def test_full_word(self, tmp_path):
+        word = _toml(tmp_path, self.LEXICON).unwrap()["bear-v"]
+        assert word.id == "bear-v"
+        assert word.gloss == "to bear"
+        assert word.frequency == 1200
+        assert word.seed_time == -2000
+        assert word.seed.ipa == "bʱereti"
 
-    def test_frequency_default_is_one(self, tmp_path):
-        inv = self._load(tmp_path, '"ka" = {gloss = "x", final = "ka"}\n').unwrap()
-        assert inv["ka"].frequency == 1
+    def test_the_earliest_form_is_the_seed_and_is_not_a_target(self, tmp_path):
+        word = _toml(tmp_path, self.LEXICON).unwrap()["bear-v"]
+        assert word.ipa == "bʱereti"             # the derivation input
+        assert set(word.targets) == {200, None}  # scored against — the seed is not among them
+        assert word.stages == {200: "biriði"}
+        assert word.final == "beəz"
 
-    def test_frequency_parsed(self, tmp_path):
-        inv = self._load(tmp_path, '"ka" = {gloss = "x", final = "ka", frequency = 240}\n').unwrap()
-        assert inv["ka"].frequency == 240
+    def test_final_is_the_untimed_slot(self, tmp_path):
+        # "final" is not a year: an untimed rule runs after every timed one, so the form after
+        # it cannot be dated. It keys as None, and sorts last.
+        word = _toml(tmp_path, self.LEXICON).unwrap()["bear-v"]
+        assert None in word.forms
+        assert word.forms[None].ipa == "beəz"
 
-    def test_frequency_bool_rejected(self, tmp_path):
-        # bool is an int subclass — `true` must not become 1.
-        err = self._load(tmp_path, '"ka" = {gloss = "x", frequency = true}\n').unwrap_err()
-        assert any("frequency" in e for e in err)
+    def test_category_is_read_per_form(self, tmp_path):
+        word = _toml(tmp_path, self.LEXICON).unwrap()["bear-v"]
+        assert word.forms[-2000].category == "verb.pres.3sg"
+        assert word.forms[200].category == "verb.pres.3sg.strong"
+        assert word.forms[None].category == ""  # omitted ⇒ empty, never guessed
 
-    def test_frequency_non_positive_rejected(self, tmp_path):
-        err = self._load(tmp_path, '"ka" = {gloss = "x", frequency = 0}\n').unwrap_err()
-        assert any("frequency" in e for e in err)
+    def test_category_in_force_is_the_latest_at_or_before(self, tmp_path):
+        # This is what a category-scoped rule reads, and it is why a category given at a LATER
+        # time expresses a reanalysis: every rule from that time on sees the new one.
+        word = _toml(tmp_path, self.LEXICON).unwrap()["bear-v"]
+        assert word.category_at(-2000) == "verb.pres.3sg"
+        assert word.category_at(-500) == "verb.pres.3sg"         # still the seed's
+        assert word.category_at(200) == "verb.pres.3sg.strong"   # the 200 entry takes effect
+        assert word.category_at(900) == "verb.pres.3sg.strong"   # and stays in force
+        assert word.category_at(-9999) == "verb.pres.3sg"        # before everything ⇒ the seed's
 
-    def test_frequency_non_integer_rejected(self, tmp_path):
-        err = self._load(tmp_path, '"ka" = {gloss = "x", frequency = 1.5}\n').unwrap_err()
-        assert any("frequency" in e for e in err)
+    def test_defaults(self, tmp_path):
+        word = _toml(
+            tmp_path, '[[words]]\nid = "a"\nforms = [{ time = 0, ipa = "a" }]\n'
+        ).unwrap()["a"]
+        assert word.gloss == "" and word.frequency == 1 and word.seed.category == ""
 
-    def test_both_forms_coexist(self, tmp_path):
-        # The explicit requirement: the plain string form and the table form
-        # must both work in one inventory.
-        content = (
-            '"ˌɑbˈɑnte" = "avant"\n'
-            '"ˈɑmɑt̪" = {gloss = "aime", final = "ɛm", 600 = "ˈãj̃.məθ"}\n'
-        )
-        result = self._load(tmp_path, content)
-        assert result.is_ok()
-        inv = result.unwrap()
-        assert inv["ˌɑbˈɑnte"].gloss == "avant"
-        assert inv["ˌɑbˈɑnte"].final is None
-        assert inv["ˌɑbˈɑnte"].stages == {}
-        assert inv["ˈɑmɑt̪"].final == "ɛm"
-        assert inv["ˈɑmɑt̪"].stages == {600: "ˈãj̃.məθ"}
+    def test_coexists_with_the_concise_form(self, tmp_path):
+        # ABOVE the array: TOML binds a bare key/value to the table header above it, so a
+        # concise entry written below [[words]] would become a key of that word.
+        inventory = _toml(tmp_path, '"atta" = "eight"\n' + self.LEXICON).unwrap()
+        assert set(inventory) == {"bear-v", "atta"}
 
-    def test_table_optional_fields(self, tmp_path):
-        # gloss/final both optional; a table with only stages is valid.
-        result = self._load(tmp_path, '"a" = {500 = "b"}\n')
-        assert result.is_ok()
-        w = result.unwrap()["a"]
-        assert w.gloss == ""
-        assert w.final is None
-        assert w.stages == {500: "b"}
+    def test_concise_entry_below_the_array_says_why(self, tmp_path):
+        errors = _toml(tmp_path, self.LEXICON + '\n"atta" = "eight"\n').unwrap_err()
+        assert "must go ABOVE every [[words]] table" in errors[0]
 
-    def test_negative_stage_time_allowed(self, tmp_path):
-        # -100 is a real rule time; stage times aren't constrained to boundaries.
-        result = self._load(tmp_path, '"a" = {gloss = "x", -100 = "y"}\n')
-        assert result.is_ok()
-        assert result.unwrap()["a"].stages == {-100: "y"}
+    @pytest.mark.parametrize(
+        "table, expected",
+        [
+            ('[[words]]\nforms = [{time=0, ipa="a"}]', "has no 'id'"),
+            ('[[words]]\nid = "a"', "has no 'forms'"),
+            ('[[words]]\nid = "a"\nforms = []', "has no 'forms'"),
+            ('[[words]]\nid = "a"\nforms = [{time=0}]', "no 'ipa'"),
+            ('[[words]]\nid = "a"\nforms = [{ipa="a"}]', "'time'"),
+            ('[[words]]\nid = "a"\nforms = [{time="soon", ipa="a"}]', "neither an integer"),
+            ('[[words]]\nid = "a"\nforms = [{time=0, ipa="a", category=7}]', "not a string"),
+            ('[[words]]\nid = "a"\nfrequency = 0\nforms = [{time=0, ipa="a"}]', "positive integer"),
+            ('[[words]]\nid = "a"\nfrequency = true\nforms = [{time=0, ipa="a"}]', "positive"),
+            ('[[words]]\nid = "a"\nnope = 1\nforms = [{time=0, ipa="a"}]', "unknown key"),
+        ],
+    )
+    def test_errors(self, tmp_path, table, expected):
+        assert expected in _toml(tmp_path, table).unwrap_err()[0]
 
-    def test_non_integer_stage_key_errors(self, tmp_path):
-        result = self._load(tmp_path, '"a" = {gloss = "x", latin = "y"}\n')
-        assert result.is_err()
-        assert any("latin" in e for e in result.unwrap_err())
+    def test_duplicate_id_errors(self, tmp_path):
+        text = '[[words]]\nid = "a"\nforms = [{time=0, ipa="a"}]\n' * 2
+        assert "already defined" in _toml(tmp_path, text).unwrap_err()[0]
 
-    def test_non_string_stage_form_errors(self, tmp_path):
-        result = self._load(tmp_path, '"a" = {100 = 42}\n')
-        assert result.is_err()
-
-    def test_non_string_final_errors(self, tmp_path):
-        result = self._load(tmp_path, '"a" = {final = 42}\n')
-        assert result.is_err()
-
-    def test_non_string_non_table_value_errors(self, tmp_path):
-        result = self._load(tmp_path, '"a" = 42\n')
-        assert result.is_err()
-        assert any("gloss string or a table" in e for e in result.unwrap_err())
+    def test_two_forms_at_one_time_errors(self, tmp_path):
+        text = '[[words]]\nid = "a"\nforms = [{time=0, ipa="a"}, {time=0, ipa="b"}]\n'
+        assert "two forms at 0" in _toml(tmp_path, text).unwrap_err()[0]
 
 
-class TestLoadWordInventoryCsv:
-    """The CSV lexicon form: same schema as TOML, dispatched by the .csv extension."""
+class TestCsv:
+    """One row per attested form — the long shape, so a category can vary with time."""
 
-    def _load(self, tmp_path, content):
-        path = tmp_path / "words.csv"
-        path.write_text(content, encoding="utf-8")
-        return load_word_inventory(path)
+    LEXICON = (
+        "id,time,ipa,category,gloss,frequency\n"
+        "bear-v,-2000,bʱereti,verb.pres.3sg,to bear,1200\n"
+        "bear-v,200,biriði,verb.pres.3sg.strong,,\n"
+        "bear-v,final,beəz,,,\n"
+    )
 
-    def test_dispatches_and_loads(self, tmp_path):
-        inv = self._load(
-            tmp_path,
-            "word,gloss,final,-100,750\n"
-            "avɑ̃te,avant,avɑ̃,,\n"
-            "amat,aime,ɛm,ˈɑmɑt,ˈɛmə\n",
-        ).unwrap()
-        assert set(inv) == {"avɑ̃te", "amat"}
-        assert inv["avɑ̃te"].gloss == "avant" and inv["avɑ̃te"].final == "avɑ̃"
-        assert inv["avɑ̃te"].stages == {}  # empty cells → no stage
-        assert inv["amat"].stages == {-100: "ˈɑmɑt", 750: "ˈɛmə"}
+    def test_rows_sharing_an_id_are_one_word(self, tmp_path):
+        inventory = _csv(tmp_path, self.LEXICON).unwrap()
+        assert list(inventory) == ["bear-v"]
+        word = inventory["bear-v"]
+        assert word.seed.ipa == "bʱereti"
+        assert word.stages == {200: "biriði"}
+        assert word.final == "beəz"
+        assert word.gloss == "to bear" and word.frequency == 1200
 
-    def test_empty_final_is_none(self, tmp_path):
-        inv = self._load(tmp_path, "word,gloss,final\nx,thing,\n").unwrap()
-        assert inv["x"].final is None
+    def test_category_per_row(self, tmp_path):
+        word = _csv(tmp_path, self.LEXICON).unwrap()["bear-v"]
+        assert word.category_at(200) == "verb.pres.3sg.strong"
+
+    def test_row_order_does_not_matter(self, tmp_path):
+        rows = self.LEXICON.splitlines()
+        shuffled = "\n".join([rows[0], rows[3], rows[1], rows[2]]) + "\n"
+        assert _csv(tmp_path, shuffled).unwrap()["bear-v"].seed.ipa == "bʱereti"
 
     def test_quoted_comma_gloss(self, tmp_path):
-        # A gloss with a comma must be read as one field (csv quoting), not split.
-        inv = self._load(tmp_path, 'word,gloss,final\nx,"amère (bitter, f.)",amɛʁ\n').unwrap()
-        assert inv["x"].gloss == "amère (bitter, f.)"
+        text = 'id,time,ipa,gloss\na,0,a,"amère, bitter"\n'
+        assert _csv(tmp_path, text).unwrap()["a"].gloss == "amère, bitter"
 
-    def test_frequency_column(self, tmp_path):
-        inv = self._load(tmp_path, "word,gloss,frequency\nx,thing,42\ny,other,\n").unwrap()
-        assert inv["x"].frequency == 42
-        assert inv["y"].frequency == 1  # blank → default
-
-    def test_missing_word_column_errors(self, tmp_path):
-        err = self._load(tmp_path, "gloss,final\navant,avɑ̃\n").unwrap_err()
-        assert any("must have a 'word' column" in e for e in err)
-
-    def test_unknown_column_errors(self, tmp_path):
-        err = self._load(tmp_path, "word,gloss,notes\nx,thing,hi\n").unwrap_err()
-        assert any("neither" in e and "notes" in e for e in err)
-
-    def test_duplicate_word_errors(self, tmp_path):
-        err = self._load(tmp_path, "word,gloss\nx,a\nx,b\n").unwrap_err()
-        assert any("already defined" in e for e in err)
-
-    def test_bad_frequency_errors(self, tmp_path):
-        err = self._load(tmp_path, "word,gloss,frequency\nx,a,-3\n").unwrap_err()
-        assert any("positive integer" in e for e in err)
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("time,ipa\n0,a\n", "missing required column"),
+            ("id,time,ipa,wat\na,0,a,x\n", "unknown column"),
+            ("id,time,ipa\n,0,a\n", "empty 'id'"),
+            ("id,time,ipa\na,0,\n", "empty 'ipa'"),
+            ("id,time,ipa\na,soon,a\n", "neither an integer"),
+            ("id,time,ipa\na,0,a\na,0,b\n", "already has a form at 0"),
+            ("id,time,ipa,frequency\na,0,a,0\n", "positive integer"),
+            ("id,time,ipa,gloss\na,0,a,x\na,1,b,y\n", "two different glosses"),
+        ],
+    )
+    def test_errors(self, tmp_path, text, expected):
+        assert expected in _csv(tmp_path, text).unwrap_err()[0]
 
 
 class TestCsvTomlEquivalence:
-    """A TOML and a CSV encoding the same lexicon load to the same inventory."""
-
     def test_same_inventory(self, tmp_path):
-        from src.fortis.loaders.words import load_word_inventory_csv, load_word_inventory_toml
-
-        toml = tmp_path / "w.toml"
-        toml.write_text(
-            '"amat" = {gloss = "aime", final = "ɛm", -100 = "ˈɑmɑt", 750 = "ˈɛmə", frequency = 3}\n'
-            '"o" = {gloss = "eau", final = "o"}\n',
-            encoding="utf-8",
-        )
-        csvp = tmp_path / "w.csv"
-        csvp.write_text(
-            "word,gloss,final,-100,750,frequency\n"
-            "amat,aime,ɛm,ˈɑmɑt,ˈɛmə,3\n"
-            "o,eau,o,,,\n",
-            encoding="utf-8",
-        )
-        ti = load_word_inventory_toml(toml).unwrap()
-        ci = load_word_inventory_csv(csvp).unwrap()
-        assert set(ti) == set(ci)
-        for k in ti:
-            a, b = ti[k], ci[k]
-            assert (a.gloss, a.final, a.stages, a.frequency) == (
-                b.gloss, b.final, b.stages, b.frequency
-            )
+        """The two serialisations are two spellings of one model."""
+        from_toml = _toml(tmp_path, TestWordsArray.LEXICON).unwrap()
+        from_csv = _csv(tmp_path, TestCsv.LEXICON).unwrap()
+        assert from_toml.keys() == from_csv.keys()
+        for key in from_toml:
+            assert from_toml[key] == from_csv[key]

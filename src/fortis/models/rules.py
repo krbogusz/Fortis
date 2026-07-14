@@ -41,9 +41,20 @@ class Rule:
             Optional in the TOML, defaulting to 0.
         raw_definition: Original definition string, kept for traces and errors.
         sd: Parsed structural description.
-        words: If non-empty, the rule fires only on words whose ipa or gloss is listed
+        words: If non-empty, the rule fires only on words whose id or gloss is listed
             — a sporadic / lexically-restricted change, or one staged to show a synchronic
             mechanism on a particular word. Empty ⇒ applies to every word.
+        categories: If non-empty, the rule fires only on words whose grammatical category *at
+            this rule's time* is listed — the class-wide counterpart of ``words``, which names
+            individual words. The strings are matched literally against
+            :attr:`~src.fortis.models.inventories.Attestation.category`, which is opaque and
+            project-defined: the engine has no vocabulary of categories and never parses one, so
+            a project chooses whatever scheme it likes. Empty ⇒ applies to every word.
+
+            This is what makes a MORPHOLOGICALLY conditioned change expressible — one that
+            applies to the verbs but not the nouns. Such a rule is not a sound law, and the
+            distinction is worth keeping visible: a cascade that needs one is making a different
+            (weaker) claim about the words it lands.
     """
 
     id: str
@@ -54,6 +65,7 @@ class Rule:
     name: str | None = None
     description: str | None = None
     words: tuple[str, ...] = ()
+    categories: tuple[str, ...] = ()
 
 
 class RuleInventory(UserDict["int | None", tuple[Rule, ...]]):

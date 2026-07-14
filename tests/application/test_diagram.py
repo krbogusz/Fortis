@@ -124,7 +124,7 @@ def test_change_kept_association_is_solid(project):
 def _change_diagrams(project, ipa):
     """Every render_change diagram across a word's derivation — the rule of each step drives it."""
     rules = resolve_rule_letters(project.rules, project)
-    word = project.words[ipa]
+    word = next(w for w in project.words.values() if w.seed.ipa == ipa)
     derivation = derive(
         word, string_to_sequence(ipa, project), rules, project.letters, project.features,
         project.sonorities, project.syllable_parts, project.tiers,

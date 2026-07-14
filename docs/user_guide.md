@@ -168,23 +168,74 @@ a single-segment bundle for the nucleus, an element sequence for an onset or cod
 
 ### 4.1 The lexicon — `words.toml` / `words.csv`
 
-The lexicon is given in TOML or CSV (equally valid — see the **CSV form** at the end of this
-section). In the TOML form, each entry's key is an IPA string; its value is either a **gloss string** or a
-**table**. The table form adds optional *target* annotations — attested forms the
-derivation is measured against (§8.3): `final`, the attested surface form, and any
-number of integer-keyed `stages`, the attested form at that derivation `time`.
+**A word is a series of attested forms through time.** The **earliest** is the derivation
+**seed** — the input — and every later one is a **target** the derived form is scored against at
+that time (§8.3). The input is not a different kind of thing from an attested form; it is simply
+the earliest one we have.
+
+Each form carries an IPA transcription and, optionally, a grammatical **category** (§4.1.1).
 
 ```toml
-# Words for testing phonological derivation.
-"xenti"     = "in front"                        # gloss only
-"mexteːr"   = "mother"
-"bʱleɣʷmoː" = "flower"
-"ˈɑmɑt"     = {gloss = "loves", final = "ɛm",   # gloss + attested targets
-               600 = "ˈãj̃məθ", 1400 = "ɛm"}
+[[words]]
+id = "bear-v"
+gloss = "to bear"
+frequency = 1200
+forms = [
+  { time = -2000,   ipa = "ˈbʱereti", category = "verb.pres.3sg" },  # the seed: the input
+  { time = 200,     ipa = "ˈbirið̠i", category = "verb.pres.3sg" },  # a target at t=200
+  { time = "final", ipa = "beəz" },                                  # the surface
+]
 ```
 
-Only the IPA key feeds derivation; `final` and `stages` are ignored by the engine
-and read only by the accuracy analysis.
+`id` is the key, and must be unique. It is deliberately **not** the gloss: identity and human
+label are different concerns (`lay` is both a verb and a noun), and a generated lexicon's gloss is
+often not a gloss at all — a word with no modern reflex has nothing to gloss it with. Write
+`bear-v` / `bear-n` and nothing collides.
+
+`time = "final"` is the surface, and it is **not a year**: an untimed rule (§4.2) runs after every
+timed one, so the form after it cannot be dated. It sorts last, always.
+
+`frequency` is a token weight for frequency-weighted accuracy (§8.3). It belongs to the word, not
+to any one of its forms.
+
+**The concise form.** A word that is only a seed — no targets, nothing to score — is written as a
+bare `"<ipa>" = "<gloss>"`, where the key is both the id and the IPA:
+
+```toml
+"xenti"     = "in front"
+"bʱleɣʷmoː" = "flower"
+```
+
+A showcase lexicon used only to *watch* a rule fire has nothing else to say, and a full
+`[[words]]` table for each would be noise. One catch, and it is TOML's rather than ours: concise
+entries must appear **above** every `[[words]]` table, because TOML binds a bare key/value to the
+table header above it. Put one below and it silently becomes a *key of that word*; the loader
+catches this and says so.
+
+#### 4.1.1 `category` — and why it is *given*, not derived
+
+A form's `category` is an opaque, **project-defined** string (`"verb.pres.3sg"`, `"noun.acc.sg"`,
+`"n-stem"`). The engine has no vocabulary of its own and never parses one: it only compares the
+string, literally, against a rule's `categories` (§4.2). So `"verb.pres.3sg"` is *not* a
+sub-class of `"verb"` as far as the engine is concerned — a project picks whatever scheme it
+likes, and lists the ones a rule applies to.
+
+The category is an **annotation you supply**, exactly like the seed IPA, and the engine never
+predicts it. That is what keeps it out of circularity: the engine still predicts only the *IPA*,
+and the category conditions the sound laws the way "this is a weak class-1 verb" conditions them
+in a handbook.
+
+The category **in force** at a rule's time is the one from the latest form at or before it. Which
+means giving a *different* category at a later time is how a **reanalysis** is expressed:
+
+```toml
+forms = [
+  { time = 0,   ipa = "ˈkʷekʷlos", category = "noun.m" },
+  { time = 200, ipa = "ˈxwexwlɑ̃", category = "noun.n" },   # reanalysed as a neuter
+]
+```
+
+Every rule from t=200 on sees `noun.n`; everything before it sees `noun.m`.
 
 A word may also carry a **floating lexical autosegment** — a melody-tier value with
 no host segment of its own (the classic case: a grammatical floating H tone) —
@@ -194,22 +245,29 @@ string matters: `kata⟨◌́⟩` places a floating high _after_ the final segme
 suffixal tone that docks leftward onto it); `⟨◌́⟩kata` places one _before_ the
 first. A dock rule (§5.12) then binds it wherever it sits.
 
-**CSV form (`words.csv`).** The lexicon may equally be written as a CSV table — the same
-schema, one word per row — chosen by the file's extension (`load_word_inventory` dispatches on
-`.csv` vs TOML). A header row names the columns, read **by name** so any order works; the
-canonical order follows the derivation timeline:
+**CSV form (`words.csv`).** The same model, written as a table — chosen by the file's extension
+(`load_word_inventory` dispatches on `.csv` vs TOML). It is the **long** shape: one row per
+attested *form*, not one per word.
 
 ```
-word, gloss, frequency, <intermediate stage times, ascending>, final
+id,time,ipa,category,gloss,frequency
+bear-v,-2000,ˈbʱereti,verb.pres.3sg,to bear,1200
+bear-v,200,ˈbirið̠i,verb.pres.3sg,,
+bear-v,final,beəz,,,
 ```
 
-e.g. `word, gloss, frequency, -200, -100, 750, 1000, 1200, 1400, final`. `word` is the IPA key
-(required); `gloss`/`final`/`frequency` are the reserved columns (all optional except `word`);
-every other column
-whose name is an **integer** is a stage time, its cell the attested form then. An empty
-cell means "not present". Fields are read with the `csv` module, so a value containing a
-comma must be quoted (`"amère, bitter"`). A project may carry either form; if both
-`words.toml` and `words.csv` are present, TOML wins.
+Rows sharing an `id` are one word; they need not be adjacent, and their order does not matter.
+`id`, `time` and `ipa` are required; `category`, `gloss` and `frequency` are optional. `gloss` and
+`frequency` belong to the word rather than to any one time, so they are taken from whichever of
+its rows supplies them (conventionally the first) — and two rows that *disagree* are an error, not
+a silent last-wins.
+
+Long rather than one-column-per-checkpoint because a **category can vary with time**, and a wide
+table has nowhere to put it. It also means a lexicon of any depth has the same six columns.
+
+Fields are read with the `csv` module, so a value containing a comma must be quoted
+(`"amère, bitter"`). A project may carry either form; if both `words.toml` and `words.csv` are
+present, TOML wins.
 
 ### 4.2 Rules — `rules.toml` / `rules.csv`
 
@@ -243,7 +301,19 @@ definition  = "∅ [+cons, +syll] → u [-syll]"
 - `name` _(optional)_ — a short human-readable label.
 - `description` _(optional)_ — a one-sentence description.
 - `application` _(optional, default `"simultaneous"`)_ — one of `"simultaneous"`, `"left_to_right"`, `"right_to_left"`. See §6.2.
-- `words` _(optional)_ — a word, or list of words, the rule is restricted to (matched against each word's IPA **or** gloss). With it set, the rule fires only on those words and is skipped for all others — a **sporadic** / lexically-restricted change, or a rule staged to demonstrate a synchronic mechanism on one word. Omit it (the default) and the rule applies to every word. A listed name that matches no word (by IPA or gloss) raises a load-time warning, since the rule could then never fire — a guard against typos.
+- `words` _(optional)_ — a word, or list of words, the rule is restricted to (matched against each word's `id`, gloss, **or** seed IPA — whichever you reach for). With it set, the rule fires only on those words and is skipped for all others — a **sporadic** / lexically-restricted change, or a rule staged to demonstrate a synchronic mechanism on one word. Omit it (the default) and the rule applies to every word. A listed name that matches no word raises a load-time warning, since the rule could then never fire — a guard against typos. Note that the seed IPA is *not* an identifier: two words can share one, and such a scope then names them both — which is what "scope by IPA" should mean.
+- `categories` _(optional)_ — a category, or list of categories, the rule is restricted to. The **class-wide** counterpart of `words`: where that one names individual words, this names a word class. Each string is matched **literally** against the word's category *in force at this rule's time* (§4.1.1). Omit it (the default) and the rule applies to every word — and note that a word with **no** category is not in *any* class, so a scoped rule skips it.
+
+  ```toml
+  [weak_present_levelling]
+  time = -900
+  categories = ["verb.pres.3sg.weak"]      # nouns, and the strong verbs, are untouched
+  definition = "ð̠ → θ̠ / _ i #"
+  ```
+
+  This is what makes a **morphologically conditioned** change expressible — one that applies to
+  the verbs but not the nouns. Worth keeping visible for what it is: such a rule is *not* a sound
+  law, and a cascade that needs one is making a different, weaker claim about the words it lands.
 
 **Ordering:** rules are sorted by `time` ascending — undated rules (no `time`) last — then by order of appearance in the file for rules that share a time. Leaving gaps between `time` values (e.g. −2000, −1000, 0) lets you insert later rules without renumbering.
 
@@ -684,8 +754,9 @@ The change summary shows the segments that changed as `old→new` (e.g. `kʲ→k
 Every CLI run writes into a `reports/` subfolder of the project directory:
 
 - **`derivations.csv`** — the main report: the firing-rule trace in long format, one
-  row per word × firing rule (columns `word, rule, t, before, after, change`). Each
-  word is bookended by two synthetic rules — **`input`** (`before` = the raw IPA as
+  row per word × firing rule (columns `word, rule, t, before, after, change`). The `word`
+  column holds the lexicon's **`id`** — the one unambiguous per-word name (§4.1). Each
+  word is bookended by two synthetic rules — **`input`** (`before` = the seed IPA as
   written in the lexicon, `after` = the form the engine ingested it as: syllabified,
   diacritics normalised) and **`output`** (`after` = the surface form). A word on which
   no rule fired is just its `input` and `output` rows.

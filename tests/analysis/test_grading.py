@@ -23,7 +23,7 @@ from src.fortis.application.rendering import render_syllabified
 from src.fortis.application.tiers import lower_tiers
 from src.fortis.models.bundles import FeatureBundle
 from src.fortis.models.form import Form
-from src.fortis.models.inventories import Word
+from src.fortis.models.inventories import Attestation, Word
 from src.fortis.models.specs import FeatureSpec
 
 
@@ -234,7 +234,7 @@ class TestGradeDerivationIntegration:
 
     def test_exact_match_when_target_equals_surface(self, project):
         derivation = derive_all(project)[0]
-        derivation.word.final = self._surface(derivation, project)
+        derivation.word.forms[None] = Attestation(self._surface(derivation, project))
         ingest_targets([derivation], project)
         result = distance_to_target(derivation, project)
         assert result is not None
@@ -243,21 +243,21 @@ class TestGradeDerivationIntegration:
 
     def test_one_phone_difference(self, project):
         derivation = derive_all(project)[0]
-        derivation.word.final = self._surface(derivation, project) + "k"
+        derivation.word.forms[None] = Attestation(self._surface(derivation, project) + "k")
         ingest_targets([derivation], project)
         result = distance_to_target(derivation, project)
         assert result is not None and result.distance == 1
 
     def test_missing_target_is_skipped(self, project):
         derivation = derive_all(project)[0]
-        derivation.word.final = None
+        derivation.word.forms.pop(None, None)
         assert distance_to_target(derivation, project) is None
 
     def test_grade_counts_skipped_and_graded(self, project):
         derivations = derive_all(project)
         for derivation in derivations:
-            derivation.word.final = None
-        derivations[0].word.final = self._surface(derivations[0], project)
+            derivation.word.forms.pop(None, None)
+        derivations[0].word.forms[None] = Attestation(self._surface(derivations[0], project))
         ingest_targets(derivations, project)
         report = measure_accuracy(derivations, project)
         assert report.assessed == 1
@@ -291,8 +291,8 @@ class TestGradeStages:
         time = 10**9
         form, bounds = form_at_time(d, time)
         snapshot = render_syllabified(lower_tiers(form), bounds, project)
-        d.word.stages = {time: snapshot}  # target == the snapshot ⇒ exact
-        d.word.final = None
+        d.word.set_stages({time: snapshot})  # target == the snapshot ⇒ exact
+        d.word.forms.pop(None, None)
         ingest_targets(derivations, project)
         stages = accuracy_by_stage(derivations, project)
         assert stages[-1].label == "final"  # final always trails
@@ -302,9 +302,9 @@ class TestGradeStages:
 
     def test_only_words_with_that_stage_are_graded(self, project):
         derivations = derive_all(project)
-        derivations[0].word.stages = {500: self._surface(derivations[0], project)}
+        derivations[0].word.set_stages({500: self._surface(derivations[0], project)})
         for d in derivations[1:]:
-            d.word.stages = {}
+            d.word.set_stages({})
         ingest_targets(derivations, project)
         stage = next(s for s in accuracy_by_stage(derivations, project) if s.label == "500")
         assert stage.report.assessed == 1
@@ -386,11 +386,9 @@ class TestCrossTimeColumns:
         a = _bundle(vowel=1)
         b = _bundle(cons=1, voice=0, lab=0)
         p = _bundle(cons=1, voice=0, lab=1)  # one feature from b (lab)
-        word = Word(ipa="x")
-        word.stage_forms = {
-            200: self._form(a, b, b, a),  # "abba"
-            400: self._form(a, p, p, a),   # "appa"
-        }
+        word = Word.from_series(id="x", seed="x")
+        word.forms[200] = Attestation("t200", form=self._form(a, b, b, a))
+        word.forms[400] = Attestation("t400", form=self._form(a, p, p, a))
         derived = self._form(a, p, p, a)  # "appa" — matches T₄₀₀, not T₂₀₀
         matches_at, closest_at = _cross_time_columns(derived, word, project)
         assert matches_at == "400"
@@ -400,11 +398,9 @@ class TestCrossTimeColumns:
         a = _bundle(vowel=1)
         b = _bundle(cons=1, voice=0, lab=0)
         p = _bundle(cons=1, voice=0, lab=1)
-        word = Word(ipa="x")
-        word.stage_forms = {
-            200: self._form(a, b, b, a),  # "abba"
-            400: self._form(a, p, p, a),  # "appa"
-        }
+        word = Word.from_series(id="x", seed="x")
+        word.forms[200] = Attestation("t200", form=self._form(a, b, b, a))
+        word.forms[400] = Attestation("t400", form=self._form(a, p, p, a))
         derived = self._form(a, b, b, a)  # "abba" — matches T₂₀₀ only
         matches_at, closest_at = _cross_time_columns(derived, word, project)
         assert matches_at == "200"
@@ -413,11 +409,9 @@ class TestCrossTimeColumns:
     def test_match_at_multiple_stages_comma_joined_in_time_order(self, project):
         a = _bundle(vowel=1)
         b = _bundle(cons=1, voice=0, lab=0)
-        word = Word(ipa="x")
-        word.stage_forms = {
-            200: self._form(a, b, b, a),  # "abba"
-            400: self._form(a, b, b, a),  # also "abba"
-        }
+        word = Word.from_series(id="x", seed="x")
+        word.forms[200] = Attestation("t200", form=self._form(a, b, b, a))
+        word.forms[400] = Attestation("t400", form=self._form(a, b, b, a))
         derived = self._form(a, b, b, a)  # matches both targets
         matches_at, closest_at = _cross_time_columns(derived, word, project)
         assert matches_at == "200,400"
@@ -428,12 +422,10 @@ class TestCrossTimeColumns:
         b = _bundle(cons=1, voice=0, lab=0)
         p = _bundle(cons=1, voice=0, lab=1)
         m = _bundle(cons=1, voice=0, lab=0, nasal=1)  # one feature from b (nasal)
-        word = Word(ipa="x")
-        word.stage_forms = {
-            200: self._form(a, b, b, a),  # fd to derived = 2 (b→p twice)
-            400: self._form(a, m, m, a),  # fd to derived = 2 (m→p twice)
-            600: self._form(a, p, p, a),  # fd to derived = 0
-        }
+        word = Word.from_series(id="x", seed="x")
+        word.forms[200] = Attestation("t200", form=self._form(a, b, b, a))
+        word.forms[400] = Attestation("t400", form=self._form(a, m, m, a))
+        word.forms[600] = Attestation("t600", form=self._form(a, p, p, a))
         derived = self._form(a, p, p, a)
         matches_at, closest_at = _cross_time_columns(derived, word, project)
         assert matches_at == "600"
@@ -443,15 +435,15 @@ class TestCrossTimeColumns:
         a = _bundle(vowel=1)
         b = _bundle(cons=1, voice=0, lab=0)
         p = _bundle(cons=1, voice=0, lab=1)
-        word = Word(ipa="x")
-        word.stage_forms = {200: self._form(a, b, b, a)}  # "abba", fd 2 to derived
-        word.final_form = self._form(a, p, p, a)          # "appa", fd 0 to derived
+        word = Word.from_series(id="x", seed="x")
+        word.forms[200] = Attestation("t200", form=self._form(a, b, b, a))  # fd 2
+        word.forms[None] = Attestation("appa", form=self._form(a, p, p, a))  # fd 0
         derived = self._form(a, p, p, a)
         matches_at, closest_at = _cross_time_columns(derived, word, project)
         assert matches_at == "final"
         assert closest_at == "final"
 
     def test_no_targets_yields_empty_columns(self, project):
-        word = Word(ipa="x")
+        word = Word.from_series(id="x", seed="x")
         derived = self._form(_bundle(vowel=1))
         assert _cross_time_columns(derived, word, project) == ("", "")

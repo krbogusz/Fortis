@@ -165,25 +165,21 @@ def ingest_words(project: Project) -> None:
 
 
 def _ingest_word(word, project: Project) -> None:
+    """Segment every TARGET in place, onto its own ``Attestation.form``.
+
+    The seed is skipped: it is the derivation's input, not something the derivation is scored
+    against, and it is segmented on the way in by the engine itself.
+    """
     who = word.gloss or word.ipa
-    if word.final is not None:
-        word.final_form = try_segment(word.final, project)
-        if word.final_form is None:
+    for time, attestation in word.targets.items():
+        attestation.form = try_segment(attestation.ipa, project)
+        if attestation.form is None:
+            where = "final" if time is None else f"stage {time}"
             warnings.warn(
-                f"attested final {word.final!r} for {who!r} uses a symbol not in the "
-                "inventory — skipped from the accuracy and error analyses",
-                stacklevel=2,
-            )
-    for time, attested in word.stages.items():
-        form = try_segment(attested, project)
-        if form is None:
-            warnings.warn(
-                f"attested stage {time} form {attested!r} for {who!r} uses a symbol not in "
+                f"attested {where} form {attestation.ipa!r} for {who!r} uses a symbol not in "
                 "the inventory — skipped from the accuracy and error analyses",
                 stacklevel=2,
             )
-        else:
-            word.stage_forms[time] = form
 
 
 @dataclass(frozen=True)

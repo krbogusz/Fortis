@@ -100,7 +100,7 @@ defaults, with any it omits falling back to them, so a project holds only what d
 
 ```
 python -m src.fortis.main --words my_words.toml --rules my_rules.toml
-python -m src.fortis.main --project projects/pie_to_germanic   # PIE → Proto-Germanic
+python -m src.fortis.main --project projects/pie_to_english    # PIE → Present-Day English
 ```
 
 The lexicon, the rule list, the diacritics, and the sonority scale may each be written in
@@ -414,7 +414,7 @@ fortis/
 │   │   ├── features.toml  letters.csv  diacritics.toml   # words/rules/diacritics/sonorities may
 │   │   ├── sonorities.toml  syllable_parts.toml  tiers.toml   # equally be given as .csv (TOML default)
 │   │   └── words.toml  rules.toml  settings.toml   # settings.toml: tunable analysis params (optional)
-│   └── ...                      # other projects, e.g. latin_to_french, pie_to_germanic
+│   └── ...                      # other projects, e.g. latin_to_french, pie_to_english
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
 ├── web/                         # browser playground (Pyodide) — see web/README.md
 ├── tests/

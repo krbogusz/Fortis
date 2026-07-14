@@ -63,7 +63,10 @@ class TestSegmentationGate:
     def test_unsegmentable_source_is_excluded_and_counted(self, synth):
         # Inject a word whose -100 stage uses a symbol the project cannot segment.
         poisoned = dict(synth.words)
-        poisoned["💥boom"] = Word(ipa="💥boom", final="a", stages={-100: "💥", 750: "a"})
+        poisoned["💥boom"] = Word.from_series(
+            id="💥boom", seed="💥boom", seed_time=-1000,
+            final="a", stages={-100: "💥", 750: "a"},
+        )
         project = replace(synth, words=WordInventory(poisoned))
         interval = build_interval(project, -100, 750)
         assert "💥" in interval.excluded
