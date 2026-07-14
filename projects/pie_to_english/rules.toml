@@ -1678,7 +1678,7 @@ arm, barm, hard.
 t = 1740, BEFORE pde_r_loss (1750) — and that is the whole point. Dated in the 1900 block it looked
 for an /ɹ/ that the r-loss had already deleted, and arm, barm, hard came out **aːm, **baːm, **haːd
 with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there."""
-definition = "a → ɑ / _ ɹ"
+definition = "a → ɑ / _ r"
 
 [eme_goat_diphthongisation]
 time = 1900
@@ -1721,8 +1721,12 @@ definition = "g → ∅ / ŋ _ #"
 [eme_short_e_opens]
 time = 1900
 name = "Short /e/ opens to /ɛ/"
-description = "RP's DRESS vowel: bed, nest, elk, helm."
-definition = "e → ɛ"
+description = """RP's DRESS vowel: bed, nest, elk, helm.
+
+NOT the *e of the FACE diphthong, which pde_face_vowel has just made and which is short too —
+acre, bane, haven came out **ɛɪkə, **bɛɪn, **hɛɪvən. Same restriction, and for the same reason, as
+eme_trap_vowel's."""
+definition = "e → ɛ / _ [-syll]"
 
 [eme_foot_strut_split]
 time = 1900
@@ -1973,12 +1977,16 @@ definition = "[+syll, length: short, +rounded] → u / w _ r"
 # ─── The pre-/r/ vowels, all of them dated BEFORE pde_r_loss (1750) ───────────────────────────
 # Non-rhotic RP does not simply drop the /r/ — the vowel in front of it went its own way first,
 # and each of these has to be stated while the /r/ that conditions it is still on the page.
+#
+# AND WHILE IT IS STILL AN /r/. eme_rhotic_approximant turns the trill into RP's approximant /ɹ/
+# at 1900, long after every one of these has fired; written with the ɹ they name a segment that
+# does not exist yet and not one of them matched. The same trap as eme_th_voicing's dental.
 
 [pde_nurse_vowel]
 time = 1740
 name = "NURSE: a short vowel before coda /ɹ/ becomes /ɜː/"
 description = "ME wurd, herd, first, bird > RP /wɜːd/, /hɜːd/, /fɜːst/, /bɜːd/."
-definition = "[+syll, length: short, aperture: !low] → ɜː / _ ɹ [-syll]* $"
+definition = "[+syll, length: short, aperture: !low] → ɜː / _ r [-syll]* $"
 
 [pde_centring_diphthongs]
 time = 1745
@@ -1988,9 +1996,9 @@ description = """RP's centring diphthongs. The Great Vowel Shift has already rai
 
 Dated 1745: after the shift (1600), which decides WHICH vowel is there, and before pde_r_loss."""
 definition = [
-    "iː → ɪ ə / _ ɹ",
-    "ɛː → ɛ ə / _ ɹ",
-    "uː → ʊ ə / _ ɹ",
+    "iː → ɪ ə / _ r",
+    "ɛː → ɛ ə / _ r",
+    "uː → ʊ ə / _ r",
 ]
 
 [pde_force_vowel]
@@ -2021,3 +2029,21 @@ diphthong: /neɪm/, /beɪn/, /eɪkə/, /heɪvən/.
 Dated 1750, AFTER pde_meat_merger (1700) — otherwise its /eː/ output is raised straight on to /iː/
 and bane comes out **biːn."""
 definition = "ɛː → e ɪ"
+
+
+[eme_final_f_voicing]
+time = 1500
+name = "A final *f voices after a vowel"
+description = "ME fīf, hōf, wīf > RP five, hoof, wive — and the -ve of the spelling records it."
+definition = "f → v / [+syll] _ #"
+
+[eme_dental_shortening]
+time = 1550
+name = "A long /ɛː/ shortens before a dental"
+description = """ME dēth, stēd, thrēd, brēd, dēd give RP death, stead, thread, bread, dead — with a
+SHORT vowel, and it is short before the Great Vowel Shift arrives, which is why they are not
+/diːθ/, /stiːd/, /θriːd/. Dated 1550, before the shift (1600).
+
+It is not exceptionless — ME mēd keeps its length (RP mead /miːd/) in the same environment — but
+the shortened set is much the larger."""
+definition = "ɛː → ɛ / _ [-syll, +ant] #"
