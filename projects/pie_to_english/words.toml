@@ -808,7 +808,7 @@ forms = [
   { time = 200, ipa = "ˈɸiŋgrɑz", category = "noun" },
   { time = 900, ipa = "ˈfiŋger" },
   { time = 1400, ipa = "ˈfiŋgər" },
-  { time = "final", ipa = "ˈfɪŋgəː" },
+  { time = "final", ipa = "ˈfɪŋgə", note = "Short final schwa (RP /ˈfɪŋɡə/), consistent with the column — Wiktionary's ˈfɪŋgəː was the lone long-schwa transcription of 177." },
 ]
 
 [[words]]
