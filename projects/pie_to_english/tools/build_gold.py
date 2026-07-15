@@ -395,6 +395,16 @@ PREFORM_FIXES = {
     # *ansuz stays a miss too — see the note on m_to_n_before_t_d in rules.toml: *amsaz keeps its
     # *ms, so *ansuz's *n cannot be a sound change and we have no independent evidence for its
     # preform. *wapsō keeps a STOP *p that no accent or grade can produce from *wóbʰseh₂.
+
+    # ── The cited form is a DOUBTFUL variant; the etymological dictionaries give the standard one ─
+    # Where Wiktionary's kaikki extract picked a disputed reconstruction over the mainstream one,
+    # an independent etymological dictionary settles it — the correction is to the STANDARD form,
+    # read off the cognate set, not off our cascade.
+    "rugiz": "rugʰis",      # *rugiz 'rye' — kaikki gives *wrugʰis, but the *w- rests only on a
+                            # Thracian comparandum the EIEC calls "unconvincing"; Wiktionary's own
+                            # lemma reconstructs *rugʰ-is from Balto-Slavic *rugís, and Klein (OE
+                            # ryge : Lith. rugys : OSl. rŭžĭ) and Hoad (Gmc *rugiz) both give a
+                            # w-less form. The attested Germanic *rugiz has no *w either.
 }
 
 
