@@ -2151,3 +2151,40 @@ Only the i-mutated *æe — NOT the plain broken *eo of weorc, beorg, feorh, whi
 a West Saxon diphthong (there is no Anglian normalisation of those in the column, so smoothing them
 would trade a West-Saxon-gold word for nothing)."""
 definition = "æ e → e ∅ / _ [+cons, -syll]"
+
+
+# ─── SPORADIC MORPHOLOGICAL CHANGES ────────────────────────────────────────────────────────────
+# Reanalysis, leveling, rebracketing and compounding are NOT regular sound changes — they act on
+# individual words, not on every word in an environment, so they are word-scoped (`words = [...]`)
+# and marked SPORADIC. Each is justified by the attested Old English morphology, which is the
+# evidence that the word underwent the change, exactly as a Verner-voiced consonant is the evidence
+# for a PIE accent. They are separated from the sound-law cascade so the regular accuracy stays
+# legible; SOURCE.md reports the two figures apart.
+
+[sporadic_weak_reanalysis_final_e]
+time = 476
+name = "SPORADIC (reanalysis): a u-/ō-stem noun transfers to the weak/i-stem and takes final -e"
+description = """The Old English endings are attested: *anguz > ange, *tulguz > tulge (u-stems
+that moved to the i/ja-declension), *muldǭ > molde (the strong ō-stem 'earth' is a WEAK feminine
+in Old English). Each gained a final *-e the strong stem did not have — a paradigm transfer, not a
+sound change, so it fires only on these words. Dated 476, after every apocope that would strip it."""
+words = ["anguz", "tulguz", "muldō"]
+definition = "∅ → e / [-syll] _ #"
+
+[sporadic_nstem_gender_e]
+time = 476
+name = "SPORADIC (reanalysis): the neuter n-stem *hertô is feminine in OE, ending -e not -a"
+description = """*hertô is a NEUTER n-stem in Proto-Germanic (Wiktionary: *hertô n) and takes the
+regular masculine/neuter weak ending *-a in our cascade (as guma, nama do). But Old English heorte
+is FEMININE, with *-e — the word changed gender, and the ending followed. A lexical reassignment,
+not a sound change."""
+words = ["heart"]
+definition = "ɑ → e / _ #"
+
+[sporadic_harjaz_here]
+time = 476
+name = "SPORADIC (reanalysis): *harjaz 'army' is the ja-stem here, ending -e"
+description = """*harjaz gives OE here, with the ja-stem *-e; our cascade leaves the *-j stranded
+word-finally (*xerj). The *-e is the ja-stem nominative, levelled in from the oblique. Lexical."""
+words = ["harjaz"]
+definition = "j → e / _ #"
