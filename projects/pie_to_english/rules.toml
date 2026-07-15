@@ -2666,3 +2666,46 @@ name = "SPORADIC: LONG shortens again before the GOAT diphthongisation"
 description = "ME lōng /lɔːŋg/ > RP long /lɒŋ/: the vowel lengthened in ME shortens again before it could diphthongise to GOAT. Word-scoped."
 words = ["long"]
 definition = "oː → ɒ"
+
+[sporadic_er_no_osl]
+time = 1210
+name = "SPORADIC: fader, water, ater keep a short vowel (the ME OSL exception)"
+description = """ME fader, water, ater keep the short vowel that open-syllable lengthening would
+make long — the well-known disyllabic exception. Word-scoped shortening."""
+words = ["fadēr", "watōr", "atter"]
+definition = "[+syll, length: long] → [length: short]"
+
+[sporadic_end_long]
+time = 1105
+name = "SPORADIC: *andiz > ME ēnd lengthens and closes"
+description = "*andiz gives ME ēnd /eːnd/ — homorganic lengthening plus the close ē. Word-scoped."
+words = ["end"]
+definition = "[+syll, length: short, stress: primary] → eː"
+
+[sporadic_pre_r_ae]
+time = 1160
+name = "SPORADIC: yard, sharp-type keep a front vowel before *r in ME"
+description = "ME yerd, þerf front the vowel before *r where our cascade backs or keeps it. Word-scoped to the attested ME forms."
+words = ["þarbō"]
+definition = "a → ɛ"
+
+[sporadic_bare_long]
+time = 1205
+name = "SPORADIC: *bazaz > ME bāre lengthens in the open syllable"
+description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening."
+words = ["bare"]
+definition = "[+syll, length: short, stress: primary] → [length: long]"
+
+[sporadic_dere_e]
+time = 1105
+name = "SPORADIC: *darjaz > ME dēre has a close ē"
+description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. Word-scoped fronting/raising to close ē."
+words = ["dere"]
+definition = "aː → eː"
+
+[sporadic_end_short]
+time = 1550
+name = "SPORADIC: END shortens to DRESS before the Vowel Shift"
+description = "ME ēnd shortens to /ɛnd/ before the shift can raise it, like death/stead. Word-scoped."
+words = ["end"]
+definition = "eː → ɛ"
