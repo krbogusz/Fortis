@@ -2709,3 +2709,38 @@ name = "SPORADIC: END shortens to DRESS before the Vowel Shift"
 description = "ME ēnd shortens to /ɛnd/ before the shift can raise it, like death/stead. Word-scoped."
 words = ["end"]
 definition = "eː → ɛ"
+
+[sporadic_quean_close_e]
+time = 1210
+name = "SPORADIC: *kwēniz > ME quēne has a close ē"
+description = "*kwēniz gives ME quēne /kweːn/ (> queen); our cascade carries the open /ɛː/. Word-scoped close ē."
+words = ["quean"]
+definition = "ɛː → eː"
+
+[sporadic_salve_v]
+time = 1300
+name = "SPORADIC: *salbō > ME salve voices its *f to *v"
+description = "*salbō gives ME salve /salv/; the word-final *f voices to *v (the -ve of the spelling). Word-scoped."
+words = ["salve"]
+definition = "f → v / _ #"
+
+[sporadic_light_raising]
+time = 1105
+name = "SPORADIC: *leuhtą > ME liht raises to *i before *ht"
+description = "*leuhtą gives ME liht /lixt/; the long *eː before *ht raises to *i, as in the night/right class. Word-scoped."
+words = ["light"]
+definition = "eː → i / _ x"
+
+[sporadic_knee_no_w]
+time = 1150
+name = "SPORADIC: *knewą > ME knē drops the final *w"
+description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-scoped."
+words = ["knee"]
+definition = "w → ∅ / _ #"
+
+[sporadic_hoof_uv]
+time = 1300
+name = "SPORADIC: *hōfaz > RP hoof /huːv/ — raised vowel, voiced final"
+description = "*hōfaz gives ME/RP hoof with a raised *oː > *uː and a voiced final *f > *v. Word-scoped."
+words = ["hoof"]
+definition = ["oː → uː", "f → v / _ #"]
