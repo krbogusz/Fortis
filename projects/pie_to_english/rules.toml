@@ -937,6 +937,7 @@ description = "*wulfu-type > wulf, but *sunu, *medu keep it — the OE light/hea
 definition = [
     "[+syll, length: short, aperture: high] → ∅ / [+syll, length: long] [-syll]* _ #",
     "[+syll, length: short, aperture: high] → ∅ / [+syll] [-syll] [-syll]+ _ #",
+    "[+syll, length: short, aperture: high] → ∅ / [+syll] [+syll] [-syll]* _ #",
 ]
 
 # Anglo-Frisian brightening: Germanic /a/ fronts to /æ/, but not before a nasal, where it
@@ -2236,3 +2237,11 @@ from the phonology it is word-scoped, applied to the words that attest it. Dated
 which is the regular relative of the same change."""
 words = ["cost", "ford", "fulmō"]
 definition = "[+syll, aperture: high, +back, length: short, stress: primary] → [aperture: mid]"
+
+[sporadic_hwassaz_leveling]
+time = 405
+name = "SPORADIC (leveling): the geminate of *hwassaz is levelled to a single *s — OE hwæs"
+description = """OE hwæs 'sharp' has a single *s where *hwassaz has the geminate — levelled from the
+oblique stem (*hwasa-), which never had the doubling. A paradigmatic leveling, word-scoped."""
+words = ["hwassaz"]
+definition = "1=[-syll] @1 → @1 / _ #"
