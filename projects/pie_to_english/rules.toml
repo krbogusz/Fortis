@@ -1653,9 +1653,9 @@ definition = "[+syll, aperture: high, +front, length: short, stress: primary] �
 time = 1620
 name = "The trill *r becomes the approximant /ɹ/"
 description = """Early Modern English realises /r/ as the approximant [ɹ], not the trill the cascade
-has carried since PIE (Wikipedia, Phonological history of English → R-sounds). Dated 1620, after the
-Great Vowel Shift and BEFORE the pre-/r/ vowel changes and r-loss, which therefore act on the
-approximant — those rules are written with ɹ."""
+has carried since PIE. Dated 1620, after the Great Vowel Shift and BEFORE the seventeenth-century
+pre-/r/ vowel changes (Jones §4.6) and the later r-loss, which therefore act on the approximant —
+those rules are written with ɹ."""
 definition = "r → ɹ"
 
 [eme_short_i_laxes]
@@ -1999,7 +1999,8 @@ definition = "[+syll, length: short, stress: primary, aperture: !low] → ɜː /
 time = 1745
 name = "NEAR, SQUARE, CURE: a long vowel before /ɹ/ takes a schwa offglide"
 description = """RP's centring diphthongs. The Great Vowel Shift has already raised the vowel; the
-/ɹ/ then breaks into a schwa as it goes — beer /bɪə/, deer /dɪə/, share /ʃɛə/, sour /saʊə/.
+/ɹ/ then breaks into a schwa as it goes — beer /bɪə/, deer /dɪə/, share /ʃɛə/, sour /saʊə/. This is
+Jones §4.6, "Seventeenth-century pre-[r] Breaking" (hear [iːr] > [iər], bear [eːr] > [ɛər]).
 
 Dated 1745: after the shift (1600), which decides WHICH vowel is there, and before pde_r_loss."""
 definition = [
@@ -2636,16 +2637,21 @@ definition = "uː → ʌ"
 [sporadic_me_homorganic_length]
 time = 1210
 name = "SPORADIC: ME lengthens the vowel before a homorganic cluster — anadô, long, gernaz"
-description = """ME ōnd, lōng, yērn lengthen the vowel before *nd, *ŋg, *rn — the Middle English
-homorganic lengthening, which is lexically variable (hund, dust keep their short vowel). Word-scoped
-to those that lengthen."""
+description = """ME ōnd, lōng, yērn lengthen the vowel before *nd, *ŋg, *rn — late-OE/early-ME
+homorganic lengthening before a voiced homorganic cluster (Jones, *A History of English Phonology*
+§2.2.5-6). Jones stresses that the process is "patchy" and "exception-ful": some words lengthen,
+some do not, and some lengthen then shorten again (his crumb, hirde). So it is word-scoped to the
+words that attest the long vowel, with sporadic_me_shorten for those that keep or revert to a short
+one — not a regular rule that would have to pick one behaviour for the whole cluster class."""
 words = ["anadô", "long", "gernaz"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_me_shorten]
 time = 1210
 name = "SPORADIC: dust, hund keep a short vowel in ME"
-description = "ME dust, hund keep the short vowel that OE dūst, and homorganic lengthening on hundą, would make long. Word-scoped shortening."
+description = """ME dust, hund keep a short vowel where OE dūst and homorganic lengthening (on
+hundą) would give a long one — the "patchy" underside of the same change (Jones §2.2.5-6, who notes
+that [nd] clusters are "particularly open to exceptional behaviour"). Word-scoped shortening."""
 words = ["dust", "hundą"]
 definition = "[+syll, length: long] → [length: short]"
 
@@ -2667,7 +2673,12 @@ definition = "oː → ɒ"
 time = 1210
 name = "SPORADIC: fader, water, ater keep a short vowel (the ME OSL exception)"
 description = """ME fader, water, ater keep the short vowel that open-syllable lengthening would
-make long — the well-known disyllabic exception. Word-scoped shortening."""
+make long. Jones §3.2.4 ("'Exceptions' to open syllable lengthening") documents exactly this class:
+disyllables whose open first syllable ought to lengthen but persistently do not, the shared trait
+being a SONORANT in the second syllable's coda (fader, water, copor, botom) — the intervocalic
+sonorant is taken to "close" the first syllable and block the lengthening. It is lexical, though
+(haven, beaver, acre have the same -er/-en and DO lengthen), so it is word-scoped, not a general
+sonorant-coda condition."""
 words = ["fadēr", "watōr", "atter"]
 definition = "[+syll, length: long] → [length: short]"
 
