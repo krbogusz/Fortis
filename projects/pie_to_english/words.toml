@@ -3097,9 +3097,9 @@ forms = [
 [[words]]
 id = "gulþīnaz"
 gloss = "gulþīnaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰolh₃-t-inos is replaced by *ǵʰl̥h₃tínos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
-  { time = -2000, ipa = "ˈgʲʱolʁʷtinos", category = "adj", note = "PIE *ǵʰolh₃-t-inos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "gʲʱl̩ʁʷˈtinos", category = "adj", note = "PIE *ǵʰolh₃-t-inos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣulθiːnɑz", category = "adj" },
   { time = 900, ipa = "ˈgylden" },
   { time = 1400, ipa = "ˈgiːldən" },

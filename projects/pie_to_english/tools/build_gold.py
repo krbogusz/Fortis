@@ -413,6 +413,11 @@ PREFORM_FIXES = {
                             # which gives *twō; but the attested *twai has the *ai diphthong, and
                             # *ai continues PIE *oy, NOT *oh₁ (which gives *ō). So the masculine
                             # *dwoy is what the attested form points to — the grade read off it.
+    "gulþīnaz": "ǵʰl̥h₃tínos",  # *gulþīnaz 'golden' — the attested *gul- is the ZERO grade *ǵʰl̥-
+                            # (syllabic *l̥ > *ul, as in gold *gulþą), not kaikki's o-grade *ǵʰolh₃-
+                            # (which gives our wrong *ɣɑl-). Same wrong-grade pattern as *mundiz :
+                            # *mn̥tís above. The voiceless *þ (Verner did not fire) puts the accent
+                            # on the suffix, off the root.
 }
 
 
