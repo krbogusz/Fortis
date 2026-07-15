@@ -2979,3 +2979,10 @@ name = "SPORADIC: *septm̥ > *seƀun loses the *t of *ft"
 description = "The cluster *ft (< *pt) loses its *t: *septm̥ > *seƀun (OE seofon), keeping the Verner-voiced *ƀ. Our cascade instead devoices the *ƀ before the surviving *t. Word-scoped t-loss, before that devoicing."
 words = ["seven"]
 definition = "t → ∅ / β _"
+
+[sporadic_anadz_cluster_voice]
+time = 10
+name = "SPORADIC: the *þs cluster of *anadz voices together to *ðz (Verner on the cluster)"
+description = "*anadz 'duck' has BOTH consonants voiced (Kroonen *anad-): Verner voices the whole *þs cluster to *ðz after the unaccented vowel, not just the *þ. Our cascade voices only the *þ, then devoices it before the surviving *s. Word-scoped voicing of the *s, before that devoicing."
+words = ["anadz"]
+definition = "s → z / ð _"

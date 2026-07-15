@@ -202,8 +202,6 @@ PREFORM_FIXES = {
     "sundraz": "sn̥Htrós",   # *sundraz — the *d is a hardened *ð ⇒ Verner fired ⇒ oxytone
     "furhnō": "pŕ̥ḱneh₂",   # *furhnō — VOICELESS *x ⇒ Verner did not fire ⇒ root accent
     "hurhaz": "kŕ̥ḱos",     # *hurhaz — VOICELESS *x ⇒ root accent, against the cited oxytone
-    "anadz": "h₂enh₂éts",   # *anadz — BOTH consonants voiced (*d and *z) ⇒ Verner fired twice ⇒
-                            # oxytone, against the cited barytone *h₂énh₂ets
     "fraiþaz": "proh₁ítos", # *fraiþaz — VOICELESS *þ ⇒ Verner did not fire, so the syllable before
                             # it carried the accent. Ringe writes *pró-h₁itos with a hyphen: *pró-
                             # is a PREFIX, and a Germanic prefix is unstressed — the root takes the
