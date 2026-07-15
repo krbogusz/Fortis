@@ -409,11 +409,11 @@ PREFORM_FIXES = {
 # raising in `wg_long_mid_raising`), not a spelling convention. Mapping it away would have
 # hidden a real rule.
 #
-# θ/ð → θ̠/ð̠ is the same kind of identity, read the other way: both spell Germanic þ, but the
-# engine's is non-dental because it inherits PIE *t's alveolar coding, while Wiktionary's plain
-# θ is dental by IPA convention. One phoneme, two spellings.
+# There is no longer a θ→θ convention: Grimm now makes the DENTAL *þ [θ] directly
+# (grimm_dentalisation in rules.toml), the same segment Wiktionary writes, so no remapping is
+# needed. It used to spell the engine's non-dental fricative *θ.
 #
-# NOT a rule for ɑ→a, though the gold is full of ɑ: the engine derives both (ˈan.θ̠e.rɑz), so
+# NOT a rule for ɑ→a, though the gold is full of ɑ: the engine derives both (ˈan.θe.rɑz), so
 # folding them together turns correct segments into wrong ones — it cost 8 exact matches when
 # tried. Where the two really disagree on the low vowel, that is phonology, not spelling.
 #
@@ -486,7 +486,7 @@ ATTESTED_FIXES = {
 }
 
 
-CONVENTIONS = [("ɪ̯", "j"), ("i̯", "j"), ("u̯", "w"), ("θ", "θ̠"), ("ð", "ð̠")]
+CONVENTIONS = [("ɪ̯", "j"), ("i̯", "j"), ("u̯", "w")]
 
 
 def anglianise(oe: str) -> str:
@@ -526,7 +526,7 @@ def normalise(ipa: str, *, reconstructed: bool) -> str:
     # A nasal before a velar IS velar. Wiktionary does not mark the allophone — it writes OE
     # ġeong /junɡ/, finger /fingɛr/, þanc /θank/ — but the engine derives the [ŋ] the spelling
     # stands for, and the two are the same segment. This is a notational identity of exactly the
-    # kind θ/θ̠ already is, and it applies to EVERY column: it is a fact about the transcription,
+    # kind θ/θ already is, and it applies to EVERY column: it is a fact about the transcription,
     # not about the form, so it does not touch what the attested columns actually attest.
     # The SYLLABLE DOTS have to go FIRST: Wiktionary writes OE finger /ˈfin.ɡer/, inca /ˈin.kɑ/,
     # anga /ˈɑn.gɛ/ — with the boundary standing between the *n and the velar that conditions it.

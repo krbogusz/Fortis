@@ -45,7 +45,7 @@ frequency = 744544
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχepi", category = "noun", note = "PIE *h₁epi, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɛːβɑnθ̠s", category = "noun" },
+  { time = 200, ipa = "ˈɛːβɑnθs", category = "noun" },
   { time = 900, ipa = "ˈæːfen" },
   { time = 1400, ipa = "ˈɛːvən" },
   { time = "final", ipa = "ˈiːvən" },
@@ -58,9 +58,9 @@ frequency = 577197
 note = "Source: Wiktionary (kaikki). 200 TARGET corrected against a cited reconstruction (Kroonen / Ringe outrank Wiktionary's Proto-Germanic)."
 forms = [
   { time = -2000, ipa = "ˈħenteros", category = "adj", note = "PIE *h₂énteros, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑnθ̠ɑrɑz", category = "adj", note = "Corrected against a cited reconstruction (see the word note)." },
-  { time = 900, ipa = "ˈoːθ̠er" },
-  { time = 1400, ipa = "ˈuð̠ər" },
+  { time = 200, ipa = "ˈɑnθɑrɑz", category = "adj", note = "Corrected against a cited reconstruction (see the word note)." },
+  { time = 900, ipa = "ˈoːθer" },
+  { time = 1400, ipa = "ˈuðər" },
   { time = "final", ipa = "ˈʌðə" },
 ]
 
@@ -122,7 +122,7 @@ frequency = 392242
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʲenχtis", category = "noun", note = "PIE *ǵénh₁tis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈkinθ̠iz", category = "noun" },
+  { time = 200, ipa = "ˈkinθiz", category = "noun" },
   { time = 900, ipa = "ˈkynd" },
   { time = 1400, ipa = "ˈkiːnd" },
   { time = "final", ipa = "ˈkaɪnd" },
@@ -148,9 +148,9 @@ frequency = 366626
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtrejes", category = "num", note = "PIE *tréyes, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠riːz", category = "num" },
-  { time = 900, ipa = "ˈθ̠riː" },
-  { time = 1400, ipa = "ˈθ̠reː" },
+  { time = 200, ipa = "ˈθriːz", category = "num" },
+  { time = 900, ipa = "ˈθriː" },
+  { time = 1400, ipa = "ˈθreː" },
   { time = "final", ipa = "ˈθɹiː" },
 ]
 
@@ -199,7 +199,7 @@ frequency = 267268
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħrojˈdʱos", category = "adj", note = "PIE *h₂roy-dʰ-ó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈrɑjð̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈrɑjðɑz", category = "adj" },
   { time = 900, ipa = "ˈræːde" },
   { time = "final", ipa = "ˈɹɛdi" },
 ]
@@ -211,7 +211,7 @@ frequency = 262367
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ḱl̥-tó-s is replaced by *ḱĺ̥tos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈkʲl̩tos", category = "adj", note = "PIE *ḱl̥-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈxulθ̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈxulθɑz", category = "adj" },
   { time = 900, ipa = "ˈxold" },
   { time = "final", ipa = "ˈhəʊld" },
 ]
@@ -223,9 +223,9 @@ frequency = 259877
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱreħteːr", category = "noun", note = "PIE *bʰréh₂tēr, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbrɔːθ̠ɛːr", category = "noun" },
-  { time = 900, ipa = "ˈbroːθ̠or" },
-  { time = 1400, ipa = "ˈbroːð̠ər" },
+  { time = 200, ipa = "ˈbrɔːθɛːr", category = "noun" },
+  { time = 900, ipa = "ˈbroːθor" },
+  { time = 1400, ipa = "ˈbroːðər" },
   { time = "final", ipa = "ˈbɹʌðə" },
 ]
 
@@ -261,7 +261,7 @@ frequency = 242871
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "korˈtus", category = "adj", note = "PIE *kort-ús, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈxɑrð̠uz", category = "adj" },
+  { time = 200, ipa = "ˈxɑrðuz", category = "adj" },
   { time = 900, ipa = "ˈxæɑrd" },
   { time = 1400, ipa = "ˈhard" },
   { time = "final", ipa = "ˈhɑːd" },
@@ -313,9 +313,9 @@ frequency = 189000
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱowtus", category = "noun", note = "PIE *dʰówtus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈdɑwθ̠uz", category = "noun" },
-  { time = 900, ipa = "ˈdæɑːθ̠" },
-  { time = 1400, ipa = "ˈdɛːθ̠" },
+  { time = 200, ipa = "ˈdɑwθuz", category = "noun" },
+  { time = 900, ipa = "ˈdæɑːθ" },
+  { time = 1400, ipa = "ˈdɛːθ" },
   { time = "final", ipa = "ˈdɛθ" },
 ]
 
@@ -339,7 +339,7 @@ frequency = 166957
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʷeˈtwores", category = "num", note = "PIE *kʷetwóres, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸeð̠wɔːr", category = "num" },
+  { time = 200, ipa = "ˈɸeðwɔːr", category = "num" },
   { time = 900, ipa = "ˈfeoːwer" },
   { time = 1400, ipa = "ˈfɔwr" },
   { time = "final", ipa = "ˈfɔː" },
@@ -352,7 +352,7 @@ frequency = 164938
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *werdʰom is replaced by *wr̥dʰóm on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "wr̩ˈdʱom", category = "noun", note = "PIE *werdʰom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwurð̠ɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈwurðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈword" },
   { time = 1400, ipa = "ˈwurd" },
   { time = "final", ipa = "ˈwɜːd" },
@@ -416,7 +416,7 @@ frequency = 131445
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱoˈdʱħjom", category = "noun", note = "PIE *bʰodʰh₂-yó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈbɑð̠jɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈbɑðjɑ̃", category = "noun" },
   { time = 900, ipa = "ˈbedd" },
   { time = 1400, ipa = "ˈbɛd" },
   { time = "final", ipa = "ˈbɛd" },
@@ -649,9 +649,9 @@ frequency = 50364
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsħunteros", category = "adj", note = "PIE *sh₂ún-teros, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈsunθ̠rɑz", category = "adj" },
-  { time = 900, ipa = "ˈsuːθ̠" },
-  { time = 1400, ipa = "ˈsuːθ̠" },
+  { time = 200, ipa = "ˈsunθrɑz", category = "adj" },
+  { time = 900, ipa = "ˈsuːθ" },
+  { time = 1400, ipa = "ˈsuːθ" },
   { time = "final", ipa = "ˈsaʊθ" },
 ]
 
@@ -751,7 +751,7 @@ frequency = 38229
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱoħutlom", category = "noun", note = "PIE *bʰoh₂u-tlo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈbɔːθ̠lɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈbɔːθlɑ̃", category = "noun" },
   { time = 900, ipa = "ˈbotl" },
   { time = "final", ipa = "ˈbɒtl̩" },
 ]
@@ -789,7 +789,7 @@ frequency = 32757
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲluˈtos", category = "adj", note = "PIE *ḱlutós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxluːð̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈxluːðɑz", category = "adj" },
   { time = 900, ipa = "ˈxluːd" },
   { time = 1400, ipa = "ˈluːd" },
   { time = "final", ipa = "ˈlaʊd" },
@@ -815,7 +815,7 @@ frequency = 26740
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwedʱrom", category = "noun", note = "PIE *wedʰrom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈweð̠rɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈweðrɑ̃", category = "noun" },
   { time = 900, ipa = "ˈweder" },
   { time = 1400, ipa = "ˈwɛdər" },
   { time = "final", ipa = "ˈwɛðə" },
@@ -931,9 +931,9 @@ frequency = 18301
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kʷetwr̥tós is replaced by *kʷetwr̥tṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "kʷetwr̩ˈtoː", category = "adj", note = "PIE *kʷetwr̥tós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸeð̠urθ̠ɔːː", category = "adj" },
-  { time = 900, ipa = "ˈfeoːrθ̠ɑ" },
-  { time = 1400, ipa = "ˈfeːrð̠" },
+  { time = 200, ipa = "ˈɸeðurθɔːː", category = "adj" },
+  { time = 900, ipa = "ˈfeoːrθɑ" },
+  { time = 1400, ipa = "ˈfeːrð" },
   { time = "final", ipa = "ˈfɔːθ" },
 ]
 
@@ -957,9 +957,9 @@ frequency = 17703
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħjuχn̩ˈtis", category = "noun", note = "PIE *h₂yu-Hn̥-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈjuɣunθ̠iz", category = "noun" },
-  { time = 900, ipa = "ˈjuguθ̠" },
-  { time = 1400, ipa = "ˈjuːð̠" },
+  { time = 200, ipa = "ˈjuɣunθiz", category = "noun" },
+  { time = 900, ipa = "ˈjuguθ" },
+  { time = 1400, ipa = "ˈjuːð" },
   { time = "final", ipa = "ˈjuːθ" },
 ]
 
@@ -982,7 +982,7 @@ frequency = 16138
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʱordʱos", category = "noun", note = "PIE *gʰórdʰos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɣɑrð̠ɑz", category = "noun" },
+  { time = 200, ipa = "ˈɣɑrðɑz", category = "noun" },
   { time = 900, ipa = "ˈjæɑrd" },
   { time = 1400, ipa = "ˈjɛːrd" },
   { time = "final", ipa = "ˈjɑːd" },
@@ -995,9 +995,9 @@ frequency = 15296
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tn̩ˈħwus", category = "adj", note = "PIE *tn̥h₂wús, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠unnuz", category = "adj" },
-  { time = 900, ipa = "ˈθ̠ynne" },
-  { time = 1400, ipa = "ˈθ̠in" },
+  { time = 200, ipa = "ˈθunnuz", category = "adj" },
+  { time = 900, ipa = "ˈθynne" },
+  { time = 1400, ipa = "ˈθin" },
   { time = "final", ipa = "ˈθɪn" },
 ]
 
@@ -1046,9 +1046,9 @@ frequency = 12143
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtegus", category = "adj", note = "PIE *tégus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ekuz", category = "adj" },
-  { time = 900, ipa = "ˈθ̠ikke" },
-  { time = 1400, ipa = "ˈθ̠ik" },
+  { time = 200, ipa = "ˈθekuz", category = "adj" },
+  { time = 900, ipa = "ˈθikke" },
+  { time = 1400, ipa = "ˈθik" },
   { time = "final", ipa = "ˈθɪk" },
 ]
 
@@ -1059,7 +1059,7 @@ frequency = 11428
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "worˈtos", category = "noun", note = "PIE *wor-tós, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈwɑrð̠ɑz", category = "noun" },
+  { time = 200, ipa = "ˈwɑrðɑz", category = "noun" },
   { time = 900, ipa = "ˈwæɑrd" },
   { time = "final", ipa = "ˈwɔːd" },
 ]
@@ -1083,7 +1083,7 @@ frequency = 10080
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁widʰéwh₂ is replaced by *h₁widʰewṓn on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "χwidʱeˈwoːn", category = "noun", note = "PIE *h₁widʰéwh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwið̠uwɔ̃ː", category = "noun" },
+  { time = 200, ipa = "ˈwiðuwɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈwiduwe" },
   { time = "final", ipa = "ˈwɪdəʊ" },
 ]
@@ -1133,9 +1133,9 @@ frequency = 9408
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷdonts", category = "noun", note = "PIE *h₃dónts, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈtɑnθ̠s", category = "noun" },
-  { time = 900, ipa = "ˈtoːθ̠" },
-  { time = 1400, ipa = "ˈtoːθ̠" },
+  { time = 200, ipa = "ˈtɑnθs", category = "noun" },
+  { time = 900, ipa = "ˈtoːθ" },
+  { time = 1400, ipa = "ˈtoːθ" },
   { time = "final", ipa = "ˈtuːθ" },
 ]
 
@@ -1184,7 +1184,7 @@ frequency = 8320
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *pértus is replaced by *pr̥tús on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "pr̩ˈtus", category = "noun", note = "PIE *pértus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸurð̠uz", category = "noun" },
+  { time = 200, ipa = "ˈɸurðuz", category = "noun" },
   { time = 900, ipa = "ˈford" },
   { time = "final", ipa = "ˈfɔːd" },
 ]
@@ -1208,7 +1208,7 @@ frequency = 7798
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *bʰr-oy-tos is replaced by *bʰroytós on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "bʱrojˈtos", category = "adj", note = "PIE *bʰr-oy-tos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈbrɑjð̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈbrɑjðɑz", category = "adj" },
   { time = 900, ipa = "ˈbrɑːd" },
   { time = 1400, ipa = "ˈbrɔːd" },
   { time = "final", ipa = "ˈbɹɔːd" },
@@ -1221,9 +1221,9 @@ frequency = 7758
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχojtos", category = "noun", note = "PIE *Hóytos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑjθ̠ɑz", category = "noun" },
-  { time = 900, ipa = "ˈɑːθ̠" },
-  { time = 1400, ipa = "ˈɔːθ̠" },
+  { time = 200, ipa = "ˈɑjθɑz", category = "noun" },
+  { time = 900, ipa = "ˈɑːθ" },
+  { time = 1400, ipa = "ˈɔːθ" },
   { time = "final", ipa = "ˈəʊθ" },
 ]
 
@@ -1336,7 +1336,7 @@ frequency = 6336
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *seh₁tis is replaced by *seh₁tís on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "seχˈtis", category = "noun", note = "PIE *seh₁tis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈsɛːð̠iz", category = "noun" },
+  { time = 200, ipa = "ˈsɛːðiz", category = "noun" },
   { time = 900, ipa = "ˈsæːd" },
   { time = 1400, ipa = "ˈseːd" },
   { time = "final", ipa = "ˈsiːd" },
@@ -1349,7 +1349,7 @@ frequency = 6333
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *dʰéh₁tis is replaced by *dʰeh₁tís on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "dʱeχˈtis", category = "noun", note = "PIE *dʰéh₁tis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈdɛːð̠iz", category = "noun" },
+  { time = 200, ipa = "ˈdɛːðiz", category = "noun" },
   { time = 900, ipa = "ˈdæːd" },
   { time = "final", ipa = "ˈdiːd" },
 ]
@@ -1361,7 +1361,7 @@ frequency = 6263
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ploʁʷˈtus", category = "noun", note = "PIE *ploh₃tús, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸlɔːð̠uz", category = "noun" },
+  { time = 200, ipa = "ˈɸlɔːðuz", category = "noun" },
   { time = 900, ipa = "ˈfloːd" },
   { time = 1400, ipa = "ˈfloːd" },
   { time = "final", ipa = "ˈflʌd" },
@@ -1374,9 +1374,9 @@ frequency = 5814
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *septm̥mós is replaced by *septm̥mṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "septm̩ˈmoː", category = "adj", note = "PIE *septm̥mós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈseβunð̠ɔːː", category = "adj" },
-  { time = 900, ipa = "ˈseofoθ̠ɑ" },
-  { time = 1400, ipa = "ˈsɛvəð̠" },
+  { time = 200, ipa = "ˈseβunðɔːː", category = "adj" },
+  { time = 900, ipa = "ˈseofoθɑ" },
+  { time = 1400, ipa = "ˈsɛvəð" },
   { time = "final", ipa = "ˈsɛvnθ" },
 ]
 
@@ -1412,9 +1412,9 @@ frequency = 4985
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *treh₁tus is replaced by *treh₁tús on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "treχˈtus", category = "noun", note = "PIE *treh₁tus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠rɛːð̠uz", category = "noun" },
-  { time = 900, ipa = "ˈθ̠ræːd" },
-  { time = 1400, ipa = "ˈθ̠rɛːd" },
+  { time = 200, ipa = "ˈθrɛːðuz", category = "noun" },
+  { time = 900, ipa = "ˈθræːd" },
+  { time = 1400, ipa = "ˈθrɛːd" },
   { time = "final", ipa = "ˈθɹɛd" },
 ]
 
@@ -1451,9 +1451,9 @@ frequency = 4350
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *oḱtowós is replaced by *oḱtowṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "okʲtoˈwoː", category = "adj", note = "PIE *oḱtowós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑxtuð̠ɔːː", category = "adj" },
-  { time = 900, ipa = "ˈæɑxtoθ̠ɑ" },
-  { time = 1400, ipa = "ˈæjxtəð̠" },
+  { time = 200, ipa = "ˈɑxtuðɔːː", category = "adj" },
+  { time = 900, ipa = "ˈæɑxtoθɑ" },
+  { time = 1400, ipa = "ˈæjxtəð" },
   { time = "final", ipa = "ˈeɪtθ" },
 ]
 
@@ -1477,7 +1477,7 @@ frequency = 4166
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲliˈtom", category = "noun", note = "PIE *ḱlitóm, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxlið̠ɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈxliðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈxlid" },
   { time = 1400, ipa = "ˈlid" },
   { time = "final", ipa = "ˈlɪd" },
@@ -1542,7 +1542,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁newn̥nó
 forms = [
   { time = -2000, ipa = "χnewn̩ˈtoː", category = "adj", note = "PIE *h₁newn̥nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnewundɔːː", category = "adj" },
-  { time = 1400, ipa = "ˈniəð̠" },
+  { time = 1400, ipa = "ˈniəð" },
   { time = "final", ipa = "ˈnaɪnθ" },
 ]
 
@@ -1679,9 +1679,9 @@ frequency = 2338
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tr̩ˈnos", category = "noun", note = "PIE *tr̥nós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠urnɑz", category = "noun" },
-  { time = 900, ipa = "ˈθ̠orn" },
-  { time = 1400, ipa = "ˈθ̠ɔrn" },
+  { time = 200, ipa = "ˈθurnɑz", category = "noun" },
+  { time = 900, ipa = "ˈθorn" },
+  { time = 1400, ipa = "ˈθɔrn" },
   { time = "final", ipa = "ˈθɔːn" },
 ]
 
@@ -1692,7 +1692,7 @@ frequency = 2031
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmedʱjos", category = "adj", note = "PIE *médʰyos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈmið̠jɑz", category = "adj" },
+  { time = 200, ipa = "ˈmiðjɑz", category = "adj" },
   { time = 900, ipa = "ˈmidd" },
   { time = "final", ipa = "ˈmɪd" },
 ]
@@ -1806,9 +1806,9 @@ frequency = 1462
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱrutom", category = "noun", note = "PIE *bʰru(h₁)-to-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈbruθ̠ɑ̃", category = "noun" },
-  { time = 900, ipa = "ˈbroθ̠" },
-  { time = 1400, ipa = "ˈbrɔθ̠" },
+  { time = 200, ipa = "ˈbruθɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈbroθ" },
+  { time = 1400, ipa = "ˈbrɔθ" },
   { time = "final", ipa = "ˈbɹɒθ" },
 ]
 
@@ -1907,7 +1907,7 @@ frequency = 967
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *médʰu is replaced by *médʰus on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈmedʱus", category = "noun", note = "PIE *médʰu, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈmeð̠uz", category = "noun" },
+  { time = 200, ipa = "ˈmeðuz", category = "noun" },
   { time = 900, ipa = "ˈmedu" },
   { time = 1400, ipa = "ˈmɛːd" },
   { time = "final", ipa = "ˈmiːd" },
@@ -2009,7 +2009,7 @@ frequency = 643
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *stéh₂tis is replaced by *sth₂tís on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈstħtis", category = "noun", note = "PIE *stéh₂tis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈstɑð̠iz", category = "noun" },
+  { time = 200, ipa = "ˈstɑðiz", category = "noun" },
   { time = 900, ipa = "ˈstede" },
   { time = 1400, ipa = "ˈstɛːd" },
   { time = "final", ipa = "ˈstɛd" },
@@ -2107,8 +2107,8 @@ frequency = 346
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈlowʁʷtrom", category = "noun", note = "PIE *lówh₃trom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈlɑwθ̠rɑ̃", category = "noun" },
-  { time = 900, ipa = "ˈlæɑːθ̠or" },
+  { time = 200, ipa = "ˈlɑwθrɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈlæɑːθor" },
   { time = "final", ipa = "ˈlɑːðə" },
 ]
 
@@ -2194,9 +2194,9 @@ frequency = 169
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂leytos is replaced by *h₂lóytos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈħlojtos", category = "adj", note = "PIE *h₂leytos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈlɑjθ̠ɑz", category = "adj" },
-  { time = 900, ipa = "ˈlɑːθ̠" },
-  { time = 1400, ipa = "ˈlɔːθ̠" },
+  { time = 200, ipa = "ˈlɑjθɑz", category = "adj" },
+  { time = 900, ipa = "ˈlɑːθ" },
+  { time = 1400, ipa = "ˈlɔːθ" },
   { time = "final", ipa = "ˈləʊθ" },
 ]
 
@@ -2218,7 +2218,7 @@ gloss = "lede"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχlewdʱis", category = "noun", note = "PIE *h₁léwdʰis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈliwð̠iz", category = "noun" },
+  { time = 200, ipa = "ˈliwðiz", category = "noun" },
   { time = 900, ipa = "ˈleoːd" },
   { time = 1400, ipa = "ˈleːd" },
   { time = "final", ipa = "ˈliːd" },
@@ -2230,9 +2230,9 @@ gloss = "theed"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tewˈteħ", category = "noun", note = "PIE *tewtéh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ewð̠ɔː", category = "noun" },
-  { time = 900, ipa = "ˈθ̠eoːd" },
-  { time = 1400, ipa = "ˈθ̠øːd" },
+  { time = 200, ipa = "ˈθewðɔː", category = "noun" },
+  { time = 900, ipa = "ˈθeoːd" },
+  { time = 1400, ipa = "ˈθøːd" },
   { time = "final", ipa = "ˈθiːd" },
 ]
 
@@ -2242,9 +2242,9 @@ gloss = "wath"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwadʱom", category = "noun", note = "PIE *wadʰom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwɑð̠ɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈwɑðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈwæːd" },
-  { time = 1400, ipa = "ˈwaθ̠" },
+  { time = 1400, ipa = "ˈwaθ" },
   { time = "final", ipa = "ˈwæθ" },
 ]
 
@@ -2374,7 +2374,7 @@ gloss = "gudą"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰutós is replaced by *ǵʰutóm on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "gʲʱuˈtom", category = "noun", note = "PIE *ǵʰutós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɣuð̠ɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈɣuðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈgod" },
   { time = 1400, ipa = "ˈgɔd" },
 ]
@@ -2429,7 +2429,7 @@ gloss = "fadēr"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpħteːr", category = "noun", note = "PIE *ph₂tḗr, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸɑð̠ɛːr", category = "noun" },
+  { time = 200, ipa = "ˈɸɑðɛːr", category = "noun" },
   { time = 900, ipa = "ˈfæder" },
   { time = 1400, ipa = "ˈfadər" },
 ]
@@ -2440,7 +2440,7 @@ gloss = "mōdēr"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *méh₂tēr is replaced by *meh₂tḗr on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "meħˈteːr", category = "noun", note = "PIE *méh₂tēr, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈmɔːð̠ɛːr", category = "noun" },
+  { time = 200, ipa = "ˈmɔːðɛːr", category = "noun" },
   { time = 900, ipa = "ˈmoːdor" },
   { time = 1400, ipa = "ˈmoːdər" },
 ]
@@ -2452,8 +2452,8 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *deḱm̥tós 
 forms = [
   { time = -2000, ipa = "ˈdekʲm̩toː", category = "adj", note = "PIE *deḱm̥tós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtexundɔːː", category = "adj" },
-  { time = 900, ipa = "ˈteoːθ̠ɑ" },
-  { time = 1400, ipa = "ˈtɛnð̠" },
+  { time = 900, ipa = "ˈteoːθɑ" },
+  { time = 1400, ipa = "ˈtɛnð" },
 ]
 
 [[words]]
@@ -2484,7 +2484,7 @@ gloss = "raudaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "χrowˈdʱos", category = "adj", note = "PIE *h₁rowdʰós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈrɑwð̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈrɑwðɑz", category = "adj" },
   { time = 900, ipa = "ˈræɑːd" },
   { time = 1400, ipa = "ˈrɛːd" },
 ]
@@ -2539,8 +2539,8 @@ gloss = "couth"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵn̥h₃tós is replaced by *ǵń̥h₃tos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈgʲn̩ʁʷtos", category = "adj", note = "PIE *ǵn̥h₃tós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈkunθ̠ɑz", category = "adj" },
-  { time = 900, ipa = "ˈkuːθ̠" },
+  { time = 200, ipa = "ˈkunθɑz", category = "adj" },
+  { time = 900, ipa = "ˈkuːθ" },
   { time = "final", ipa = "ˈkuːθ" },
 ]
 
@@ -2572,9 +2572,9 @@ gloss = "arbaidiz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷorbʱos", category = "noun", note = "PIE *h₃órbʰos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑrβɑjð̠iz", category = "noun" },
-  { time = 900, ipa = "ˈæɑrfoθ̠e" },
-  { time = 1400, ipa = "ˈarvəð̠" },
+  { time = 200, ipa = "ˈɑrβɑjðiz", category = "noun" },
+  { time = 900, ipa = "ˈæɑrfoθe" },
+  { time = 1400, ipa = "ˈarvəð" },
 ]
 
 [[words]]
@@ -2671,9 +2671,9 @@ gloss = "tharm"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtormos", category = "noun", note = "PIE *tórmos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ɑrmɑz", category = "noun" },
-  { time = 900, ipa = "ˈθ̠æɑrm" },
-  { time = 1400, ipa = "ˈθ̠arm" },
+  { time = 200, ipa = "ˈθɑrmɑz", category = "noun" },
+  { time = 900, ipa = "ˈθæɑrm" },
+  { time = 1400, ipa = "ˈθarm" },
 ]
 
 [[words]]
@@ -2693,7 +2693,7 @@ gloss = "anadz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂énh₂ts is replaced by *h₂énh₂ets on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈħenħets", category = "noun", note = "PIE *h₂énh₂ts, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑnɑð̠z", category = "noun" },
+  { time = 200, ipa = "ˈɑnɑðz", category = "noun" },
   { time = 900, ipa = "ˈened" },
   { time = 1400, ipa = "ˈeːnd" },
 ]
@@ -2902,9 +2902,9 @@ gloss = "munþaz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *mn̥-tó-s is replaced by *mń̥tos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈmn̩tos", category = "noun", note = "PIE *mn̥-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈmunθ̠ɑz", category = "noun" },
-  { time = 900, ipa = "ˈmuːθ̠" },
-  { time = 1400, ipa = "ˈmuːθ̠" },
+  { time = 200, ipa = "ˈmunθɑz", category = "noun" },
+  { time = 900, ipa = "ˈmuːθ" },
+  { time = 1400, ipa = "ˈmuːθ" },
 ]
 
 [[words]]
@@ -2924,7 +2924,7 @@ gloss = "haiduz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kojˈtus", category = "noun", note = "PIE *koyt-ús, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈxɑjð̠uz", category = "noun" },
+  { time = 200, ipa = "ˈxɑjðuz", category = "noun" },
   { time = 900, ipa = "ˈxɑːd" },
   { time = 1400, ipa = "ˈhɔːd" },
 ]
@@ -2946,7 +2946,7 @@ gloss = "bladą"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱl̩ʁʷˈtom", category = "noun", note = "PIE *bʰl̥h₃-tó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈblɑð̠ɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈblɑðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈblæd" },
   { time = 1400, ipa = "ˈblaːd" },
 ]
@@ -2968,7 +2968,7 @@ gloss = "anadô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħenχdʱoː", category = "noun", note = "PIE *h₂enh₁-dʰō, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɑnɑð̠ɔːː", category = "noun" },
+  { time = 200, ipa = "ˈɑnɑðɔːː", category = "noun" },
   { time = 900, ipa = "ˈɑndɑ" },
   { time = 1400, ipa = "ˈɔːnd" },
 ]
@@ -3023,7 +3023,7 @@ gloss = "skaduz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *(s)ḱh₃-tús is replaced by *sḱh₃tús on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈskʲʁʷtus", category = "noun", note = "PIE *(s)ḱh₃-tús, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈskɑð̠uz", category = "noun" },
+  { time = 200, ipa = "ˈskɑðuz", category = "noun" },
   { time = 900, ipa = "ˈʃɑdu" },
   { time = 1400, ipa = "ˈʃaːd" },
 ]
@@ -3067,9 +3067,9 @@ gloss = "eath"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħewtus", category = "adj", note = "PIE *h₂éw-tu-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɑwθ̠uz", category = "adj" },
-  { time = 900, ipa = "ˈeːθ̠e" },
-  { time = 1400, ipa = "ˈɛːð̠" },
+  { time = 200, ipa = "ˈɑwθuz", category = "adj" },
+  { time = 900, ipa = "ˈeːθe" },
+  { time = 1400, ipa = "ˈɛːð" },
 ]
 
 [[words]]
@@ -3100,7 +3100,7 @@ gloss = "gulþīnaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʲʱolʁʷtinos", category = "adj", note = "PIE *ǵʰolh₃-t-inos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɣulθ̠iːnɑz", category = "adj" },
+  { time = 200, ipa = "ˈɣulθiːnɑz", category = "adj" },
   { time = 900, ipa = "ˈgylden" },
   { time = 1400, ipa = "ˈgiːldən" },
 ]
@@ -3133,9 +3133,9 @@ gloss = "þarbō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "torˈpeħ", category = "noun", note = "PIE *torp-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈθ̠ɑrβɔː", category = "noun" },
-  { time = 900, ipa = "ˈθ̠æɑrf" },
-  { time = 1400, ipa = "ˈθ̠ɛrf" },
+  { time = 200, ipa = "ˈθɑrβɔː", category = "noun" },
+  { time = 900, ipa = "ˈθæɑrf" },
+  { time = 1400, ipa = "ˈθɛrf" },
 ]
 
 [[words]]
@@ -3194,8 +3194,8 @@ gloss = "gunþiz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *gʷʰéntis is replaced by *gʷʰń̥tis on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈgʷʱn̩tis", category = "noun", note = "PIE *gʷʰéntis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɣunθ̠iz", category = "noun" },
-  { time = 900, ipa = "ˈguːθ̠" },
+  { time = 200, ipa = "ˈɣunθiz", category = "noun" },
+  { time = 900, ipa = "ˈguːθ" },
 ]
 
 [[words]]
@@ -3274,8 +3274,8 @@ gloss = "hleuþrą"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲlewtrom", category = "noun", note = "PIE *ḱléwtrom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxlewθ̠rɑ̃", category = "noun" },
-  { time = 900, ipa = "ˈxleoːθ̠or" },
+  { time = 200, ipa = "ˈxlewθrɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈxleoːθor" },
 ]
 
 [[words]]
@@ -3284,8 +3284,8 @@ gloss = "niþjaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈnitjos", category = "noun", note = "PIE *nítyos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈniθ̠jɑz", category = "noun" },
-  { time = 900, ipa = "ˈniθ̠θ̠ɑs" },
+  { time = 200, ipa = "ˈniθjɑz", category = "noun" },
+  { time = 900, ipa = "ˈniθθɑs" },
 ]
 
 [[words]]
@@ -3474,8 +3474,8 @@ gloss = "murth"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *mr̥tós is replaced by *mŕ̥tom on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈmr̩tom", category = "noun", note = "PIE *mr̥tós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈmurθ̠ɑ̃", category = "noun" },
-  { time = 900, ipa = "ˈmorθ̠" },
+  { time = 200, ipa = "ˈmurθɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈmorθ" },
 ]
 
 [[words]]
@@ -3484,8 +3484,8 @@ gloss = "kurþrą"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħgr̩trom", category = "noun", note = "PIE *h₂gr̥trom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈkurθ̠rɑ̃", category = "noun" },
-  { time = 900, ipa = "ˈkorθ̠er" },
+  { time = 200, ipa = "ˈkurθrɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈkorθer" },
 ]
 
 [[words]]
@@ -3534,7 +3534,7 @@ gloss = "snood"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "snoχˈteħ", category = "noun", note = "PIE *snoh₁téh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈsnɔːð̠ɔː", category = "noun" },
+  { time = 200, ipa = "ˈsnɔːðɔː", category = "noun" },
   { time = "final", ipa = "ˈsnuːd" },
 ]
 
@@ -3574,8 +3574,8 @@ gloss = "staþlaz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *sth₂tlos is replaced by *sth₂̥́tlos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈstħ̩tlos", category = "noun", note = "PIE *sth₂tlos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈstɑθ̠lɑz", category = "noun" },
-  { time = 900, ipa = "ˈstɑθ̠ol" },
+  { time = 200, ipa = "ˈstɑθlɑz", category = "noun" },
+  { time = 900, ipa = "ˈstɑθol" },
 ]
 
 [[words]]
@@ -3604,7 +3604,7 @@ gloss = "hrīdrǭ"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kréydʰrom is replaced by *kreydʰrṓn on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "krejˈdʱroːn", category = "noun", note = "PIE *kréydʰrom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxriːð̠rɔ̃ː", category = "noun" },
+  { time = 200, ipa = "ˈxriːðrɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈxridder" },
 ]
 
@@ -3644,7 +3644,7 @@ gloss = "reudaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "χrewˈdʱos", category = "adj", note = "PIE *h₁rewdʰós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈrewð̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈrewðɑz", category = "adj" },
   { time = 900, ipa = "ˈreoːd" },
 ]
 
@@ -3764,8 +3764,8 @@ gloss = "þursuz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *térs-u-s is replaced by *tŕ̥sus on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈtr̩sus", category = "adj", note = "PIE *térs-u-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈθ̠ursuz", category = "adj" },
-  { time = 900, ipa = "ˈθ̠yrre" },
+  { time = 200, ipa = "ˈθursuz", category = "adj" },
+  { time = 900, ipa = "ˈθyrre" },
 ]
 
 [[words]]
@@ -3774,7 +3774,7 @@ gloss = "wadją"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwodʱjom", category = "noun", note = "PIE *wodʰ-yo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈwɑð̠jɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈwɑðjɑ̃", category = "noun" },
   { time = 900, ipa = "ˈwedd" },
 ]
 
@@ -3784,8 +3784,8 @@ gloss = "þankaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtongos", category = "noun", note = "PIE *tóng-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈθ̠ɑŋkɑz", category = "noun" },
-  { time = 900, ipa = "ˈθ̠ɑŋk" },
+  { time = 200, ipa = "ˈθɑŋkɑz", category = "noun" },
+  { time = 900, ipa = "ˈθɑŋk" },
 ]
 
 [[words]]
@@ -3914,8 +3914,8 @@ gloss = "þrawō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtrowχeħti", category = "noun", note = "PIE *trowH-eh₂-ti, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈθ̠rɑwɔː", category = "noun" },
-  { time = 900, ipa = "ˈθ̠ræɑː" },
+  { time = 200, ipa = "ˈθrɑwɔː", category = "noun" },
+  { time = 900, ipa = "ˈθræɑː" },
 ]
 
 [[words]]
@@ -3963,7 +3963,7 @@ gloss = "biridi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱereti", category = "verb.pres.3sg", note = "PIE *bʰéreti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbirið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈbiriði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4026,7 +4026,7 @@ gloss = "bidjō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʷʱedʱjoħ", category = "verb.pres.1sg", note = "PIE *gʷʰédʰyoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbið̠jɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈbiðjɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -4035,7 +4035,7 @@ gloss = "itidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχedti", category = "verb.pres.3sg", note = "PIE *h₁édti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈitið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈitiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4053,7 +4053,7 @@ gloss = "rīdidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷrejdʱχeti", category = "verb.pres.3sg", note = "PIE *h₃réydʰh₁eti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈriːð̠ið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈriːðiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4062,7 +4062,7 @@ gloss = "biudidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱewdʱeti", category = "verb.pres.3sg", note = "PIE *bʰéwdʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbiwð̠ið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈbiwðiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4071,7 +4071,7 @@ gloss = "beudō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱewdʱoħ", category = "verb.pres.1sg", note = "PIE *bʰéwdʰoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbewð̠ɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈbewðɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -4089,7 +4089,7 @@ gloss = "wēidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħweːχti", category = "verb.pres.3sg", note = "PIE *h₂wḗh₁ti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwɛːið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈwɛːiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4098,7 +4098,7 @@ gloss = "rēdidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχreχdʱeti", category = "verb.pres.3sg", note = "PIE *Hréh₁dʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈrɛːð̠ið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈrɛːðiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4107,7 +4107,7 @@ gloss = "bīdidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱejdʱeti", category = "verb.pres.3sg", note = "PIE *bʰéydʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbiːð̠ið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈbiːðiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4116,7 +4116,7 @@ gloss = "bīdō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱejdʱoħ", category = "verb.pres.1sg", note = "PIE *bʰéydʰoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbiːð̠ɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈbiːðɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -4125,7 +4125,7 @@ gloss = "snīwidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsnejgʷʱeti", category = "verb.pres.3sg", note = "PIE *snéygʷʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈsniːwið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈsniːwiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4143,7 +4143,7 @@ gloss = "wigidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwegʲʱeti", category = "verb.pres.3sg", note = "PIE *wéǵʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwiɣið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈwiɣiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4170,7 +4170,7 @@ gloss = "akidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħegʲeti", category = "verb.pres.3sg", note = "PIE *h₂éǵeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑkið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈɑkiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4188,7 +4188,7 @@ gloss = "alidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħeleti", category = "verb.pres.3sg", note = "PIE *h₂életi, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑlið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈɑliði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4215,7 +4215,7 @@ gloss = "hilidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲeleti", category = "verb.pres.3sg", note = "PIE *ḱéleti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxilið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈxiliði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4287,7 +4287,7 @@ gloss = "ferþuz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpertus", category = "noun", note = "PIE *pértus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸerθ̠uz", category = "noun" },
+  { time = 200, ipa = "ˈɸerθuz", category = "noun" },
 ]
 
 [[words]]
@@ -4314,7 +4314,7 @@ gloss = "haþuz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kéh₃tus is replaced by *kátus on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈkatus", category = "noun", note = "PIE *kéh₃tus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxɑθ̠uz", category = "noun" },
+  { time = 200, ipa = "ˈxɑθuz", category = "noun" },
 ]
 
 [[words]]
@@ -4323,7 +4323,7 @@ gloss = "þahsuz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *tótḱus is replaced by *táksus on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈtaksus", category = "noun", note = "PIE *tótḱus, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ɑxsuz", category = "noun" },
+  { time = 200, ipa = "ˈθɑxsuz", category = "noun" },
 ]
 
 [[words]]
@@ -4359,7 +4359,7 @@ gloss = "mīgidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷmejgʲʱeti", category = "verb.pres.3sg", note = "PIE *h₃méyǵʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈmiːɣið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈmiːɣiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4377,7 +4377,7 @@ gloss = "stīgidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈstejgʱeti", category = "verb.pres.3sg", note = "PIE *stéygʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈstiːɣið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈstiːɣiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4449,7 +4449,7 @@ gloss = "þanjō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "toˈnejoħ", category = "verb.pres.1sg", note = "PIE *tonéyoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ɑnjɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈθɑnjɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -4467,7 +4467,7 @@ gloss = "fadiz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *pótis is replaced by *potís on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "poˈtis", category = "noun", note = "PIE *pótis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸɑð̠iz", category = "noun" },
+  { time = 200, ipa = "ˈɸɑðiz", category = "noun" },
 ]
 
 [[words]]
@@ -4494,7 +4494,7 @@ gloss = "nadraz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *(s)néHtr̥ is replaced by *nh₂trós on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈnħtros", category = "noun", note = "PIE *(s)néHtr̥, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈnɑð̠rɑz", category = "noun" },
+  { time = 200, ipa = "ˈnɑðrɑz", category = "noun" },
 ]
 
 [[words]]
@@ -4503,7 +4503,7 @@ gloss = "brimidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱremeti", category = "verb.pres.3sg", note = "PIE *bʰrémeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbrimið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈbrimiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4539,7 +4539,7 @@ gloss = "wiþiz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈweχitis", category = "noun", note = "PIE *wéh₁itis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwiθ̠iz", category = "noun" },
+  { time = 200, ipa = "ˈwiθiz", category = "noun" },
 ]
 
 [[words]]
@@ -4575,7 +4575,7 @@ gloss = "tīhidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdejkʲeti", category = "verb.pres.3sg", note = "PIE *déyḱeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈtiːxið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈtiːxiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4593,7 +4593,7 @@ gloss = "turþiz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdr̩tis", category = "noun", note = "PIE *dŕ̥tis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈturθ̠iz", category = "noun" },
+  { time = 200, ipa = "ˈturθiz", category = "noun" },
 ]
 
 [[words]]
@@ -4602,7 +4602,7 @@ gloss = "saidaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "sojˈtos", category = "noun", note = "PIE *soytós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈsɑjð̠ɑz", category = "noun" },
+  { time = 200, ipa = "ˈsɑjðɑz", category = "noun" },
 ]
 
 [[words]]
@@ -4620,7 +4620,7 @@ gloss = "baidijō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱojˈdʱejoħ", category = "verb.pres.1sg", note = "PIE *bʰoydʰéyoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈbɑjð̠ijɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈbɑjðijɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -4647,7 +4647,7 @@ gloss = "kumþiz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *gʷémtis is replaced by *gʷḿ̥tis on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈgʷm̩tis", category = "noun", note = "PIE *gʷémtis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈkumθ̠iz", category = "noun" },
+  { time = 200, ipa = "ˈkumθiz", category = "noun" },
 ]
 
 [[words]]
@@ -4692,7 +4692,7 @@ gloss = "þinhslō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtengʱsleħ", category = "noun", note = "PIE *tengʰs(e)leh₂, as cited by Wiktionary." },
-  { time = 900, ipa = "ˈθ̠iːksl" },
+  { time = 900, ipa = "ˈθiːksl" },
 ]
 
 [[words]]
@@ -4701,7 +4701,7 @@ gloss = "stadaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈstħtos", category = "adj", note = "PIE *sth₂tós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈstɑð̠ɑz", category = "adj" },
+  { time = 200, ipa = "ˈstɑðɑz", category = "adj" },
 ]
 
 [[words]]
@@ -4710,7 +4710,7 @@ gloss = "rikidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷregʲeti", category = "verb.pres.3sg", note = "PIE *h₃réǵeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈrikið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈrikiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4728,7 +4728,7 @@ gloss = "arþrą"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħerʁʷtrom", category = "noun", note = "PIE *h₂érh₃trom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑrθ̠rɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈɑrθrɑ̃", category = "noun" },
 ]
 
 [[words]]
@@ -4782,7 +4782,7 @@ gloss = "riutidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχrewdχti", category = "verb.pres.3sg", note = "PIE *HréwdHti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈriwtið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈriwtiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4800,7 +4800,7 @@ gloss = "agiþō"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂óḱets is replaced by *h₂oḱéteh₂ on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ħoˈkʲeteħ", category = "noun", note = "PIE *h₂óḱets, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑɣiθ̠ɔː", category = "noun" },
+  { time = 200, ipa = "ˈɑɣiθɔː", category = "noun" },
 ]
 
 [[words]]
@@ -4827,7 +4827,7 @@ gloss = "hlīdō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲlejˈteħ", category = "noun", note = "PIE *ḱleytéh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxliːð̠ɔː", category = "noun" },
+  { time = 200, ipa = "ˈxliːðɔː", category = "noun" },
 ]
 
 [[words]]
@@ -4836,7 +4836,7 @@ gloss = "hlīþrō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲlejtreħ", category = "noun", note = "PIE *ḱléytreh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxliːθ̠rɔː", category = "noun" },
+  { time = 200, ipa = "ˈxliːθrɔː", category = "noun" },
 ]
 
 [[words]]
@@ -4854,7 +4854,7 @@ gloss = "þarzijō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "torˈsejoħ", category = "verb.pres.1sg", note = "PIE *torséyoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ɑrzijɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈθɑrzijɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -4908,7 +4908,7 @@ gloss = "muþraz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmuχtrom", category = "noun", note = "PIE *múHtrom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈmuθ̠rɑz", category = "noun" },
+  { time = 200, ipa = "ˈmuθrɑz", category = "noun" },
 ]
 
 [[words]]
@@ -4917,7 +4917,7 @@ gloss = "laudaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχlowdʱos", category = "noun", note = "PIE *h₁lówdʰos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈlɑwð̠ɑz", category = "noun" },
+  { time = 200, ipa = "ˈlɑwðɑz", category = "noun" },
 ]
 
 [[words]]
@@ -4926,7 +4926,7 @@ gloss = "wididi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwedʱeti", category = "verb.pres.3sg", note = "PIE *wédʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwið̠ið̠i", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈwiðiði", category = "verb.pres.3sg" },
 ]
 
 [[words]]
@@ -4935,7 +4935,7 @@ gloss = "wedō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwedʱoħ", category = "verb.pres.1sg", note = "PIE *wédʰoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈweð̠ɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈweðɔː", category = "verb.pres.1sg" },
 ]
 
 [[words]]
@@ -5061,7 +5061,7 @@ gloss = "frīdaz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "priχˈtos", note = "PIE *priHtós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɸriːð̠ɑz" },
+  { time = 200, ipa = "ˈɸriːðɑz" },
 ]
 
 [[words]]
@@ -5088,7 +5088,7 @@ gloss = "hurdiz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "kr̩χˈtis", note = "PIE *kr̥Htís, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxurð̠iz" },
+  { time = 200, ipa = "ˈxurðiz" },
 ]
 
 [[words]]
@@ -5124,7 +5124,7 @@ gloss = "hwaþaraz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "ˈkʷoteros", note = "PIE *kʷóteros, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxʷɑθ̠ɑrɑz" },
+  { time = 200, ipa = "ˈxʷɑθɑrɑz" },
 ]
 
 [[words]]
@@ -5133,7 +5133,7 @@ gloss = "þrinz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "ˈtrins", note = "PIE *tríns, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠rinz" },
+  { time = 200, ipa = "ˈθrinz" },
 ]
 
 [[words]]
@@ -5223,7 +5223,7 @@ gloss = "aþnaz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "ˈatnos", note = "PIE *átnos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑθ̠nɑz" },
+  { time = 200, ipa = "ˈɑθnɑz" },
 ]
 
 [[words]]
@@ -5241,7 +5241,7 @@ gloss = "þas"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "ˈtosjo", note = "PIE *tósyo, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈθ̠ɑs" },
+  { time = 200, ipa = "ˈθɑs" },
 ]
 
 [[words]]
@@ -5268,7 +5268,7 @@ gloss = "anþaraz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "ˈanteros", note = "PIE *ánteros, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑnθ̠ɑrɑz" },
+  { time = 200, ipa = "ˈɑnθɑrɑz" },
 ]
 
 [[words]]
@@ -5439,7 +5439,7 @@ gloss = "spēdiz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "speχˈtis", category = "adj", note = "PIE *speh₁-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈspɛːð̠iz", category = "adj" },
+  { time = 200, ipa = "ˈspɛːðiz", category = "adj" },
 ]
 
 [[words]]
@@ -5538,7 +5538,7 @@ gloss = "þeuhtēr"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tewkˈteːr", category = "noun", note = "PIE *tewk-tḗr, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈθ̠ewxtɛːr", category = "noun" },
+  { time = 200, ipa = "ˈθewxtɛːr", category = "noun" },
 ]
 
 [[words]]
@@ -5556,7 +5556,7 @@ gloss = "fruþǭ"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *prutH-eh₂ is replaced by *prútHeh₂m on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "ˈprutχeħm", category = "noun", note = "PIE *prutH-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɸruθ̠ɔ̃ː", category = "noun" },
+  { time = 200, ipa = "ˈɸruθɔ̃ː", category = "noun" },
 ]
 
 [[words]]
@@ -5574,7 +5574,7 @@ gloss = "snauþuz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈksnewtus", category = "adj", note = "PIE *ksnéw-tu-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈsnɑwθ̠uz", category = "adj" },
+  { time = 200, ipa = "ˈsnɑwθuz", category = "adj" },
 ]
 
 [[words]]
@@ -5583,7 +5583,7 @@ gloss = "fadurbanô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpħtr̩gʷʱonoː", category = "noun", note = "PIE *ph₂tr̥-gʷʰon-ō, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɸɑð̠urˌbɑnɔːː", category = "noun" },
+  { time = 200, ipa = "ˈɸɑðurˌbɑnɔːː", category = "noun" },
 ]
 
 [[words]]
@@ -5592,7 +5592,7 @@ gloss = "anþą"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħenχtom", category = "noun", note = "PIE *h₂enh₁-to-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɑnθ̠ɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈɑnθɑ̃", category = "noun" },
 ]
 
 [[words]]
@@ -5610,7 +5610,7 @@ gloss = "bardō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱorsdʱos", category = "noun", note = "PIE *bʰórsdʰ-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈbɑrð̠ɔː", category = "noun" },
+  { time = 200, ipa = "ˈbɑrðɔː", category = "noun" },
 ]
 
 [[words]]
@@ -5646,7 +5646,7 @@ gloss = "flunþrą"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpln̩ħtrom", category = "noun", note = "PIE *pl-n̥-h₂-tro-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɸlunθ̠rɑ̃", category = "noun" },
+  { time = 200, ipa = "ˈɸlunθrɑ̃", category = "noun" },
 ]
 
 [[words]]
@@ -5673,7 +5673,7 @@ gloss = "skaudō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈskowdʱeħ", category = "noun", note = "PIE *skówdʰ-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈskɑwð̠ɔː", category = "noun" },
+  { time = 200, ipa = "ˈskɑwðɔː", category = "noun" },
 ]
 
 [[words]]
@@ -5691,7 +5691,7 @@ gloss = "fraiþaz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "proˈχitos", note = "PIE *pró-h₁itos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈɸrɑjθ̠ɑz" },
+  { time = 200, ipa = "ˈɸrɑjθɑz" },
 ]
 
 [[words]]
@@ -5700,5 +5700,5 @@ gloss = "sōþiz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
   { time = -2000, ipa = "ˈsaħtis", note = "PIE *sáh₂ti-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈsɔːθ̠iz" },
+  { time = 200, ipa = "ˈsɔːθiz" },
 ]
