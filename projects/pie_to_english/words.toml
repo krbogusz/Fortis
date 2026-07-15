@@ -2344,7 +2344,7 @@ forms = [
   { time = 200, ipa = "ˈɑjtrɑ̃", category = "noun" },
   { time = 900, ipa = "ˈɑːtor" },
   { time = 1400, ipa = "ˈatər" },
-  { time = "final", ipa = "ˈætəɹ" },
+  { time = "final", ipa = "ˈætə", note = "Non-rhotic (RP), consistent with the rest of the modern column — Wiktionary's ˈætəɹ was the lone rhotic transcription of 177." },
 ]
 
 [[words]]
