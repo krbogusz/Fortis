@@ -2927,3 +2927,12 @@ name = "SPORADIC: *ferhuz > ME fer loses its *x after *r, lengthening the vowel"
 description = "OE feorh > ME fer(e) /fɛːr/ — the *x of the *rx coda is lost with compensatory lengthening, which me_x_loss (a vowel + x) does not reach. Word-scoped, before it."
 words = ["ferhuz"]
 definition = ["[+syll] → [length: long] / _ r x", "x → ∅ / r _"]
+
+[sporadic_haven]
+time = 460
+name = "SPORADIC: *habanō > OE hæfen keeps the brightened *æ (a-restoration not applied)"
+description = """OE hæfen 'haven' keeps the Anglo-Frisian *æ where a-restoration would back it before
+the following *a — the same lexical patchiness Jones §3.2 notes for these changes. Word-scoped:
+re-front the stressed vowel, and the *-anō ending reduces to *-en (the *a to *e, the *u lost)."""
+words = ["haven"]
+definition = ["[+syll, stress: primary, +back, aperture: low] → [+front, back: none, advancement: atr]", "ɑ → e", "u → ∅ / n _ #"]
