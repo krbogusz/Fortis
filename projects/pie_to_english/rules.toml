@@ -2547,7 +2547,7 @@ time = 431
 name = "SPORADIC: *abjǭ > OE ebba — geminate *bb and final -a"
 description = "*abjǭ gives OE ebba; like rib, the geminate is a stop *bb and it takes final -a. Word-scoped."
 words = ["ebb"]
-definition = ["f → b", "e → ɑ / _ #"]
+definition = "f → b"
 
 [sporadic_wator_vowels]
 time = 456
@@ -2555,3 +2555,10 @@ name = "SPORADIC: *watōr > OE wæter — front vowel, reduced second vowel"
 description = "*watōr gives OE wæter; our cascade leaves *wɑtoːr. Word-scoped: the *a fronts to *æ and the long *ō reduces to *e."
 words = ["watōr"]
 definition = ["ɑ → æ", "oː → e"]
+
+[sporadic_ebb_ending]
+time = 457
+name = "SPORADIC: *abjǭ > OE ebba ends in -a"
+description = "*abjǭ is an a-stem ebba in Old English, ending -a, not the -e the weak ōn-stem rule gives. Word-scoped, after that rule."
+words = ["ebb"]
+definition = "e → ɑ / _ #"
