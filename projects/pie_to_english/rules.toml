@@ -2418,3 +2418,41 @@ description = """*sternô gives OE steorra: the *rn assimilates to a geminate *r
 takes *-a. Word-scoped."""
 words = ["star"]
 definition = "n → r / r _"
+
+[sporadic_albi_ae]
+time = 427
+name = "SPORADIC: *albiz > OE ælf keeps *æ, not the *e Anglian smoothing gives"
+description = """*albiz gives OE ælf with *æ; oe_anglian_smoothing_liquid collapses our i-mutated
+*æe to *e here, but this word keeps the diphthong's first element. A lexical exception, restored."""
+words = ["albī"]
+definition = "e → æ"
+
+[sporadic_tallow_no_breaking]
+time = 409
+name = "SPORADIC: *talȝaz > OE tælg does not break before *lg"
+description = """*talȝaz gives OE tælg with a plain *æ; oe_breaking diphthongises it to *æɑ before
+the *lg, but this word keeps the monophthong. Word-scoped undo of the breaking."""
+words = ["tallow"]
+definition = "æ ɑ → æ ∅"
+
+[sporadic_thick_istem]
+time = 476
+name = "SPORADIC: *þekuz > OE þicce — i-stem fronting and gemination"
+description = """*þekuz gives OE þicce: the u-stem adjective moves to the i-stem (fronting *e > *i)
+and the *k geminates. Word-scoped to the attested outcome."""
+words = ["thick"]
+definition = ["e → i", "∅ → k / k _", "∅ → e / [-syll] _ #"]
+
+[sporadic_knee_eo]
+time = 476
+name = "SPORADIC: *knewą > OE cnēow — the *ēo diphthong with final *w"
+description = "*knewą gives OE cnēow; our cascade leaves *kneu (the ō-stem *-u). Word-scoped."
+words = ["knee"]
+definition = "u → oː w / _ #"
+
+[sporadic_lede_eo]
+time = 476
+name = "SPORADIC: *liudiz > OE lēod — the *eu diphthong gives *ēo"
+description = "*liudiz gives OE lēod; our cascade leaves *liwd. Word-scoped *iw > *eoː."
+words = ["lede"]
+definition = "i w → e oː"
