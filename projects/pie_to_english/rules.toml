@@ -2562,3 +2562,16 @@ name = "SPORADIC: *abjǭ > OE ebba ends in -a"
 description = "*abjǭ is an a-stem ebba in Old English, ending -a, not the -e the weak ōn-stem rule gives. Word-scoped, after that rule."
 words = ["ebb"]
 definition = "e → ɑ / _ #"
+
+
+[sporadic_ow_vocalisation]
+time = 1260
+name = "SPORADIC: the *ɣ-derived final velar vocalises to *w — marrow, tallow, saw, yellow"
+description = """Middle English marow, talow, saw, yelow: a word-final velar that goes back to *ɣ
+(not a true stop) vocalises to *w — with a svarabhakti *ɔ after a consonant. Word-scoped, because
+by Middle English these have merged with the true stops (buck, oak) that do NOT vocalise."""
+words = ["marrow", "tallow", "saw", "gelwaz"]
+definition = [
+    "[+back, aperture: high, -son, nasal: none] → ɔ w / [+cons, +son] _ #",
+    "[+back, aperture: high, -son, nasal: none] → w / [+syll] _ #",
+]
