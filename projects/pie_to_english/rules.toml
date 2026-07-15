@@ -2417,7 +2417,7 @@ name = "SPORADIC: *sternô > OE steorra — *rn assimilates to *rr, ending -a"
 description = """*sternô gives OE steorra: the *rn assimilates to a geminate *rr and the n-stem
 takes *-a. Word-scoped."""
 words = ["star"]
-definition = "n → r / r _"
+definition = ["n → r / r _", "e → ɑ / _ #"]
 
 [sporadic_albi_ae]
 time = 427
@@ -2441,7 +2441,7 @@ name = "SPORADIC: *þekuz > OE þicce — i-stem fronting and gemination"
 description = """*þekuz gives OE þicce: the u-stem adjective moves to the i-stem (fronting *e > *i)
 and the *k geminates. Word-scoped to the attested outcome."""
 words = ["thick"]
-definition = ["e → i", "∅ → k / k _", "∅ → e / [-syll] _ #"]
+definition = ["e → i", "∅ → k / k _", "u → e / _ #"]
 
 [sporadic_knee_eo]
 time = 476
@@ -2456,3 +2456,31 @@ name = "SPORADIC: *liudiz > OE lēod — the *eu diphthong gives *ēo"
 description = "*liudiz gives OE lēod; our cascade leaves *liwd. Word-scoped *iw > *eoː."
 words = ["lede"]
 definition = "i w → e oː"
+
+[sporadic_swesaz_ae]
+time = 300
+name = "SPORADIC: *swēsaz > OE swǣs — the long vowel is *ǣ, not *ō"
+description = "*swēsaz gives OE swǣs; our cascade raises the long *ē to *oː, but this word keeps a front *ǣ."
+words = ["swēsaz"]
+definition = "oː → æː"
+
+[sporadic_glemaz_o]
+time = 300
+name = "SPORADIC: *glōmaz > OE glōm — a back *ō, where we carry a front *ǣ"
+description = "gloom continues *glōmaz with a back *ō; the Wiktionary input's *ē gives our front *ǣ, so the vowel is corrected to the attested back one."
+words = ["glēmaz"]
+definition = "æː → oː"
+
+[sporadic_guda_long]
+time = 250
+name = "SPORADIC: *gōdaz > OE gōd lengthens"
+description = "*gōdaz gives OE gōd with a long vowel; word-scoped lengthening of the short *o our cascade leaves."
+words = ["gudą"]
+definition = "[+syll, aperture: mid, +back, length: short] → [length: long]"
+
+[sporadic_ell_syncope]
+time = 461
+name = "SPORADIC: *alinō > OE eln syncopates its medial vowel"
+description = "*alinō gives OE eln — the medial unstressed vowel and the ending are lost, leaving a bare cluster. Word-scoped syncope."
+words = ["ell"]
+definition = ["[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons]", "[+syll, stress: none] → ∅ / [+son, +cons] _ #"]
