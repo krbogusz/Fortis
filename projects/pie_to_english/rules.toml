@@ -777,8 +777,11 @@ definition = "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ [-son, +cont, 
 [wg_nasal_spirant_rounding]
 time = 320
 name = "The lengthened a rounds to oː before the fricative"
-description = "*gans > gaːs > gōs; *fimf > fīf and *uns > ūs keep their vowel, being high already"
-definition = "[+syll, length: long, aperture: low, rounded: none] → oː / _ [-son, +cont, -voice]"
+description = """*gans > gaːs > gōs. The vowel is the BACK *ɑː that nasal loss lengthens; a FRONT
+long low vowel (swǣs, from *ē) stands before a voiceless fricative too but must NOT round —
+restricting to +back keeps swēsaz off it, which is why no sporadic patch is needed there.
+(*fimf > fīf and *uns > ūs keep their vowel, being high already.)"""
+definition = "[+syll, length: long, aperture: low, +back, rounded: none] → oː / _ [-son, +cont, -voice]"
 
 # West Germanic a-umlaut: a short high vowel lowers before a non-high vowel in the next
 # syllable — PrG *gulþam > OE gold, *kurną > corn (Minkova §3.4 n.9). It must run before the
@@ -2459,13 +2462,6 @@ name = "SPORADIC: *liudiz > OE lēod — the *eu diphthong gives *ēo"
 description = "*liudiz gives OE lēod; our cascade leaves *liwd. Word-scoped *iw > *eoː."
 words = ["lede"]
 definition = "i w → e oː"
-
-[sporadic_swesaz_ae]
-time = 350
-name = "SPORADIC: *swēsaz > OE swǣs — the long vowel is *ǣ, not *ō"
-description = "*swēsaz gives OE swǣs; our cascade raises the long *ē to *oː, but this word keeps a front *ǣ."
-words = ["swēsaz"]
-definition = "oː → æː"
 
 [sporadic_glemaz_o]
 time = 300
