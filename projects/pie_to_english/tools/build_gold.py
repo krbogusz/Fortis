@@ -413,6 +413,9 @@ PREFORM_FIXES = {
                             # which gives *twō; but the attested *twai has the *ai diphthong, and
                             # *ai continues PIE *oy, NOT *oh₁ (which gives *ō). So the masculine
                             # *dwoy is what the attested form points to — the grade read off it.
+    "þrawō": "trowh₁eh₂",   # *þrawō 'affliction' (fem. ō-stem) — kaikki links a finite VERB form
+                            # *trowh₁eti, whose *-eti gives our stray *-ði; the noun takes the
+                            # ō-stem *-eh₂. Same wrong-cell trap the verbs taught, one ending over.
     "gulþīnaz": "ǵʰl̥h₃tínos",  # *gulþīnaz 'golden' — the attested *gul- is the ZERO grade *ǵʰl̥-
                             # (syllabic *l̥ > *ul, as in gold *gulþą), not kaikki's o-grade *ǵʰolh₃-
                             # (which gives our wrong *ɣɑl-). Same wrong-grade pattern as *mundiz :
