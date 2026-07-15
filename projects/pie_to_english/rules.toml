@@ -2885,3 +2885,24 @@ name = "SPORADIC: evil keeps a long *iː"
 description = "OE yfel > ME evel lengthens in the open syllable to /eːvəl/ (whence modern /ˈiːvəl/ via the Vowel Shift); our cascade carries a short high vowel, so it is set to the long mid *eː the shift then raises. Word-scoped."
 words = ["evil"]
 definition = "i → eː"
+
+[sporadic_yoke_goat]
+time = 1650
+name = "SPORADIC: yoke has a long *oː > GOAT, not the short LOT vowel"
+description = "OE ġeoc > ME yoke has a long *oː (open-syllable) that the GOAT diphthongisation takes to /jəʊk/; our cascade keeps it short. Word-scoped lengthening, after the Vowel Shift and before GOAT."
+words = ["yoke"]
+definition = "o → oː"
+
+[sporadic_ell_no_n]
+time = 1500
+name = "SPORADIC: *eln > modern ell drops the final *n"
+description = "OE eln > ME elne > modern ell /ɛl/ — the final *n is lost. Word-scoped."
+words = ["ell"]
+definition = "n → ∅ / _ #"
+
+[sporadic_erf_no_voice]
+time = 1900
+name = "SPORADIC: erf keeps a voiceless *f"
+description = "erf /ɜːf/ keeps the voiceless final *f that eme_final_f_voicing wrongly voices (cf. reef). Word-scoped re-devoicing."
+words = ["erf"]
+definition = "v → f / _ #"
