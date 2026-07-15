@@ -1674,7 +1674,7 @@ arm, barm, hard.
 t = 1740, BEFORE pde_r_loss (1750) — and that is the whole point. Dated in the 1900 block it looked
 for an /ɹ/ that the r-loss had already deleted, and arm, barm, hard came out **aːm, **baːm, **haːd
 with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there."""
-definition = "[+syll, length: short] a → ɑ / _ r"
+definition = "a → ɑ / _ r"
 
 [eme_goat_diphthongisation]
 time = 1900
