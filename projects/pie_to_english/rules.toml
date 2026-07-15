@@ -2636,3 +2636,33 @@ name = "SPORADIC: GOME shortens to the STRUT vowel"
 description = "ME gome /goːm/ > RP /gʌm/: the *uː shortens and unrounds to STRUT. Word-scoped."
 words = ["gome"]
 definition = "uː → ʌ"
+
+[sporadic_me_homorganic_length]
+time = 1210
+name = "SPORADIC: ME lengthens the vowel before a homorganic cluster — anadô, long, gernaz"
+description = """ME ōnd, lōng, yērn lengthen the vowel before *nd, *ŋg, *rn — the Middle English
+homorganic lengthening, which is lexically variable (hund, dust keep their short vowel). Word-scoped
+to those that lengthen."""
+words = ["anadô", "long", "gernaz"]
+definition = "[+syll, length: short, stress: primary] → [length: long]"
+
+[sporadic_me_shorten]
+time = 1210
+name = "SPORADIC: dust, hund keep a short vowel in ME"
+description = "ME dust, hund keep the short vowel that OE dūst, and homorganic lengthening on hundą, would make long. Word-scoped shortening."
+words = ["dust", "hundą"]
+definition = "[+syll, length: long] → [length: short]"
+
+[sporadic_cold_no_palatal]
+time = 1050
+name = "SPORADIC: *kaldaz > ME cold keeps *k, not the OE palatal"
+description = "ME cold has a hard /k/ (reinforced by Norse); OE ċeald palatalised, but the modern word continues the unpalatalised Anglian/Norse form. Word-scoped."
+words = ["cold"]
+definition = "t͡ʃ → k"
+
+[sporadic_long_short]
+time = 1620
+name = "SPORADIC: LONG shortens again before the GOAT diphthongisation"
+description = "ME lōng /lɔːŋg/ > RP long /lɒŋ/: the vowel lengthened in ME shortens again before it could diphthongise to GOAT. Word-scoped."
+words = ["long"]
+definition = "ɔː → ɒ"
