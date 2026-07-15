@@ -2705,7 +2705,7 @@ words = ["bare"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_dere_e]
-time = 1105
+time = 1250
 name = "SPORADIC: *darjaz > ME dēre has a close ē"
 description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. Word-scoped fronting/raising to close ē."
 words = ["dere"]
@@ -2814,3 +2814,24 @@ name = "SPORADIC: *ange keeps *a before *ŋg in ME — ang, not **ong"
 description = "ME ang, hang, sang keep the unrounded *a before *ŋg, where long, song round (me_a_before_nasal_rounds is lexically split). Word-scoped, undoing the rounding."
 words = ["anguz"]
 definition = "ɔ → a / _ [+nas]"
+
+[sporadic_welkin_e]
+time = 1150
+name = "SPORADIC: *wolcen > ME welken has a front *ɛ"
+description = "OE wolcen gives ME welken /wɛlkən/ — the *o fronts to *ɛ (the West-Saxon weor- reflex). Word-scoped."
+words = ["welkin"]
+definition = "ɔ → ɛ"
+
+[sporadic_yard_front_r]
+time = 1160
+name = "SPORADIC: *geard > ME yerd has a front *ɛː before *r"
+description = "OE ġeard gives ME yerd /jɛːrd/, with the front reflex of *ea before *r, where our cascade merges it to back *a. Word-scoped."
+words = ["yard"]
+definition = "a → ɛː / _ r"
+
+[sporadic_yard_back_modern]
+time = 1600
+name = "SPORADIC: yard's modern reflex is the BACK (START) vowel, not the ME front one"
+description = "ME yerd is front, but the surviving modern yard /jɑːd/ continues the back-vowel doublet (ġeard beside ġerd). Word-scoped: the ME front *ɛː backs to *ɑ before *r so START applies."
+words = ["yard"]
+definition = "ɛː → ɑ / _ r"
