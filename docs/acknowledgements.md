@@ -70,6 +70,11 @@ and Kroonen, *Etymological Dictionary of Proto-Germanic*. These are copyrighted 
 out of the repo. A sound law is a fact and is encoded as a rule, with the citation in a comment;
 no book text belongs in the repository.
 
+Freely available and used the same way — a fact checked, never redistributed — is Wikipedia's
+[**Phonological history of English**](https://en.wikipedia.org/wiki/Phonological_history_of_English)
+(and the linked per-change articles), CC BY-SA 4.0, a convenient index of the relative chronology
+of the English sound changes and their approximate dates.
+
 ## Chomsky & Halle (1968) — the spe feature system
 
 - **Source:** Noam Chomsky & Morris Halle (1968), _The Sound Pattern of English_. New York:

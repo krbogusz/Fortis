@@ -1347,8 +1347,8 @@ description = "Minkova §5.2 — arm /ɑːm/, four /fɔː/"
 # short schwa in RP — other /ˈʌðə/, brother /ˈbɹʌðə/, weather /ˈwɛðə/ — and lengthening it there
 # produced **ʌðəː, with a long schwa no English word has.
 definition = [
-    "[+syll, stress: primary] → [length: long] / _ r [-syll]* $",
-    "r → ∅ / _ [-syll]* $",
+    "[+syll, stress: primary] → [length: long] / _ ɹ [-syll]* $",
+    "ɹ → ∅ / _ [-syll]* $",
 ]
 
 # Germanic raises short *e to *i before a nasal in the CODA — *femf > *fimf, *wenda > *winda
@@ -1648,9 +1648,12 @@ definition = [
 ]
 
 [eme_rhotic_approximant]
-time = 1900
+time = 1620
 name = "The trill *r becomes the approximant /ɹ/"
-description = "Modern English /ɹ/ is an approximant, not the trill the cascade has carried since PIE."
+description = """Early Modern English realises /r/ as the approximant [ɹ], not the trill the cascade
+has carried since PIE (Wikipedia, Phonological history of English → R-sounds). Dated 1620, after the
+Great Vowel Shift and BEFORE the pre-/r/ vowel changes and r-loss, which therefore act on the
+approximant — those rules are written with ɹ."""
 definition = "r → ɹ"
 
 [eme_short_i_laxes]
@@ -1674,7 +1677,7 @@ arm, barm, hard.
 t = 1740, BEFORE pde_r_loss (1750) — and that is the whole point. Dated in the 1900 block it looked
 for an /ɹ/ that the r-loss had already deleted, and arm, barm, hard came out **aːm, **baːm, **haːd
 with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there."""
-definition = "a → ɑ / _ r"
+definition = "a → ɑ / _ ɹ"
 
 [eme_goat_diphthongisation]
 time = 1900
@@ -1991,7 +1994,7 @@ unrestricted rule gave **eɪkɜː, **biːvɜː, **fɪŋgɜː. It also reached in
 It is not the NORTH vowel either: ME corn, horn, thorn, stork have RP /ɔː/, not /ɜː/. They are kept
 out by DATE rather than by a clause — pde_north_vowel (1735) has already lengthened their /ɔ/, and
 this rule asks for a SHORT vowel."""
-definition = "[+syll, length: short, stress: primary, aperture: !low] → ɜː / _ r [-syll]* $"
+definition = "[+syll, length: short, stress: primary, aperture: !low] → ɜː / _ ɹ [-syll]* $"
 
 [pde_centring_diphthongs]
 time = 1745
@@ -2001,9 +2004,9 @@ description = """RP's centring diphthongs. The Great Vowel Shift has already rai
 
 Dated 1745: after the shift (1600), which decides WHICH vowel is there, and before pde_r_loss."""
 definition = [
-    "iː → ɪ ə / _ r",
-    "ɛː → ɛ ə / _ r",
-    "uː → ʊ ə / _ r",
+    "iː → ɪ ə / _ ɹ",
+    "ɛː → ɛ ə / _ ɹ",
+    "uː → ʊ ə / _ ɹ",
 ]
 
 [pde_force_vowel]
@@ -2016,7 +2019,7 @@ AFTER the Great Vowel Shift (1600), and written on the shift's OUTPUT. Dated bef
 `oː → ɔː / _ r`, the shift then finds the /ɔː/ it has just made and raises it right back to /oː/,
 and eme_goat_diphthongisation finishes the job: floor came out **fləʊ. So the rule takes the /uː/
 the shift leaves and lowers THAT. The /uː/ of sour is already an /aʊ/ by now and is not touched."""
-definition = "uː → ɔː / _ r"
+definition = "uː → ɔː / _ ɹ"
 
 [pde_meat_merger]
 time = 1700
@@ -2056,7 +2059,7 @@ description = """ME corn, horn, thorn, stork, ford > RP /kɔːn/, /hɔːn/, /θ�
 Dated 1735, just before pde_nurse_vowel (1740), and that ordering is what keeps the two apart: this
 one leaves a LONG vowel, and NURSE asks for a short one, so the NORTH words are out of its reach
 without a clause naming them."""
-definition = "ɔ → ɔː / _ r [-syll]* $"
+definition = "ɔ → ɔː / _ ɹ [-syll]* $"
 
 
 
@@ -2282,7 +2285,7 @@ description = """ME hert gives RP heart /hɑːt/ with START /ɑː/, not the NURS
 *r would regularly take (as in her, herd). A lexical irregularity — heart and hearth both back to
 START. Word-scoped, dated with the other pre-/r/ vowels."""
 words = ["heart"]
-definition = "ɛ → ɑ / _ r"
+definition = "ɛ → ɑ / _ ɹ"
 
 [sporadic_ansuz_nasal]
 time = 150
