@@ -2309,3 +2309,23 @@ Germanic sharpening (Holtzmann's Law) of a glide, which is sporadic and hits onl
 Word-scoped."""
 words = ["dew", "lawwō"]
 definition = "∅ → w / [+syll] w _"
+
+[sporadic_no_i_lowering]
+time = 475
+name = "SPORADIC: *i is not lowered — OE hlid, wifer keep their high vowel"
+description = """The West Germanic lowering of *i to *e before a non-high vowel (pgmc_i_lowering)
+is doubtful in principle — Kroonen reconstructs *fiska-, *nista- with *i, and Ringe cites Lloyd,
+'Is there an a-umlaut of i in Germanic?'. These words attest the *i survived: OE hlid, wifer, not
+**hled, **wefer. Restored on the stressed vowel, word-scoped."""
+words = ["lid", "wibraz"]
+definition = "[+syll, stress: primary] e → i"
+
+[sporadic_a_restoration]
+time = 407
+name = "SPORADIC: the brightened *æ is restored to *a before a back vowel across a cluster"
+description = """A-restoration (oe_a_restoration) undoes Anglo-Frisian brightening before a back
+vowel, but only across a SINGLE consonant. *staþlaz > staþol, *wakraz > wacor, *salwaz > salu keep
+their *a before a back vowel across a CLUSTER, where the regular rule cannot reach — a lexical
+extension of the same restoration, word-scoped."""
+words = ["staþlaz", "waker", "sallow"]
+definition = "[+syll, aperture: low, +front, length: short] → [+back, front: none, advancement: rtr]"
