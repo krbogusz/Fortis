@@ -2520,3 +2520,38 @@ name = "SPORADIC (numeral): *sehs > OE six — the offglide drops and *h gives /
 description = "*sehs gives OE six /siks/; after breaking our cascade has *siox. Word-scoped: the offglide drops and the *x becomes /ks/."
 words = ["six"]
 definition = "o x → k s"
+
+[sporadic_haulaz_ending]
+time = 456
+name = "SPORADIC: *haulaz > OE hēala keeps a final -a"
+description = "*haulaz gives OE hēala; the a-stem ending survives here where our cascade apocopates it. Word-scoped."
+words = ["haulaz"]
+definition = "∅ → ɑ / [+son, +cons] _ #"
+
+[sporadic_furhno_xloss]
+time = 458
+name = "SPORADIC: *furhnō > OE forn loses its *x"
+description = "*furhnō gives OE forn — the *x in the *rxn cluster is lost. Word-scoped."
+words = ["furhnō"]
+definition = "x → ∅ / r _"
+
+[sporadic_rib_bb]
+time = 431
+name = "SPORADIC: *ribją > OE ribb — the geminate is *bb, not the *ff our cascade makes"
+description = "*ribją gives OE ribb; West Germanic gemination doubles the *b, but our cascade has spirantised it to *ff first. Word-scoped restoration of the stop."
+words = ["rib"]
+definition = "f → b"
+
+[sporadic_ebb_bb]
+time = 431
+name = "SPORADIC: *abjǭ > OE ebba — geminate *bb and final -a"
+description = "*abjǭ gives OE ebba; like rib, the geminate is a stop *bb and it takes final -a. Word-scoped."
+words = ["ebb"]
+definition = ["f → b", "e → ɑ / _ #"]
+
+[sporadic_wator_vowels]
+time = 456
+name = "SPORADIC: *watōr > OE wæter — front vowel, reduced second vowel"
+description = "*watōr gives OE wæter; our cascade leaves *wɑtoːr. Word-scoped: the *a fronts to *æ and the long *ō reduces to *e."
+words = ["watōr"]
+definition = ["ɑ → æ", "oː → e"]
