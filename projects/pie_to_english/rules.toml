@@ -2964,3 +2964,11 @@ name = "SPORADIC: *riutidi keeps the suffix *i (no syncope)"
 description = "The 3sg *riutidi keeps its *-i-, which our syncope wrongly drops (giving **riwtði). Word-scoped restoration."
 words = ["riutidi"]
 definition = "∅ → i / [-syll] _ ð"
+
+
+[sporadic_stojo_j]
+time = 0
+name = "SPORADIC: *stōjō keeps its intervocalic *j"
+description = "The attested *stōjō keeps the *j our cascade drops between the two long vowels. Word-scoped restoration."
+words = ["stōjō"]
+definition = "∅ → j / [+syll] _ [+syll]"
