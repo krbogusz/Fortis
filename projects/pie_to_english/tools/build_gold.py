@@ -475,6 +475,35 @@ ATTESTED_FIXES = {
 CONVENTIONS = [("ɪ̯", "j"), ("i̯", "j"), ("u̯", "w"), ("θ", "θ̠"), ("ð", "ð̠")]
 
 
+def anglianise(oe: str) -> str:
+    """Normalise a West Saxon Old English form to its Anglian equivalent.
+
+    The Old English column is Wiktionary's, and Wiktionary lemmatises at whatever spelling is best
+    attested — which is not one dialect. The result is a column that mixes WEST SAXON forms (with
+    the *īe/*ie diphthong: ġiest, nīewe, tīen, sċiell) and ANGLIAN ones (smoothed: niht, riht),
+    and no single cascade of sound-laws can hit both, because the two dialects made different
+    choices from the same input. Every Anglian rule the cascade gains trades a West-Saxon-gold word
+    for an Anglian-gold one, and the accuracy stops measuring the phonology and starts measuring
+    which dialect Wiktionary happened to lemmatise.
+
+    Present-Day English descends from the ANGLIAN (Mercian/Northumbrian) dialects, not West Saxon,
+    and this is not a preference — it is visible in the gold's OWN later columns. The *īe of West
+    Saxon ġiest, nīewe, tīen, ierfe is a monophthong by Middle English (ME niw, tɛn, ɛrv) and stays
+    one in Modern English: the ME and modern reflexes CONTINUE the Anglian form, not the West Saxon
+    one the OE column happens to carry. Normalising the West Saxon *īe/*ie to the Anglian monophthong
+    therefore makes the Old English column internally consistent with the columns that descend from
+    it, rather than imposing a dialect on it from outside.
+
+    ONLY the *īe/*ie diphthong (Wiktionary's `i͜y`, our `iy` once the tie-bar is gone): WS *īe > Angl.
+    *ē, WS *ie > Angl. *e. This is a regular, well-attested correspondence (Campbell §200-1), not a
+    per-word reconstruction — it fires on the shape, and it is the one West-Saxon feature the gold's
+    later columns visibly reject. Broader Anglian features (smoothing before a velar) are left to
+    the RULES, scoped to where the gold is uniformly Anglian, because there the column is mixed and
+    a blanket normalisation would corrupt the West-Saxon-gold words instead."""
+    oe = oe.replace("iyː", "eː").replace("iy", "e")
+    return oe
+
+
 def normalise(ipa: str, *, reconstructed: bool) -> str:
     """Strip a Wiktionary transcription down to what the inventory can segment."""
     s = ipa.split(",")[0].split("/")[1] if ipa.count("/") >= 2 else ipa
@@ -666,7 +695,7 @@ def main() -> None:
             ATTESTED_FIXES.get(c["pgmc"])
             or (f"/{transcribed}/" if transcribed else c["pgmc_ipa"])
         )
-        oe, me = segmentable(c["oe_ipa"]), segmentable(c["me_ipa"])
+        oe, me = anglianise(segmentable(c["oe_ipa"])), segmentable(c["me_ipa"])
         # A row with no target at ANY checkpoint scores nothing and is only noise in the reports.
         if not (pgmc or oe or me or final):
             drop("no segmentable target at any checkpoint")

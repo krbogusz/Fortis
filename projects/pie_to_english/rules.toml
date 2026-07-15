@@ -2135,3 +2135,18 @@ description = """The smoothed *e raises to *i before the *ht cluster — Anglian
 liht, the direct ancestors of night, right, might, light. Dated after i-mutation (420), which has
 already turned the *æ of *mæht into an *e for this to raise."""
 definition = "e → i / _ x t"
+
+[oe_anglian_smoothing_liquid]
+time = 426
+name = "Anglian smoothing of the i-mutated broken diphthong to /e/"
+description = """The West Saxon *ie (i-mutation of the broken *ea) is a plain *e in Anglian:
+WS sċiell, ierfe > Anglian sċell, erfe. Our cascade derives the diphthong as *æe (breaking makes
+*æɑ, i-mutation fronts the *ɑ), and this collapses it to the Anglian monophthong — the same
+dialect choice, and the same source, as the *iy the gold normalisation (anglianise) removes from
+the West Saxon targets. The two are one change seen from the two ends: the rule brings our
+DERIVATION to Anglian, the gold step brings the West Saxon TARGETS to Anglian, and they meet.
+
+Only the i-mutated *æe — NOT the plain broken *eo of weorc, beorg, feorh, which the gold keeps as
+a West Saxon diphthong (there is no Anglian normalisation of those in the column, so smoothing them
+would trade a West-Saxon-gold word for nothing)."""
+definition = "æ e → e ∅ / _ [+cons, -syll]"
