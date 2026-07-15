@@ -2225,3 +2225,14 @@ name = "A word-final velar stop spirantises to *x — the ME -gh words"
 description = """OE trog gives Middle English trough with the *x that Middle English spells -gh: a
 late hardening of the final velar to the voiceless fricative, before me_x_loss takes it later."""
 definition = "g → x / [+syll] _ #"
+
+[sporadic_u_lowering]
+time = 355
+name = "SPORADIC: short *u lowers to *o (the lexically-diffused West Germanic lowering)"
+description = """The lowering of *u to *o in Old English is notoriously irregular — *kustuz > cost,
+*furduz > ford, *fulmô > folm lower, while *fullaz > full, *bukkaz > bucc, *hundą > hund and the
+i-stem *kustiz > cyst keep their *u in the very same environments. Because it cannot be predicted
+from the phonology it is word-scoped, applied to the words that attest it. Dated with a-mutation,
+which is the regular relative of the same change."""
+words = ["cost", "ford", "fulmō"]
+definition = "[+syll, aperture: high, +back, length: short, stress: primary] → [aperture: mid]"
