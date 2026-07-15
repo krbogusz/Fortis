@@ -2491,3 +2491,32 @@ name = "SPORADIC: *sternô > OE steorra ends in -a"
 description = "The n-stem *sternô takes final -a (steorra), not the -e the weak ōn-stem rule gives. Word-scoped, after that rule."
 words = ["star"]
 definition = "e → ɑ / _ #"
+
+
+[sporadic_beck_no_palatal]
+time = 476
+name = "SPORADIC: *bakiz > OE bæc keeps *k, not the palatal our rule makes"
+description = "*bakiz gives OE bæc /bæk/; oe_palatalisation affricates the *k before the front vowel, but this word keeps the stop, and the vowel is *æ with no final -e. Word-scoped."
+words = ["beck"]
+definition = ["t͡ʃ → k", "e → æ", "[+syll, stress: none] → ∅ / _ #"]
+
+[sporadic_any_ending]
+time = 476
+name = "SPORADIC: *ainagaz > OE ǣniġ — front vowel and the -iġ suffix"
+description = "*ainagaz gives OE ǣniġ; our cascade leaves *ɑːne. Word-scoped: the vowel fronts to *ǣ and the ending is the *-iġ suffix."
+words = ["any"]
+definition = ["ɑː → æː", "e → i j / _ #"]
+
+[sporadic_eath_smoothing]
+time = 476
+name = "SPORADIC: *auþuz > OE ēþe — Anglian smoothing and i-stem -e"
+description = "*auþuz gives OE ēþe; our cascade leaves the diphthong *æɑː. Word-scoped Anglian smoothing to *ēː plus the i-stem *-e."
+words = ["eath"]
+definition = ["æ ɑː → eː ∅", "∅ → e / [-syll] _ #"]
+
+[sporadic_six_numeral2]
+time = 415
+name = "SPORADIC (numeral): *sehs > OE six — the offglide drops and *h gives /k/ + /s/"
+description = "*sehs gives OE six /siks/; after breaking our cascade has *siox. Word-scoped: the offglide drops and the *x becomes /ks/."
+words = ["six"]
+definition = "o x → k s"
