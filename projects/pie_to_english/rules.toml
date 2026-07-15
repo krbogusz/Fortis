@@ -2763,3 +2763,38 @@ swank). Dated 1600, before the START backing (eme_short_a_backs, 1740) so the *w
 reach START."""
 definition = ["a → ɔ / w _ r", "a → ɒ / w _"]
 
+
+[sporadic_buttaz_istem]
+time = 476
+name = "SPORADIC: *buttaz > OE bytt — i-stem i-mutation of *u to *y"
+description = "OE bytt is an i-stem (Ringe & Taylor), so its *u i-mutates to *y where the a-stem *buttaz would keep it. Word-scoped."
+words = ["buttaz-end"]
+definition = "u → y"
+
+[sporadic_sister_backmutation]
+time = 470
+name = "SPORADIC: *swestr- > OE sweostor — back mutation of *e to *eo across the cluster"
+description = "OE sweostor has the *eo of back mutation (u-umlaut); oe_back_mutation reaches it only across a single liquid, not the *str cluster. Word-scoped."
+words = ["sister"]
+definition = "e → e o"
+
+[sporadic_wort_imutation]
+time = 476
+name = "SPORADIC: *wurtiz > OE wyrt — i-mutation and r-metathesis"
+description = "OE wyrt 'plant' i-mutates the *u to *y; our cascade carries the metathesised *wroːt. Word-scoped restoration of the attested order and vowel."
+words = ["wort"]
+definition = "1=r oː → y @1 / w _"
+
+[sporadic_kind_imutation]
+time = 476
+name = "SPORADIC: *kinþiz > OE cynd — i-stem, unpalatalised, dental"
+description = "OE cynd keeps a hard *k (its *y is younger than palatalisation), i-mutates to *y, and has the OE *d for *þ; our cascade palatalises and over-lengthens. Word-scoped to the attested outcome."
+words = ["kind"]
+definition = ["t͡ʃ → k", "iː → y", "θ → d"]
+
+[sporadic_buttaz_u]
+time = 1145
+name = "SPORADIC: *bytt keeps a rounded *u in ME — butt, not **bitt"
+description = "OE bytt gives ME but(t) /but/ (> butt /bʌt/) with the rounded reflex of *y, not the East-Midland unrounding to *i. Word-scoped, before me_y_unrounding."
+words = ["buttaz-end"]
+definition = "y → u"
