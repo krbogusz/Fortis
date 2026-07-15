@@ -21,20 +21,17 @@ Proto-Indo-European to Present-Day English, scored at four checkpoints.
 
 ## Lexicon (`words.toml`) — CC BY-SA 4.0
 
-Built in two stages from the [kaikki.org](https://kaikki.org/) machine-readable Wiktionary
-extracts (produced by [wiktextract](https://github.com/tatuylonen/wiktextract), MIT; the *data*
-is Wiktionary's, CC BY-SA 4.0). Neither stage's output is stored — run them to regenerate:
+**`words.toml` is the canonical, hand-maintained lexicon.** To correct a word — a wrong preform,
+a transcription slip in a target, a stem-class fix — **edit `words.toml` directly** and record the
+reason in that form's (or the word's) `note`. There is no "regenerate the gold" step.
 
-```
-PYTHONPATH=. python projects/pie_to_english/tools/build_chains.py   # kaikki → chains.json
-PYTHONPATH=. python projects/pie_to_english/tools/build_gold.py     # chains.json → words.toml
-```
-
-`PYTHONPATH=.` (the repo root), **not** `src`: `fortis.analysis.accuracy` imports
-`from src.fortis...`, so the root must be on the path. The obvious invocations crash on
-`ModuleNotFoundError: No module named 'src'` *before writing anything*, which leaves `words.toml`
-untouched and makes a diff falsely read as "reproduced byte-identically". Check the exit status,
-not just the diff.
+It was *bootstrapped* once from the [kaikki.org](https://kaikki.org/) Wiktionary extracts (produced
+by [wiktextract](https://github.com/tatuylonen/wiktextract), MIT; the *data* is Wiktionary's, CC
+BY-SA 4.0) by `tools/build_chains.py` (kaikki → `chains.json`) and `tools/build_gold.py`
+(`chains.json` → `words.toml`). Those tools, and the `PREFORM_FIXES` / `ATTESTED_FIXES` / `OE_FIXES`
+tables inside `build_gold.py`, are kept as the **record of how the bootstrap was built and why each
+early correction was made** — but they are NOT re-run over the committed `words.toml`, because that
+would overwrite the hand corrections. New corrections go straight into `words.toml`.
 
 **The kaikki extracts are not versioned** (~280 MB). Both tools read them from
 `projects/pie_to_english/.cache/` — override with `FORTIS_PIE_CACHE` — and that directory is
