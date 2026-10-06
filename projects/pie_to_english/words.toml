@@ -2353,13 +2353,12 @@ forms = [
 id = "bequest"
 gloss = "bequest"
 frequency = 189
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target bɪˈkwɛst was removed on 2026-10-06 (DECISIONS.md, four cases): New formation: Klein s.v. bequest, PDF 105, calls ME biqueste a blend of ME biquide (prefix bi- and OE cwide 'saying') and queste (from Old French). It is not the reflex of OE cwiss, the 1400 target's word."
 forms = [
   { time = -2000, ipa = "ˈgʷettis", category = "noun", note = "PIE *gʷét-ti-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈkʷissiz", category = "noun" },
   { time = 403, ipa = "ˈkwissi", note = "PWGmc *kwissi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 1400, ipa = "ˈkwist" },
-  { time = "final", ipa = "bɪˈkwɛst" },
 ]
 
 [[words]]
