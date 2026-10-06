@@ -192,6 +192,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *méntis is re
 forms = [
   { time = -2000, ipa = "mn̩ˈtis", category = "noun", note = "PIE *méntis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmundiz", category = "noun" },
+  { time = 900, ipa = "ˈmynd", note = "Transcribed from OE mynd (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = 1400, ipa = "ˈmuːnd" },
   { time = "final", ipa = "ˈmaɪnd" },
 ]
@@ -3855,6 +3856,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "snoχˈteħ", category = "noun", note = "PIE *snoh₁téh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsnɔːðɔː", category = "noun" },
+  { time = 900, ipa = "ˈsnoːd", note = "Transcribed from OE snōd (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = "final", ipa = "ˈsnuːd" },
 ]
 
@@ -3941,6 +3943,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱraːks", category = "noun", note = "PIE *dʰrā́ks, as cited by Wiktionary." },
   { time = 200, ipa = "ˈdrɔːxs", category = "noun" },
+  { time = 900, ipa = "ˈdroːs", note = "Transcribed from OE drōs (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = 1400, ipa = "ˈdrɔs", note = "Transcribed from ME drosse (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈdɹɒs" },
 ]
@@ -4694,6 +4697,7 @@ forms = [
   { time = -2000, ipa = "χln̩ˈgʷʱros", category = "adj", note = "PIE *h₁ln̥gʷʰrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈluŋgrɑz", category = "adj" },
   { time = 403, ipa = "ˈluŋgr", note = "PWGmc *lungr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 900, ipa = "ˈluŋgor", note = "Transcribed from OE lungor (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4903,6 +4907,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈweχitis", category = "noun", note = "PIE *wéh₁itis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwiθiz", category = "noun" },
+  { time = 900, ipa = "ˈwiθe", note = "Transcribed from OE wiþe (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = "final", ipa = "ˈwɪθ", note = "RP from Wiktionary (kaikki), withe; added 2026-10-06." },
 ]
 
@@ -5171,6 +5176,7 @@ forms = [
   { time = -2000, ipa = "ħoˈkʲeteħ", category = "noun", note = "PIE *h₂óḱets, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑɣiθɔː", category = "noun" },
   { time = 403, ipa = "ˈɑɣiθɑː", note = "PWGmc *agiþā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 900, ipa = "ˈejeθe", note = "Transcribed from OE eġeþe (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
 ]
 
 [[words]]

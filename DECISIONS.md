@@ -110,3 +110,16 @@ dependency declared it, so the tool failed in a fresh environment. The dev group
 **Rejected:**
 - A separate dependency group for the data tools, which `uv sync` would not install by default.
 - Installing it ad hoc (`uv run --with pypdf`), which is what replaced it for one run.
+
+## 2026-10-06: Transcribe Old English spellings by rule
+
+**Choice:** Where Wiktionary gives an Old English spelling without IPA, the 900 target is
+transcribed from the spelling by `projects/pie_to_english/tools/oe_ipa.py`. The tool refuses
+spellings its rules cannot read. Reconstructed (starred) forms and spellings of a different
+formation (a compound, a prefixed or derived word) are not transcribed.
+
+**Reason:** Old English spelling with macrons and dotted palatals is close to phonemic. The tool
+agrees with Wiktionary's own IPA on 435 of 450 lemmas, and every disagreement is information the
+spelling lacks (an unmarked long vowel, compound stress). Asked for on 2026-10-06.
+
+**Rejected:** Leaving the spellings without a target.

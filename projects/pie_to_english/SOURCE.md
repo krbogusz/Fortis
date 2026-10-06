@@ -215,6 +215,16 @@ sooth, hrīsą, thill, theal, gamalaz, tehswô, ētijaz, lingwidi, lingwō, wazr
 tēlō*. The bootstrap drops most other chains for its stated reasons: 116 verbs or affixes, 113
 bare PIE roots, 14 PIE forms it cannot transliterate.
 
+### Old English transcriptions
+
+Six Old English spellings without Wiktionary IPA were transcribed by `tools/oe_ipa.py` on
+2026-10-06: *mynd, snōd, drōs, lungor, wiþe, eġeþe*. The tool follows Wiktionary's conventions
+and agrees with its IPA on 435 of 450 lemmas (`python tools/oe_ipa.py` runs the check); the 15
+disagreements are long vowels that a descendants tree leaves unmarked and compound stress. Four
+other spellings were a different formation and were not used: *sīþfæt* (fetą), *wæstling*
+(wastijō), *ġeēan* (aunaz), *scēaffōt* (skaibaz). Starred spellings are reconstructions, not
+attestations, and were skipped.
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed
