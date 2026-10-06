@@ -2229,12 +2229,34 @@ Three conditions, and the gold forces every one of them:
               **ōx. Requiring a single consonant after the boundary reproduces the real
               syllabification without needing an onset table.
 
-NOT restricted to an open SECOND syllable, though the misses invite it. ME fader, weder, ater, oter
-stay short while nama, talu, scaru lengthen, and the difference looks like the *r that closes the
-second syllable of the first set — but requiring the word to end after the second vowel then blocks
-hæfen, bebr, æcer, which DO lengthen (ME haven, beaver, acre). The fader/water class is a genuine
-Middle English exception, not a conditioning this rule is missing."""
-definition = "[+syll, length: short, stress: primary, aperture: !high] → [length: long] / _ $ [-syll] [+syll]"
+The second syllable must be a coda-less final schwa, the tale, name, nose type. Minkova §7.5.2.1
+(PDF 223) counts the outcomes: words of that type lengthen in 95.8 per cent of cases, while 84.8 per
+cent of the disyllables whose second syllable stays (acorn, over) resist the lengthening, 97.6 per
+cent of those whose second syllable is closed by an obstruent (gannet, haddock) keep the short
+vowel, and about a quarter of those with a sonorant peak (acre, navel, besom, open) lengthen. So
+ME fader, water, weder and eni stay short by rule, and the minority that does lengthen before a
+sonorant is word-scoped (sporadic_osl_sonorant_coda)."""
+definition = "[+syll, length: short, stress: primary, aperture: !high] → [length: long] / _ $ [-syll] ə #"
+
+[sporadic_atter_short]
+time = 1210
+name = "SPORADIC: atter continues the geminated variant *aittra-"
+description = """Ringe & Taylor (PDF 69): *t geminated sporadically before *r in West Germanic, leaving doublets,
+and they cite PNWGmc *aitrą > PWGmc *aitr, *aittra- > OE ātor (OS ēttar). OE also shortened a long
+vowel before a geminate (PDF 296). The 900 target records ātor; ME atter, with short a, continues
+the geminated āttor > attor. Word-scoped, because the gemination is sporadic."""
+words = ["atter"]
+definition = "[+syll, length: long] → [length: short]"
+
+[sporadic_osl_sonorant_coda]
+time = 1200
+name = "SPORADIC: acre, haven, beaver, navel lengthen before a sonorant-peak syllable"
+description = """Minkova §7.5.2.1 (PDF 223): second syllables with a sonorant peak, "rB ~ ər (acre), lB ~ əl
+(navel), mB ~ əm (besom) and nB ~ ən (open)", lengthen the stressed vowel in nearly a quarter of
+the eligible words. Acre and navel are her examples; haven and beaver have long vowels in their ME
+targets (hāven, bēver). Word-scoped, because three quarters of the class keep the short vowel."""
+words = ["acre", "haven", "beaver", "navel"]
+definition = "[+syll, length: short, stress: primary, aperture: !high] → [length: long]"
 
 [eme_trap_vowel]
 time = 1575
@@ -3267,13 +3289,6 @@ description = "*anþeraz gives ME other with a short *u where our cascade carrie
 words = ["other"]
 definition = "oː → u"
 
-[sporadic_weather_short]
-time = 1210
-name = "SPORADIC: *wedrą > ME weder keeps a short vowel"
-description = "*wedrą gives ME weder /wɛder/; open-syllable lengthening wrongly lengthens it here. Word-scoped shortening."
-words = ["weather"]
-definition = "ɛː → ɛ"
-
 [sporadic_gome_full_osl]
 time = 1200
 name = "SPORADIC: *gumô lowers and lengthens — ME gome"
@@ -3358,19 +3373,6 @@ name = "SPORADIC: LONG shortens again before the GOAT diphthongisation"
 description = "ME lōng /lɔːŋg/ > RP long /lɒŋ/: the vowel lengthened in ME shortens again before it could diphthongise to GOAT. Word-scoped."
 words = ["long"]
 definition = "oː → ɒ"
-
-[sporadic_er_no_osl]
-time = 1210
-name = "SPORADIC: fader, water, ater keep a short vowel (the ME OSL exception)"
-description = """ME fader, water, ater keep the short vowel that open-syllable lengthening would
-make long. Jones §3.2.4 ("'Exceptions' to open syllable lengthening") documents exactly this class:
-disyllables whose open first syllable ought to lengthen but persistently do not, the shared trait
-being a SONORANT in the second syllable's coda (fader, water, copor, botom) — the intervocalic
-sonorant is taken to "close" the first syllable and block the lengthening. It is lexical, though
-(haven, beaver, acre have the same -er/-en and DO lengthen), so it is word-scoped, not a general
-sonorant-coda condition."""
-words = ["fadēr", "watōr", "atter"]
-definition = "[+syll, length: long] → [length: short]"
 
 [sporadic_end_long]
 time = 1105
