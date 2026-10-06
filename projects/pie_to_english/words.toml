@@ -3365,14 +3365,13 @@ forms = [
 [[words]]
 id = "gangaz"
 gloss = "gangaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈgæŋ was removed on 2026-10-06 (DECISIONS.md, four cases): Loan: Hoad s.v. gang derives the noun (12th c.) from ON gangr, ganga, cognate with OE gang. The native OE gang survives as ME gong, the 1400 target."
 forms = [
   { time = -2000, ipa = "ˈgʲʱongʱos", category = "noun", note = "PIE *ǵʰóngʰ-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣɑŋgɑz", category = "noun" },
   { time = 403, ipa = "ˈɣɑŋg", note = "PWGmc *gang (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑŋg" },
   { time = 1400, ipa = "ˈgɔŋg" },
-  { time = "final", ipa = "ˈgæŋ", note = "RP from Wiktionary (kaikki), gang; added 2026-10-06." },
 ]
 
 [[words]]
