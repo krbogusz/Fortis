@@ -3085,8 +3085,11 @@ homorganic lengthening before a voiced homorganic cluster (Jones, *A History of 
 §2.2.5-6). Jones stresses that the process is "patchy" and "exception-ful": some words lengthen,
 some do not, and some lengthen then shorten again (his crumb, hirde). So it is word-scoped to the
 words that attest the long vowel, with sporadic_me_shorten for those that keep or revert to a short
-one — not a regular rule that would have to pick one behaviour for the whole cluster class."""
-words = ["anadô", "long", "gernaz"]
+one — not a regular rule that would have to pick one behaviour for the whole cluster class.
+
+ME gīlden 'golden' (gulþīnaz) lengthens before *ld in a disyllable, as the Ormulum's kinde, findenn,
+climben do (Jones §2.2.5, Table 2.13, PDF 41–42)."""
+words = ["anadô", "long", "gernaz", "gulþīnaz"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_me_shorten]
