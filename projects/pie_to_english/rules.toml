@@ -2281,10 +2281,24 @@ and bane comes out **biːn."""
 definition = "ɛː → e ɪ"
 
 
+[sporadic_trough_x_to_f]
+time = 1440
+name = "SPORADIC: trough keeps its *x as *f"
+description = """From the 14th century a coda *x after a back vowel is either lost or becomes *f, and each word
+keeps one outcome: though and through lose it, enough, rough and trough have [f] (Minkova §5.1.4,
+table (5), PDF 113–114; Jones, Steponavičius §202, Pyles & Algeo p. 176). t = 1440, before
+me_x_loss (1450)."""
+words = ["trough"]
+definition = "x → f / [+syll, +back] _"
+
 [eme_final_f_voicing]
 time = 1500
-name = "A final *f voices after a vowel"
-description = "ME fīf, hōf, wīf > RP five, hoof, wive — and the -ve of the spelling records it."
+name = "SPORADIC: five takes the *v of its inflected forms"
+description = """ME fīf, fīve > RP five. Final fricatives were voiceless in Old English, and Middle English
+voices them only where an inflection followed (Minkova §4.4, PDF 89–91; Jones §3.5, Table 3.32, PDF
+189, and §3.5.1, PDF 199: fif/fiues). So the [v] of five is the allophone of its inflected forms,
+not a sound law: reef, staff, sheaf keep [f]. Word-scoped; it used to be stated for every final *f."""
+words = ["five"]
 definition = "f → v / [+syll] _ #"
 
 
