@@ -4920,11 +4920,10 @@ forms = [
 [[words]]
 id = "hūnaz"
 gloss = "hūnaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈhaʊnd was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong word: hound continues OE hund < PGmc *hundaz, not *hūnaz. Kroonen has no *hūna- that reaches English."
 forms = [
   { time = -2000, ipa = "kʲuˈχnos", category = "noun", note = "PIE *ḱuh₁nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxuːnɑz", category = "noun" },
-  { time = "final", ipa = "ˈhaʊnd", note = "RP from Wiktionary (kaikki), hound; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6121,7 +6120,7 @@ gloss = "green"
 frequency = 52557
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈgroχnis", category = "adj", note = "PIE *groh₁-ni-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈgʱroχnis", category = "adj", note = "PREFORM corrected 2026-10-06: was ˈgroχnis; now *gʰroh₁nis. Kroonen s.v. *grōni-, PDF 231–232: *ghroh1-ni-, an adjective to *grōan- grow. The cited *g gives PGmc *k by Grimm, and the attested *grōniz has *g. PIE *groh₁-ni-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣrɔːniz", category = "adj" },
   { time = 403, ipa = "ˈɣrɔːniː", note = "PWGmc *grōnī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgreːne" },
@@ -6300,14 +6299,13 @@ forms = [
 id = "hate"
 gloss = "hate"
 frequency = 128153
-note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hatiz-, PDF 254; Ringe p. 310, PDF 321: *ḱh₂̥dos. Wiktionary cites only a bare root. Added 2026-10-06."
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hatiz-, PDF 254; Ringe p. 310, PDF 321: *ḱh₂̥dos. Wiktionary cites only a bare root. Added 2026-10-06. The final target ˈheɪt was removed on 2026-10-06 (DECISIONS.md, four cases): Replacement: Hoad s.v. hate says the noun (13th c.) comes partly from ON hatr and partly from the verb hate, and superseded OE hete. The ME target hete is the regular reflex and stays."
 forms = [
   { time = -2000, ipa = "ˈkʲħ̩dos", category = "noun", note = "PIE *ḱh₂̥dos (Kroonen s.v. *hatiz-, PDF 254; Ringe p. 310, PDF 321); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈxɑtɑz", category = "noun" },
   { time = 403, ipa = "ˈxɑti", note = "PWGmc *hati (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxete" },
   { time = 1400, ipa = "ˈhɛːt" },
-  { time = "final", ipa = "ˈheɪt" },
 ]
 
 [[words]]
@@ -6343,9 +6341,9 @@ gloss = "hare"
 frequency = 2160
 note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hesan- ~ *hazan-, PDF 263; Ringe p. 308, PDF 319: *ḱesōn. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
-  { time = -2000, ipa = "ˈkʲesoːn", category = "noun", note = "PIE *ḱesōn (Kroonen s.v. *hesan- ~ *hazan-, PDF 263; Ringe p. 308, PDF 319); Wiktionary cites only a bare root." },
-  { time = 200, ipa = "ˈxɑsɔːː", category = "noun" },
-  { time = 403, ipa = "ˈxɑsɔː", note = "PWGmc *hasō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = -2000, ipa = "kʲaˈsoːn", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈkʲesoːn; now *ḱasṓn. Kroonen s.v. *hesan- ~ *hazan-, PDF 263: OE hara continues Anglo-Nordic *hazan-, from a mobile paradigm *ḱas-ōn, gen. *ḱas-n-ós; the English line takes the accent after the *s, which Verner voices. PIE *ḱesōn (Kroonen s.v. *hesan- ~ *hazan-, PDF 263; Ringe p. 308, PDF 319); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxɑzɔːː", category = "noun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈxɑsɔːː. Kroonen s.v. *hesan- ~ *hazan-, PDF 263: the ancestor of OE hara is Anglo-Nordic *hazan-; continental WGmc *hasan- (OS haso, OHG haso) is not on the English line. Reconstruction column, where Kroonen outranks Wiktionary." },
+  { time = 403, ipa = "ˈxɑzɔː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈxɑsɔː. Kroonen s.v. *hesan- ~ *hazan-, PDF 263: the English line has *hazan-; the cited *hasō is the continental form (OS haso, OHG haso). PWGmc *hasō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑrɑ" },
   { time = 1400, ipa = "ˈhaːr" },
   { time = "final", ipa = "ˈhɛə" },
