@@ -3538,6 +3538,16 @@ unstressed vowels (1200) leaves -iġ as [əj]; the suffix is [i] instead, and fi
 (1350) does not touch it."""
 definition = "ə j → i / _ #"
 
+[sporadic_r_metathesis]
+time = 1200
+name = "SPORADIC: r metathesis in bright and wright"
+description = """Minkova §5.2.2 (PDF 119): metathesis of /r/ and a short vowel is common in OE (worhte ~ wrohte
+'wrought', þirdda ~ þridda 'third'), and "bright, burn, burst, cress, crud, dirt … are survivals of
+metathesised forms". It is sporadic, so the rule is word-scoped. The ME vowel of bright is i, as
+14th-century <brit> shows (Minkova §7.4, PDF 206); the 1400 targets are briht and wriht."""
+words = ["berhtaz", "wurhtiz"]
+definition = ["ɛ r → r i / _ x t", "i r → r i / _ x t"]
+
 [sporadic_fifth_short]
 time = 1100
 name = "SPORADIC: fifth shortens its vowel before the suffix"
