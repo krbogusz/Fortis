@@ -20,5 +20,8 @@
   },
   "dependencies": {
     "marked": "^18.0.5"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
