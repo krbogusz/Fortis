@@ -3354,6 +3354,17 @@ unexplained, and no other word changes final n to m."""
 words = ["lindō"]
 definition = "n → m / _ #"
 
+[sporadic_wind_short]
+time = 1700
+name = "SPORADIC: wind (noun) is reshortened"
+description = """Pyles & Algeo (p. 149, PDF 82): after homorganic lengthening, "reshortening has subsequently
+occurred, however, in some words — for instance, wind (noun), held, send, friend; compare wind
+(verb) … in which the lengthening survives". Minkova §6.4 (PDF 169): the noun and the verb were
+"actually homophonous into the late seventeenth century", probably split by homophony avoidance.
+So the noun shortens after the 1687 checkpoint. Word-scoped."""
+words = ["wind"]
+definition = "a ɪ → ɪ"
+
 [sporadic_foot_late_shortening]
 time = 1700
 name = "SPORADIC: foot shortens to FOOT after the unrounding"
