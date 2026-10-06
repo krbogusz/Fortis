@@ -1,6 +1,6 @@
 # Source of the PIE → English project
 
-Proto-Indo-European to Present-Day English, scored at five checkpoints.
+Proto-Indo-European to Present-Day English, scored at nine checkpoints.
 
 > **Licensing — this directory is not all under one licence.**
 >
@@ -56,7 +56,8 @@ the lexicon from 114 rows (111 scorable at 200) to **249 rows, 240 scorable at 2
 
 Each word is a `[[words]]` table with an `id`, a `gloss`, a `frequency`, and a `forms` array —
 the PIE seed at **−2000** and the attested forms at **200** (Proto-Germanic), **403**
-(Proto-West Germanic), **900** (Old English), **1400** (Middle English) and the modern **final** surface. A form that is not attested
+(Proto-West Germanic), **900** (Old English), **1400** (Middle English), **1570**, **1580**, **1621**
+and **1687** (Early Modern English) and the modern **final** surface. A form that is not attested
 is simply absent from the array — the engine scores each word at whichever checkpoints it has.
 `gloss` is the modern reflex where there is one and the Proto-Germanic headword (`hurnaz`) where
 the word died before Modern English; it is a label and a `--single` lookup key, not necessarily
@@ -297,6 +298,7 @@ This applies to *reconstructions only*, and the distinction is the whole point:
 | **200** (Proto-Germanic) | reconstruction | Ringe/Kroonen → `ATTESTED_FIXES` |
 | **403** (Proto-West Germanic) | reconstruction | Ringe & Taylor → a direct edit with a citation |
 | **900 / 1400 / final** | **attestation** — a real recorded form | nobody. Never touched. |
+| **1570 / 1580 / 1621 / 1687** | an orthoepist's description, as Jones reads it | nobody |
 
 Old English *nest*, *fisc*, *wer* are things people actually wrote down. Proto-Germanic `*nestą`
 is somebody's guess. The two are not the same kind of object and must not be given the same
