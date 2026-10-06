@@ -1766,6 +1766,26 @@ t = 1250, BEFORE `me_x_to_h` (1300). That rule turns the initial *x into an *h, 
 date it wins on file order and leaves this one nothing to match."""
 definition = "x → ∅ / # _ [+son, -syll, +cons, back: none]"
 
+# The other half of the initial *h-cluster story, which me_h_cluster_loss deliberately leaves for
+# later: the *hw- it protects does eventually reduce, and RP is on the reducing side.
+[pde_wine_whine_merger]
+time = 1800
+name = "The wine–whine merger: initial /hw/ reduces to /w/"
+description = """ME hwal, hwēl, hwīt keep the cluster, but in the great majority of English — RP
+included — initial /hw/ ([ʍ]) falls together with plain /w/, so whine rhymes with wine and whale
+is /weɪl/. The contrast survives only in Scottish, Irish, Southern American and New England
+speech, none of which is the target here.
+
+t = 1800, AFTER the Middle English checkpoint at 1400, which is the whole point: ME still has the
+cluster and the 1400 column is transcribed with it (hweːl, hwiːt). Dating this any earlier takes
+the *h away from the very column that records it. 1800 puts it in the post-split band where
+Wikipedia's chronology places the merger's spread through standard English.
+
+No exclusion is needed for the who/whom/whose/how set, which lost the *w instead (/hw/ > /h/
+before a rounded vowel, already in OE and ME): those words are not in this lexicon, and whole —
+which is here — never had *hw at all (OE hāl), so it reaches this rule as /h/ and is untouched."""
+definition = "h → ∅ / # _ w"
+
 [me_degemination]
 time = 1250
 name = "Geminates simplify"
