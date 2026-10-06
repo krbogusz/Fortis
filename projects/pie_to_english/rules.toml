@@ -1880,11 +1880,17 @@ pre-/r/ vowel changes (Jones §4.6) and the later r-loss, which therefore act on
 those rules are written with ɹ."""
 definition = "r → ɹ"
 
-[eme_short_i_laxes]
-time = 1900
-name = "Short /i/ laxes to /ɪ/"
-description = "RP has the lax KIT vowel where the cascade still carries a tense short *i: quick, fish, finger."
-definition = "i → ɪ"
+[lme_short_high_vowels_lax]
+time = 1569
+name = "The short high vowels are written lax: /i/ > /ɪ/, /u/ > /ʊ/"
+description = """This rule changes the notation, not the sound. Minkova reconstructs lax short high and mid
+vowels from late Old English on (§6.5.1, PDF 172–173, after Hogg 1992), and Pyles & Algeo's table of
+the late ME short vowels has [ɪ] in "in" and [ʊ] in "but" (p. 174, PDF 95). Wiktionary's OE and ME
+transcriptions write these vowels [i, u], and so do the rules dated before this one. The Early
+Modern readings write [ɪ, ʊ]: Hart's ⟨kuik⟩ [kwɪk] and ⟨sun⟩ [sʊn], Gil's ⟨kin⟩ [kɪn]. So the
+change is dated just before the first Early Modern checkpoint (1570). The [i] of [iw] stays, because
+eme_iw_to_juu reads it."""
+definition = ["i → ɪ // _ w", "u → ʊ"]
 
 [eme_short_o_opens]
 time = 1900
@@ -2010,18 +2016,26 @@ eme_trap_vowel's."""
 definition = "e → ɛ / _ [-syll]"
 
 [eme_foot_strut_split]
-time = 1900
-name = "The FOOT–STRUT split: short /u/ is /ʊ/ after a labial before /l/, else /ʌ/"
-description = """The most famous split in the history of English. Short *u stays FOOT where a
-LABIAL precedes and an *l follows, and unrounds to STRUT everywhere else:
+time = 1640
+name = "The FOOT–STRUT split: short /ʊ/ stays after a labial before /l/, else becomes /ʌ/"
+description = """Short *ʊ stays FOOT where a LABIAL precedes and an *l follows, and unrounds to STRUT
+everywhere else:
 
     FOOT : *full > full,  *wulf > wolf,  *wull > wool
     STRUT: *sunu > son,   *guma > gome
 
-Written as a single unconditioned lowering it takes full, wolf and wool with it."""
+Pyles & Algeo (pp. 173–174, PDF 94–95): ME short u unrounded, "though the older value survives in a
+good many words in which the vowel was preceded by a labial consonant, especially if it was followed
+by l". Minkova §8.2.1 (PDF 245–246) dates it: the unrounding started around 1600, was still going on
+in the first half of the 17th century, and has its first solid evidence in the 1640s (Lass 1999).
+Gil (1621) still writes the ⟨u⟩ of ⟨but⟩ in ⟨fludz⟩, and Cooper (1687) separates the vowels of full
+and up (Jones, PDF 233). Hence 1640.
+
+The [ʊ] must follow a consonant or the word edge. The second half of the [aʊ] that the Vowel Shift
+makes is also [ʊ], and it does not unround."""
 definition = [
-    "u → ʊ / [+labial, -syll] _ l",
-    "u → ʌ",
+    "ʊ → ʌ / [-syll] _ // [+labial, -syll] _ l",
+    "ʊ → ʌ / # _",
 ]
 
 [eme_th_voicing]
