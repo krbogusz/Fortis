@@ -3508,8 +3508,11 @@ definition = "a ʊ → a ʊ ə / _ ɹ"
 [sporadic_weather_dental]
 time = 1550
 name = "SPORADIC: *weder > weather — intervocalic *d becomes *ð"
-description = "OE weder gives modern weather /ˈwɛðə/ — the intervocalic *d fricativises to *ð, as in father, mother, gather, hither (a lexical set; ladder, adder keep *d). Word-scoped."
-words = ["weather"]
+description = """OE weder, fæder, mōdor give weather, father, mother with /ð/. Before syllabic /r/, etymological
+<-der> began to be spelled <-ther> in the 15th century, and the two forms varied from the 16th to the
+18th (Minkova §5.2.3, PDF 124–125; Hoad s.v. father: "cf. mother, gather, hither, together, whether").
+The change is lexical: ladder, adder and fodder keep /d/. Word-scoped."""
+words = ["weather", "mōdēr", "fadēr"]
 definition = "d → ð / [+syll] _ [+syll]"
 
 [sporadic_evil_long]
