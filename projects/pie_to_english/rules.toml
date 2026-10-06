@@ -3075,9 +3075,13 @@ words = ["wapsō"]
 definition = "1=p 2=s → @2 @1"
 
 [sporadic_ferhuz_xloss]
-time = 1440
+time = 1390
 name = "SPORADIC: *ferhuz > ME fer loses its *x after *r, lengthening the vowel"
-description = "OE feorh > ME fer(e) /fɛːr/ — the *x of the *rx coda is lost with compensatory lengthening, which me_x_loss (a vowel + x) does not reach. Word-scoped, before it."
+description = """OE feorh > ME fer(e) /fɛːr/ — the *x of the *rx coda is lost with compensatory lengthening, which me_x_loss (a vowel + x) does not reach. Word-scoped, before it.
+
+Coda *h varies with zero from the 13th and 14th centuries (Minkova §5.1.4, PDF 113–115).
+t = 1390, before the 1400 checkpoint, which records fer. Dated 1440, the rule came after that
+checkpoint and never reached it."""
 words = ["ferhuz"]
 definition = ["[+syll] → [length: long] / _ r x", "x → ∅ / r _"]
 
