@@ -253,6 +253,17 @@ definition = [
 # *h₂yuHn̥ḱós > *jungaz both have a SHORT /u/ in the attested Proto-Germanic, so the general
 # "loss after a vowel", which lengthens, must not reach them.
 
+# Osthoff's law: a long vowel shortens before a sonorant + consonant, but not before a word-final
+# sonorant (Ringe §3.2.1 (iii), PDF 105–107; Kroonen §2.1.5, PDF 21–22). It comes after
+# tautosyllabic *VH has become long, which feeds it: *pḗrsneh₂ > *fersnō 'heel', post-PIE *wēntós >
+# *wentós > *windaz 'wind', *yūnkós > *yunkós. Ringe says it "probably applied"; Kroonen also
+# explains *mimza- < *mēms-o- by it. The two books agree, so it is regular here.
+[pgmc_osthoffs_law]
+time = -1900
+name = "Osthoff's law: a long vowel shortens before a sonorant + consonant"
+description = "Ringe §3.2.1 (iii), PDF 105–107; Kroonen §2.1.5, PDF 21–22 — *pḗrsneh₂ > *fersnō"
+definition = "[+syll, -cons, length: long] → [length: short] / _ [+son, -syll] [-syll]"
+
 [velar_labialization]
 time = -2000
 name = "Velar labialization"
