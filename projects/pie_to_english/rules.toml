@@ -2625,14 +2625,57 @@ definition = "e → ɑ / _ #"
 [sporadic_ow_vocalisation]
 time = 1260
 name = "SPORADIC: the *ɣ-derived final velar vocalises to *w — marrow, tallow, saw, yellow"
-description = """Middle English marow, talow, saw, yelow: a word-final velar that goes back to *ɣ
-(not a true stop) vocalises to *w — with a svarabhakti *ɔ after a consonant. Word-scoped, because
-by Middle English these have merged with the true stops (buck, oak) that do NOT vocalise."""
-words = ["marrow", "tallow", "saw", "gelwaz"]
+description = """Middle English marow, talow, saw, yelow, farow: a word-final velar fricative (not a
+true stop) vocalises to *w — with a svarabhakti *ɔ after a consonant. Word-scoped, because by
+Middle English these have merged with the true stops (buck, oak) that do NOT vocalise.
+
+farrow joins the list on the strength of its OBLIQUE stem: OE fearh 'pig' inflects fearges, and it
+is that *ɣ — not the nominative's final *h — that the Middle English farow generalises, exactly as
+marrow generalises the *ɣ of mearges. The nominative-only *h of a word with no such oblique does
+not vocalise, which is why this stays a word list rather than a general rule about final velars."""
+words = ["marrow", "tallow", "saw", "gelwaz", "farrow", "sallow"]
 definition = [
     "[+back, aperture: high, -son, nasal: none] → ɔ w / [+cons, +son] _ #",
     "[+back, aperture: high, -son, nasal: none] → w / [+syll] _ #",
+    # The svarabhakti half on its own, for the w-stems (sallow, yellow): they already HAVE their
+    # final *w — sporadic_w_stem_ow_restoration put it back at 1180 — and only need the *ɔ that
+    # makes it syllabic. Same output as clause 1, reached from a *w instead of a velar.
+    "∅ → ɔ / [+cons, +son] _ w #",
 ]
+
+# The same Middle English *-ow, reached from the other direction: not from a velar but from the
+# *-u that oe_final_w_to_u made out of a *w in the first place.
+[sporadic_w_stem_ow_restoration]
+time = 1180
+name = "SPORADIC: the w-stem adjectives restore their *w in Middle English — sallow, yellow"
+description = """OE salu and geolu are the nominative singular of w-STEM adjectives, and the *w
+they end in survives all through the paradigm: the oblique cases are salwes, geolwes. Middle
+English levels the stem with the *w restored and a svarabhakti *ɔ before it — salow, yelow — and
+that is the form the modern sallow and yellow continue.
+
+This exactly undoes oe_final_w_to_u (468), which turned the *w of *salw, *gelw into the *u of the
+attested OE salu, geolu. The nominative is what Old English records and what the 900 column is
+transcribed in, so the *u has to be made; Middle English then generalises the oblique stem instead,
+and the *w comes back.
+
+t = 1180: AFTER eme_short_e_opens (1150), which gives yellow its *ɛ, and BEFORE
+me_unstressed_reduction (1200). That window is narrow but forced — left any later, the final *u
+has already reduced to schwa and then been deleted, and sallow came out **seɪl and yellow **jiːl,
+with no trace of the *w at all.
+
+The *w comes back BARE here, with no vowel before it: *salw, *gelw. The svarabhakti *ɔ that makes
+the syllabic *-ɔw is added later, by the third clause of sporadic_ow_vocalisation (1260), and the
+split is what makes the timing work. A *w restored bare CLOSES the syllable, so neither of the two
+rules at 1200 can touch it — me_unstressed_reduction finds no unstressed vowel to reduce, and the
+open-syllable lengthening finds no open syllable. Restore the whole *-ɔw here in one step and both
+of them fire: the *ɔ reduces to schwa and the stem vowel lengthens, giving **saːləw for the
+attested ME salow. marrow and tallow escape the same trap by accident of dating — their velar does
+not vocalise until 1260 — and this rule pair just gives sallow and yellow the same shelter.
+
+Word-scoped: OE has plenty of other final *-u (sunu, giefu, ġiest) that is NOT a w-stem and simply
+reduces away. Only the words whose modern reflex still shows the *-ow belong here."""
+words = ["sallow", "gelwaz"]
+definition = "u → w / [+cons] _ #"
 
 [sporadic_anglian_close_e]
 time = 1100
