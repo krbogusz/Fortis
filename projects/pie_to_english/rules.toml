@@ -2330,6 +2330,24 @@ Norse systir instead, not this word's reflex (Hoad)."""
 words = ["sister"]
 definition = "w e o → u / s _"
 
+[sporadic_fire_fuir]
+time = 300
+name = "SPORADIC (levelling): PGmc *fōr becomes PWGmc *fuïr"
+description = """The PWGmc nominative of 'fire' was disyllabic *fuïr, "an unusual sequence that can only have
+arisen by levelling of nom.-acc. *-r into the oblique stem *fuïn-" (Ringe & Taylor §4.2, PDF 134).
+Before the Proto-West Germanic checkpoint (403)."""
+words = ["fire"]
+definition = "ɔː → u i / _ r #"
+
+[sporadic_fire_yr]
+time = 419
+name = "SPORADIC: PWGmc *fuïr becomes OE fȳr"
+description = """"In one inherited word it appears that a disyllabic sequence *ui has become ȳ": *fuïr >
+*fyïr > fȳr (Ringe & Taylor §6.6.3, PDF 240). Just before i-mutation (420), which would otherwise front
+the *u first."""
+words = ["fire"]
+definition = "u i → yː ∅ / _ r #"
+
 [sporadic_zstem_istem]
 time = 399
 name = "SPORADIC: eġe and siġe re-form their s-stem as an i-stem"
