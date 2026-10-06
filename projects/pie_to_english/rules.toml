@@ -610,6 +610,17 @@ chain shift: run it before, and Grimm makes it *ɸ, Verner voices that to *β, a
 words = ["ampraz"]
 definition = "∅ → p / m _ r"
 
+[pgmc_s_voicing_before_voiced]
+time = -990
+name = "*s is voiced to *z before a voiced obstruent"
+description = """Ringe (PDF 32): PIE *s "was voiced to *[z] before voiced stops (e.g. in *nisdós …); it
+probably also had a breathy-voiced allophone before breathy-voiced stops (e.g. in *misdʰó-)".
+Grimm's law makes the plain *d of *nisdós voiceless, so its *s stays *s (*nistaz). After *dʰ the
+*s stays voiced: *bʰr̥sdʰom > *burzdą 'board' and *bʰorsdʰos > *barzdaz 'beard' (Kroonen s.v.
+*burzda-, *barzda-). Kroonen adds that this *z "was assimilated by the preceding r" after
+rhotacism, hence OE bord, beard. Dated after Grimm's law, which creates the voiced fricatives."""
+definition = "s → z / _ [-son, +voice]"
+
 [non_high_back_merger]
 time = -1000
 name = "Merging of non-high back vowels"
