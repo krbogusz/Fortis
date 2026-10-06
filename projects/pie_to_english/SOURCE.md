@@ -225,6 +225,18 @@ other spellings were a different formation and were not used: *sīþfæt* (fetą
 (wastijō), *ġeēan* (aunaz), *scēaffōt* (skaibaz). Starred spellings are reconstructions, not
 attestations, and were skipped.
 
+### Bare-root words added on 2026-10-06
+
+The bootstrap drops a chain whose PIE form Wiktionary cites only as a bare root. For the 111 such
+chains, the standard references were searched for the full preform of the exact word:
+Kroonen, with Ringe where he has the word. 60 were found. The 51 that the book states without
+doubt were added by running the unchanged bootstrap with those preforms (`PREFORM_FIXES`,
+supplied for the run only), and each entry's note names the book, headword and page. Left out:
+the seven the book itself doubts (*aigin, miltiją, hugiz, līþu, knawaz, hehlǭ, miuzijō*), the
+chains with no preform in either book (Germanic-only, substrate or unexplained words), the
+duplicates *gold, ēbanþs, swēgraz, humelaz*, and *betwixt*, a be- formation. The finals of
+*sole, riff, sullow, leam* were dropped as an obsolete, dialect or different word.
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed

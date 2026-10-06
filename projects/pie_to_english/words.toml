@@ -6295,3 +6295,550 @@ forms = [
   { time = -2000, ipa = "ˈdolχeħ", category = "noun", note = "PIE *dolH-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈtɛːlɔː", category = "noun" },
 ]
+
+[[words]]
+id = "hate"
+gloss = "hate"
+frequency = 128153
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hatiz-, PDF 254; Ringe p. 310, PDF 321: *ḱh₂̥dos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkʲħ̩dos", category = "noun", note = "PIE *ḱh₂̥dos (Kroonen s.v. *hatiz-, PDF 254; Ringe p. 310, PDF 321); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxɑtɑz", category = "noun" },
+  { time = 900, ipa = "ˈxete" },
+  { time = 1400, ipa = "ˈhɛːt" },
+  { time = "final", ipa = "ˈheɪt" },
+]
+
+[[words]]
+id = "bull"
+gloss = "bull"
+frequency = 16952
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *bul(l)an-, PDF 121: *bʰlḗn. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈbʱleːn", category = "noun", note = "PIE *bʰlḗn (Kroonen s.v. *bul(l)an-, PDF 121); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈbulɔːː", category = "noun" },
+  { time = 900, ipa = "ˈbulɑ" },
+  { time = 1400, ipa = "ˈbul" },
+  { time = "final", ipa = "ˈbʊl" },
+]
+
+[[words]]
+id = "lamb"
+gloss = "lamb"
+frequency = 9011
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *lambiz-, PDF 365; Ringe p. 310, PDF 321: *h₁lonbʰos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈχlonbʱos", category = "noun", note = "PIE *h₁lonbʰos (Kroonen s.v. *lambiz-, PDF 365; Ringe p. 310, PDF 321); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈlɑmbɑz", category = "noun" },
+  { time = 900, ipa = "ˈlɑmb" },
+  { time = 1400, ipa = "ˈlam" },
+  { time = "final", ipa = "ˈlæm" },
+]
+
+[[words]]
+id = "hare"
+gloss = "hare"
+frequency = 2160
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hesan- ~ *hazan-, PDF 263; Ringe p. 308, PDF 319: *ḱesōn. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkʲesoːn", category = "noun", note = "PIE *ḱesōn (Kroonen s.v. *hesan- ~ *hazan-, PDF 263; Ringe p. 308, PDF 319); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxɑsɔːː", category = "noun" },
+  { time = 900, ipa = "ˈxɑrɑ" },
+  { time = 1400, ipa = "ˈhaːr" },
+  { time = "final", ipa = "ˈhɛə" },
+]
+
+[[words]]
+id = "navel"
+gloss = "navel"
+frequency = 740
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *nablan-, PDF 420: *h₃nobʰlō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈʁʷnobʱloː", category = "noun", note = "PIE *h₃nobʰlō (Kroonen s.v. *nablan-, PDF 420); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈnɑβɑlɔːː", category = "noun" },
+  { time = 900, ipa = "ˈnɑfolɑ" },
+  { time = 1400, ipa = "ˈnaːvəl" },
+  { time = "final", ipa = "ˈneɪvəl" },
+]
+
+[[words]]
+id = "yew"
+gloss = "yew"
+frequency = 192
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *īwa-, PDF 311: *h₁eyHwos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈχejχwos", category = "noun", note = "PIE *h₁eyHwos (Kroonen s.v. *īwa-, PDF 311); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈiːxʷɑz", category = "noun" },
+  { time = 900, ipa = "ˈiːw" },
+  { time = 1400, ipa = "ˈiw" },
+  { time = "final", ipa = "ˈjuː" },
+]
+
+[[words]]
+id = "grēwaz"
+gloss = "grēwaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *grēwa-, PDF 229: *ǵʰréh₁wos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈgʲʱreχwos", category = "adj", note = "PIE *ǵʰréh₁wos (Kroonen s.v. *grēwa-, PDF 229); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɣrɛːwɑz", category = "adj" },
+  { time = 900, ipa = "ˈgræːj" },
+  { time = 1400, ipa = "ˈgræj" },
+]
+
+[[words]]
+id = "balgiz"
+gloss = "balgiz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *balgi-, PDF 87: *bʰolǵʰis. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈbʱolgʲʱis", category = "noun", note = "PIE *bʰolǵʰis (Kroonen s.v. *balgi-, PDF 87); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈbɑlɣiz", category = "noun" },
+  { time = 900, ipa = "ˈbelj" },
+  { time = 1400, ipa = "ˈbɛliː" },
+]
+
+[[words]]
+id = "lataz"
+gloss = "lataz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *lata-, PDF 368: *lh₁̥dos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈlχ̩dos", category = "adj", note = "PIE *lh₁̥dos (Kroonen s.v. *lata-, PDF 368); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈlɑtɑz", category = "adj" },
+  { time = 900, ipa = "ˈlæt" },
+  { time = 1400, ipa = "ˈlaːt" },
+]
+
+[[words]]
+id = "mēþiz"
+gloss = "mēþiz"
+note = "Source: Wiktionary (kaikki). PREFORM from Ringe §3.2.1 (ii), PDF 101; Kroonen s.v. *mēþi-, PDF 407: *méh₁tis. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈmeχtis", category = "noun", note = "PIE *méh₁tis (Ringe §3.2.1 (ii), PDF 101; Kroonen s.v. *mēþi-, PDF 407); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈmɛːθiz", category = "noun" },
+  { time = 900, ipa = "ˈmæːθ" },
+  { time = 1400, ipa = "ˈmɛːθ" },
+]
+
+[[words]]
+id = "raubaz"
+gloss = "raubaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *rauba-, PDF 446: *Hrowpós. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "χrowˈpos", category = "noun", note = "PIE *Hrowpós (Kroonen s.v. *rauba-, PDF 446); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈrɑwβɑz", category = "noun" },
+  { time = 900, ipa = "ˈræɑːf" },
+  { time = 1400, ipa = "ˈrɛːf" },
+]
+
+[[words]]
+id = "seþlą"
+gloss = "seþlą"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *setla-, PDF 474; Ringe PDF 117: *sedtlom. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈsedtlom", category = "noun", note = "PIE *sedtlom (Kroonen s.v. *setla-, PDF 474; Ringe PDF 117); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈseθlɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈsetl" },
+  { time = 1400, ipa = "ˈseːld" },
+]
+
+[[words]]
+id = "sōl"
+gloss = "sōl"
+note = "Source: Wiktionary (kaikki). PREFORM from Ringe §3.2.6 (i) p. 162, PDF 173, and p. 309, PDF 320; Kroonen s.v. *sōel- ~ *sunnōn-, PDF 503: *sáh₂wl̥. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈsaħwl̩", category = "noun", note = "PIE *sáh₂wl̥ (Ringe §3.2.6 (i) p. 162, PDF 173, and p. 309, PDF 320; Kroonen s.v. *sōel- ~ *sunnōn-, PDF 503); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈsɔːl", category = "noun" },
+  { time = 900, ipa = "ˈsoːl" },
+]
+
+[[words]]
+id = "bewwą"
+gloss = "bewwą"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *bewwa-, PDF 101: *bʰewh₂om. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈbʱewħom", category = "noun", note = "PIE *bʰewh₂om (Kroonen s.v. *bewwa-, PDF 101); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈbewwɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈbeoːw" },
+]
+
+[[words]]
+id = "talą"
+gloss = "talą"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *tala-, PDF 548: *dolHom. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈdolχom", category = "noun", note = "PIE *dolHom (Kroonen s.v. *tala-, PDF 548); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈtɑlɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈtæːl" },
+]
+
+[[words]]
+id = "lasiwaz"
+gloss = "lasiwaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *lasiwa-, PDF 367: *losiwos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈlosiwos", category = "adj", note = "PIE *losiwos (Kroonen s.v. *lasiwa-, PDF 367); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈlɑsiwɑz", category = "adj" },
+  { time = 900, ipa = "ˈlesu" },
+]
+
+[[words]]
+id = "wajjuz"
+gloss = "wajjuz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wajju-, PDF 608: *wh₁̥yús. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "wχ̩ˈjus", category = "noun", note = "PIE *wh₁̥yús (Kroonen s.v. *wajju-, PDF 608); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈwɑjjuz", category = "noun" },
+  { time = 900, ipa = "ˈwæːj" },
+]
+
+[[words]]
+id = "wurþiz"
+gloss = "wurþiz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wurþi-, PDF 641: *h₂wr̥tis. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈħwr̩tis", category = "noun", note = "PIE *h₂wr̥tis (Kroonen s.v. *wurþi-, PDF 641); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈwurθiz", category = "noun" },
+  { time = 900, ipa = "ˈworθ" },
+]
+
+[[words]]
+id = "gaidwą"
+gloss = "gaidwą"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *gaidwa-, PDF 203: *gʰoydʰwom. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈgʱojdʱwom", category = "noun", note = "PIE *gʰoydʰwom (Kroonen s.v. *gaidwa-, PDF 203); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɣɑjðwɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈgɑːd" },
+]
+
+[[words]]
+id = "wraihaz"
+gloss = "wraihaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wraiha-, PDF 633: *wróyḱos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈwrojkʲos", category = "adj", note = "PIE *wróyḱos (Kroonen s.v. *wraiha-, PDF 633); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈwrɑjxɑz", category = "adj" },
+  { time = 1400, ipa = "ˈwraw" },
+]
+
+[[words]]
+id = "wetmô"
+gloss = "wetmô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wetman-, PDF 623; Ringe PDF 103: *h₁wédmō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈχwedmoː", category = "noun", note = "PIE *h₁wédmō (Kroonen s.v. *wetman-, PDF 623; Ringe PDF 103); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈwetmɔːː", category = "noun" },
+  { time = 900, ipa = "ˈwitumɑ" },
+]
+
+[[words]]
+id = "delō"
+gloss = "delō"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *delō-, PDF 133: *dʰeh₁léh₂. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "dʱeˈχleħ", category = "noun", note = "PIE *dʰeh₁léh₂ (Kroonen s.v. *delō-, PDF 133); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈdelɔː", category = "noun" },
+  { time = 900, ipa = "ˈdelu" },
+]
+
+[[words]]
+id = "rōtaz"
+gloss = "rōtaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *rōta-, PDF 456: *HroHdos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈχroχdos", category = "adj", note = "PIE *HroHdos (Kroonen s.v. *rōta-, PDF 456); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈrɔːtɑz", category = "adj" },
+  { time = 900, ipa = "ˈroːt" },
+]
+
+[[words]]
+id = "kīmô"
+gloss = "kīmô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *kīman-, PDF 327: *ǵiHmō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈgʲiχmoː", category = "noun", note = "PIE *ǵiHmō (Kroonen s.v. *kīman-, PDF 327); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈkiːmɔːː", category = "noun" },
+]
+
+[[words]]
+id = "ambô"
+gloss = "ambô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *amban-, PDF 62: *h₃émbʰō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈʁʷembʱoː", category = "noun", note = "PIE *h₃émbʰō (Kroonen s.v. *amban-, PDF 62); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɑmbɔːː", category = "noun" },
+]
+
+[[words]]
+id = "dunkalaz"
+gloss = "dunkalaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *dunkla- ~ *dunkra-, PDF 149: *dʰn̥gʷlos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈdʱn̩gʷlos", category = "adj", note = "PIE *dʰn̥gʷlos (Kroonen s.v. *dunkla- ~ *dunkra-, PDF 149); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈduŋkɑlɑz", category = "adj" },
+]
+
+[[words]]
+id = "mōhô"
+gloss = "mōhô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *mōhan- ~ *magan-, PDF 411: *méh₂kō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈmeħkoː", category = "noun", note = "PIE *méh₂kō (Kroonen s.v. *mōhan- ~ *magan-, PDF 411); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈmɔːxɔːː", category = "noun" },
+]
+
+[[words]]
+id = "digraz"
+gloss = "digraz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *digra-, PDF 135: *dʰiǵʰros. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈdʱigʲʱros", category = "adj", note = "PIE *dʰiǵʰros (Kroonen s.v. *digra-, PDF 135); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈdiɣrɑz", category = "adj" },
+]
+
+[[words]]
+id = "knukô"
+gloss = "knukô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *knuk(k)an-, PDF 338: *ǵnugō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈgʲnugoː", category = "noun", note = "PIE *ǵnugō (Kroonen s.v. *knuk(k)an-, PDF 338); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈknukɔːː", category = "noun" },
+]
+
+[[words]]
+id = "skuwwô"
+gloss = "skuwwô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *skuwwan-, PDF 492; Ringe PDF 103: *skuṓ. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "skuˈoː", category = "noun", note = "PIE *skuṓ (Kroonen s.v. *skuwwan-, PDF 492; Ringe PDF 103); Wiktionary cites only a bare root." },
+  { time = 900, ipa = "ˈʃuːwɑ" },
+]
+
+[[words]]
+id = "azaniz"
+gloss = "azaniz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *azani-, PDF 84: *h₁osonis. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈχosonis", category = "noun", note = "PIE *h₁osonis (Kroonen s.v. *azani-, PDF 84); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɑzɑniz", category = "noun" },
+]
+
+[[words]]
+id = "ainijaz"
+gloss = "ainijaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *ainja-, PDF 50: *h₁oynyos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈχojnjos", category = "noun", note = "PIE *h₁oynyos (Kroonen s.v. *ainja-, PDF 50); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɑjnijɑz", category = "noun" },
+]
+
+[[words]]
+id = "angraz"
+gloss = "angraz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *angra- 1, PDF 66: *h₂enkrós. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ħenˈkros", category = "noun", note = "PIE *h₂enkrós (Kroonen s.v. *angra- 1, PDF 66); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɑŋgrɑz", category = "noun" },
+]
+
+[[words]]
+id = "wrīhô"
+gloss = "wrīhô"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wrīhan-, PDF 636; Ringe PDF 103: *wréyḱō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈwrejkʲoː", category = "noun", note = "PIE *wréyḱō (Kroonen s.v. *wrīhan-, PDF 636; Ringe PDF 103); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈwriːxɔːː", category = "noun" },
+]
+
+[[words]]
+id = "raubō"
+gloss = "raubō"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *raubō-, PDF 446: *Hrowpéh₂. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "χrowˈpeħ", category = "noun", note = "PIE *Hrowpéh₂ (Kroonen s.v. *raubō-, PDF 446); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈrɑwβɔː", category = "noun" },
+]
+
+[[words]]
+id = "þunguz"
+gloss = "þunguz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *þungu-, PDF 591: *tn̥gʰus. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈtn̩gʱus", category = "adj", note = "PIE *tn̥gʰus (Kroonen s.v. *þungu-, PDF 591); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈθuŋguz", category = "adj" },
+]
+
+[[words]]
+id = "hamfaz"
+gloss = "hamfaz"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hamfa-, PDF 247: *kómpos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkompos", category = "adj", note = "PIE *kómpos (Kroonen s.v. *hamfa-, PDF 247); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxɑmɸɑz", category = "adj" },
+]
+
+[[words]]
+id = "gǭ"
+gloss = "gǭ"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *gōīn-, PDF 224: *ǵʰyōm. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈgʲʱjoːm", category = "noun", note = "PIE *ǵʰyōm (Kroonen s.v. *gōīn-, PDF 224); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɣɔ̃ː", category = "noun" },
+]
+
+[[words]]
+id = "ring"
+gloss = "ring"
+frequency = 66018
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hringa-, PDF 287; Ringe p. 174, PDF 185: *kringʰos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkringʱos", category = "noun", note = "PIE *kringʰos (Kroonen s.v. *hringa-, PDF 287; Ringe p. 174, PDF 185); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxriŋgɑz", category = "noun" },
+  { time = 900, ipa = "ˈxriŋg" },
+  { time = 1400, ipa = "ˈriŋg" },
+  { time = "final", ipa = "ˈɹɪŋ" },
+]
+
+[[words]]
+id = "board"
+gloss = "board"
+frequency = 48666
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *burzda-, PDF 124: *bʰr̥sdʰom. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈbʱr̩sdʱom", category = "noun", note = "PIE *bʰr̥sdʰom (Kroonen s.v. *burzda-, PDF 124); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈburðɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈbord" },
+  { time = 1400, ipa = "ˈboːrd" },
+  { time = "final", ipa = "ˈbɔːd" },
+]
+
+[[words]]
+id = "merry"
+gloss = "merry"
+frequency = 17407
+note = "Source: Wiktionary (kaikki). PREFORM from Ringe §3.2.2 (i) p. 100, PDF 111; Kroonen s.v. *murgu-, PDF 417: *mr̥ǵʰús. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "mr̩ˈgʲʱus", category = "adj", note = "PIE *mr̥ǵʰús (Ringe §3.2.2 (i) p. 100, PDF 111; Kroonen s.v. *murgu-, PDF 417); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈmurɣuz", category = "adj" },
+  { time = 900, ipa = "ˈmyrje" },
+  { time = 1400, ipa = "ˈmiriː" },
+  { time = "final", ipa = "ˈmɛɹi" },
+]
+
+[[words]]
+id = "ham"
+gloss = "ham"
+frequency = 7982
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *ham(m)ō-, PDF 247: *konh₂méh₂. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "konˈħmeħ", category = "noun", note = "PIE *konh₂méh₂ (Kroonen s.v. *ham(m)ō-, PDF 247); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxɑmmɔː", category = "noun" },
+  { time = 900, ipa = "ˈxɑmm" },
+  { time = 1400, ipa = "ˈham" },
+  { time = "final", ipa = "ˈhæm" },
+]
+
+[[words]]
+id = "sole"
+gloss = "sole"
+frequency = 5438
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *saila/ō-, PDF 462: *sh₂oylom. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈsħojlom", category = "noun", note = "PIE *sh₂oylom (Kroonen s.v. *saila/ō-, PDF 462); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈsɑjlɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈsɑːl" },
+]
+
+[[words]]
+id = "thirst"
+gloss = "thirst"
+frequency = 3690
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *þurstu-, PDF 593: *tr̥stus. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈtr̩stus", category = "noun", note = "PIE *tr̥stus (Kroonen s.v. *þurstu-, PDF 593); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈθurstuz", category = "noun" },
+  { time = 900, ipa = "ˈθurst" },
+  { time = 1400, ipa = "ˈθirst" },
+  { time = "final", ipa = "ˈθɜːst" },
+]
+
+[[words]]
+id = "riff"
+gloss = "riff"
+frequency = 977
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hrefiz-, PDF 284: *krépos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkrepos", category = "noun", note = "PIE *krépos (Kroonen s.v. *hrefiz-, PDF 284); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxreɸɑz", category = "noun" },
+  { time = 900, ipa = "ˈxrif" },
+]
+
+[[words]]
+id = "haw"
+gloss = "haw"
+frequency = 569
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *haga(n)-, PDF 238: *kagʰō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkagʱoː", category = "noun", note = "PIE *kagʰō (Kroonen s.v. *haga(n)-, PDF 238); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxɑɣɔːː", category = "noun" },
+  { time = 900, ipa = "ˈxɑgɑ" },
+  { time = 1400, ipa = "ˈhaw" },
+  { time = "final", ipa = "ˈhɔː" },
+]
+
+[[words]]
+id = "fen"
+gloss = "fen"
+frequency = 441
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *fanja-, PDF 168: *ponyom. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈponjom", category = "noun", note = "PIE *ponyom (Kroonen s.v. *fanja-, PDF 168); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈɸɑnjɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈfenn" },
+  { time = 1400, ipa = "ˈfɛn" },
+  { time = "final", ipa = "ˈfɛn" },
+]
+
+[[words]]
+id = "nit"
+gloss = "nit"
+frequency = 282
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hnit-, PDF 276: *ḱnids. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈkʲnids", category = "noun", note = "PIE *ḱnids (Kroonen s.v. *hnit-, PDF 276); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈxnits", category = "noun" },
+  { time = 900, ipa = "ˈxnitu" },
+  { time = "final", ipa = "ˈnɪt" },
+]
+
+[[words]]
+id = "sullow"
+gloss = "sullow"
+note = "Source: Wiktionary (kaikki). PREFORM from Ringe §3.2.2 (i) p. 100, PDF 111; Kroonen s.v. *sulha-, PDF 531: *sl̥ks. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈsl̩ks", category = "noun", note = "PIE *sl̥ks (Ringe §3.2.2 (i) p. 100, PDF 111; Kroonen s.v. *sulha-, PDF 531); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈsulxs", category = "noun" },
+  { time = 900, ipa = "ˈsulx" },
+  { time = 1400, ipa = "ˈsulɔw" },
+]
+
+[[words]]
+id = "leam"
+gloss = "leam"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *leuhman-, PDF 373: *léwkmō. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈlewkmoː", category = "noun", note = "PIE *léwkmō (Kroonen s.v. *leuhman-, PDF 373); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈlewxmɔːː", category = "noun" },
+  { time = 900, ipa = "ˈleoːmɑ" },
+  { time = 1400, ipa = "ˈleːm" },
+]
+
+[[words]]
+id = "lithe"
+gloss = "lithe"
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *linþa-, PDF 379: *léntos. Wiktionary cites only a bare root. Added 2026-10-06."
+forms = [
+  { time = -2000, ipa = "ˈlentos", category = "adj", note = "PIE *léntos (Kroonen s.v. *linþa-, PDF 379); Wiktionary cites only a bare root." },
+  { time = 200, ipa = "ˈlinθɑz", category = "adj" },
+  { time = 900, ipa = "ˈliːθe" },
+  { time = "final", ipa = "ˈlaɪð" },
+]
