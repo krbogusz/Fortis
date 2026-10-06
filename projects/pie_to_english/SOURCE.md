@@ -37,7 +37,9 @@ would overwrite the hand corrections. New corrections go straight into `words.to
 `projects/pie_to_english/.cache/` — override with `FORTIS_PIE_CACHE` — and that directory is
 gitignored. `tools/` being in the repo does not make the pipeline self-contained: with an empty
 cache the extracts must be re-fetched from [kaikki.org](https://kaikki.org/) first
-(`kaikki/{pie,pgmc,oe,me}.jsonl`).
+(`kaikki/{pie,pgmc,oe,me,pwgmc}.jsonl`), and then the derived files built in order:
+`tools/ringe.py` (needs the Ringe PDF in `sources/`), `tools/build_chains.py`, then
+`tools/pde_sounds.py`.
 
 The spine is the **Proto-Germanic** extract. Each record carries its PIE parent (an `inh`
 etymology template) and, usually, a `descendants` tree running down through Old English →
@@ -202,9 +204,9 @@ and last too late.
 
 The refreshed extracts were run through the unchanged bootstrap (`build_gold.py`, with its output
 redirected so that `words.toml` was not overwritten), and the words it produced that the lexicon
-lacked were appended as generated. The bootstrap's `pde_sounds.json` is not built by any tool in
-`tools/`. It was rebuilt from kaikki's per-word English pages, keeping only transcriptions tagged
-RP or UK, or untagged, so that `modern_ipa` could not fall back to General American.
+lacked were appended as generated. The bootstrap's `pde_sounds.json` is built by
+`tools/pde_sounds.py` from kaikki's per-word English pages. It keeps only transcriptions tagged RP
+or UK, or untagged, so that `modern_ipa` cannot fall back to General American.
 
 Of 23 new rows, 4 were left out: *gold* (Wiktionary now links *gelwaz 'yellow' to it), *ēbanþs*
 (the word *even* already in the lexicon), *swēgraz* (the same PIE form as *swēguraz*) and
