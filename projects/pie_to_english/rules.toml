@@ -675,6 +675,7 @@ definition = [
     "1=n w → @1 @1",     # nw > nn
     "1=l n → @1 @1",     # ln > ll
     "z → @1 / _ 1=m",    # zm > mm
+    "n → @1 / _ 1=m",    # nm > mm: *konh₂-méh₂ > *hammō 'ham' (Kroonen s.v. *ham(m)ō-, PDF 247)
     # …and *ðl > *ll — but only after a SHORT vowel. A geminate cannot stand after a heavy
     # nucleus, and the gold says so directly: *sth₂dʰlós has a short *a and gives *stallaz, while
     # *h₂éydʰlom has the diphthong *ai and gives *ailą with a SINGLE *l. Without the length
