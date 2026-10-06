@@ -1265,9 +1265,13 @@ definition = [
 # dōm, *flōduz > flōd) and ē [ɛː] > [eː]. The gold keeps the two apart — PGmc is transcribed
 # with ɔː/ɛː and OE with oː/eː — so this is a change to derive, not a convention to normalise.
 [wg_long_mid_raising]
-time = 250
+time = 404
 name = "Long ɔː raises to oː; long ɛː LOWERS to æː"
 description = """PGmc *ō [ɔː] > OE ō [oː] — that half is a raising, and it stands.
+
+t = 404, after the Proto-West Germanic checkpoint (403), whose forms still have the open *ō
+(Wiktionary's PWGmc transcriptions write [ɔː], as in *hrabō /ˈxrɑ.βɔː/). Dated 250, the raising
+gave the 403 column oː for the ɔː of *brōþer, *swōtī, *fōt.
 
 The front half goes the OTHER WAY. PGmc *ē₁ [ɛː] does not raise to [eː]; it LOWERS to OE ǣ [æː],
 and the gold says so without exception: *sēdiz > OE sǣd, *dēdiz > dǣd, *þrēduz > þrǣd, *mēkijaz
@@ -2548,7 +2552,7 @@ words = ["lede"]
 definition = "i w → e oː"
 
 [sporadic_glemaz_o]
-time = 300
+time = 404
 name = "SPORADIC: *glōmaz > OE glōm — a back *ō, where we carry a front *ǣ"
 description = """The attested OE glōm 'twilight' (Klein; > modern gloom /gluːm/) has a back *ō, but
 Wiktionary reconstructs the Proto-Germanic with *ē (which our cascade regularly makes into a front
