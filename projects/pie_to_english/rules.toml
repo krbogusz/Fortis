@@ -3319,6 +3319,17 @@ description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. 
 words = ["dere"]
 definition = "aː → eː"
 
+[sporadic_fifth_short]
+time = 1100
+name = "SPORADIC: fifth shortens its vowel before the suffix"
+description = """Minkova §7.5.1.1 (PDF 214–215): a long stem vowel shortened before the derivational -th ~ -t
+in late Old and early Middle English (five-fifth, deep-depth, foul-filth), and "-th with ordinal
+numerals causes shortening in fifth, tenth but not in ninth". OE fīfta is long (the 900 target) and
+ME fifte short (the 1400 target), so the rule sits between them. Word-scoped, because ninth keeps
+its long vowel."""
+words = ["fifth"]
+definition = "iː → i"
+
 [sporadic_ten_short]
 time = 1300
 name = "SPORADIC: ten shortens before 1400"
