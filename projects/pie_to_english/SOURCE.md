@@ -136,6 +136,29 @@ normalised as the bootstrap normalises its own, and each note quotes the source 
 left out. ME *widwe* /ˈwidwə/ would lose its only syllable nucleus to the column's dropped final
 -e. OE *sīen* would pass through `anglianise()`, which wrongly turns the īe from *īo into ē.
 
+### Middle English transcriptions
+
+Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed
+from the spelling (DECISIONS.md, 2026-10-06). Middle English spelling rarely marks vowel length:
+*god* is both [gɔd] 'God' and [goːd] 'good' (Minkova §6.2, PDF 154). So only spellings whose
+reading these rules fix are transcribed:
+
+1. A stressed vowel is short before a doubled consonant letter or before two consonants
+   (Minkova §7.5.3, PDF 225–226).
+2. Rule 1 does not apply before the lengthening clusters *ld*, *nd*, *mb*, *ng*, *rd*, *rn*
+   and *rð* (Minkova §6.4, PDF 168–169; Jones §2.2.5, PDF 41–42), nor before *st*, where
+   shortening is lexical (Minkova §7.5.1.1, PDF 212–213).
+3. A vowel digraph, a vowel in an open syllable, and a vowel before a single final consonant are
+   not transcribed: their length or quality is ambiguous (Minkova §2.4, PDF 46; §6.2, PDF 154;
+   §7.2, PDF 188–191). A macron in the edited headword marks a long vowel.
+4. The column's conventions apply: short *e* is ɛ and short *o* is ɔ, *sch* is ʃ, *gh* and *h*
+   before *t* are x, and a final *-e* is dropped, as in 78 of the 80 targets whose spelling ends
+   in *-e*.
+
+This added 15 targets: *harm*, *schelle*, *ribbe*, *midde*, *hals*, *morth*, *ridder*,
+*drosse*, *briht*, *frosk*, *wedde*, *thank*, *inke*, *wrihte*, *gūth*. Each one's note says it
+is a transcription. The other 53 spellings without IPA stay blank.
+
 What survives is nouns, adjectives and numerals: **249 rows**, the same order as the FLLAPS gold
 that `latin_to_french` scores against.
 

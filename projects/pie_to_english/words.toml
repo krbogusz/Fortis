@@ -836,6 +836,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲormos", category = "noun", note = "PIE *pḱór-mo-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxɑrmɑz", category = "noun" },
   { time = 900, ipa = "ˈxæɑrm" },
+  { time = 1400, ipa = "ˈharm", note = "Transcribed from ME harm (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈhɑːm" },
 ]
 
@@ -1081,6 +1082,7 @@ forms = [
   { time = -2000, ipa = "ˈskolχjeħ", category = "noun", note = "PIE *skolH-yeh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈskɑljɔː", category = "noun" },
   { time = 900, ipa = "ˈʃell" },
+  { time = 1400, ipa = "ˈʃɛl", note = "Transcribed from ME schelle (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈʃɛl" },
 ]
 
@@ -1603,6 +1605,7 @@ forms = [
   { time = -2000, ipa = "ˈχrebʱjom", category = "noun", note = "PIE *h₁rebʰ-yo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈriβjɑ̃", category = "noun" },
   { time = 900, ipa = "ˈribb" },
+  { time = 1400, ipa = "ˈrib", note = "Transcribed from ME ribbe (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈɹɪb" },
 ]
 
@@ -1704,6 +1707,7 @@ forms = [
   { time = -2000, ipa = "ˈmedʱjos", category = "adj", note = "PIE *médʰyos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmiðjɑz", category = "adj" },
   { time = 900, ipa = "ˈmidd" },
+  { time = 1400, ipa = "ˈmid", note = "Transcribed from ME midde (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈmɪd" },
 ]
 
@@ -3242,6 +3246,7 @@ forms = [
   { time = -2000, ipa = "ˈgʷʱn̩tis", category = "noun", note = "PIE *gʷʰéntis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣunθiz", category = "noun" },
   { time = 900, ipa = "ˈguːθ" },
+  { time = 1400, ipa = "ˈguːθ", note = "Transcribed from ME gūth (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3252,6 +3257,7 @@ forms = [
   { time = -2000, ipa = "ˈkolsos", category = "noun", note = "PIE *kólsos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑlsɑz", category = "noun" },
   { time = 900, ipa = "ˈxæɑls" },
+  { time = 1400, ipa = "ˈhals", note = "Transcribed from ME hals (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3453,6 +3459,7 @@ forms = [
   { time = -2000, ipa = "ˈχengoː", category = "noun", note = "PIE *h₁engō, as cited by Wiktionary." },
   { time = 200, ipa = "ˈiŋkɔːː", category = "noun" },
   { time = 900, ipa = "ˈiŋkɑ" },
+  { time = 1400, ipa = "ˈiŋk", note = "Transcribed from ME inke (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3523,6 +3530,7 @@ forms = [
   { time = -2000, ipa = "ˈmr̩tom", category = "noun", note = "PIE *mr̥tós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmurθɑ̃", category = "noun" },
   { time = 900, ipa = "ˈmorθ" },
+  { time = 1400, ipa = "ˈmɔrθ", note = "Transcribed from ME morth (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3603,6 +3611,7 @@ forms = [
   { time = -2000, ipa = "wr̩gʲˈtis", category = "noun", note = "PIE *wr̥ǵtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwurxtiz", category = "noun" },
   { time = 900, ipa = "ˈwyrxt" },
+  { time = 1400, ipa = "ˈwrixt", note = "Transcribed from ME wrihte (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3653,6 +3662,7 @@ forms = [
   { time = -2000, ipa = "krejˈdʱroːn", category = "noun", note = "PIE *kréydʰrom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxriːðrɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈxridder" },
+  { time = 1400, ipa = "ˈridər", note = "Transcribed from ME ridder (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈɹɪdəl", note = "RP from Wiktionary (kaikki), riddle; added 2026-10-06." },
 ]
 
@@ -3663,6 +3673,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱraːks", category = "noun", note = "PIE *dʰrā́ks, as cited by Wiktionary." },
   { time = 200, ipa = "ˈdrɔːxs", category = "noun" },
+  { time = 1400, ipa = "ˈdrɔs", note = "Transcribed from ME drosse (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈdɹɒs" },
 ]
 
@@ -3765,6 +3776,7 @@ forms = [
   { time = -2000, ipa = "bʱergʲˈtos", category = "adj", note = "PIE *bʰer(H)ǵ-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈberxtɑz", category = "adj" },
   { time = 900, ipa = "ˈbeorxt" },
+  { time = 1400, ipa = "ˈbrixt", note = "Transcribed from ME briht (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈbɹaɪt", note = "RP from Wiktionary (kaikki), bright; added 2026-10-06." },
 ]
 
@@ -3786,6 +3798,7 @@ forms = [
   { time = -2000, ipa = "prugʱˈkʲos", category = "noun", note = "PIE *prugʰ-ḱó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸruskɑz", category = "noun" },
   { time = 900, ipa = "ˈfrosk" },
+  { time = 1400, ipa = "ˈfrɔsk", note = "Transcribed from ME frosk (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3826,6 +3839,7 @@ forms = [
   { time = -2000, ipa = "ˈwodʱjom", category = "noun", note = "PIE *wodʰ-yo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwɑðjɑ̃", category = "noun" },
   { time = 900, ipa = "ˈwedd" },
+  { time = 1400, ipa = "ˈwɛd", note = "Transcribed from ME wedde (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3836,6 +3850,7 @@ forms = [
   { time = -2000, ipa = "ˈtongos", category = "noun", note = "PIE *tóng-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈθɑŋkɑz", category = "noun" },
   { time = 900, ipa = "ˈθɑŋk" },
+  { time = 1400, ipa = "ˈθaŋk", note = "Transcribed from ME thank (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
 [[words]]
