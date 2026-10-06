@@ -2525,10 +2525,11 @@ definition = [
 [oe_h_loss]
 time = 462
 name = "*h is lost between voiced sounds, with lengthening or contraction"
-description = "Ringe & Taylor §6.9.1, §6.9.3; Steponavičius §171; Jones §2.2 — hwēol, swēor, ēa"
+description = """Ringe & Taylor §6.9.1, §6.9.3; Steponavičius §171; Jones §2.2 — hwēol, swēor, ēa. A nasal after the
+*h counts as a voiced sound too: Ringe & Taylor (PDF 320) give PNWGmc *leuhmō̄ > *lēohmā > OE lēoma."""
 definition = [
-    "[+syll] → [length: long] / _ x [+son, +cons, -syll, nasal: none]",
-    "x → ∅ / [+syll, length: long] _ [+son, +cons, -syll, nasal: none]",
+    "[+syll] → [length: long] / _ x [+son, +cons, -syll]",
+    "x → ∅ / [+syll, length: long] _ [+son, +cons, -syll]",
     "[+syll] x [+syll, stress: none] → [length: long] ∅ ∅",
 ]
 
