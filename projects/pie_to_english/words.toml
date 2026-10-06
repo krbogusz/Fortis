@@ -227,13 +227,12 @@ forms = [
 id = "hold"
 gloss = "hold"
 frequency = 262367
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ḱl̥-tó-s is replaced by *ḱĺ̥tos on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ḱl̥-tó-s is replaced by *ḱĺ̥tos on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈhəʊld was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: OE hold 'loyal' has none; /həʊld/ is the verb, from Anglian haldan (Hoad, Klein s.v. hold; Steponavičius §163; Minkova PDF 168)."
 forms = [
   { time = -2000, ipa = "ˈkʲl̩tos", category = "adj", note = "PIE *ḱl̥-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxulθɑz", category = "adj" },
   { time = 403, ipa = "ˈxolθ", note = "PWGmc *holþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxold" },
-  { time = "final", ipa = "ˈhəʊld" },
 ]
 
 [[words]]
@@ -424,14 +423,13 @@ forms = [
 id = "sister"
 gloss = "sister"
 frequency = 154095
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swésōr is replaced by *swéstēr on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swésōr is replaced by *swéstēr on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈsɪstə was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE sister is Old Norse systir; the native suster died out (Hoad s.v. sister)."
 forms = [
   { time = -2000, ipa = "ˈswesteːr", category = "noun", note = "PIE *swésōr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈswestɛːr", category = "noun" },
   { time = 403, ipa = "ˈswester", note = "PWGmc *swester (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsweostor" },
   { time = 1400, ipa = "ˈsustər" },
-  { time = "final", ipa = "ˈsɪstə", note = "RP from Wiktionary (kaikki), sister; added 2026-10-06." },
 ]
 
 [[words]]
@@ -816,27 +814,25 @@ forms = [
 id = "bottle"
 gloss = "bottle"
 frequency = 38229
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈbɒtl̩ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE bottle is Old French botele (Hoad, Klein PDF 117); OE botl 'dwelling' has none."
 forms = [
   { time = -2000, ipa = "ˈbʱoħutlom", category = "noun", note = "PIE *bʰoh₂u-tlo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɔːθlɑ̃", category = "noun" },
   { time = 403, ipa = "ˈbɔːθl", note = "PWGmc *bōþl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbotl" },
-  { time = "final", ipa = "ˈbɒtl̩" },
 ]
 
 [[words]]
 id = "lay"
 gloss = "lay"
 frequency = 36984
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *lókus is replaced by *lokús on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *lókus is replaced by *lokús on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈleɪ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: OE lagu 'sea' has none, and ME lawe would give /lɔː/; lay 'song' is Old French lai (Hoad; Minkova PDF 83)."
 forms = [
   { time = -2000, ipa = "loˈkus", category = "noun", note = "PIE *lókus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑɣuz", category = "noun" },
   { time = 403, ipa = "ˈlɑɣu", note = "PWGmc *lagu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑgu" },
   { time = 1400, ipa = "ˈlaw", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈlaɣə. Transcription convention: ME lawe has the vocalised [w] of OE lagu, not a velar fricative (Minkova PDF 83; Jones Table 3.18; Pyles & Algeo p. 148)." },
-  { time = "final", ipa = "ˈleɪ" },
 ]
 
 [[words]]
@@ -1341,14 +1337,13 @@ forms = [
 id = "sixth"
 gloss = "sixth"
 frequency = 7566
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swéḱstos is replaced by *séḱtō on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swéḱstos is replaced by *séḱtō on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈsɪksθ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: sixth is a new formation that replaced ME sixte (Hoad s.v. six)."
 forms = [
   { time = -2000, ipa = "ˈsekʲtoː", category = "adj", note = "PIE *swéḱstos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsextɔːː", category = "adj" },
   { time = 403, ipa = "ˈsextɔː", note = "PWGmc *sehtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsikstɑ" },
   { time = 1400, ipa = "ˈsikst" },
-  { time = "final", ipa = "ˈsɪksθ" },
 ]
 
 [[words]]
@@ -1659,13 +1654,12 @@ forms = [
 id = "beck"
 gloss = "beck"
 frequency = 3601
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈbɛk was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE beck is Old Norse bekkr (Hoad s.v. beck; Klein PDF 102)."
 forms = [
   { time = -2000, ipa = "ˈbʱogis", category = "noun", note = "PIE *bʰog-i-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑkiz", category = "noun" },
   { time = 403, ipa = "ˈbɑki", note = "PWGmc *baki (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbet͡ʃe", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈbæk. Wrong word: bæc is 'back'; *bakiz 'brook' gives OE beċe (Ringe & Taylor PDF 252, 209; Hoad s.v. beck)." },
-  { time = "final", ipa = "ˈbɛk" },
 ]
 
 [[words]]
@@ -1783,13 +1777,12 @@ forms = [
 id = "reef"
 gloss = "reef"
 frequency = 2778
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *krewp-o-s is replaced by *krewpós on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *krewp-o-s is replaced by *krewpós on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈɹiːf was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE reef is Old Norse rif (Klein PDF 651); OE hrēof 'rough' has none."
 forms = [
   { time = -2000, ipa = "krewˈpos", category = "adj", note = "PIE *krewp-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxrewβɑz", category = "adj" },
   { time = 403, ipa = "ˈxrewβ", note = "PWGmc *hreub (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxreoːf" },
-  { time = "final", ipa = "ˈɹiːf" },
 ]
 
 [[words]]
@@ -1976,14 +1969,13 @@ forms = [
 id = "ey"
 gloss = "ey"
 frequency = 1258
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈeɪ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: Old Norse agi 'awe' displaced native eie, eȝe (Hoad s.v. awe)."
 forms = [
   { time = -2000, ipa = "ˈħegʱos", category = "noun", note = "PIE *h₂égʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑɣɑz", category = "noun" },
   { time = 403, ipa = "ˈɑɣi", note = "PWGmc *agi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeje" },
   { time = 1400, ipa = "ˈɛj", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈeːɣə. Transcription convention: OE eġe had a palatal [j], which gives ME [ɛj], not a velar fricative (Minkova Fig. 7.8a, PDF 206; Jones Table 3.17)." },
-  { time = "final", ipa = "ˈeɪ" },
 ]
 
 [[words]]
@@ -2029,11 +2021,10 @@ forms = [
 id = "bumblebee"
 gloss = "bumblebee"
 frequency = 1023
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈbʌmbəlˌbiː was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: bumblebee is imitative bumble + bee; the *humbel line gives humble-bee (Hoad, Klein PDF 126)."
 forms = [
   { time = -2000, ipa = "ˈkm̩χelos", category = "noun", note = "PIE *km̥H-el-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxumelɑz", category = "noun" },
-  { time = "final", ipa = "ˈbʌmbəlˌbiː" },
 ]
 
 [[words]]
