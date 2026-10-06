@@ -2512,8 +2512,12 @@ definition = "ɣ → x / _ #"
 time = 1250
 name = "A word-final velar stop spirantises to *x — the ME -gh words"
 description = """OE trog gives Middle English trough with the *x that Middle English spells -gh: a
-late hardening of the final velar to the voiceless fricative, before me_x_loss takes it later."""
-definition = "g → x / [+syll] _ #"
+late hardening of the final velar to the voiceless fricative, before me_x_loss takes it later.
+
+After a BACK vowel only. OE *g after a front vowel was the palatal [j], which became the second
+half of a diphthong, not an *x (Minkova §4.2.1, PDF 83–84; §5.1.4, PDF 113): stīg > stile, dæg >
+day."""
+definition = "g → x / [+syll, +back] _ #"
 
 [sporadic_u_lowering]
 time = 355
