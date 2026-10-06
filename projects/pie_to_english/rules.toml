@@ -907,9 +907,13 @@ definition = "z → r"
 # snoru (light), against *wullɔː > wull, *mizdɔː > meːd, *θewðɔː > θeoːd (heavy). Nothing else
 # was carrying the ending across, so it survived to Old English as a full *-ɔː.
 [oe_final_long_o_to_u]
-time = 440
+time = 401
 name = "The ō-stem ending *-ō becomes *-u"
-description = "*skɑrɔː > ʃɑru, *wullɔː > wull — the high-vowel deletion then splits them"
+description = """*skɑrɔː > ʃɑru, *wullɔː > wull — the high-vowel deletion then splits them
+
+t = 401, before the Proto-West Germanic checkpoint (403). Ringe & Taylor §2.1.1 (PDF 30): "word-final
+bimoric non-nasalized long *-ō became short *-u in unstressed syllables in PNWGmc", well before
+PWGmc. Dated 440, it left the 403 column with *-ō for the *-u of *skalju, *haƀanu, *saɣu."""
 definition = "[+syll, aperture: mid, +back, +rounded, length: long, nasal: none] → u / [+syll] []* _ #"
 
 [wg_final_apocope]
@@ -2559,9 +2563,13 @@ definition = ["e → i", "∅ → k / k _", "u → e / _ #"]
 [sporadic_knee_eo]
 time = 476
 name = "SPORADIC: *knewą > OE cnēow — the *ēo diphthong with final *w"
-description = "*knewą gives OE cnēow; our cascade leaves *kneu (the ō-stem *-u). Word-scoped."
+description = """*knewą gives OE cnēow; our cascade leaves *kneoː, the diphthong without its *w. Word-scoped.
+
+It used to leave *kneu: oe_final_long_o_to_u, then dated 440, took the second half of the new
+*ēo for an ō-stem ending. Dated 401 (PNWGmc), that rule no longer reaches it, and this one only
+restores the *w."""
 words = ["knee"]
-definition = "u → oː w / _ #"
+definition = "∅ → w / oː _ #"
 
 [sporadic_lede_eo]
 time = 476
