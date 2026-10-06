@@ -1560,6 +1560,17 @@ definition = "[+syll, stress: none, length: short] → ə"
 
 # The velar fricative is lost with compensatory lengthening: niht > night /naɪt/, miht >
 # might (§5.3 — the KNIGHT-NIGHT cluster simplifications).
+[lme_e_raising_before_x]
+time = 1420
+name = "A long *e rises to *i before the palatal fricative (high, nigh)"
+description = """Steponavičius §183 (PDF 171–172): "At the close of the 13th c. a [j]-glide developed in front
+of the voiceless palatal dorsal fricative", and "[ei] before [x'] was replaced by [ii] in the 14th
+c., for example, in MidE hēh > heih, heigh > high". Minkova §7.4 (PDF 206–207): [-eːç] gives
+[-ejç] ~ [ej], "later raised, merging with [ij]" (OE nēh > ME neh, neih, nih). The 1400 target of
+high (Wiktionary's ME) still has [eː], so the rule is dated just after that checkpoint. The long
+[iː] then takes part in the Vowel Shift."""
+definition = "eː → iː / _ x"
+
 [me_x_loss]
 time = 1450
 name = "x is lost, lengthening the vowel before it"
