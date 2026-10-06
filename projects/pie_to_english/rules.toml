@@ -1673,7 +1673,21 @@ description = "Minkova §6.4 — CHILD-CHILDREN, HOUND; *ald > āld, *kind > kī
 #   the sonorant is a NASAL or a LATERAL, not *r — ME hard, arm, barm keep their short vowel;
 #   the stop is NOT VELAR — ME long and young keep a short vowel before their *ŋg (/lɔŋg/,
 #   /juŋg/), which is homorganic phonetically but takes no part in the change.
-definition = "[+syll, length: short] → [length: long] / _ [+son, -syll, +cons, trill: none] [-son, +voice, -cont, back: none] $"
+# And not before *mb. Minkova §6.4 (PDF 167) counts nine -mb words (climb, comb, coomb, dumb,
+# December, lamb, timber, tumble, womb), finds lengthening in only four, and concludes: "There is no
+# compelling argument for classifying -mb as a lengthening cluster." Jones (PDF 40, 138) names lamb
+# as unlengthened or shortened again. comb is lengthened by sporadic_comb_long.
+definition = "[+syll, length: short] → [length: long] / _ [+son, -syll, +cons, trill: none] [-son, +voice, -cont, back: none, labial: none] $"
+
+[sporadic_comb_long]
+time = 1050
+name = "SPORADIC: comb lengthens before *mb"
+description = """Minkova §6.4 (PDF 167) lists comb among the four -mb words that show lengthening in PDE, and
+Pyles & Algeo (p. 148–149, PDF 82) say the lengthening survived at the end of ME "only in i and o
+before mb (clīmben 'to climb,' cǭmb 'comb')". Word-scoped, because -mb is not a regular lengthening
+cluster."""
+words = ["comb"]
+definition = "[+syll, length: short, stress: primary] → [length: long] / _ m b"
 
 # Middle English short o is open [ɔ] — fox /fɔks/, corn /kɔrn/, yoke /jɔk/ (§7.3).
 [me_short_o_opening]
