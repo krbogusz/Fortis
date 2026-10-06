@@ -3100,14 +3100,18 @@ words = ["hoof"]
 definition = ["oː → uː", "f → v / _ #"]
 
 [eme_w_rounding_a]
-time = 1600
+time = 1590
 name = "Short *a rounds to *ɒ after *w (Early Modern English)"
 description = """After /w/ (including /kw/), Early Modern English rounds short *a to *ɒ: was, what,
 wash, want, swan, wander, and before *r the long START vowel to *ɔː — war, warm, ward, swarm, quart,
 dwarf (Jones ch. 4; the WATH/WASP rounding). NOT before a velar, where it stays (wag, wax, twang,
-swank). Dated 1600, before the START backing (eme_short_a_backs, 1740) so the *w-rounded words never
-reach START."""
-definition = ["a → ɔ / w _ r", "a → ɒ / w _"]
+swank; Minkova §8.2.1, PDF 239–240). Before the START backing (eme_short_a_backs, 1740) so the
+*w-rounded words never reach START.
+
+t = 1590, before the Vowel Shift (1600). Dated 1600 it came after the shift in file order and
+rounded the new [aɪ] of white, wise, wight. Minkova dates the rounding from the 15th century
+(PDF 239), and Bullokar's unrounded warm of 1580 (Jones PDF 264) is still before it."""
+definition = ["a → ɔ / w _ r", "a → ɒ / w _ // _ [-syll, +back]"]
 
 
 [sporadic_buttaz_istem]
