@@ -309,7 +309,7 @@ This applies to *reconstructions only*, and the distinction is the whole point:
 | the PIE **input** | reconstruction | Ringe/Kroonen → `PREFORM_FIXES` |
 | **200** (Proto-Germanic) | reconstruction | Ringe/Kroonen → `ATTESTED_FIXES` |
 | **403** (Proto-West Germanic) | reconstruction | Ringe & Taylor → a direct edit with a citation |
-| **900 / 1400 / final** | **attestation** — a real recorded form | nobody. Never touched. |
+| **900 / 1400 / final** | **attestation** — a real recorded form | a cited source, in four cases only (below) |
 | **1570 / 1580 / 1621 / 1687** | an orthoepist's description, as Jones reads it | nobody |
 
 Old English *nest*, *fisc*, *wer* are things people actually wrote down. Proto-Germanic `*nestą`
@@ -349,8 +349,15 @@ wrong. Where the standard reference work says so in as many words, the reference
 
 **The rules, which are not negotiable:**
 
-1. **Only the 200 column.** The 900 / 1400 / final columns are *attested* — real recorded Old
-   English, Middle English and modern forms. They are never touched, whatever they cost us.
+1. **The 200 and 403 columns freely; the attested columns in four cases only.** The 900 / 1400 /
+   final columns are *attested* — real recorded Old English, Middle English and modern forms —
+   and a form that was really recorded is never replaced to make a word land. Since 2026-10-06
+   (DECISIONS.md) an attested target may be corrected, with a citation, when the source shows one
+   of four things: the target breaks the column's transcription convention (a General American
+   form in the RP column); it records a dialect variant the later columns do not continue (South-
+   Western ME *frøː*); it belongs to a different word (*twēġen* is *twain*, not *two*); or the
+   modern target is a loan or a new formation, not the word's reflex, and is removed (*sister* is
+   Old Norse *systir*). Each correction keeps the old value in its note.
 2. **Only with an explicit citation** from Kroonen or Ringe, quoted in the comment. Never from our
    own inference, and never because a word would otherwise miss.
 3. **The entry must be defensible with the derivation switched off.** If the only argument for it

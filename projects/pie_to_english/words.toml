@@ -94,7 +94,7 @@ forms = [
   { time = -2000, ipa = "ˈnewjos", category = "adj", note = "PIE *néwyos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈniwjɑz", category = "adj" },
   { time = 403, ipa = "ˈniwi", note = "PWGmc *niwi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈneːwe" },
+  { time = 900, ipa = "ˈniːwe", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈneːwe. Transcription convention: anglianise() turned West Saxon nīewe into ē, but its īe comes from *īo, and Northumbrian has nīwe (Ringe & Taylor §6.6.3, PDF 264; Hoad, Klein s.v. new)." },
   { time = 1400, ipa = "ˈniw" },
   { time = "final", ipa = "ˈnjuː" },
 ]
@@ -193,7 +193,7 @@ forms = [
   { time = -2000, ipa = "mn̩ˈtis", category = "noun", note = "PIE *méntis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmundiz", category = "noun" },
   { time = 900, ipa = "ˈmynd", note = "Transcribed from OE mynd (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
-  { time = 1400, ipa = "ˈmuːnd" },
+  { time = 1400, ipa = "ˈmiːnd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈmuːnd. Dialect variant: ME u for OE y is West Midland and South-Western [y]; the standard has [iː], which final /maɪnd/ continues (Minkova §7.3.1; Steponavičius §180, §194; Pyles & Algeo pp. 145-146; Klein PDF 493)." },
   { time = "final", ipa = "ˈmaɪnd" },
 ]
 
@@ -444,7 +444,7 @@ forms = [
   { time = 200, ipa = "ˈɸrijɑz", category = "adj" },
   { time = 403, ipa = "ˈfriː", note = "PWGmc *frī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfreoː" },
-  { time = 1400, ipa = "ˈfrøː" },
+  { time = 1400, ipa = "ˈfreː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈfrøː. Dialect variant: ME [øː] for OE ēo is South-Western and West Midland; elsewhere [eː], which the final /iː/ continues (Jones §2.4.4, Table 2.35; Minkova §7.2.2; Steponavičius §180; Pyles & Algeo p. 147)." },
   { time = "final", ipa = "ˈfɹiː" },
 ]
 
@@ -835,7 +835,7 @@ forms = [
   { time = 200, ipa = "ˈlɑɣuz", category = "noun" },
   { time = 403, ipa = "ˈlɑɣu", note = "PWGmc *lagu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑgu" },
-  { time = 1400, ipa = "ˈlaɣə" },
+  { time = 1400, ipa = "ˈlaw", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈlaɣə. Transcription convention: ME lawe has the vocalised [w] of OE lagu, not a velar fricative (Minkova PDF 83; Jones Table 3.18; Pyles & Algeo p. 148)." },
   { time = "final", ipa = "ˈleɪ" },
 ]
 
@@ -1225,7 +1225,7 @@ forms = [
   { time = 403, ipa = "ˈtɑlu", note = "PWGmc *talu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtɑlu" },
   { time = 1400, ipa = "ˈtaːl" },
-  { time = "final", ipa = "ˈteːl" },
+  { time = "final", ipa = "ˈteɪl", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈteːl. Transcription convention: RP has the FACE diphthong; /eː/ is Scots and Northern (McMahon §3.3.1; Steponavičius §187; Jones §5.3; Minkova Fig. 8.4). Every other FACE target has /eɪ/." },
 ]
 
 [[words]]
@@ -1565,7 +1565,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "prusˈtos", category = "noun", note = "PIE *prustós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸrustɑz", category = "noun" },
-  { time = 900, ipa = "ˈforst" },
+  { time = 900, ipa = "ˈfrost", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈforst. Dialect variant: OE has forst and frost, and ME and PDE continue frost (Ringe & Taylor §6.10.2; Steponavičius §174; Jones Table 3.42; Hoad, Klein s.v. frost)." },
   { time = 1400, ipa = "ˈfrɔst" },
   { time = "final", ipa = "ˈfɹɒst" },
 ]
@@ -1982,7 +1982,7 @@ forms = [
   { time = 200, ipa = "ˈɑɣɑz", category = "noun" },
   { time = 403, ipa = "ˈɑɣi", note = "PWGmc *agi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeje" },
-  { time = 1400, ipa = "ˈeːɣə" },
+  { time = 1400, ipa = "ˈɛj", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈeːɣə. Transcription convention: OE eġe had a palatal [j], which gives ME [ɛj], not a velar fricative (Minkova Fig. 7.8a, PDF 206; Jones Table 3.17)." },
   { time = "final", ipa = "ˈeɪ" },
 ]
 
@@ -2237,7 +2237,7 @@ forms = [
   { time = -2000, ipa = "ˈskolχeħ", category = "noun", note = "PIE *skolH-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈskɑlɔː", category = "noun" },
   { time = 403, ipa = "ˈskɑlu", note = "PWGmc *skalu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈʃæɑlu" },
+  { time = 900, ipa = "ˈʃɑlu", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈʃæɑlu. Dialect variant: OE has sċealu and scalu, and the ea is West Saxon (Klein s.v. shale; Ringe & Taylor PDF 222, 232-233; Steponavičius §141)." },
   { time = "final", ipa = "ˈʃeɪl" },
 ]
 
@@ -2420,7 +2420,7 @@ forms = [
   { time = 200, ipa = "ˈθewðɔː", category = "noun" },
   { time = 403, ipa = "ˈθewdu", note = "PWGmc *þeudu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθeoːd" },
-  { time = 1400, ipa = "ˈθøːd" },
+  { time = 1400, ipa = "ˈθeːd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈθøːd. Dialect variant: ME [øː] for OE ēo is South-Western and West Midland; elsewhere [eː] (Jones §2.4.4, Table 2.35; Minkova §7.2.2; Steponavičius §180; Pyles & Algeo p. 147)." },
   { time = "final", ipa = "ˈθiːd" },
 ]
 
@@ -2672,7 +2672,7 @@ forms = [
   { time = 200, ipa = "ˈsnɑjwɑz", category = "noun" },
   { time = 403, ipa = "ˈsnɑjw", note = "PWGmc *snaiw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsnɑːw" },
-  { time = 1400, ipa = "ˈsnɑw" },
+  { time = 1400, ipa = "ˈsnɔw", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈsnɑw. Dialect variant: ME snaw with [aw] is Northern; elsewhere OE ā gives [ɔw], which PDE snow continues (Steponavičius §183; Jones Table 3.15; Minkova Fig. 7.8b; Klein PDF 721)." },
   { time = "final", ipa = "ˈsnəʊ", note = "RP from Wiktionary (kaikki), snow; added 2026-10-06." },
 ]
 
