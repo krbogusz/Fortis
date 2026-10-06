@@ -3427,7 +3427,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχekʲwos", category = "noun", note = "PIE *h₁éḱwos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈexʷɑz", category = "noun" },
-  { time = 403, ipa = "ˈexw", note = "PWGmc *ehw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈexu", note = "PWGmc *ehu, after Ringe & Taylor (PDF 193): *ehwaz > PWGmc *ehu, *ehw-. Wiktionary has *ehw, the oblique stem. Added 2026-10-06." },
   { time = 900, ipa = "ˈeox" },
 ]
 
