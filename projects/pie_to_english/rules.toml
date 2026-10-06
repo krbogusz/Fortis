@@ -2478,6 +2478,16 @@ in, for example, Goth. timrjan > OE timbrian". So *timr > timbr. Dated before th
 (466), which would otherwise separate the m from the r (**timer)."""
 definition = "∅ → b / m _ (r | l)"
 
+[oe_degemination_next_to_consonant]
+time = 600
+name = "A geminate simplifies next to another consonant"
+description = """Ringe & Taylor (PDF 296): in Old English "geminate consonants were also degeminated next to
+another consonant" (cyste, þrycte). Rhotacism leaves such a geminate in *burzd > *borrd, because
+*z "did merge with *r … in the intervocalic cluster *rz in all the daughters" (PDF 98), and Kroonen
+(s.v. *burzda-) says the *z "was assimilated by the preceding r": OE bord. Dated after rhotacism
+(405)."""
+definition = ["1=[-syll] @1 → @1 / _ [-syll]", "1=[-syll] @1 → @1 / [-syll] _"]
+
 [sporadic_ja_stem_gemination]
 time = 459
 name = "SPORADIC (levelling): a ja-stem nominative takes the geminate of its oblique forms"
