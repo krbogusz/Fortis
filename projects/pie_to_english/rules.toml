@@ -2375,8 +2375,16 @@ consonant between is an *f. And so is the SINGLE: written with `[-syll]*`, to re
 Dated 470, and *gelwaz is why: its back vowel arrives only when oe_final_w_vocalisation (468)
 turns the *w into one. The sequence is *gelwaz > *gelu > ġeolu, and at that point the *u is
 adjacent and no widened environment is needed. It is also after i-mutation, with which it is in
-complementary distribution — a FRONT vowel in the next syllable fronts, a BACK one breaks."""
-definition = "[+syll, -cons, aperture: mid, +front, length: short] → e o / _ [+son, -syll, +cons, nasal: none] [+syll, +back]"
+complementary distribution — a FRONT vowel in the next syllable fronts, a BACK one breaks.
+
+The second clause: Ringe & Taylor §6.9.4 (PDF 339) have West Saxon back umlaut of e before u with
+a labial between as well (seofon, eowu, eofor); *bebruz still keeps its e, because apocope came
+first. Jones (PDF 93) notes that the change is lexically diffused (heofon, eofor beside hefon,
+efor). Finding F4 of the Ringe & Taylor review (its first half)."""
+definition = [
+    "[+syll, -cons, aperture: mid, +front, length: short] → e o / _ [+son, -syll, +cons, nasal: none] [+syll, +back]",
+    "[+syll, -cons, aperture: mid, +front, length: short] → e o / _ [-syll, +labial] [+syll, +back, aperture: high]",
+]
 
 [oe_final_w_vocalisation]
 time = 402
