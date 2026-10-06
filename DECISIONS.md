@@ -235,3 +235,17 @@ period. Tested: dream, ear and ausô become exact at 1687; no other row changes.
 **Rejected:** The 18th-century date the rule had, which follows Pyles & Algeo's account of the
 fashionable [e] that lasted "from about 1600 to the mid-eighteenth century". Jones notes the
 controversy over Cooper's values, so this decision depends on his reading.
+
+## 2026-10-07: Date the Vowel Shift at 1560, with ME ā at 1600
+
+**Choice:** `emode_vowel_shift` (the high and mid vowels) is dated 1560, and the step ME ā > [ɛː]
+is a separate rule, `emode_vowel_shift_low`, at 1600.
+
+**Reason:** Minkova dates the shift c. 1400–1550 (Fig. 8.6, PDF 257). Hart (1570) already has [oː]
+in ghost and still has [aː] in fāðr, and Cooper (1687) has [ɛː] in name. The 1400 targets follow
+the traditional reconstruction with unshifted vowels, so the shift must come after 1400. The
+shortenings dated 1550 must come before it. Tested: ghost becomes exact at 1570; might moves one
+step away there (Hart's short [ɪ]); no final row changes.
+
+**Rejected:** The single shift at 1600. Also rejected: Stenbrenden's 13th–14th-century start for
+the high and upper-mid vowels (Minkova §8.2.2.1, PDF 253–254), which the 1400 targets do not show.

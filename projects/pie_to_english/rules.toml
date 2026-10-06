@@ -1603,9 +1603,12 @@ definition = "ə → ∅ / _ #"
 # The Great Vowel Shift (Minkova ch. 8, which treats it as a series rather than one event):
 # the long vowels raise, and the two already-high ones diphthongise.
 [emode_vowel_shift]
-time = 1600
+time = 1560
 name = "The Great Vowel Shift"
-description = """Minkova ch. 8 — iː > əɪ, uː > əʊ, eː > iː, oː > uː, ɛː > eː, ɔː > oː, aː > ɛː.
+description = """Minkova ch. 8 — iː > əɪ, uː > əʊ, eː > iː, oː > uː, ɛː > eː, ɔː > oː; ME ā moves later
+(emode_vowel_shift_low). Dated 1560: Minkova dates the shift c. 1400–1550 (Fig. 8.6, PDF 257), Hart
+(1570) already has [oː] in ghost, and the shortenings dated 1550 (death, red, hot, end) must come
+first. The 1400 targets keep the unshifted vowels of the traditional ME reconstruction.
 
 The high vowels become [əɪ] and [əʊ] first. Minkova (Fig. 8.6, PDF 257, and n. 18) gives them as the
 intermediate stage, "the closest to … the 'authentic' Elizabethan/Shakespearean pronunciation";
@@ -1621,8 +1624,17 @@ definition = [
     # [oo] in floor, whore, door, against [uu] in good, food, book.
     "eː → iː", "oː → uː // _ r",
     "ɛː → eː", "ɔː → oː",
-    "aː → ɛː",
 ]
+
+[emode_vowel_shift_low]
+time = 1600
+name = "The Great Vowel Shift: ME ā fronts and raises to [ɛː]"
+description = """The low vowel moves last. Minkova (Fig. 8.6, PDF 257) dates the shift c. 1400–1550, and
+Stenbrenden's data put the high and upper-mid vowels in the 13th–14th centuries (Minkova §8.2.2.1,
+PDF 253–254). Hart (1570) still has [aː] in fāðr while his ghost already has [oː], so the step
+for ME ā is dated after the rest of the shift (emode_vowel_shift, 1560). Cooper (1687) has [ɛː]
+in name."""
+definition = "aː → ɛː"
 
 # RP is non-rhotic: /r/ is lost in the coda, leaving a lengthened or centring vowel (§5.2).
 # The initial velar fricative weakens to /h/ — OE hām, heorte are [x-] in the engine's
