@@ -6304,6 +6304,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hatiz-, PDF 254;
 forms = [
   { time = -2000, ipa = "ˈkʲħ̩dos", category = "noun", note = "PIE *ḱh₂̥dos (Kroonen s.v. *hatiz-, PDF 254; Ringe p. 310, PDF 321); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈxɑtɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑti", note = "PWGmc *hati (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxete" },
   { time = 1400, ipa = "ˈhɛːt" },
   { time = "final", ipa = "ˈheɪt" },
@@ -6330,6 +6331,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *lambiz-, PDF 365
 forms = [
   { time = -2000, ipa = "ˈχlonbʱos", category = "noun", note = "PIE *h₁lonbʰos (Kroonen s.v. *lambiz-, PDF 365; Ringe p. 310, PDF 321); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈlɑmbɑz", category = "noun" },
+  { time = 403, ipa = "ˈlɑmb", note = "PWGmc *lamb (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑmb" },
   { time = 1400, ipa = "ˈlam" },
   { time = "final", ipa = "ˈlæm" },
@@ -6343,6 +6345,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hesan- ~ *hazan-
 forms = [
   { time = -2000, ipa = "ˈkʲesoːn", category = "noun", note = "PIE *ḱesōn (Kroonen s.v. *hesan- ~ *hazan-, PDF 263; Ringe p. 308, PDF 319); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈxɑsɔːː", category = "noun" },
+  { time = 403, ipa = "ˈxɑsɔː", note = "PWGmc *hasō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑrɑ" },
   { time = 1400, ipa = "ˈhaːr" },
   { time = "final", ipa = "ˈhɛə" },
@@ -6369,6 +6372,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *īwa-, PDF 311: 
 forms = [
   { time = -2000, ipa = "ˈχejχwos", category = "noun", note = "PIE *h₁eyHwos (Kroonen s.v. *īwa-, PDF 311); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈiːxʷɑz", category = "noun" },
+  { time = 403, ipa = "ˈiːxu", note = "PWGmc *īhu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈiːw" },
   { time = 1400, ipa = "ˈiw" },
   { time = "final", ipa = "ˈjuː" },
@@ -6381,6 +6385,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *grēwa-, PDF 229
 forms = [
   { time = -2000, ipa = "ˈgʲʱreχwos", category = "adj", note = "PIE *ǵʰréh₁wos (Kroonen s.v. *grēwa-, PDF 229); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈɣrɛːwɑz", category = "adj" },
+  { time = 403, ipa = "ˈɣrɑːw", note = "PWGmc *grāu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgræːj" },
   { time = 1400, ipa = "ˈgræj" },
 ]
@@ -6392,6 +6397,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *balgi-, PDF 87: 
 forms = [
   { time = -2000, ipa = "ˈbʱolgʲʱis", category = "noun", note = "PIE *bʰolǵʰis (Kroonen s.v. *balgi-, PDF 87); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈbɑlɣiz", category = "noun" },
+  { time = 403, ipa = "ˈbɑlɣi", note = "PWGmc *balgi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbelj" },
   { time = 1400, ipa = "ˈbɛliː" },
 ]
@@ -6403,6 +6409,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *lata-, PDF 368: 
 forms = [
   { time = -2000, ipa = "ˈlχ̩dos", category = "adj", note = "PIE *lh₁̥dos (Kroonen s.v. *lata-, PDF 368); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈlɑtɑz", category = "adj" },
+  { time = 403, ipa = "ˈlɑt", note = "PWGmc *lat (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlæt" },
   { time = 1400, ipa = "ˈlaːt" },
 ]
@@ -6425,6 +6432,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *rauba-, PDF 446:
 forms = [
   { time = -2000, ipa = "χrowˈpos", category = "noun", note = "PIE *Hrowpós (Kroonen s.v. *rauba-, PDF 446); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈrɑwβɑz", category = "noun" },
+  { time = 403, ipa = "ˈrɑwβ", note = "PWGmc *raub (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈræɑːf" },
   { time = 1400, ipa = "ˈrɛːf" },
 ]
@@ -6436,6 +6444,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *setla-, PDF 474;
 forms = [
   { time = -2000, ipa = "ˈsedtlom", category = "noun", note = "PIE *sedtlom (Kroonen s.v. *setla-, PDF 474; Ringe PDF 117); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈseθlɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈseθl", note = "PWGmc *seþl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsetl" },
   { time = 1400, ipa = "ˈseːld" },
 ]
@@ -6447,6 +6456,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Ringe §3.2.6 (i) p. 162, PDF 
 forms = [
   { time = -2000, ipa = "ˈsaħwl̩", category = "noun", note = "PIE *sáh₂wl̥ (Ringe §3.2.6 (i) p. 162, PDF 173, and p. 309, PDF 320; Kroonen s.v. *sōel- ~ *sunnōn-, PDF 503); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈsɔːl", category = "noun" },
+  { time = 403, ipa = "ˈsɔːl", note = "PWGmc *sōl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsoːl" },
 ]
 
@@ -6457,6 +6467,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *bewwa-, PDF 101:
 forms = [
   { time = -2000, ipa = "ˈbʱewħom", category = "noun", note = "PIE *bʰewh₂om (Kroonen s.v. *bewwa-, PDF 101); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈbewwɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈbeww", note = "PWGmc *beuw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeoːw" },
 ]
 
@@ -6467,6 +6478,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *tala-, PDF 548: 
 forms = [
   { time = -2000, ipa = "ˈdolχom", category = "noun", note = "PIE *dolHom (Kroonen s.v. *tala-, PDF 548); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈtɑlɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈtɑl", note = "PWGmc *tal (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtæːl" },
 ]
 
@@ -6507,6 +6519,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *gaidwa-, PDF 203
 forms = [
   { time = -2000, ipa = "ˈgʱojdʱwom", category = "noun", note = "PIE *gʰoydʰwom (Kroonen s.v. *gaidwa-, PDF 203); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈɣɑjðwɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈɣɑjdu", note = "PWGmc *gaidu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑːd" },
 ]
 
@@ -6527,6 +6540,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wetman-, PDF 623
 forms = [
   { time = -2000, ipa = "ˈχwedmoː", category = "noun", note = "PIE *h₁wédmō (Kroonen s.v. *wetman-, PDF 623; Ringe PDF 103); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈwetmɔːː", category = "noun" },
+  { time = 403, ipa = "ˈweθmɔː", note = "PWGmc *weþmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwitumɑ" },
 ]
 
@@ -6547,6 +6561,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *rōta-, PDF 456:
 forms = [
   { time = -2000, ipa = "ˈχroχdos", category = "adj", note = "PIE *HroHdos (Kroonen s.v. *rōta-, PDF 456); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈrɔːtɑz", category = "adj" },
+  { time = 403, ipa = "ˈrɔːt", note = "PWGmc *rōt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈroːt" },
 ]
 
@@ -6566,6 +6581,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *amban-, PDF 62: 
 forms = [
   { time = -2000, ipa = "ˈʁʷembʱoː", category = "noun", note = "PIE *h₃émbʰō (Kroonen s.v. *amban-, PDF 62); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈɑmbɔːː", category = "noun" },
+  { time = 403, ipa = "ˈɑmbɔː", note = "PWGmc *ambō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6584,6 +6600,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *mōhan- ~ *magan
 forms = [
   { time = -2000, ipa = "ˈmeħkoː", category = "noun", note = "PIE *méh₂kō (Kroonen s.v. *mōhan- ~ *magan-, PDF 411); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈmɔːxɔːː", category = "noun" },
+  { time = 403, ipa = "ˈmɑxɔː", note = "PWGmc *mahō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6602,6 +6619,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *knuk(k)an-, PDF 
 forms = [
   { time = -2000, ipa = "ˈgʲnugoː", category = "noun", note = "PIE *ǵnugō (Kroonen s.v. *knuk(k)an-, PDF 338); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈknukɔːː", category = "noun" },
+  { time = 403, ipa = "ˈknokɔː", note = "PWGmc *knokō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6610,6 +6628,7 @@ gloss = "skuwwô"
 note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *skuwwan-, PDF 492; Ringe PDF 103: *skuṓ. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
   { time = -2000, ipa = "skuˈoː", category = "noun", note = "PIE *skuṓ (Kroonen s.v. *skuwwan-, PDF 492; Ringe PDF 103); Wiktionary cites only a bare root." },
+  { time = 403, ipa = "ˈskuːwɔː", note = "PWGmc *skūwō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃuːwɑ" },
 ]
 
@@ -6620,6 +6639,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *azani-, PDF 84: 
 forms = [
   { time = -2000, ipa = "ˈχosonis", category = "noun", note = "PIE *h₁osonis (Kroonen s.v. *azani-, PDF 84); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈɑzɑniz", category = "noun" },
+  { time = 403, ipa = "ˈɑzɑni", note = "PWGmc *aʀani (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6674,6 +6694,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *hamfa-, PDF 247:
 forms = [
   { time = -2000, ipa = "ˈkompos", category = "adj", note = "PIE *kómpos (Kroonen s.v. *hamfa-, PDF 247); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈxɑmɸɑz", category = "adj" },
+  { time = 403, ipa = "ˈxɑmf", note = "PWGmc *hamf (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
