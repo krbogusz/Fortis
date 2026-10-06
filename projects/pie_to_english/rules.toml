@@ -2815,12 +2815,14 @@ definition = "oː → ɔː"
 
 [sporadic_flood_strut]
 time = 1600
-name = "SPORADIC: FLOOD shortens to the STRUT vowel"
-description = """ME flōd gives RP flood /flʌd/ — the long *oː shortens and unrounds to STRUT, as in
-blood and (with FOOT) good. Lexically split from the words that keep /uː/ (mood, food). Word-scoped:
-the *uː the Vowel Shift makes is shortened to the STRUT *ʌ."""
+name = "SPORADIC: flood shortens early enough to unround"
+description = """ME flōd gives RP flood /flʌd/. The [uː] of the Vowel Shift shortened to [ʊ] in flood,
+blood and glove early enough for them to take part in the unrounding of [ʊ] to [ʌ] (Minkova §8.3.1,
+PDF 272; Pyles & Algeo p. 172, PDF 94). Gil (1621) has ⟨fludz⟩ with the short u of ⟨but⟩, so the
+shortening comes before 1621 and the unrounding (eme_foot_strut_split, 1640) after it. The
+shortening is lexical (mood and food keep [uː]), so the rule is word-scoped."""
 words = ["flood"]
-definition = "uː → ʌ"
+definition = "uː → ʊ"
 
 [sporadic_er_lowering]
 time = 1450
