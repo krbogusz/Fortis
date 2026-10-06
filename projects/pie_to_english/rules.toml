@@ -1181,9 +1181,13 @@ description = "Minkova §4.1 — the Verner/Grimm voiced fricative hardens in We
 definition = "ð → d"
 
 [wg_b_hardening]
-time = 260
+time = 404
 name = "β becomes f"
-description = "*ubilaz > OE yfel"
+description = """*ubilaz > OE yfel
+
+t = 404, after the Proto-West Germanic checkpoint (403). In PWGmc */b/ still had its fricative
+allophone, "much as [it] had been in PGmc" (Ringe & Taylor §4.1, PDF 121), so the merger of *β
+with *f is later. Dated 260, it gave the 403 column f for the β of *haƀan, *seƀun, *uƀil."""
 definition = "β → f"
 
 # The three Proto-Germanic diphthongs reach Old English, and NOTHING was carrying them there:
