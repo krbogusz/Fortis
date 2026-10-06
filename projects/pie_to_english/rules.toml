@@ -2808,14 +2808,17 @@ the *uː the Vowel Shift makes is shortened to the STRUT *ʌ."""
 words = ["flood"]
 definition = "uː → ʌ"
 
-[sporadic_heart_start]
-time = 1739
-name = "SPORADIC: HEART has the START vowel, not NURSE"
-description = """ME hert gives RP heart /hɑːt/ with START /ɑː/, not the NURSE /ɜː/ its short *ɛ before
-*r would regularly take (as in her, herd). A lexical irregularity — heart and hearth both back to
-START. Word-scoped, dated with the other pre-/r/ vowels."""
-words = ["heart"]
-definition = "ɛ → ɑ / _ ɹ"
+[sporadic_er_lowering]
+time = 1450
+name = "SPORADIC: late ME ɛr > ar in star and heart"
+description = """Before /r/, ME ɛ was lowered to a: sterre > starre, herte > harte. The change began in the
+North early in the 14th century and reached the South by its end (Dobson §64, cited in Minkova
+§7.3.1, PDF 200, and §8.3.2, PDF 275–277). It was incomplete: spelling and Latin restored [ɛr] in
+many words (serve, perfect, AmE clerk), and her, herd and fern keep NURSE. So the rule is
+word-scoped. Minkova names star in both sections, and says heart "must have had the short [ε] for
+it to be lowered to [a]". From here both words follow the ME /ar/ of arm and hard."""
+words = ["star", "heart"]
+definition = "ɛ → a / _ r"
 
 [sporadic_ansuz_nasal]
 time = 150
