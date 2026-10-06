@@ -38,8 +38,8 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *dwóh₁ is r
 forms = [
   { time = -2000, ipa = "ˈdwoj", category = "num", note = "PIE *dwóh₁, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtwɑj", category = "num" },
-  { time = 900, ipa = "ˈtweːjen" },
-  { time = 1400, ipa = "ˈtwæj" },
+  { time = 900, ipa = "ˈtwɑː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈtweːjen. Wrong word: twēġen is the masculine, continued by twain; two continues the feminine and neuter twā (Hoad, Klein s.v. two, twain; Pyles & Algeo pp. 105, 144; Ringe & Taylor PDF 95)." },
+  { time = 1400, ipa = "ˈtwɔː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈtwæj. Wrong word: ME tweye continues twēġen (twain); two continues twā > ME twō (Hoad, Klein s.v. two, twain; Pyles & Algeo p. 146 n. 4)." },
 ]
 
 [[words]]
@@ -1664,7 +1664,7 @@ forms = [
   { time = -2000, ipa = "ˈbʱogis", category = "noun", note = "PIE *bʰog-i-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑkiz", category = "noun" },
   { time = 403, ipa = "ˈbɑki", note = "PWGmc *baki (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈbæk" },
+  { time = 900, ipa = "ˈbet͡ʃe", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈbæk. Wrong word: bæc is 'back'; *bakiz 'brook' gives OE beċe (Ringe & Taylor PDF 252, 209; Hoad s.v. beck)." },
   { time = "final", ipa = "ˈbɛk" },
 ]
 
@@ -1912,7 +1912,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲelmoː", category = "noun", note = "PIE *ḱél-mō, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 403, ipa = "ˈxelmɔː", note = "PWGmc *helmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxelmɑ" },
-  { time = 1400, ipa = "ˈhalm" },
+  { time = 1400, ipa = "ˈhɛlm", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈhalm. Wrong word: ME halm is haulm 'straw' < OE healm; helm 'tiller' is ME helme < OE helma (Klein s.v. helm, PDF 368, and s.v. halm, PDF 363)." },
   { time = 1580, ipa = "ˈhɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨hełm⟩ with his half-vowel l, and Jones gives [hɛləm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈhɛlm" },
 ]
@@ -2471,7 +2471,7 @@ forms = [
   { time = 200, ipa = "ˈmizdɔː", category = "noun" },
   { time = 403, ipa = "ˈmizdu", note = "PWGmc *miʀdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmeːd" },
-  { time = 1400, ipa = "ˈmɛːd" },
+  { time = 1400, ipa = "ˈmeːd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈmɛːd. Wrong word: OE mēd has a close ē, which ME [meː] continues; /mɛːd/ is mead 'drink' < medu (Minkova §5.2.3, PDF 121, and PDF 201, 221; Pyles & Algeo p. 145)." },
   { time = "final", ipa = "ˈmiːd" },
 ]
 
@@ -2793,11 +2793,10 @@ forms = [
 [[words]]
 id = "arbaidiz"
 gloss = "arbaidiz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈæɑrfoθe was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong word: OE earfoþe continues the derivative *arbaidja-, not *arbaidiz (Kroonen s.v. *arbaiþi-, PDF 71; Ringe & Taylor PDF 195)."
 forms = [
   { time = -2000, ipa = "ˈʁʷorbʱos", category = "noun", note = "PIE *h₃órbʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑrβɑjðiz", category = "noun" },
-  { time = 900, ipa = "ˈæɑrfoθe" },
   { time = 1400, ipa = "ˈarvəð" },
 ]
 
@@ -3529,7 +3528,7 @@ forms = [
   { time = -2000, ipa = "widˈtos", category = "adj", note = "PIE *widtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwissɑz", category = "adj" },
   { time = 403, ipa = "ˈwiss", note = "PWGmc *wiss (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈwiːs" },
+  { time = 900, ipa = "ˈwiss", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈwiːs. Wrong word: wīs 'wise' continues *wīsaz; *wissaz 'certain' gives (ġe)wiss (Ringe & Taylor, addenda PDF 527)." },
 ]
 
 [[words]]
@@ -3589,11 +3588,10 @@ forms = [
 [[words]]
 id = "niþjaz"
 gloss = "niþjaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈniθθɑs was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong form: niþþas 'men' is a plural with a remodelled ending, *niþjōz >! niþþas, not a reflex of the singular (Ringe & Taylor PDF 66)."
 forms = [
   { time = -2000, ipa = "ˈnitjos", category = "noun", note = "PIE *nítyos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈniθjɑz", category = "noun" },
-  { time = 900, ipa = "ˈniθθɑs" },
 ]
 
 [[words]]
@@ -3993,11 +3991,9 @@ forms = [
 [[words]]
 id = "hersô"
 gloss = "hersô"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈxærn was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong word: OE hærn 'wave, sea' comes from *hraznu (Ringe & Taylor PDF 99); Liberman (BRAIN, PDF 73) calls it a late hapax and probably not native. The 1400 target ˈhɛrns was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong word: ME hernes 'brains' is Scandinavian (Liberman, BRAIN, PDF 73)."
 forms = [
   { time = -2000, ipa = "ˈkʲerħsoː", category = "noun", note = "PIE *ḱérh₂sō, as cited by Wiktionary." },
-  { time = 900, ipa = "ˈxærn" },
-  { time = 1400, ipa = "ˈhɛrns" },
 ]
 
 [[words]]
@@ -4228,7 +4224,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲlojwom", category = "noun", note = "PIE *ḱloy-wo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxlɑjwɑ̃", category = "noun" },
   { time = 403, ipa = "ˈxlɑjw", note = "PWGmc *hlaiw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈxleoːw" },
+  { time = 900, ipa = "ˈxlɑːw", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈxleoːw. Wrong word: hlēow 'shelter' is a different word; *hlaiwą gives OE hlāw 'mound', since *ai gives ā in every OE dialect (Klein s.v. low 'hill', PDF 458; Hoad s.v. lee; Ringe & Taylor PDF 185-186)." },
   { time = 1400, ipa = "ˈlɔw", note = "IPA from Wiktionary (kaikki) for ME lowe /ˈlɔu̯(ə)/; added 2026-10-06." },
 ]
 

@@ -2900,13 +2900,6 @@ words = ["star"]
 definition = "e → ɑ / _ #"
 
 
-[sporadic_beck_no_palatal]
-time = 476
-name = "SPORADIC: *bakiz > OE bæc keeps *k, not the palatal our rule makes"
-description = "*bakiz gives OE bæc /bæk/; oe_palatalisation affricates the *k before the front vowel, but this word keeps the stop, and the vowel is *æ with no final -e. Word-scoped."
-words = ["beck"]
-definition = ["t͡ʃ → k", "e → æ", "[+syll, stress: none] → ∅ / _ #"]
-
 [sporadic_any_ending]
 time = 476
 name = "SPORADIC: *ainagaz > OE ǣniġ — front vowel and the -iġ suffix"
