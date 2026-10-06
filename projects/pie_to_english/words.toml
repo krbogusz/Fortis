@@ -653,7 +653,7 @@ forms = [
   { time = -2000, ipa = "okʲˈtoːw", category = "num", note = "PIE *oḱtṓw, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑxtɔːw", category = "num" },
   { time = 403, ipa = "ˈɑxtɔː", note = "PWGmc *ahtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈæɑxtɑ" },
+  { time = 900, ipa = "ˈæxtɑ", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈæɑxtɑ. Dialect variant: eahta is West Saxon, with breaking. Ringe & Taylor §6.6.3 (PDF 327): *æhtā > OE eahta (WS), with Anglian smoothing in North. æhto and Merc. hund-æhta-tiġ 'eighty'. PDE eight continues the Anglian form (Minkova §7.4 starts ME eighte from OE ehta)." },
   { time = 1400, ipa = "ˈæjxt" },
   { time = 1687, ipa = "ˈæɪt", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper says eight is 'commonly sounded ait', with the diphthong formed from the a of can and i. (Jones sect. 4.4.4, PDF 276 (book p. 263)). Added 2026-10-06." },
   { time = "final", ipa = "ˈeɪt" },
@@ -1573,7 +1573,7 @@ forms = [
   { time = -2000, ipa = "ħekʲtʁʷuˈtχoː", category = "adj", note = "PREFORM corrected 2026-10-06: was okʲtoˈwoː; now *h₂eḱth₃utHṓ. Kroonen s.v. *ahtudan-, PDF 45: *h₂eḱt-h₃u-tHo-; the accent is read off the Verner-voiced *d. PIE *oḱtowós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑxtuðɔːː", category = "adj" },
   { time = 403, ipa = "ˈɑxtudɔː", note = "PWGmc *ahtudō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈæɑxtoθɑ" },
+  { time = 900, ipa = "ˈæxtoθɑ", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈæɑxtoθɑ. Dialect variant: eahtoþa is West Saxon, with breaking. Ringe & Taylor §6.6.3 (PDF 327) give Anglian æh- for 'eight' (Merc. hund-æhta-tiġ); PDE eighth continues the Anglian form." },
   { time = 1400, ipa = "ˈæjxtəð" },
   { time = "final", ipa = "ˈeɪtθ" },
 ]
