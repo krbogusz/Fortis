@@ -148,3 +148,17 @@ which is what Ringe's examples have (*s, *p), it changes no other word.
 
 **Rejected:** Kroonen's preform *péh₂ur with Mahlow's law (s.v. *fōr-, PDF 191). Mahlow's law is
 decided on its own.
+
+## 2026-10-07: Kluge's law after Verner for *ðn (white)
+
+**Choice:** Adopt Kroonen's post-Verner Kluge's law for a Verner-voiced *ð before *n and the accent
+(`kroonen_kluge_after_verner`), with his late shortening of a geminate after a long vowel
+(`kroonen_late_geminate_shortening`), and his preform *ḱweytnós for white.
+
+**Reason:** Ringe rejects Kluge's law and gives no derivation of *hwītaz. Kroonen derives it
+(*ḱueit-nó- > *hwītta- > *hwīta-, s.v. *hwīta-, PDF 307), and his chronology puts the law after
+Verner (§2.2.5.2, §2.2.6). Ringe's counterexample *swiknaz has *kn, which this restricted form does
+not touch. Tested: white exact at all five checkpoints, no other word changed. The cascade's older
+pre-Grimm `kluges_law` is left as it is.
+
+**Rejected:** Following Ringe and leaving white without a derivation.

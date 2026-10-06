@@ -462,6 +462,16 @@ continuant that is NOT the sibilant *s (which is +strident) — so it catches *�
 Grimm's aspirate clause, and *ð from Verner alike, whatever letter renders them."""
 definition = "[-son, +cont, +lingual, +front, +anterior, strident: none, dental: none] → [+dental]"
 
+# Kroonen's order puts Kluge's law AFTER Verner's law (Grimm 1 > Verner > Kluge > Grimm 2; §2.2.5.2
+# and the flowchart, §2.2.6, PDF 31, 38): a Verner-voiced *ð before *n and the accent geminates to
+# *tt. *ḱueit-nó- > *hwītta- > *hwīta- 'white' (s.v. *hwīta-, PDF 307). Before the stress is fixed,
+# because the accent conditions it. See DECISIONS.md for the choice against Ringe.
+[kroonen_kluge_after_verner]
+time = -1000
+name = "Kluge's law after Verner: *ðn before the accent becomes *tt"
+description = "Kroonen §2.2.5.2, §2.2.6; s.v. *hwīta-, PDF 307 — *ḱweytnós > *hwītta- > *hwīta-"
+definition = "ð n → t t / ([+syll] | j) _ [+syll, stress: primary]"
+
 [stress_change]
 time = -1000
 name = "Stress change to first syllable"
@@ -812,6 +822,15 @@ i-stem with the accusative *þrinz (§4.3.6 (i), PDF 330). Whether monosyllables
 recovered (§4.3.4 (i), PDF 317), so the change is word-scoped here."""
 words = ["þrinz"]
 definition = "s → z / n _ #"
+
+# Geminates shorten after a long vowel late in Proto-Germanic (Kroonen §2.2.6, PDF 37–38): the *tt
+# that Kluge's law gives *hwītta- is single in *hwītaz. The early geminate_shortening (-1900) comes
+# before Kluge's law and cannot reach it.
+[kroonen_late_geminate_shortening]
+time = 150
+name = "A geminate obstruent shortens after a long vowel"
+description = "Kroonen §2.2.6, PDF 37–38 — *hwītta- > *hwītaz"
+definition = "1=[-son, -syll] @1 → @1 ∅ / [+syll, length: long] _"
 
 [lvl_nominative_z]
 time = 150

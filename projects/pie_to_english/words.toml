@@ -509,7 +509,7 @@ gloss = "white"
 frequency = 112881
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈkʲwejtoːr", category = "adj", note = "PIE *ḱweytōr, as cited by Wiktionary." },
+  { time = -2000, ipa = "kʲwejˈtnos", category = "adj", note = "PREFORM corrected 2026-10-06: was ˈkʲwejtoːr; now *ḱweytnós. Kroonen s.v. *hwīta-, PDF 307: *ḱueit-nó-, with Kluge's law after Verner; the cited *ḱweytōr is a different derivative. PIE *ḱweytōr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxʷiːtɑz", category = "adj" },
   { time = 403, ipa = "ˈxwiːt", note = "PWGmc *hwīt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwiːt" },
