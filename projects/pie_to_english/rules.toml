@@ -2201,6 +2201,15 @@ definition = [
     "[+syll] x [+syll, stress: none] → [length: long] ∅ ∅",
 ]
 
+# A final *-iju contracts: the *j is lost between the high vowels and *iu becomes the diphthong
+# *īo, which later merges with *ēo: *þrijō > *þriu > þrīo, *frijōnd- > frīond (Ringe & Taylor
+# §6.1.2, PDF 189–190; īo and ēo merge, §6.10.1, PDF 353). The cascade writes the merged *ēo.
+[oe_iju_contraction]
+time = 441
+name = "A final *-iju contracts to the diphthong *ēo"
+description = "Ringe & Taylor §6.1.2, §6.10.1 — *frijō > *friu > frēo, *þrijō > þrīo"
+definition = "[+syll, aperture: high, +front, stress: primary] j [+syll, aperture: high, +back, stress: none] → e oː ∅ ∅ / _ #"
+
 [sporadic_zstem_istem]
 time = 399
 name = "SPORADIC: eġe and siġe re-form their s-stem as an i-stem"
@@ -2734,8 +2743,8 @@ time = 476
 name = "SPORADIC: *frijaz, *frijō > OE frēo — the stem vowel becomes the *ēo diphthong"
 description = """*frijaz, *frijō give OE frēo: once the intervocalic *j is lost the stressed *ī and
 the following back vowel contract to the *ēo diphthong. Word-scoped to these two."""
-words = ["free", "frijō"]
-# Short or long: *frijō keeps a short *i, *frijaz has had PWGmc *frī since `wg_final_j_vocalisation`.
+words = ["free"]
+# PWGmc *frī (`wg_final_j_vocalisation`). *frijō now reaches frēo regularly (`oe_iju_contraction`).
 definition = "[+syll, aperture: high, +front] → e oː / _ #"
 
 [sporadic_geminate_no_umlaut]
