@@ -764,7 +764,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχnewn̩", category = "num", note = "PIE *h₁néwn̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnewun", category = "num" },
-  { time = 403, ipa = "ˈnewn", note = "PWGmc *neun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈniɣun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈnewn. Ringe & Taylor §5.3, PDF 181: the English line has northern West Germanic *nigun (OE nigon, OF niugen, OS nigun); *neun is the form of OHG niun. Reconstruction column, where Ringe & Taylor outrank Wiktionary. Transcribed by pwgmc_ipa. PWGmc *neun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnigon" },
   { time = 1400, ipa = "ˈniːn" },
   { time = "final", ipa = "ˈnaɪn" },
