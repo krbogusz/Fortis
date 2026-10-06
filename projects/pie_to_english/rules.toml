@@ -1730,20 +1730,13 @@ definition = "[+syll, length: short, aperture: mid, +back, +rounded] → [advanc
 # It must run BEFORE i-mutation (t=420): the front vowels i-mutation creates do NOT trigger
 # palatalisation, which is exactly why OE cynd keeps its /k/ — its /y/ is younger than the
 # change. Ordered after i-mutation instead, the rule turns cynd into **t͡ʃynd and loses ground.
-[wg_gemination]
+[oe_j_loss_after_geminate]
 time = 430
-name = "West Germanic gemination: a consonant doubles before *j"
-description = """Minkova §4.2. A single consonant after a SHORT vowel is doubled by a following
-*j, which is then absorbed:
-
-    *badją  > OE bedd     *kunją  > cynn     *midjaz > midd
-    *wadją  > wedd        *ribją  > ribb     *banjō  > benn
-
-*r is the exception and does not geminate (*harjaz > OE here, not **herre).
-
-Dated 430, AFTER i-mutation (420): the *j is what triggers the umlaut, and a rule that consumes it
-first would take the trigger away — *badją needs its *a fronted to *e before the *j is spent."""
-definition = "1=[+cons, -syll, trill: none] j → @1 @1 / [+syll, length: short] _"
+name = "*j is lost after a geminate"
+description = """Ringe & Taylor (PDF 62) write the West Germanic gemination as *Cj > *CjCj: the *j survives it
+(PWGmc *bannju, *skallju, *haggju). Old English has bend, sċiell, heċġ, with no trace of it, so the
+*j is lost after the geminate. Dated 430, after i-mutation (420), which the *j triggers."""
+definition = "j → ∅ / 1=[-syll] @1 _"
 
 [oe_parasite_vowel]
 time = 466
@@ -1798,6 +1791,10 @@ description = "Minkova §4.3 — ċinn > chin, heċġ > hedge, fisċ > fish. NOT
 definition = [
     "s k → ʃ ∅",
     "k → t͡ʃ / _ [+syll, +front]",
+    # The geminate *gg before *j, from the West Germanic gemination (*hagjō > *haggju), is
+    # palatal as a whole: OE heċġ, leċġ. Before the clauses below, which would take only its
+    # first half.
+    "g g → j j / _ j",
     "g → j / _ [+syll, +front]",
     "g → j / [+syll, +front] _ #",
     "g → j / [+syll, +front] _ [-syll]",
@@ -2456,6 +2453,24 @@ definition = [
     "j → i / [+cons] _ # // j _",
 ]
 
+
+[wg_gemination]
+time = 402
+name = "West Germanic gemination: a consonant doubles before *j"
+description = """Minkova §4.2; Ringe & Taylor §3.1.2 (PDF 61–62). A single consonant after a SHORT vowel is
+doubled before *j: *Cj > *CjCj. The *j stays (PWGmc *bannju, *skallju, *haggju) and is lost in
+Old English after i-mutation (oe_j_loss_after_geminate):
+
+    *banjō  > *bannju > OE benn     *skaljō > *skallju > OE sċiell     *hagjō > *haggju > OE heċġ
+
+*r is the exception and does not geminate (*harjaz > OE here, not **herre). The geminate of *ɣ is
+the stop *gg. Ringe & Taylor show that the change follows the loss of final *-a and *-ą and the
+vocalisation of a stranded *-j, so it is dated 402, after those rules, and before the 403
+checkpoint."""
+definition = [
+    "1=[+cons, -syll, trill: none] j → @1 @1 j / [+syll, length: short] _",
+    "ɣ ɣ → g g",
+]
 [sporadic_final_u_levelling]
 time = 461
 name = "SPORADIC (levelling): the *-u from a final *w is lost — cwic, eoh"
