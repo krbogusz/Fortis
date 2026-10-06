@@ -3246,6 +3246,15 @@ description = "ME fool /foːl/ > RP full /fʊl/: the *uː the Vowel Shift makes 
 words = ["full"]
 definition = "uː → ʊ"
 
+[sporadic_lime_m]
+time = 1650
+name = "SPORADIC: line 'linden' becomes lime"
+description = """Hoad s.v. lime³: "linden, xvii. unexpl. alt. of line, var. of lind". The 1400 target
+is still ME līn, so the change is dated in the 17th century. Word-scoped: Hoad calls it
+unexplained, and no other word changes final n to m."""
+words = ["lindō"]
+definition = "n → m / _ #"
+
 [sporadic_foot_late_shortening]
 time = 1700
 name = "SPORADIC: foot shortens to FOOT after the unrounding"
