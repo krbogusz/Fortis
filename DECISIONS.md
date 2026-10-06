@@ -162,3 +162,15 @@ not touch. Tested: white exact at all five checkpoints, no other word changed. T
 pre-Grimm `kluges_law` is left as it is.
 
 **Rejected:** Following Ringe and leaving white without a derivation.
+
+## 2026-10-07: Do not adopt Mahlow's law
+
+**Choice:** The cascade has no rule for Mahlow's law (Kroonen's *ōu > *ō except before two
+consonants or word-finally, §2.1.5, PDF 22–23).
+
+**Reason:** Ringe derives *stauraz regularly from *steh₂-u-ro- (PDF 107), against Kroonen's *stōra-
+from the same kind of preform. Tested with Kroonen's lengthening before *u and his Mahlow rule:
+roo lost its exact match at 200 and 900 (OE rōw keeps the *w that Ringe's chronology preserves),
+and stōraz did not become exact.
+
+**Rejected:** Kroonen's Mahlow's law.
