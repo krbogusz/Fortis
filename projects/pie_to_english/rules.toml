@@ -1909,6 +1909,44 @@ definition = "θ → ð / [+syll] _ [+syll]"
 
 
 # ─── Middle English ───────────────────────────────────────────────────────────────────────────
+# Old English *g was a fricative [ɣ] after a back vowel (Minkova §4.2.1, PDF 83–84), and Middle
+# English vocalises it to *w there: lagu > lawe, sagu > sawe, boga > bowe (§5.1.2, PDF 103; Jones
+# §3.4.2, Table 3.18, PDF 163–165). The cascade writes the fricative g (`wg_g_hardening`, 405), so
+# the rule reads g. A single *g between a back vowel and a vowel is never the stop, which stands
+# only initially, after a nasal and in a geminate. Before the æ/ɑ merger (1150), which turns OE ɑ
+# into a front a, and before open-syllable lengthening (1200), which the new closed syllable blocks.
+[me_g_vocalisation]
+time = 1140
+name = "A *g after a back vowel vocalises to *w before a vowel"
+description = "Minkova §4.2.1, §5.1.2; Jones Table 3.18 — sagu > sawe, lagu > lawe, boga > bowe"
+definition = "g → w / [+syll, +back] _ [+syll]"
+
+# In a vowel + glide diphthong the vowel's length is neutralised (Minkova §6.5.3, PDF 177–178;
+# §7.4, PDF 208): OE dēaw gives ME [dɛw], and the 1400 column writes every ME diphthong as a short
+# vowel + w (niw, saw, fɔwr). After the loss of final -e (1350), which leaves the *w in the coda.
+[me_glide_length_neutralisation]
+time = 1360
+name = "A long vowel shortens before a coda *w"
+description = "Minkova §6.5.3, §7.4 — dēaw > ME dɛw"
+definition = "[+syll, length: long] → [length: short] / _ w [-syll]* $"
+
+# Late ME *a before a final *l develops a *w glide and joins *au: hall > haul, ball > bawl
+# (Jones §3.4.4, Table 3.24, PDF 172–173; Salesbury 1547, PDF 253; Minkova §8.2.2.3, PDF 268–269).
+[lme_al_glide]
+time = 1450
+name = "A glide develops between *a and a final *l"
+description = "Jones Table 3.24 — hall > haul, mainly 15th century"
+definition = "∅ → w / a _ l #"
+
+# Early Modern *au becomes *ɔː: claw, draw, law, all (Jones §4.4.2, PDF 270–273; Minkova
+# §8.2.2.3, PDF 268–269). Dated between Gil (1621), who still writes the diphthong (dauħter, Jones
+# PDF 274), and Cooper (1687), whose "o guttural" in awl is [ɔː] (PDF 271).
+[eme_aw_monophthongisation]
+time = 1650
+name = "*au becomes *ɔː"
+description = "Jones §4.4.2; Minkova §8.2.2.3 — law, draw, all"
+definition = "a w → ɔː"
+
 
 [me_ea_monophthongisation]
 time = 1100
@@ -2776,7 +2814,7 @@ farrow joins the list on the strength of its OBLIQUE stem: OE fearh 'pig' inflec
 is that *ɣ — not the nominative's final *h — that the Middle English farow generalises, exactly as
 marrow generalises the *ɣ of mearges. The nominative-only *h of a word with no such oblique does
 not vocalise, which is why this stays a word list rather than a general rule about final velars."""
-words = ["marrow", "tallow", "saw", "gelwaz", "farrow", "sallow"]
+words = ["marrow", "tallow", "gelwaz", "farrow", "sallow"]
 definition = [
     "[+back, aperture: high, -son, nasal: none] → ɔ w / [+cons, +son] _ #",
     "[+back, aperture: high, -son, nasal: none] → w / [+syll] _ #",
