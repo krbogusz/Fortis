@@ -5217,6 +5217,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "aˈmros", category = "adj", note = "PIE *amrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑmprɑz", category = "adj" },
+  { time = 403, ipa = "ˈɑmpr", note = "PWGmc *ampr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5827,6 +5828,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱr̩sˈtis", category = "noun", note = "PIE *bʰr̥s-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈburstiz", category = "noun" },
+  { time = 403, ipa = "ˈbursti", note = "PWGmc *bursti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5991,6 +5993,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpln̩ħtrom", category = "noun", note = "PIE *pl-n̥-h₂-tro-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸlunθrɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈflonθr", note = "PWGmc *flonþr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6067,6 +6070,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "dʱewˈbos", category = "adj", note = "PIE *dʰewb-ó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdewpɑz", category = "adj" },
+  { time = 403, ipa = "ˈdewp", note = "PWGmc *deup (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdeoːp" },
   { time = 1400, ipa = "ˈdeːp" },
   { time = "final", ipa = "ˈdiːp" },
@@ -6080,6 +6084,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgroχnis", category = "adj", note = "PIE *groh₁-ni-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣrɔːniz", category = "adj" },
+  { time = 403, ipa = "ˈɣrɔːniː", note = "PWGmc *grōnī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgreːne" },
   { time = 1400, ipa = "ˈgreːn" },
   { time = "final", ipa = "ˈgɹiːn" },
@@ -6093,6 +6098,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "dn̩ˈgʲʱweħs", category = "noun", note = "PIE *dn̥ǵʰwéh₂s, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtuŋgɔ̃ː", category = "noun" },
+  { time = 403, ipa = "ˈtuŋgɑː", note = "PWGmc *tungā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtuŋge" },
   { time = 1400, ipa = "ˈtuŋg" },
   { time = "final", ipa = "ˈtʌŋ" },
@@ -6106,6 +6112,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱiˈdros", category = "adj", note = "PIE *bʰidrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈbitrɑz", category = "adj" },
+  { time = 403, ipa = "ˈbitr", note = "PWGmc *bitr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbiter" },
   { time = "final", ipa = "ˈbɪtə" },
 ]
@@ -6183,6 +6190,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "deˈkʲswos", category = "adj", note = "PIE *deḱs(i)wós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtexswɔːː", category = "adj" },
+  { time = 403, ipa = "ˈtexswɔː", note = "PWGmc *tehswō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6228,6 +6236,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈlejgʲos", category = "noun", note = "PIE *leyǵ-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈliːkɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈliːk", note = "PWGmc *līk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
