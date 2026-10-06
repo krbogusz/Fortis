@@ -723,6 +723,8 @@ problem and is recorded as one."""
 definition = [
     "ɣʷ → b / # _",
     "ɣʷ → ɣ / [+cons, nasal: 1] _",
+    # also after *l: *wl̥kʷíh₂ > *wulgī (Ringe §3.2.4 (iii), PDF 143–144, who calls the point uncertain)
+    "ɣʷ → ɣ / l _",
     "ɣʷ → w",
 ]
 
@@ -764,7 +766,8 @@ description = "*/j/ is lost between vowels except after *i* (and, automatically,
 definition = [
     "j → ∅ / [+syll] _ [+syll] // [+syll, aperture: high, +front] _",   # j-loss (kept after i; w handled by the context)
     "[+syll, aperture: low] [+syll, aperture: low] → [length: long] ∅",          # aa > aː  (same quality, e.g. aja > stānti)
-    "[+syll, aperture: high, stress: none] → [-syll] / [+syll] _",       # Vi, Vu > diphthong  (offglide)
+    # after a SHORT vowel only: after a long one the hiatus stays, *wēji- > *wēï- (Ringe §3.2.6 (i), PDF 170)
+    "[+syll, aperture: high, stress: none] → [-syll] / [+syll, length: short] _",       # Vi, Vu > diphthong  (offglide)
 ]
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -786,6 +789,15 @@ definition = "[+syll, aperture: low, length: long] → [back, rounded, labial, a
 # *-az (the engine derives it correctly), but oxytone *tr̥nós gives *-as. Germanic has *-az
 # throughout — the ending was levelled across the paradigm, erasing the accentual split. The
 # levelling is stated here because no sound law produces it.
+[sporadic_thrinz_z]
+time = 150
+name = "SPORADIC: the accusative *þrinz has the analogical *-z"
+description = """*-z replaced *-s in nominal endings (Ringe §3.2.4 (ii), PDF 136), and 'three' is an ordinary
+i-stem with the accusative *þrinz (§4.3.6 (i), PDF 330). Whether monosyllables took part cannot be
+recovered (§4.3.4 (i), PDF 317), so the change is word-scoped here."""
+words = ["þrinz"]
+definition = "s → z / n _ #"
+
 [lvl_nominative_z]
 time = 150
 name = "The nominative *-az is levelled across the thematic nouns"
@@ -801,7 +813,8 @@ the accent on its own suffix."""
 # NOT after a consonant, though *tríns > *þrinz makes it tempting: *sehs, *fōts, *tanþs, *gans,
 # *aiks, *wrōts, *nahts and *drōs all keep their *s in exactly that position. The *-z of *þrinz is
 # the numeral's PLURAL ending, a different morpheme from the nominative singular this rule levels,
-# and one levelling cannot be read off the other. *þrinz stays a miss.
+# and one levelling cannot be read off the other, so *þrinz has its own word-scoped rule
+# (`sporadic_thrinz_z`).
 definition = "s → z / [+syll, stress: none] _ #"
 
 # A nasal is lost before */x/, nasalising the vowel and lengthening it: *wonkos > *wɑ̃ːxɑz.

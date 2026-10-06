@@ -4434,7 +4434,7 @@ id = "wēidi"
 gloss = "wēidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈħweːχti", category = "verb.pres.3sg", note = "PIE *h₂wḗh₁ti, as cited by Wiktionary." },
+  { time = -2000, ipa = "ˈħweχjeti", category = "verb.pres.3sg", note = "PREFORM corrected 2026-10-06: was ˈħweːχti; now *h₂wéh₁yeti. Ringe §3.2.6 (i), PDF 170: the verb is thematic *h₂wéh₁ye/o-; the cited *h₂wḗh₁ti is athematic. PIE *h₂wḗh₁ti, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɛːiði", category = "verb.pres.3sg" },
 ]
 
@@ -4757,7 +4757,7 @@ id = "wulgī"
 gloss = "wulgī"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "wl̩ˈkʷiħs", category = "noun", note = "PIE *wl̥kʷíh₂s, as cited by Wiktionary." },
+  { time = -2000, ipa = "wl̩ˈkʷiħ", category = "noun", note = "PREFORM corrected 2026-10-06: was wl̩ˈkʷiħs; now *wl̥kʷíh₂. Ringe §3.2.4 (iii), PDF 143-144: the nominative *wl̥kʷíh₂ has no *-s. PIE *wl̥kʷíh₂s, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwulɣiː", category = "noun" },
 ]
 
