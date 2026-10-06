@@ -2241,7 +2241,7 @@ definition = "x → ∅"
 
 # The falling [iw] becomes the rising [juː] (Minkova §8.2.2.3, PDF 268: from c. 1600; McMahon
 # §3.3.3.2, PDF 129–130; Steponavičius §197, PDF 191: late 16th century; Jones §3.4.3, PDF 171).
-# t = 1640, after the Vowel Shift (1600), which would otherwise diphthongise the new *uː.
+# t = 1640, after the Vowel Shift (1560), which would otherwise diphthongise the new *uː.
 [eme_iw_to_juu]
 time = 1640
 name = "*iw becomes *juː"
@@ -2356,8 +2356,8 @@ as [æ] (PDF 260, 264), and those readings are the 1580 and 1621 targets. So the
 before 1580.
 
 The rule needs a consonant after the vowel, as before. It leaves the [a] of [aw] (hall > haul, law),
-which eme_aw_monophthongisation reads. The [a] of the Vowel Shift's [aɪ] and [aʊ] arrives later
-(1600), so it is not fronted."""
+which eme_aw_monophthongisation reads. The Vowel Shift writes [əɪ] and [əʊ] (1560) and lowers
+them to [aɪ], [aʊ] only at 1690, so they are not fronted."""
 definition = "a → æ / _ [-syll] // _ w"
 
 
@@ -2725,7 +2725,7 @@ description = """RP's centring diphthongs. The Great Vowel Shift has already rai
 /ɹ/ then breaks into a schwa as it goes — beer /bɪə/, deer /dɪə/, share /ʃɛə/, sour /saʊə/. This is
 Jones §4.6, "Seventeenth-century pre-[r] Breaking" (hear [iːr] > [iər], bear [eːr] > [ɛər]).
 
-Dated 1745: after the shift (1600), which decides WHICH vowel is there, and before pde_r_loss."""
+Dated 1745: after the shift (1560, 1600), which decides WHICH vowel is there, and before pde_r_loss."""
 definition = [
     "iː → ɪ ə / _ ɹ",
     "ɛː → ɛ ə / _ ɹ",
@@ -2745,7 +2745,7 @@ definition = "oː → ɔː / _ ɹ"
 time = 1680
 name = "The MEAT vowel joins MEET: /eː/ raises to /iː/"
 description = """The last step of the Great Vowel Shift, and it is a SEPARATE step — ME ɛː reaches
-/eː/ in the shift itself (1600) and only then goes on to /iː/. Dated before Cooper (1687), whose
+/eː/ in the shift itself (1560) and only then goes on to /iː/. Dated before Cooper (1687), whose
 "e long" (bean, dream, eat) and "ee" (ear, fear, near) Jones reads as [iː] (Table 4.8, PDF 259);
 see DECISIONS.md, 2026-10-07. Written
 inside emode_vowel_shift the two clauses fire in the same pass and *drɛːm stops at **dreːm: the
@@ -3016,7 +3016,7 @@ death, stead, thread, red, hot. Minkova §8.3.1 (PDF 271–272) lists bread, dea
 thread among the monosyllables shortened before a dental, and red < OE rēad and hot < OE hāt in
 note 32. The shortening "must have occurred prior to the shift to [iː]", and it was most advanced
 before -d. Mead and seed keep their length, so the rule is word-scoped. Dated 1550, before the
-shift (1600)."""
+shift (1560)."""
 words = ["death", "stead", "thread", "raudaz", "haitaz"]
 definition = ["ɛː → ɛ", "ɔː → ɔ"]
 
@@ -3627,8 +3627,8 @@ dwarf (Jones ch. 4; the WATH/WASP rounding). NOT before a velar, where it stays 
 swank; Minkova §8.2.1, PDF 239–240). Before the START backing (eme_short_a_backs, 1740) so the
 *w-rounded words never reach START.
 
-t = 1590, before the Vowel Shift (1600). Dated 1600 it came after the shift in file order and
-rounded the new [aɪ] of white, wise, wight. Minkova dates the rounding from the 15th century
+t = 1590. It reads only [æ], so the Vowel Shift's [əɪ] (1560) is out of its reach; when the
+shift wrote [aɪ] directly, a rounding dated after it rounded the new [aɪ] of white, wise, wight. Minkova dates the rounding from the 15th century
 (PDF 239), and Bullokar's unrounded warm of 1580 (Jones PDF 264) is still before it."""
 definition = ["æ → ɔ / w _ r", "æ → ɒ / w _ // _ [-syll, +back]"]
 
@@ -3741,7 +3741,7 @@ time = 1610
 name = "PRICE before /r/ takes a schwa: fire, wire"
 description = """The PRICE diphthong develops a schwa before /r/: Hart (1569) already writes fire as [feiər]
 (McMahon §6.3.1, PDF 246–247), and Gil (1621) has fjer beside fjr, hjer 'hire', attier (Jones §4.3,
-Table 4.6, PDF 255), which Jones reads as [əiər]. So the rule is dated after the Vowel Shift (1600)
+Table 4.6, PDF 255), which Jones reads as [əiər]. So the rule is dated after the Vowel Shift (1560)
 and before the 1621 checkpoint, on the shift's [əɪ] and before the trill becomes [ɹ] (1620). The
 later lowering to [aɪ] keeps the schwa."""
 definition = "ə ɪ → ə ɪ ə / _ r"
