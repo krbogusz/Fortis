@@ -959,11 +959,9 @@ definition = [
 ]
 
 # The n-stem nominative *-ô becomes Old English *-a: *uxsɔːː > oxa, *neɸɔːː > nefa, *ɣumɔːː >
-# guma, and every ordinal (*feðurθɔːː > feorþa). It is the OVERLONG that identifies it — the
-# ō-stem *-ō is merely long and becomes *-u instead (t=440 above) — so this rule has to run while
-# the two are still distinguishable, and `oe_overlong_shortening` has been moved from 250 to 465
-# to keep them apart until they have each been dealt with. Merged early, the n-stems were taking
-# the ō-stem's *-u and coming out **nefu, **guma-less oks.
+# guma, and every ordinal (*feðurθɔːː > feorþa). By now it is the PWGmc *-ō of `wg_final_long_o`
+# (402), raised to oː by `wg_long_mid_raising` (404). The ō-stem *-ō has long since become *-u
+# (401), so no other final oː after a consonant is left for this rule to take.
 #
 # And it must run AFTER the apocope (450), which deletes a final short unrounded vowel in a
 # polysyllable and would take this *-a straight back off again. That ordering is why the ending
@@ -971,18 +969,18 @@ definition = [
 [oe_final_overlong_to_a]
 time = 455
 name = "The n-stem ending *-ô becomes *-a"
-description = "*uxsɔːː > oxa, *neɸɔːː > nefa, *feðurθɔːː > feorþa"
-definition = "[+syll, length: overlong] → ɑ / [+syll] []* _ #"
+description = "*uxsɔːː > oxa, *neɸɔːː > nefa, *feðurθɔːː > feorþa, through PWGmc *-ō"
+definition = "[+syll, length: long, +back, +rounded, aperture: mid] → ɑ / [+syll] []* [-syll] _ #"
 
 # The weak (ōn-stem) feminine *-ǭ becomes Old English *-e: *xɔːrɔ̃ː > hōre, *wiðuwɔ̃ː > widuwe,
-# *kʷenɔ̃ː > cwene. The NASAL is what tells it apart from the strong ō-stem *-ō, which is oral
-# and becomes *-u (t=440) — the same two declensions that the Proto-Germanic column keeps apart
-# with its tilde. After the apocope (450), like the *-a above, or it would be deleted again.
+# *kʷenɔ̃ː > cwene. By now it is the PWGmc *-ā of `wg_final_long_o` (402); Ringe & Taylor give
+# PWGmc *tungā, *hertā > OE tunge, heorte (§3.1.4, PDF 74). After the apocope (450), like the *-a
+# above, or it would be deleted again.
 [oe_final_nasal_o_to_e]
 time = 456
 name = "The weak ōn-stem ending *-ǭ becomes *-e"
-description = "*xɔːrɔ̃ː > hōre, *wiðuwɔ̃ː > widuwe, *kʷenɔ̃ː > cwene"
-definition = "[+syll, nasal, length: long] → e / [+syll] []* _ #"
+description = "*xɔːrɔ̃ː > hōre, *wiðuwɔ̃ː > widuwe, *kʷenɔ̃ː > cwene, through PWGmc *-ā"
+definition = "[+syll, length: long, aperture: low, +back] → e / [+syll] []* [-syll] _ #"
 
 [oe_high_vowel_deletion]
 time = 460
@@ -1020,6 +1018,22 @@ time = 402
 name = "The thematic final *-a apocopates"
 description = "*ɑjnɑɣɑ > *ɑjnɑɣ — early, so the *ɣ is word-final when palatalisation looks"
 definition = "[+syll, length: short, +back, rounded: none] → ∅ / [+syll] []* _ #"
+
+# The two word-final long ō-vowels that survive into West Germanic. The ORAL bimoric *-ō has already
+# become *-u (401), so the bimoric vowel left at the end of a word is the NASAL *-ǭ of the ōn-stems.
+# After a consonant only: the *ēo of cnēo is written e + oː and must not count as an ending.
+[wg_final_long_o]
+time = 402
+name = "Final trimoric *-ô becomes *-ō, final bimoric *-ǭ becomes *-ā"
+description = """Ringe & Taylor §3.1.4 (PDF 73–74): word-finally, "surviving bimoric long ō-vowels became
+PWGmc *ā, while trimoric long ō̄-vowels became PWGmc *ō", both mergers: *tungǭ > *tungā (OE tunge),
+*gebō̄z > *gebō (OE ġiefa), and the n-stem *-ô of *uxsô, *fimftô > *-ō (OE oxa, fīfta).
+
+t = 402, before the Proto-West Germanic checkpoint (403), whose forms have *-ō and *-ā here."""
+definition = [
+    "[+syll, length: overlong, +rounded] → [length: long] / [+syll] []* [-syll] _ #",
+    "[+syll, nasal, length: long] → ɑː / [+syll] []* [-syll] _ #",
+]
 
 # A final short *-i that survives the weight test above lowers to *-e — Ringe & Taylor's own
 # chain is *stadiz > *stædi > OE stedi > *stede*. This is what puts the final vowel on mere, here,
