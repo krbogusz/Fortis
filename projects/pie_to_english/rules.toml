@@ -3547,13 +3547,6 @@ only after *i, and only occasionally (mēd beside meord), while hord and heordan
 definition = "[+syll, aperture: high, +front, length: short] z → [aperture: mid, length: long] ∅ / _ d"
 
 
-[sporadic_anguz_no_rounding]
-time = 1200
-name = "SPORADIC: *ange keeps *a before *ŋg in ME — ang, not **ong"
-description = "ME ang, hang, sang keep the unrounded *a before *ŋg, where long, song round (me_a_before_nasal_rounds is lexically split). Word-scoped, undoing the rounding."
-words = ["anguz"]
-definition = "ɔ → a / _ [+nas]"
-
 [sporadic_welkin_e]
 time = 1150
 name = "SPORADIC: *wolcen > ME welken has a front *ɛ"
@@ -3595,25 +3588,6 @@ name = "SPORADIC: *attraz > ME ater keeps a short *a"
 description = "OE ātor/attor gives ME ater /atər/ with a short unrounded *a, not the *ɔ our ā-rounding + OSL give. Word-scoped."
 words = ["atter"]
 definition = "ɔ → a"
-
-[sporadic_seven_osl_miss]
-time = 1250
-name = "SPORADIC: *seofon > ME seven misses the open-syllable lengthening"
-description = """OE seofon gives ME seven /ˈsɛvən/ with a SHORT vowel, and RP keeps it: /ˈsɛvən/,
-not the **/ˈsiːvən/ that lengthening plus the Vowel Shift would give.
-
-One of the open-syllable-lengthening misses that me_open_syllable_lengthening's own notes call a
-genuine Middle English exception rather than a conditioning the rule is missing — the same class as
-fader, weder, ater, oter, and handled the same way, word by word. It cannot be stated as a rule
-about the following consonant, because hæfen sits in exactly the same environment and DOES lengthen
-(ME haven, RP /ˈheɪvən/): seven and haven differ lexically, not phonologically. Compare the heaven,
-ever, never group, which also keeps a short vowel before /v/.
-
-t = 1250, AFTER the lengthening at 1200 and BEFORE the Middle English checkpoint at 1400, so the
-1400 column records the short vowel it should (ˈsɛvən). Left until after 1400 it would fix the
-modern form and leave the Middle English one long."""
-words = ["seven"]
-definition = "ɛː → ɛ"
 
 [sporadic_lindo_nd]
 time = 1250
