@@ -6355,7 +6355,7 @@ frequency = 740
 note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *nablan-, PDF 420: *h₃nobʰlō. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
   { time = -2000, ipa = "ˈʁʷnobʱloː", category = "noun", note = "PIE *h₃nobʰlō (Kroonen s.v. *nablan-, PDF 420); Wiktionary cites only a bare root." },
-  { time = 200, ipa = "ˈnɑβɑlɔːː", category = "noun" },
+  { time = 200, ipa = "ˈnɑβlɔːː", category = "noun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈnɑβɑlɔːː. Kroonen s.v. *nablan-, PDF 420: PGmc *nablan- 'navel' (ON nafli) from *h₃nobʰ-l-ōn-, with no vowel between the b and the l; the medial vowel of OE nafela and OHG nabalo is later. Reconstruction column, where Kroonen outranks Wiktionary. Written in the convention of the old target." },
   { time = 900, ipa = "ˈnɑfolɑ" },
   { time = 1400, ipa = "ˈnaːvəl" },
   { time = "final", ipa = "ˈneɪvəl" },
