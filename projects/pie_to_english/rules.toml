@@ -2409,6 +2409,14 @@ words = ["quick", "ehwaz"]
 definition = "u → ∅ / _ #"
 
 
+[oe_unstressed_u_lowering]
+time = 485
+name = "Unstressed *u is OE o in a closed final syllable"
+description = """Ringe & Taylor §6.9.6 (PDF 350): unstressed a and u "remained distinct in early OE (the latter
+often written o)", and by about 900 the two were merging in closed final syllables. So *nigun,
+*sebun give OE nigon, seofon. Finding F4 of the Ringe & Taylor review (its second half)."""
+definition = "[+syll, aperture: high, +back, stress: none, length: short] → [aperture: mid] / _ [-syll]+ #"
+
 [oe_unstressed_i_to_e]
 time = 472
 name = "An unstressed short *i lowers to *e"
