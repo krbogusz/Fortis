@@ -296,6 +296,15 @@ name = "Velar labialization"
 description = "Velars are labialised by following */w/, which is deleted"
 definition = "[+bk, aperture: high] w → [+rounded] ∅ "
 
+[sporadic_fifth_cardinal_p]
+time = -2000
+name = "SPORADIC: the ordinal *fimftô takes the *p of the cardinal *fimf"
+description = """Kroonen s.v. *fimftan-, PDF 180–181: the ordinal was rebuilt on the full-grade root of the
+cardinal, whose *p for *kʷ is itself sporadic (*penkʷe > *fimf). Before the labiovelars are
+delabialised."""
+words = ["fifth"]
+definition = "kʷ → p / _ t"
+
 [labiovelar_delabialization]
 time = -2000
 name = "Labiovelar delabialization"
@@ -379,6 +388,22 @@ description = """*dlóngʰos > PGmc *langaz. A word-initial stop + *l is not a l
 Germanic and the stop simply goes; the cascade otherwise carried it through Grimm and produced
 **tlangaz, with an onset no attested Germanic word has."""
 definition = "d → ∅ / # _ l"
+
+[sporadic_hluda_long_u]
+time = -1000
+name = "SPORADIC: *hlūdaz 'loud' has a secondary long *ū"
+description = """Kroonen s.v. *hlūda-, PDF 271–272: the root *ḱlu- has no laryngeal, so the long *ū "arose
+secondarily within Germanic"."""
+words = ["loud"]
+definition = "u → uː / l _"
+
+[sporadic_juz_z]
+time = -1000
+name = "SPORADIC: *jūz 'you' takes the *-z of *wīz 'we'"
+description = """Ringe (PDF 164, 244): the *-z of *jūz is analogical, from *wīz. The preform is Kroonen's *iuH-s
+(s.v. *jūz, PDF 315)."""
+words = ["jūz"]
+definition = "s → z / _ #"
 
 [grimms_law]
 time = -1000
@@ -3511,8 +3536,12 @@ definition = "∅ → j / [+syll] _ [+syll]"
 [sporadic_seven_t_loss]
 time = 10
 name = "SPORADIC: *septm̥ > *seƀun loses the *t of *ft"
-description = "The cluster *ft (< *pt) loses its *t: *septm̥ > *seƀun (OE seofon), keeping the Verner-voiced *ƀ. Our cascade instead devoices the *ƀ before the surviving *t. Word-scoped t-loss, before that devoicing."
-words = ["seven"]
+description = """The cluster *ft (< *pt) loses its *t: *septm̥ > *seƀun (OE seofon), keeping the Verner-voiced *ƀ. Our cascade instead devoices the *ƀ before the surviving *t. Word-scoped t-loss, before that devoicing.
+
+Kroonen names the cause: in the ordinal *septm̥-tHó- the first *t was dissimilated against the suffix
+*t, and the cardinal took the *t-less root from it (s.v. *sebun-, *sebunþ/dan-, PDF 469). *ēbanþ-
+'evening' has the same dissimilation (*h₁éh₁pt-ont-, PDF 153)."""
+words = ["seven", "seventh", "even"]
 definition = "t → ∅ / β _"
 
 [sporadic_anadz_cluster_voice]

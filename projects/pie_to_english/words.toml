@@ -48,7 +48,7 @@ gloss = "even"
 frequency = 744544
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈχepi", category = "noun", note = "PIE *h₁epi, as cited by Wiktionary." },
+  { time = -2000, ipa = "χeχpˈtonts", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈχepi; now *h₁eh₁ptónts. Kroonen s.v. *ēbanþ-, PDF 153: nom. *h₁éh₁pt-ont, gen. *h₁h̥₁pt-n̥t-ós; the accent on the suffix records the mobile paradigm, and the *ēb- has the same dissimilation as *sebun-. PIE *h₁epi, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɛːβɑnθs", category = "noun" },
   { time = 403, ipa = "ˈɑːβɑnθ", note = "PWGmc *ābanþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæːfen" },
@@ -1489,7 +1489,7 @@ gloss = "seventh"
 frequency = 5814
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *septm̥mós is replaced by *septm̥mṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
-  { time = -2000, ipa = "septm̩ˈmoː", category = "adj", note = "PIE *septm̥mós, as cited by Wiktionary." },
+  { time = -2000, ipa = "septm̩ˈtχoː", category = "adj", note = "PREFORM corrected 2026-10-06: was septm̩ˈmoː; now *septm̥tHṓ. Kroonen s.v. *sebunþ/dan-, PDF 469: the ordinal *septm̥-tHó-, in which the first *t is dissimilated. PIE *septm̥mós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈseβundɔːː", category = "adj", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈseβunðɔːː. 200 reconstruction: Kroonen s.v. *sebunþ/dan-, PDF 469; every other 200 target has the stop [d] after a nasal, which pgmc_dh_hardening_after_nasal produces." },
   { time = 403, ipa = "ˈseβundɔː", note = "PWGmc *sebundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈseofoθɑ" },
@@ -5645,7 +5645,7 @@ id = "jūz"
 gloss = "jūz"
 note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited derivation, which outranks Wiktionary (Ringe > Kroonen > Wiktionary)."
 forms = [
-  { time = -2000, ipa = "ˈjuː", note = "PIE *yū́, as cited by Wiktionary." },
+  { time = -2000, ipa = "ˈjuχs", note = "PREFORM corrected 2026-10-06: was ˈjuː; now *yúHs. Kroonen s.v. *jūz, PDF 315: *iuH-s; the cited *yū́ has no ending. PIE *yū́, as cited by Wiktionary." },
   { time = 200, ipa = "ˈjuːz" },
 ]
 
