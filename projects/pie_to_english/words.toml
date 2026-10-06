@@ -459,7 +459,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "pl̩ˈχnos", category = "adj", note = "PIE *pl̥h₁nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸullɑz", category = "adj" },
-  { time = 403, ipa = "ˈfulː", note = "PWGmc *full (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈfull", note = "PWGmc *full (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfull" },
   { time = 1400, ipa = "ˈfoːl" },
   { time = "final", ipa = "ˈfʊl" },
@@ -1103,7 +1103,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱugʲkos", category = "noun", note = "PIE *bʰuǵ-ko-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbukkɑz", category = "noun" },
-  { time = 403, ipa = "ˈbukː", note = "PWGmc *bukk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈbukk", note = "PWGmc *bukk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbukk" },
   { time = 1400, ipa = "ˈbuk" },
   { time = "final", ipa = "ˈbʌk" },
@@ -1485,7 +1485,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *sth₂dʰlóm
 forms = [
   { time = -2000, ipa = "ˈstħdʱlos", category = "noun", note = "PIE *sth₂dʰlóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstɑllɑz", category = "noun" },
-  { time = 403, ipa = "ˈstɑlː", note = "PWGmc *stall (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈstɑll", note = "PWGmc *stall (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstæɑll" },
   { time = "final", ipa = "ˈstɔːl" },
 ]
@@ -3483,7 +3483,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "widˈtos", category = "adj", note = "PIE *widtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwissɑz", category = "adj" },
-  { time = 403, ipa = "ˈwisː", note = "PWGmc *wiss (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈwiss", note = "PWGmc *wiss (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwiːs" },
 ]
 
@@ -3526,7 +3526,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʷχdtos", category = "adj", note = "PIE *kʷh₁dtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxʷɑssɑz", category = "adj" },
-  { time = 403, ipa = "ˈxwɑsː", note = "PWGmc *hwass (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈxwɑss", note = "PWGmc *hwass (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwæs" },
 ]
 

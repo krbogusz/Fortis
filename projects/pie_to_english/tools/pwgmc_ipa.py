@@ -14,6 +14,10 @@ Taylor's sketch of PWGmc phonology (§4.1, PDF 120–121), which outranks Wiktio
   ē   the close ē₂ [eː]: stressed PGmc *ē₁ had become *ā (PDF 120), which is spelled ā.
 
 b and g keep their PGmc allophones ("much as they had been in PGmc"), so `pgmc_ipa` handles them.
+
+One convention differs from the 200 column's: a word-final geminate is two consonants (*full
+/ˈfull/), not a long one. PGmc has almost none — its words end in an ending — but PWGmc has many
+after apocope (*fulla > *full), and the engine and the Old English column write them as two.
 """
 import re
 
@@ -27,4 +31,5 @@ def transcribe(word: str) -> str | None:
     if ipa is None:
         return None
     ipa = ipa.replace("ð", "d").replace("ɸ", "f")
+    ipa = re.sub(r"([^ɑeiouɛɔ̃ː])ː$", r"\1\1", ipa)
     return re.sub(r"([xkɣ])ʷ", r"\1w", ipa)
