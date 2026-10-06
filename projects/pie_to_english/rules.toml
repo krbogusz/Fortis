@@ -3725,12 +3725,14 @@ through the 15th and 16th, and by the latter half of the 17th century they preva
 definition = ["k → ∅ / # _ n", "g → ∅ / # _ n"]
 
 [pde_price_r_centring]
-time = 1745
-name = "PRICE before /ɹ/ takes a schwa: fire, wire"
-description = """The PRICE diphthong develops a schwa before /ɹ/, as MOUTH does (pde_mouth_r_centring): Hart
-(1569) already writes fire as [feiər] (McMahon §6.3.1, PDF 246–247), and Gil (1621) has fjer, fjr
-(Jones §4.3, Table 4.6, PDF 255). Dated with the other centring rules, before pde_r_loss (1750)."""
-definition = "a ɪ → a ɪ ə / _ ɹ"
+time = 1610
+name = "PRICE before /r/ takes a schwa: fire, wire"
+description = """The PRICE diphthong develops a schwa before /r/: Hart (1569) already writes fire as [feiər]
+(McMahon §6.3.1, PDF 246–247), and Gil (1621) has fjer beside fjr, hjer 'hire', attier (Jones §4.3,
+Table 4.6, PDF 255), which Jones reads as [əiər]. So the rule is dated after the Vowel Shift (1600)
+and before the 1621 checkpoint, on the shift's [əɪ] and before the trill becomes [ɹ] (1620). The
+later lowering to [aɪ] keeps the schwa."""
+definition = "ə ɪ → ə ɪ ə / _ r"
 
 [pde_mouth_r_centring]
 time = 1745
