@@ -1551,6 +1551,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁newn̥nó
 forms = [
   { time = -2000, ipa = "χnewn̩ˈtoː", category = "adj", note = "PIE *h₁newn̥nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnewundɔːː", category = "adj" },
+  { time = 900, ipa = "ˈnigoθɑ", note = "IPA from Wiktionary (kaikki) for OE nigoða /ˈni.ɡo.θɑ/; added 2026-10-06." },
   { time = 1400, ipa = "ˈniəð" },
   { time = "final", ipa = "ˈnaɪnθ" },
 ]
@@ -3703,6 +3704,7 @@ forms = [
   { time = -2000, ipa = "ˈgʱojlos", category = "adj", note = "PIE *gʰoylos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑjlɑz", category = "adj" },
   { time = 900, ipa = "ˈgɑːl" },
+  { time = 1400, ipa = "ˈgɔːl", note = "IPA from Wiktionary (kaikki) for ME gol /ɡɔ̝ːl/; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3924,6 +3926,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲlojwom", category = "noun", note = "PIE *ḱloy-wo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxlɑjwɑ̃", category = "noun" },
   { time = 900, ipa = "ˈxleoːw" },
+  { time = 1400, ipa = "ˈlɔw", note = "IPA from Wiktionary (kaikki) for ME lowe /ˈlɔu̯(ə)/; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4798,6 +4801,8 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħengʲʱoː", category = "noun", note = "PIE *h₂én(h₁)ǵʰō, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑŋgɔːː", category = "noun" },
+  { time = 900, ipa = "ˈɑŋgɑ", note = "IPA from Wiktionary (kaikki) for OE anga /ˈɑn.ɡɑ/; added 2026-10-06." },
+  { time = 1400, ipa = "ˈaŋg", note = "IPA from Wiktionary (kaikki) for ME ange /ˈanɡ(ə)/; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5392,6 +5397,8 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲn̩ˈʁʷjom", category = "noun", note = "PIE *ǵn̥h₃-yó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈkunjɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈkynn", note = "IPA from Wiktionary (kaikki) for OE cynn /kynn/; added 2026-10-06." },
+  { time = 1400, ipa = "ˈkin", note = "IPA from Wiktionary (kaikki) for ME kyn /kin/; added 2026-10-06." },
   { time = "final", ipa = "ˈkɪn", note = "RP from Wiktionary (kaikki), kin; added 2026-10-06." },
 ]
 

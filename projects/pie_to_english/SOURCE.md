@@ -130,6 +130,12 @@ was added to such a row, and to single-reflex rows that had none, when all of th
 This added 49 finals. Each one's `note` names the reflex and, for a reviewer's choice, the reason.
 Genuine doublets stay blank, for example *shade*/*shadow* and *whit*/*wight*.
 
+The same refresh found Wiktionary IPA, missing at the bootstrap, for three Old English forms
+(*nigoða*, *anga*, *cynn*) and four Middle English ones (*gol*, *lowe*, *ange*, *kyn*). They are
+normalised as the bootstrap normalises its own, and each note quotes the source IPA. Two were
+left out. ME *widwe* /ˈwidwə/ would lose its only syllable nucleus to the column's dropped final
+-e. OE *sīen* would pass through `anglianise()`, which wrongly turns the īe from *īo into ē.
+
 What survives is nouns, adjectives and numerals: **249 rows**, the same order as the FLLAPS gold
 that `latin_to_french` scores against.
 
