@@ -1913,7 +1913,7 @@ START backing is a pre-coda-/r/ change: arm, barm, hard have the /ɹ/ closing th
 marrow, farrow, sallow the /ɹ/ or /l/ is the ONSET of the next syllable and the vowel stays TRAP —
 RP has /ˈmæɹəʊ/, not **/ˈmɑɹəʊ/. Unrestricted, this rule reached across the syllable break and
 backed marrow's /æ/."""
-definition = "a → ɑ / _ ɹ [-syll]* $"
+definition = "æ → ɑ / _ ɹ [-syll]* $"
 
 # The toe–tow merger feeds eme_goat_diphthongisation below: it puts the ME *-ɔw words into the
 # same /oː/ the Vowel Shift leaves for toe, and the GOAT rule then diphthongises both together.
@@ -2175,14 +2175,19 @@ Middle English exception, not a conditioning this rule is missing."""
 definition = "[+syll, length: short, stress: primary, aperture: !high] → [length: long] / _ $ [-syll] [+syll]"
 
 [eme_trap_vowel]
-time = 1900
-name = "ME /a/ is RP /æ/"
-description = """The TRAP vowel: slack, black, gnat.
+time = 1575
+name = "ME /a/ becomes Early Modern /æ/"
+description = """The TRAP vowel: slack, black, gnat. Pyles & Algeo's table (p. 174, PDF 95) has late ME
+[a] become Early Modern [æ]. Minkova §8.2.1 (PDF 239) gives the range of dates in the literature,
+from the 15th century (Kökeritz, Wyld) to the 18th (Jespersen), with Lass placing the stabilisation
+of [æ] in the 1650s. Jones reads the short a of Bullokar (1580: harm, warm) and Gil (1621: hart)
+as [æ] (PDF 260, 264), and those readings are the 1580 and 1621 targets. So the rule is dated just
+before 1580.
 
-NOT the *a of a DIPHTHONG. The Great Vowel Shift has just made RP's PRICE /aɪ/ and MOUTH /aʊ/ out
-of the ME long high vowels, and their first element is the same low *a this rule is looking for:
-five came out **fæɪf and sour **sæʊə."""
-definition = "a → æ / _ [-syll]"
+The rule needs a consonant after the vowel, as before. It leaves the [a] of [aw] (hall > haul, law),
+which eme_aw_monophthongisation reads. The [a] of the Vowel Shift's [aɪ] and [aʊ] arrives later
+(1600), so it is not fronted."""
+definition = "a → æ / _ [-syll] // _ w"
 
 
 [me_ae_raising]
@@ -3396,7 +3401,7 @@ swank; Minkova §8.2.1, PDF 239–240). Before the START backing (eme_short_a_ba
 t = 1590, before the Vowel Shift (1600). Dated 1600 it came after the shift in file order and
 rounded the new [aɪ] of white, wise, wight. Minkova dates the rounding from the 15th century
 (PDF 239), and Bullokar's unrounded warm of 1580 (Jones PDF 264) is still before it."""
-definition = ["a → ɔ / w _ r", "a → ɒ / w _ // _ [-syll, +back]"]
+definition = ["æ → ɔ / w _ r", "æ → ɒ / w _ // _ [-syll, +back]"]
 
 
 [sporadic_buttaz_istem]
