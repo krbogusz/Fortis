@@ -2105,6 +2105,16 @@ Ordered AFTER me_syllabic_schwa (1150), which gives swefn its second vowel: the 
 plainly intervocalic and no separate clause is needed for the sonorant environment."""
 definition = "f → v / [+voice] _ [+voice]"
 
+# OE /s/ has a voiced allophone [z] between voiced sounds, like /f/ and /θ/ (Minkova §4.4, PDF
+# 89–91; Pyles & Algeo p. 105: lēosan, hūsl), and Middle English writes hasel for [haːzəl]
+# (Minkova §7.3.1, PDF 199). After a vowel only: a wider [+voice] _ context turned the *rs of
+# *hersô into **rz (tested by the source review).
+[me_s_voicing]
+time = 1200
+name = "The fricative *s voices between a vowel and a voiced sound"
+description = "Minkova §4.4, §7.3.1; Pyles & Algeo p. 105 — OE hæsel > ME hāzel"
+definition = "s → z / [+syll] _ [+voice]"
+
 [me_mb_simplification]
 time = 1350
 name = "Final /mb/ loses its stop"
@@ -3155,8 +3165,8 @@ definition = "[+syll, length: short, stress: primary] → [length: long]"
 [sporadic_bare_long]
 time = 1205
 name = "SPORADIC: *bazaz > ME bāre lengthens in the open syllable"
-description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening."
-words = ["bare"]
+description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening. ME hāzel too: only about a quarter of words with a sonorant-final second syllable lengthen, so it is lexical (Minkova §7.5.2.1, PDF 223)."
+words = ["bare", "hazel"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_dere_e]
