@@ -215,12 +215,11 @@ forms = [
 id = "ready"
 gloss = "ready"
 frequency = 267268
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The final target ˈɹɛdi was removed on 2026-10-06 (DECISIONS.md, four cases): New formation: Klein s.v. ready (PDF 646) has ME redi, readi 'formed—with change of suff.—fr. OE. rǣde', and Hoad s.v. ready calls ME rǣdi(ȝ) an extended form, with the suffix -y, of OE rǣde. The suffix is not a reflex of the OE word."
 forms = [
   { time = -2000, ipa = "ħrojˈdʱos", category = "adj", note = "PIE *h₂roy-dʰ-ó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈrɑjðɑz", category = "adj" },
   { time = 900, ipa = "ˈræːde" },
-  { time = "final", ipa = "ˈɹɛdi" },
 ]
 
 [[words]]
