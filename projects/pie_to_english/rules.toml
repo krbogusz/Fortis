@@ -1268,6 +1268,21 @@ definition = "[+syll, -cons, aperture: low, +front, length: short, stress: none]
 
 # West Germanic hardens the Proto-Germanic bilabial fricative to a labiodental: *fōts > fōt,
 # *fuhsaz > fox, *fullaz > full (Minkova §4.1 — OE has /f/, not /ɸ/).
+[pgmc_unstressed_or_to_ar]
+time = 245
+name = "Unstressed *-ōr becomes *-ar"
+description = """Ringe & Taylor §3.1.4 (PDF 73–75): a bimoric *ō before a final *r became *ā and then
+shortened, so *watōr > *watar > OE wæter and *fedwōr > *fewwār > *feuwar > fēower. This is finding F7
+of the Ringe & Taylor review. It replaces the word-scoped rule that gave water its OE vowels."""
+definition = "[+syll, length: long, +back, +rounded, stress: none] → ɑ / _ r #"
+
+[pgmc_dw_to_ww]
+time = 255
+name = "*dw becomes *ww"
+description = """Ringe & Taylor §3.1.1 (PDF 56): *fedwōr 'four' > *fewwār; the voiced dental fricative
+assimilates to a following *w. Finding F7 of the Ringe & Taylor review."""
+definition = "[-son, +voice, +cont, +anterior] → w / [+syll] _ w"
+
 [wg_f_hardening]
 time = 250
 name = "ɸ becomes f"
@@ -3186,13 +3201,6 @@ name = "SPORADIC: *abjǭ > OE ebba — geminate *bb and final -a"
 description = "*abjǭ gives OE ebba; like rib, the geminate is a stop *bb and it takes final -a. Word-scoped."
 words = ["ebb"]
 definition = "f → b"
-
-[sporadic_wator_vowels]
-time = 456
-name = "SPORADIC: *watōr > OE wæter — front vowel, reduced second vowel"
-description = "*watōr gives OE wæter; our cascade leaves *wɑtoːr. Word-scoped: the *a fronts to *æ and the long *ō reduces to *e."
-words = ["watōr"]
-definition = ["ɑ → æ", "oː → e"]
 
 [sporadic_ebb_ending]
 time = 457
