@@ -221,3 +221,17 @@ Tested: night and right become exact at 1621; no final row changes.
 **Rejected:** A one-step shift to [aɪ], [aʊ] at 1600. Also rejected: Minkova p. 261, which says the
 changes were "pretty much complete by the end of the sixteenth century"; that conflicts with her
 own footnote 18 and with the orthoepists.
+
+## 2026-10-07: Date the MEAT–MEET merger before Cooper
+
+**Choice:** `pde_meat_merger` (ME ɛ̄, by then [eː], > [iː]) is dated 1680, before the 1687
+checkpoint.
+
+**Reason:** Jones reads Cooper's (1687) "e long" (bean, dream, eat) and "ee" (ear, fear, near) as
+[iː] (Table 4.8, PDF 259), and those readings are the 1687 targets. Pyles & Algeo (p. 173, PDF 94)
+say the [i] pronunciation of ME ē words had been an option since the beginning of the Modern
+period. Tested: dream, ear and ausô become exact at 1687; no other row changes.
+
+**Rejected:** The 18th-century date the rule had, which follows Pyles & Algeo's account of the
+fashionable [e] that lasted "from about 1600 to the mid-eighteenth century". Jones notes the
+controversy over Cooper's values, so this decision depends on his reading.

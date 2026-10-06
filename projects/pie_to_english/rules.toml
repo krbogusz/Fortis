@@ -2731,10 +2731,12 @@ the shift leaves and lowers THAT. The /uː/ of sour is already an /aʊ/ by now a
 definition = "uː → ɔː / _ ɹ"
 
 [pde_meat_merger]
-time = 1700
+time = 1680
 name = "The MEAT vowel joins MEET: /eː/ raises to /iː/"
 description = """The last step of the Great Vowel Shift, and it is a SEPARATE step — ME ɛː reaches
-/eː/ in the shift itself (1600) and only then goes on to /iː/, in the eighteenth century. Written
+/eː/ in the shift itself (1600) and only then goes on to /iː/. Dated before Cooper (1687), whose
+"e long" (bean, dream, eat) and "ee" (ear, fear, near) Jones reads as [iː] (Table 4.8, PDF 259);
+see DECISIONS.md, 2026-10-07. Written
 inside emode_vowel_shift the two clauses fire in the same pass and *drɛːm stops at **dreːm: the
 rule list applies once, so a chain of raisings needs one date per link.
 
