@@ -412,6 +412,21 @@ name = "Unstressed */ew/ > */ow/ before a consonant or word-finally"
 description = "Unstressed */ew/ > */ow/ before a consonant or word-finally"
 definition = "[+syll, aperture: !high, +fr, length: short, stress: none] w → ow / _ ([-syll]|#)"
 
+# The complementary environment of the rule above: the same rounding of an unstressed *e by a
+# following *w, but PREVOCALICALLY, where it goes all the way to *u rather than stopping at *o.
+[unstressed_ew_to_uw]
+time = -1000
+name = "Unstressed */ew/ > */uw/ before a vowel"
+description = """*h₁widʰewṓn > PGmc *widuwō 'widow' (Kroonen), OE widuwe. Before a vowel the
+unstressed *e of an *-ew- sequence is rounded and raised by the glide to *u, giving *-uw-; the
+sister rule above catches the same *e before a consonant or word-finally and stops at *o.
+
+Placed immediately BEFORE unstressed_e_to_i_except_before_r, which carries the same date (-1000):
+at equal dates file order decides, and the general *e > *i raising would otherwise get there first
+and give **widiwō for the attested *widuwō. The restriction to a following VOWEL is what keeps the
+two apart — the *ew of *ew > *ow is preconsonantal or final, and never prevocalic."""
+definition = "[+syll, aperture: !high, +fr, length: short, stress: none] w → uw / _ [+syll]"
+
 [unstressed_e_to_i_except_before_r]
 time = -1000
 name = "Unstressed */e/ > */i/ except before */r/"
@@ -817,9 +832,16 @@ description = "Minkova §3.4 n.9. Held before a lateral — *fullaz > full, *wul
 # So a blanket "held before a lateral" (what stood here) costs hold, wolcen, folc and molde, while
 # no lateral condition at all costs full, wull and wulf. Two clauses, and the second says exactly
 # what the data says: an *l lowers unless a lateral or a labial follows it.
+#
+# STRESSED only (`stress: !none`, so a compound's secondary stress counts too). a-umlaut is a
+# stressed-vowel change, and every form the notes above argue from — horn, corn, thorn, hold,
+# wolcen, folc, molde, and the held hund, mund, guma, sundor, full, wull, wulf — has the *u in the
+# stressed first syllable, so the restriction costs none of them. What it buys is the MEDIAL *u of
+# an unstressed syllable, which has its own reduction fate and does not lower here: *widuwō > OE
+# widuwe, which was coming out **widowe.
 definition = [
-    "[+syll, aperture: high, length: short, +back] → [aperture: mid] / _ [-syll, nasal: none, lateral: none] [-syll]* [+syll, aperture: !high]",
-    "[+syll, aperture: high, length: short, +back] → [aperture: mid] / _ [-syll, +lateral] [-syll, lateral: none, labial: none] [-syll]* [+syll, aperture: !high]",
+    "[+syll, aperture: high, length: short, +back, stress: !none] → [aperture: mid] / _ [-syll, nasal: none, lateral: none] [-syll]* [+syll, aperture: !high]",
+    "[+syll, aperture: high, length: short, +back, stress: !none] → [aperture: mid] / _ [-syll, +lateral] [-syll, lateral: none, labial: none] [-syll]* [+syll, aperture: !high]",
 ]
 
 [wg_final_z_loss]
