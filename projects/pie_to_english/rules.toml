@@ -2224,10 +2224,21 @@ definition = "x → k / l _"
 [me_w_rounding]
 time = 1150
 name = "A vowel rounds to /u/ between *w and *r"
-description = """OE word, wyrm, worold > ME wurd, wurm, wurld — the *w rounds the vowel after it and
-the *r keeps it back. The vowel is already ROUNDED (OE o and y): ME werk, wer, kwern keep their
-unrounded *e in the same environment, and a rule written for any short vowel gave **wurk, **wur."""
+description = """OE word, worold > ME wurd, wurld — the *w rounds the vowel after it and the *r keeps it
+back. The vowel is already ROUNDED: ME werk, wer, kwern keep their unrounded *e in the same
+environment, and a rule written for any short vowel gave **wurk, **wur. OE y never reaches this
+rule, because me_y_unrounding has the same date and comes first; wyrm > wurm is lexical
+(`sporadic_worm_u`)."""
 definition = "[+syll, length: short, +rounded] → u / w _ r"
+
+# OE [ʏ] was retracted to [ʊ] in a lexical subset of words, the ones the standard keeps with u:
+# church, much (Minkova §7.3.1, PDF 194–197), and wyrm > ME wurm, worm (Klein p. 858).
+[sporadic_worm_u]
+time = 1145
+name = "SPORADIC: OE wyrm > ME wurm retracts its *y to *u"
+description = "Minkova §7.3.1 (PDF 194–197): the retraction of OE y to u is lexical (church, much)"
+words = ["wurmiz"]
+definition = "y → u"
 
 
 # ─── The pre-/r/ vowels, all of them dated BEFORE pde_r_loss (1750) ───────────────────────────
