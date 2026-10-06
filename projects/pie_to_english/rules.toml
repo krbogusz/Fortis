@@ -598,13 +598,16 @@ definition = [
 # two are the same segment again.
 [mr_epenthesis]
 time = -900
-name = "A stop is epenthesised between */m/ and */r/"
-description = """*amrós > PGmc *ampraz. A nasal and a liquid do not stand together: an oral stop of
-the nasal's own place is inserted between them, exactly as in *þumraz > thumb.
+name = "SPORADIC: a *p is epenthesised between */m/ and */r/ in *ampraz"
+description = """*amrós > PGmc *ampraz (Kroonen s.v. *ampra-, < *Hom-ro-). Word-scoped, because the stop is
+not regular in Proto-Germanic: Ringe (PDF 261) has *timrijaną 'to build' with no stop (Goth.
+timrjan), and the 200 and 403 targets of timber, *timrą and *timr, have none either. The b of OE
+timber is an Old English epenthesis (oe_mr_epenthesis).
 
 t = -900, AFTER Grimm and Verner. The epenthetic *p is a NEW stop and must not be swept into the
 chain shift: run it before, and Grimm makes it *ɸ, Verner voices that to *β, and the *β hardens to
 *b after the nasal — *ampraz came out **ambraz."""
+words = ["ampraz"]
 definition = "∅ → p / m _ r"
 
 [non_high_back_merger]
@@ -1592,8 +1595,11 @@ definition = [
 [pgmc_e_raising_before_coda_nasal]
 time = -900
 name = "e raises to i before a syllable-final nasal"
-description = "Minkova §3.4 — *femf > *fimf. Coda position is `[-syll]* $`, not `$`: in *femf the nasal is in the coda but a fricative stands between it and the boundary."
-definition = "[+syll, aperture: mid, +front, length: short] → [aperture: high] / _ [+cons, nasal: 1] [-syll]* $"
+description = """Minkova §3.4 — *femf > *fimf. Ringe (PDF 184–185): *e "was raised to *i when followed by a
+nasal in the syllable coda (though not before a nasal which was in turn followed by a vowel)". So
+the condition is a nasal followed by a consonant or the word end, whatever the syllabifier makes of
+the cluster: *temr- 'timber' has its m before an r, which the syllabifier would put in the onset."""
+definition = "[+syll, aperture: mid, +front, length: short] → [aperture: high] / _ [+cons, nasal: 1] ([-syll] | #)"
 
 # TODO — West Germanic gemination (Minkova §3.4): a consonant doubles before *j (*hagjō >
 # heċġ, *satjaną > settan). Tried as a bare "C → CC / _ j" and it LOST an exact match: the
@@ -2451,6 +2457,15 @@ word-finally, and `oe_high_vowel_deletion` (460) then deletes it as the short *-
 the same heavy-syllable condition as every other final high vowel. Stated as one rule it would say
 the weight condition twice."""
 definition = "[+syll, length: long, aperture: high, stress: none] → [length: short] / _ #"
+
+[oe_mr_epenthesis]
+time = 450
+name = "A *b is epenthesised between *m and a liquid in Old English"
+description = """Minkova §5.2.5 (PDF 129–130): the transition from a nasal to a liquid "is facilitated by an
+intervening consonant", as in OE bræmlas > bræmblas 'brambles', and she compares "the epenthesis
+in, for example, Goth. timrjan > OE timbrian". So *timr > timbr. Dated before the parasite vowel
+(466), which would otherwise separate the m from the r (**timer)."""
+definition = "∅ → b / m _ (r | l)"
 
 [sporadic_ja_stem_gemination]
 time = 459
