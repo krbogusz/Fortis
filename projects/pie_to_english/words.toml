@@ -470,7 +470,7 @@ forms = [
   { time = 200, ipa = "ˈɸullɑz", category = "adj" },
   { time = 403, ipa = "ˈfull", note = "PWGmc *full (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfull" },
-  { time = 1400, ipa = "ˈfoːl" },
+  { time = 1400, ipa = "ˈful", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈfoːl. Wrong word: the old target /ˈfoːl/ is ME fol 'fool', borrowed from Old French, which the bootstrap attached. Klein s.v. full, PDF 325: ME full, from OE full." },
   { time = 1687, ipa = "ˈfʊl", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper treats the vowel of full as a short vowel whose long partner is the vowel of fole 'foal'. (Jones sect. 4.2(2), PDF 233 (book p. 220)). Added 2026-10-06." },
   { time = "final", ipa = "ˈfʊl" },
 ]
@@ -2014,7 +2014,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲoħpos", category = "noun", note = "PIE *ḱoph₂ós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɔːɸɑz", category = "noun" },
   { time = 900, ipa = "ˈxoːf" },
-  { time = 1400, ipa = "ˈhuːv" },
+  { time = 1400, ipa = "ˈhoːf", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈhuːv. Wrong word: the old target /ˈhuːv/ is ME houve, from OE hūfe 'a covering for the head', which the bootstrap attached. Klein s.v. hoof, PDF 379: ME hoof, from OE hōf." },
 ]
 
 [[words]]

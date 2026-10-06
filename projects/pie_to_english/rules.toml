@@ -3274,18 +3274,11 @@ definition = "ɛː → ɛ"
 
 [sporadic_gome_full_osl]
 time = 1200
-name = "SPORADIC: *gumô, *fullaz lower and lengthen — ME gome, fool"
-description = """ME gome, fool (/goːm/, /foːl/) lower the high *u to *oː and lengthen it — a variant
+name = "SPORADIC: *gumô lowers and lengthens — ME gome"
+description = """ME gome (/goːm/) lowers the high *u to *oː and lengthens it — a variant
 of open-syllable lengthening that our rule skips because it excludes high vowels. Word-scoped."""
-words = ["gome", "full"]
+words = ["gome"]
 definition = "[+syll, aperture: high, +back, length: short] → [aperture: mid, length: long]"
-
-[sporadic_full_foot]
-time = 1650
-name = "SPORADIC: FULL shortens to the FOOT vowel"
-description = "ME fool /foːl/ > RP full /fʊl/: the *uː the Vowel Shift makes shortens to FOOT. Word-scoped (cf. flood > STRUT)."
-words = ["full"]
-definition = "uː → ʊ"
 
 [sporadic_lime_m]
 time = 1650
@@ -3470,13 +3463,6 @@ name = "SPORADIC: *knewą > ME knē drops the final *w"
 description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-scoped."
 words = ["knee"]
 definition = "w → ∅ / _ #"
-
-[sporadic_hoof_uv]
-time = 1300
-name = "SPORADIC: *hōfaz > RP hoof /huːv/ — raised vowel, voiced final"
-description = "*hōfaz gives ME/RP hoof with a raised *oː > *uː and a voiced final *f > *v. Word-scoped."
-words = ["hoof"]
-definition = ["oː → uː", "f → v / _ #"]
 
 [eme_w_rounding_a]
 time = 1590
