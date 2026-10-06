@@ -1969,6 +1969,15 @@ description = """After the Great Vowel Shift the long open *ɔː of Middle Engli
 it has the GOAT diphthong, and the modern column is transcribed in it."""
 definition = "oː → ə ʊ"
 
+[pde_happy_tensing]
+time = 1950
+name = "Final unstressed /ɪ/ is tense /i/ (happY)"
+description = """Minkova §8.2.1 (PDF 237), after Wells 1982: "happY-tensing", the second vowel of happy
+realised "as a more peripheral vowel, a compromise between [ɪ] and [iː]". The RP targets write it
+[i]: any, ready, merry. Minkova gives no date; Wells describes it in recent RP, so the rule is
+dated last. It undoes the laxing of 1569 at the word end."""
+definition = "ɪ → i / [-syll] _ #"
+
 [pde_final_schwa_w_is_goat]
 time = 1900
 name = "A word-final /w/ after a schwa is the GOAT offglide /ʊ/"
@@ -3400,6 +3409,24 @@ name = "SPORADIC: *darjaz > ME dēre has a close ē"
 description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. Word-scoped fronting/raising to close ē."
 words = ["dere"]
 definition = "aː → eː"
+
+[sporadic_any_short]
+time = 1000
+name = "SPORADIC: any continues the short OE variant ęniġ"
+description = """Minkova §8.2.1 (PDF 238) lists OE æniġ, ęniġ, aniġ, ani, eniġ for any, one of the high-frequency
+words with [æn] ~ [ɛn] variation. RP /ˈɛni/ continues a short e variant, not the long ǣniġ of the
+900 target, which would give **/ˈiːni/. Word-scoped, dated before OE ǣ is raised (1100)."""
+words = ["any"]
+definition = "æː → e"
+
+[me_y_suffix]
+time = 1210
+name = "The unstressed suffix -iġ is ME -i"
+description = """Minkova §7.6 (PDF 230–231): "With the exception of [-i] in the affix <-y> (> OE -iġ), all
+uncovered vowels in final unstressed syllables in native words were dropped." The reduction of
+unstressed vowels (1200) leaves -iġ as [əj]; the suffix is [i] instead, and final schwa loss
+(1350) does not touch it."""
+definition = "ə j → i / _ #"
 
 [sporadic_fifth_short]
 time = 1100
