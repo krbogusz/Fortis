@@ -2201,6 +2201,26 @@ definition = [
     "[+syll] x [+syll, stress: none] → [length: long] ∅ ∅",
 ]
 
+[sporadic_zstem_istem]
+time = 399
+name = "SPORADIC: eġe and siġe re-form their s-stem as an i-stem"
+description = """OE eġe 'fear' and siġe 'victory' continue s-stems (*agaz-, *segaz-) that levelled the *-iz
+of their oblique forms into the nominative and became masculine i-stems (Ringe & Taylor §7.2.3,
+PDF 400; *agaz >! *agi > eġe, PDF 252). A morphological change, so word-scoped. Before the West
+Germanic loss of final *-z (400)."""
+words = ["ey", "segaz"]
+definition = ["ɑ → i / _ z #", "e → i / _ ɣ"]
+
+[sporadic_zstem_r]
+time = 399
+name = "SPORADIC: ēar 'ear of grain' keeps its s-stem *-z as *r"
+description = """OE ēar continues the s-stem *ahaz-, *ahuz-, which kept its stem consonant and became a
+neuter a-stem: ēar < *eaher (Ringe & Taylor §7.2.3, PDF 400; PDF 192; Hoad s.v. ear²). Word-scoped;
+the *z is turned into the *r that rhotacism would give it, before the West Germanic loss of final
+*-z (400) can take it."""
+words = ["ear"]
+definition = "z → r / _ #"
+
 [oe_final_long_high_shortening]
 time = 399
 name = "A final long high vowel shortens"
