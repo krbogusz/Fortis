@@ -1490,7 +1490,7 @@ frequency = 5814
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *septm̥mós is replaced by *septm̥mṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
   { time = -2000, ipa = "septm̩ˈmoː", category = "adj", note = "PIE *septm̥mós, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈseβunðɔːː", category = "adj" },
+  { time = 200, ipa = "ˈseβundɔːː", category = "adj", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈseβunðɔːː. 200 reconstruction: Kroonen s.v. *sebunþ/dan-, PDF 469; every other 200 target has the stop [d] after a nasal, which pgmc_dh_hardening_after_nasal produces." },
   { time = 403, ipa = "ˈseβundɔː", note = "PWGmc *sebundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈseofoθɑ" },
   { time = 1400, ipa = "ˈsɛvəð" },
@@ -2129,7 +2129,7 @@ frequency = 765
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχroχweħ", category = "noun", note = "PIE *h₁roh₁-weh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈrɔːɔː", category = "noun" },
+  { time = 200, ipa = "ˈrɔːwɔː", category = "noun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈrɔːɔː. 200 reconstruction (SOURCE.md: Ringe/Kroonen outrank Wiktionary): Ringe drops *w only between round vowels, and *ā was not round until the late shift to *ō (PDF 172-173, 182), so the PGmc form keeps it, as OE rōw does." },
   { time = 403, ipa = "ˈrɔːw", note = "PWGmc *rōu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈroːw" },
   { time = 1400, ipa = "ˈrɔː" },
@@ -2722,8 +2722,8 @@ id = "ausô"
 gloss = "ausô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈħoːws", category = "noun", note = "PIE *h₂ṓws, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɑwsɔːː", category = "noun" },
+  { time = -2000, ipa = "ħewˈsoː", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈħoːws; now *h₂ewsṓ. Kroonen s.v. *auzōn-, PDF 82: an n-stem with the accent on the suffix, which gives the Verner *z. PIE *h₂ṓws, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈɑwzɔːː", category = "noun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈɑwsɔːː. 200 reconstruction: Kroonen's headword is *auzōn- (PDF 82), and OE ēare at 900 needs the *z." },
   { time = 403, ipa = "ˈɑwzɑː", note = "PWGmc *auʀā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑːre" },
   { time = 1400, ipa = "ˈɛːr" },
