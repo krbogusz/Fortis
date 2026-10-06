@@ -1011,7 +1011,9 @@ description = "*wulfu-type > wulf, but *sunu, *medu keep it — the OE light/hea
 definition = [
     "[+syll, length: short, aperture: high] → ∅ / [+syll, length: long] [-syll]* _ #",
     "[+syll, length: short, aperture: high] → ∅ / [+syll] [-syll] [-syll]+ _ #",
-    "[+syll, length: short, aperture: high] → ∅ / [+syll] [+syll] [-syll]* _ #",
+    # A diphthong is heavy only when long: a SHORT broken diphthong (fealu, eahu) is a light syllable
+    # and keeps its *-u (Ringe & Taylor §6.8.1, PDF 303).
+    "[+syll, length: short, aperture: high] → ∅ / [+syll] [+syll, length: long] [-syll]* _ #",
 ]
 
 # Anglo-Frisian brightening: Germanic /a/ fronts to /æ/, but not before a nasal, where it
@@ -2044,14 +2046,23 @@ complementary distribution — a FRONT vowel in the next syllable fronts, a BACK
 definition = "[+syll, -cons, aperture: mid, +front, length: short] → e o / _ [+son, -syll, +cons, nasal: none] [+syll, +back]"
 
 [oe_final_w_vocalisation]
-time = 468
+time = 402
 name = "A final *w after a consonant becomes *u"
 description = """Once apocope has stripped the ending, *falwaz, *salwaz, *gelwaz are left ending in
 a consonant + *w, and Old English writes the *w as a vowel: fealu, salu, ġeolu, mearu.
 
 Dated 468, beside oe_parasite_vowel (466) — both repair a final cluster the apocope has just
 created, and both need every ending already gone."""
-definition = "w → u / [-syll] _ #"
+definition = "w → u / [+cons] _ # // [+son, +cont, lateral: none] _"
+
+[wg_final_j_vocalisation]
+time = 402
+name = "A final *j after a consonant becomes *i, and final *ij becomes *ī"
+description = "Ringe & Taylor §3.1.2, PDF 61–62 — *harjaz > *hari, *andijaz > *andī, *arbiją > *arbī"
+definition = [
+    "i j → iː ∅ / _ #",
+    "j → i / [+cons] _ # // j _",
+]
 
 [sporadic_final_u_levelling]
 time = 469
@@ -2091,7 +2102,7 @@ definition = [
 
 
 [oe_final_long_high_shortening]
-time = 458
+time = 399
 name = "A final long high vowel shortens"
 description = """*wulbī, *albī end in a long *ī, and Old English has wylf, ælf — the ending is gone
 altogether. It gets there in two steps, and only the first is stated here: the long vowel shortens
@@ -2099,6 +2110,26 @@ word-finally, and `oe_high_vowel_deletion` (460) then deletes it as the short *-
 the same heavy-syllable condition as every other final high vowel. Stated as one rule it would say
 the weight condition twice."""
 definition = "[+syll, length: long, aperture: high, stress: none] → [length: short] / _ #"
+
+[sporadic_ja_stem_gemination]
+time = 459
+name = "SPORADIC (levelling): a ja-stem nominative takes the geminate of its oblique forms"
+description = """The PWGmc nominative of a short ja-stem ends in *-i: the *j became *i when the ending was lost,
+before the West Germanic gemination (Ringe & Taylor §3.1.2, PDF 61–62; relic OHG beti 'bed' < PWGmc
+*badi). Old English bedd, cynn, midd, ribb, wedd take the geminate of the oblique forms, where *Cj
+"survived to undergo gemination" (PDF 62). After i-mutation (420), which the *-i triggers, and before
+the high-vowel deletion (460)."""
+words = ["bed", "kin", "kunją", "mid", "rib", "wadją"]
+definition = "1=[+cons] i → @1 @1 / [+syll] _ #"
+
+[oe_final_new_long_i_shortening]
+time = 465
+name = "The PWGmc final *-ī from *-ij- shortens"
+description = """*andijaz > PWGmc *andī > OE ende, *arbiją > *arbī > ierfe (Ringe & Taylor §3.1.2, PDF 61–62).
+This *-ī arose in PWGmc (`wg_final_j_vocalisation`, 402), after the older final *-ī had shortened
+(`oe_final_long_high_shortening`, 399), so it was still long when `oe_high_vowel_deletion` (460)
+took the short ones. It shortens after that, and `oe_final_i_to_e` (470) lowers it to *-e."""
+definition = "[+syll, length: long, aperture: high, +front, stress: none] → [length: short] / _ #"
 
 
 [me_a_before_nasal_rounds]
@@ -2535,7 +2566,8 @@ name = "SPORADIC: *frijaz, *frijō > OE frēo — the stem vowel becomes the *ē
 description = """*frijaz, *frijō give OE frēo: once the intervocalic *j is lost the stressed *ī and
 the following back vowel contract to the *ēo diphthong. Word-scoped to these two."""
 words = ["free", "frijō"]
-definition = "i → e oː / _ #"
+# Short or long: *frijō keeps a short *i, *frijaz has had PWGmc *frī since `wg_final_j_vocalisation`.
+definition = "[+syll, aperture: high, +front] → e oː / _ #"
 
 [sporadic_geminate_no_umlaut]
 time = 355
@@ -2593,6 +2625,24 @@ description = """*albiz gives OE ælf with *æ; oe_anglian_smoothing_liquid coll
 *æe to *e here, but this word keeps the diphthong's first element. A lexical exception, restored."""
 words = ["albī"]
 definition = "e → æ"
+
+[sporadic_fee_a_stem]
+time = 404
+name = "SPORADIC: *fehu > OE feoh becomes an a-stem and loses its *-u early"
+description = """Ringe & Taylor §6.2.1 n. 4 (PDF 192): feoh is an early a-stem, and a surviving *-u would have
+given **fēo. The *-u goes before breaking (408), which then sees the *h as final. After the Proto-West
+Germanic checkpoint (403), whose *fehu still has it."""
+words = ["fee"]
+definition = "u → ∅ / _ #"
+
+[sporadic_fallow_breaking]
+time = 409
+name = "SPORADIC (levelling): fealu takes the broken ea of its oblique stem fealw-"
+description = """PWGmc *falu has *l + vowel, where breaking cannot apply, yet Old English has fealu: "broken ea
+was generalized in fealu, fealw-" (Ringe & Taylor, PDF 213), from the oblique forms with *lw. After
+breaking (408)."""
+words = ["fallow"]
+definition = "[+syll, +back, aperture: low, length: short] → æ ɑ / _ l"
 
 [sporadic_tallow_no_breaking]
 time = 409
