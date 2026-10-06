@@ -2096,9 +2096,24 @@ definition = "[+syll, length: long] → [length: short] / _ w [-syll]* $"
 # (Jones §3.4.4, Table 3.24, PDF 172–173; Salesbury 1547, PDF 253; Minkova §8.2.2.3, PDF 268–269).
 [lme_al_glide]
 time = 1450
-name = "A glide develops between *a and a final *l"
-description = "Jones Table 3.24 — hall > haul, mainly 15th century"
-definition = "∅ → w / a _ l #"
+name = "A back glide develops between *a or *ɔ and a coda *l"
+description = """Late ME [aw] from a + l: all, hall, call, false, salt (Minkova PDF 269, and §5.2.5,
+PDF 130–131: the dark [ɫ] of the coda is vocalised, keeping its backness). Jones Table 3.24 has
+hall > haul in the 15th century. Before l and a consonant the short ɔ takes the glide too: Bullokar
+writes mould with his half-vowel l, which Jones reads [mould] (Table 4.12, PDF 264), and Minkova
+cites ME fok(e) 'folk'. The l itself goes later before a labial or velar (eme_l_loss)."""
+definition = ["∅ → w / a _ l #", "∅ → w / a _ l [-syll]", "∅ → w / ɔ _ l [-syll]"]
+
+[eme_l_loss]
+time = 1550
+name = "Coda *l is lost after the glide before a labial or a velar"
+description = """Minkova §5.2.5 (PDF 130–131): coda /l/ "flanked by a back vowel in the peak and a velar or
+a labial in the second coda slot" is lost (hafpenny, fok(k)(e) 'folk'); the change is "fully covered
+in documents from and after the fifteenth century", and its spread south "was still under way at
+the end of the sixteenth century". Mulcaster (1582) says salues is said sawues (Jones PDF 253),
+Gil (1621) calls the l-less fók the commoner form, and Cooper (1687) says L is silent in salve,
+calf, half, chalk and walk (Jones PDF 254). Before a dental the l stays: salt, bald, mould."""
+definition = ["l → ∅ / w _ [+labial, -syll]", "l → ∅ / w _ [+back, -syll]"]
 
 # Late Middle English [ɛw] and [ew] merge with [iw] (Minkova §8.2.2.3, Fig. 8.7, PDF 268;
 # Steponavičius §183, PDF 172). After the 1400 checkpoint, which still writes dɛw.
@@ -2126,8 +2141,18 @@ definition = "i w → j uː / _ [-syll]* $"
 [eme_aw_monophthongisation]
 time = 1650
 name = "*au becomes *ɔː"
-description = "Jones §4.4.2; Minkova §8.2.2.3 — law, draw, all"
-definition = "a w → ɔː"
+description = """Jones §4.4.2; Minkova §8.2.2.3 — law, draw, all. Not before a labial, where the [aw]
+left by eme_l_loss (half, calf, salve) goes to [æː] instead (eme_aw_before_labial)."""
+definition = "a w → ɔː // _ [+labial, -syll]"
+
+[eme_aw_before_labial]
+time = 1700
+name = "*au before a labial becomes *æː (calf, half, salve)"
+description = """Minkova PDF 269: the l-less forms before a labial (calf, calm, half) went with talk and
+chalk "until the seventeenth century", and "the pronunciation with [æː] in calf and half is
+recorded from the early eighteenth century in British English". The [æː] then backs with BATH
+(pde_bath_backing) to the [ɑː] of RP salve, half, calf."""
+definition = "a w → æː / _ [+labial, -syll]"
 
 
 [me_ea_monophthongisation]
