@@ -2210,6 +2210,15 @@ name = "A final *-iju contracts to the diphthong *ēo"
 description = "Ringe & Taylor §6.1.2, §6.10.1 — *frijō > *friu > frēo, *þrijō > þrīo"
 definition = "[+syll, aperture: high, +front, stress: primary] j [+syll, aperture: high, +back, stress: none] → e oː ∅ ∅ / _ #"
 
+[sporadic_excrescent_t]
+time = 1300
+name = "SPORADIC: ME quiste, heste take an excrescent final *t"
+description = """Hoad calls the t of ME quiste 'bequest' parasitic and that of heste 'behest' added on the model
+of abstract nouns in -te (s.v. bequest, hest); Jones §3.5 (PDF 190) records syllable-final t epenthesis
+in the 13th–14th centuries (fesant, plought). Word-scoped."""
+words = ["bequest", "haisiz"]
+definition = "∅ → t / s _ #"
+
 [sporadic_sister_suster]
 time = 950
 name = "SPORADIC: OE sweostor > ME suster through the variant swuster"
