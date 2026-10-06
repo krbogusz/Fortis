@@ -2798,10 +2798,12 @@ definition = "1=[-syll] @1 → @1 / _ #"
 [sporadic_dread_shortening]
 time = 1550
 name = "SPORADIC: the DEATH/STEAD/BREAD class shortens its vowel before the Vowel Shift"
-description = """ME dēth, stēd, thrēd, brēd, dēd shorten to a short DRESS vowel — death, stead,
-thread — before the Great Vowel Shift can raise them, while mēd, sēd, dēd keep their length (mead,
-seed). The split is lexical, so it is word-scoped; dated 1550, before the shift (1600)."""
-words = ["death", "stead", "thread"]
+description = """ME dēth, stēd, thrēd, rēd shorten to the DRESS vowel before the Great Vowel Shift can
+raise them: death, stead, thread, red. Minkova §8.3.1 (PDF 271–272) lists bread, dead, death, head,
+thread among the monosyllables shortened before a dental, and red < OE rēad in note 32. The
+shortening "must have occurred prior to the shift to [iː]", and it was most advanced before -d.
+Mead and seed keep their length, so the rule is word-scoped. Dated 1550, before the shift (1600)."""
+words = ["death", "stead", "thread", "raudaz"]
 definition = "ɛː → ɛ"
 
 [sporadic_broad_thought]
