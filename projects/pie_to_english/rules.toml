@@ -2965,13 +2965,6 @@ Word-scoped: the *o wg_a_umlaut wrongly produced is raised back to *u and length
 words = ["dust"]
 definition = "[+syll, aperture: mid, +back, length: short] → [aperture: high, length: long]"
 
-[sporadic_wath_long]
-time = 465
-name = "SPORADIC: *waþą > OE wǣd lengthens its vowel"
-description = "*waþą gives OE wǣd with a long vowel; word-scoped compensatory-style lengthening."
-words = ["wath"]
-definition = "[+syll, length: short] → [length: long]"
-
 [sporadic_six_numeral]
 time = 415
 name = "SPORADIC (numeral): *sehs > OE six — the *hs cluster gives /ks/ and the vowel raises"

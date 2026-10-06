@@ -2422,7 +2422,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwadʱom", category = "noun", note = "PIE *wadʰom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑðɑ̃", category = "noun" },
-  { time = 900, ipa = "ˈwæːd" },
+  { time = 900, ipa = "ˈwæd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈwæːd. Wrong word: the old target /wæːd/ is the IPA of OE wǣd 'garment' (< *wēdiz), which shares the spelling. Wiktionary's OE wæd 'shallow water, ford' (< *wadą) is /wæd/." },
   { time = 1400, ipa = "ˈwaθ" },
   { time = "final", ipa = "ˈwæθ" },
 ]
