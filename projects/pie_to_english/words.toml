@@ -1861,7 +1861,7 @@ gloss = "timber"
 frequency = 1858
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈdemros", category = "noun", note = "PIE *dem(H)-ro-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈdemrom", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈdemros; now *démrom. Kroonen s.v. *timbra-, PDF 557: a neuter, n. timber, from *dem(H)-ro-. The neuter ending gives the attested 200 *timrą; the cited masculine *-ros gave *-az. PIE *dem(H)-ro-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈtimrɑ̃", category = "noun" },
   { time = 403, ipa = "ˈtimr", note = "PWGmc *timr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtimber" },
