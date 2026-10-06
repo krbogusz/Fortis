@@ -2457,10 +2457,10 @@ time = 459
 name = "SPORADIC (levelling): a ja-stem nominative takes the geminate of its oblique forms"
 description = """The PWGmc nominative of a short ja-stem ends in *-i: the *j became *i when the ending was lost,
 before the West Germanic gemination (Ringe & Taylor §3.1.2, PDF 61–62; relic OHG beti 'bed' < PWGmc
-*badi). Old English bedd, cynn, midd, ribb, wedd take the geminate of the oblique forms, where *Cj
+*badi). Old English bedd, cynn, midd, ribb, wedd, fenn take the geminate of the oblique forms, where *Cj
 "survived to undergo gemination" (PDF 62). After i-mutation (420), which the *-i triggers, and before
 the high-vowel deletion (460)."""
-words = ["bed", "kin", "kunją", "mid", "rib", "wadją"]
+words = ["bed", "kin", "kunją", "mid", "rib", "wadją", "fen"]
 definition = "1=[+cons] i → @1 @1 / [+syll] _ #"
 
 [oe_final_new_long_i_shortening]
