@@ -173,6 +173,21 @@ cascade does together with the later loss of the *j; the lowering of *i to *e (l
 Ringe & Taylor find in only two words (§2.3.1); and Wiktionary's PWGmc *u where Old English shows
 a-umlaut (fox, ford, yoke).
 
+### Words added on 2026-10-06
+
+The refreshed extracts were run through the unchanged bootstrap (`build_gold.py`, with its output
+redirected so that `words.toml` was not overwritten), and the words it produced that the lexicon
+lacked were appended as generated. The bootstrap's `pde_sounds.json` is not built by any tool in
+`tools/`. It was rebuilt from kaikki's per-word English pages, keeping only transcriptions tagged
+RP or UK, or untagged, so that `modern_ipa` could not fall back to General American.
+
+Of 23 new rows, 4 were left out: *gold* (Wiktionary now links *gelwaz 'yellow' to it), *ēbanþs*
+(the word *even* already in the lexicon), *swēgraz* (the same PIE form as *swēguraz*) and
+*humelaz* (the word *bumblebee*). 19 were added: *mark, deep, green, tongue, bitter, moth,
+sooth, hrīsą, thill, theal, gamalaz, tehswô, ētijaz, lingwidi, lingwō, wazrą, līką, dankwaz,
+tēlō*. The bootstrap drops most other chains for its stated reasons: 116 verbs or affixes, 113
+bare PIE roots, 14 PIE forms it cannot transliterate.
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed

@@ -6046,3 +6046,204 @@ forms = [
   { time = -2000, ipa = "ˈsaħtis", note = "PIE *sáh₂ti-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈsɔːθiz" },
 ]
+
+[[words]]
+id = "mark"
+gloss = "mark"
+frequency = 61805
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈmorgʲs", category = "noun", note = "PIE *mórǵs, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈmɑrkɔː", category = "noun" },
+  { time = 900, ipa = "ˈmæɑrk" },
+  { time = "final", ipa = "ˈmɑːk" },
+]
+
+[[words]]
+id = "deep"
+gloss = "deep"
+frequency = 60938
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "dʱewˈbos", category = "adj", note = "PIE *dʰewb-ó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈdewpɑz", category = "adj" },
+  { time = 900, ipa = "ˈdeoːp" },
+  { time = 1400, ipa = "ˈdeːp" },
+  { time = "final", ipa = "ˈdiːp" },
+]
+
+[[words]]
+id = "green"
+gloss = "green"
+frequency = 52557
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈgroχnis", category = "adj", note = "PIE *groh₁-ni-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈɣrɔːniz", category = "adj" },
+  { time = 900, ipa = "ˈgreːne" },
+  { time = 1400, ipa = "ˈgreːn" },
+  { time = "final", ipa = "ˈgɹiːn" },
+]
+
+[[words]]
+id = "tongue"
+gloss = "tongue"
+frequency = 24001
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "dn̩ˈgʲʱweħs", category = "noun", note = "PIE *dn̥ǵʰwéh₂s, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈtuŋgɔ̃ː", category = "noun" },
+  { time = 900, ipa = "ˈtuŋge" },
+  { time = 1400, ipa = "ˈtuŋg" },
+  { time = "final", ipa = "ˈtʌŋ" },
+]
+
+[[words]]
+id = "bitter"
+gloss = "bitter"
+frequency = 9785
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "bʱiˈdros", category = "adj", note = "PIE *bʰidrós, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈbitrɑz", category = "adj" },
+  { time = 900, ipa = "ˈbiter" },
+  { time = "final", ipa = "ˈbɪtə" },
+]
+
+[[words]]
+id = "moth"
+gloss = "moth"
+frequency = 1923
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "maˈteːn", category = "noun", note = "PIE *mat-ḗn, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈmɑθɔːː", category = "noun" },
+  { time = 900, ipa = "ˈmoθθe" },
+  { time = "final", ipa = "ˈmɒθ" },
+]
+
+[[words]]
+id = "sooth"
+gloss = "sooth"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈχsonts", category = "adj", note = "PIE *h₁sónts, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈsɑnθɑz", category = "adj" },
+  { time = 900, ipa = "ˈsoːθ" },
+  { time = "final", ipa = "ˈsuːθ" },
+]
+
+[[words]]
+id = "hrīsą"
+gloss = "hrīsą"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈkrejsom", category = "noun", note = "PIE *kréys-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈxriːsɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈxriːs" },
+  { time = 1400, ipa = "ˈriːs" },
+]
+
+[[words]]
+id = "thill"
+gloss = "thill"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈtelħiħ", category = "noun", note = "PIE *télh₂-ih₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈθiljɔ̃ː", category = "noun" },
+  { time = 900, ipa = "ˈθille" },
+  { time = 1400, ipa = "ˈθil" },
+]
+
+[[words]]
+id = "theal"
+gloss = "theal"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈtelħom", category = "noun", note = "PIE *telh₂-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈθelɑ̃", category = "noun" },
+  { time = 900, ipa = "ˈθel" },
+  { time = 1400, ipa = "ˈθɛːl" },
+]
+
+[[words]]
+id = "gamalaz"
+gloss = "gamalaz"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈkʲomħelos", category = "adj", note = "PIE *ḱom-h₂el-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈɣɑmɑlɑz", category = "adj" },
+  { time = 900, ipa = "ˈgɑmol" },
+]
+
+[[words]]
+id = "tehswô"
+gloss = "tehswô"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "deˈkʲswos", category = "adj", note = "PIE *deḱs(i)wós, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈtexswɔːː", category = "adj" },
+]
+
+[[words]]
+id = "ētijaz"
+gloss = "ētijaz"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈχeːdijos", category = "adj", note = "PIE *h₁ēdiyos, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈɛːtijɑz", category = "adj" },
+]
+
+[[words]]
+id = "lingwidi"
+gloss = "lingwidi"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈχlengʷʱeti", category = "verb.pres.3sg", note = "PIE *h₁léngʷʰeti, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈlinɣʷiði", category = "verb.pres.3sg" },
+]
+
+[[words]]
+id = "lingwō"
+gloss = "lingwō"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈχlengʷʱoħ", category = "verb.pres.1sg", note = "PIE *h₁léngʷʰoh₂, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈlinɣʷɔː", category = "verb.pres.1sg" },
+]
+
+[[words]]
+id = "wazrą"
+gloss = "wazrą"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈwosr̩", category = "noun", note = "PIE *wósr̥, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈwɑzrɑ̃", category = "noun" },
+]
+
+[[words]]
+id = "līką"
+gloss = "līką"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈlejgʲos", category = "noun", note = "PIE *leyǵ-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈliːkɑ̃", category = "noun" },
+]
+
+[[words]]
+id = "dankwaz"
+gloss = "dankwaz"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈdʱongʷos", category = "adj", note = "PIE *dʰóngʷ-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈdɑŋkʷɑz", category = "adj" },
+]
+
+[[words]]
+id = "tēlō"
+gloss = "tēlō"
+note = "Source: Wiktionary (kaikki)."
+forms = [
+  { time = -2000, ipa = "ˈdolχeħ", category = "noun", note = "PIE *dolH-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈtɛːlɔː", category = "noun" },
+]
