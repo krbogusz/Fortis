@@ -1617,7 +1617,9 @@ is eme_price_mouth_lowering."""
 # the lax vowels, so writing them as glides misses every long-*i and long-*u word in the lexicon.
 definition = [
     "iː → ə ɪ", "uː → ə ʊ",
-    "eː → iː", "oː → uː",
+    # Not before r: Jones (PDF 258) reads Coles (1674) as keeping ME ō before r unraised,
+    # [oo] in floor, whore, door, against [uu] in good, food, book.
+    "eː → iː", "oː → uː // _ r",
     "ɛː → eː", "ɔː → oː",
     "aː → ɛː",
 ]
@@ -2719,16 +2721,13 @@ definition = [
 ]
 
 [pde_force_vowel]
-time = 1650
+time = 1700
 name = "FORCE: a long back vowel before /r/ lowers to /ɔː/"
-description = """ME flōr, hōr, bōrd end at RP floor /flɔː/, whore /hɔː/, board /bɔːd/ — the /r/
-lowers the vowel instead of letting it raise.
-
-AFTER the Great Vowel Shift (1600), and written on the shift's OUTPUT. Dated before it, as
-`oː → ɔː / _ r`, the shift then finds the /ɔː/ it has just made and raises it right back to /oː/,
-and eme_goat_diphthongisation finishes the job: floor came out **fləʊ. So the rule takes the /uː/
-the shift leaves and lowers THAT. The /uː/ of sour is already an /aʊ/ by now and is not touched."""
-definition = "uː → ɔː / _ ɹ"
+description = """ME flōr, hōr end at RP floor /flɔː/, whore /hɔː/ — the /r/ lowers the vowel instead of
+letting it raise. The Vowel Shift leaves ME ō unraised before r (Jones, PDF 258: Coles 1674 has
+[oo] in floor, whore, door), so this rule lowers that [oː]. Dated after the 1687 checkpoint,
+where the targets still have [oː]. The /uː/ of sour is an /aʊ/ by now and is not touched."""
+definition = "oː → ɔː / _ ɹ"
 
 [pde_meat_merger]
 time = 1680
