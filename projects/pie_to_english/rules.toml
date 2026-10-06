@@ -2981,6 +2981,16 @@ description = "ME yerd, þerf front the vowel before *r where our cascade backs 
 words = ["þarbō"]
 definition = "a → ɛ"
 
+[sporadic_inflected_osl]
+time = 1440
+name = "SPORADIC: whale and ware take the long vowel of their inflected forms"
+description = """Open-syllable lengthening needs a disyllable, and an inflected form can supply it: OE hwæl,
+hwæle(s) (Minkova §7.5.2.1, PDF 222–223); staff beside staves (Jones §3.2, PDF 118–119). The long
+vowel then spreads to the uninflected form, but word by word. t = 1440, after the 1400 checkpoint,
+which records the short nominative (hwal), and before the glide of lme_al_glide (1450)."""
+words = ["whale", "ware"]
+definition = "[+syll, length: short, stress: primary] → [length: long]"
+
 [sporadic_bare_long]
 time = 1205
 name = "SPORADIC: *bazaz > ME bāre lengthens in the open syllable"
