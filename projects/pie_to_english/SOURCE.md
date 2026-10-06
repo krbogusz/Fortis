@@ -200,6 +200,12 @@ fricative of night; the one-step Vowel Shift (1600) gives [aɪ] where Gil has [�
 short i and u (1900) is too late for Gil's kin [ɪ]; STRUT reaches flood too early, and TRAP heart
 and last too late.
 
+On 2026-10-07 these dates were revised from the sources: the short high vowels are written lax
+from 1569, TRAP is [æ] from 1575, the FOOT–STRUT split is at 1640, the fricative is lost at 1640,
+and the Vowel Shift goes through [əɪ], [əʊ] before [aɪ], [aʊ] at 1690 (DECISIONS.md, 2026-10-07).
+The four stages then scored 3/7, 0/11, 8/14 and 6/14. Bullokar's inserted vowels and the
+diphthong notation ([oʊ] where the cascade writes [ɔw]) account for most of what remains.
+
 ### Words added on 2026-10-06
 
 The refreshed extracts were run through the unchanged bootstrap (`build_gold.py`, with its output
