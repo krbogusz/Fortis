@@ -1001,6 +1001,14 @@ name = "The weak ōn-stem ending *-ǭ becomes *-e"
 description = "*xɔːrɔ̃ː > hōre, *wiðuwɔ̃ː > widuwe, *kʷenɔ̃ː > cwene, through PWGmc *-ā"
 definition = "[+syll, length: long, aperture: low, +back] → e / [+syll] []* [-syll] _ #"
 
+# After palatalisation, *w is lost after a non-initial velar: *ahwō > *eahu, *sehwan > sēon
+# (Ringe & Taylor §6.4.2, PDF 229–230).
+[oe_w_loss_after_velar]
+time = 411
+name = "*w is lost after a non-initial velar"
+description = "Ringe & Taylor §6.4.2, PDF 229–230 — *ahwō > *eahu, *sehwan > sēon"
+definition = "w → ∅ / [+syll] [+cons, +back, -son] _"
+
 [oe_high_vowel_deletion]
 time = 460
 name = "Final -u is deleted after a heavy syllable, kept after a light one"
@@ -2132,12 +2140,13 @@ definition = [
 ]
 
 [sporadic_final_u_levelling]
-time = 469
+time = 461
 name = "SPORADIC (levelling): the *-u from a final *w is lost — cwic, eoh"
 description = """Ringe & Taylor: *kwikwaz > PWGmc *kwiku > OE *cwicu >! cwic, the *-u "lost by levelling on
 the oblique forms" (PDF 63, 338); *ehwaz > PWGmc *ehu, *ehw- >! OE eoh (PDF 193). The "!" marks a
-step that is not a sound change. After the vocalisation of the final *w (468), which makes the
-*-u."""
+step that is not a sound change. After the vocalisation of the final *w (402), which makes the
+*-u, and before the loss of intervocalic *h (oe_h_loss, 462), which would otherwise contract it:
+eoh keeps its *h because the *-u was already gone."""
 words = ["quick", "ehwaz"]
 definition = "u → ∅ / _ #"
 
@@ -2167,6 +2176,21 @@ definition = [
     "ø → e",
 ]
 
+
+# After the apocope, *h is lost between voiced sounds. Before a liquid it lengthens the vowel;
+# between vowels the two contract (Ringe & Taylor §6.9.1, PDF 320–323, and §6.9.3, PDF 329–331;
+# Steponavičius §171, PDF 157; Jones §2.2, Tables 2.5–2.6, PDF 30–31): *hweohul > hwēol,
+# *swehur > swēor, *eahu > ēa. After the high-vowel deletion (460), which has decided the *-u of
+# *eahu, and before the parasite vowel (466), which would otherwise split *hweohl.
+[oe_h_loss]
+time = 462
+name = "*h is lost between voiced sounds, with lengthening or contraction"
+description = "Ringe & Taylor §6.9.1, §6.9.3; Steponavičius §171; Jones §2.2 — hwēol, swēor, ēa"
+definition = [
+    "[+syll] → [length: long] / _ x [+son, +cons, -syll, nasal: none]",
+    "x → ∅ / [+syll, length: long] _ [+son, +cons, -syll, nasal: none]",
+    "[+syll] x [+syll, stress: none] → [length: long] ∅ ∅",
+]
 
 [oe_final_long_high_shortening]
 time = 399
