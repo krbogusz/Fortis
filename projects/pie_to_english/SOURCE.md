@@ -683,7 +683,7 @@ reconstructing Anglian targets wholesale (inventing forms, i.e. circularity) or 
 rules to hit the citation forms (fitting). **The dialect normalisation is the honest lever, and it
 is real but incremental; the rest of the gap is a property of the gold, not the rules.**
 
-Proto-Germanic is **449/528 (85.0%)** exact. Report the **count and the denominator**, never the
+On 2026-10-07 Proto-Germanic is **536/597 (89.8%)** exact. Report the **count and the denominator**, never the
 percentage alone: an earlier expansion took it from 222/260 (85.4%) to 310/425 — **+88 exact**
 while the rate *fell 12 points*, because 165 new and entirely untuned words entered the
 denominator. The old 260 still scored exactly 222; nothing regressed.
