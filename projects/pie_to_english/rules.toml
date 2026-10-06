@@ -1891,6 +1891,24 @@ name = "Short /ɔ/ opens to /ɒ/"
 description = "RP's LOT vowel: fox, ox, otter."
 definition = "ɔ → ɒ"
 
+[eme_bath_lengthening]
+time = 1680
+name = "TRAP lengthens before a voiceless fricative in the coda (BATH)"
+description = """Minkova §8.2.1 (PDF 240–242): "the original short open vowel was lengthened when followed
+by a tautosyllabic voiceless fricative: /-f/, /-θ/ or /-s/" (after, last, class, bath). The new long
+vowel stays apart from the ME ā that the Vowel Shift is raising, and "the lengthening must have
+started in the seventeenth century". Cooper (1687) already has a lengthened a in last with no change
+of quality (Jones, PDF 232), so the rule is dated before that checkpoint and gives [æː]. The backing
+to [ɑː] is pde_bath_backing."""
+definition = "æ → æː / _ (f | θ | s) [-syll]* $"
+
+[pde_bath_backing]
+time = 1780
+name = "The BATH vowel backs to /ɑː/"
+description = """Minkova §8.2.1 (PDF 242): the lengthened [æː] "is lengthened and later backed and occurs
+as [ɑː] in SSBE". It was still stigmatised in the 18th century, so the backing is dated late in it."""
+definition = "æː → ɑː"
+
 [eme_short_a_backs]
 time = 1740
 name = "Short /a/ backs to /ɑ/ before /ɹ/"
