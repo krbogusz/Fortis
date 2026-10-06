@@ -153,10 +153,25 @@ English, where most of the 900 errors arise.
   the first Old English rules (404). No rule has this date.
 - **Status.** A reconstruction, like the 200 column, so Ringe & Taylor outrank it.
 
-At its introduction the column scored 117/270 exact. Most misses come from rules dated on the
-wrong side of the checkpoint: changes that Ringe & Taylor put before PWGmc but the cascade runs
-later (final *-ō > *-u, loss of trimoric vowels, gemination, the labiovelars), and Ingvaeonic
-changes that the cascade runs earlier (the nasal spirant law, β > f, the raising of ɔː).
+At its introduction the column scored 117/270 exact. Most misses came from rules dated on the
+wrong side of the checkpoint, and re-dating them to Ringe & Taylor's chronology took it to
+202/270 with no loss at 900, 1400 or final:
+
+- moved after 403, as northern West Germanic or later: the nasal-spirant law and *lþ > *ld
+  (§5.1.1, §5.1.3), β > f and the raising of ō (§4.1);
+- moved before 403, as PNWGmc or PWGmc: final *-ō > *-u (§2.1.1), the older final *-ī shortening,
+  the labiovelars (§3.1.3), and the vocalisation of final *j and *w (§3.1.2);
+- added: PWGmc *ē₁ > *ā (§4.1) with its Anglo-Frisian fronting or rounding (§5.1.2), and the
+  PWGmc final *-ō and *-ā of the n- and ōn-stems (§3.1.4).
+
+The earlier vocalisation of *j and *w made several Old English forms analogical, as Ringe & Taylor
+describe them: the ja-stem geminates (bedd, cynn), fealu, feoh, cwic and eoh. Each has a
+word-scoped rule citing the page.
+
+Still open at 403: the West Germanic gemination of a medial *Cj (*haggju, *muggju), which the
+cascade does together with the later loss of the *j; the lowering of *i to *e (lid, meed), which
+Ringe & Taylor find in only two words (§2.3.1); and Wiktionary's PWGmc *u where Old English shows
+a-umlaut (fox, ford, yoke).
 
 ### Middle English transcriptions
 
