@@ -2430,15 +2430,6 @@ took the short ones. It shortens after that, and `oe_final_i_to_e` (470) lowers 
 definition = "[+syll, length: long, aperture: high, +front, stress: none] → [length: short] / _ #"
 
 
-[me_a_before_nasal_rounds]
-time = 1140
-name = "A short *a rounds before a nasal"
-description = """OE lang, gang, hand > ME long, gong, hond. The nasal must CLOSE the syllable —
-ME nama, bana keep their *a (name, bane) because theirs is an onset, and an unrestricted rule gave
-**nome, **bone. Dated before the æ/ɑ merger (1150), which would otherwise front the vowel out from
-under it."""
-definition = "[+syll, length: short, aperture: low, +back] → [aperture: mid, +rounded, +labial, advancement: rtr] / _ [+nas] [-syll]"
-
 [me_gg_affrication]
 time = 1000
 name = "The geminate palatal *ġġ affricates to /d͡ʒ/"
@@ -3231,10 +3222,21 @@ description = "ME gome /goːm/ > RP /gʌm/: the *uː shortens and unrounds to ST
 words = ["gome"]
 definition = "uː → ʌ"
 
+[sporadic_oe_homorganic_length]
+time = 1090
+name = "SPORADIC: long and ond lengthen before *ŋg, *nd in late Old English"
+description = """OE lang, ened > lāng, ānd before the rounding of OE ā (me_a_rounding, 1100), which gives the
+ME lǭng, ǭnd of the 1400 targets. Jones (§2.2.5–6) dates homorganic lengthening to late OE and early
+ME and calls it "patchy". The regular oe_homorganic_lengthening (1050) excludes *ŋg, so the two words
+are named here. The ME o of long comes from this long ā, not from a rounding of short a before a
+nasal, which Minkova (PDF 156, 238) assigns to the North and West Midlands."""
+words = ["anadô", "long"]
+definition = "[+syll, length: short, stress: primary] → [length: long]"
+
 [sporadic_me_homorganic_length]
 time = 1210
-name = "SPORADIC: ME lengthens the vowel before a homorganic cluster — anadô, long, gernaz"
-description = """ME ōnd, lōng, yērn lengthen the vowel before *nd, *ŋg, *rn — late-OE/early-ME
+name = "SPORADIC: ME lengthens the vowel before a homorganic cluster — gernaz, gulþīnaz"
+description = """ME yērn lengthens the vowel before *rn — late-OE/early-ME
 homorganic lengthening before a voiced homorganic cluster (Jones, *A History of English Phonology*
 §2.2.5-6). Jones stresses that the process is "patchy" and "exception-ful": some words lengthen,
 some do not, and some lengthen then shorten again (his crumb, hirde). So it is word-scoped to the
@@ -3243,7 +3245,7 @@ one — not a regular rule that would have to pick one behaviour for the whole c
 
 ME gīlden 'golden' (gulþīnaz) lengthens before *ld in a disyllable, as the Ormulum's kinde, findenn,
 climben do (Jones §2.2.5, Table 2.13, PDF 41–42)."""
-words = ["anadô", "long", "gernaz", "gulþīnaz"]
+words = ["gernaz", "gulþīnaz"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_me_shorten]
