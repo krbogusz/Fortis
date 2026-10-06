@@ -3481,6 +3481,14 @@ description = "OE lind 'linden' gives ME line /liːn/ — the *d of the *nd clus
 words = ["lindō"]
 definition = "d → ∅ / n _ #"
 
+[eme_kn_simplification]
+time = 1680
+name = "Initial /kn-/ and /gn-/ lose their stop"
+description = """Initial <kn->, <gn-> were still /kn-/, /gn-/ in the 14th century; the simplified forms spread
+through the 15th and 16th, and by the latter half of the 17th century they prevailed (Minkova
+§5.3.1, PDF 132–133): knee, knight, gnat."""
+definition = ["k → ∅ / # _ n", "g → ∅ / # _ n"]
+
 [pde_price_r_centring]
 time = 1745
 name = "PRICE before /ɹ/ takes a schwa: fire, wire"
