@@ -2320,7 +2320,7 @@ forms = [
   { time = 200, ipa = "ˈtɑlɣɑz", category = "noun" },
   { time = 900, ipa = "ˈtælg" },
   { time = 1400, ipa = "ˈtalɔw" },
-  { time = "final", ipa = "ˈtæloʊ" },
+  { time = "final", ipa = "ˈtæləʊ", note = "TARGET corrected: the bootstrap took Wiktionary's GENERAL AMERICAN /ˈtæloʊ/. This project's modern column is RP, whose GOAT vowel is /əʊ/ — as every other GOAT word in this lexicon already has (old, boat, widow, marrow, sallow, farrow). tallow was the lone oʊ outlier." },
 ]
 
 [[words]]

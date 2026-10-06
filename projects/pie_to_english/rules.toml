@@ -1703,8 +1703,32 @@ arm, barm, hard.
 
 t = 1740, BEFORE pde_r_loss (1750) — and that is the whole point. Dated in the 1900 block it looked
 for an /ɹ/ that the r-loss had already deleted, and arm, barm, hard came out **aːm, **baːm, **haːd
-with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there."""
-definition = "a → ɑ / _ ɹ"
+with the wrong vowel. Every pre-*r vowel rule has to be stated while the *r is still there.
+
+CODA /ɹ/ only, written with the same `_ ɹ [-syll]* $` clause as pde_nurse_vowel and pde_north_vowel.
+START backing is a pre-coda-/r/ change: arm, barm, hard have the /ɹ/ closing the syllable, but in
+marrow, farrow, sallow the /ɹ/ or /l/ is the ONSET of the next syllable and the vowel stays TRAP —
+RP has /ˈmæɹəʊ/, not **/ˈmɑɹəʊ/. Unrestricted, this rule reached across the syllable break and
+backed marrow's /æ/."""
+definition = "a → ɑ / _ ɹ [-syll]* $"
+
+# The toe–tow merger feeds eme_goat_diphthongisation below: it puts the ME *-ɔw words into the
+# same /oː/ the Vowel Shift leaves for toe, and the GOAT rule then diphthongises both together.
+[eme_toe_tow_merger]
+time = 1650
+name = "The toe–tow merger: /ɔw/ smooths to /oː/"
+description = """ME lōw, soul, marwe, talwe end in the diphthong *ɔw; in the seventeenth century it
+smooths to *ow and then to the long monophthong *oː, falling together with the *oː of toe (< ME
+*ɔː, raised by the Vowel Shift). Hence tow rhymes with toe, soul with sole, and marrow and tallow
+end in the GOAT vowel rather than a stray glide.
+
+t = 1650, AFTER the Middle English checkpoint at 1400 — ME still HAS the diphthong and the 1400
+column is transcribed with it (marɔw, talɔw, both already exact) — and BEFORE
+eme_goat_diphthongisation (1900), which is the point: this rule does not produce the modern vowel
+itself, it merely delivers *oː into the GOAT rule, which then gives /əʊ/. It is also ordered before
+eme_short_o_opens (1900); left until after it, the *ɔ would already have opened to *ɒ and there
+would be no *ɔw left to match."""
+definition = "ɔ w → oː"
 
 [eme_goat_diphthongisation]
 time = 1900
@@ -1713,6 +1737,20 @@ description = """After the Great Vowel Shift the long open *ɔː of Middle Engli
 (ghost, oath, oak, dole, loath). Received Pronunciation does not have a long monophthong there —
 it has the GOAT diphthong, and the modern column is transcribed in it."""
 definition = "oː → ə ʊ"
+
+[pde_final_schwa_w_is_goat]
+time = 1900
+name = "A word-final /w/ after a schwa is the GOAT offglide /ʊ/"
+description = """RP has no word-final sequence of schwa plus a consonantal /w/: where one would
+stand, what is actually said is the GOAT diphthong, /əʊ/. widow ends /-dəʊ/, not **/-dəw/.
+
+This is a realisation rule, not a sound change — it belongs with the others in this block. The
+words that reach it are the ones whose *-ow was already a diphthong by Middle English (marrow,
+tallow, sallow, yellow) and got to /əʊ/ the historical way, through eme_toe_tow_merger and the
+GOAT rule above; widow instead had its unstressed vowel reduced to schwa at 1200, before any of
+that machinery could see it, and arrives here with the glide still consonantal. Both spellings of
+the same modern vowel, and this levels them."""
+definition = "w → ʊ / ə _ #"
 
 [me_h_cluster_loss]
 time = 1250
