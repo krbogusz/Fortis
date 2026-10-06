@@ -174,3 +174,19 @@ roo lost its exact match at 200 and 900 (OE rōw keeps the *w that Ringe's chron
 and stōraz did not become exact.
 
 **Rejected:** Kroonen's Mahlow's law.
+
+## 2026-10-07: Open-syllable lengthening only before a final schwa
+
+**Choice:** `me_open_syllable_lengthening` applies only when the second syllable is a coda-less
+final schwa. The four sonorant-peak words with long ME vowels (acre, navel, haven, beaver) are
+lengthened by a word-scoped rule (`sporadic_osl_sonorant_coda`).
+
+**Reason:** Minkova §7.5.2.1 (PDF 223) counts the outcomes. Words with a coda-less final schwa
+lengthen in 95.8 per cent of cases. Of the disyllables whose second syllable survives, 84.8 per cent
+resist the lengthening. Of those with a sonorant peak, about a quarter lengthen. A rule should
+describe the majority, so the minority becomes the word list. Tested: any becomes exact at final,
+navel and seventh move closer, and the exception rules for father, water and weather become
+unnecessary.
+
+**Rejected:** Lengthening every open syllable and listing the words that stay short. That was the
+earlier design, and it needed a new exception for every word with a surviving second syllable.
