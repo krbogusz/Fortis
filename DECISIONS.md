@@ -98,3 +98,15 @@ most of the Great Vowel Shift.
 **Rejected:**
 - One checkpoint at 1621, the median of the evidence.
 - One checkpoint per form's own year: eight stages, two of them with a single form.
+
+## 2026-10-06: Add pypdf as a dev dependency
+
+**Choice:** `pypdf` joins the `dev` dependency group in `pyproject.toml`.
+
+**Reason:** `projects/pie_to_english/tools/ringe.py` imports it to read the Ringe PDF, but no
+dependency declared it, so the tool failed in a fresh environment. The dev group is installed by
+`uv sync` by default. The engine itself still has no runtime dependencies.
+
+**Rejected:**
+- A separate dependency group for the data tools, which `uv sync` would not install by default.
+- Installing it ad hoc (`uv run --with pypdf`), which is what replaced it for one run.
