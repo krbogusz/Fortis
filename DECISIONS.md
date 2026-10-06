@@ -190,3 +190,19 @@ unnecessary.
 
 **Rejected:** Lengthening every open syllable and listing the words that stay short. That was the
 earlier design, and it needed a new exception for every word with a surviving second syllable.
+
+## 2026-10-07: Date the loss of [x] by the orthoepists
+
+**Choice:** `eme_x_loss` drops the velar and palatal fricative at 1640, between Gil (1621), who
+still writes it in night, right and brightness, and Wallis (1653), who says it is "almost always
+omitted" (Jones §4.3(1), PDF 251–252). The lengthening of the vowel before it stays at 1450.
+
+**Reason:** The Early Modern targets are Jones's readings of the orthoepists. Hart (1570) and Gil
+(1621) keep the fricative in might, night, right and daughter, so a cascade that loses it in the
+15th century cannot match those columns. Jones says the loss was complete in Southern speech by the
+late 17th century.
+
+**Rejected:** The 15th-century dating in Minkova §5.1.4 (full-scale evidence in the 15th century),
+Pyles & Algeo p. 176 ("as early as the fifteenth century in all England south of the Humber") and
+Steponavičius §202 (early 15th century). Pyles & Algeo add that old-fashioned speakers kept the
+sounds into the late 16th century, which is what the orthoepists record.

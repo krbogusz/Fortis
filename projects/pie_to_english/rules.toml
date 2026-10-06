@@ -1573,13 +1573,16 @@ definition = "eː → iː / _ x"
 
 [me_x_loss]
 time = 1450
-name = "x is lost, lengthening the vowel before it"
-description = """Minkova §5.3 — niht > nīt, then the Vowel Shift takes it to /naɪt/.
+name = "A vowel lengthens before x"
+description = """Minkova §5.3 — niht > nīt, then the Vowel Shift takes it to /naɪt/. Steponavičius §183 (PDF
+171): a [j]-glide developed before the palatal fricative at the close of the 13th c., and fused
+with the vowel.
 
 t = 1450, AFTER the Middle English checkpoint, for the same reason as me_ng_simplification:
 Middle English still HAS the fricative (dohter is /ˈdɔxtər/, wiht /ˈwixt/, liht /ˈlixt/), and a
-rule at 1400 takes it away from the column that records it."""
-definition = ["[+syll] → [length: long] / _ x", "x → ∅ / [+syll, length: long] _"]
+rule at 1400 takes it away from the column that records it. The fricative itself is lost much
+later (eme_x_loss)."""
+definition = "[+syll] → [length: long] / _ x"
 
 # Final schwa is lost (§7.6) — the silent -e of ME spelling.
 # Dated BEFORE the 1400 checkpoint, not after it. Chaucer still scans a final -e, but the gold's
@@ -2201,6 +2204,17 @@ definition = [
     "ɛ w → i w / _ [-syll]* $",
     "e w → i w / _ [-syll]* $",
 ]
+
+[eme_x_loss]
+time = 1640
+name = "The velar and palatal fricative is lost"
+description = """Jones §4.3(1) (PDF 251–252): Gil (1621) "almost everywhere suggests … that the post-vowel
+fricative is still produced" (njħt, rjħt, brjħtnes), while Wallis (1653) says the sound of gh in
+light, night, right, daughter "is almost always omitted"; by the latter part of the 17th century
+the loss was complete in Southern dialects. The Early Modern targets are Jones's readings of these
+orthoepists, so the loss is dated between Gil and Wallis. Minkova (§5.1.4), Pyles & Algeo (p. 176)
+and Steponavičius (§202) date the loss from the 15th century; see DECISIONS.md, 2026-10-07."""
+definition = "x → ∅"
 
 # The falling [iw] becomes the rising [juː] (Minkova §8.2.2.3, PDF 268: from c. 1600; McMahon
 # §3.3.3.2, PDF 129–130; Steponavičius §197, PDF 191: late 16th century; Jones §3.4.3, PDF 171).
