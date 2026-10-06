@@ -772,15 +772,25 @@ definition = [
 # (Minkova §3.4, n. 8). Two rules, as in latin_to_french's ns-loss: lengthen, then delete,
 # so the deletion can require the length it is compensating for.
 [wg_nasal_spirant_lengthening]
-time = 300
+time = 404
 name = "Vowel lengthens before a nasal + voiceless fricative"
-description = "Minkova §3.4 n.8 — the first half of the Ingvaeonic nasal-spirant law"
+description = """Minkova §3.4 n.8 — the first half of the Ingvaeonic nasal-spirant law
+
+t = 404, after the Proto-West Germanic checkpoint (403). The nasal-spirant law is a northern
+West Germanic change, after PWGmc (Ringe & Taylor §5.1.1, PDF 155); Wiktionary's PWGmc still has
+*gans, *munþ, *fimf. The three rules keep their order: they come first among the 404 rules in
+the file."""
 definition = "[+syll] → [length: long] / _ [+cons, nasal: 1] [-son, +cont, -voice]"
 
 [wg_nasal_spirant_loss]
-time = 310
+time = 404
 name = "Nasal lost before a voiceless fricative"
-description = "*gans > gōs, *tanþs > tōþ, *fimf > fīf — the compensating length is already in place"
+description = """*gans > gōs, *tanþs > tōþ, *fimf > fīf — the compensating length is already in place
+
+t = 404, after the Proto-West Germanic checkpoint (403). The nasal-spirant law is a northern
+West Germanic change, after PWGmc (Ringe & Taylor §5.1.1, PDF 155); Wiktionary's PWGmc still has
+*gans, *munþ, *fimf. The three rules keep their order: they come first among the 404 rules in
+the file."""
 definition = "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ [-son, +cont, -voice]"
 
 # West Germanic loses final *-z (PGmc *wulfaz > *wulfa), and the final short vowel then
@@ -790,12 +800,17 @@ definition = "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ [-son, +cont, 
 # *tanþs > tōþ (Minkova §3.4). Only that vowel — the context is the fricative it lengthened
 # before, which is still standing — so other long /aː/ is untouched.
 [wg_nasal_spirant_rounding]
-time = 320
+time = 404
 name = "The lengthened a rounds to oː before the fricative"
 description = """*gans > gaːs > gōs. The vowel is the BACK *ɑː that nasal loss lengthens; a FRONT
 long low vowel (swǣs, from *ē) stands before a voiceless fricative too but must NOT round —
 restricting to +back keeps swēsaz off it, which is why no sporadic patch is needed there.
-(*fimf > fīf and *uns > ūs keep their vowel, being high already.)"""
+(*fimf > fīf and *uns > ūs keep their vowel, being high already.)
+
+t = 404, after the Proto-West Germanic checkpoint (403). The nasal-spirant law is a northern
+West Germanic change, after PWGmc (Ringe & Taylor §5.1.1, PDF 155); Wiktionary's PWGmc still has
+*gans, *munþ, *fimf. The three rules keep their order: they come first among the 404 rules in
+the file."""
 definition = "[+syll, length: long, aperture: low, +back, rounded: none] → oː / _ [-son, +cont, -voice]"
 
 # West Germanic a-umlaut: a short high vowel lowers before a non-high vowel in the next
@@ -2162,7 +2177,7 @@ vowel: /ˈʌðə/, /ˈbɹʌðə/, /ˈmʌðə/. Dated 1750, before the FOOT–STR
 definition = "uː → ʌ / _ ð"
 
 [wg_th_hardening_after_l]
-time = 315
+time = 404
 name = "*þ hardens to *d after *l"
 description = """*hulþaz > OE hold, *gulþīnaz > golden, *felþuz > feld. The dental fricative becomes
 a stop after an *l — and only after an *l:
@@ -2174,7 +2189,11 @@ a stop after an *l — and only after an *l:
   nasal was still in front of it and gave **tand, **mund, **kund, **ander for five of Old English's
   most ordinary words.
 
-t = 315, immediately after the nasal-spirant loss, for exactly that reason."""
+t = 315, immediately after the nasal-spirant loss, for exactly that reason.
+
+t = 404, after the Proto-West Germanic checkpoint (403). Ringe & Taylor list *lþ > *ld among
+the northern West Germanic changes (§5.1.3, PDF 171), and Wiktionary's PWGmc keeps *golþ. It
+still runs after the nasal-spirant rules, which come earlier in the file at the same date."""
 definition = "θ → d / [+lat] _"
 
 [oe_final_j_loss]
