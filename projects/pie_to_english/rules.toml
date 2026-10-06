@@ -3607,13 +3607,6 @@ modern form and leave the Middle English one long."""
 words = ["seven"]
 definition = "ɛː → ɛ"
 
-[sporadic_wire_pre_r]
-time = 1150
-name = "SPORADIC: *wīraz > ME wer lowers *ī to *ɛː before *r"
-description = "OE wīr gives a ME wer /wɛːr/ with the vowel lowered before *r (whence modern wire's /aɪə/). Word-scoped."
-words = ["wire"]
-definition = "iː → ɛː / _ r"
-
 [sporadic_lindo_nd]
 time = 1250
 name = "SPORADIC: *lindō > ME line loses the *d of *nd"

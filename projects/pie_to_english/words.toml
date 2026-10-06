@@ -1053,7 +1053,7 @@ forms = [
   { time = -2000, ipa = "ˈweχiros", category = "noun", note = "PIE *weh₁iros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwiːrɑz", category = "noun" },
   { time = 900, ipa = "ˈwiːr" },
-  { time = 1400, ipa = "ˈwɛːr" },
+  { time = 1400, ipa = "ˈwiːr", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈwɛːr. Wrong word: the old target /ˈwɛːr(ə)/ is the ME verb were (past of be), which the bootstrap attached. Klein s.v. wire, PDF 856: ME wyre, wir, from OE wīr." },
   { time = "final", ipa = "ˈwaɪə", note = "RP from Wiktionary (kaikki), wire; added 2026-10-06." },
 ]
 
