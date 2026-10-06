@@ -1721,9 +1721,11 @@ definition = "∅ → j / [+syll, aperture: high, +front] _ [+syll]"
 # normalised to /j/: the gold by CONVENTIONS, the derivation by this rule.
 [pgmc_diphthong_offglide]
 time = 150
-name = "The offglide of a diphthong is written j"
-description = "*ɑi̯θɑz and *ɑjnɑɣɑz are the same diphthong, spelt two ways in the source"
-definition = "i̯ → j / [+syll] _"
+name = "The offglide of a diphthong is written j or w"
+description = """*ɑi̯θɑz and *ɑjnɑɣɑz are the same diphthong, spelt two ways in the source. The same holds for
+*u̯: PGmc *ai, *au, *eu are the sequences /aj/, /aw/, /ew/, and the second half of *au is structurally
+the semivowel *w (Ringe §4.2, PDF 254–255; §3.2.6 (i), PDF 171): *stauraz, *raumaz."""
+definition = ["i̯ → j / [+syll] _", "u̯ → w / [+syll] _"]
 
 # Germanic a-umlaut, the /i/ half only: short *i lowers to *e before a non-high vowel in the
 # next syllable — *nisdós > *nestaz. Blocked before /j/, which is why *midjaz keeps its /i/.
