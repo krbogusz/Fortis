@@ -397,6 +397,7 @@ forms = [
   { time = 200, ipa = "ˈswestɛːr", category = "noun" },
   { time = 900, ipa = "ˈsweostor" },
   { time = 1400, ipa = "ˈsustər" },
+  { time = "final", ipa = "ˈsɪstə", note = "RP from Wiktionary (kaikki), sister; added 2026-10-06." },
 ]
 
 [[words]]
@@ -617,6 +618,7 @@ forms = [
   { time = 200, ipa = "ˈsternɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈsteorrɑ" },
   { time = 1400, ipa = "ˈstɛr" },
+  { time = "final", ipa = "ˈstɑː", note = "RP from Wiktionary (kaikki), star; added 2026-10-06." },
 ]
 
 [[words]]
@@ -694,6 +696,7 @@ forms = [
   { time = 200, ipa = "ˈɸɔːts", category = "noun" },
   { time = 900, ipa = "ˈfoːt" },
   { time = 1400, ipa = "ˈfoːt" },
+  { time = "final", ipa = "ˈfʊt", note = "RP from Wiktionary (kaikki), foot; added 2026-10-06." },
 ]
 
 [[words]]
@@ -976,6 +979,7 @@ forms = [
   { time = 200, ipa = "ˈwiːrɑz", category = "noun" },
   { time = 900, ipa = "ˈwiːr" },
   { time = 1400, ipa = "ˈwɛːr" },
+  { time = "final", ipa = "ˈwaɪə", note = "RP from Wiktionary (kaikki), wire; added 2026-10-06." },
 ]
 
 [[words]]
@@ -1014,6 +1018,7 @@ forms = [
   { time = 200, ipa = "ˈɸimɸtɔːː", category = "adj" },
   { time = 900, ipa = "ˈfiːftɑ" },
   { time = 1400, ipa = "ˈfift" },
+  { time = "final", ipa = "ˈfɪfθ", note = "RP from Wiktionary (kaikki), fifth; added 2026-10-06." },
 ]
 
 [[words]]
@@ -1101,6 +1106,7 @@ forms = [
   { time = 200, ipa = "ˈknewɑ̃", category = "noun" },
   { time = 900, ipa = "ˈkneoːw" },
   { time = 1400, ipa = "ˈkneː" },
+  { time = "final", ipa = "ˈniː", note = "RP from Wiktionary (kaikki), knee; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2053,6 +2059,7 @@ forms = [
   { time = 200, ipa = "ˈsɑlβɔː", category = "noun" },
   { time = 900, ipa = "ˈsæɑlf" },
   { time = 1400, ipa = "ˈsalv" },
+  { time = "final", ipa = "ˈsɑːv", note = "RP from Wiktionary (kaikki), salve; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2137,6 +2144,7 @@ forms = [
   { time = -2000, ipa = "polˈχwos", category = "adj", note = "PIE *polHwós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɑlwɑz", category = "adj" },
   { time = 900, ipa = "ˈfæɑlu" },
+  { time = "final", ipa = "ˈfæləʊ", note = "RP from Wiktionary (kaikki), fallow; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2380,6 +2388,7 @@ forms = [
   { time = 200, ipa = "ˈɣuðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈgod" },
   { time = 1400, ipa = "ˈgɔd" },
+  { time = "final", ipa = "ˈgɒd", note = "RP from Wiktionary (kaikki), god; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2435,6 +2444,7 @@ forms = [
   { time = 200, ipa = "ˈɸɑðɛːr", category = "noun" },
   { time = 900, ipa = "ˈfæder" },
   { time = 1400, ipa = "ˈfadər" },
+  { time = "final", ipa = "ˈfɑːðə", note = "RP from Wiktionary (kaikki), father: faeder is the Scots form. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2446,6 +2456,7 @@ forms = [
   { time = 200, ipa = "ˈmɔːðɛːr", category = "noun" },
   { time = 900, ipa = "ˈmoːdor" },
   { time = 1400, ipa = "ˈmoːdər" },
+  { time = "final", ipa = "ˈmʌðə", note = "RP from Wiktionary (kaikki), mother; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2457,6 +2468,7 @@ forms = [
   { time = 200, ipa = "ˈtexundɔːː", category = "adj" },
   { time = 900, ipa = "ˈteoːθɑ" },
   { time = 1400, ipa = "ˈtɛnð" },
+  { time = "final", ipa = "ˈtaɪð", note = "RP from Wiktionary (kaikki), tithe: tithe continues OE tēoþa; tenth is a new formation on ten. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2468,6 +2480,7 @@ forms = [
   { time = 200, ipa = "ˈsnɑjwɑz", category = "noun" },
   { time = 900, ipa = "ˈsnɑːw" },
   { time = 1400, ipa = "ˈsnɑw" },
+  { time = "final", ipa = "ˈsnəʊ", note = "RP from Wiktionary (kaikki), snow; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2490,6 +2503,7 @@ forms = [
   { time = 200, ipa = "ˈrɑwðɑz", category = "adj" },
   { time = 900, ipa = "ˈræɑːd" },
   { time = 1400, ipa = "ˈrɛːd" },
+  { time = "final", ipa = "ˈɹɛd", note = "RP from Wiktionary (kaikki), red; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2501,6 +2515,7 @@ forms = [
   { time = 200, ipa = "ˈwɑtɔːr", category = "noun" },
   { time = 900, ipa = "ˈwæter" },
   { time = 1400, ipa = "ˈwatər" },
+  { time = "final", ipa = "ˈwɔːtə", note = "RP from Wiktionary (kaikki), water; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2523,6 +2538,7 @@ forms = [
   { time = 200, ipa = "ˈɑwsɔːː", category = "noun" },
   { time = 900, ipa = "ˈæɑːre" },
   { time = 1400, ipa = "ˈɛːr" },
+  { time = "final", ipa = "ˈɪə", note = "RP from Wiktionary (kaikki), ear; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2534,6 +2550,7 @@ forms = [
   { time = 200, ipa = "ˈnɑxts", category = "noun" },
   { time = 900, ipa = "ˈnixt" },
   { time = 1400, ipa = "ˈnixt" },
+  { time = "final", ipa = "ˈnaɪt", note = "RP from Wiktionary (kaikki), night; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2556,6 +2573,7 @@ forms = [
   { time = 200, ipa = "ˈwerkɑ̃", category = "noun" },
   { time = 900, ipa = "ˈweork" },
   { time = 1400, ipa = "ˈwɛrk" },
+  { time = "final", ipa = "ˈwɜːk", note = "RP from Wiktionary (kaikki), work; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2589,6 +2607,7 @@ forms = [
   { time = 200, ipa = "ˈnɑmɔːː", category = "noun" },
   { time = 900, ipa = "ˈnɑmɑ" },
   { time = 1400, ipa = "ˈnaːm" },
+  { time = "final", ipa = "ˈneɪm", note = "RP from Wiktionary (kaikki), name; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2611,6 +2630,7 @@ forms = [
   { time = 200, ipa = "ˈrextɑz", category = "adj" },
   { time = 900, ipa = "ˈrixt" },
   { time = 1400, ipa = "ˈrixt" },
+  { time = "final", ipa = "ˈɹaɪt", note = "RP from Wiktionary (kaikki), right; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2622,6 +2642,7 @@ forms = [
   { time = 200, ipa = "ˈxɑjmɑz", category = "noun" },
   { time = 900, ipa = "ˈxɑːm" },
   { time = 1400, ipa = "ˈhɔːm" },
+  { time = "final", ipa = "ˈhəʊm", note = "RP from Wiktionary (kaikki), home; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2644,6 +2665,7 @@ forms = [
   { time = 200, ipa = "ˈwurmiz", category = "noun" },
   { time = 900, ipa = "ˈwyrm" },
   { time = 1400, ipa = "ˈwurm" },
+  { time = "final", ipa = "ˈwɜːm", note = "RP from Wiktionary (kaikki), worm: wyrm is an archaic revival. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2666,6 +2688,7 @@ forms = [
   { time = 200, ipa = "ˈɑrsɑz", category = "noun" },
   { time = 900, ipa = "ˈæɑrs" },
   { time = 1400, ipa = "ˈars" },
+  { time = "final", ipa = "ˈɑːs", note = "RP from Wiktionary (kaikki), arse: ass is the American form. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2710,6 +2733,7 @@ forms = [
   { time = 200, ipa = "ˈlɑwxɑz", category = "noun" },
   { time = 900, ipa = "ˈlæɑːx" },
   { time = 1400, ipa = "ˈlæj" },
+  { time = "final", ipa = "ˈliː", note = "RP from Wiktionary (kaikki), lea; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2754,6 +2778,7 @@ forms = [
   { time = 200, ipa = "ˈɑlɑz", category = "noun" },
   { time = 900, ipa = "ˈæl" },
   { time = 1400, ipa = "ˈal" },
+  { time = "final", ipa = "ˈɔːl", note = "RP from Wiktionary (kaikki), awl; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2787,6 +2812,7 @@ forms = [
   { time = 200, ipa = "ˈlindɔː", category = "noun" },
   { time = 900, ipa = "ˈlind" },
   { time = 1400, ipa = "ˈliːn" },
+  { time = "final", ipa = "ˈlaɪm", note = "RP from Wiktionary (kaikki), lime; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2798,6 +2824,7 @@ forms = [
   { time = 200, ipa = "ˈkʷernɔː", category = "noun" },
   { time = 900, ipa = "ˈkweorn" },
   { time = 1400, ipa = "ˈkwɛrn" },
+  { time = "final", ipa = "ˈkwɜːn", note = "RP from Wiktionary (kaikki), quern; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2831,6 +2858,7 @@ forms = [
   { time = 200, ipa = "ˈbuttɑz", category = "noun" },
   { time = 900, ipa = "ˈbytt" },
   { time = 1400, ipa = "ˈbut" },
+  { time = "final", ipa = "ˈbʌt", note = "RP from Wiktionary (kaikki), butt; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2842,6 +2870,7 @@ forms = [
   { time = 200, ipa = "ˈkluːtɑz", category = "noun" },
   { time = 900, ipa = "ˈkluːt" },
   { time = 1400, ipa = "ˈkluːt" },
+  { time = "final", ipa = "ˈklaʊt", note = "RP from Wiktionary (kaikki), clout: clout continues OE clūt; cloud continues OE clūd. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2864,6 +2893,7 @@ forms = [
   { time = 200, ipa = "ˈwɑpsɔː", category = "noun" },
   { time = 900, ipa = "ˈwæps" },
   { time = 1400, ipa = "ˈwasp" },
+  { time = "final", ipa = "ˈwɒsp", note = "RP from Wiktionary (kaikki), wasp; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2875,6 +2905,7 @@ forms = [
   { time = 200, ipa = "ˈelmɑz", category = "noun" },
   { time = 900, ipa = "ˈelm" },
   { time = 1400, ipa = "ˈɛlm" },
+  { time = "final", ipa = "ˈɛlm", note = "RP from Wiktionary (kaikki), elm; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2886,6 +2917,7 @@ forms = [
   { time = 200, ipa = "ˈxuːsɑ̃", category = "noun" },
   { time = 900, ipa = "ˈxuːs" },
   { time = 1400, ipa = "ˈhuːs" },
+  { time = "final", ipa = "ˈhaʊs", note = "RP from Wiktionary (kaikki), house; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2897,6 +2929,7 @@ forms = [
   { time = 200, ipa = "ˈxɑwxɑz", category = "adj" },
   { time = 900, ipa = "ˈxæɑːx" },
   { time = 1400, ipa = "ˈheːx" },
+  { time = "final", ipa = "ˈhaɪ", note = "RP from Wiktionary (kaikki), high; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2908,6 +2941,7 @@ forms = [
   { time = 200, ipa = "ˈmunθɑz", category = "noun" },
   { time = 900, ipa = "ˈmuːθ" },
   { time = 1400, ipa = "ˈmuːθ" },
+  { time = "final", ipa = "ˈmaʊθ", note = "RP from Wiktionary (kaikki), mouth; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2919,6 +2953,7 @@ forms = [
   { time = 200, ipa = "ˈɸulkɑ̃", category = "noun" },
   { time = 900, ipa = "ˈfolk" },
   { time = 1400, ipa = "ˈfɔlk" },
+  { time = "final", ipa = "ˈfəʊk", note = "RP from Wiktionary (kaikki), folk; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2941,6 +2976,7 @@ forms = [
   { time = 200, ipa = "ˈwiːsɑz", category = "adj" },
   { time = 900, ipa = "ˈwiːs" },
   { time = 1400, ipa = "ˈwiːs" },
+  { time = "final", ipa = "ˈwaɪz", note = "RP from Wiktionary (kaikki), wise; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2952,6 +2988,7 @@ forms = [
   { time = 200, ipa = "ˈblɑðɑ̃", category = "noun" },
   { time = 900, ipa = "ˈblæd" },
   { time = 1400, ipa = "ˈblaːd" },
+  { time = "final", ipa = "ˈbleɪd", note = "RP from Wiktionary (kaikki), blade; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3040,6 +3077,7 @@ forms = [
   { time = 200, ipa = "ˈxɑjtɑz", category = "adj" },
   { time = 900, ipa = "ˈxɑːt" },
   { time = 1400, ipa = "ˈhɔːt" },
+  { time = "final", ipa = "ˈhɒt", note = "RP from Wiktionary (kaikki), hot; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3051,6 +3089,7 @@ forms = [
   { time = 200, ipa = "ˈstɑβɑz", category = "noun" },
   { time = 900, ipa = "ˈstæf" },
   { time = 1400, ipa = "ˈstaf" },
+  { time = "final", ipa = "ˈstɑːf", note = "RP from Wiktionary (kaikki), staff; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3062,6 +3101,7 @@ forms = [
   { time = 200, ipa = "ˈmuldɔː", category = "noun" },
   { time = 900, ipa = "ˈmolde" },
   { time = 1400, ipa = "ˈmɔld" },
+  { time = "final", ipa = "ˈməʊld", note = "RP from Wiktionary (kaikki), mould: mold is the American spelling. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -3095,6 +3135,7 @@ forms = [
   { time = 200, ipa = "ˈɣɑŋgɑz", category = "noun" },
   { time = 900, ipa = "ˈgɑŋg" },
   { time = 1400, ipa = "ˈgɔŋg" },
+  { time = "final", ipa = "ˈgæŋ", note = "RP from Wiktionary (kaikki), gang; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3117,6 +3158,7 @@ forms = [
   { time = 200, ipa = "ˈduniz", category = "noun" },
   { time = 900, ipa = "ˈdyne" },
   { time = 1400, ipa = "ˈdin" },
+  { time = "final", ipa = "ˈdɪn", note = "RP from Wiktionary (kaikki), din; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3239,6 +3281,7 @@ forms = [
   { time = -2000, ipa = "ˈbʱergʲʱos", category = "noun", note = "PIE *bʰérǵʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈberɣɑz", category = "noun" },
   { time = 900, ipa = "ˈbeorg" },
+  { time = "final", ipa = "ˈbæɹəʊ", note = "RP from Wiktionary (kaikki), barrow; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3609,6 +3652,7 @@ forms = [
   { time = -2000, ipa = "krejˈdʱroːn", category = "noun", note = "PIE *kréydʰrom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxriːðrɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈxridder" },
+  { time = "final", ipa = "ˈɹɪdəl", note = "RP from Wiktionary (kaikki), riddle; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3719,6 +3763,7 @@ forms = [
   { time = -2000, ipa = "bʱergʲˈtos", category = "adj", note = "PIE *bʰer(H)ǵ-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈberxtɑz", category = "adj" },
   { time = 900, ipa = "ˈbeorxt" },
+  { time = "final", ipa = "ˈbɹaɪt", note = "RP from Wiktionary (kaikki), bright; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3919,6 +3964,7 @@ forms = [
   { time = -2000, ipa = "ˈtrowχeħ", category = "noun", note = "PIE *trowH-eh₂-ti, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈθrɑwɔː", category = "noun" },
   { time = 900, ipa = "ˈθræɑː" },
+  { time = "final", ipa = "ˈθɹəʊ", note = "RP from Wiktionary (kaikki), throe; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4543,6 +4589,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈweχitis", category = "noun", note = "PIE *wéh₁itis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwiθiz", category = "noun" },
+  { time = "final", ipa = "ˈwɪθ", note = "RP from Wiktionary (kaikki), withe; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4570,6 +4617,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲuˈχnos", category = "noun", note = "PIE *ḱuh₁nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxuːnɑz", category = "noun" },
+  { time = "final", ipa = "ˈhaʊnd", note = "RP from Wiktionary (kaikki), hound; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5344,6 +5392,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲn̩ˈʁʷjom", category = "noun", note = "PIE *ǵn̥h₃-yó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈkunjɑ̃", category = "noun" },
+  { time = "final", ipa = "ˈkɪn", note = "RP from Wiktionary (kaikki), kin; added 2026-10-06." },
 ]
 
 [[words]]

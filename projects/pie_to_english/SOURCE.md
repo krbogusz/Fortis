@@ -106,6 +106,30 @@ with the English one. Since a word is scored at whichever checkpoints it has, th
 
 A row with no segmentable target at *any* checkpoint is still dropped — it scores nothing.
 
+### Finals filled on 2026-10-06
+
+Most of the "several modern reflexes" rows listed the standard word beside dialect spellings or
+proper nouns: *God*/*god*, *mither*/*mother*, *snaw*/*snow*, *neet*/*night*/*nite*. A final
+was added to such a row, and to single-reflex rows that had none, when all of these hold:
+
+1. Exactly one listed reflex is a standard English word. An entry counts as standard when it is
+   not a proper noun and has a sense that is not an alternative or inflected form and is not
+   tagged dialectal, obsolete, archaic, rare or regional.
+2. That entry's Wiktionary etymology names the word's own Old English form, or its
+   Proto-Germanic form when there is no Old English one. This rejects homographs: *near*
+   'kidney' and *near* 'close' both go back to ME *nere*.
+3. Its transcription is RP: tagged Received Pronunciation, else UK, else untagged. An American
+   transcription is never used.
+4. A reviewer confirmed the pick. Review rejected compounds and new formations (*hangnail*,
+   *behest*, *golden*, *inkling*), obsolete reflexes (*near* 'kidney'), an uncertain etymology
+   (*mound*) and transcriptions that are not RP (*two* /tu/, *haulm* /hɒm/). Where two
+   reflexes passed, the reviewer chose the standard continuant: *father* over Scots *faeder*,
+   *worm* over *wyrm*, *arse* over *ass*, *clout* over *cloud*, *mould* over *mold*, *tithe*
+   over *tenth*.
+
+This added 49 finals. Each one's `note` names the reflex and, for a reviewer's choice, the reason.
+Genuine doublets stay blank, for example *shade*/*shadow* and *whit*/*wight*.
+
 What survives is nouns, adjectives and numerals: **249 rows**, the same order as the FLLAPS gold
 that `latin_to_french` scores against.
 
