@@ -2301,6 +2301,15 @@ and bane comes out **biːn."""
 definition = "ɛː → e ɪ"
 
 
+# Close ME [oː] before [x] breaks to [ou] and rises to [uː] in the 15th century: plughe, enughe
+# (Jones §3.4.1, Tables 3.14–3.15, PDF 158–160; Steponavičius §183, PDF 172; Minkova §7.4 n. 14,
+# PDF 207). Open [ɔː] does not rise (dāh > dough). Before me_x_loss (1450).
+[lme_ox_raising]
+time = 1440
+name = "Close *oː rises to *uː before *x"
+description = "Jones §3.4.1; Steponavičius §183; Minkova §7.4 n. 14 — bōh > bough, plōh > plough"
+definition = "oː → uː / _ x"
+
 [sporadic_trough_x_to_f]
 time = 1440
 name = "SPORADIC: trough keeps its *x as *f"
