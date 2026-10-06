@@ -934,14 +934,17 @@ definition = "[+syll, length: short, rounded: none, aperture: !high] → ∅ / [
 #
 # The word-final ones DELABIALISE instead, and Ringe is explicit that this comes FIRST:
 # "originally word-final labiovelars simply lost their labialization before the resolution of
-# labiovelars into velar + *w sequences". Hence two rules, the loss ordered before the split —
-# which is what gives *kʷikʷɑz its two different outcomes, `kw…k`, in one word.
+# labiovelars into velar + *w sequences". Hence two rules, the loss ordered before the split.
 #
-# Dated after the apocope (450), which is what makes the second *kʷ of *kʷikʷɑz word-final in the
-# first place; and after OE palatalisation (410), or the *k freed by the resolution would stand
-# before a front vowel and affricate — **chwic for cwic.
+# Both at 401, before the Proto-West Germanic checkpoint (403) — the resolution is a PWGmc change —
+# and before the apocope (402). "Originally" word-final means final before the apocope, so the
+# second *kʷ of *kʷikʷɑz is NOT one of them: it resolves to *kw, and with the apocope and the
+# vocalisation of final *w it gives Ringe & Taylor's PWGmc *kwiku (PDF 63). The velar then stands
+# before a back vowel, where OE palatalisation (410) leaves it alone; OE cwic loses the *-u by
+# levelling (`sporadic_final_u_levelling`). These rules used to sit at 470–480, after the apocope,
+# which delabialised that second *kʷ as if it were originally final.
 [oe_final_labiovelar_delabialisation]
-time = 470
+time = 401
 name = "A word-final labiovelar loses its labialisation"
 description = "Ringe & Taylor §3.1.3 — *kʷikʷ > *kʷik, before the resolution below"
 definition = [
@@ -950,7 +953,7 @@ definition = [
 ]
 
 [oe_labiovelar_resolution]
-time = 480
+time = 401
 name = "Labiovelars resolve into velar + w"
 description = "Ringe & Taylor §3.1.3 — PWGmc *kʷ, *xʷ > *kw, *xw (cwic, hwæl)"
 definition = [
@@ -2026,6 +2029,16 @@ a consonant + *w, and Old English writes the *w as a vowel: fealu, salu, ġeolu,
 Dated 468, beside oe_parasite_vowel (466) — both repair a final cluster the apocope has just
 created, and both need every ending already gone."""
 definition = "w → u / [-syll] _ #"
+
+[sporadic_final_u_levelling]
+time = 469
+name = "SPORADIC (levelling): the *-u from a final *w is lost — cwic, eoh"
+description = """Ringe & Taylor: *kwikwaz > PWGmc *kwiku > OE *cwicu >! cwic, the *-u "lost by levelling on
+the oblique forms" (PDF 63, 338); *ehwaz > PWGmc *ehu, *ehw- >! OE eoh (PDF 193). The "!" marks a
+step that is not a sound change. After the vocalisation of the final *w (468), which makes the
+*-u."""
+words = ["quick", "ehwaz"]
+definition = "u → ∅ / _ #"
 
 
 [oe_unstressed_i_to_e]
