@@ -1879,7 +1879,7 @@ forms = [
   { time = 403, ipa = "ˈdɑww", note = "PWGmc *dauw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæɑːw" },
   { time = 1400, ipa = "ˈdɛw" },
-  { time = "final", ipa = "ˈd͡ʒuː" },
+  { time = "final", ipa = "ˈdjuː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈd͡ʒuː. Transcription convention: Steponavičius §203 (PDF 193) says RP retains the yod after /t d/ ('tune, duke'), and Minkova §5.4.1 (p. 144) reports Walker (1791) condemning [dʒ] in duke and the variation that continues. The coalesced /dʒuː/ is a variant, not the RP form the column records." },
 ]
 
 [[words]]
@@ -2747,13 +2747,12 @@ forms = [
 [[words]]
 id = "couth"
 gloss = "couth"
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵn̥h₃tós is replaced by *ǵń̥h₃tos on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵn̥h₃tós is replaced by *ǵń̥h₃tos on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈkuːθ was removed on 2026-10-06 (DECISIONS.md, four cases): Dialect borrowing: Minkova §8.1 (p. 235) says the standard borrowed the regional pronunciation of uncouth, whose ū escaped the Vowel Shift as it did in the North (§8.2.2.2, p. 260). The regular reflex of OE cūþ would be /kaʊθ/."
 forms = [
   { time = -2000, ipa = "ˈgʲn̩ʁʷtos", category = "adj", note = "PIE *ǵn̥h₃tós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkunθɑz", category = "adj" },
   { time = 403, ipa = "ˈkunθ", note = "PWGmc *kunþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkuːθ" },
-  { time = "final", ipa = "ˈkuːθ" },
 ]
 
 [[words]]
