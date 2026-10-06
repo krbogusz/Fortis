@@ -290,6 +290,21 @@ name = "Osthoff's law: a long vowel shortens before a sonorant + consonant"
 description = "Ringe §3.2.1 (iii), PDF 105–107; Kroonen §2.1.5, PDF 21–22 — *pḗrsneh₂ > *fersnō"
 definition = "[+syll, -cons, length: long] → [length: short] / _ [+son, -syll] [-syll]"
 
+# Word-initial *CuV- becomes *CwV- (*su(H)īnom > *swīną, *suignós > *swiknaz), and *w is then lost
+# between a labial and a round vowel: *ph₂uṓr > *puwōr > *pwōr > *fōr 'fire' (Ringe §3.2.5 (ii),
+# PDF 158, and §3.2.6 (i), PDF 173). Figure 3.1 puts both before *o > *a.
+[pgmc_initial_cuv]
+time = -1900
+name = "Word-initial *CuV- becomes *CwV-"
+description = "Ringe §3.2.5 (ii), PDF 158 — *su(H)īnom > *swīną, *ph₂uṓr > *pwōr"
+definition = "[+syll, aperture: high, +back] → w / # [-syll, -son] _ [+syll]"
+
+[pgmc_w_loss_labial_round]
+time = -1900
+name = "*w is lost between a labial and a round vowel"
+description = "Ringe §3.2.6 (i), PDF 173 — *pwōr > *fōr"
+definition = "w → ∅ / [+labial, -syll, lingual: none] _ [+syll, +rounded]"
+
 [velar_labialization]
 time = -2000
 name = "Velar labialization"

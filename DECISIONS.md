@@ -136,3 +136,15 @@ the *-ur- (PDF 98, 181). Kroonen's route needs neither. Tested: taikuraz exact a
 word worse.
 
 **Rejected:** Ringe's route: Cowgill's law on a preform *dayh₂wēr, plus an analogical *-ur-.
+
+## 2026-10-07: Derive PGmc *fōr 'fire' as Ringe does
+
+**Choice:** `pgmc_initial_cuv` and `pgmc_w_loss_labial_round` (Ringe §3.2.5 (ii), §3.2.6 (i))
+derive *fōr from the existing preform *ph₂uṓr: *pwōr, then loss of *w between a labial and a round
+vowel.
+
+**Reason:** It needs no new preform and makes fire exact at 200. Restricted to an initial obstruent,
+which is what Ringe's examples have (*s, *p), it changes no other word.
+
+**Rejected:** Kroonen's preform *péh₂ur with Mahlow's law (s.v. *fōr-, PDF 191). Mahlow's law is
+decided on its own.
