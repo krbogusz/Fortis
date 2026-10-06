@@ -2632,15 +2632,20 @@ me_x_loss (1450)."""
 words = ["trough"]
 definition = "x → f / [+syll, +back] _"
 
-[eme_final_f_voicing]
+[eme_final_fricative_voicing]
 time = 1500
-name = "SPORADIC: five takes the *v of its inflected forms"
+name = "SPORADIC: five, wise and lithe take the voiced fricative of their inflected forms"
 description = """ME fīf, fīve > RP five. Final fricatives were voiceless in Old English, and Middle English
 voices them only where an inflection followed (Minkova §4.4, PDF 89–91; Jones §3.5, Table 3.32, PDF
 189, and §3.5.1, PDF 199: fif/fiues). So the [v] of five is the allophone of its inflected forms,
-not a sound law: reef, staff, sheaf keep [f]. Word-scoped; it used to be stated for every final *f."""
-words = ["five"]
-definition = "f → v / [+syll] _ #"
+not a sound law: reef, staff, sheaf keep [f]. Word-scoped; it used to be stated for every final *f.
+
+Minkova (PDF 93–94) gives the same origin for "<wise> with [-z]": the singleton fricative of wīse
+was voiced before the final schwa, and the schwa loss left the [z] at the word end. All final [ð]
+in PDE goes back to that schwa loss, and lithe is one of the two words with no verb to explain it.
+The 1400 targets of five and wise still have the voiceless fricative."""
+words = ["five", "wīsaz", "lithe"]
+definition = ["f → v / [+syll] _ #", "s → z / [+syll] _ #", "θ → ð / [+syll] _ #"]
 
 
 
@@ -3678,7 +3683,7 @@ definition = "n → ∅ / _ #"
 [sporadic_erf_no_voice]
 time = 1900
 name = "SPORADIC: erf keeps a voiceless *f"
-description = "erf /ɜːf/ keeps the voiceless final *f that eme_final_f_voicing wrongly voices (cf. reef). Word-scoped re-devoicing."
+description = "RP erf /ɜːf/ has a voiceless final *f where ME erve had [v] (the 1400 target ɛrv, voiced between vowels before the schwa was lost). Word-scoped re-devoicing."
 words = ["erf"]
 definition = "v → f / _ #"
 
