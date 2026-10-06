@@ -3038,9 +3038,13 @@ definition = "i → eː"
 [sporadic_yoke_goat]
 time = 1650
 name = "SPORADIC: yoke has a long *oː > GOAT, not the short LOT vowel"
-description = "OE ġeoc > ME yoke has a long *oː (open-syllable) that the GOAT diphthongisation takes to /jəʊk/; our cascade keeps it short. Word-scoped lengthening, after the Vowel Shift and before GOAT."
+description = """OE ġeoc > ME yoke has a long *oː (open-syllable) that the GOAT diphthongisation takes to /jəʊk/; our cascade keeps it short. Word-scoped lengthening, after the Vowel Shift and before GOAT.
+
+The long vowel comes from the inflected, disyllabic forms (Jones §3.2, PDF 118–119; Minkova
+§7.5.2.1, PDF 222–223). The rule matches *ɔ: me_short_o_opening opens the vowel at 1150, so a
+pattern on *o never fired."""
 words = ["yoke"]
-definition = "o → oː"
+definition = "ɔ → oː"
 
 [sporadic_ell_no_n]
 time = 1500
