@@ -1947,6 +1947,26 @@ name = "A glide develops between *a and a final *l"
 description = "Jones Table 3.24 — hall > haul, mainly 15th century"
 definition = "∅ → w / a _ l #"
 
+# Late Middle English [ɛw] and [ew] merge with [iw] (Minkova §8.2.2.3, Fig. 8.7, PDF 268;
+# Steponavičius §183, PDF 172). After the 1400 checkpoint, which still writes dɛw.
+[lme_ew_raising]
+time = 1450
+name = "*ɛw and *ew merge with *iw"
+description = "Minkova §8.2.2.3; Steponavičius §183 — dew, new, few fall together in [iw]"
+definition = [
+    "ɛ w → i w / _ [-syll]* $",
+    "e w → i w / _ [-syll]* $",
+]
+
+# The falling [iw] becomes the rising [juː] (Minkova §8.2.2.3, PDF 268: from c. 1600; McMahon
+# §3.3.3.2, PDF 129–130; Steponavičius §197, PDF 191: late 16th century; Jones §3.4.3, PDF 171).
+# t = 1640, after the Vowel Shift (1600), which would otherwise diphthongise the new *uː.
+[eme_iw_to_juu]
+time = 1640
+name = "*iw becomes *juː"
+description = "Minkova §8.2.2.3; McMahon §3.3.3.2; Steponavičius §197 — new, dew, few"
+definition = "i w → j uː / _ [-syll]* $"
+
 # Early Modern *au becomes *ɔː: claw, draw, law, all (Jones §4.4.2, PDF 270–273; Minkova
 # §8.2.2.3, PDF 268–269). Dated between Gil (1621), who still writes the diphthong (dauħter, Jones
 # PDF 274), and Cooper (1687), whose "o guttural" in awl is [ɔː] (PDF 271).
