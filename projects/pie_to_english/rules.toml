@@ -3331,6 +3331,16 @@ description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. 
 words = ["dere"]
 definition = "aː → eː"
 
+[sporadic_ten_short]
+time = 1300
+name = "SPORADIC: ten shortens before 1400"
+description = """Minkova §8.3.1, note 32 (PDF 271): ten < OE Angl. tēn(e) is one of the monosyllables
+shortened before the Vowel Shift; fifteen keeps the long vowel, and the shift raised it.
+Wiktionary's ME ten is already short [tɛn], so this shortening is dated before the 1400
+checkpoint. The short vowel is the DRESS [ɛ] of ME. Word-scoped, like end below."""
+words = ["ten"]
+definition = "eː → ɛ"
+
 [sporadic_end_short]
 time = 1550
 name = "SPORADIC: END shortens to DRESS before the Vowel Shift"
