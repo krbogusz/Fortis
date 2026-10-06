@@ -123,3 +123,16 @@ agrees with Wiktionary's own IPA on 435 of 450 lemmas, and every disagreement is
 spelling lacks (an unmarked long vowel, compound stress). Asked for on 2026-10-06.
 
 **Rejected:** Leaving the spellings without a target.
+
+## 2026-10-07: Derive the *k of taikuraz by Kroonen's laryngeal velarization
+
+**Choice:** `kroonen_laryngeal_velarization` (*-aiH- before *u or *w > *-aik-) derives
+*taikuraz from the cited *dayh₂uros.
+
+**Reason:** Both books take the *k from a laryngeal before a labial glide. Kroonen states it as a
+sound law with a second example, *aikwernan- (s.v. *taikwer-, PDF 546; PDF 48–49). Ringe reaches it
+through Cowgill's law, but needs a different preform with *h₂w and an analogy with *swehuraz for
+the *-ur- (PDF 98, 181). Kroonen's route needs neither. Tested: taikuraz exact at 200 and 403, no
+word worse.
+
+**Rejected:** Ringe's route: Cowgill's law on a preform *dayh₂wēr, plus an analogical *-ur-.

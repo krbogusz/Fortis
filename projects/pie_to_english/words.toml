@@ -4234,7 +4234,7 @@ id = "spenô"
 gloss = "spenô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈpstenos", category = "noun", note = "PIE *pstén-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈpstenoː", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈpstenos; now *psténō. Kroonen s.v. *spenan-, PDF 506: *psten-on-, an n-stem; the nominative *-ō follows Ringe (PDF 103). PIE *pstén-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈspenɔːː", category = "noun" },
   { time = 900, ipa = "ˈspɑnu" },
 ]
@@ -5124,7 +5124,7 @@ id = "sparwaz"
 gloss = "sparwaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈspeːr", category = "noun", note = "PIE *spḗr, as cited by Wiktionary." },
+  { time = -2000, ipa = "ˈpsorwos", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈspeːr; now *psórwos. Kroonen s.v. *sparwa(n)-, PDF 506: *psórwos; the cited *spḗr is the root. PIE *spḗr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈspɑrwɑz", category = "noun" },
 ]
 

@@ -45,6 +45,23 @@ definition = [
     "∅ → t / # s _ [+trill, +syll]",
 ]
 
+# Word-initial *ps- metathesises to *sp-, and *pst- simplifies to *sp-: *psórwos > *sparwaz
+# 'sparrow', *psten-on- > *spenô 'teat'. Kroonen calls the metathesis regular (s.v. *sparwa(n)-,
+# PDF 506, "cf. *stelan- < *tsel-e-"; s.v. *spenan-, PDF 506). Ringe is silent.
+[kroonen_initial_ps]
+time = -2000
+name = "Word-initial *ps- becomes *sp-, *pst- becomes *sp-"
+description = "Kroonen s.v. *sparwa(n)-, *spenan-, PDF 506 — *psórwos > *sparwaz, *psten- > *spen-"
+definition = ["p s t → s p ∅ / # _", "p s → s p / # _"]
+
+# A dental is regularly lost between *n and *j: *h₁s-n̥t-yós > *sunjaz 'truth' (Kroonen s.v.
+# *sunja-, PDF 532).
+[kroonen_dental_loss_nj]
+time = -2000
+name = "A dental is lost between *n and *j"
+description = "Kroonen s.v. *sunja-, PDF 532 — *h₁sn̥tyós > *sunjaz"
+definition = "[+cons, -continuant, +anterior, -sonorant] → ∅ / [+cons, nasal: 1] _ j"
+
 [u_epenthesis]
 time = -2000
 name = "'u' epenthesis"
@@ -106,6 +123,15 @@ time = -2000
 name = "Loss of initial laryngeals"
 description = "Word-initial laryngeals are lost before a consonant"
 definition = "#[+cons, advancement: rtr][+cons] → ∅[+cons]"
+
+# *-aiH- before *u or *w gives *-aikw-: *dayh₂uros > *taikuraz 'brother-in-law', *aiHw- >
+# *aikwernan- 'squirrel' (Kroonen s.v. *taikwer-, PDF 546, and *aikwernan-, PDF 48–49). Ringe
+# reaches the same *k through Cowgill's law on a preform with *h₂w (PDF 98, 181); see DECISIONS.md.
+[kroonen_laryngeal_velarization]
+time = -2000
+name = "A laryngeal after *j becomes *g before *u or *w"
+description = "Kroonen s.v. *taikwer-, PDF 546; *aikwernan-, PDF 48–49 — *dayh₂uros > *taikuraz"
+definition = "[+cons, advancement: rtr] → g / j _ [+syll, +back, aperture: high]"
 
 [cowgills_law]
 time = -2000
