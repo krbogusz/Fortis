@@ -25,6 +25,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ojnoˈkos", category = "adj", note = "PIE *oynokós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑjnɑɣɑz", category = "adj" },
+  { time = 403, ipa = "ˈɑjnɑɣ", note = "PWGmc *ainag (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæːnij" },
   { time = "final", ipa = "ˈɛni" },
 ]
@@ -49,6 +50,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχepi", category = "noun", note = "PIE *h₁epi, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɛːβɑnθs", category = "noun" },
+  { time = 403, ipa = "ˈɑːβɑnθ", note = "PWGmc *ābanþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæːfen" },
   { time = 1400, ipa = "ˈɛːvən" },
   { time = "final", ipa = "ˈiːvən" },
@@ -62,6 +64,7 @@ note = "Source: Wiktionary (kaikki). 200 TARGET corrected against a cited recons
 forms = [
   { time = -2000, ipa = "ˈħenteros", category = "adj", note = "PIE *h₂énteros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑnθɑrɑz", category = "adj", note = "Corrected against a cited reconstruction (see the word note)." },
+  { time = 403, ipa = "ˈɑnθɑr", note = "PWGmc *anþar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈoːθer" },
   { time = 1400, ipa = "ˈuðər" },
   { time = "final", ipa = "ˈʌðə" },
@@ -75,6 +78,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈlojstos", category = "noun", note = "PIE *loystos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑjstɑz", category = "noun" },
+  { time = 403, ipa = "ˈlɑjst", note = "PWGmc *laist (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑːst" },
   { time = "final", ipa = "ˈlɑːst" },
 ]
@@ -87,6 +91,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈnewjos", category = "adj", note = "PIE *néwyos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈniwjɑz", category = "adj" },
+  { time = 403, ipa = "ˈniwi", note = "PWGmc *niwi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈneːwe" },
   { time = 1400, ipa = "ˈniw" },
   { time = "final", ipa = "ˈnjuː" },
@@ -100,6 +105,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdlongʱos", category = "adj", note = "PIE *dlongʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑŋgɑz", category = "adj" },
+  { time = 403, ipa = "ˈlɑŋg", note = "PWGmc *lang (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑŋg" },
   { time = 1400, ipa = "ˈlɔːŋg" },
   { time = "final", ipa = "ˈlɒŋ" },
@@ -113,6 +119,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħelˈtos", category = "adj", note = "PIE *h₂eltós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑldɑz", category = "adj" },
+  { time = 403, ipa = "ˈɑld", note = "PWGmc *ald (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑld" },
   { time = 1400, ipa = "ˈɔːld" },
   { time = "final", ipa = "ˈəʊld" },
@@ -139,6 +146,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmogʱtis", category = "noun", note = "PIE *mógʰtis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑxtiz", category = "noun" },
+  { time = 403, ipa = "ˈmɑxti", note = "PWGmc *mahti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmixt" },
   { time = 1400, ipa = "ˈmixt" },
   { time = "final", ipa = "ˈmaɪt" },
@@ -165,6 +173,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "suˈχnus", category = "noun", note = "PIE *suHnús, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsunuz", category = "noun" },
+  { time = 403, ipa = "ˈsunu", note = "PWGmc *sunu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsunu" },
   { time = 1400, ipa = "ˈsun" },
   { time = "final", ipa = "ˈsʌn" },
@@ -190,6 +199,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "soˈkeħ", category = "noun", note = "PIE *sok-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈsɑɣɔː", category = "noun" },
+  { time = 403, ipa = "ˈsɑɣu", note = "PWGmc *sagu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsɑgu" },
   { time = 1400, ipa = "ˈsaw" },
   { time = "final", ipa = "ˈsɔː" },
@@ -215,6 +225,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ḱl̥-tó-s 
 forms = [
   { time = -2000, ipa = "ˈkʲl̩tos", category = "adj", note = "PIE *ḱl̥-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxulθɑz", category = "adj" },
+  { time = 403, ipa = "ˈxolθ", note = "PWGmc *holþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxold" },
   { time = "final", ipa = "ˈhəʊld" },
 ]
@@ -227,6 +238,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱreħteːr", category = "noun", note = "PIE *bʰréh₂tēr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈbrɔːθɛːr", category = "noun" },
+  { time = 403, ipa = "ˈbrɔːθer", note = "PWGmc *brōþer (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbroːθor" },
   { time = 1400, ipa = "ˈbroːðər" },
   { time = "final", ipa = "ˈbɹʌðə" },
@@ -240,6 +252,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkħponeħ", category = "noun", note = "PIE *kh₂póneh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑβɑnɔː", category = "noun" },
+  { time = 403, ipa = "ˈxɑβɑnu", note = "PWGmc *habanu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæfen" },
   { time = 1400, ipa = "ˈhaːvən" },
   { time = "final", ipa = "ˈheɪvən" },
@@ -278,6 +291,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħenˈtios", category = "noun", note = "PIE *h₂entíos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑndijɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑndiː", note = "PWGmc *andī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈende" },
   { time = 1400, ipa = "ˈeːnd" },
   { time = "final", ipa = "ˈɛnd" },
@@ -291,6 +305,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ḱérd is re
 forms = [
   { time = -2000, ipa = "ˈkʲerdoː", category = "noun", note = "PIE *ḱérd, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxertɔːː", category = "noun" },
+  { time = 403, ipa = "ˈxertɑː", note = "PWGmc *hertā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxeorte" },
   { time = 1400, ipa = "ˈhɛrt" },
   { time = "final", ipa = "ˈhɑːt" },
@@ -304,6 +319,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħjuχn̩ˈkʲos", category = "adj", note = "PIE *h₂yuHn̥ḱós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈjuŋgɑz", category = "adj" },
+  { time = 403, ipa = "ˈjuŋg", note = "PWGmc *jung (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjuŋg" },
   { time = 1400, ipa = "ˈjuŋg" },
   { time = "final", ipa = "ˈjʌŋ" },
@@ -317,6 +333,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱowtus", category = "noun", note = "PIE *dʰówtus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈdɑwθuz", category = "noun" },
+  { time = 403, ipa = "ˈdɑwθu", note = "PWGmc *dauþu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæɑːθ" },
   { time = 1400, ipa = "ˈdɛːθ" },
   { time = "final", ipa = "ˈdɛθ" },
@@ -330,6 +347,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpenkʷe", category = "num", note = "PIE *pénkʷe, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸimɸ", category = "num" },
+  { time = 403, ipa = "ˈfimf", note = "PWGmc *fimf (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiːf" },
   { time = 1400, ipa = "ˈfiːf" },
   { time = "final", ipa = "ˈfaɪv" },
@@ -343,6 +361,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʷeˈtwores", category = "num", note = "PIE *kʷetwóres, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸeðwɔːr", category = "num" },
+  { time = 403, ipa = "ˈfewwɑr", note = "PWGmc *feuwar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfeoːwer" },
   { time = 1400, ipa = "ˈfɔwr" },
   { time = "final", ipa = "ˈfɔː" },
@@ -356,6 +375,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *werdʰom is r
 forms = [
   { time = -2000, ipa = "wr̩ˈdʱom", category = "noun", note = "PIE *werdʰom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwurðɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈword", note = "PWGmc *word (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈword" },
   { time = 1400, ipa = "ˈwurd" },
   { time = "final", ipa = "ˈwɜːd" },
@@ -369,6 +389,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "dʱugħˈteːr", category = "noun", note = "PIE *dʰugh₂tḗr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈduxtɛːr", category = "noun" },
+  { time = 403, ipa = "ˈdoxter", note = "PWGmc *dohter (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdoxtor" },
   { time = 1400, ipa = "ˈdɔxtər" },
   { time = "final", ipa = "ˈdɔːtə" },
@@ -382,6 +403,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *péh₂wr̥ i
 forms = [
   { time = -2000, ipa = "pħuˈoːr", category = "noun", note = "PIE *péh₂wr̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɔːr", category = "noun" },
+  { time = 403, ipa = "ˈfuir", note = "PWGmc *fuir (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfyːr" },
   { time = 1400, ipa = "ˈfiːr" },
   { time = "final", ipa = "ˈfaɪə" },
@@ -395,6 +417,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swésōr is r
 forms = [
   { time = -2000, ipa = "ˈswesteːr", category = "noun", note = "PIE *swésōr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈswestɛːr", category = "noun" },
+  { time = 403, ipa = "ˈswester", note = "PWGmc *swester (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsweostor" },
   { time = 1400, ipa = "ˈsustər" },
   { time = "final", ipa = "ˈsɪstə", note = "RP from Wiktionary (kaikki), sister; added 2026-10-06." },
@@ -408,6 +431,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "priˈχos", category = "adj", note = "PIE *priHós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸrijɑz", category = "adj" },
+  { time = 403, ipa = "ˈfriː", note = "PWGmc *frī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfreoː" },
   { time = 1400, ipa = "ˈfrøː" },
   { time = "final", ipa = "ˈfɹiː" },
@@ -421,6 +445,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱoˈdʱħjom", category = "noun", note = "PIE *bʰodʰh₂-yó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑðjɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈbɑdi", note = "PWGmc *badi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbedd" },
   { time = 1400, ipa = "ˈbɛd" },
   { time = "final", ipa = "ˈbɛd" },
@@ -434,6 +459,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "pl̩ˈχnos", category = "adj", note = "PIE *pl̥h₁nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸullɑz", category = "adj" },
+  { time = 403, ipa = "ˈfulː", note = "PWGmc *full (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfull" },
   { time = 1400, ipa = "ˈfoːl" },
   { time = "final", ipa = "ˈfʊl" },
@@ -447,6 +473,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈlewktom", category = "noun", note = "PIE *lewktom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlewxtɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈlewxt", note = "PWGmc *leuht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈleoːxt" },
   { time = 1400, ipa = "ˈlixt" },
   { time = "final", ipa = "ˈlaɪt" },
@@ -460,6 +487,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swéḱs is r
 forms = [
   { time = -2000, ipa = "ˈsekʲs", category = "num", note = "PIE *swéḱs, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsexs", category = "num" },
+  { time = 403, ipa = "ˈsexs", note = "PWGmc *sehs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsiks" },
   { time = 1400, ipa = "ˈsiks" },
   { time = "final", ipa = "ˈsɪks" },
@@ -473,6 +501,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲwejtoːr", category = "adj", note = "PIE *ḱweytōr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxʷiːtɑz", category = "adj" },
+  { time = 403, ipa = "ˈxwiːt", note = "PWGmc *hwīt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwiːt" },
   { time = 1400, ipa = "ˈhwiːt" },
   { time = "final", ipa = "ˈwaɪt" },
@@ -486,6 +515,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdekʲm̩", category = "num", note = "PIE *déḱm̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtexun", category = "num" },
+  { time = 403, ipa = "ˈtexun", note = "PWGmc *tehun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈteːn" },
   { time = 1400, ipa = "ˈtɛn" },
   { time = "final", ipa = "ˈtɛn" },
@@ -499,6 +529,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "golˈtos", category = "adj", note = "PIE *goltós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkɑldɑz", category = "adj" },
+  { time = 403, ipa = "ˈkɑld", note = "PWGmc *kald (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈt͡ʃæɑld" },
   { time = 1400, ipa = "ˈkɔːld" },
   { time = "final", ipa = "ˈkəʊld" },
@@ -512,6 +543,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱrowgʱmos", category = "noun", note = "PIE *dʰrówgʰmos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈdrɑwmɑz", category = "noun" },
+  { time = 403, ipa = "ˈdrɑwm", note = "PWGmc *draum (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdræɑːm" },
   { time = 1400, ipa = "ˈdrɛːm" },
   { time = "final", ipa = "ˈdɹiːm" },
@@ -525,6 +557,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsweħdus", category = "adj", note = "PIE *swéh₂dus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈswɔːtuz", category = "adj" },
+  { time = 403, ipa = "ˈswɔːtiː", note = "PWGmc *swōtī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsweːte" },
   { time = 1400, ipa = "ˈsweːt" },
   { time = "final", ipa = "ˈswiːt" },
@@ -538,6 +571,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʷiˈʁʷwos", category = "adj", note = "PIE *gʷih₃wós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkʷikʷɑz", category = "adj" },
+  { time = 403, ipa = "ˈkwiku", note = "PWGmc *kwiku (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkwik" },
   { time = 1400, ipa = "ˈkwik" },
   { time = "final", ipa = "ˈkwɪk" },
@@ -551,6 +585,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "sepˈtm̩", category = "num", note = "PIE *septḿ̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈseβun", category = "num" },
+  { time = 403, ipa = "ˈseβun", note = "PWGmc *sebun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈseofon" },
   { time = 1400, ipa = "ˈsɛvən" },
   { time = "final", ipa = "ˈsɛvən" },
@@ -577,6 +612,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱojdos", category = "noun", note = "PIE *bʰóyd-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑjtɑz", category = "noun" },
+  { time = 403, ipa = "ˈbɑjt", note = "PWGmc *bait (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbɑːt" },
   { time = 1400, ipa = "ˈbɔːt" },
   { time = "final", ipa = "ˈbəʊt" },
@@ -590,6 +626,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *péysks is re
 forms = [
   { time = -2000, ipa = "ˈpiskos", category = "noun", note = "PIE *péysks, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸiskɑz", category = "noun" },
+  { time = 403, ipa = "ˈfisk", note = "PWGmc *fisk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiʃ" },
   { time = 1400, ipa = "ˈfiʃ" },
   { time = "final", ipa = "ˈfɪʃ" },
@@ -603,6 +640,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "okʲˈtoːw", category = "num", note = "PIE *oḱtṓw, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑxtɔːw", category = "num" },
+  { time = 403, ipa = "ˈɑxtɔː", note = "PWGmc *ahtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑxtɑ" },
   { time = 1400, ipa = "ˈæjxt" },
   { time = "final", ipa = "ˈeɪt" },
@@ -642,6 +680,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħuˈpelos", category = "adj", note = "PIE *h₂upélos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈuβilɑz", category = "adj" },
+  { time = 403, ipa = "ˈuβil", note = "PWGmc *ubil (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈyfel" },
   { time = 1400, ipa = "ˈivəl" },
   { time = "final", ipa = "ˈiːvəl" },
@@ -668,6 +707,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱewˈsom", category = "noun", note = "PIE *bʰewsóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈbewzɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈbewz", note = "PWGmc *beuʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeoːr" },
   { time = 1400, ipa = "ˈbeːr" },
   { time = "final", ipa = "ˈbɪə" },
@@ -681,6 +721,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħweχn̩ts", category = "noun", note = "PIE *h₂wéh₁n̥ts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwindɑz", category = "noun" },
+  { time = 403, ipa = "ˈwind", note = "PWGmc *wind (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwind" },
   { time = 1400, ipa = "ˈwiːnd" },
   { time = "final", ipa = "ˈwɪnd" },
@@ -694,6 +735,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpoːds", category = "noun", note = "PIE *pṓds, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɔːts", category = "noun" },
+  { time = 403, ipa = "ˈfɔːt", note = "PWGmc *fōt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfoːt" },
   { time = 1400, ipa = "ˈfoːt" },
   { time = "final", ipa = "ˈfʊt", note = "RP from Wiktionary (kaikki), foot; added 2026-10-06." },
@@ -707,6 +749,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχnewn̩", category = "num", note = "PIE *h₁néwn̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnewun", category = "num" },
+  { time = 403, ipa = "ˈnewn", note = "PWGmc *neun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnigon" },
   { time = 1400, ipa = "ˈniːn" },
   { time = "final", ipa = "ˈnaɪn" },
@@ -745,6 +788,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʷʱormos", category = "adj", note = "PIE *gʷʰór-mo-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwɑrmɑz", category = "adj" },
+  { time = 403, ipa = "ˈwɑrm", note = "PWGmc *warm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæɑrm" },
   { time = 1400, ipa = "ˈwarm" },
   { time = "final", ipa = "ˈwɔːm" },
@@ -758,6 +802,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱoħutlom", category = "noun", note = "PIE *bʰoh₂u-tlo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɔːθlɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈbɔːθl", note = "PWGmc *bōþl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbotl" },
   { time = "final", ipa = "ˈbɒtl̩" },
 ]
@@ -770,6 +815,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *lókus is rep
 forms = [
   { time = -2000, ipa = "loˈkus", category = "noun", note = "PIE *lókus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑɣuz", category = "noun" },
+  { time = 403, ipa = "ˈlɑɣu", note = "PWGmc *lagu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑgu" },
   { time = 1400, ipa = "ˈlaɣə" },
   { time = "final", ipa = "ˈleɪ" },
@@ -783,6 +829,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰéysd-os 
 forms = [
   { time = -2000, ipa = "ˈgʲʱojsdos", category = "noun", note = "PIE *ǵʰéysd-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣɑjstɑz", category = "noun" },
+  { time = 403, ipa = "ˈɣɑjst", note = "PWGmc *gaist (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑːst" },
   { time = 1400, ipa = "ˈgɔːst" },
   { time = "final", ipa = "ˈgəʊst" },
@@ -796,6 +843,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲluˈtos", category = "adj", note = "PIE *ḱlutós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxluːðɑz", category = "adj" },
+  { time = 403, ipa = "ˈxluːd", note = "PWGmc *hlūd (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxluːd" },
   { time = 1400, ipa = "ˈluːd" },
   { time = "final", ipa = "ˈlaʊd" },
@@ -809,6 +857,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "penˈkʷros", category = "noun", note = "PIE *penkʷ-ró-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸiŋgrɑz", category = "noun" },
+  { time = 403, ipa = "ˈfiŋgr", note = "PWGmc *fingr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiŋger" },
   { time = 1400, ipa = "ˈfiŋgər" },
   { time = "final", ipa = "ˈfɪŋgə", note = "Short final schwa (RP /ˈfɪŋɡə/), consistent with the column — Wiktionary's ˈfɪŋgəː was the lone long-schwa transcription of 177." },
@@ -822,6 +871,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwedʱrom", category = "noun", note = "PIE *wedʰrom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈweðrɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈwedr", note = "PWGmc *wedr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈweder" },
   { time = 1400, ipa = "ˈwɛdər" },
   { time = "final", ipa = "ˈwɛðə" },
@@ -848,6 +898,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħweχn̩tos", category = "noun", note = "PIE *h₂wéh₁n̥tos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwintruz", category = "noun" },
+  { time = 403, ipa = "ˈwintru", note = "PWGmc *wintru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwinter" },
   { time = 1400, ipa = "ˈwintər" },
   { time = "final", ipa = "ˈwɪntə" },
@@ -861,6 +912,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲr̩ˈħnom", category = "noun", note = "PIE *ḱr̥h₂-nó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxurnɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈxorn", note = "PWGmc *horn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxorn" },
   { time = 1400, ipa = "ˈhɔrn" },
   { time = "final", ipa = "ˈhɔːn" },
@@ -887,6 +939,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħekʲos", category = "noun", note = "PIE *h₂éḱos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑxɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑxɑz", note = "PWGmc *ahaʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑːr" },
   { time = 1400, ipa = "ˈɛːr" },
   { time = "final", ipa = "ˈɪə" },
@@ -913,6 +966,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwl̩kʷos", category = "noun", note = "PIE *wĺ̥kʷos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwulɸɑz", category = "noun" },
+  { time = 403, ipa = "ˈwulf", note = "PWGmc *wulf (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwulf" },
   { time = 1400, ipa = "ˈwulf" },
   { time = "final", ipa = "ˈwʊlf" },
@@ -926,6 +980,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʷoːws", category = "noun", note = "PIE *gʷṓws, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkɔːz", category = "noun" },
+  { time = 403, ipa = "ˈkɔː", note = "PWGmc *kō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkuː" },
   { time = 1400, ipa = "ˈkuː" },
   { time = "final", ipa = "ˈkaʊ" },
@@ -965,6 +1020,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħjuχn̩ˈtis", category = "noun", note = "PIE *h₂yu-Hn̥-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈjuɣunθiz", category = "noun" },
+  { time = 403, ipa = "ˈjuɣunθi", note = "PWGmc *jugunþi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjuguθ" },
   { time = 1400, ipa = "ˈjuːð" },
   { time = "final", ipa = "ˈjuːθ" },
@@ -991,6 +1047,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʱordʱos", category = "noun", note = "PIE *gʰórdʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑrðɑz", category = "noun" },
+  { time = 403, ipa = "ˈɣɑrd", note = "PWGmc *gard (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjæɑrd" },
   { time = 1400, ipa = "ˈjɛːrd" },
   { time = "final", ipa = "ˈjɑːd" },
@@ -1004,6 +1061,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tn̩ˈħwus", category = "adj", note = "PIE *tn̥h₂wús, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθunnuz", category = "adj" },
+  { time = 403, ipa = "ˈθunniː", note = "PWGmc *þunnī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθynne" },
   { time = 1400, ipa = "ˈθin" },
   { time = "final", ipa = "ˈθɪn" },
@@ -1017,6 +1075,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *penkʷtós is
 forms = [
   { time = -2000, ipa = "penkʷˈtoː", category = "adj", note = "PIE *penkʷtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸimɸtɔːː", category = "adj" },
+  { time = 403, ipa = "ˈfimftɔː", note = "PWGmc *fimftō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiːftɑ" },
   { time = 1400, ipa = "ˈfift" },
   { time = "final", ipa = "ˈfɪfθ", note = "RP from Wiktionary (kaikki), fifth; added 2026-10-06." },
@@ -1030,6 +1089,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpukʲsos", category = "noun", note = "PIE *púḱsos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸuxsɑz", category = "noun" },
+  { time = 403, ipa = "ˈfuxs", note = "PWGmc *fuhs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfoks" },
   { time = 1400, ipa = "ˈfɔks" },
   { time = "final", ipa = "ˈfɒks" },
@@ -1043,6 +1103,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱugʲkos", category = "noun", note = "PIE *bʰuǵ-ko-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbukkɑz", category = "noun" },
+  { time = 403, ipa = "ˈbukː", note = "PWGmc *bukk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbukk" },
   { time = 1400, ipa = "ˈbuk" },
   { time = "final", ipa = "ˈbʌk" },
@@ -1056,6 +1117,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtegus", category = "adj", note = "PIE *tégus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθekuz", category = "adj" },
+  { time = 403, ipa = "ˈθikkwiː", note = "PWGmc *þikkwī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθikke" },
   { time = 1400, ipa = "ˈθik" },
   { time = "final", ipa = "ˈθɪk" },
@@ -1069,6 +1131,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "worˈtos", category = "noun", note = "PIE *wor-tós, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwɑrðɑz", category = "noun" },
+  { time = 403, ipa = "ˈwɑrd", note = "PWGmc *ward (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæɑrd" },
   { time = "final", ipa = "ˈwɔːd" },
 ]
@@ -1081,6 +1144,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈskolχjeħ", category = "noun", note = "PIE *skolH-yeh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈskɑljɔː", category = "noun" },
+  { time = 403, ipa = "ˈskɑllju", note = "PWGmc *skallju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃell" },
   { time = 1400, ipa = "ˈʃɛl", note = "Transcribed from ME schelle (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈʃɛl" },
@@ -1094,6 +1158,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁widʰéwh
 forms = [
   { time = -2000, ipa = "χwidʱeˈwoːn", category = "noun", note = "PIE *h₁widʰéwh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwiðuwɔ̃ː", category = "noun" },
+  { time = 403, ipa = "ˈwiduwɑː", note = "PWGmc *widuwā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwiduwe" },
   { time = "final", ipa = "ˈwɪdəʊ" },
 ]
@@ -1106,6 +1171,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʲnewom", category = "noun", note = "PIE *ǵnéw-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈknewɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈknew", note = "PWGmc *kneu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkneoːw" },
   { time = 1400, ipa = "ˈkneː" },
   { time = "final", ipa = "ˈniː", note = "RP from Wiktionary (kaikki), knee; added 2026-10-06." },
@@ -1119,6 +1185,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲr̩ˈħnom", category = "noun", note = "PIE *ǵr̥h₂nóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkurnɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈkorn", note = "PWGmc *korn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkorn" },
   { time = 1400, ipa = "ˈkɔrn" },
   { time = "final", ipa = "ˈkɔːn" },
@@ -1132,6 +1199,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "dolˈχeħ", category = "noun", note = "PIE *dolH-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈtɑlɔː", category = "noun" },
+  { time = 403, ipa = "ˈtɑlu", note = "PWGmc *talu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtɑlu" },
   { time = 1400, ipa = "ˈtaːl" },
   { time = "final", ipa = "ˈteːl" },
@@ -1145,6 +1213,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷdonts", category = "noun", note = "PIE *h₃dónts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtɑnθs", category = "noun" },
+  { time = 403, ipa = "ˈtɑnθ", note = "PWGmc *tanþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtoːθ" },
   { time = 1400, ipa = "ˈtoːθ" },
   { time = "final", ipa = "ˈtuːθ" },
@@ -1158,6 +1227,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵénus is re
 forms = [
   { time = -2000, ipa = "ˈgʲenwus", category = "noun", note = "PIE *ǵénus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkinnuz", category = "noun" },
+  { time = 403, ipa = "ˈkinnu", note = "PWGmc *kinnu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈt͡ʃinn" },
   { time = 1400, ipa = "ˈt͡ʃin" },
   { time = "final", ipa = "ˈt͡ʃɪn" },
@@ -1171,6 +1241,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *nisdós is re
 forms = [
   { time = -2000, ipa = "nisˈdom", category = "noun", note = "PIE *nisdós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnistɑ̃", category = "noun", note = "Corrected against a cited reconstruction (see the word note)." },
+  { time = 403, ipa = "ˈnest", note = "PWGmc *nest (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnest" },
   { time = 1400, ipa = "ˈnɛst" },
   { time = "final", ipa = "ˈnɛst" },
@@ -1196,6 +1267,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *pértus is re
 forms = [
   { time = -2000, ipa = "pr̩ˈtus", category = "noun", note = "PIE *pértus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸurðuz", category = "noun" },
+  { time = 403, ipa = "ˈfurdu", note = "PWGmc *furdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈford" },
   { time = "final", ipa = "ˈfɔːd" },
 ]
@@ -1208,6 +1280,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpekʲu", category = "noun", note = "PIE *péḱu, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸexu", category = "noun" },
+  { time = 403, ipa = "ˈfexu", note = "PWGmc *fehu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfeox" },
   { time = "final", ipa = "ˈfiː" },
 ]
@@ -1220,6 +1293,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *bʰr-oy-tos i
 forms = [
   { time = -2000, ipa = "bʱrojˈtos", category = "adj", note = "PIE *bʰr-oy-tos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbrɑjðɑz", category = "adj" },
+  { time = 403, ipa = "ˈbrɑjd", note = "PWGmc *braid (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbrɑːd" },
   { time = 1400, ipa = "ˈbrɔːd" },
   { time = "final", ipa = "ˈbɹɔːd" },
@@ -1233,6 +1307,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχojtos", category = "noun", note = "PIE *Hóytos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑjθɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑjθ", note = "PWGmc *aiþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːθ" },
   { time = 1400, ipa = "ˈɔːθ" },
   { time = "final", ipa = "ˈəʊθ" },
@@ -1246,6 +1321,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swéḱstos i
 forms = [
   { time = -2000, ipa = "ˈsekʲtoː", category = "adj", note = "PIE *swéḱstos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsextɔːː", category = "adj" },
+  { time = 403, ipa = "ˈsextɔː", note = "PWGmc *sehtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsikstɑ" },
   { time = 1400, ipa = "ˈsikst" },
   { time = "final", ipa = "ˈsɪksθ" },
@@ -1259,6 +1335,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmori", category = "noun", note = "PIE *móri, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑri", category = "noun" },
+  { time = 403, ipa = "ˈmɑri", note = "PWGmc *mari (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmere" },
   { time = "final", ipa = "ˈmɪə" },
 ]
@@ -1271,6 +1348,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʷalos", category = "noun", note = "PIE *(s)kʷálos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxʷɑlɑz", category = "noun" },
+  { time = 403, ipa = "ˈxwɑl", note = "PWGmc *hwal (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwæl" },
   { time = 1400, ipa = "ˈhwal" },
   { time = "final", ipa = "ˈweɪl" },
@@ -1284,6 +1362,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʲʱħens", category = "noun", note = "PIE *ǵʰh₂éns, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑns", category = "noun" },
+  { time = 403, ipa = "ˈɣɑns", note = "PWGmc *gans (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgoːs" },
   { time = 1400, ipa = "ˈgoːs" },
   { time = "final", ipa = "ˈguːs" },
@@ -1297,6 +1376,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "dʱewˈsom", category = "noun", note = "PIE *dʰews-ó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdewzɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈdewz", note = "PWGmc *deuʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdeoːr" },
   { time = 1400, ipa = "ˈdeːr" },
   { time = "final", ipa = "ˈdɪə" },
@@ -1310,6 +1390,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "dʱewˈsos", category = "adj", note = "PIE *dʰews-ó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdewzɑz", category = "adj" },
+  { time = 403, ipa = "ˈdewz", note = "PWGmc *deuʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdeoːr" },
   { time = "final", ipa = "ˈdɪə" },
 ]
@@ -1322,6 +1403,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱoˈsos", category = "adj", note = "PIE *bʰosós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈbɑzɑz", category = "adj" },
+  { time = 403, ipa = "ˈbɑz", note = "PWGmc *baʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbær" },
   { time = 1400, ipa = "ˈbaːr" },
   { time = "final", ipa = "ˈbɛə" },
@@ -1335,6 +1417,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsrowmos", category = "noun", note = "PIE *srow-mo-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈstrɑwmɑz", category = "noun" },
+  { time = 403, ipa = "ˈstrɑwm", note = "PWGmc *straum (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstræɑːm" },
   { time = 1400, ipa = "ˈstrɛːm" },
   { time = "final", ipa = "ˈstɹiːm" },
@@ -1361,6 +1444,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *dʰéh₁tis 
 forms = [
   { time = -2000, ipa = "dʱeχˈtis", category = "noun", note = "PIE *dʰéh₁tis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈdɛːðiz", category = "noun" },
+  { time = 403, ipa = "ˈdɑːdi", note = "PWGmc *dādi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæːd" },
   { time = "final", ipa = "ˈdiːd" },
 ]
@@ -1373,6 +1457,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ploʁʷˈtus", category = "noun", note = "PIE *ploh₃tús, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸlɔːðuz", category = "noun" },
+  { time = 403, ipa = "ˈflɔːdu", note = "PWGmc *flōdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfloːd" },
   { time = 1400, ipa = "ˈfloːd" },
   { time = "final", ipa = "ˈflʌd" },
@@ -1386,6 +1471,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *septm̥mós i
 forms = [
   { time = -2000, ipa = "septm̩ˈmoː", category = "adj", note = "PIE *septm̥mós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈseβunðɔːː", category = "adj" },
+  { time = 403, ipa = "ˈseβundɔː", note = "PWGmc *sebundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈseofoθɑ" },
   { time = 1400, ipa = "ˈsɛvəð" },
   { time = "final", ipa = "ˈsɛvnθ" },
@@ -1399,6 +1485,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *sth₂dʰlóm
 forms = [
   { time = -2000, ipa = "ˈstħdʱlos", category = "noun", note = "PIE *sth₂dʰlóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstɑllɑz", category = "noun" },
+  { time = 403, ipa = "ˈstɑlː", note = "PWGmc *stall (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstæɑll" },
   { time = "final", ipa = "ˈstɔːl" },
 ]
@@ -1411,6 +1498,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħejgʲs", category = "noun", note = "PIE *h₂éyǵs, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑjks", category = "noun" },
+  { time = 403, ipa = "ˈɑjk", note = "PWGmc *aik (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːk" },
   { time = 1400, ipa = "ˈɔːk" },
   { time = "final", ipa = "ˈəʊk" },
@@ -1437,6 +1525,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsuχros", category = "adj", note = "PIE *súHros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsuːrɑz", category = "adj" },
+  { time = 403, ipa = "ˈsuːr", note = "PWGmc *sūr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsuːr" },
   { time = 1400, ipa = "ˈsuːr" },
   { time = "final", ipa = "ˈsaʊə" },
@@ -1463,6 +1552,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *oḱtowós is
 forms = [
   { time = -2000, ipa = "okʲtoˈwoː", category = "adj", note = "PIE *oḱtowós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑxtuðɔːː", category = "adj" },
+  { time = 403, ipa = "ˈɑxtudɔː", note = "PWGmc *ahtudō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑxtoθɑ" },
   { time = 1400, ipa = "ˈæjxtəð" },
   { time = "final", ipa = "ˈeɪtθ" },
@@ -1476,6 +1566,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲn̩ˈχjom", category = "noun", note = "PIE *ǵn̥h₁-yó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈkunjɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈkuni", note = "PWGmc *kuni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkynn" },
   { time = 1400, ipa = "ˈkin" },
   { time = "final", ipa = "ˈkɪn" },
@@ -1489,6 +1580,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kʲliˈtom", category = "noun", note = "PIE *ḱlitóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxliðɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈxlid", note = "PWGmc *hlid (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxlid" },
   { time = 1400, ipa = "ˈlid" },
   { time = "final", ipa = "ˈlɪd" },
@@ -1502,6 +1594,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱoχmos", category = "noun", note = "PIE *dʰóh₁mos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈdɔːmɑz", category = "noun" },
+  { time = 403, ipa = "ˈdɔːm", note = "PWGmc *dōm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdoːm" },
   { time = 1400, ipa = "ˈdoːm" },
   { time = "final", ipa = "ˈduːm" },
@@ -1515,6 +1608,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtawros", category = "noun", note = "PIE *táwros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstewrɑz", category = "noun" },
+  { time = 403, ipa = "ˈstewr", note = "PWGmc *steur (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsteoːr" },
   { time = 1400, ipa = "ˈsteːr" },
   { time = "final", ipa = "ˈstɪə" },
@@ -1541,6 +1635,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱogis", category = "noun", note = "PIE *bʰog-i-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑkiz", category = "noun" },
+  { time = 403, ipa = "ˈbɑki", note = "PWGmc *baki (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbæk" },
   { time = "final", ipa = "ˈbɛk" },
 ]
@@ -1553,6 +1648,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁newn̥nó
 forms = [
   { time = -2000, ipa = "χnewn̩ˈtoː", category = "adj", note = "PIE *h₁newn̥nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnewundɔːː", category = "adj" },
+  { time = 403, ipa = "ˈnewndɔː", note = "PWGmc *neundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnigoθɑ", note = "IPA from Wiktionary (kaikki) for OE nigoða /ˈni.ɡo.θɑ/; added 2026-10-06." },
   { time = 1400, ipa = "ˈniəð" },
   { time = "final", ipa = "ˈnaɪnθ" },
@@ -1566,6 +1662,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈslogos", category = "adj", note = "PIE *slogos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈslɑkɑz", category = "adj" },
+  { time = 403, ipa = "ˈslɑk", note = "PWGmc *slak (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈslæk" },
   { time = "final", ipa = "ˈslæk" },
 ]
@@ -1578,6 +1675,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpokʲsom", category = "noun", note = "PIE *poḱsom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɑxsɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈfɑxs", note = "PWGmc *fahs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfæɑks" },
   { time = 1400, ipa = "ˈfaks" },
   { time = "final", ipa = "ˈfæks" },
@@ -1591,6 +1689,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *(s)poHy-m-os 
 forms = [
   { time = -2000, ipa = "ˈpojmos", category = "noun", note = "PIE *(s)poHy-m-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸɑjmɑz", category = "noun" },
+  { time = 403, ipa = "ˈfɑjm", note = "PWGmc *faim (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfɑːm" },
   { time = 1400, ipa = "ˈfɔːm" },
   { time = "final", ipa = "ˈfəʊm" },
@@ -1604,6 +1703,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχrebʱjom", category = "noun", note = "PIE *h₁rebʰ-yo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈriβjɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈriβi", note = "PWGmc *ribi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈribb" },
   { time = 1400, ipa = "ˈrib", note = "Transcribed from ME ribbe (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈɹɪb" },
@@ -1617,6 +1717,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *uksḗn is re
 forms = [
   { time = -2000, ipa = "uˈksoː", category = "noun", note = "PIE *uksḗn, as cited by Wiktionary." },
   { time = 200, ipa = "ˈuxsɔːː", category = "noun" },
+  { time = 403, ipa = "ˈoxsɔː", note = "PWGmc *ohsō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈoksɑ" },
   { time = 1400, ipa = "ˈɔks" },
   { time = "final", ipa = "ˈɒks" },
@@ -1630,6 +1731,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħwl̩ˈχneħ", category = "noun", note = "PIE *h₂wl̥h₁néh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwullɔː", category = "noun" },
+  { time = 403, ipa = "ˈwullu", note = "PWGmc *wullu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwull" },
   { time = 1400, ipa = "ˈwul" },
   { time = "final", ipa = "ˈwʊl" },
@@ -1643,6 +1745,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱebʱrus", category = "noun", note = "PIE *bʰébʰrus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈbeβruz", category = "noun" },
+  { time = 403, ipa = "ˈbeβru", note = "PWGmc *bebru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbefer" },
   { time = 1400, ipa = "ˈbɛːvər" },
   { time = "final", ipa = "ˈbiːvə" },
@@ -1656,6 +1759,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *krewp-o-s is 
 forms = [
   { time = -2000, ipa = "krewˈpos", category = "adj", note = "PIE *krewp-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxrewβɑz", category = "adj" },
+  { time = 403, ipa = "ˈxrewβ", note = "PWGmc *hreub (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxreoːf" },
   { time = "final", ipa = "ˈɹiːf" },
 ]
@@ -1668,6 +1772,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈstoħlos", category = "noun", note = "PIE *stoh₂los, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstɔːlɑz", category = "noun" },
+  { time = 403, ipa = "ˈstɔːl", note = "PWGmc *stōl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstoːl" },
   { time = "final", ipa = "ˈstuːl" },
 ]
@@ -1680,6 +1785,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkoslos", category = "noun", note = "PIE *kóslos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑslɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑsl", note = "PWGmc *hasl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæsl" },
   { time = 1400, ipa = "ˈhaːzəl" },
   { time = "final", ipa = "ˈheɪzəl" },
@@ -1693,6 +1799,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tr̩ˈnos", category = "noun", note = "PIE *tr̥nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθurnɑz", category = "noun" },
+  { time = 403, ipa = "ˈθorn", note = "PWGmc *þorn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθorn" },
   { time = 1400, ipa = "ˈθɔrn" },
   { time = "final", ipa = "ˈθɔːn" },
@@ -1706,6 +1813,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmedʱjos", category = "adj", note = "PIE *médʰyos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmiðjɑz", category = "adj" },
+  { time = 403, ipa = "ˈmidi", note = "PWGmc *midi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmidd" },
   { time = 1400, ipa = "ˈmid", note = "Transcribed from ME midde (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈmɪd" },
@@ -1719,6 +1827,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *mosgʰós is 
 forms = [
   { time = -2000, ipa = "mosˈgʱom", category = "noun", note = "PIE *mosgʰós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑzɣɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈmɑzɣ", note = "PWGmc *maʀg (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmæɑrx" },
   { time = 1400, ipa = "ˈmarɔw" },
   { time = "final", ipa = "ˈmæɹəʊ" },
@@ -1732,6 +1841,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdemros", category = "noun", note = "PIE *dem(H)-ro-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈtimrɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈtimr", note = "PWGmc *timr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtimber" },
   { time = "final", ipa = "ˈtɪmbə" },
 ]
@@ -1744,6 +1854,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱowħom", category = "noun", note = "PIE *dʰowh₂-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdɑwwɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈdɑww", note = "PWGmc *dauw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæɑːw" },
   { time = 1400, ipa = "ˈdɛw" },
   { time = "final", ipa = "ˈd͡ʒuː" },
@@ -1769,6 +1880,7 @@ frequency = 1778
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲelmoː", category = "noun", note = "PIE *ḱél-mō, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 403, ipa = "ˈxelmɔː", note = "PWGmc *helmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxelmɑ" },
   { time = 1400, ipa = "ˈhalm" },
   { time = "final", ipa = "ˈhɛlm" },
@@ -1782,6 +1894,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kagʰyóm is 
 forms = [
   { time = -2000, ipa = "kaˈgʱjeħ", category = "noun", note = "PIE *kagʰyóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑɣjɔː", category = "noun" },
+  { time = 403, ipa = "ˈxɑggju", note = "PWGmc *haggju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxejj" },
   { time = 1400, ipa = "ˈhɛd͡ʒ" },
   { time = "final", ipa = "ˈhɛd͡ʒ" },
@@ -1795,6 +1908,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *wrugʰ-is is 
 forms = [
   { time = -2000, ipa = "ˈrugʱis", category = "noun", note = "PIE *wrugʰ-is, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈruɣiz", category = "noun" },
+  { time = 403, ipa = "ˈruɣi", note = "PWGmc *rugi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈryje" },
   { time = 1400, ipa = "ˈriː" },
   { time = "final", ipa = "ˈɹaɪ" },
@@ -1821,6 +1935,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱrutom", category = "noun", note = "PIE *bʰru(h₁)-to-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbruθɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈbroθ", note = "PWGmc *broþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbroθ" },
   { time = 1400, ipa = "ˈbrɔθ" },
   { time = "final", ipa = "ˈbɹɒθ" },
@@ -1834,6 +1949,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħegʱos", category = "noun", note = "PIE *h₂égʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑɣɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑɣi", note = "PWGmc *agi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeje" },
   { time = 1400, ipa = "ˈeːɣə" },
   { time = "final", ipa = "ˈeɪ" },
@@ -1847,6 +1963,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħegʲros", category = "noun", note = "PIE *h₂éǵros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑkrɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑkr", note = "PWGmc *akr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæker" },
   { time = 1400, ipa = "ˈaːkər" },
   { time = "final", ipa = "ˈeɪkə" },
@@ -1922,6 +2039,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *médʰu is re
 forms = [
   { time = -2000, ipa = "ˈmedʱus", category = "noun", note = "PIE *médʰu, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmeðuz", category = "noun" },
+  { time = 403, ipa = "ˈmedu", note = "PWGmc *medu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmedu" },
   { time = 1400, ipa = "ˈmɛːd" },
   { time = "final", ipa = "ˈmiːd" },
@@ -1948,6 +2066,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "χeˈʁʷleneħ", category = "noun", note = "PIE *Heh₃l-én-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑlinɔː", category = "noun" },
+  { time = 403, ipa = "ˈɑlinu", note = "PWGmc *alinu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeln" },
   { time = 1400, ipa = "ˈɛln" },
   { time = "final", ipa = "ˈɛl" },
@@ -1961,6 +2080,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "uˈdros", category = "noun", note = "PIE *udrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈutrɑz", category = "noun" },
+  { time = 403, ipa = "ˈotr", note = "PWGmc *otr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈotr" },
   { time = 1400, ipa = "ˈɔtər" },
   { time = "final", ipa = "ˈɒtə" },
@@ -1974,6 +2094,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsr̩gʲos", category = "noun", note = "PIE *sr̥ǵos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsturkɑz", category = "noun" },
+  { time = 403, ipa = "ˈstork", note = "PWGmc *stork (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstork" },
   { time = 1400, ipa = "ˈstɔrk" },
   { time = "final", ipa = "ˈstɔːk" },
@@ -1987,6 +2108,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχroχweħ", category = "noun", note = "PIE *h₁roh₁-weh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈrɔːɔː", category = "noun" },
+  { time = 403, ipa = "ˈrɔːw", note = "PWGmc *rōu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈroːw" },
   { time = 1400, ipa = "ˈrɔː" },
 ]
@@ -1999,6 +2121,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "muˈχiħ", category = "noun", note = "PIE *muH-íh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈmuɣjɔː", category = "noun" },
+  { time = 403, ipa = "ˈmuggju", note = "PWGmc *muggju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmyjj" },
   { time = 1400, ipa = "ˈmidʒ" },
   { time = "final", ipa = "ˈmɪd͡ʒ" },
@@ -2012,6 +2135,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈporkʲos", category = "noun", note = "PIE *pórḱos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɑrxɑz", category = "noun" },
+  { time = 403, ipa = "ˈfɑrx", note = "PWGmc *farh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfæɑrx" },
   { time = "final", ipa = "ˈfæɹəʊ" },
 ]
@@ -2024,6 +2148,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *stéh₂tis i
 forms = [
   { time = -2000, ipa = "ˈstħtis", category = "noun", note = "PIE *stéh₂tis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstɑðiz", category = "noun" },
+  { time = 403, ipa = "ˈstɑdi", note = "PWGmc *stadi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstede" },
   { time = 1400, ipa = "ˈstɛːd" },
   { time = "final", ipa = "ˈstɛd" },
@@ -2037,6 +2162,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "juˈgom", category = "noun", note = "PIE *yugóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈjukɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈjuk", note = "PWGmc *juk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjok" },
   { time = 1400, ipa = "ˈjɔk" },
   { time = "final", ipa = "ˈjəʊk" },
@@ -2050,6 +2176,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "woˈros", category = "adj", note = "PIE *worós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑrɑz", category = "adj" },
+  { time = 403, ipa = "ˈwɑr", note = "PWGmc *war (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwær" },
   { time = "final", ipa = "ˈwɛə" },
 ]
@@ -2062,6 +2189,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "solˈpeħ", category = "noun", note = "PIE *solp-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈsɑlβɔː", category = "noun" },
+  { time = 403, ipa = "ˈsɑlβu", note = "PWGmc *salbu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsæɑlf" },
   { time = 1400, ipa = "ˈsalv" },
   { time = "final", ipa = "ˈsɑːv", note = "RP from Wiktionary (kaikki), salve; added 2026-10-06." },
@@ -2075,6 +2203,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈskolχeħ", category = "noun", note = "PIE *skolH-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈskɑlɔː", category = "noun" },
+  { time = 403, ipa = "ˈskɑlu", note = "PWGmc *skalu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃæɑlu" },
   { time = "final", ipa = "ˈʃeɪl" },
 ]
@@ -2135,6 +2264,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwreħds", category = "noun", note = "PIE *wréh₂ds, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwrɔːts", category = "noun" },
+  { time = 403, ipa = "ˈwurti", note = "PWGmc *wurti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwyrt" },
   { time = 1400, ipa = "ˈwirt" },
   { time = "final", ipa = "ˈwɜːt" },
@@ -2160,6 +2290,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *népōts is r
 forms = [
   { time = -2000, ipa = "ˈnepoː", category = "noun", note = "PIE *népōts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈneɸɔːː", category = "noun" },
+  { time = 403, ipa = "ˈnefɔː", note = "PWGmc *nefō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnefɑ" },
   { time = 1400, ipa = "ˈnɛːv" },
   { time = "final", ipa = "ˈniːv" },
@@ -2173,6 +2304,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈrewgʱmn̩", category = "noun", note = "PIE *réwgʰmn̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈrɑwmɑz", category = "noun" },
+  { time = 403, ipa = "ˈrɑwm", note = "PWGmc *raum (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈræɑːm" },
   { time = 1400, ipa = "ˈrɛːm" },
   { time = "final", ipa = "ˈɹiːm" },
@@ -2186,6 +2318,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱorʁʷeħ", category = "noun", note = "PIE *dʰórh₃-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdɑrɔː", category = "noun" },
+  { time = 403, ipa = "ˈdɑru", note = "PWGmc *daru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdɑru" },
   { time = 1400, ipa = "ˈdeːr" },
   { time = "final", ipa = "ˈdɪə" },
@@ -2199,6 +2332,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʷettis", category = "noun", note = "PIE *gʷét-ti-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈkʷissiz", category = "noun" },
+  { time = 403, ipa = "ˈkwissi", note = "PWGmc *kwissi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 1400, ipa = "ˈkwist" },
   { time = "final", ipa = "bɪˈkwɛst" },
 ]
@@ -2211,6 +2345,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂leytos is
 forms = [
   { time = -2000, ipa = "ˈħlojtos", category = "adj", note = "PIE *h₂leytos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑjθɑz", category = "adj" },
+  { time = 403, ipa = "ˈlɑjθ", note = "PWGmc *laiþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑːθ" },
   { time = 1400, ipa = "ˈlɔːθ" },
   { time = "final", ipa = "ˈləʊθ" },
@@ -2223,6 +2358,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰmṓ is r
 forms = [
   { time = -2000, ipa = "gʲʱm̩ˈoː", category = "noun", note = "PIE *ǵʰmṓ, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣumɔːː", category = "noun" },
+  { time = 403, ipa = "ˈɣumɔː", note = "PWGmc *gumō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgumɑ" },
   { time = 1400, ipa = "ˈgoːm" },
   { time = "final", ipa = "ˈgʌm" },
@@ -2235,6 +2371,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχlewdʱis", category = "noun", note = "PIE *h₁léwdʰis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈliwðiz", category = "noun" },
+  { time = 403, ipa = "ˈliwdi", note = "PWGmc *liudi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈleoːd" },
   { time = 1400, ipa = "ˈleːd" },
   { time = "final", ipa = "ˈliːd" },
@@ -2247,6 +2384,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "tewˈteħ", category = "noun", note = "PIE *tewtéh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθewðɔː", category = "noun" },
+  { time = 403, ipa = "ˈθewdu", note = "PWGmc *þeudu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθeoːd" },
   { time = 1400, ipa = "ˈθøːd" },
   { time = "final", ipa = "ˈθiːd" },
@@ -2271,6 +2409,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈswepnos", category = "noun", note = "PIE *swépnos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsweɸnɑz", category = "noun" },
+  { time = 403, ipa = "ˈswefn", note = "PWGmc *swefn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈswefn" },
   { time = 1400, ipa = "ˈswɛvən" },
   { time = "final", ipa = "ˈswɛvən" },
@@ -2283,6 +2422,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *gʷḗn is re
 forms = [
   { time = -2000, ipa = "gʷeˈnoːn", category = "noun", note = "PIE *gʷḗn, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkʷenɔ̃ː", category = "noun" },
+  { time = 403, ipa = "ˈkwenɑː", note = "PWGmc *kwenā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkwene" },
   { time = 1400, ipa = "ˈkweːn" },
   { time = "final", ipa = "ˈkwiːn" },
@@ -2295,6 +2435,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *misdʰós is 
 forms = [
   { time = -2000, ipa = "misˈdʱeħ", category = "noun", note = "PIE *misdʰós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmizdɔː", category = "noun" },
+  { time = 403, ipa = "ˈmizdu", note = "PWGmc *miʀdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmeːd" },
   { time = 1400, ipa = "ˈmɛːd" },
   { time = "final", ipa = "ˈmiːd" },
@@ -2319,6 +2460,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "soˈlwos", category = "adj", note = "PIE *solwós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsɑlwɑz", category = "adj" },
+  { time = 403, ipa = "ˈsɑlu", note = "PWGmc *salu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsɑlu" },
   { time = 1400, ipa = "ˈsalɔw" },
   { time = "final", ipa = "ˈsæləʊ" },
@@ -2343,6 +2485,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷorbʱjom", category = "noun", note = "PIE *h₃orbʰ-yo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑrβijɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈɑrβiː", note = "PWGmc *arbī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈerfe" },
   { time = 1400, ipa = "ˈɛrv" },
   { time = "final", ipa = "ˈɜːf" },
@@ -2355,6 +2498,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħejdrom", category = "noun", note = "PIE *h₂eyd-ro-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑjtrɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈɑjtr", note = "PWGmc *aitr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːtor" },
   { time = 1400, ipa = "ˈatər" },
   { time = "final", ipa = "ˈætə", note = "Non-rhotic (RP), consistent with the rest of the modern column — Wiktionary's ˈætəɹ was the lone rhotic transcription of 177." },
@@ -2367,6 +2511,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *wl̥g-nó-s i
 forms = [
   { time = -2000, ipa = "wl̩ˈgnom", category = "noun", note = "PIE *wl̥g-nó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwulknɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈwolkn", note = "PWGmc *wolkn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwolkn" },
   { time = 1400, ipa = "ˈwɛlkən" },
   { time = "final", ipa = "ˈwɛlkɪn" },
@@ -2391,6 +2536,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰutós is 
 forms = [
   { time = -2000, ipa = "gʲʱuˈtom", category = "noun", note = "PIE *ǵʰutós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣuðɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈɣod", note = "PWGmc *god (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgod" },
   { time = 1400, ipa = "ˈgɔd" },
   { time = "final", ipa = "ˈgɒd", note = "RP from Wiktionary (kaikki), god; added 2026-10-06." },
@@ -2403,6 +2549,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲolħmos", category = "noun", note = "PIE *ḱolh₂mos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑlmɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑlm", note = "PWGmc *halm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæɑlm" },
   { time = 1400, ipa = "ˈhalm" },
 ]
@@ -2425,6 +2572,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχojnos", category = "num", note = "PIE *h₁óynos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑjnɑz", category = "num" },
+  { time = 403, ipa = "ˈɑjn", note = "PWGmc *ain (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːn" },
   { time = 1400, ipa = "ˈɔːn" },
 ]
@@ -2447,6 +2595,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpħteːr", category = "noun", note = "PIE *ph₂tḗr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɑðɛːr", category = "noun" },
+  { time = 403, ipa = "ˈfɑder", note = "PWGmc *fader (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfæder" },
   { time = 1400, ipa = "ˈfadər" },
   { time = "final", ipa = "ˈfɑːðə", note = "RP from Wiktionary (kaikki), father: faeder is the Scots form. Added 2026-10-06." },
@@ -2459,6 +2608,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *méh₂tēr i
 forms = [
   { time = -2000, ipa = "meħˈteːr", category = "noun", note = "PIE *méh₂tēr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɔːðɛːr", category = "noun" },
+  { time = 403, ipa = "ˈmɔːder", note = "PWGmc *mōder (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmoːdor" },
   { time = 1400, ipa = "ˈmoːdər" },
   { time = "final", ipa = "ˈmʌðə", note = "RP from Wiktionary (kaikki), mother; added 2026-10-06." },
@@ -2471,6 +2621,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *deḱm̥tós 
 forms = [
   { time = -2000, ipa = "ˈdekʲm̩toː", category = "adj", note = "PIE *deḱm̥tós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtexundɔːː", category = "adj" },
+  { time = 403, ipa = "ˈtexundɔː", note = "PWGmc *tehundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈteoːθɑ" },
   { time = 1400, ipa = "ˈtɛnð" },
   { time = "final", ipa = "ˈtaɪð", note = "RP from Wiktionary (kaikki), tithe: tithe continues OE tēoþa; tenth is a new formation on ten. Added 2026-10-06." },
@@ -2483,6 +2634,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsnojgʷʱos", category = "noun", note = "PIE *snóygʷʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsnɑjwɑz", category = "noun" },
+  { time = 403, ipa = "ˈsnɑjw", note = "PWGmc *snaiw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsnɑːw" },
   { time = 1400, ipa = "ˈsnɑw" },
   { time = "final", ipa = "ˈsnəʊ", note = "RP from Wiktionary (kaikki), snow; added 2026-10-06." },
@@ -2495,6 +2647,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkorjos", category = "noun", note = "PIE *kóryos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑrjɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑri", note = "PWGmc *hari (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxere" },
   { time = 1400, ipa = "ˈhɛːr" },
 ]
@@ -2506,6 +2659,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "χrowˈdʱos", category = "adj", note = "PIE *h₁rowdʰós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈrɑwðɑz", category = "adj" },
+  { time = 403, ipa = "ˈrɑwd", note = "PWGmc *raud (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈræɑːd" },
   { time = 1400, ipa = "ˈrɛːd" },
   { time = "final", ipa = "ˈɹɛd", note = "RP from Wiktionary (kaikki), red; added 2026-10-06." },
@@ -2518,6 +2672,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *wédōr is re
 forms = [
   { time = -2000, ipa = "ˈwodoːr", category = "noun", note = "PIE *wédōr, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑtɔːr", category = "noun" },
+  { time = 403, ipa = "ˈwɑtɑr", note = "PWGmc *watar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæter" },
   { time = 1400, ipa = "ˈwatər" },
   { time = "final", ipa = "ˈwɔːtə", note = "RP from Wiktionary (kaikki), water; added 2026-10-06." },
@@ -2530,6 +2685,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħekʷeħ", category = "noun", note = "PIE *h₂ékʷeh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑxʷɔː", category = "noun" },
+  { time = 403, ipa = "ˈɑxu", note = "PWGmc *ahu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑː" },
   { time = 1400, ipa = "ˈɛː" },
 ]
@@ -2541,6 +2697,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħoːws", category = "noun", note = "PIE *h₂ṓws, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑwsɔːː", category = "noun" },
+  { time = 403, ipa = "ˈɑwzɑː", note = "PWGmc *auʀā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑːre" },
   { time = 1400, ipa = "ˈɛːr" },
   { time = "final", ipa = "ˈɪə", note = "RP from Wiktionary (kaikki), ear; added 2026-10-06." },
@@ -2553,6 +2710,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈnokʷts", category = "noun", note = "PIE *nókʷts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnɑxts", category = "noun" },
+  { time = 403, ipa = "ˈnɑxt", note = "PWGmc *naht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnixt" },
   { time = 1400, ipa = "ˈnixt" },
   { time = "final", ipa = "ˈnaɪt", note = "RP from Wiktionary (kaikki), night; added 2026-10-06." },
@@ -2565,6 +2723,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵn̥h₃tós
 forms = [
   { time = -2000, ipa = "ˈgʲn̩ʁʷtos", category = "adj", note = "PIE *ǵn̥h₃tós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkunθɑz", category = "adj" },
+  { time = 403, ipa = "ˈkunθ", note = "PWGmc *kunþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkuːθ" },
   { time = "final", ipa = "ˈkuːθ" },
 ]
@@ -2588,6 +2747,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħengʲʱus", category = "adj", note = "PIE *h₂énǵʰus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑŋguz", category = "adj" },
+  { time = 403, ipa = "ˈɑŋgiː", note = "PWGmc *angī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑŋge" },
   { time = 1400, ipa = "ˈaŋg" },
 ]
@@ -2610,6 +2770,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁nómn̥ i
 forms = [
   { time = -2000, ipa = "ˈχnomoː", category = "noun", note = "PIE *h₁nómn̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnɑmɔːː", category = "noun" },
+  { time = 403, ipa = "ˈnɑmɔː", note = "PWGmc *namō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnɑmɑ" },
   { time = 1400, ipa = "ˈnaːm" },
   { time = "final", ipa = "ˈneɪm", note = "RP from Wiktionary (kaikki), name; added 2026-10-06." },
@@ -2622,6 +2783,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲʱojˈsos", category = "noun", note = "PIE *ǵʰoysós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑjzɑz", category = "noun" },
+  { time = 403, ipa = "ˈɣɑjz", note = "PWGmc *gaiʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑːr" },
   { time = 1400, ipa = "ˈgɔːr" },
 ]
@@ -2633,6 +2795,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ʁʷregʲˈtos", category = "adj", note = "PIE *h₃reǵtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈrextɑz", category = "adj" },
+  { time = 403, ipa = "ˈrext", note = "PWGmc *reht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈrixt" },
   { time = 1400, ipa = "ˈrixt" },
   { time = "final", ipa = "ˈɹaɪt", note = "RP from Wiktionary (kaikki), right; added 2026-10-06." },
@@ -2645,6 +2808,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲojmos", category = "noun", note = "PIE *ḱóymos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑjmɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑjm", note = "PWGmc *haim (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑːm" },
   { time = 1400, ipa = "ˈhɔːm" },
   { time = "final", ipa = "ˈhəʊm", note = "RP from Wiktionary (kaikki), home; added 2026-10-06." },
@@ -2657,6 +2821,7 @@ note = "Source: Wiktionary (kaikki). 200 TARGET corrected against a cited recons
 forms = [
   { time = -2000, ipa = "wiˈχros", category = "noun", note = "PIE *wiHrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwirɑz", category = "noun", note = "Corrected against a cited reconstruction (see the word note)." },
+  { time = 403, ipa = "ˈwer", note = "PWGmc *wer (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwer" },
   { time = 1400, ipa = "ˈwɛr" },
 ]
@@ -2668,6 +2833,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwr̩mis", category = "noun", note = "PIE *wr̥mis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwurmiz", category = "noun" },
+  { time = 403, ipa = "ˈwurmi", note = "PWGmc *wurmi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwyrm" },
   { time = 1400, ipa = "ˈwurm" },
   { time = "final", ipa = "ˈwɜːm", note = "RP from Wiktionary (kaikki), worm: wyrm is an archaic revival. Added 2026-10-06." },
@@ -2680,6 +2846,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwogʲʱnos", category = "noun", note = "PIE *wóǵʰnos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑɣnɑz", category = "noun" },
+  { time = 403, ipa = "ˈwɑɣn", note = "PWGmc *wagn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæjn" },
   { time = 1400, ipa = "ˈwæjn" },
 ]
@@ -2691,6 +2858,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχorsos", category = "noun", note = "PIE *h₁órsos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑrsɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑrs", note = "PWGmc *ars (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑrs" },
   { time = 1400, ipa = "ˈars" },
   { time = "final", ipa = "ˈɑːs", note = "RP from Wiktionary (kaikki), arse: ass is the American form. Added 2026-10-06." },
@@ -2703,6 +2871,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈtormos", category = "noun", note = "PIE *tórmos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθɑrmɑz", category = "noun" },
+  { time = 403, ipa = "ˈθɑrm", note = "PWGmc *þarm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθæɑrm" },
   { time = 1400, ipa = "ˈθarm" },
 ]
@@ -2714,6 +2883,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħoːwˈjom", category = "noun", note = "PIE *h₂ōwyóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑjjɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈɑjj", note = "PWGmc *aij (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæːj" },
   { time = 1400, ipa = "ˈæj" },
 ]
@@ -2725,6 +2895,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂énh₂ts
 forms = [
   { time = -2000, ipa = "ˈħenħets", category = "noun", note = "PIE *h₂énh₂ts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑnɑðz", category = "noun" },
+  { time = 403, ipa = "ˈɑnɑd", note = "PWGmc *anad (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈened" },
   { time = 1400, ipa = "ˈeːnd" },
 ]
@@ -2736,6 +2907,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈlowkos", category = "noun", note = "PIE *lówkos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑwxɑz", category = "noun" },
+  { time = 403, ipa = "ˈlɑwx", note = "PWGmc *lauh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlæɑːx" },
   { time = 1400, ipa = "ˈlæj" },
   { time = "final", ipa = "ˈliː", note = "RP from Wiktionary (kaikki), lea; added 2026-10-06." },
@@ -2748,6 +2920,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲʱelˈʁʷwos", category = "adj", note = "PIE *ǵʰelh₃wós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣelwɑz", category = "adj" },
+  { time = 403, ipa = "ˈɣelu", note = "PWGmc *gelu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjeolu" },
   { time = 1400, ipa = "ˈjɛlɔw" },
 ]
@@ -2759,6 +2932,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *snusós is re
 forms = [
   { time = -2000, ipa = "snuˈseħ", category = "noun", note = "PIE *snusós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsnuzɔː", category = "noun" },
+  { time = 403, ipa = "ˈsnuzu", note = "PWGmc *snuʀu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsnoru" },
   { time = 1400, ipa = "ˈsnɔːr" },
 ]
@@ -2781,6 +2955,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχolos", category = "noun", note = "PIE *h₁ólos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑlɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑl", note = "PWGmc *al (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæl" },
   { time = 1400, ipa = "ˈal" },
   { time = "final", ipa = "ˈɔːl", note = "RP from Wiktionary (kaikki), awl; added 2026-10-06." },
@@ -2793,6 +2968,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʱegʱugʲʱos", category = "noun", note = "PIE *gʰegʰuǵʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑwkɑz", category = "noun" },
+  { time = 403, ipa = "ˈɣɑwk", note = "PWGmc *gauk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjæɑːk" },
   { time = 1400, ipa = "ˈjɛːk" },
 ]
@@ -2815,6 +2991,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "lenˈteħ", category = "noun", note = "PIE *lentéh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlindɔː", category = "noun" },
+  { time = 403, ipa = "ˈlindu", note = "PWGmc *lindu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlind" },
   { time = 1400, ipa = "ˈliːn" },
   { time = "final", ipa = "ˈlaɪm", note = "RP from Wiktionary (kaikki), lime; added 2026-10-06." },
@@ -2839,6 +3016,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *pn̥tstós is
 forms = [
   { time = -2000, ipa = "ˈpn̩tstos", category = "adj", note = "PIE *pn̥tstós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸunsɑz", category = "adj" },
+  { time = 403, ipa = "ˈfuns", note = "PWGmc *funs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfuːs" },
   { time = 1400, ipa = "ˈfuːs" },
 ]
@@ -2885,6 +3063,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmeːgʲejos", category = "noun", note = "PIE *mēǵeyos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɛːkijɑz", category = "noun" },
+  { time = 403, ipa = "ˈmɑːkiː", note = "PWGmc *mākī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmæːt͡ʃe" },
   { time = 1400, ipa = "ˈmeːt͡ʃ" },
 ]
@@ -2896,6 +3075,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwobʱseħ", category = "noun", note = "PIE *wóbʰseh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑpsɔː", category = "noun" },
+  { time = 403, ipa = "ˈwɑpsu", note = "PWGmc *wapsu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæps" },
   { time = 1400, ipa = "ˈwasp" },
   { time = "final", ipa = "ˈwɒsp", note = "RP from Wiktionary (kaikki), wasp; added 2026-10-06." },
@@ -2908,6 +3088,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχelem", category = "noun", note = "PIE *h₁élem, as cited by Wiktionary." },
   { time = 200, ipa = "ˈelmɑz", category = "noun" },
+  { time = 403, ipa = "ˈelm", note = "PWGmc *elm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈelm" },
   { time = 1400, ipa = "ˈɛlm" },
   { time = "final", ipa = "ˈɛlm", note = "RP from Wiktionary (kaikki), elm; added 2026-10-06." },
@@ -2920,6 +3101,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkuχsom", category = "noun", note = "PIE *(s)kuH-s-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxuːsɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈxuːs", note = "PWGmc *hūs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxuːs" },
   { time = 1400, ipa = "ˈhuːs" },
   { time = "final", ipa = "ˈhaʊs", note = "RP from Wiktionary (kaikki), house; added 2026-10-06." },
@@ -2932,6 +3114,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkowkos", category = "adj", note = "PIE *kówk-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxɑwxɑz", category = "adj" },
+  { time = 403, ipa = "ˈxɑwx", note = "PWGmc *hauh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæɑːx" },
   { time = 1400, ipa = "ˈheːx" },
   { time = "final", ipa = "ˈhaɪ", note = "RP from Wiktionary (kaikki), high; added 2026-10-06." },
@@ -2944,6 +3127,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *mn̥-tó-s is
 forms = [
   { time = -2000, ipa = "ˈmn̩tos", category = "noun", note = "PIE *mn̥-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈmunθɑz", category = "noun" },
+  { time = 403, ipa = "ˈmunθ", note = "PWGmc *munþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmuːθ" },
   { time = 1400, ipa = "ˈmuːθ" },
   { time = "final", ipa = "ˈmaʊθ", note = "RP from Wiktionary (kaikki), mouth; added 2026-10-06." },
@@ -2956,6 +3140,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *pl̥h₁-gós
 forms = [
   { time = -2000, ipa = "pl̩χˈgom", category = "noun", note = "PIE *pl̥h₁-gós, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸulkɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈfolk", note = "PWGmc *folk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfolk" },
   { time = 1400, ipa = "ˈfɔlk" },
   { time = "final", ipa = "ˈfəʊk", note = "RP from Wiktionary (kaikki), folk; added 2026-10-06." },
@@ -2991,6 +3176,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱl̩ʁʷˈtom", category = "noun", note = "PIE *bʰl̥h₃-tó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈblɑðɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈblɑd", note = "PWGmc *blad (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈblæd" },
   { time = 1400, ipa = "ˈblaːd" },
   { time = "final", ipa = "ˈbleɪd", note = "RP from Wiktionary (kaikki), blade; added 2026-10-06." },
@@ -3003,6 +3189,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *mh₂-nt-éh�
 forms = [
   { time = -2000, ipa = "mn̩ˈteħ", category = "noun", note = "PIE *mh₂-nt-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈmundɔː", category = "noun" },
+  { time = 403, ipa = "ˈmundu", note = "PWGmc *mundu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmund" },
   { time = 1400, ipa = "ˈmuːnd" },
 ]
@@ -3014,6 +3201,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħenχdʱoː", category = "noun", note = "PIE *h₂enh₁-dʰō, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑnɑðɔːː", category = "noun" },
+  { time = 403, ipa = "ˈɑnɑdɔː", note = "PWGmc *anadō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑndɑ" },
   { time = 1400, ipa = "ˈɔːnd" },
 ]
@@ -3036,6 +3224,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʲʱerχnos", category = "adj", note = "PIE *ǵʰerH-no-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣernɑz", category = "adj" },
+  { time = 403, ipa = "ˈɣern", note = "PWGmc *gern (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjeorn" },
   { time = 1400, ipa = "ˈjɛːrn" },
 ]
@@ -3047,6 +3236,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ħojˈseħ", category = "noun", note = "PIE *h₂oys-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑjzɔː", category = "noun" },
+  { time = 403, ipa = "ˈɑjzu", note = "PWGmc *aiʀu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːr" },
   { time = 1400, ipa = "ˈɔːr" },
 ]
@@ -3058,6 +3248,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱeħnis", category = "noun", note = "PIE *bʰeh₂-ni-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɔːniz", category = "noun" },
+  { time = 403, ipa = "ˈbɔːni", note = "PWGmc *bōni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeːn" },
   { time = 1400, ipa = "ˈbɛːn" },
 ]
@@ -3069,6 +3260,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *(s)ḱh₃-t�
 forms = [
   { time = -2000, ipa = "ˈskʲʁʷtus", category = "noun", note = "PIE *(s)ḱh₃-tús, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈskɑðuz", category = "noun" },
+  { time = 403, ipa = "ˈskɑdu", note = "PWGmc *skadu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃɑdu" },
   { time = 1400, ipa = "ˈʃaːd" },
 ]
@@ -3080,6 +3272,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *keHid-o-s is 
 forms = [
   { time = -2000, ipa = "ˈkoħidos", category = "adj", note = "PIE *keHid-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxɑjtɑz", category = "adj" },
+  { time = 403, ipa = "ˈxɑjt", note = "PWGmc *hait (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑːt" },
   { time = 1400, ipa = "ˈhɔːt" },
   { time = "final", ipa = "ˈhɒt", note = "RP from Wiktionary (kaikki), hot; added 2026-10-06." },
@@ -3092,6 +3285,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈstobʱos", category = "noun", note = "PIE *stóbʰ-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈstɑβɑz", category = "noun" },
+  { time = 403, ipa = "ˈstɑβ", note = "PWGmc *stab (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstæf" },
   { time = 1400, ipa = "ˈstaf" },
   { time = "final", ipa = "ˈstɑːf", note = "RP from Wiktionary (kaikki), staff; added 2026-10-06." },
@@ -3116,6 +3310,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħewtus", category = "adj", note = "PIE *h₂éw-tu-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑwθuz", category = "adj" },
+  { time = 403, ipa = "ˈɑwθiː", note = "PWGmc *auþī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeːθe" },
   { time = 1400, ipa = "ˈɛːð" },
 ]
@@ -3127,6 +3322,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsteħuros", category = "adj", note = "PIE *steh₂-u-ro-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈstɔːrɑz", category = "adj" },
+  { time = 403, ipa = "ˈstɔːr", note = "PWGmc *stōr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstoːr" },
   { time = 1400, ipa = "ˈstɔːr" },
 ]
@@ -3138,6 +3334,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʲʱongʱos", category = "noun", note = "PIE *ǵʰóngʰ-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣɑŋgɑz", category = "noun" },
+  { time = 403, ipa = "ˈɣɑŋg", note = "PWGmc *gang (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑŋg" },
   { time = 1400, ipa = "ˈgɔŋg" },
   { time = "final", ipa = "ˈgæŋ", note = "RP from Wiktionary (kaikki), gang; added 2026-10-06." },
@@ -3150,6 +3347,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰolh₃-t-
 forms = [
   { time = -2000, ipa = "gʲʱl̩ʁʷˈtinos", category = "adj", note = "PIE *ǵʰolh₃-t-inos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣulθiːnɑz", category = "adj" },
+  { time = 403, ipa = "ˈɣulθiːn", note = "PWGmc *gulþīn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgylden" },
   { time = 1400, ipa = "ˈgiːldən" },
 ]
@@ -3161,6 +3359,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱunis", category = "noun", note = "PIE *dʰún-is, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈduniz", category = "noun" },
+  { time = 403, ipa = "ˈduni", note = "PWGmc *duni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdyne" },
   { time = 1400, ipa = "ˈdin" },
   { time = "final", ipa = "ˈdɪn", note = "RP from Wiktionary (kaikki), din; added 2026-10-06." },
@@ -3184,6 +3383,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "torˈpeħ", category = "noun", note = "PIE *torp-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈθɑrβɔː", category = "noun" },
+  { time = 403, ipa = "ˈθɑrβu", note = "PWGmc *þarbu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθæɑrf" },
   { time = 1400, ipa = "ˈθɛrf" },
 ]
@@ -3195,6 +3395,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʱostis", category = "noun", note = "PIE *gʰóstis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑstiz", category = "noun" },
+  { time = 403, ipa = "ˈɣɑsti", note = "PWGmc *gasti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjest" },
 ]
 
@@ -3205,6 +3406,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħemsus", category = "noun", note = "PIE *h₂émsus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑnsuz", category = "noun" },
+  { time = 403, ipa = "ˈɑnsu", note = "PWGmc *ansu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈoːs" },
 ]
 
@@ -3225,6 +3427,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχekʲwos", category = "noun", note = "PIE *h₁éḱwos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈexʷɑz", category = "noun" },
+  { time = 403, ipa = "ˈexw", note = "PWGmc *ehw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeox" },
 ]
 
@@ -3235,6 +3438,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmogʱus", category = "noun", note = "PIE *mogʰus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑɣuz", category = "noun" },
+  { time = 403, ipa = "ˈmɑɣu", note = "PWGmc *magu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmɑgu" },
 ]
 
@@ -3245,6 +3449,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *gʷʰéntis i
 forms = [
   { time = -2000, ipa = "ˈgʷʱn̩tis", category = "noun", note = "PIE *gʷʰéntis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣunθiz", category = "noun" },
+  { time = 403, ipa = "ˈɣunθi", note = "PWGmc *gunþi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈguːθ" },
   { time = 1400, ipa = "ˈguːθ", note = "Transcribed from ME gūth (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
@@ -3256,6 +3461,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkolsos", category = "noun", note = "PIE *kólsos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑlsɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑls", note = "PWGmc *hals (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæɑls" },
   { time = 1400, ipa = "ˈhals", note = "Transcribed from ME hals (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
@@ -3277,6 +3483,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "widˈtos", category = "adj", note = "PIE *widtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwissɑz", category = "adj" },
+  { time = 403, ipa = "ˈwisː", note = "PWGmc *wiss (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwiːs" },
 ]
 
@@ -3287,6 +3494,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈbʱergʲʱos", category = "noun", note = "PIE *bʰérǵʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈberɣɑz", category = "noun" },
+  { time = 403, ipa = "ˈberɣ", note = "PWGmc *berg (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeorg" },
   { time = "final", ipa = "ˈbæɹəʊ", note = "RP from Wiktionary (kaikki), barrow; added 2026-10-06." },
 ]
@@ -3318,6 +3526,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʷχdtos", category = "adj", note = "PIE *kʷh₁dtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxʷɑssɑz", category = "adj" },
+  { time = 403, ipa = "ˈxwɑsː", note = "PWGmc *hwass (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwæs" },
 ]
 
@@ -3328,6 +3537,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲlewtrom", category = "noun", note = "PIE *ḱléwtrom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxlewθrɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈxlewθr", note = "PWGmc *hleuþr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxleoːθor" },
 ]
 
@@ -3358,6 +3568,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmarkos", category = "noun", note = "PIE *márkos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑrxɑz", category = "noun" },
+  { time = 403, ipa = "ˈmɑrx", note = "PWGmc *marh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmæɑrx" },
 ]
 
@@ -3368,6 +3579,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkħptos", category = "adj", note = "PIE *kh₂ptós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑɸtɑz", category = "adj" },
+  { time = 403, ipa = "ˈxɑft", note = "PWGmc *haft (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæft" },
 ]
 
@@ -3378,6 +3590,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *sweḱrúh₂
 forms = [
   { time = -2000, ipa = "sweˈkʲreħ", category = "noun", note = "PIE *sweḱrúh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsweɣrɔː", category = "noun" },
+  { time = 403, ipa = "ˈsweɣru", note = "PWGmc *swegru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈswejer" },
 ]
 
@@ -3388,6 +3601,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkapros", category = "noun", note = "PIE *kápros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑɸrɑz", category = "noun" },
+  { time = 403, ipa = "ˈxɑfr", note = "PWGmc *hafr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæfer" },
 ]
 
@@ -3398,6 +3612,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgewlos", category = "noun", note = "PIE *gewlos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkewlɑz", category = "noun" },
+  { time = 403, ipa = "ˈkewl", note = "PWGmc *keul (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈt͡ʃeoːl" },
 ]
 
@@ -3428,6 +3643,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpl̩ħmeħ", category = "noun", note = "PIE *pl̥h₂meh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸulmɔː", category = "noun" },
+  { time = 403, ipa = "ˈfolmu", note = "PWGmc *folmu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfolm" },
 ]
 
@@ -3448,6 +3664,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈweχros", category = "adj", note = "PIE *weh₁ros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɛːrɑz", category = "adj" },
+  { time = 403, ipa = "ˈwɑːr", note = "PWGmc *wār (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæːr" },
 ]
 
@@ -3469,6 +3686,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħoju", category = "noun", note = "PIE *h₂óyu, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑjwɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑjw", note = "PWGmc *aiw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑː" },
 ]
 
@@ -3479,6 +3697,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲerus", category = "noun", note = "PIE *ḱérus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxeruz", category = "noun" },
+  { time = 403, ipa = "ˈxeru", note = "PWGmc *heru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxeoru" },
 ]
 
@@ -3519,6 +3738,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmħkʲros", category = "adj", note = "PIE *mh₂ḱrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑɣrɑz", category = "adj" },
+  { time = 403, ipa = "ˈmɑɣr", note = "PWGmc *magr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmæjer" },
 ]
 
@@ -3550,6 +3770,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "sħiˈmoː", category = "noun", note = "PIE *sh₂imṓ, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsiːmɔːː", category = "noun" },
+  { time = 403, ipa = "ˈsiːmɔː", note = "PWGmc *sīmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsiːmɑ" },
 ]
 
@@ -3600,6 +3821,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *bʰerHǵós i
 forms = [
   { time = -2000, ipa = "bʱerχˈgʲeħ", category = "noun", note = "PIE *bʰerHǵós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈberkɔː", category = "noun" },
+  { time = 403, ipa = "ˈberku", note = "PWGmc *berku (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeork" },
 ]
 
@@ -3610,6 +3832,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *wr̥ǵtós is
 forms = [
   { time = -2000, ipa = "wr̩gʲˈtis", category = "noun", note = "PIE *wr̥ǵtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwurxtiz", category = "noun" },
+  { time = 403, ipa = "ˈwurxti", note = "PWGmc *wurhti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwyrxt" },
   { time = 1400, ipa = "ˈwrixt", note = "Transcribed from ME wrihte (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
@@ -3661,6 +3884,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kréydʰrom i
 forms = [
   { time = -2000, ipa = "krejˈdʱroːn", category = "noun", note = "PIE *kréydʰrom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxriːðrɔ̃ː", category = "noun" },
+  { time = 403, ipa = "ˈxriːdrɑː", note = "PWGmc *hrīdrā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxridder" },
   { time = 1400, ipa = "ˈridər", note = "Transcribed from ME ridder (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈɹɪdəl", note = "RP from Wiktionary (kaikki), riddle; added 2026-10-06." },
@@ -3714,6 +3938,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʱojlos", category = "adj", note = "PIE *gʰoylos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑjlɑz", category = "adj" },
+  { time = 403, ipa = "ˈɣɑjl", note = "PWGmc *gail (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑːl" },
   { time = 1400, ipa = "ˈgɔːl", note = "IPA from Wiktionary (kaikki) for ME gol /ɡɔ̝ːl/; added 2026-10-06." },
 ]
@@ -3744,6 +3969,7 @@ gloss = "muldô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ml̩χˈdʱoː", category = "noun", note = "PIE *ml̥Hdʰṓ, as cited by Wiktionary." },
+  { time = 403, ipa = "ˈmoldɔː", note = "PWGmc *moldō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmoldɑ" },
   { time = 1400, ipa = "ˈmɔld" },
 ]
@@ -3755,6 +3981,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmoldos", category = "adj", note = "PIE *moldos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑltɑz", category = "adj" },
+  { time = 403, ipa = "ˈmɑlt", note = "PWGmc *malt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmæɑlt" },
 ]
 
@@ -3765,6 +3992,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈgʷʱonjeħ", category = "noun", note = "PIE *gʷʰon-yeh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑnjɔː", category = "noun" },
+  { time = 403, ipa = "ˈbɑnnju", note = "PWGmc *bannju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbenn" },
 ]
 
@@ -3775,6 +4003,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "bʱergʲˈtos", category = "adj", note = "PIE *bʰer(H)ǵ-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈberxtɑz", category = "adj" },
+  { time = 403, ipa = "ˈberxt", note = "PWGmc *berht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeorxt" },
   { time = 1400, ipa = "ˈbrixt", note = "Transcribed from ME briht (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈbɹaɪt", note = "RP from Wiktionary (kaikki), bright; added 2026-10-06." },
@@ -3787,6 +4016,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdajħuros", category = "noun", note = "PIE *dayh₂ur-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈtɑjkurɑz", category = "noun" },
+  { time = 403, ipa = "ˈtɑjkur", note = "PWGmc *taikur (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtɑːkor" },
 ]
 
@@ -3797,6 +4027,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "prugʱˈkʲos", category = "noun", note = "PIE *prugʰ-ḱó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸruskɑz", category = "noun" },
+  { time = 403, ipa = "ˈfrosk", note = "PWGmc *frosk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfrosk" },
   { time = 1400, ipa = "ˈfrɔsk", note = "Transcribed from ME frosk (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
@@ -3808,6 +4039,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *pr̥ḱ-n-éh
 forms = [
   { time = -2000, ipa = "ˈpr̩kʲneħ", category = "noun", note = "PIE *pr̥ḱ-n-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸurxnɔː", category = "noun" },
+  { time = 403, ipa = "ˈforxnu", note = "PWGmc *forhnu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈforn" },
 ]
 
@@ -3818,6 +4050,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwogʲros", category = "adj", note = "PIE *wóǵ-ros, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwɑkrɑz", category = "adj" },
+  { time = 403, ipa = "ˈwɑkr", note = "PWGmc *wakr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwɑkor" },
 ]
 
@@ -3828,6 +4061,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *térs-u-s is 
 forms = [
   { time = -2000, ipa = "ˈtr̩sus", category = "adj", note = "PIE *térs-u-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈθursuz", category = "adj" },
+  { time = 403, ipa = "ˈθurziː", note = "PWGmc *þurʀī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθyrre" },
 ]
 
@@ -3838,6 +4072,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwodʱjom", category = "noun", note = "PIE *wodʰ-yo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwɑðjɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈwɑdi", note = "PWGmc *wadi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwedd" },
   { time = 1400, ipa = "ˈwɛd", note = "Transcribed from ME wedde (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
@@ -3870,6 +4105,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "χuˈχros", category = "noun", note = "PIE *Huh₁-ró-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑwrɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑwr", note = "PWGmc *aur (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑːr" },
 ]
 
@@ -3890,6 +4126,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħejdʱlom", category = "noun", note = "PIE *h₂éydʰ-lom, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑjlɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈɑjl", note = "PWGmc *ail (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːl" },
 ]
 
@@ -3900,6 +4137,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "kroˈsneħ", category = "noun", note = "PIE *kros-néh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxrɑznɔː", category = "noun" },
+  { time = 403, ipa = "ˈxrɑznu", note = "PWGmc *hraʀnu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxræn" },
 ]
 
@@ -3920,6 +4158,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈsweːdʱχsos", category = "adj", note = "PIE *swēdʰh₁-s-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈswɛːsɑz", category = "adj" },
+  { time = 403, ipa = "ˈswɑːs", note = "PWGmc *swās (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈswæːs" },
 ]
 
@@ -3940,6 +4179,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲlojwom", category = "noun", note = "PIE *ḱloy-wo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxlɑjwɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈxlɑjw", note = "PWGmc *hlaiw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxleoːw" },
   { time = 1400, ipa = "ˈlɔw", note = "IPA from Wiktionary (kaikki) for ME lowe /ˈlɔu̯(ə)/; added 2026-10-06." },
 ]
@@ -3981,6 +4221,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *trowH-eh₂-t
 forms = [
   { time = -2000, ipa = "ˈtrowχeħ", category = "noun", note = "PIE *trowH-eh₂-ti, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈθrɑwɔː", category = "noun" },
+  { time = 403, ipa = "ˈθrɑw", note = "PWGmc *þrau (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθræɑː" },
   { time = "final", ipa = "ˈθɹəʊ", note = "RP from Wiktionary (kaikki), throe; added 2026-10-06." },
 ]
@@ -4002,6 +4243,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "wl̩ˈpiħ", category = "noun", note = "PIE *wl̥p-íh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwulβiː", category = "noun" },
+  { time = 403, ipa = "ˈwulβi", note = "PWGmc *wulbi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwylf" },
 ]
 
@@ -4022,6 +4264,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈmelit", category = "noun", note = "PIE *mélit, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmili", category = "noun" },
+  { time = 403, ipa = "ˈmili", note = "PWGmc *mili (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4085,6 +4328,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "loˈgʱejoħ", category = "verb.pres.1sg", note = "PIE *logʰéyoh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑɣjɔː", category = "verb.pres.1sg" },
+  { time = 403, ipa = "ˈlɑggju", note = "PWGmc *laggju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4328,6 +4572,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *séh₁mn̥ i
 forms = [
   { time = -2000, ipa = "ˈseχmoː", category = "noun", note = "PIE *séh₁mn̥, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsɛːmɔːː", category = "noun" },
+  { time = 403, ipa = "ˈsɑːmɔː", note = "PWGmc *sāmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4337,6 +4582,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷeroː", category = "noun", note = "PIE *h₃érō, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑrɔːː", category = "noun" },
+  { time = 403, ipa = "ˈɑrɔː", note = "PWGmc *arō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4382,6 +4628,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kéh₃tus is
 forms = [
   { time = -2000, ipa = "ˈkatus", category = "noun", note = "PIE *kéh₃tus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑθuz", category = "noun" },
+  { time = 403, ipa = "ˈxɑθu", note = "PWGmc *haþu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4391,6 +4638,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *tótḱus is 
 forms = [
   { time = -2000, ipa = "ˈtaksus", category = "noun", note = "PIE *tótḱus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθɑxsuz", category = "noun" },
+  { time = 403, ipa = "ˈθɑxs", note = "PWGmc *þahs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4400,6 +4648,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "χln̩ˈgʷʱros", category = "adj", note = "PIE *h₁ln̥gʷʰrós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈluŋgrɑz", category = "adj" },
+  { time = 403, ipa = "ˈluŋgr", note = "PWGmc *lungr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4409,6 +4658,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷosdos", category = "noun", note = "PIE *h₃ósdos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑstɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑst", note = "PWGmc *ast (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4463,6 +4713,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈʁʷengʷoː", category = "noun", note = "PIE *h₃éngʷō, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑŋkʷɔːː", category = "noun" },
+  { time = 403, ipa = "ˈɑŋkwɔː", note = "PWGmc *ankwō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4626,6 +4877,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *gʷréh₂wō
 forms = [
   { time = -2000, ipa = "gʷerˈħnus", category = "noun", note = "PIE *gʷréh₂wō, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkʷernuz", category = "noun" },
+  { time = 403, ipa = "ˈkwernu", note = "PWGmc *kwernu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4735,6 +4987,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈlojseħ", category = "noun", note = "PIE *lóyseh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑjsɔː", category = "noun" },
+  { time = 403, ipa = "ˈlɑjsu", note = "PWGmc *laisu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4872,6 +5125,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂óḱets 
 forms = [
   { time = -2000, ipa = "ħoˈkʲeteħ", category = "noun", note = "PIE *h₂óḱets, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑɣiθɔː", category = "noun" },
+  { time = 403, ipa = "ˈɑɣiθɑː", note = "PWGmc *agiþā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4889,6 +5143,7 @@ gloss = "harmô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkʲormoː", category = "noun", note = "PIE *ḱormō, as cited by Wiktionary." },
+  { time = 403, ipa = "ˈxɑrmɔː", note = "PWGmc *harmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæɑrmɑ" },
 ]
 
@@ -5106,6 +5361,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₂egʷnós 
 forms = [
   { time = -2000, ipa = "ħeˈgʷʱnos", category = "noun", note = "PIE *h₂egʷnós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑwnɑz", category = "noun" },
+  { time = 403, ipa = "ˈɑwn", note = "PWGmc *aun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5160,6 +5416,7 @@ note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited 
 forms = [
   { time = -2000, ipa = "kr̩χˈtis", note = "PIE *kr̥Htís, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxurðiz" },
+  { time = 403, ipa = "ˈxurdi", note = "PWGmc *hurdi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5178,6 +5435,7 @@ note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited 
 forms = [
   { time = -2000, ipa = "ˈkʲojros", note = "PIE *ḱoyros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑjrɑz" },
+  { time = 403, ipa = "ˈxɑjr", note = "PWGmc *hair (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5286,6 +5544,7 @@ note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited 
 forms = [
   { time = -2000, ipa = "sekwˈnis", note = "PIE *sekwnís, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsiwniz" },
+  { time = 403, ipa = "ˈsiwni", note = "PWGmc *siuni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5358,6 +5617,7 @@ note = "Source: Ringe, *From Proto-Indo-European to Proto-Germanic* — a cited 
 forms = [
   { time = -2000, ipa = "kl̩ˈχnis", note = "PIE *kl̥Hnís, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxulliz" },
+  { time = 403, ipa = "ˈxulli", note = "PWGmc *hulli (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5412,6 +5672,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "gʲn̩ˈʁʷjom", category = "noun", note = "PIE *ǵn̥h₃-yó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈkunjɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈkuni", note = "PWGmc *kuni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkynn", note = "IPA from Wiktionary (kaikki) for OE cynn /kynn/; added 2026-10-06." },
   { time = 1400, ipa = "ˈkin", note = "IPA from Wiktionary (kaikki) for ME kyn /kin/; added 2026-10-06." },
   { time = "final", ipa = "ˈkɪn", note = "RP from Wiktionary (kaikki), kin; added 2026-10-06." },
@@ -5424,6 +5685,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱm̩bʱos", category = "adj", note = "PIE *dʰm̥bʰ-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdumbɑz", category = "adj" },
+  { time = 403, ipa = "ˈdumb", note = "PWGmc *dumb (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5433,6 +5695,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈkrojnis", category = "adj", note = "PIE *króy-n-is, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxrɑjniz", category = "adj" },
+  { time = 403, ipa = "ˈxrɑjniː", note = "PWGmc *hrainī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5442,6 +5705,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpojħdos", category = "adj", note = "PIE *poyh₂d-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸɑjtɑz", category = "adj" },
+  { time = 403, ipa = "ˈfɑjt", note = "PWGmc *fait (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5460,6 +5724,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈdʱrugʱom", category = "noun", note = "PIE *dʰrugʰ-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdruɣɑ̃", category = "noun" },
+  { time = 403, ipa = "ˈdroɣ", note = "PWGmc *drog (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5487,6 +5752,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈwejkos", category = "adj", note = "PIE *wéyk-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈwiːxɑz", category = "adj" },
+  { time = 403, ipa = "ˈwiːx", note = "PWGmc *wīh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5514,6 +5780,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "speχˈtis", category = "adj", note = "PIE *speh₁-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈspɛːðiz", category = "adj" },
+  { time = 403, ipa = "ˈspɑːdiː", note = "PWGmc *spādī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5550,6 +5817,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħensjeħ", category = "noun", note = "PIE *h₂ens-yeh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɑnsijɔː", category = "noun" },
+  { time = 403, ipa = "ˈɑnsiju", note = "PWGmc *ansiju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5604,6 +5872,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "meˈχros", category = "adj", note = "PIE *meh₁-ró-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈmɛːrɑz", category = "adj" },
+  { time = 403, ipa = "ˈmɑːr", note = "PWGmc *mār (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5694,6 +5963,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "lowˈχeħ", category = "noun", note = "PIE *lowH-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈlɑwwɔː", category = "noun" },
+  { time = 403, ipa = "ˈlɑwwu", note = "PWGmc *lauwu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]

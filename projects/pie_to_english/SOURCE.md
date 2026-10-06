@@ -1,6 +1,6 @@
 # Source of the PIE → English project
 
-Proto-Indo-European to Present-Day English, scored at four checkpoints.
+Proto-Indo-European to Present-Day English, scored at five checkpoints.
 
 > **Licensing — this directory is not all under one licence.**
 >
@@ -55,8 +55,8 @@ that stops at Proto-Germanic is a *complete* chain for that column. Lifting the 
 the lexicon from 114 rows (111 scorable at 200) to **249 rows, 240 scorable at 200**.
 
 Each word is a `[[words]]` table with an `id`, a `gloss`, a `frequency`, and a `forms` array —
-the PIE seed at **−2000** and the attested forms at **200** (Proto-Germanic), **900** (Old
-English), **1400** (Middle English) and the modern **final** surface. A form that is not attested
+the PIE seed at **−2000** and the attested forms at **200** (Proto-Germanic), **403**
+(Proto-West Germanic), **900** (Old English), **1400** (Middle English) and the modern **final** surface. A form that is not attested
 is simply absent from the array — the engine scores each word at whichever checkpoints it has.
 `gloss` is the modern reflex where there is one and the Proto-Germanic headword (`hurnaz`) where
 the word died before Modern English; it is a label and a `--single` lookup key, not necessarily
@@ -135,6 +135,28 @@ The same refresh found Wiktionary IPA, missing at the bootstrap, for three Old E
 normalised as the bootstrap normalises its own, and each note quotes the source IPA. Two were
 left out. ME *widwe* /ˈwidwə/ would lose its only syllable nucleus to the column's dropped final
 -e. OE *sīen* would pass through `anglianise()`, which wrongly turns the īe from *īo into ē.
+
+### The Proto-West Germanic column (403)
+
+Added on 2026-10-06 (DECISIONS.md). The column splits the long leg from Proto-Germanic to Old
+English, where most of the 900 errors arise.
+
+- **Source.** Wiktionary's Proto-West Germanic entries, joined to the lexicon through their
+  `inh` link to the Proto-Germanic headword. Where one headword has several PWGmc entries, the
+  one whose descendants list the word's own Old English form is used. 270 words have a form.
+- **Transcription.** `tools/pwgmc_ipa.py`. Wiktionary gives IPA for only 8 of its 5578 PWGmc
+  entries, so the headword is transcribed, as the 200 column is. The letters follow Ringe &
+  Taylor's PWGmc phonology (§4.1, PDF 120–121): *d* is a stop everywhere, *f* is labiodental,
+  the labiovelars are clusters, *ʀ* is still *z*, and *ē* is ē₂ because stressed ē₁ had
+  become *ā*.
+- **Year.** 403: after the West Germanic loss of final *-z (400) and apocope (402), and before
+  the first Old English rules (404). No rule has this date.
+- **Status.** A reconstruction, like the 200 column, so Ringe & Taylor outrank it.
+
+At its introduction the column scored 117/270 exact. Most misses come from rules dated on the
+wrong side of the checkpoint: changes that Ringe & Taylor put before PWGmc but the cascade runs
+later (final *-ō > *-u, loss of trimoric vowels, gemination, the labiovelars), and Ingvaeonic
+changes that the cascade runs earlier (the nasal spirant law, β > f, the raising of ɔː).
 
 ### Middle English transcriptions
 
@@ -219,6 +241,7 @@ This applies to *reconstructions only*, and the distinction is the whole point:
 | --- | --- | --- |
 | the PIE **input** | reconstruction | Ringe/Kroonen → `PREFORM_FIXES` |
 | **200** (Proto-Germanic) | reconstruction | Ringe/Kroonen → `ATTESTED_FIXES` |
+| **403** (Proto-West Germanic) | reconstruction | Ringe & Taylor → a direct edit with a citation |
 | **900 / 1400 / final** | **attestation** — a real recorded form | nobody. Never touched. |
 
 Old English *nest*, *fisc*, *wer* are things people actually wrote down. Proto-Germanic `*nestą`
