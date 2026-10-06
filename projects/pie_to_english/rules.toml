@@ -3221,6 +3221,18 @@ description = "ME fool /foːl/ > RP full /fʊl/: the *uː the Vowel Shift makes 
 words = ["full"]
 definition = "uː → ʊ"
 
+[sporadic_foot_late_shortening]
+time = 1700
+name = "SPORADIC: foot shortens to FOOT after the unrounding"
+description = """Good, stood, food and foot are recorded with [uː] in the 16th and 17th centuries, and the
+shortened [ʊ] gained ground through the 17th; the shortening reached coda -d first, then -v, then
+-t, -θ, -k (Minkova §8.3.1, PDF 272, after Dobson §§35–39 and Ogura 1987). Coles (1674) still groups
+foot with food ([uː]; Jones, PDF 258). So foot shortens after the 1687 checkpoint, too late for
+eme_foot_strut_split (1640), and keeps [ʊ]. The shortening is lexical (food keeps [uː]), so the rule
+is word-scoped."""
+words = ["foot"]
+definition = "uː → ʊ"
+
 [sporadic_gome_strut]
 time = 1650
 name = "SPORADIC: GOME shortens to the STRUT vowel"
