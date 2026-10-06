@@ -3462,6 +3462,14 @@ description = "OE lind 'linden' gives ME line /liːn/ — the *d of the *nd clus
 words = ["lindō"]
 definition = "d → ∅ / n _ #"
 
+[pde_price_r_centring]
+time = 1745
+name = "PRICE before /ɹ/ takes a schwa: fire, wire"
+description = """The PRICE diphthong develops a schwa before /ɹ/, as MOUTH does (pde_mouth_r_centring): Hart
+(1569) already writes fire as [feiər] (McMahon §6.3.1, PDF 246–247), and Gil (1621) has fjer, fjr
+(Jones §4.3, Table 4.6, PDF 255). Dated with the other centring rules, before pde_r_loss (1750)."""
+definition = "a ɪ → a ɪ ə / _ ɹ"
+
 [pde_mouth_r_centring]
 time = 1745
 name = "MOUTH before *r takes a schwa offglide — sour, hour, flower"
