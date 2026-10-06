@@ -945,7 +945,7 @@ definition = "[+syll, length: long, aperture: low, +back, rounded: none] → oː
 time = 350
 name = "a-umlaut: short u, i lower before a non-high vowel"
 description = "Minkova §3.4 n.9. Held before a lateral — *fullaz > full, *wulfaz > wulf keep their u, while *kurną > corn and *þurnaz > þorn lower across r. (OE gold < *gulþam is a known counterexample to the l-blocking; the change is irregular.)"
-# The *u half ONLY. The lowering of *i is `pgmc_i_lowering` (t=50) and has already run; repeating
+# The *u half ONLY. The lowering of *i is the word-scoped `pgmc_i_lowering` (t=300); repeating
 # it here, with no restriction on the intervening consonants, lowered the /i/ of words Old English
 # keeps it in — OE fisc, cwic, niġon against our **fesc, **cwec, **neġon.
 #
@@ -1849,21 +1849,13 @@ definition = ["i̯ → j / [+syll] _", "u̯ → w / [+syll] _"]
 # bibliography suggests the field has not explained it either.
 [pgmc_i_lowering]
 time = 300
-name = "Short i lowers to e before a non-high vowel (West Germanic)"
-description = "*nistaz > OE nest, but *fiskaz > OE fisc keeps its i; blocked before j (*midjaz)"
-# The intervening span excludes high segments, which is what actually blocks /j/: written
-# [-syll, lateral: none]* the wildcard simply skips over the j of *midjaz and lowers it.
-#
-# Blocked before a syllable-final NASAL, the other standard exception. *lentéh₂ raises its *e to
-# *i before the coda *n (`e_to_i_before_syllable_final_nasal`, t=-900) and this rule then lowered
-# it straight back, handing **lendɔː to a gold that reads *lindɔː. A nasal coda protects the /i/;
-# it is the same environment that created it, and the two must not fight. *nisdós is untouched —
-# its /i/ stands before an /s/, not a nasal — so *nestaz still lowers as before.
-# And only the STRESSED vowel. a-umlaut is a root-vowel change; an unstressed medial /i/ is not
-# in its reach. *h₂oḱéteh₂ raises its medial *e to *i (unstressed_e_to_i, t=-1000) and this rule
-# then lowered it straight back again, giving **ɑɣeθɔː for the attested *ɑɣiθɔː. The /i/ of
-# *nisdós is the ROOT vowel and still lowers to the *nestɑ̃ the gold wants — nothing is lost.
-definition = "[+syll, aperture: high, +front, length: short, stress: primary] → [aperture: mid] / _ [-syll, lateral: none, aperture: !high]* [+syll, aperture: !high] // _ [+nas]$"
+name = "SPORADIC: *i lowers to *e in nest and wer"
+description = """Ringe & Taylor §2.3.1(ii) (PDF 49): West Germanic has no regular lowering of *i to *e.
+Only wer and nest show e for *i, for reasons the book calls unrecoverable, while fisc, cwic, biter,
+hlid and wifer keep their i. So the lowering is word-scoped. Kroonen also reconstructs *fiska- and
+*nista- with *i, and Ringe cites Lloyd, "Is there an a-umlaut of i in Germanic?"."""
+words = ["nest", "weraz", "nistaz"]
+definition = "[+syll, aperture: high, +front, length: short, stress: primary] → [aperture: mid]"
 
 
 # ─── Modern English realisation ───────────────────────────────────────────────────────────────
@@ -2870,16 +2862,6 @@ Word-scoped."""
 words = ["dew", "lawwō"]
 definition = "∅ → w / [+syll] w _"
 
-[sporadic_no_i_lowering]
-time = 475
-name = "SPORADIC: *i is not lowered — OE hlid, wifer keep their high vowel"
-description = """The West Germanic lowering of *i to *e before a non-high vowel (pgmc_i_lowering)
-is doubtful in principle — Kroonen reconstructs *fiska-, *nista- with *i, and Ringe cites Lloyd,
-'Is there an a-umlaut of i in Germanic?'. These words attest the *i survived: OE hlid, wifer, not
-**hled, **wefer. Restored on the stressed vowel, word-scoped."""
-words = ["lid", "wibraz"]
-definition = "[+syll, aperture: mid, +front, stress: primary] → [aperture: high]"
-
 [sporadic_a_restoration]
 time = 407
 name = "SPORADIC: the brightened *æ is restored to *a before a back vowel across a cluster"
@@ -3443,9 +3425,11 @@ definition = "y → u"
 time = 404
 name = "*zd simplifies to *d, lengthening the vowel — *mizdō > mēd"
 description = """The cluster *zd loses its *z with compensatory lengthening of the vowel before the
-rhotacism of *z can reach it: *mizdō > *mīdō > OE mēd 'reward'. Dated 404, before wg_rhotacism (405),
-which would otherwise give **merd."""
-definition = "[+syll] z → [length: long] ∅ / _ d"
+rhotacism of *z can reach it: *mizdō > OE mēd 'reward'. Ringe & Taylor §3.3.1 (PDF 99): this happens
+only after *i, and only occasionally (mēd beside meord), while hord and heordan keep their r. The
+*i comes out as long mid ē. Dated 404, before wg_rhotacism (405), which would otherwise give
+**merd."""
+definition = "[+syll, aperture: high, +front, length: short] z → [aperture: mid, length: long] ∅ / _ d"
 
 
 [sporadic_anguz_no_rounding]
