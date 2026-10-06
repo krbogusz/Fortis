@@ -206,3 +206,18 @@ late 17th century.
 Pyles & Algeo p. 176 ("as early as the fifteenth century in all England south of the Humber") and
 Steponavičius §202 (early 15th century). Pyles & Algeo add that old-fashioned speakers kept the
 sounds into the late 16th century, which is what the orthoepists record.
+
+## 2026-10-07: Stage the shift of ME ī and ū through [əɪ] and [əʊ]
+
+**Choice:** `emode_vowel_shift` (1600) gives [əɪ] and [əʊ], and `eme_price_mouth_lowering`
+(1690) lowers them to [aɪ] and [aʊ].
+
+**Reason:** Minkova gives [əɪ] and [əʊ] as the intermediate stage and as the Shakespearean value
+(Fig. 8.6 and n. 18, PDF 257). Pyles & Algeo date [aɪ] and [aʊ] to "the course of the seventeenth
+century" (p. 171, PDF 93). Jones reads Gil (1621) as [ei]- or [əi]-type and still writes Cooper's
+(1687) reflex as [ei]/[əi] (PDF 225, 252–253), so the lowering comes after the 1687 checkpoint.
+Tested: night and right become exact at 1621; no final row changes.
+
+**Rejected:** A one-step shift to [aɪ], [aʊ] at 1600. Also rejected: Minkova p. 261, which says the
+changes were "pretty much complete by the end of the sixteenth century"; that conflicts with her
+own footnote 18 and with the orthoepists.

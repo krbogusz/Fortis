@@ -1599,12 +1599,18 @@ definition = "ə → ∅ / _ #"
 [emode_vowel_shift]
 time = 1600
 name = "The Great Vowel Shift"
-description = "Minkova ch. 8 — iː > aɪ, uː > aʊ, eː > iː, oː > uː, ɛː > eː, ɔː > oː, aː > ɛː"
+description = """Minkova ch. 8 — iː > əɪ, uː > əʊ, eː > iː, oː > uː, ɛː > eː, ɔː > oː, aː > ɛː.
+
+The high vowels become [əɪ] and [əʊ] first. Minkova (Fig. 8.6, PDF 257, and n. 18) gives them as the
+intermediate stage, "the closest to … the 'authentic' Elizabethan/Shakespearean pronunciation";
+Pyles & Algeo (p. 171, PDF 93) have [əɪ] and [əʊ] becoming [aɪ] and [aʊ] "in the course of the
+seventeenth century"; Jones reads Gil (1621) as [ei]- or [əi]-type (PDF 225, 252). The lowering
+is eme_price_mouth_lowering."""
 # The two new diphthongs are written with the LAX second element the modern column uses — RP's
 # PRICE is /aɪ/ and MOUTH /aʊ/, not /aj/ and /aw/. The glide letters are different segments from
 # the lax vowels, so writing them as glides misses every long-*i and long-*u word in the lexicon.
 definition = [
-    "iː → a ɪ", "uː → a ʊ",
+    "iː → ə ɪ", "uː → ə ʊ",
     "eː → iː", "oː → uː",
     "ɛː → eː", "ɔː → oː",
     "aː → ɛː",
@@ -3378,6 +3384,15 @@ is still ME līn, so the change is dated in the 17th century. Word-scoped: Hoad 
 unexplained, and no other word changes final n to m."""
 words = ["lindō"]
 definition = "n → m / _ #"
+
+[eme_price_mouth_lowering]
+time = 1690
+name = "The first half of [əɪ] and [əʊ] lowers to [a]"
+description = """Pyles & Algeo (p. 171, PDF 93): ME ī "went on in most types of English to become in the course
+of the seventeenth century [aɪ]", and [əʊ] "became [aʊ] at about the same time". Jones still writes
+Cooper's (1687) reflex as [ei]/[əi] (PDF 252–253), so the lowering is dated after that checkpoint.
+GOAT's [əʊ] arises only at 1900, so it is not affected."""
+definition = ["ə ɪ → a ɪ", "ə ʊ → a ʊ"]
 
 [sporadic_wind_short]
 time = 1700
