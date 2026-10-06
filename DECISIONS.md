@@ -84,3 +84,17 @@ to add the 400 checkpoint and to add words. Wiktionary has changed since the boo
 data may differ from the data the lexicon was built from.
 
 **Rejected:** Working from the books only.
+
+## 2026-10-06: Score the Early Modern evidence at four checkpoints
+
+**Choice:** The Early Modern forms are scored at four years, one per group of orthoepists: 1570
+(Hart), 1580 (Bullokar, Mulcaster), 1621 (Gil) and 1687 (Coles, Cooper). This replaces the single
+Early Modern checkpoint in "Gather more data for pie_to_english" (2026-10-06), item 2.
+
+**Reason:** The attested forms run from 1551 to 1687 in four groups, with nothing between 1621 and
+1674. One year would score Bullokar's and Cooper's forms against the same cascade state, across
+most of the Great Vowel Shift.
+
+**Rejected:**
+- One checkpoint at 1621, the median of the evidence.
+- One checkpoint per form's own year: eight stages, two of them with a single form.

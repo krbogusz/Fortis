@@ -67,6 +67,7 @@ forms = [
   { time = 403, ipa = "ˈɑnθɑr", note = "PWGmc *anþar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈoːθer" },
   { time = 1400, ipa = "ˈuðər" },
+  { time = 1570, ipa = "ˈuːðər", note = "Early Modern English, Hart 1551, scored at 1570: Hart says the o of do, to and other has 'the proper sound of the u'. (Jones sect. 4.2, PDF 222 (book p. 209)). Added 2026-10-06." },
   { time = "final", ipa = "ˈʌðə" },
 ]
 
@@ -80,6 +81,7 @@ forms = [
   { time = 200, ipa = "ˈlɑjstɑz", category = "noun" },
   { time = 403, ipa = "ˈlɑjst", note = "PWGmc *laist (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑːst" },
+  { time = 1687, ipa = "ˈlæːst", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper says the a of ass is lengthened in last with no change of quality. (Jones sect. 4.2(2), PDF 232 (book p. 219); vowel values PDF 233, 273). Added 2026-10-06." },
   { time = "final", ipa = "ˈlɑːst" },
 ]
 
@@ -122,6 +124,7 @@ forms = [
   { time = 403, ipa = "ˈɑld", note = "PWGmc *ald (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑld" },
   { time = 1400, ipa = "ˈɔːld" },
+  { time = 1580, ipa = "ˈoʊld", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨ołd⟩ with his half-vowel l, beside ⟨old⟩. (Jones sect. 4.3.1, Table 4.12, PDF 264 (book p. 251)). Added 2026-10-06." },
   { time = "final", ipa = "ˈəʊld" },
 ]
 
@@ -149,6 +152,7 @@ forms = [
   { time = 403, ipa = "ˈmɑxti", note = "PWGmc *mahti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmixt" },
   { time = 1400, ipa = "ˈmixt" },
+  { time = 1570, ipa = "ˈmɪxt", note = "Early Modern English, Hart 1570, scored at 1570: Attested only inside almighty, Hart's ⟨aul-mih-ti⟩. (Jones sect. 4.1, PDF 211-212 (book pp. 198-199)). Added 2026-10-06." },
   { time = "final", ipa = "ˈmaɪt" },
 ]
 
@@ -176,6 +180,7 @@ forms = [
   { time = 403, ipa = "ˈsunu", note = "PWGmc *sunu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsunu" },
   { time = 1400, ipa = "ˈsun" },
+  { time = 1570, ipa = "ˈsʊn", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨sun⟩ with short u, the letter he also uses in ⟨tu⟩ 'to' and ⟨kum⟩ 'come'. (Jones sect. 4.1, PDF 211-212 (book pp. 198-199)). Added 2026-10-06." },
   { time = "final", ipa = "ˈsʌn" },
 ]
 
@@ -308,6 +313,7 @@ forms = [
   { time = 403, ipa = "ˈxertɑː", note = "PWGmc *hertā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxeorte" },
   { time = 1400, ipa = "ˈhɛrt" },
+  { time = 1621, ipa = "ˈhæɹt", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨hart⟩, listed under [æː]/[æ]. (Jones sect. 4.3(2), Table 4.10, PDF 260 (book p. 247); sample PDF 224 (book p. 211)). Added 2026-10-06." },
   { time = "final", ipa = "ˈhɑːt" },
 ]
 
@@ -336,6 +342,7 @@ forms = [
   { time = 403, ipa = "ˈdɑwθu", note = "PWGmc *dauþu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæɑːθ" },
   { time = 1400, ipa = "ˈdɛːθ" },
+  { time = 1687, ipa = "ˈdɛθ", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists death where ea stands for 'e short', which Jones gives as [ɛ]. (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
   { time = "final", ipa = "ˈdɛθ" },
 ]
 
@@ -378,6 +385,7 @@ forms = [
   { time = 403, ipa = "ˈword", note = "PWGmc *word (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈword" },
   { time = 1400, ipa = "ˈwurd" },
+  { time = 1621, ipa = "ˈwuːɹd", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨würd⟩, in the [uː] column. (Jones sect. 4.3(2), Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
   { time = "final", ipa = "ˈwɜːd" },
 ]
 
@@ -392,6 +400,7 @@ forms = [
   { time = 403, ipa = "ˈdoxter", note = "PWGmc *dohter (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdoxtor" },
   { time = 1400, ipa = "ˈdɔxtər" },
+  { time = 1621, ipa = "ˈdaʊxtəɹ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨dauħter⟩. (Jones sect. 4.4.3, Table 4.17, PDF 274 (book p. 261); text PDF 275). Added 2026-10-06." },
   { time = "final", ipa = "ˈdɔːtə" },
 ]
 
@@ -406,6 +415,7 @@ forms = [
   { time = 403, ipa = "ˈfuir", note = "PWGmc *fuir (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfyːr" },
   { time = 1400, ipa = "ˈfiːr" },
+  { time = 1621, ipa = "ˈfəɪəɹ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨fjer⟩, his own example of j and e joining, which Jones reads [əiər]. (Jones sect. 4.3(2), Table 4.6, PDF 255 (book p. 242)). Added 2026-10-06." },
   { time = "final", ipa = "ˈfaɪə" },
 ]
 
@@ -462,6 +472,7 @@ forms = [
   { time = 403, ipa = "ˈfull", note = "PWGmc *full (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfull" },
   { time = 1400, ipa = "ˈfoːl" },
+  { time = 1687, ipa = "ˈfʊl", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper treats the vowel of full as a short vowel whose long partner is the vowel of fole 'foal'. (Jones sect. 4.2(2), PDF 233 (book p. 220)). Added 2026-10-06." },
   { time = "final", ipa = "ˈfʊl" },
 ]
 
@@ -546,6 +557,7 @@ forms = [
   { time = 403, ipa = "ˈdrɑwm", note = "PWGmc *draum (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdræɑːm" },
   { time = 1400, ipa = "ˈdrɛːm" },
+  { time = 1687, ipa = "ˈdɹiːm", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists dream where ea stands for 'e long', a class he keeps apart from 'ee' (ear, near, fear). (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
   { time = "final", ipa = "ˈdɹiːm" },
 ]
 
@@ -574,6 +586,7 @@ forms = [
   { time = 403, ipa = "ˈkwiku", note = "PWGmc *kwiku (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkwik" },
   { time = 1400, ipa = "ˈkwik" },
+  { time = 1570, ipa = "ˈkwɪk", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨kuik⟩ ('the quick and the dead'). (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
   { time = "final", ipa = "ˈkwɪk" },
 ]
 
@@ -601,6 +614,7 @@ forms = [
   { time = 200, ipa = "ˈɸlɔːrɑz", category = "noun" },
   { time = 900, ipa = "ˈfloːr" },
   { time = 1400, ipa = "ˈfloːr" },
+  { time = 1687, ipa = "ˈfloːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles puts floor in the set with foal, mole, soul and loaf, which Jones gives as [ɔː] or [oː]. (Jones sect. 4.3(2), PDF 258 (book p. 245)). Added 2026-10-06." },
   { time = "final", ipa = "ˈflɔː" },
 ]
 
@@ -643,6 +657,7 @@ forms = [
   { time = 403, ipa = "ˈɑxtɔː", note = "PWGmc *ahtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑxtɑ" },
   { time = 1400, ipa = "ˈæjxt" },
+  { time = 1687, ipa = "ˈæɪt", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper says eight is 'commonly sounded ait', with the diphthong formed from the a of can and i. (Jones sect. 4.4.4, PDF 276 (book p. 263)). Added 2026-10-06." },
   { time = "final", ipa = "ˈeɪt" },
 ]
 
@@ -738,6 +753,7 @@ forms = [
   { time = 403, ipa = "ˈfɔːt", note = "PWGmc *fōt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfoːt" },
   { time = 1400, ipa = "ˈfoːt" },
+  { time = 1687, ipa = "ˈfuːt", note = "Early Modern English, Coles 1674, scored at 1687: Coles groups foot with good, food and book, which Jones reads as [uː]. (Jones sect. 4.3(2), PDF 258 (book p. 245) and Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
   { time = "final", ipa = "ˈfʊt", note = "RP from Wiktionary (kaikki), foot; added 2026-10-06." },
 ]
 
@@ -791,6 +807,7 @@ forms = [
   { time = 403, ipa = "ˈwɑrm", note = "PWGmc *warm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæɑrm" },
   { time = 1400, ipa = "ˈwarm" },
+  { time = 1580, ipa = "ˈwærəm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨warḿ⟩ with his half-vowel m. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈwɔːm" },
 ]
 
@@ -832,6 +849,7 @@ forms = [
   { time = 403, ipa = "ˈɣɑjst", note = "PWGmc *gaist (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgɑːst" },
   { time = 1400, ipa = "ˈgɔːst" },
+  { time = 1570, ipa = "ˈgoːst", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨gōst⟩ with the long mark. (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
   { time = "final", ipa = "ˈgəʊst" },
 ]
 
@@ -887,6 +905,7 @@ forms = [
   { time = 200, ipa = "ˈxɑrmɑz", category = "noun" },
   { time = 900, ipa = "ˈxæɑrm" },
   { time = 1400, ipa = "ˈharm", note = "Transcribed from ME harm (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
+  { time = 1580, ipa = "ˈhærəm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨harḿ⟩. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈhɑːm" },
 ]
 
@@ -928,6 +947,7 @@ forms = [
   { time = 200, ipa = "ˈxɔːrɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈxoːre" },
   { time = 1400, ipa = "ˈhoːr" },
+  { time = 1687, ipa = "ˈhoːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles puts whore, and hore 'hoar', in the set with foal, mole and soul, which Jones gives as [ɔː] or [oː]. (Jones sect. 4.3(2), PDF 258 (book p. 245)). Added 2026-10-06." },
   { time = "final", ipa = "ˈhɔː" },
 ]
 
@@ -942,6 +962,7 @@ forms = [
   { time = 403, ipa = "ˈɑxɑz", note = "PWGmc *ahaʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑːr" },
   { time = 1400, ipa = "ˈɛːr" },
+  { time = 1687, ipa = "ˈiːɹ", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists ears where ea stands for 'ee', which Jones gives as [iː]. (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
   { time = "final", ipa = "ˈɪə" },
 ]
 
@@ -1188,6 +1209,7 @@ forms = [
   { time = 403, ipa = "ˈkorn", note = "PWGmc *korn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkorn" },
   { time = 1400, ipa = "ˈkɔrn" },
+  { time = 1580, ipa = "ˈkɔrən", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨corń⟩ with his half-vowel n. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈkɔːn" },
 ]
 
@@ -1216,6 +1238,7 @@ forms = [
   { time = 403, ipa = "ˈtɑnθ", note = "PWGmc *tanþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtoːθ" },
   { time = 1400, ipa = "ˈtoːθ" },
+  { time = 1621, ipa = "ˈtuːθ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨tüth⟩, in the [uː] column. (Jones sect. 4.3(2), Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
   { time = "final", ipa = "ˈtuːθ" },
 ]
 
@@ -1460,6 +1483,7 @@ forms = [
   { time = 403, ipa = "ˈflɔːdu", note = "PWGmc *flōdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfloːd" },
   { time = 1400, ipa = "ˈfloːd" },
+  { time = 1621, ipa = "ˈflʊd", note = "Early Modern English, Gil 1619, scored at 1621: Gil's sample poem has ⟨fludz⟩ 'floods' with plain u, the short vowel of ⟨but⟩. (Jones sect. 4.2(1), PDF 224 (book p. 211)). Added 2026-10-06." },
   { time = "final", ipa = "ˈflʌd" },
 ]
 
@@ -1528,6 +1552,7 @@ forms = [
   { time = 403, ipa = "ˈsuːr", note = "PWGmc *sūr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsuːr" },
   { time = 1400, ipa = "ˈsuːr" },
+  { time = 1687, ipa = "ˈsoːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles lists sour in the same set as foal, sore and floor, which Jones gives as [ɔː] or [oː]. (Jones sect. 4.3(2), PDF 258 (book p. 245)). Added 2026-10-06." },
   { time = "final", ipa = "ˈsaʊə" },
 ]
 
@@ -1569,6 +1594,7 @@ forms = [
   { time = 403, ipa = "ˈkuni", note = "PWGmc *kuni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkynn" },
   { time = 1400, ipa = "ˈkin" },
+  { time = 1621, ipa = "ˈkɪn", note = "Early Modern English, Gil 1619, scored at 1621: Gil writes ⟨kin⟩ 'blood relation' against ⟨kïn⟩ 'keen'. (Jones sect. 4.2(1), PDF 225 (book p. 212)). Added 2026-10-06." },
   { time = "final", ipa = "ˈkɪn" },
 ]
 
@@ -1597,6 +1623,7 @@ forms = [
   { time = 403, ipa = "ˈdɔːm", note = "PWGmc *dōm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdoːm" },
   { time = 1400, ipa = "ˈdoːm" },
+  { time = 1621, ipa = "ˈduːm", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨düm⟩ 'judgment', in the [uː] column. (Jones sect. 4.3(2), Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
   { time = "final", ipa = "ˈduːm" },
 ]
 
@@ -1802,6 +1829,7 @@ forms = [
   { time = 403, ipa = "ˈθorn", note = "PWGmc *þorn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθorn" },
   { time = 1400, ipa = "ˈθɔrn" },
+  { time = 1580, ipa = "ˈθɔrən", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨thorń⟩, and Jones gives [θɔrən] with an inserted vowel before the half-vowel n. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈθɔːn" },
 ]
 
@@ -1870,6 +1898,7 @@ forms = [
   { time = 200, ipa = "ˈxelmɑz", category = "noun" },
   { time = 900, ipa = "ˈxelm" },
   { time = 1400, ipa = "ˈhɛlm" },
+  { time = 1580, ipa = "ˈhɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨hełm⟩ with his half-vowel l, and Jones gives [hɛləm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈhɛlm" },
 ]
 
@@ -1883,6 +1912,7 @@ forms = [
   { time = 403, ipa = "ˈxelmɔː", note = "PWGmc *helmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxelmɑ" },
   { time = 1400, ipa = "ˈhalm" },
+  { time = 1580, ipa = "ˈhɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨hełm⟩ with his half-vowel l, and Jones gives [hɛləm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈhɛlm" },
 ]
 
@@ -2178,6 +2208,7 @@ forms = [
   { time = 200, ipa = "ˈwɑrɑz", category = "adj" },
   { time = 403, ipa = "ˈwɑr", note = "PWGmc *war (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwær" },
+  { time = 1687, ipa = "ˈwɛːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles pairs wear and ware as homophones in a list that Jones describes as unambiguous [ɛː]. (Jones sect. 4.3(2), PDF 259 (book p. 246)). Added 2026-10-06." },
   { time = "final", ipa = "ˈwɛə" },
 ]
 
@@ -2192,6 +2223,7 @@ forms = [
   { time = 403, ipa = "ˈsɑlβu", note = "PWGmc *salbu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsæɑlf" },
   { time = 1400, ipa = "ˈsalv" },
+  { time = 1580, ipa = "ˈsaʊv", note = "Early Modern English, Mulcaster 1582, scored at 1580: Mulcaster says salues is said sawues, with the l turned into u. (Jones sect. 4.3(1), PDF 253 (book p. 240)). Added 2026-10-06." },
   { time = "final", ipa = "ˈsɑːv", note = "RP from Wiktionary (kaikki), salve; added 2026-10-06." },
 ]
 
@@ -2241,6 +2273,7 @@ forms = [
   { time = -2000, ipa = "bʱeħˈgʲʱus", category = "noun", note = "PIE *bʰeh₂ǵʰús, as cited by Wiktionary." },
   { time = 200, ipa = "ˈbɔːɣuz", category = "noun" },
   { time = 900, ipa = "ˈboːg" },
+  { time = 1621, ipa = "ˈboʊ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨bou⟩, one of his rare forms without the fricative. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
   { time = "final", ipa = "ˈbaʊ" },
 ]
 
@@ -2539,6 +2572,7 @@ forms = [
   { time = 403, ipa = "ˈɣod", note = "PWGmc *god (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgod" },
   { time = 1400, ipa = "ˈgɔd" },
+  { time = 1570, ipa = "ˈgɔd", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨God⟩ with short o. (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
   { time = "final", ipa = "ˈgɒd", note = "RP from Wiktionary (kaikki), god; added 2026-10-06." },
 ]
 
@@ -2598,6 +2632,7 @@ forms = [
   { time = 403, ipa = "ˈfɑder", note = "PWGmc *fader (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfæder" },
   { time = 1400, ipa = "ˈfadər" },
+  { time = 1570, ipa = "ˈfaːðr̩", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨fāðr⟩, with long ā and no vowel before the final r, so the r is syllabic. (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
   { time = "final", ipa = "ˈfɑːðə", note = "RP from Wiktionary (kaikki), father: faeder is the Scots form. Added 2026-10-06." },
 ]
 
@@ -2700,6 +2735,7 @@ forms = [
   { time = 403, ipa = "ˈɑwzɑː", note = "PWGmc *auʀā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑːre" },
   { time = 1400, ipa = "ˈɛːr" },
+  { time = 1687, ipa = "ˈiːɹ", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists ears where ea stands for 'ee', which Jones gives as [iː]. (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
   { time = "final", ipa = "ˈɪə", note = "RP from Wiktionary (kaikki), ear; added 2026-10-06." },
 ]
 
@@ -2713,6 +2749,7 @@ forms = [
   { time = 403, ipa = "ˈnɑxt", note = "PWGmc *naht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnixt" },
   { time = 1400, ipa = "ˈnixt" },
+  { time = 1621, ipa = "ˈnəɪxt", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨njħt⟩. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
   { time = "final", ipa = "ˈnaɪt", note = "RP from Wiktionary (kaikki), night; added 2026-10-06." },
 ]
 
@@ -2773,6 +2810,7 @@ forms = [
   { time = 403, ipa = "ˈnɑmɔː", note = "PWGmc *namō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnɑmɑ" },
   { time = 1400, ipa = "ˈnaːm" },
+  { time = 1687, ipa = "ˈnɛːm", note = "Early Modern English, Cooper 1687, scored at 1687: Jones lists name among Cooper's words with the cane vowel. (Jones sect. 4.2(2), PDF 234 (book p. 221); see PDF 233 and 276). Added 2026-10-06." },
   { time = "final", ipa = "ˈneɪm", note = "RP from Wiktionary (kaikki), name; added 2026-10-06." },
 ]
 
@@ -2798,6 +2836,7 @@ forms = [
   { time = 403, ipa = "ˈrext", note = "PWGmc *reht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈrixt" },
   { time = 1400, ipa = "ˈrixt" },
+  { time = 1621, ipa = "ˈɹəɪxt", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨rjħt⟩, with the same values as night. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
   { time = "final", ipa = "ˈɹaɪt", note = "RP from Wiktionary (kaikki), right; added 2026-10-06." },
 ]
 
@@ -2836,6 +2875,7 @@ forms = [
   { time = 403, ipa = "ˈwurmi", note = "PWGmc *wurmi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwyrm" },
   { time = 1400, ipa = "ˈwurm" },
+  { time = 1580, ipa = "ˈwɔrəm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨worḿ⟩ with o, while he writes u in ⟨burń⟩ and ⟨cħurł⟩. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
   { time = "final", ipa = "ˈwɜːm", note = "RP from Wiktionary (kaikki), worm: wyrm is an archaic revival. Added 2026-10-06." },
 ]
 
@@ -2958,6 +2998,7 @@ forms = [
   { time = 403, ipa = "ˈɑl", note = "PWGmc *al (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæl" },
   { time = 1400, ipa = "ˈal" },
+  { time = 1687, ipa = "ˈɔːl", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper gives the aw of awl as one spelling of his 'o guttural', which Jones gives as [ɔ] or [ɔː]. (Jones sect. 4.4.2, PDF 271 (book p. 258)). Added 2026-10-06." },
   { time = "final", ipa = "ˈɔːl", note = "RP from Wiktionary (kaikki), awl; added 2026-10-06." },
 ]
 
@@ -3091,6 +3132,7 @@ forms = [
   { time = 403, ipa = "ˈelm", note = "PWGmc *elm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈelm" },
   { time = 1400, ipa = "ˈɛlm" },
+  { time = 1580, ipa = "ˈɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar has ⟨elḿ⟩ and ⟨ełḿ⟩, and Jones reads the second as [ɛələm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252)). Added 2026-10-06." },
   { time = "final", ipa = "ˈɛlm", note = "RP from Wiktionary (kaikki), elm; added 2026-10-06." },
 ]
 
@@ -3143,6 +3185,7 @@ forms = [
   { time = 403, ipa = "ˈfolk", note = "PWGmc *folk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfolk" },
   { time = 1400, ipa = "ˈfɔlk" },
+  { time = 1621, ipa = "ˈfoːk", note = "Early Modern English, Gil 1621, scored at 1621: Gil gives ⟨fók⟩, the l-less form he says is said more often, beside ⟨folk⟩ for the learned. (Jones sect. 4.3(1), PDF 254 (book p. 241)). Added 2026-10-06." },
   { time = "final", ipa = "ˈfəʊk", note = "RP from Wiktionary (kaikki), folk; added 2026-10-06." },
 ]
 
@@ -3300,6 +3343,7 @@ forms = [
   { time = 200, ipa = "ˈmuldɔː", category = "noun" },
   { time = 900, ipa = "ˈmolde" },
   { time = 1400, ipa = "ˈmɔld" },
+  { time = 1580, ipa = "ˈmoʊld", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨mołd⟩ with his half-vowel l. (Jones sect. 4.3.1, Table 4.12, PDF 264 (book p. 251)). Added 2026-10-06." },
   { time = "final", ipa = "ˈməʊld", note = "RP from Wiktionary (kaikki), mould: mold is the American spelling. Added 2026-10-06." },
 ]
 
@@ -4006,6 +4050,7 @@ forms = [
   { time = 403, ipa = "ˈberxt", note = "PWGmc *berht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeorxt" },
   { time = 1400, ipa = "ˈbrixt", note = "Transcribed from ME briht (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
+  { time = 1621, ipa = "ˈbɹəɪxt", note = "Early Modern English, Gil 1621, scored at 1621: Attested only in Gil's ⟨brjħtnes⟩ 'brightness', so the stem is taken from the derivative. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
   { time = "final", ipa = "ˈbɹaɪt", note = "RP from Wiktionary (kaikki), bright; added 2026-10-06." },
 ]
 
@@ -5676,6 +5721,7 @@ forms = [
   { time = 403, ipa = "ˈkuni", note = "PWGmc *kuni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkynn", note = "IPA from Wiktionary (kaikki) for OE cynn /kynn/; added 2026-10-06." },
   { time = 1400, ipa = "ˈkin", note = "IPA from Wiktionary (kaikki) for ME kyn /kin/; added 2026-10-06." },
+  { time = 1621, ipa = "ˈkɪn", note = "Early Modern English, Gil 1619, scored at 1621: Gil writes ⟨kin⟩ 'blood relation' against ⟨kïn⟩ 'keen'. (Jones sect. 4.2(1), PDF 225 (book p. 212)). Added 2026-10-06." },
   { time = "final", ipa = "ˈkɪn", note = "RP from Wiktionary (kaikki), kin; added 2026-10-06." },
 ]
 

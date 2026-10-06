@@ -173,6 +173,30 @@ cascade does together with the later loss of the *j; the lowering of *i to *e (l
 Ringe & Taylor find in only two words (§2.3.1); and Wiktionary's PWGmc *u where Old English shows
 a-umlaut (fox, ford, yoke).
 
+### The Early Modern checkpoints (1570, 1580, 1621, 1687)
+
+Added on 2026-10-06 (DECISIONS.md). The forms are the pronunciations that 16th- and 17th-century
+orthoepists record for words in the lexicon, as Jones reads them (*A History of English
+Phonology*, ch. 4). Minkova and Pyles & Algeo name no orthoepist for any of these words, so they
+served only for dating. 46 forms for 43 words. Each note names the orthoepist, his date and
+spelling, Jones's page, and any doubt about the reading.
+
+- **Years.** The evidence falls into four groups, each scored at its main orthoepist's date:
+  Hart 1551 and 1570 at 1570 (7 forms); Bullokar 1580 and Mulcaster 1582 at 1580 (11); Gil 1619
+  and 1621 at 1621 (14); Coles 1674 and Cooper 1687 at 1687 (14). No rule shares these years.
+- **Conventions.** The IPA follows the final column, except where the source does not decide.
+  The sources say nothing about the quality of r, so it is written r before the cascade's
+  change to ɹ (1620) and ɹ after it. Gil's palatal fricative is written x, as in the 1400 column.
+- **Less certain.** might and bright are attested only in almighty and brightness. Seven
+  Bullokar forms (warm, harm, corn, thorn, worm, helm, elm) carry the inserted vowel of Jones's
+  reading ([θɔrən]), where a syllabic consonant is also possible.
+
+At their introduction the four stages scored 1/7, 0/11, 2/14 and 4/14. The misses point at the
+cascade's Early Modern dates: `me_x_loss` (1450) is too early, since Hart and Gil still have the
+fricative of night; the one-step Vowel Shift (1600) gives [aɪ] where Gil has [əɪ]; the laxing of
+short i and u (1900) is too late for Gil's kin [ɪ]; STRUT reaches flood too early, and TRAP heart
+and last too late.
+
 ### Words added on 2026-10-06
 
 The refreshed extracts were run through the unchanged bootstrap (`build_gold.py`, with its output
