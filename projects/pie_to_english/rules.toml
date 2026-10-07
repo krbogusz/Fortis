@@ -3335,7 +3335,7 @@ consonant between is an *f. And so is the SINGLE: written with `[-syll]*`, to re
 *lw of *gelwaz, it reaches across *helma, *hagjō and *swegrō too and gives **heolma, **heoġġ,
 **sweoġer.
 
-Dated 470, and *gelwaz is why: its back vowel arrives only when oe_final_w_vocalisation (468)
+Dated 470, and *gelwaz is why: its back vowel arrives only when oe_final_w_vocalisation (402)
 turns the *w into one. The sequence is *gelwaz > *gelu > ġeolu, and at that point the *u is
 adjacent and no widened environment is needed. It is also after i-mutation, with which it is in
 complementary distribution — a FRONT vowel in the next syllable fronts, a BACK one breaks.
@@ -3367,8 +3367,8 @@ name = "A final *w after a consonant becomes *u"
 description = """Once apocope has stripped the ending, *falwaz, *salwaz, *gelwaz are left ending in
 a consonant + *w, and Old English writes the *w as a vowel: fealu, salu, ġeolu, mearu.
 
-Dated 468, beside oe_parasite_vowel (466) — both repair a final cluster the apocope has just
-created, and both need every ending already gone."""
+Dated 402, before the Proto-West Germanic checkpoint: Ringe & Taylor place the vocalisation of a
+final *w in PWGmc (§3.1.2), after the apocope of *-a at the same date."""
 definition = "w → u / [+cons] _ # // [+son, +cont, lateral: none] _"
 
 [wg_final_j_vocalisation]
@@ -4408,7 +4408,7 @@ they end in survives all through the paradigm: the oblique cases are salwes, geo
 English levels the stem with the *w restored and a svarabhakti *ɔ before it — salow, yelow — and
 that is the form the modern sallow and yellow continue.
 
-This exactly undoes oe_final_w_to_u (468), which turned the *w of *salw, *gelw into the *u of the
+This exactly undoes oe_final_w_vocalisation (402), which turned the *w of *salw, *gelw into the *u of the
 attested OE salu, geolu. The nominative is what Old English records and what the 900 column is
 transcribed in, so the *u has to be made; Middle English then generalises the oblique stem instead,
 and the *w comes back.
