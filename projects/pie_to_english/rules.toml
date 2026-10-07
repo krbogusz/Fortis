@@ -551,6 +551,15 @@ name = "Verner's law"
 description = "Voiceless fricatives are voiced when preceded by an unaccented vowel, including cases where the vowel and fricative are separated by a sonorant (n, m, r, l, j, w)"
 definition = "[-son, +cont, -voice] → [+vc] / [+syll, stress: none] [+son, -syll]? _ "
 
+# Ringe (§3.2.3 (iii), PDF 177–178) states PIE *sr > PGmc *str in general, with a word-internal
+# example: *ausrā- > *austrōn- 'Easter'. sr_to_str (-2000) takes only the initial cluster. The medial
+# one is dated after Verner's law: a *z from Verner's law takes no *t, as *wazrą shows.
+[pgmc_sr_to_str_medial]
+time = -1000
+name = "A *t is inserted between a medial *s and *r"
+description = "Ringe PDF 177–178: *ausrā- > *austrōn-; Kroonen s.v. *gestra-, PDF 216: *dʰgʰes-ro- > *gestra-"
+definition = "∅ → t / [+syll] s _ r"
+
 [grimm_dentalisation]
 time = -1000
 name = "The Germanic fricative *þ is DENTAL"
