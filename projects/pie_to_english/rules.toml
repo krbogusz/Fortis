@@ -2560,11 +2560,16 @@ definition = "u → ∅ / _ #"
 
 [oe_unstressed_u_lowering]
 time = 485
-name = "Unstressed *u is OE o in a closed final syllable"
+name = "Unstressed *u is OE o before a consonant"
 description = """Ringe & Taylor §6.9.6 (PDF 350): unstressed a and u "remained distinct in early OE (the latter
 often written o)", and by about 900 the two were merging in closed final syllables. So *nigun,
-*sebun give OE nigon, seofon. Finding F4 of the Ringe & Taylor review (its second half)."""
-definition = "[+syll, aperture: high, +back, stress: none, length: short] → [aperture: mid] / _ [-syll]+ #"
+*sebun give OE nigon, seofon. Finding F4 of the Ringe & Taylor review (its second half).
+
+In West Saxon the contrast was breaking down "in all positions, except word-finally" (PDF 350), and
+the ordinals have a medial o: seofoþa, eahtoþa, nigoþa. So the rule applies before any consonant.
+Not before *w: widuwe keeps its u, as WS wuduwe ~ widuwe does (PDF 337). The exception is inferred
+from the lexicon (DECISIONS.md, 2026-10-07)."""
+definition = "[+syll, aperture: high, +back, stress: none, length: short] → [aperture: mid] / _ [-syll] // _ w"
 
 [oe_unstressed_i_to_e]
 time = 472
