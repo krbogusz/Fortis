@@ -190,8 +190,6 @@ word-scoped rule citing the page.
 
 Still open at 403:
 
-- ear: a word-scoped rule turns its s-stem *z into *r before 403, to keep it from the loss of
-  final *-z.
 - skuwwô needs Holtzmann's law.
 - thick: the target is Ringe & Taylor's ja-stem *þikkwī.
 - flunþrą: its *o rests only on Old Dutch.
@@ -204,7 +202,8 @@ English loses later, so hedge (*haggju) is exact. The lowering of *i to *e, whic
 find in only two words (§2.3.1), is now word-scoped to them, so lid and meed are exact. The targets
 of fox and yoke follow Ringe & Taylor's a-umlaut, and the lowering in ford is dated after PWGmc. *w
 is lost before an unstressed *u after a consonant (§2.1.1) and after a stressed vowel (§3.1.5), so
-ahwō, roo and þrawō are exact.
+ahwō, roo and þrawō are exact. ear restores its s-stem *z after the loss of final *-z, so its 403
+form keeps the *z that rhotacism turns into *r later.
 
 ### The Early Modern checkpoints (1570, 1580, 1621, 1687)
 

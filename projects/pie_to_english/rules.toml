@@ -3155,14 +3155,15 @@ words = ["ey", "segaz", "hate"]
 definition = ["ɑ → i / _ z #", "e → i / _ ɣ"]
 
 [sporadic_zstem_r]
-time = 399
-name = "SPORADIC: ēar 'ear of grain' keeps its s-stem *-z as *r"
+time = 401
+name = "SPORADIC: ēar 'ear of grain' restores its s-stem *-z"
 description = """OE ēar continues the s-stem *ahaz-, *ahuz-, which kept its stem consonant and became a
-neuter a-stem: ēar < *eaher (Ringe & Taylor §7.2.3, PDF 400; PDF 192; Hoad s.v. ear²). Word-scoped;
-the *z is turned into the *r that rhotacism would give it, before the West Germanic loss of final
-*-z (400) can take it."""
+neuter a-stem: ēar < *eaher (Ringe & Taylor §7.2.3, PDF 400; PDF 192; Hoad s.v. ear²). Ringe & Taylor
+give PWGmc *ahaz- ~ *ahiz-, remodelled. The West Germanic loss of final *-z (400) takes the *z of
+the nominative, as in every noun in *-az, and this rule restores it from the stem at 401. So the
+403 form is *ahaʀ, and rhotacism (405) later makes the *r. Word-scoped."""
 words = ["ear"]
-definition = "z → r / _ #"
+definition = "∅ → z / [+syll] _ #"
 
 [oe_final_long_high_shortening]
 time = 399
