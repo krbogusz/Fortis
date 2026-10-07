@@ -4053,7 +4053,7 @@ id = "fruskaz"
 gloss = "fruskaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "prugʱˈkʲos", category = "noun", note = "PIE *prugʰ-ḱó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "prugʱsˈkos", category = "noun", note = "PREFORM corrected 2026-10-07: was prugʱˈkʲos; now *prugʰskós. The rules prompted the change (DECISIONS.md, 2026-10-07): Kroonen (s.v. *fruska-, PDF 160) takes *fruska- to continue 'older *frug-ska-', with the root of *frugkkan- 'frog' and the suffix *-ska-. The cited *prugʰ-ḱó-s has no *s and cannot give *fruskaz. PIE *prugʰ-ḱó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸruskɑz", category = "noun" },
   { time = 403, ipa = "ˈfrosk", note = "PWGmc *frosk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfrosk" },

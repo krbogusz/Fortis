@@ -26,6 +26,14 @@ name = "Centumization"
 description = "Merging of PIE 'palatovelar' and 'velar' plosives"
 definition = "[+cons, -sonorant, +back, +front] → [front: none]"
 
+[pie_stop_loss_before_sk]
+time = -2000
+name = "A stop is lost before *s + velar"
+description = """Ringe (PDF 197, 268): the PIE present *pr̥sḱé/ó- 'to ask' (Skt pr̥ccháti, Lat. poscere) is
+built to the root *preḱ-, whose final velar is lost before the *-sḱé/ó- suffix. So *frug-ska-,
+Kroonen's source of *fruska- 'frog' (PDF 160), gives *fruskaz."""
+definition = "[-son, -cont, -syll] → ∅ / [+syll] _ s [-son, -cont, -syll, +back]"
+
 [sr_to_str]
 time = -2000
 name = "Word-initial */sr/ > */str/"
@@ -1905,8 +1913,13 @@ description = "Minkova §4.3 — ċinn > chin, heċġ > hedge, fisċ > fish. NOT
 #
 # (`wg_g_hardening` was moved to 405, ahead of this rule, for the same reason: at 430 the PGmc *ɣ
 # was still a fricative when palatalisation looked, so no *g existed for it to find.)
+#
+# *sk stays after a back vowel. Ringe & Taylor call non-palatal sc /sk/ rare and name āscian 'to
+# ask' (PDF 19); OE frosc 'frog', like āscian, has a metathesised variant (frox, axian) that shows
+# the [sk], and ME frosk keeps it. Every other *sk in the lexicon is word-initial or follows a front
+# vowel (sċip, fisċ). The condition is inferred from the lexicon (DECISIONS.md, 2026-10-07).
 definition = [
-    "s k → ʃ ∅",
+    "s k → ʃ ∅ // [+syll, +back] _",
     "k → t͡ʃ / _ [+syll, +front]",
     # The geminate *gg before *j, from the West Germanic gemination (*hagjō > *haggju), is
     # palatal as a whole: OE heċġ, leċġ. Before the clauses below, which would take only its
