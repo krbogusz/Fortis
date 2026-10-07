@@ -3594,8 +3594,10 @@ death, stead, thread, red, hot. Minkova §8.3.1 (PDF 271–272) lists bread, dea
 thread among the monosyllables shortened before a dental, and red < OE rēad and hot < OE hāt in
 note 32. The shortening "must have occurred prior to the shift to [iː]", and it was most advanced
 before -d. Mead and seed keep their length, so the rule is word-scoped. Dated 1550, before the
-shift (1560)."""
-words = ["death", "stead", "thread", "raudaz", "haitaz"]
+shift (1560). Minkova also names OE flǣsc 'flesh' among the sources of the short [ɛ] (PDF 238).
+The 1400 target keeps the long vowel, and Minkova notes that shortened and long variants competed
+in ME, so flesh shortens here with the rest of the class."""
+words = ["death", "stead", "thread", "raudaz", "haitaz", "flesh"]
 definition = ["ɛː → ɛ", "ɔː → ɔ"]
 
 [sporadic_broad_thought]
