@@ -2802,9 +2802,13 @@ time = 1150
 name = "OE æ and ɑ merge on ME /a/"
 description = """Old English keeps a front *æ (hwæl, fæder, stæf) apart from a back *ɑ (scaru,
 talu, nama). Middle English does not: both come out as a single low front *a — whal, fader, staf
-beside share, tale, name."""
+beside share, tale, name.
+
+Not before *j. There the *æ is the first half of the diphthong it formed with a palatal g, spelled
+dæi beside dæġ (Minkova, PDF 83), and ME keeps it: [æj] > [æi] in dæġ > dai, day (Steponavičius
+§183, PDF 171; Jones Table 4.14, PDF 269). The 1400 column writes it [æj]: day, wain."""
 definition = [
-    "æ → a",
+    "æ → a // _ j",
     "ɑ → a",
 ]
 
@@ -4423,13 +4427,6 @@ name = "SPORADIC: erf keeps a voiceless *f"
 description = "RP erf /ɜːf/ has a voiceless final *f where ME erve had [v] (the 1400 target ɛrv, voiced between vowels before the schwa was lost). Word-scoped re-devoicing. Cause: devoicing of a final [v], which ME spellings such as luf 'love' and gif 'give' show (Jones Table 3.32, PDF 189). Wiktionary tags the word Northern England and Scotland, rare."
 words = ["erf"]
 definition = "v → f / _ #"
-
-[sporadic_wagnaz_ae]
-time = 1150
-name = "SPORADIC: *wagnaz > ME wain has a front *æ"
-description = "OE wægn > ME wain /wæjn/ keeps the front *æ before the *j, where our æ/ɑ merger backs it. Word-scoped. No cause in the word: the æ is the first half of the diphthong that OE æ formed with a palatal g, spelled dæi beside dæġ (Minkova, PDF 83), which the æ/ɑ merger does not reach. Only this word is scored on it at 1400."
-words = ["wagnaz"]
-definition = "a → æ / _ j"
 
 [sporadic_wapso_metathesis]
 time = 1250
