@@ -6911,7 +6911,7 @@ id = "karilaz"
 gloss = "karilaz"
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ǵerh₂-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = 200, ipa = "ˈkɑrilɑz", category = "noun", note = "PGmc *karilaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 200, ipa = "ˈkerlɑz", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈkɑrilɑz, PGmc *karilaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py; now *kerlaz. The rules prompted the change (DECISIONS.md, 2026-10-07): Kroonen (s.v. *kerla- ~ *karla-, PDF 325) puts OE ceorl, E churl and OFri. tzerl under the e-grade *kerla-, and *karilaz cannot give the broken eo of ċeorl." },
   { time = 900, ipa = "ˈt͡ʃeorl" },
   { time = 1400, ipa = "ˈt͡ʃeːrl" },
 ]
