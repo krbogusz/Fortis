@@ -3043,6 +3043,17 @@ the old *æ clause turned eahta into **ihta. night gets its *e from the i-umlaut
 oe_anglian_smoothing_liquid, which turns the i-mutated *æe into the *e this rule raises."""
 definition = "e → i / _ x (t | s | θ)"
 
+[sporadic_new_oblique_iw]
+time = 465
+name = "SPORADIC (levelling): OE nīwe takes the long vowel of its oblique stem"
+description = """Ringe & Taylor (PDF 68, 264): PGmc *niwjaz > PWGmc nom. *niwi, but oblique *[niwjwja-], where
+West Germanic gemination doubled the *w. The geminate made a long diphthong, *īow-, and that stem was
+levelled into the nominative: ">! OE (Angl.) nīowe", North. nīwe, WS nīewe. Cause: levelling of
+the oblique stem. The 403 target keeps the nominative *niwi. Dated 465, after the loss of a final
+*-i after a heavy syllable (460), which the ja-stem *-ī of *nīowī did not undergo."""
+words = ["new"]
+definition = "i → iː / _ w"
+
 [sporadic_night_oblique_i]
 time = 419
 name = "SPORADIC (levelling): niht takes the i-umlaut of its oblique stem *nahti-"
