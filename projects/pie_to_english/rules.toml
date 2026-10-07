@@ -3047,6 +3047,21 @@ name = "A final *-iju contracts to the diphthong *ēo"
 description = "Ringe & Taylor §6.1.2, §6.10.1 — *frijō > *friu > frēo, *þrijō > þrīo"
 definition = "[+syll, aperture: high, +front, stress: primary] j [+syll, aperture: high, +back, stress: none] → e oː ∅ ∅ / _ #"
 
+# PGmc *iu becomes OE īo by the same tensing as the other diphthongs: *iuwar > īower, *diubul >
+# dīofol (Ringe & Taylor §6.1.2, PDF 189–190). Mercian later merged īo with ēo (PDF 353), and the
+# cascade writes the merged *ēo, as oe_iju_contraction does. Most *iu stood before an *i or *j,
+# because PGmc raised *eu to *iu there. West Saxon then i-umlauted it to īe, but Anglian kept it:
+# *diurijaz > *dīorī > WS dīere, North. dīore (PDF 264). So the rule is dated after i-mutation
+# (420), and the *w stays a glide until then, out of the reach of i-mutation.
+[oe_iu_to_eo]
+time = 476
+name = "PGmc *iu becomes *ēo"
+description = """Ringe & Taylor §6.1.2 (PDF 189–190) and §6.10.1 (PDF 353): *iu > īo, which merges with
+ēo in Mercian. Anglian has no i-umlaut of it (PDF 263–264): *diurijaz > North. dīore, Merc. dēore;
+*liudiz > Merc. lēode (PDF 399). Before a consonant only: *niwi 'new' has a *w that begins the next
+syllable."""
+definition = "[+syll, aperture: high, +front, length: short] w → e oː / _ [-syll]"
+
 [sporadic_excrescent_t]
 time = 1300
 name = "SPORADIC: ME quiste, heste take an excrescent final *t"
@@ -3788,12 +3803,6 @@ oblique stem cnēow- spread to the nominative, as in trēo(w) 'tree'."""
 words = ["knee"]
 definition = "∅ → w / oː _ #"
 
-[sporadic_lede_eo]
-time = 476
-name = "SPORADIC: *liudiz > OE lēod — the *eu diphthong gives *ēo"
-description = "*liudiz gives OE lēod; our cascade leaves *liwd. Word-scoped *iw > *eoː. Cause: lēode is a Mercian form, whose ēo stands for the expected West Saxon īe (Ringe & Taylor, PDF 399)."
-words = ["lede"]
-definition = "i w → e oː"
 
 
 [sporadic_ell_syncope]
