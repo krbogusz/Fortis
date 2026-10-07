@@ -2506,6 +2506,17 @@ definition = "[-son, glottal_aperture: spread] → [glottal_aperture: neutral]"
 # Two identical short vowels left in hiatus by laryngeal loss collapse into one — *h₂yuHn̥ḱós
 # loses its laryngeal between the root /u/ and the /u/ epenthesised into *n̥, and the *uu that
 # results is a single /u/ in the attested *jungaz. (The long+short case is `vowel_contraction`.)
+[sporadic_skuwwo_holtzmann]
+time = -1950
+name = "SPORADIC: the hiatus of *sku.ṓ takes a *w, doubled before the accent"
+description = """Kroonen reconstructs PGmc *skuwwan- 'shadow, mirror' from the n-stem *sku-ón- (s.v. *skuwwan-, PDF
+492), and Ringe & Taylor give PGmc *skuwwō (PDF 81). The *ww is Holtzmann's law, which Kroonen states
+as gemination of a glide before the accent (§2.2.5.7, PDF 36–37). The cascade adopts that law only
+for *wH and for *j after a surviving vowel (DECISIONS.md, 2026-10-07), because the general form has
+many counter-examples. Cause: Kroonen's pretonic gemination, as he gives it for this word. Word-scoped."""
+words = ["skuwwô"]
+definition = "∅ → w w / u _ [+syll, stress: primary]"
+
 [sporadic_youth_hiatus_glide]
 time = -1950
 name = "SPORADIC: the hiatus of *ju.unþi- and *mu.ī takes a *w"
