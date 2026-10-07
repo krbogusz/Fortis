@@ -2124,7 +2124,7 @@ forms = [
   { time = 200, ipa = "ˈrɔːwɔː", category = "noun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈrɔːɔː. 200 reconstruction (SOURCE.md: Ringe/Kroonen outrank Wiktionary): Ringe drops *w only between round vowels, and *ā was not round until the late shift to *ō (PDF 172-173, 182), so the PGmc form keeps it, as OE rōw does." },
   { time = 403, ipa = "ˈrɔːw", note = "PWGmc *rōu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈroːw" },
-  { time = 1400, ipa = "ˈrɔː" },
+  { time = 1400, ipa = "ˈrow", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈrɔː. Wrong word: /rɔ̝ː/ belongs to ME ro 'roe deer', from OE rā. ME ro 'calm', from OE rōw, is also spelled rou, rowe (Wiktionary). Minkova gives the same OE ōw as ME [ow]: stōw > stou [stow] (PDF 205)." },
 ]
 
 [[words]]
@@ -2577,7 +2577,7 @@ forms = [
   { time = -2000, ipa = "ˈsegʲʱos", category = "noun", note = "PIE *séǵʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈseɣɑz", category = "noun" },
   { time = 900, ipa = "ˈsije" },
-  { time = 1400, ipa = "ˈsig" },
+  { time = 1400, ipa = "ˈsiː", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsig. Wrong word: ME sige /ˈsiɡ(ə)/ means 'urine' and is cognate with Middle Dutch seic (Wiktionary). The reflex of OE siġe 'victory' is ME siȝe /ˈsiː(ə)/ (Wiktionary), with the *ij > ī of Steponavičius §183 (PDF 170)." },
 ]
 
 [[words]]
@@ -2772,11 +2772,10 @@ forms = [
 [[words]]
 id = "arbaidiz"
 gloss = "arbaidiz"
-note = "Source: Wiktionary (kaikki). The 900 target ˈæɑrfoθe was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong word: OE earfoþe continues the derivative *arbaidja-, not *arbaidiz (Kroonen s.v. *arbaiþi-, PDF 71; Ringe & Taylor PDF 195)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈæɑrfoθe was removed on 2026-10-06 (DECISIONS.md, four cases): Wrong word: OE earfoþe continues the derivative *arbaidja-, not *arbaidiz (Kroonen s.v. *arbaiþi-, PDF 71; Ringe & Taylor PDF 195). The 1400 target ˈarvəð was removed on 2026-10-07 (DECISIONS.md, four cases): Wrong word: ME arveð 'laborious' is an adjective. It continues OE earfoþe, whose 900 target was removed on 2026-10-06 as the reflex of the derivative *arbaidja-, not of *arbaidiz."
 forms = [
   { time = -2000, ipa = "ʁʷorbʱojˈtis", category = "noun", note = "PREFORM corrected 2026-10-06: was ˈʁʷorbʱos; now *h₃orbʰoytís. Kroonen s.v. *arbaiþi-, PDF 71: a ti-stem with the suffix *-oi-ti-; the cited *h₃órbʰos is the base noun. The accent is read off the Verner-voiced *d. PIE *h₃órbʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑrβɑjðiz", category = "noun" },
-  { time = 1400, ipa = "ˈarvəð" },
 ]
 
 [[words]]
@@ -2916,7 +2915,7 @@ forms = [
   { time = 200, ipa = "ˈɑnɑðz", category = "noun" },
   { time = 403, ipa = "ˈɑnɑd", note = "PWGmc *anad (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈened" },
-  { time = 1400, ipa = "ˈeːnd" },
+  { time = 1400, ipa = "ˈɛnəd", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈeːnd. Wrong word: /ˈeːnd(ə)/ belongs to ME ende 'end'. ME ende 'duck', from OE ened, has /ˈɛ̞ːn(ə)d(ə)/ and /ˈɛn(ə)d(ə)/ (Wiktionary). The rules choose the short vowel and keep the medial one: the second syllable is closed, so the first does not lengthen (Minkova PDF 223)." },
 ]
 
 [[words]]
@@ -3344,7 +3343,7 @@ forms = [
   { time = 200, ipa = "ˈstɔːrɑz", category = "adj" },
   { time = 403, ipa = "ˈstɔːr", note = "PWGmc *stōr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstoːr" },
-  { time = 1400, ipa = "ˈstɔːr" },
+  { time = 1400, ipa = "ˈstoːr", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈstɔːr. Wrong word: /stɔːr/ belongs to the ME noun store 'supplies', a borrowing through Anglo-Norman. The adjective store 'strong', from OE stōr, has /stoːr/ as its first form (Wiktionary)." },
 ]
 
 [[words]]
