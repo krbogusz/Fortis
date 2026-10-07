@@ -4637,6 +4637,15 @@ of tiȝeþe."""
 words = ["tehundô"]
 definition = "eː → iː"
 
+[sporadic_aern_metathesis]
+time = 465
+name = "SPORADIC: OE *ræn becomes ærn"
+description = """OE ærn 'house' has its r after the vowel. Ringe & Taylor (PDF 100) derive it from *ræn, with the
+*z lost, and they call the metathesis of r and a short vowel "common, but variable" (PDF 355).
+Cause: that metathesis. Word-scoped, like sporadic_r_metathesis."""
+words = ["razną"]
+definition = "r æ → æ r / # _ n"
+
 [sporadic_r_metathesis]
 time = 1200
 name = "SPORADIC: r metathesis in bright and wright"
