@@ -2948,13 +2948,18 @@ Old English after i-mutation (oe_j_loss_after_geminate):
 
     *banjō  > *bannju > OE benn     *skaljō > *skallju > OE sċiell     *hagjō > *haggju > OE heċġ
 
-*r is the exception and does not geminate (*harjaz > OE here, not **herre). The geminates of *ɣ
+*r is the exception and does not geminate (*harjaz > OE here, not **herre). Nor do the glides: a
+*jj or *ww from Holtzmann's law was "reanalyzed as *īj, *ūw" in West Germanic (PDF 81), not doubled
+again, so the rule names obstruents, nasals and *l. Written for any consonant, it tripled the *jj
+of ajją and twajjaz. The geminates of *ɣ
 and *β are the stops *gg and *bb: PGmc *sibjō > PWGmc *[sibjbju] > OE sibb, *habjan > hebban
 (Ringe & Taylor, PDF 66). Ringe & Taylor show that the change follows the loss of final *-a and *-ą
 and the vocalisation of a stranded *-j, so it is dated 402, after those rules, and before the 403
 checkpoint."""
 definition = [
-    "1=[+cons, -syll, trill: none] j → @1 @1 j / [+syll, length: short] _",
+    "1=[-son, -syll] j → @1 @1 j / [+syll, length: short] _",
+    "1=[+son, -syll, nasal: 1] j → @1 @1 j / [+syll, length: short] _",
+    "1=[+son, -syll, +lat] j → @1 @1 j / [+syll, length: short] _",
     "ɣ ɣ → g g",
     "β β → b b",
 ]
