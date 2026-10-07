@@ -2685,6 +2685,16 @@ before a rounded vowel, already in OE and ME): those words are not in this lexic
 which is here — never had *hw at all (OE hāl), so it reaches this rule as /h/ and is untouched."""
 definition = "h → ∅ / # _ w"
 
+# Minkova (PDF 139): in ME the [w] of an onset sw- was lost before a back vowel, OE swā > so,
+# swylc > such, sweord > sword, and twā > two lost it after t. The spelling keeps the w in sword
+# and two. Pyles & Algeo (p. 144) give the same change. After the 1400 checkpoint, whose ME
+# targets still write the w.
+[me_w_loss_before_back]
+time = 1450
+name = "w is lost after an initial s or t before a back rounded vowel"
+description = "Minkova PDF 139; Pyles & Algeo p. 144 — sweord > sword, twā > two"
+definition = "w → ∅ / # (s | t) _ [+syll, +back, +rounded]"
+
 [me_degemination]
 time = 1250
 name = "Geminates simplify"
