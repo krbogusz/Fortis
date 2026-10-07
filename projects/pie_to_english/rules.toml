@@ -214,6 +214,18 @@ t = -2000, and placed ahead of the laryngeal-loss rules at the same time: they r
 is nothing left for this one to absorb."""
 definition = "[+cons, advancement: rtr] → w / w _ [+syll, stress: primary]"
 
+[sporadic_stora_glide_loss]
+time = -2000
+name = "SPORADIC: *steh₂u-ro- gives *stōraz 'big'"
+description = """Kroonen §2.1.5 (PDF 22–23) lists "*stōra- adj. 'big': ON stórr, OE, OFri. stōr < *steh₂u-ro-"
+among the words whose laryngeal lengthened the vowel before *u and whose long diphthong then lost
+its glide in an open syllable. Word-scoped: the cascade does not adopt that glide loss as a regular
+rule, since roo keeps its *w (DECISIONS.md, 2026-10-07). Cause: Kroonen's derivation. Ringe derives
+the oxytone *stauraz 'post' from the same root without it (PDF 107), and stauraz-stake keeps *au.
+After the colouring of *e to *a, before loss_of_laryngeals_before_vowels."""
+words = ["stōraz"]
+definition = "a ħ u → aː ∅ ∅"
+
 [loss_of_laryngeals_before_vowels]
 time = -2000
 name = "Loss of laryngeals before a vowel or a resonant, without lengthening"
