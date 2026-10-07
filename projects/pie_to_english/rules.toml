@@ -3898,7 +3898,7 @@ not vocalise, which is why this stays a word list rather than a general rule abo
 sullow (OE sulh, pl. sylh, Kroonen PDF 531) has ME sulow without any oblique *ɣ: its *h after *l
 had two Middle English outcomes, the vocalisation here and the hardening to k of elk (1000). The
 choice between them is lexical, so sullow is named here."""
-words = ["marrow", "tallow", "gelwaz", "farrow", "sallow", "sullow"]
+words = ["marrow", "tallow", "gelwaz", "farrow", "sallow", "sullow", "fallow"]
 definition = [
     "[+back, aperture: high, -son, nasal: none] → ɔ w / [+cons, +son] _ #",
     "[+back, aperture: high, -son, nasal: none] → w / [+syll] _ #",
@@ -3938,8 +3938,9 @@ attested ME salow. marrow and tallow escape the same trap by accident of dating 
 not vocalise until 1260 — and this rule pair just gives sallow and yellow the same shelter.
 
 Word-scoped: OE has plenty of other final *-u (sunu, giefu, ġiest) that is NOT a w-stem and simply
-reduces away. Only the words whose modern reflex still shows the *-ow belong here."""
-words = ["sallow", "gelwaz"]
+reduces away. Only the words whose modern reflex still shows the *-ow belong here. fallow is one:
+OE fealu has the oblique stem fealw- (Ringe & Taylor, PDF 213)."""
+words = ["sallow", "gelwaz", "fallow"]
 definition = "u → w / [+cons] _ #"
 
 [sporadic_anglian_close_e]
