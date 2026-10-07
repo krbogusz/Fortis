@@ -2492,13 +2492,17 @@ definition = "i → ɛ / # m _"
 
 [lme_ai_diphthong_notation]
 time = 1569
-name = "The ME diphthongs [æi] and [au] are written [æɪ] and [aʊ]"
+name = "The ME diphthongs [æi], [au] and [ɔu] are written [æɪ], [aʊ] and [oʊ]"
 description = """This rule changes the notation, not the sound, like the laxing below. The 1400 targets write
 the ME diphthong of eighte, wain as [æj]; the Early Modern readings write its second half [ɪ]:
 Cooper's eight, "commonly sounded ait" (Jones §4.4.4, PDF 276), is [æɪt]. They write the [au] of
 Mulcaster's sawues 'salves' as [aʊ] (Jones §4.3, PDF 253) in the same way. The two rules that later
-smooth [au] (eme_aw_monophthongisation, eme_aw_before_labial) read [aʊ]."""
-definition = ["æ j → æ ɪ", "a w → a ʊ"]
+smooth [au] (eme_aw_monophthongisation, eme_aw_before_labial) read [aʊ].
+
+The ME [ɔu] is written [oʊ]: Jones reads Bullokar's ⟨mołd⟩ and ⟨ołd⟩ as [mould], [ould] (Table 4.12,
+PDF 264), the *ow stage that eme_toe_tow_merger passes through. After the Vowel Shift (1560), which
+has already raised the ɔː of old to oː. The merger then reads [oʊ]."""
+definition = ["æ j → æ ɪ", "a w → a ʊ", "oː w → o ʊ", "ɔ w → o ʊ"]
 
 [lme_short_high_vowels_lax]
 time = 1569
@@ -2557,19 +2561,18 @@ definition = "æ → ɑ / _ ɹ [-syll]* $"
 # same /oː/ the Vowel Shift leaves for toe, and the GOAT rule then diphthongises both together.
 [eme_toe_tow_merger]
 time = 1650
-name = "The toe–tow merger: /ɔw/ smooths to /oː/"
-description = """ME lōw, soul, marwe, talwe end in the diphthong *ɔw; in the seventeenth century it
-smooths to *ow and then to the long monophthong *oː, falling together with the *oː of toe (< ME
+name = "The toe–tow merger: /oʊ/ from ME /ɔw/ smooths to /oː/"
+description = """ME lōw, soul, marwe, talwe end in the diphthong *ɔw. By 1580 it is [ou], written [oʊ] from
+1569 (lme_ai_diphthong_notation); in the seventeenth century it smooths to the long monophthong *oː,
+falling together with the *oː of toe (< ME
 *ɔː, raised by the Vowel Shift). Hence tow rhymes with toe, soul with sole, and marrow and tallow
 end in the GOAT vowel rather than a stray glide.
 
 t = 1650, AFTER the Middle English checkpoint at 1400 — ME still HAS the diphthong and the 1400
 column is transcribed with it (marɔw, talɔw, both already exact) — and BEFORE
 eme_goat_diphthongisation (1900), which is the point: this rule does not produce the modern vowel
-itself, it merely delivers *oː into the GOAT rule, which then gives /əʊ/. It is also ordered before
-eme_short_o_opens (1900); left until after it, the *ɔ would already have opened to *ɒ and there
-would be no *ɔw left to match."""
-definition = "ɔ w → oː"
+itself, it merely delivers *oː into the GOAT rule, which then gives /əʊ/."""
+definition = "o ʊ → oː"
 
 [eme_goat_diphthongisation]
 time = 1900
@@ -2890,8 +2893,9 @@ description = """Late ME [aw] from a + l: all, hall, call, false, salt (Minkova 
 PDF 130–131: the dark [ɫ] of the coda is vocalised, keeping its backness). Jones Table 3.24 has
 hall > haul in the 15th century. Before l and a consonant the short ɔ takes the glide too: Bullokar
 writes mould with his half-vowel l, which Jones reads [mould] (Table 4.12, PDF 264), and Minkova
-cites ME fok(e) 'folk'. The l itself goes later before a labial or velar (eme_l_loss)."""
-definition = ["∅ → w / a _ l #", "∅ → w / a _ l [-syll]", "∅ → w / ɔ _ l [-syll]"]
+cites ME fok(e) 'folk'. So does the long ɔː of old: Bullokar writes ⟨ołd⟩ with the same half-vowel l
+(Table 4.12, PDF 264). The l itself goes later before a labial or velar (eme_l_loss)."""
+definition = ["∅ → w / a _ l #", "∅ → w / a _ l [-syll]", "∅ → w / ɔ _ l [-syll]", "∅ → w / ɔː _ l [-syll]"]
 
 [eme_l_loss]
 time = 1550
