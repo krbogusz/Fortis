@@ -3205,6 +3205,17 @@ targets (hāven, bēver). Word-scoped, because three quarters of the class keep 
 words = ["acre", "haven", "beaver", "navel"]
 definition = "[+syll, length: short, stress: primary, aperture: !high] → [length: long]"
 
+[sporadic_udder_short]
+time = 1210
+name = "SPORADIC: udder takes the short vowel of its inflected forms"
+description = """Minkova (§7.5.1.1, PDF 212): from the seventh century into early ME a long stressed vowel shortened
+before two consonants, "not necessarily in the same syllable", as in nǣddre > næddre 'adder'. The
+inflected forms of OE ūder have that cluster (gen. ūdres), and Wiktionary's ME udder, uddres, uddyr
+show the short vowel with the doubled d. Cause: the shortening in the inflected forms, levelled into
+the nominative. Before the 1400 checkpoint, whose udder is short."""
+words = ["udder"]
+definition = "uː → u"
+
 [sporadic_osl_high_vowel]
 time = 1200
 name = "SPORADIC: week lengthens its high vowel in an open syllable, to ē"
