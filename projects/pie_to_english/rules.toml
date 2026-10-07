@@ -1605,6 +1605,16 @@ name = "A surviving final *-i lowers to *-e"
 description = "R&T §6.6.2 — *stædi > stedi > stede; *mari > mere"
 definition = "[+syll, length: short, aperture: high, +front] → e / [+syll] []* _ #"
 
+# Ringe & Taylor derive OE nacod from PWGmc *nakwad through *nækud (PDF 206, 287), and Kroonen
+# derives OE nicor from *nikwaza- (PDF 430): an unstressed *wa after a consonant becomes *u. The
+# books show the step without stating it as a rule, so the rule is inferred. In this lexicon it
+# reaches only nikraz. Before the brightening (406), since the *a never fronts.
+[oe_wa_to_u]
+time = 405
+name = "An unstressed *wa after a consonant becomes *u"
+description = "Ringe & Taylor PDF 206, 287: PWGmc *nakwad > *nækud > OE nacod; Kroonen PDF 430: *nikwaza- > OE nicor"
+definition = "w ɑ → u ∅ / [+syll, stress: primary] [-syll]+ _"
+
 [oe_a_fronting]
 time = 406
 name = "Anglo-Frisian brightening: a > æ, except before a nasal"
