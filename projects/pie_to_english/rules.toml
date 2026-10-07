@@ -529,6 +529,21 @@ name = "Kluge's law after Verner: *ðn before the accent becomes *tt"
 description = "Kroonen §2.2.5.2, §2.2.6; s.v. *hwīta-, PDF 307 — *ḱweytnós > *hwītta- > *hwīta-"
 definition = "ð n → t t / ([+syll] | j) _ [+syll, stress: primary]"
 
+[kroonen_holtzmann_j]
+time = -1000
+name = "Holtzmann's law: *j geminates before the accent"
+description = """Kroonen states Holtzmann's law as pretonic gemination (§2.2.5.7, PDF 36–37), with *twajjan
+'of two' < *dwoi-óm and *wajju- 'wall' < *wh₁̥i-u-, whose laryngeal vocalises "between consonantic
+resonants" first (PDF 608). Here the *j geminates only after a vowel that survives: *e, *o, *a, or
+the schwa of a first syllable, which becomes *a (Ringe PDF 109). It does not geminate after *i
+(free, frijō, sijǭ) or after a schwa that is later lost (kin, kunją). Tested on its own, Kroonen's
+unrestricted law broke those five (DECISIONS.md, 2026-10-07). Before stress_change, because the
+condition is the PIE accent."""
+definition = [
+    "j → j j / (e | o | a) _ [+syll, stress: primary]",
+    "j → j j / # [-syll]* ə _ [+syll, stress: primary]",
+]
+
 [stress_change]
 time = -1000
 name = "Stress change to first syllable"

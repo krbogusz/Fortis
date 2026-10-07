@@ -380,3 +380,19 @@ holds that "there was certainly no regular sound change that could have shortene
 **Rejected:**
 - Kroonen's Dybo's law as a regular rule.
 - Moving the accents of the five words to the root to fit the law.
+
+## 2026-10-07: Geminate pretonic *j after a surviving vowel
+
+**Choice:** `kroonen_holtzmann_j` doubles a *j that stands before the PIE accent, after *e, *o, *a
+or the schwa of a first syllable. It does not apply after *i or after a schwa that is later lost.
+
+**Reason:** Kroonen states Holtzmann's law as pretonic gemination (§2.2.5.7, PDF 36–37) and derives
+*twajjan from *dwoi-óm and *wajju- from *wh₁̥i-u- (PDF 569, 608). His unrestricted law also doubled
+the *j of free, frijō, sijǭ, kin and kunją, which have a single *j. In all five the *j follows *i
+or a schwa that the cascade later deletes. Tested with the restriction: twajjaz and wajjuz become
+exact at 200, and no other row changes. ajją stays open, since Kroonen's derivation of it also needs
+Mahlow's and Dybo's laws.
+
+**Rejected:**
+- Kroonen's unrestricted pretonic gemination of *j.
+- A laryngeal condition like the one for *w. It covers twajjaz (*dwoyHós) but not wajjuz.
