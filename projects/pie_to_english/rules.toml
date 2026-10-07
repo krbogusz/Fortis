@@ -1209,9 +1209,10 @@ name = "SPORADIC: OE *seþl becomes setl"
 description = """PWGmc *seþl 'seat' gives WS setl, North. sedl ~ seðel (Ringe & Taylor PDF 344). Ringe & Taylor
 note the usual view that *þl and *þm became tl and tm in West Saxon, but fæþm never shows a t, both
 sedl and setl occur in Anglian texts, and "we cannot recover in any detail what happened to these
-words" (PDF 356). staþol keeps its þ as well. Word-scoped. Cause: not known. Dated before
-oe_parasite_vowel (466). botl 'dwelling' had the same change, but bottle's chain misses earlier."""
-words = ["seþlą"]
+words" (PDF 356). staþol keeps its þ as well. Word-scoped. Cause: the change of *þl to tl that the
+usual view (Campbell) assigns to West Saxon, which Ringe & Taylor report with setl and botl as
+examples (PDF 356) while doubting that it was regular. Dated before oe_parasite_vowel (466)."""
+words = ["seþlą", "bottle"]
 definition = "θ → t / _ l #"
 
 [oe_tl_metathesis]

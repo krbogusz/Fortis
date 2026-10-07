@@ -815,8 +815,8 @@ gloss = "bottle"
 frequency = 38229
 note = "Source: Wiktionary (kaikki). The final target ˈbɒtl̩ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE bottle is Old French botele (Hoad, Klein PDF 117); OE botl 'dwelling' has none. The PIE seed ˈbʱoħutlom (PIE *bʰoh₂u-tlo-m, as cited by Wiktionary) was removed on 2026-10-07: no book in hand gives it: Kroonen has no entry for the word, and Ringe & Taylor give OE botl 'dwelling' without an etymology (PDF 356). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = 200, ipa = "ˈbɔːθlɑ̃", category = "noun" },
-  { time = 403, ipa = "ˈbɔːθl", note = "PWGmc *bōþl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 200, ipa = "ˈbuθlɑ̃", category = "noun", note = "START FORM revised 2026-10-08 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3): was ˈbɔːθlɑ̃, PGmc *bōþlą (Wiktionary). Hoad (s.v. build) gives OE botl = OS bodl, ON bol, from Gmc *buþlam, from *bu- 'dwell', and its derived verb byldan has the y of short *u. Wiktionary's long *ō cannot give the short o of OE botl." },
+  { time = 403, ipa = "ˈboθl", note = "TARGET corrected 2026-10-08 (rule 3): was ˈbɔːθl, PWGmc *bōþl (Wiktionary). With the short *u of Hoad's *buþlam, a-umlaut gives PWGmc *boþl." },
   { time = 900, ipa = "ˈbotl" },
 ]
 
