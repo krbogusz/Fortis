@@ -3073,7 +3073,7 @@ id = "klūtaz"
 gloss = "klūtaz"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈglewdos", category = "noun", note = "PIE *glewdos, as cited by Wiktionary." },
+  { time = -2000, ipa = "ˈgluχdos", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈglewdos; now *glúHdos. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target *klūtaz, OE clūt, ME clūt and PDE clout all have a long *ū, which the e-grade *glewdos cannot give (it gives *kleutaz, OE clēot). A zero grade with a laryngeal gives the *ū. No book gives this form, and Kroonen has no entry for the word. PIE *glewdos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkluːtɑz", category = "noun" },
   { time = 900, ipa = "ˈkluːt" },
   { time = 1400, ipa = "ˈkluːt" },
