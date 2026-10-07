@@ -2051,8 +2051,11 @@ with the vowel.
 t = 1450, AFTER the Middle English checkpoint, for the same reason as me_ng_simplification:
 Middle English still HAS the fricative (dohter is /ˈdɔxtər/, wiht /ˈwixt/, liht /ˈlixt/), and a
 rule at 1400 takes it away from the column that records it. The fricative itself is lost much
-later (eme_x_loss)."""
-definition = "[+syll] → [length: long] / _ x"
+later (eme_x_loss).
+
+Not the short front i: Hart (1570) still writes it short before the fricative, see
+eme_i_before_x_diphthong."""
+definition = ["[+syll, aperture: !high] → [length: long] / _ x", "[+syll, aperture: high, +back] → [length: long] / _ x"]
 
 # Final schwa is lost (§7.6) — the silent -e of ME spelling.
 # Dated BEFORE the 1400 checkpoint, not after it. Chaucer still scans a final -e, but the gold's
@@ -2462,6 +2465,17 @@ definition = "[+syll, aperture: high, +front, length: short, stress: primary] �
 # The last block. These are not sound changes in the interesting sense — they are the phonetic
 # realisations that make Received Pronunciation what it is — but the modern column is transcribed
 # in them, so the cascade has to arrive there.
+
+# Minkova (§5.3) and Steponavičius (§183, PDF 171) put the glide before the palatal fricative in late
+# ME. The orthoepists date it later for short i. Hart (1570) writes riht and aul-mih-ti with his
+# short i, beside ei for ME ī in bei, leif (Jones §4.1, PDF 211–212). Gil (1621) writes njht, rjht,
+# with the vowel of ME ī (Jones PDF 252). The rule follows the orthoepists, whose readings the
+# Early Modern columns record, and dates the change between them.
+[eme_i_before_x_diphthong]
+time = 1600
+name = "Short i before the fricative x takes the PRICE diphthong [əɪ]"
+description = "Hart (1570) riht, aul-mih-ti against Gil (1621) njht, rjht (Jones PDF 211–212, 252)"
+definition = "ɪ → ə ɪ / [-syll] _ x"
 
 [eme_rhotic_approximant]
 time = 1620
