@@ -3865,6 +3865,15 @@ the cause is not known."""
 words = ["broad", "daughter"]
 definition = "oː → ɔː"
 
+[sporadic_month_syncope]
+time = 1340
+name = "SPORADIC: ME moneth loses its medial vowel, month"
+description = """Minkova (PDF 221) writes the ME reflex of OE mōnaþ as mon(e)th(e): the medial vowel was optional,
+and the 1400 target and PDE month have none. Cause: the syncopated variant month. Word-scoped,
+since no regular ME change removes a medial schwa here."""
+words = ["month"]
+definition = "ə → ∅ / n _ θ #"
+
 [sporadic_flood_strut]
 time = 1600
 name = "SPORADIC: flood shortens early enough to unround"
