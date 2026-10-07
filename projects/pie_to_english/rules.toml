@@ -842,6 +842,17 @@ definition = "[+syll, aperture: low, length: long] → [back, rounded, labial, a
 # *-az (the engine derives it correctly), but oxytone *tr̥nós gives *-as. Germanic has *-az
 # throughout — the ending was levelled across the paradigm, erasing the accentual split. The
 # levelling is stated here because no sound law produces it.
+[sporadic_tongue_n_stem]
+time = 175
+name = "SPORADIC: *tungōz joins the feminine ōn-stems as *tungǭ"
+description = """Kroonen (s.v. *tungōn-, PDF 566-567) reconstructs the PIE word as an h₂-stem *dn̥ǵʰ-u(e)h₂-,
+which the cited nominative *dn̥ǵʰwéh₂s continues as an ā-stem *tungōz. Every Germanic language has
+an n-stem instead: Go. tuggo, ON tunga, OE tunge, OHG zunga. Cause: the old h₂-stem was extended
+with *-n- and joined the feminine ōn-stems, whose nominative is *-ǭ. Dated 175, after the
+ending's vowel has become *ɔː (170)."""
+words = ["tongue"]
+definition = "[+syll, length: long, +back, +rounded] z → [nasal: 1] ∅ / _ #"
+
 [sporadic_thrinz_z]
 time = 150
 name = "SPORADIC: the accusative *þrinz has the analogical *-z"
