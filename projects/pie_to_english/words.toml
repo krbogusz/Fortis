@@ -1486,14 +1486,13 @@ forms = [
 id = "seventh"
 gloss = "seventh"
 frequency = 5814
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *septm̥mós is replaced by *septm̥mṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *septm̥mós is replaced by *septm̥mṓ on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈsɛvnθ was removed on 2026-10-07 (DECISIONS.md, four cases): No modern reflex: RP seventh is a new formation. Wiktionary gives ME seventhe as 'a remodelling of sefte (Old English seofoþa) on the basis of seven + -the'; the regular reflex of seofoþa, ME seveþe, did not survive."
 forms = [
   { time = -2000, ipa = "septm̩ˈtχoː", category = "adj", note = "PREFORM corrected 2026-10-06: was septm̩ˈmoː; now *septm̥tHṓ. Kroonen s.v. *sebunþ/dan-, PDF 469: the ordinal *septm̥-tHó-, in which the first *t is dissimilated. PIE *septm̥mós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈseβundɔːː", category = "adj", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈseβunðɔːː. 200 reconstruction: Kroonen s.v. *sebunþ/dan-, PDF 469; every other 200 target has the stop [d] after a nasal, which pgmc_dh_hardening_after_nasal produces." },
   { time = 403, ipa = "ˈseβundɔː", note = "PWGmc *sebundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈseofoθɑ" },
   { time = 1400, ipa = "ˈsɛvəð" },
-  { time = "final", ipa = "ˈsɛvnθ" },
 ]
 
 [[words]]
@@ -1665,14 +1664,13 @@ forms = [
 id = "ninth"
 gloss = "ninth"
 frequency = 3578
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁newn̥nós is replaced by *h₁newn̥tṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *h₁newn̥nós is replaced by *h₁newn̥tṓ on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈnaɪnθ was removed on 2026-10-07 (DECISIONS.md, four cases): No modern reflex: RP ninth is a new formation. Hoad (s.v. nine): ninth, 'ME. niʒonþe (xii), a new formation superseding OE. nigoþa'."
 forms = [
   { time = -2000, ipa = "χnewn̩ˈtoː", category = "adj", note = "PIE *h₁newn̥nós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈnewundɔːː", category = "adj" },
-  { time = 403, ipa = "ˈnewndɔː", note = "PWGmc *neundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈniɣundɔː", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈnewndɔː. The rules prompted the change (DECISIONS.md, 2026-10-07): OE nigoþa and OS nigudo continue the northern West Germanic *nig- that Ringe & Taylor reconstruct for 'nine' (*nigun, PDF 181), not Wiktionary's *neundō, which OHG niunto continues. The 403 target of nine already has *nigun. PWGmc *neundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnigoθɑ", note = "IPA from Wiktionary (kaikki) for OE nigoða /ˈni.ɡo.θɑ/; added 2026-10-06." },
   { time = 1400, ipa = "ˈniəð" },
-  { time = "final", ipa = "ˈnaɪnθ" },
 ]
 
 [[words]]
@@ -2648,7 +2646,7 @@ forms = [
   { time = 200, ipa = "ˈtexundɔːː", category = "adj" },
   { time = 403, ipa = "ˈtexundɔː", note = "PWGmc *tehundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈteoːθɑ" },
-  { time = 1400, ipa = "ˈtɛnð" },
+  { time = 1400, ipa = "ˈtiːð", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈtɛnð. Wrong word: /ˈtɛnð/ is ME tenthe, which Wiktionary gives as 'a remodelling of tithe (Old English teoþa) on the basis of ten + -the' (also Hoad s.v. tenth). This word's reflex is ME tithe, /ˈtiːð(ə)/ in Wiktionary, which the final target tithe continues." },
   { time = "final", ipa = "ˈtaɪð", note = "RP from Wiktionary (kaikki), tithe: tithe continues OE tēoþa; tenth is a new formation on ten. Added 2026-10-06." },
 ]
 

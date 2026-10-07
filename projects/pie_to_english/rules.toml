@@ -983,8 +983,9 @@ name = "SPORADIC: northern West Germanic *nigun 'nine'"
 description = """Ringe & Taylor §5.3 (PDF 181): most Germanic languages have the expected *ne(w)un (Goth.
 niun, OHG niun), "but in northern WGmc we find forms with medial *-g-: northern WGmc *nigun 'nine'
 > OE nigon, OF niugen, OS nigun ~ nigon", and "no convincing explanation for the shape of 'nine'
-has been advanced". So the change is word-scoped. Finding F9 of the Ringe & Taylor review."""
-words = ["nine"]
+has been advanced". So the change is word-scoped. Finding F9 of the Ringe & Taylor review. The
+ordinal has the same *g: OE nigoþa, OS nigudo (Hoad s.v. nine)."""
+words = ["nine", "ninth"]
 definition = "e w → i ɣ"
 
 [wg_a_umlaut]
