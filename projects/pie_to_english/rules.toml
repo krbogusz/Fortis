@@ -2089,6 +2089,42 @@ high (Wiktionary's ME) still has [eː], so the rule is dated just after that che
 [iː] then takes part in the Vowel Shift."""
 definition = "eː → iː / _ x"
 
+# Middle English breaking of back vowels before [x] (Minkova §7.4, Fig. 7.8(d), PDF 206–207): a
+# back vowel takes a [w] glide before the velar fricative, first in the 14th century and "full-blown"
+# in the 15th. Long [ɔːx] > [ɔwx] (OE dāh > ME do(u)h), short [ɔx] > [owx] (sohte > soute) and [ɑh] >
+# [ɒwx] (slaughter). Steponavičius §183 (PDF 172) gives dāh > dough and dohter > douhter. Jones (§3.4.1,
+# Tables 3.14–3.16, PDF 158–161) finds the short-vowel breaking patchy, with dohter still common in the
+# 14th and 15th centuries, so the short vowels follow the 1400 checkpoint, whose doghter has no glide.
+[me_back_breaking_long]
+time = 1340
+name = "Long open *ɔː before *x becomes the diphthong *ɔw"
+description = "Minkova Fig. 7.8(d) (PDF 207): OE dāh > ME do(u)h, [ɔːx] > [ɔwx]; Steponavičius §183 (PDF 172)"
+definition = "ɔː → ɔ w / _ x"
+
+[lme_back_breaking_short]
+time = 1420
+name = "A back glide develops between a short *ɔ or *a and *x"
+description = "Minkova Fig. 7.8(d) (PDF 207): sohte > soute [owx], slaughter [ɒwx]; Steponavičius §183: dohter > douhter"
+definition = ["ɔ → o w / _ x", "∅ → w / a _ x"]
+
+[sporadic_trough_glide_loss]
+time = 1421
+name = "SPORADIC: trough loses the back glide again"
+description = """Minkova §7.4 n. 14 (PDF 207): "In cough (ME cowhen) and trough (ME trou) the back glide is
+unstable and the result is [ɔ]". Cause: that instability, which she names for trough."""
+words = ["trough"]
+definition = "o w → ɔ ∅ / _ x"
+
+# Minkova §7.4 n. 15 (PDF 207): the late ME [owx] of sought, thought, daughter "must have been lowered
+# to [ɒw]" in late ME and Early Modern English. Gil (1621) writes ⟨dauħter⟩ (Jones Table 4.17, PDF
+# 274–275), though still ⟨souht⟩, ⟨thouht⟩ (PDF 252), so the lowering spread word by word; none of
+# those words is in this lexicon. The open [ɔw] of dough is not lowered.
+[eme_breaking_ow_lowering]
+time = 1500
+name = "The breaking diphthong *ow lowers to *aw before *x"
+description = "Minkova §7.4 n. 15 (PDF 207); Gil's ⟨dauħter⟩ (Jones PDF 274–275)"
+definition = "o → a / _ w x"
+
 [me_x_loss]
 time = 1450
 name = "A vowel lengthens before x"
@@ -4000,13 +4036,13 @@ definition = ["ɛː → ɛ", "ɔː → ɔ"]
 
 [sporadic_broad_thought]
 time = 1650
-name = "SPORADIC: BROAD and DAUGHTER lower to THOUGHT, not GOAT"
-description = """ME brōd, dohter give RP broad /brɔːd/, daughter /dɔːtə/ with THOUGHT /ɔː/, not the
-GOAT diphthong the regular *oː takes. A lexical exception; the vowel lowers to *ɔː just before the
-GOAT diphthongisation would otherwise catch it. For daughter the change is regular: ME Breaking
-before [x] gave [douxtər] (Jones, PDF 73), and that diphthong gives THOUGHT, as in bought. For broad
-the cause is not known."""
-words = ["broad", "daughter"]
+name = "SPORADIC: BROAD lowers to THOUGHT, not GOAT"
+description = """ME brōd gives RP broad /brɔːd/ with THOUGHT /ɔː/, not the GOAT diphthong the regular *oː
+takes. A lexical exception; the vowel lowers to *ɔː just before the GOAT diphthongisation would
+otherwise catch it. The cause is not known. daughter, once listed here, now reaches THOUGHT by the
+regular ME breaking before [x] and the smoothing of [au] (lme_back_breaking_short,
+eme_aw_monophthongisation)."""
+words = ["broad"]
 definition = "oː → ɔː"
 
 [sporadic_month_syncope]

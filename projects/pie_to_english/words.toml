@@ -3047,7 +3047,7 @@ forms = [
   { time = -2000, ipa = "ˈpojkʲos", category = "adj", note = "PIE *póyḱos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɑjxɑz", category = "adj" },
   { time = 900, ipa = "ˈfɑːx" },
-  { time = 1400, ipa = "ˈfɔw" },
+  { time = 1400, ipa = "ˈfɔwx", note = "TARGET corrected 2026-10-08 (DECISIONS.md, four cases): was ˈfɔw. Reading chosen by the rules: Wiktionary gives ME fou as /fɔu̯/ and /fɔu̯x/, with spellings fogh, vouh beside fow. The column keeps the fricative where ME still had it (nigh ˈneːx, trough ˈtrɔx), and the breaking before x gives [ɔwx] (Minkova Fig. 7.8(d), PDF 207), so the rules choose /fɔu̯x/ (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4)." },
 ]
 
 [[words]]
@@ -6493,7 +6493,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wraiha-, PDF 633
 forms = [
   { time = -2000, ipa = "ˈwrojkʲos", category = "adj", note = "PIE *wróyḱos (Kroonen s.v. *wraiha-, PDF 633); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈwrɑjxɑz", category = "adj" },
-  { time = 1400, ipa = "ˈwraw" },
+  { time = 1400, ipa = "ˈwrɔwx", note = "TARGET corrected 2026-10-08 (DECISIONS.md, four cases): was ˈwraw. Reading chosen by the rules: Wiktionary gives ME wraw as /wrau̯(x)/ and /wrɔu̯(x)/, with spellings wrow, wrogh beside wraw. The a-forms are Northern, where OE ā stayed a (Steponavičius §183, PDF 172). The column rounds OE ā, and the breaking before x gives [ɔwx], so the rules choose /wrɔu̯x/ (rule 4)." },
 ]
 
 [[words]]
