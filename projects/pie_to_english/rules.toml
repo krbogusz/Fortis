@@ -1503,6 +1503,15 @@ name = "*w is lost after a non-initial velar"
 description = "Ringe & Taylor §6.4.2, PDF 229–230 — *ahwō > *eahu, *sehwan > sēon"
 definition = "w → ∅ / [+syll] [+cons, +back, -son] _"
 
+[oe_w_loss_before_i]
+time = 440
+name = "*w is lost before an unstressed *i"
+description = """Ringe & Taylor §6.7.1 (PDF 273–274): *saiwiz > *sāwi > *sǣi > OE sǣ, *aiwi > ǣ, and the combining
+form nī- 'new' in nīcenned. Dated 440: after i-mutation (420), whose *i the loss leaves in place, and
+before the apocope of a final *-i after a heavy syllable (460), which then takes it. The simplex nīwe
+restores the *w from its oblique stem (sporadic_new_oblique_iw)."""
+definition = "w → ∅ / [+syll] _ [+syll, aperture: high, +front, stress: none]"
+
 [oe_high_vowel_deletion]
 time = 460
 name = "Final -u is deleted after a heavy syllable, kept after a light one"
@@ -3533,9 +3542,11 @@ description = """Ringe & Taylor (PDF 68, 264): PGmc *niwjaz > PWGmc nom. *niwi, 
 West Germanic gemination doubled the *w. The geminate made a long diphthong, *īow-, and that stem was
 levelled into the nominative: ">! OE (Angl.) nīowe", North. nīwe, WS nīewe. Cause: levelling of
 the oblique stem. The 403 target keeps the nominative *niwi. Dated 465, after the loss of a final
-*-i after a heavy syllable (460), which the ja-stem *-ī of *nīowī did not undergo."""
+*-i after a heavy syllable (460), which the ja-stem *-ī of *nīowī did not undergo. The levelled stem
+also brings back the *w that the nominative lost before its unstressed *i (oe_w_loss_before_i, 440):
+only the combining form nī- in nīcenned keeps that loss (Ringe & Taylor PDF 274)."""
 words = ["new"]
-definition = "i → iː / _ w"
+definition = ["∅ → w / i _ i #", "i → iː / _ w"]
 
 [sporadic_night_oblique_i]
 time = 419
