@@ -415,3 +415,19 @@ OE ġeoguþ still misses: its second vowel shows no i-umlaut, which Ringe & Tayl
   seofon does not show.
 - Lengthening unstressed vowels before a nasal and a voiceless fricative. It brought youth closer at
   900 but gave the wrong vowel in even, and it changed no exact count.
+
+## 2026-10-07: Keep Mahlow's law out after a second test
+
+**Choice:** The cascade still has no rule for Mahlow's law. "Do not adopt Mahlow's law" (2026-10-07)
+stands.
+
+**Reason:** Asked for a re-test on 2026-10-07. Kroonen's account has two steps: a laryngeal lost
+before *u lengthens the vowel, and the long *ōu then loses its glide in an open syllable (§2.1.5,
+PDF 22–23). As stated, the two steps broke young, youth, roo, grēwaz and stauraz-stake and gained
+no exact row. Limited to a stressed non-high vowel, and to the glide after a back long vowel, they
+still broke roo, whose *rōwō keeps its *w, and gained nothing. stōraz and bottle came closer but did
+not become exact. cow does not fit either: Kroonen's rule shortens *ōu word-finally, which gives *au,
+not the *ō of the 200 target.
+
+**Rejected:**
+- Kroonen's lengthening before *u with his glide loss, in both forms.
