@@ -1500,7 +1500,7 @@ definition = "[+syll, length: long, aperture: low, +back] → e / [+syll] []* [-
 [oe_w_loss_after_velar]
 time = 411
 name = "*w is lost after a non-initial velar"
-description = """Ringe & Taylor §6.4.2, PDF 229–230 — *ahwō > *eahu, *sehwan > sēon. The velar may be a
+description = """Ringe & Taylor §6.4.2, PDF 229–230: *ahwō > *eahu, *sehwan > sēon. The velar may be a
 geminate: *sihhwā > seohhe, *þikkwī > þicce (PDF 64). The loss follows palatalisation, since the *w
 kept the velar of þicce from palatalising (PDF 65)."""
 definition = "w → ∅ / [+syll] [+cons, +back, -son]+ _"
@@ -2181,7 +2181,7 @@ name = "Vowel lengthens before a homorganic sonorant + voiced stop"
 description = "Minkova §6.4 — CHILD-CHILDREN, HOUND; *ald > āld, *kind > kīnd"
 # Two restrictions the gold forces, both of them standard:
 #   the sonorant is a NASAL or a LATERAL, not *r — ME hard, arm, barm keep their short vowel;
-#   the stop is NOT VELAR — the lengthening before *ŋg is a separate rule with its own
+#   the stop is NOT VELAR: the lengthening before *ŋg is a separate rule with its own
 #   conditions (oe_lengthening_before_ng, 1090), undone again by 1400.
 # And not before *mb. Minkova §6.4 (PDF 167) counts nine -mb words (climb, comb, coomb, dumb,
 # December, lamb, timber, tumble, womb), finds lengthening in only four, and concludes: "There is no
@@ -2741,7 +2741,7 @@ definition = "h → ∅ / # _ w"
 [me_w_loss_before_back]
 time = 1450
 name = "w is lost after an initial s or t before a back rounded vowel"
-description = "Minkova PDF 139; Pyles & Algeo p. 144 — sweord > sword, twā > two"
+description = "Minkova PDF 139; Pyles & Algeo p. 144: sweord > sword, twā > two"
 definition = "w → ∅ / # (s | t) _ [+syll, +back, +rounded]"
 
 [sporadic_hair_haire]
@@ -2848,7 +2848,7 @@ definition = "g → w / [+syll, +back] _ [+syll]"
 [me_g_palatalisation]
 time = 1140
 name = "A *g after a front vowel becomes the palatal glide *j before a vowel"
-description = "Minkova §4.2.1 (PDF 83); Steponavičius §168 (PDF 150), §183 (PDF 170–171) — flēoge > ME flei(e), nigon > [nijon]"
+description = "Minkova §4.2.1 (PDF 83); Steponavičius §168 (PDF 150), §183 (PDF 170–171): flēoge > ME flei(e), nigon > [nijon]"
 definition = "g → j / [+syll, +front] _ [+syll]"
 
 # Once the glide closes the stressed syllable, the unstressed vowel after it is lost before a
