@@ -3226,6 +3226,17 @@ shortening in the plural, levelled into the singular. Before the 1400 checkpoint
 words = ["weapon"]
 definition = "eː → ɛ"
 
+[oe_early_shortening]
+time = 610
+name = "A long vowel shortens before a geminate"
+description = """Ringe & Taylor (§6.7.5, PDF 296, 299): after general syncope, long vowels and diphthongs shortened
+before three consonants, before two consonants with two syllables after, and before geminates, around
+the 7th century. Their examples before a geminate are ǣnne > ænne, lǣssa > læssa, sīþþan > siþþan and
+sēlra > sella. Only the geminate clause is written here, and in this lexicon it reaches only
+hrīdder > hridder."""
+definition = "[+syll, length: long, stress: primary] → [length: short] / _ 1=[-syll] @1"
+
+
 [sporadic_osl_high_vowel]
 time = 1200
 name = "SPORADIC: week lengthens its high vowel in an open syllable, to ē"
