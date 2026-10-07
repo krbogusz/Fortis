@@ -107,6 +107,18 @@ name = "Geminate shortening"
 description = "A geminate shortens after a consonant or a long vowel"
 definition = "1=[+cons] @1 → [+cons] ∅ / ([+cons]|[length: long]) _"
 
+[sporadic_masc_nstem_nominative]
+time = -2000
+name = "SPORADIC: the masculine n-stem nominative *-ōn loses its *n"
+description = """The masculine n-stems have an oral overlong *-ô in Proto-Germanic (*hazô, *bullô), the
+feminine ōn-stems a nasal *-ǭ (*kwenǭ, *widuwǭ), and both are cited with *-ōn. Ringe: PIE n-stem
+nominatives had come to end in *-ō by Szemerényi's Law and loss of the *n (PDF 62). Kroonen: nom.
+*hazō < *kas-ōn (PDF 263), nom. *bulō (PDF 121). Cause: the old nominative of the masculine type.
+Word-scoped, because the engine does not know gender; the list names the masculine nouns. Before
+overlong_vowels, which then makes the final *ō overlong."""
+words = ["bull", "hare"]
+definition = "n → ∅ / oː _ #"
+
 [overlong_vowels]
 time = -2000
 name = "Overlong vowels creation"
