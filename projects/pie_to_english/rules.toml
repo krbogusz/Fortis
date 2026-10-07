@@ -2634,15 +2634,17 @@ definition = "æ → ɑ / _ ɹ [-syll]* $"
 # The toe–tow merger feeds eme_goat_diphthongisation below: it puts the ME *-ɔw words into the
 # same /oː/ the Vowel Shift leaves for toe, and the GOAT rule then diphthongises both together.
 [eme_toe_tow_merger]
-time = 1650
+time = 1610
 name = "The toe–tow merger: /oʊ/ from ME /ɔw/ smooths to /oː/"
 description = """ME lōw, soul, marwe, talwe end in the diphthong *ɔw. By 1580 it is [ou], written [oʊ] from
-1569 (lme_ai_diphthong_notation); in the seventeenth century it smooths to the long monophthong *oː,
-falling together with the *oː of toe (< ME
+1569 (lme_ai_diphthong_notation); early in the seventeenth century it smooths to the long monophthong
+*oː, falling together with the *oː of toe (< ME
 *ɔː, raised by the Vowel Shift). Hence tow rhymes with toe, soul with sole, and marrow and tallow
 end in the GOAT vowel rather than a stray glide.
 
-t = 1650, AFTER the Middle English checkpoint at 1400 — ME still HAS the diphthong and the 1400
+t = 1610: McMahon (§4.4.2, PDF 170–171, after Johnston) dates the southern smoothing of /ou/ (grow) to
+1600–1630, and Gil (1621) already writes the l-less folk as ⟨fók⟩ (Jones PDF 254), while Bullokar
+(1580) still has [ou] in mould and old. AFTER the Middle English checkpoint at 1400 — ME still HAS the diphthong and the 1400
 column is transcribed with it (marɔw, talɔw, both already exact) — and BEFORE
 eme_goat_diphthongisation (1900), which is the point: this rule does not produce the modern vowel
 itself, it merely delivers *oː into the GOAT rule, which then gives /əʊ/."""
