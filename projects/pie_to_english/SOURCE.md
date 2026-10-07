@@ -612,15 +612,15 @@ On 2026-10-07, 603 words. A run of the cascade writes the current figures to
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 597 | 565 (94.6%) | 568 |
-| 403 Proto-West Germanic | 300 | 271 (90.3%) | 287 |
-| 900 Old English | 385 | 346 (89.9%) | 355 |
-| 1400 Middle English | 271 | 243 (89.7%) | 250 |
+| 200 Proto-Germanic | 597 | 569 (95.3%) | 571 |
+| 403 Proto-West Germanic | 299 | 283 (94.6%) | 289 |
+| 900 Old English | 385 | 348 (90.4%) | 356 |
+| 1400 Middle English | 271 | 245 (90.4%) | 252 |
 | 1570 Hart | 7 | 5 | 5 |
 | 1580 Bullokar, Mulcaster | 11 | 6 | 8 |
 | 1621 Gil | 14 | 10 | 11 |
 | 1687 Coles, Cooper | 14 | 12 | 13 |
-| final current SSB (CUBE) | 229 | 204 (89.1%) | 209 |
+| final current SSB (CUBE) | 229 | 206 (90.0%) | 211 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
