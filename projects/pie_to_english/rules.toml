@@ -1862,19 +1862,22 @@ description = "æ > æɑ, e > eo — the source of OE's eald, earm, heorte"
 # long before oe_labiovelar_resolution (480), so the *xʷ is still one segment here and a rule
 # written for plain *x looks straight past it.
 #
+# Only a STRESSED vowel breaks. Unrestricted, the rule broke the unstressed *æ of *īsærn and gave
+# OE **īseɑrn for īsern 'iron'. The condition is inferred from iron (DECISIONS.md, 2026-10-07).
+#
 # A long vowel breaks to a LONG diphthong: "the results of the breaking of long vowels, not the
 # results of the breaking of short vowels, merged with the inherited diphthongs" (Ringe & Taylor
 # PDF 190). WS *nǣh > nēah 'near' is the only long *ǣ before *h (PDF 194). Broken short, its
 # syllable was light and kept the final *-u, and the *h was then lost between vowels.
 definition = [
-    "[+syll, -cons, aperture: low, +front] → æ ɑ / _ [+son, -syll, +cons, nasal: none] [+cons]",
-    "[+syll, -cons, aperture: mid, +front] → e o / _ [+trill] [+cons]",
-    "[+syll, -cons, aperture: mid, +front] → e o / _ [+lat] [-son, +back]",
-    "[+syll, -cons, aperture: low, +front, length: long] → æ ɑː / _ x",
-    "[+syll, -cons, aperture: low, +front] → æ ɑ / _ x",
-    "[+syll, -cons, aperture: mid, +front] → e o / _ x",
-    "[+syll, -cons, aperture: low, +front] → æ ɑ / _ xʷ",
-    "[+syll, -cons, aperture: mid, +front] → e o / _ xʷ",
+    "[+syll, -cons, aperture: low, +front, stress: primary] → æ ɑ / _ [+son, -syll, +cons, nasal: none] [+cons]",
+    "[+syll, -cons, aperture: mid, +front, stress: primary] → e o / _ [+trill] [+cons]",
+    "[+syll, -cons, aperture: mid, +front, stress: primary] → e o / _ [+lat] [-son, +back]",
+    "[+syll, -cons, aperture: low, +front, length: long, stress: primary] → æ ɑː / _ x",
+    "[+syll, -cons, aperture: low, +front, stress: primary] → æ ɑ / _ x",
+    "[+syll, -cons, aperture: mid, +front, stress: primary] → e o / _ x",
+    "[+syll, -cons, aperture: low, +front, stress: primary] → æ ɑ / _ xʷ",
+    "[+syll, -cons, aperture: mid, +front, stress: primary] → e o / _ xʷ",
 ]
 
 # PWGmc had "shifted stressed *ē to *ā (which merged with the rare PGmc *ā)" (Ringe & Taylor §4.1,
