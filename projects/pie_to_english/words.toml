@@ -7156,7 +7156,7 @@ id = "ēþrǭ"
 gloss = "ēþrǭ"
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁éh₁t-r̥ ~ *h₁h₁t-éns, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = 200, ipa = "ˈɛːθrɔ̃ː", category = "noun", note = "PGmc *ēþrǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 200, ipa = "ˈɛːðrɔ̃ː", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈɛːθrɔ̃ː, PGmc *ēþrǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py; now *ēdrǭ, with the Verner variant. The rules prompted the change (DECISIONS.md, 2026-10-07): the PIE paradigm Wiktionary cites, *h₁éh₁t-r̥ ~ *h₁h₁t-éns, has the accent on the suffix in the oblique cases, where Verner's law gives *ð. OE ǣdre and Wiktionary's own PWGmc *ādrā have the d that continues it, and *þ cannot give that d." },
   { time = 403, ipa = "ˈɑːdrɑː", note = "PWGmc *ādrā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈæːdre" },
   { time = 1400, ipa = "ˈɛːdɾə" },
