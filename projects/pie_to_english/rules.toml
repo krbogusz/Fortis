@@ -1480,6 +1480,9 @@ definition = [
     # A diphthong is heavy only when long: a SHORT broken diphthong (fealu, eahu) is a light syllable
     # and keeps its *-u (Ringe & Taylor §6.8.1, PDF 303).
     "[+syll, length: short, aperture: high] → ∅ / [+syll] [+syll, length: long] [-syll]* _ #",
+    # And after an unstressed syllable that follows a stressed light one (PDF 299): *idisi > ides,
+    # *akusi > Merc. æces (PDF 29).
+    "[+syll, length: short, aperture: high] → ∅ / # [-syll]* [+syll, length: short, stress: primary] [-syll] [+syll, stress: none] [-syll]+ _ #",
 ]
 
 # Anglo-Frisian brightening: Germanic /a/ fronts to /æ/, but not before a nasal, where it
