@@ -6359,8 +6359,8 @@ frequency = 192
 note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *īwa-, PDF 311: *h₁eyHwos. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
   { time = -2000, ipa = "ˈχejχwos", category = "noun", note = "PIE *h₁eyHwos (Kroonen s.v. *īwa-, PDF 311); Wiktionary cites only a bare root." },
-  { time = 200, ipa = "ˈiːxʷɑz", category = "noun" },
-  { time = 403, ipa = "ˈiːxu", note = "PWGmc *īhu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 200, ipa = "ˈiːwɑz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈiːxʷɑz. The rules prompted the change (DECISIONS.md, 2026-10-07): Kroonen reconstructs *īwa- with no *h (s.v. *īwa-, PDF 311), and OE īw has none. Wiktionary's *īhwaz is in no book. The books outrank Wiktionary for the 200 column." },
+  { time = 403, ipa = "ˈiːw", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈiːxu. The rules prompted the change (DECISIONS.md, 2026-10-07): PWGmc *īw continues Kroonen's *īwa- (PDF 311), the form OE īw needs. Wiktionary's *īhu keeps the *h of its *īhwaz. PWGmc *īhu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈiːw" },
   { time = 1400, ipa = "ˈiw" },
   { time = "final", ipa = "ˈjʉw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): yew /jʉ́w/, with r written ɹ and the stress as ˈ. Was ˈjuː (Wiktionary RP, Gimsonian symbols)." },
@@ -6625,7 +6625,7 @@ id = "azaniz"
 gloss = "azaniz"
 note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *azani-, PDF 84: *h₁osonis. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
-  { time = -2000, ipa = "ˈχosonis", category = "noun", note = "PIE *h₁osonis (Kroonen s.v. *azani-, PDF 84); Wiktionary cites only a bare root." },
+  { time = -2000, ipa = "χoˈsonis", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈχosonis; now *h₁osónis. The rules prompted the change (DECISIONS.md, 2026-10-07): ON ǫnn and OHG aran have the *z of Verner's law (Kroonen s.v. *azani-, PDF 84), which needs the accent after the *s. Gothic asans keeps the *s of a root accent, and Kroonen's static *h₁ós-r̥ is root-accented. The accent on the suffix is inferred from the 200 target *azaniz. PIE *h₁osonis (Kroonen s.v. *azani-, PDF 84); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈɑzɑniz", category = "noun" },
   { time = 403, ipa = "ˈɑzɑni", note = "PWGmc *aʀani (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
