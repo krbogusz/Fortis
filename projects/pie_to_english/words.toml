@@ -6236,7 +6236,7 @@ gloss = "lingwidi"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχlengʷʱeti", category = "verb.pres.3sg", note = "PIE *h₁léngʷʰeti, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈlinɣʷiði", category = "verb.pres.3sg" },
+  { time = 200, ipa = "ˈliŋgʷiði", category = "verb.pres.3sg", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈlinɣʷiði. Transcription convention: the 200 targets write *ng as [ŋg] (long, finger, tongue) and *nkw as [ŋkʷ] (ankwô, dankwaz), so *ngw is [ŋgʷ], not [nɣʷ]. Ringe: 'PGmc *gw survived only after a homorganic nasal' (PDF 122)." },
 ]
 
 [[words]]
@@ -6245,7 +6245,7 @@ gloss = "lingwō"
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈχlengʷʱoħ", category = "verb.pres.1sg", note = "PIE *h₁léngʷʰoh₂, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈlinɣʷɔː", category = "verb.pres.1sg" },
+  { time = 200, ipa = "ˈliŋgʷɔː", category = "verb.pres.1sg", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈlinɣʷɔː. Transcription convention: the 200 targets write *ng as [ŋg] (long, finger, tongue) and *nkw as [ŋkʷ] (ankwô, dankwaz), so *ngw is [ŋgʷ], not [nɣʷ]. Ringe: 'PGmc *gw survived only after a homorganic nasal' (PDF 122)." },
 ]
 
 [[words]]

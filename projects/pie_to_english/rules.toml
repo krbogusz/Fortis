@@ -800,8 +800,14 @@ definition = "gʷ → w"
 # hardening below turn the plain *ɣ into the *g the attested form shows.
 [gwh_to_w]
 time = 0
-name = "*/ɣʷ/ > */b/ word-initially, */g/ after a nasal, */w/ elsewhere"
-description = """*snojgʷʱos > *snɑjwɑz 'snow'; *lengʷʱros > *luŋgrɑz 'lungs'.
+name = "*/ɣʷ/ > */b/ word-initially, */g/ after a nasal before a consonant, */w/ elsewhere"
+description = """*snojgʷʱos > *snɑjwɑz 'snow'; *penkʷros > *fiŋgrɑz 'finger'.
+
+After a nasal the labiovelar keeps its labialization before a vowel. Ringe: "PGmc *gw survived only
+after a homorganic nasal" (PDF 122), as in *lingwō. Before a consonant it loses it, as in *fingraz.
+Kroonen dates that loss in finger before Verner's law (s.v. *fingra-, PDF 181). The rule states it
+here, after Grimm, with the same result. lungs and tongue lose theirs earlier, after *un
+(labiovelar_delabialization).
 
 Ringe §5.3.3: "In word-initial position PIE *gʷʰ became PGmc *b, except when it had already been
 delabialized by a following *u", and his examples are exactly ours — *gʷʰédʰyeti > *bidiþi,
@@ -815,10 +821,10 @@ here, and the source hierarchy (Ringe > Wiktionary) says the rule wins. Its miss
 problem and is recorded as one."""
 definition = [
     "ɣʷ → b / # _",
-    "ɣʷ → ɣ / [+cons, nasal: 1] _",
+    "ɣʷ → ɣ / [+cons, nasal: 1] _ [-syll]",
     # also after *l: *wl̥kʷíh₂ > *wulgī (Ringe §3.2.4 (iii), PDF 143–144, who calls the point uncertain)
     "ɣʷ → ɣ / l _",
-    "ɣʷ → w",
+    "ɣʷ → w // [+cons, nasal: 1] _",
 ]
 
 [long_a_raising]
@@ -2052,8 +2058,8 @@ definition = "n → ŋ / _ [+cons, -son, +back, front: none]"
 [pgmc_g_hardening_after_nasal]
 time = 100
 name = "ɣ becomes g after a nasal"
-description = "*junɣaz > *jungaz"
-definition = "ɣ → g / [+cons, nasal: 1] _"
+description = "*junɣaz > *jungaz, and the labiovelar *liŋɣʷō > *liŋgʷō"
+definition = ["ɣ → g / [+cons, nasal: 1] _", "ɣʷ → gʷ / [+cons, nasal: 1] _"]
 
 # The Proto-Germanic voiced fricatives *β ð ɣ (from Grimm's third series and from Verner) are
 # realised as the STOPS b, d, g word-initially and after a homorganic nasal — and, for *ð, after
