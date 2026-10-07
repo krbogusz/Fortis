@@ -19,10 +19,11 @@ Proto-Indo-European to Present-Day English, scored at nine checkpoints.
 >   law is a fact, and facts are not copyrightable: they are **read and cited in the rule that
 >   uses them, never redistributed** — `.gitignore` keeps the books out, and no book text belongs
 >   in the tree. Because nothing here is redistributed, none of this appears in
->   `docs/acknowledgements.md` (which lists only the CC BY-SA lexicon we do redistribute).
+>   `docs/acknowledgements.md` (which lists only the data we do redistribute).
 > - **The final targets in `words.toml` come from CUBE** (seas3.elte.hu/cube), whose pages say
->   "© Geoff Lindsey & Péter Szigetvári" and state no licence. Each note names the source
->   (DECISIONS.md, 2026-10-07). Publishing them needs a separate decision.
+>   "© Geoff Lindsey & Péter Szigetvári" and state no licence. Each note names the source. The
+>   project owner judged CUBE free to use, so the targets are published with credit in
+>   `docs/acknowledgements.md` (DECISIONS.md, 2026-10-07, "Publish the CUBE targets with credit").
 
 ## Lexicon (`words.toml`) — CC BY-SA 4.0
 

@@ -349,3 +349,18 @@ bewwą becomes exact at 200, 403 and 900, dew and lawwō stay exact, and no othe
   broke 12 words, among them free, kin, thin, widow and gelwaz. Kroonen calls the counter-examples
   "numerous" (PDF 36). The *jj of ajją, twajjaz and wajjuz stays open.
 - The laryngeal condition without the accent. It geminates þrawō and awô.
+
+## 2026-10-07: Publish the CUBE targets with credit
+
+**Choice:** The CUBE transcriptions in `projects/pie_to_english/words.toml` may be published with
+the rest of the repository. Each note names CUBE, and `docs/acknowledgements.md` credits its
+authors. This settles the question that "Take the modern targets from CUBE" (2026-10-07) left open.
+
+**Reason:** Asked on 2026-10-07, the project owner judged CUBE free to use. CUBE's about page credits
+its design and compilation to Péter Szigetvári and Geoff Lindsey, names its core database (Ádám
+Nádasdy and Szigetvári, *Huron's English Pronouncing Dictionary*, 2000), and states no licence.
+
+**Rejected:**
+- Asking the authors for permission first.
+- Keeping the targets local until a later decision.
+- Replacing them with Wiktionary RP written in CUBE's symbols.

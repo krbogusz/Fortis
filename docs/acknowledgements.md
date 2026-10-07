@@ -1,6 +1,6 @@
 # Acknowledgements and data sources
 
-This lists only material Fortis **redistributes** whose licence requires attribution. Sources that
+This lists only material Fortis **redistributes**. Sources that
 were merely consulted — reference books, papers, Wikipedia — are not copyrightable knowledge and
 are cited *for reference where they are used* (a `rules.toml` comment, a `words.toml` note, a
 project `SOURCE.md`), not here.
@@ -32,6 +32,14 @@ extracts ([wiktextract](https://github.com/tatuylonen/wiktextract), MIT tool; Wi
 4.0 — so must any redistribution. The project's `rules.toml` and `tools/` are original work under
 the repo's own licence.
 
+## PIE → English modern targets: CUBE (no licence stated)
+
+[CUBE](http://seas3.elte.hu/cube/), Current British English searchable transcriptions, designed and
+compiled by Péter Szigetvári and Geoff Lindsey. Its core database comes from Ádám Nádasdy and
+Szigetvári, *Huron's English Pronouncing Dictionary* (Biográf, 2000). The `final` targets in
+`projects/pie_to_english/words.toml` are CUBE's default transcriptions, and each note names CUBE.
+CUBE states no licence. The project owner judged it free to use (DECISIONS.md, 2026-10-07).
+
 ## Licensing
 
 Fortis (engine + original docs) is **PolyForm Noncommercial 1.0.0** ([`LICENSE`](../LICENSE)).
@@ -41,6 +49,7 @@ Fortis (engine + original docs) is **PolyForm Noncommercial 1.0.0** ([`LICENSE`]
 | Fortis engine + docs | PolyForm Noncommercial 1.0.0 |
 | Latin→French `rules.toml` + lexicon (from DiaSim / FLLAPS) | GPL-3.0 |
 | PIE→English `words.toml` (from Wiktionary) | CC BY-SA 4.0 (share-alike) |
+| PIE→English `final` targets in `words.toml` (from CUBE) | No licence stated (see above) |
 | PIE→English `rules.toml` + `tools/` (original) | PolyForm Noncommercial 1.0.0 |
 | French / English frequency lists | MIT |
 
