@@ -1036,7 +1036,7 @@ forms = [
   { time = 200, ipa = "ˈjuwunθiz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈjuɣunθiz. The rules prompted the change (DECISIONS.md, 2026-10-07): Kroonen reconstructs PGmc *ju(w)unþi- with *w and says the *g of the West Germanic forms is a West Germanic velarization of that *w (PDF 316). Wiktionary's *jugunþiz writes the West Germanic *g into Proto-Germanic. The books outrank Wiktionary for the 200 column." },
   { time = 403, ipa = "ˈjuɣunθi", note = "PWGmc *jugunþi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjuguθ" },
-  { time = 1400, ipa = "ˈjuːð" },
+  { time = 1400, ipa = "ˈjuːθ", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈjuːð. Reading chosen by the rules: Wiktionary gives ME youthe as /ˈjuːð(ə)/ and /ˈjuːθ(ə)/, and the spellings þ and th do not mark voicing. The cascade keeps the voiceless fricative, which PDE youth also has (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4)." },
   { time = "final", ipa = "ˈjʉwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): youth /jʉ́wθ/, with r written ɹ and the stress as ˈ. Was ˈjuːθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
@@ -1666,7 +1666,7 @@ forms = [
   { time = 200, ipa = "ˈnewundɔːː", category = "adj" },
   { time = 403, ipa = "ˈniɣundɔː", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈnewndɔː. The rules prompted the change (DECISIONS.md, 2026-10-07): OE nigoþa and OS nigudo continue the northern West Germanic *nig- that Ringe & Taylor reconstruct for 'nine' (*nigun, PDF 181), not Wiktionary's *neundō, which OHG niunto continues. The 403 target of nine already has *nigun. PWGmc *neundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnigoθɑ", note = "IPA from Wiktionary (kaikki) for OE nigoða /ˈni.ɡo.θɑ/; added 2026-10-06." },
-  { time = 1400, ipa = "ˈniəð" },
+  { time = 1400, ipa = "ˈniːð", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈniəð. Reading chosen by the rules: Wiktionary gives ME nythe as /ˈni.əð(ə)/ and /ˈniːð(ə)/, and the spellings niþe, nyþe, nyeþe do not decide between one syllable and two. The cascade loses the glide after the i with lengthening, as in nigon > nīn (Steponavičius §183, PDF 170-171), and gives the one-syllable reading (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4)." },
 ]
 
 [[words]]
