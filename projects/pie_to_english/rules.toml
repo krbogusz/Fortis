@@ -3932,8 +3932,8 @@ description = """Present-Day English descends from Anglian, where OE ǣ (from *�
 close ē: seed, queen, high, match give ME sēd, kwēn, hēh, mēche with /eː/, not the West Saxon open
 /ɛː/ our cascade carries. Word-scoped to those whose modern reflex (seed /iː/, etc.) confirms the
 close vowel. nigh is Anglian nēh, monophthongised before *h, against WS nēah (Ringe & Taylor PDF
-194)."""
-words = ["seed", "hauhaz", "mēkijaz", "nigh"]
+194). weapon (*wēpną) has the *ē₁ of seed, and its ME target wēpen shows the close vowel."""
+words = ["seed", "hauhaz", "mēkijaz", "nigh", "weapon"]
 definition = "ɛː → eː"
 
 [sporadic_three_lowering]
