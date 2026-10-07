@@ -1114,6 +1114,25 @@ West Germanic ending rules at 402."""
 words = ["moth"]
 definition = ["ɑ → o / _ θ", "θ → θ θ / o _", "ɔː → ɑː / _ #"]
 
+[sporadic_setl_tl]
+time = 465
+name = "SPORADIC: OE *seþl becomes setl"
+description = """PWGmc *seþl 'seat' gives WS setl, North. sedl ~ seðel (Ringe & Taylor PDF 344). Ringe & Taylor
+note the usual view that *þl and *þm became tl and tm in West Saxon, but fæþm never shows a t, both
+sedl and setl occur in Anglian texts, and "we cannot recover in any detail what happened to these
+words" (PDF 356). staþol keeps its þ as well. Word-scoped. Cause: not known. Dated before
+oe_parasite_vowel (466). botl 'dwelling' had the same change, but bottle's chain misses earlier."""
+words = ["seþlą"]
+definition = "θ → t / _ l #"
+
+[oe_tl_metathesis]
+time = 1000
+name = "A word-final tl becomes ld"
+description = """Ringe & Taylor PDF 356: "Metathesis also affected the cluster tl (in word-final position
+only?); for instance, botl 'dwelling' > bold, setl 'seat' > seld". Dated after the Old English
+checkpoint, which has setl, and before ME seld."""
+definition = "t l → l d / _ #"
+
 [sporadic_nine_nigun]
 time = 350
 name = "SPORADIC: northern West Germanic *nigun 'nine'"
@@ -2041,14 +2060,17 @@ Dated 466, after EVERY rule that can strip a final vowel — not just `wg_final_
 # with a spurious front vowel. It looks back to the NEAREST vowel across however many consonants
 # stand between: *sundr is u-n-d-r, and a single-consonant environment cannot reach its *u.
 #
+# After a dental stop no vowel is inserted before *l: Ringe & Taylor list setl, botl, ādl and
+# spātl as words without epenthesis (PDF 344), hence the exception on the two *l clauses.
+#
 # Before *l the preceding segment must be an OBSTRUENT. Written `[-syll]` it also matches the
 # first half of a GEMINATE — *fullaz > *full and *stallaz > *stall are l+l, and the rule split them
 # into **fulel and **stalel. A geminate is one long consonant, not a cluster that needs breaking.
 definition = [
     "∅ → o / [+syll, +back] [-syll]* [-syll] _ r #",
     "∅ → e / [-syll] _ r #",
-    "∅ → o / [+syll, +back] [-syll]* [-son] _ l #",
-    "∅ → e / [-son] _ l #",
+    "∅ → o / [+syll, +back] [-syll]* [-son] _ l # // [-son, -cont, +anterior] _",
+    "∅ → e / [-son] _ l # // [-son, -cont, +anterior] _",
 ]
 
 [oe_palatalisation]
