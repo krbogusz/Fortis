@@ -3802,13 +3802,6 @@ re-front the stressed vowel, and the *-anō ending reduces to *-en (the *a to *e
 words = ["haven"]
 definition = ["[+syll, stress: primary, +back, aperture: low] → [+front, back: none, advancement: atr]", "ɑ → e", "u → ∅ / n _ #"]
 
-[sporadic_sixth_ks]
-time = 426
-name = "SPORADIC (Anglian): *sehstō > OE sixta — *x gives /k/ + /s/ before *t"
-description = "The same *hs > /ks/ as six (sporadic_six_numeral2): *sehstō > sixta /siksta/. After Anglian smoothing/raising the sequence is *sixt-, so the *x becomes /ks/ before the *t. Word-scoped. Cause: analogy with six. Ringe & Taylor give North. sesta beside WS siexta (PDF 172), and note that sixth can have been influenced by six (PDF 173)."
-words = ["sixth"]
-definition = "x → k s / _ t"
-
 [sporadic_south_syncope]
 time = -940
 name = "SPORADIC: *sunþraz syncopates the *-teros suffix vowel before *r"

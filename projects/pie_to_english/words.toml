@@ -1338,9 +1338,9 @@ gloss = "sixth"
 frequency = 7566
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *swéḱstos is replaced by *séḱtō on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈsɪksθ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: sixth is a new formation that replaced ME sixte (Hoad s.v. six)."
 forms = [
-  { time = -2000, ipa = "ˈsekʲtoː", category = "adj", note = "PIE *swéḱstos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈsextɔːː", category = "adj" },
-  { time = 403, ipa = "ˈsextɔː", note = "PWGmc *sehtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = -2000, ipa = "ˈsekʲstoː", category = "adj", note = "PREFORM corrected 2026-10-07: was ˈsekʲtoː; now *séḱstō. The rules prompted the change (DECISIONS.md, 2026-10-07): Ringe & Taylor give PGmc *sehstō (Goth. saíhsta) > PWGmc *sehstō (PDF 172), and every OE form has the s (North. sesta, WS siexta, sixta). The earlier preform *séḱtō had dropped the s of the cited *swéḱstos to fit Wiktionary's *sehtô, which ON sétti continues. The *w stays out, as in six (Ringe: analogy with *septḿ̥). PIE *swéḱstos, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈsexstɔːː", category = "adj", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsextɔːː. Ringe & Taylor give PGmc *sehstō (Goth. saíhsta; PDF 172). Wiktionary's *sehtô is the form ON sétti continues, not the West Germanic one. The books outrank Wiktionary for the 200 column." },
+  { time = 403, ipa = "ˈsexstɔː", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsextɔː. Ringe & Taylor give PWGmc *sehstō, whence North. OE sesta and WS siexta (PDF 172). Wiktionary's PWGmc *sehtō lacks the s that every OE form has. PWGmc *sehtō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsikstɑ" },
   { time = 1400, ipa = "ˈsikst" },
 ]
