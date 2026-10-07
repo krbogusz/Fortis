@@ -3881,8 +3881,9 @@ description = """ME flōd gives RP flood /flʌd/. The [uː] of the Vowel Shift s
 blood and glove early enough for them to take part in the unrounding of [ʊ] to [ʌ] (Minkova §8.3.1,
 PDF 272; Pyles & Algeo p. 172, PDF 94). Gil (1621) has ⟨fludz⟩ with the short u of ⟨but⟩, so the
 shortening comes before 1621 and the unrounding (eme_foot_strut_split, 1640) after it. The
-shortening is lexical (mood and food keep [uː]), so the rule is word-scoped."""
-words = ["flood"]
+shortening is lexical (mood and food keep [uː]), so the rule is word-scoped. Minkova (§8.3.1, PDF
+273) gives OE mōnað 'month' the same EModE shortened [ʊ], later non-Northern [ʌ]."""
+words = ["flood", "month"]
 definition = "uː → ʊ"
 
 [sporadic_er_lowering]
