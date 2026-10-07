@@ -2053,7 +2053,10 @@ is eme_price_mouth_lowering."""
 # PRICE is /aɪ/ and MOUTH /aʊ/, not /aj/ and /aw/. The glide letters are different segments from
 # the lax vowels, so writing them as glides misses every long-*i and long-*u word in the lexicon.
 definition = [
-    "ˈiː → ə ɪ", "ˈuː → ə ʊ",
+    "ˈiː → ə ɪ",
+    # ME ū stays [uː] after /j/ and /w/: you, youth, wound (Steponavičius §194 (2), PDF 188). He
+    # adds the position before a labial (room, stoop), which no word in this lexicon reaches.
+    "ˈuː → ə ʊ // (j | w) _",
     # Not before r: Jones (PDF 258) reads Coles (1674) as keeping ME ō before r unraised,
     # [oo] in floor, whore, door, against [uu] in good, food, book.
     "eː → iː", "oː → uː // _ r",
