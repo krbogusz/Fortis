@@ -2201,14 +2201,15 @@ Dated 466, after EVERY rule that can strip a final vowel — not just `wg_final_
 # After a dental stop no vowel is inserted before *l: Ringe & Taylor list setl, botl, ādl and
 # spātl as words without epenthesis (PDF 344), hence the exception on the two *l clauses.
 #
-# Before *l the preceding segment must be an OBSTRUENT. Written `[-syll]` it also matches the
-# first half of a GEMINATE — *fullaz > *full and *stallaz > *stall are l+l, and the rule split them
-# into **fulel and **stalel. A geminate is one long consonant, not a cluster that needs breaking.
+# Before *l the vowel is inserted "after other consonants", sonorants included: sāwl > sāwol
+# (PDF 345). It is not inserted after *r (PDF 344), nor between the halves of a GEMINATE:
+# *fullaz > *full and *stallaz > *stall are l+l, and a geminate is one long consonant, not a
+# cluster that needs breaking. Hence *r and *l join the exception on the two *l clauses.
 definition = [
     "∅ → o / [+syll, +back] [-syll]* [-syll] _ r #",
     "∅ → e / [-syll] _ r #",
-    "∅ → o / [+syll, +back] [-syll]* [-son] _ l # // [-son, -cont, +anterior] _",
-    "∅ → e / [-son] _ l # // [-son, -cont, +anterior] _",
+    "∅ → o / [+syll, +back] [-syll]* [-syll] _ l # // ([-son, -cont, +anterior] | r | l) _",
+    "∅ → e / [-syll] _ l # // ([-son, -cont, +anterior] | r | l) _",
 ]
 
 [oe_palatalisation]
