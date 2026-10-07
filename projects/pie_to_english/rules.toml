@@ -408,7 +408,8 @@ definition = "d → ∅ / # _ l"
 time = -1000
 name = "SPORADIC: *hlūdaz 'loud' has a secondary long *ū"
 description = """Kroonen s.v. *hlūda-, PDF 271–272: the root *ḱlu- has no laryngeal, so the long *ū "arose
-secondarily within Germanic"."""
+secondarily within Germanic". Kroonen (PDF 272) tentatively suggests a vrddhi derivative. No other
+cause is known."""
 words = ["loud"]
 definition = "u → uː / l _"
 
@@ -2972,7 +2973,9 @@ time = 404
 name = "SPORADIC: *mazȝaz spirantises its final velar word-finally — OE mearh"
 description = """OE mearh has a voiceless *x from the *ȝ of *mazȝaz, but the change is lexical, not
 regular: *berȝaz keeps its stop (beorg), *talȝaz keeps its (tealg), both in the same environment.
-Word-scoped to mearh; dated 404, before wg_g_hardening (405) turns the *ȝ into a stop."""
+Word-scoped to mearh; dated 404, before wg_g_hardening (405) turns the *ȝ into a stop. Old English
+spells the final consonant both ways, mearg ~ mearh 'marrow' (Minkova, PDF 81). So the cause is
+variation, and each target records one variant."""
 words = ["marrow"]
 definition = "ɣ → x / _ #"
 
@@ -3025,7 +3028,9 @@ time = 1650
 name = "SPORADIC: BROAD and DAUGHTER lower to THOUGHT, not GOAT"
 description = """ME brōd, dohter give RP broad /brɔːd/, daughter /dɔːtə/ with THOUGHT /ɔː/, not the
 GOAT diphthong the regular *oː takes. A lexical exception; the vowel lowers to *ɔː just before the
-GOAT diphthongisation would otherwise catch it."""
+GOAT diphthongisation would otherwise catch it. For daughter the change is regular: ME Breaking
+before [x] gave [douxtər] (Jones, PDF 73), and that diphthong gives THOUGHT, as in bought. For broad
+the cause is not known."""
 words = ["broad", "daughter"]
 definition = "oː → ɔː"
 
@@ -3065,7 +3070,8 @@ definition = "m → n / _ s"
 time = 1
 name = "SPORADIC: *warmaz keeps a *w-, not the *b- the labiovelar would give"
 description = """*warmaz 'warm' has a disputed etymology; whatever its PIE onset, the Proto-Germanic
-form is *w-, where our labiovelar treatment yields *b-. Word-scoped to the attested outcome."""
+form is *w-, where our labiovelar treatment yields *b-. Word-scoped to the attested outcome. The
+cause is not known."""
 words = ["warm"]
 definition = "b → w / # _"
 
@@ -3093,7 +3099,7 @@ time = 467
 name = "SPORADIC: no parasite vowel — OE otr, hæsl keep a syllabic sonorant"
 description = """*utraz, *haslaz give OE otr, hæsl (ottor, hæsel are the later, resyllabified
 forms); the parasite vowel oe_parasite_vowel inserts one where these words attest a bare cluster.
-Word-scoped removal of the epenthetic vowel."""
+Word-scoped removal of the epenthetic vowel. Cause: the targets record the older forms."""
 words = ["otter", "hazel"]
 definition = "[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons] #"
 
@@ -3101,15 +3107,20 @@ definition = "[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons] #"
 time = 465
 name = "SPORADIC: *dustaz > OE dūst keeps a long *u, not the a-umlauted *o"
 description = """*dustaz gives OE dūst — the *u is kept (a-umlaut did not lower it) and lengthened.
-Word-scoped: the *o wg_a_umlaut wrongly produced is raised back to *u and lengthened."""
+Word-scoped: the *o wg_a_umlaut wrongly produced is raised back to *u and lengthened. Cause: OE dūst
+continues *dunstą (Kroonen s.v. *dunsta-, PDF 149), whose *n was lost before *s with lengthening of
+the vowel. The 200 target *dustą cannot give the long ū, so this rule stands in for a revision of
+the preform."""
 words = ["dust"]
 definition = "[+syll, aperture: mid, +back, length: short] → [aperture: high, length: long]"
 
 [sporadic_six_numeral]
 time = 415
-name = "SPORADIC (numeral): *sehs > OE six — the *hs cluster gives /ks/ and the vowel raises"
-description = """The numerals develop irregularly. *sehs gives OE six /siks/: the *h before *s
-hardens to a stop and the *e raises to *i. Word-scoped."""
+name = "SPORADIC (Anglian): *sehs > OE six — the *hs cluster gives /ks/ and the vowel raises"
+description = """*sehs gives OE six /siks/: the *h before *s hardens to a stop and the *e raises to *i.
+Word-scoped. Both changes are regular Anglian ones: *hs became /ks/ after breaking (Ringe & Taylor,
+PDF 203), and Anglian smoothing turned *iox into ix (PDF 324). The cascade limits smoothing to *ht
+because the flax target is West Saxon feax, so this rule stands in for it here."""
 words = ["six"]
 definition = ["e → i", "x → k / _ s"]
 
@@ -3117,7 +3128,9 @@ definition = ["e → i", "x → k / _ s"]
 time = 476
 name = "SPORADIC: *frijaz, *frijō > OE frēo — the stem vowel becomes the *ēo diphthong"
 description = """*frijaz, *frijō give OE frēo: once the intervocalic *j is lost the stressed *ī and
-the following back vowel contract to the *ēo diphthong. Word-scoped to these two."""
+the following back vowel contract to the *ēo diphthong. Word-scoped to these two. Cause, probably:
+the masculine *frī took the frēo of the forms with a back vowel after *-ij-, which contract
+regularly (*frijō, oe_iju_contraction; Ringe & Taylor, PDF 190). No source at hand says so."""
 words = ["free"]
 # PWGmc *frī (`wg_final_j_vocalisation`). *frijō now reaches frēo regularly (`oe_iju_contraction`).
 definition = "[+syll, aperture: high, +front] → e oː / _ #"
@@ -3144,14 +3157,14 @@ definition = ["y → u", "yː → uː"]
 time = 467
 name = "SPORADIC: *kurþrą > OE corþer takes an *e parasite, not the *o our harmony gives"
 description = """The parasite vowel of *kurþr is *e (corþer), where oe_parasite_vowel's back-vowel
-harmony gives *o. A lexical exception to the harmony, word-scoped."""
+harmony gives *o. A lexical exception to the harmony, word-scoped. The cause is not known."""
 words = ["kurþrą"]
 definition = "o → e / θ _ r"
 
 [sporadic_sengreen_apocope]
 time = 473
 name = "SPORADIC: *siniz > OE sin loses its final vowel"
-description = "*siniz gives OE sin — the light-syllable final *-i, kept by rule, is lost here."
+description = "*siniz gives OE sin — the light-syllable final *-i, kept by rule, is lost here. The cause is not known."
 words = ["sengreen"]
 definition = "[+syll, stress: none] → ∅ / _ #"
 
@@ -3175,7 +3188,9 @@ definition = "n → r / r _"
 time = 427
 name = "SPORADIC: *albiz > OE ælf keeps *æ, not the *e Anglian smoothing gives"
 description = """*albiz gives OE ælf with *æ; oe_anglian_smoothing_liquid collapses our i-mutated
-*æe to *e here, but this word keeps the diphthong's first element. A lexical exception, restored."""
+*æe to *e here, but this word keeps the diphthong's first element. A lexical exception, restored.
+Cause: Anglian retraction. Before *lC, Anglian retracted *æ to *a instead of breaking it, and
+i-mutation then gave æ: *ælbi > Angl. *albi > ælf- (Ringe & Taylor, PDF 246)."""
 words = ["albī"]
 definition = "e → æ"
 
@@ -3201,7 +3216,8 @@ definition = "[+syll, +back, aperture: low, length: short] → æ ɑ / _ l"
 time = 409
 name = "SPORADIC: *talȝaz > OE tælg does not break before *lg"
 description = """*talȝaz gives OE tælg with a plain *æ; oe_breaking diphthongises it to *æɑ before
-the *lg, but this word keeps the monophthong. Word-scoped undo of the breaking."""
+the *lg, but this word keeps the monophthong. Word-scoped undo of the breaking. The cause is not
+known."""
 words = ["tallow"]
 definition = "æ ɑ → æ ∅"
 
@@ -3220,14 +3236,15 @@ description = """*knewą gives OE cnēow; our cascade leaves *kneoː, the diphth
 
 It used to leave *kneu: oe_final_long_o_to_u, then dated 440, took the second half of the new
 *ēo for an ō-stem ending. Dated 401 (PNWGmc), that rule no longer reaches it, and this one only
-restores the *w."""
+restores the *w. Cause: levelling. Ringe & Taylor give *knewą >! OE cnēo(w) (PDF 189): the *w of the
+oblique stem cnēow- spread to the nominative, as in trēo(w) 'tree'."""
 words = ["knee"]
 definition = "∅ → w / oː _ #"
 
 [sporadic_lede_eo]
 time = 476
 name = "SPORADIC: *liudiz > OE lēod — the *eu diphthong gives *ēo"
-description = "*liudiz gives OE lēod; our cascade leaves *liwd. Word-scoped *iw > *eoː."
+description = "*liudiz gives OE lēod; our cascade leaves *liwd. Word-scoped *iw > *eoː. Cause: lēode is a Mercian form, whose ēo stands for the expected West Saxon īe (Ringe & Taylor, PDF 399)."
 words = ["lede"]
 definition = "i w → e oː"
 
@@ -3235,7 +3252,7 @@ definition = "i w → e oː"
 [sporadic_ell_syncope]
 time = 461
 name = "SPORADIC: *alinō > OE eln syncopates its medial vowel"
-description = "*alinō gives OE eln — the medial unstressed vowel and the ending are lost, leaving a bare cluster. Word-scoped syncope."
+description = "*alinō gives OE eln — the medial unstressed vowel and the ending are lost, leaving a bare cluster. Word-scoped syncope. Why the vowel is lost after a light syllable is not known."
 words = ["ell"]
 definition = ["[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons]", "[+syll, stress: none] → ∅ / [+son, +cons] _ #"]
 
@@ -3250,56 +3267,56 @@ definition = "e → ɑ / _ #"
 [sporadic_any_ending]
 time = 476
 name = "SPORADIC: *ainagaz > OE ǣniġ — front vowel and the -iġ suffix"
-description = "*ainagaz gives OE ǣniġ; our cascade leaves *ɑːne. Word-scoped: the vowel fronts to *ǣ and the ending is the *-iġ suffix."
+description = "*ainagaz gives OE ǣniġ; our cascade leaves *ɑːne. Word-scoped: the vowel fronts to *ǣ and the ending is the *-iġ suffix. Cause: OE ǣniġ has the suffix variant -iġ, whose *i fronts the vowel by i-mutation."
 words = ["any"]
 definition = ["ɑː → æː", "e → i j / _ #"]
 
 [sporadic_eath_smoothing]
 time = 476
-name = "SPORADIC: *auþuz > OE ēþe — Anglian smoothing and i-stem -e"
-description = "*auþuz gives OE ēþe; our cascade leaves the diphthong *æɑː. Word-scoped Anglian smoothing to *ēː plus the i-stem *-e."
+name = "SPORADIC: *auþuz > OE ēþe — Anglian i-mutation and ja-stem -e"
+description = "*auþuz gives OE ēþe; our cascade leaves the diphthong *æɑː. The cause is the West Germanic ja-stem *auþī, the 403 target, with Anglian i-mutation of its ēa: *auþī > *ēaþī > WS īeþe, Angl. ēþe (Ringe & Taylor, PDF 261; on the ja-stems, PDF 36). This rule makes the vowel and the -e in one step."
 words = ["eath"]
 definition = ["æ ɑː → eː ∅", "∅ → e / [-syll] _ #"]
 
 [sporadic_six_numeral2]
 time = 415
-name = "SPORADIC (numeral): *sehs > OE six — the offglide drops and *h gives /k/ + /s/"
-description = "*sehs gives OE six /siks/; after breaking our cascade has *siox. Word-scoped: the offglide drops and the *x becomes /ks/."
+name = "SPORADIC (Anglian): *sehs > OE six — the offglide drops and *h gives /k/ + /s/"
+description = "*sehs gives OE six /siks/; after breaking our cascade has *siox. Word-scoped: the offglide drops and the *x becomes /ks/. The cause is Anglian smoothing of *iox to ix (Ringe & Taylor, PDF 324), with the regular change of *hs to /ks/ (PDF 203)."
 words = ["six"]
 definition = "o x → k s"
 
 [sporadic_haulaz_ending]
 time = 456
-name = "SPORADIC: *haulaz > OE hēala keeps a final -a"
-description = "*haulaz gives OE hēala; the a-stem ending survives here where our cascade apocopates it. Word-scoped."
+name = "SPORADIC: *haulaz > OE hēala has a final -a"
+description = "*haulaz gives OE hēala; our cascade apocopates the ending. Cause, probably: OE hēala is a weak noun, as OHG hōla suggests (Ringe & Taylor, PDF 187), so its -a is the weak ending, not a surviving a-stem one. Word-scoped."
 words = ["haulaz"]
 definition = "∅ → ɑ / [+son, +cons] _ #"
 
 [sporadic_furhno_xloss]
 time = 458
 name = "SPORADIC: *furhnō > OE forn loses its *x"
-description = "*furhnō gives OE forn — the *x in the *rxn cluster is lost. Word-scoped."
+description = "*furhnō gives OE forn — the *x in the *rxn cluster is lost. Word-scoped. The cause is not known."
 words = ["furhnō"]
 definition = "x → ∅ / r _"
 
 [sporadic_rib_bb]
 time = 431
 name = "SPORADIC: *ribją > OE ribb — the geminate is *bb, not the *ff our cascade makes"
-description = "*ribją gives OE ribb; West Germanic gemination doubles the *b, but our cascade has spirantised it to *ff first. Word-scoped restoration of the stop."
+description = "*ribją gives OE ribb; West Germanic gemination doubles the *b, but our cascade has spirantised it to *ff first. Word-scoped restoration of the stop. No cause in the word: West Germanic gemination of *b before *j gives the stop *bb (Ringe & Taylor, PDF 66: *sibjō > OE sibb, *habjan > hebban). The cascade lacks that clause, so this rule stands in for it."
 words = ["rib"]
 definition = "f → b"
 
 [sporadic_ebb_bb]
 time = 431
 name = "SPORADIC: *abjǭ > OE ebba — geminate *bb and final -a"
-description = "*abjǭ gives OE ebba; like rib, the geminate is a stop *bb and it takes final -a. Word-scoped."
+description = "*abjǭ gives OE ebba; like rib, the geminate is a stop *bb and it takes final -a. Word-scoped. No cause in the word: it is the regular gemination described under sporadic_rib_bb."
 words = ["ebb"]
 definition = "f → b"
 
 [sporadic_ebb_ending]
 time = 457
 name = "SPORADIC: *abjǭ > OE ebba ends in -a"
-description = "*abjǭ is an a-stem ebba in Old English, ending -a, not the -e the weak ōn-stem rule gives. Word-scoped, after that rule."
+description = "*abjǭ is the masculine weak noun ebba in Old English, ending -a, not the -e the weak ōn-stem rule gives. Word-scoped, after that rule."
 words = ["ebb"]
 definition = "e → ɑ / _ #"
 
@@ -3372,7 +3389,7 @@ definition = "ɛː → eː"
 [sporadic_three_lowering]
 time = 1100
 name = "SPORADIC: *þrīz > ME þrē lowers the long vowel"
-description = "*þrīz gives ME þrē /θreː/ — the long *ī lowers to *ē. Word-scoped."
+description = "*þrīz gives ME þrē /θreː/ — the long *ī lowers to *ē. Word-scoped. Cause: ME þrē continues the OE neuter and feminine form, *þrijō > OE þrīo (Ringe & Taylor, PDF 190), later þrēo, not the masculine þrī of the 900 target."
 words = ["three"]
 definition = "iː → eː"
 
@@ -3387,7 +3404,7 @@ definition = "eː → ɛː"
 [sporadic_other_u]
 time = 1150
 name = "SPORADIC: *anþeraz > ME other /uðer/ has a short *u"
-description = "*anþeraz gives ME other with a short *u where our cascade carries a long *oː. Word-scoped."
+description = "*anþeraz gives ME other with a short *u where our cascade carries a long *oː. Word-scoped. The cause is not known. Hart (1570) has [uː] in other, which points to a long ME vowel, so the short u of the 1400 target may be a variant."
 words = ["other"]
 definition = "oː → u"
 
@@ -3443,7 +3460,7 @@ definition = "uː → ʊ"
 [sporadic_gome_strut]
 time = 1650
 name = "SPORADIC: GOME shortens to the STRUT vowel"
-description = "ME gome /goːm/ > RP /gʌm/: the *uː shortens and unrounds to STRUT. Word-scoped."
+description = "ME gome /goːm/ > RP /gʌm/: the *uː shortens and unrounds to STRUT. Word-scoped. Cause: the lexical early shortening of [uː] that flood and blood also show (sporadic_flood_strut)."
 words = ["gome"]
 definition = "uː → ʌ"
 
@@ -3492,7 +3509,7 @@ definition = "t͡ʃ → k"
 [sporadic_long_short]
 time = 1620
 name = "SPORADIC: LONG shortens again before the GOAT diphthongisation"
-description = "ME lōng /lɔːŋg/ > RP long /lɒŋ/: the vowel lengthened in ME shortens again before it could diphthongise to GOAT. Word-scoped."
+description = "ME lōng /lɔːŋg/ > RP long /lɒŋ/: the vowel lengthened in ME shortens again before it could diphthongise to GOAT. Word-scoped. Cause: homorganic lengthening was patchy, and some words lengthened and then shortened again (Jones §2.2.5–6, cited under sporadic_me_homorganic_length)."
 words = ["long"]
 definition = "oː → ɒ"
 
@@ -3506,7 +3523,7 @@ definition = "[+syll, length: short, stress: primary] → eː"
 [sporadic_pre_r_ae]
 time = 1160
 name = "SPORADIC: yard, sharp-type keep a front vowel before *r in ME"
-description = "ME yerd, þerf front the vowel before *r where our cascade backs or keeps it. Word-scoped to the attested ME forms."
+description = "ME yerd, þerf front the vowel before *r where our cascade backs or keeps it. Word-scoped to the attested ME forms. Cause: a Southern form. ME e for OE ea before r is the West and Central Southern reflex (Jones Table 2.34, PDF 78, cited for yerd)."
 words = ["þarbō"]
 definition = "a → ɛ"
 
@@ -3523,14 +3540,14 @@ definition = "[+syll, length: short, stress: primary] → [length: long]"
 [sporadic_bare_long]
 time = 1205
 name = "SPORADIC: *bazaz > ME bāre lengthens in the open syllable"
-description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening. ME hāzel too: only about a quarter of words with a sonorant-final second syllable lengthen, so it is lexical (Minkova §7.5.2.1, PDF 223)."
+description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening. ME hāzel too: only about a quarter of words with a sonorant-final second syllable lengthen, so it is lexical (Minkova §7.5.2.1, PDF 223). For bare the cause is the inflected, disyllabic forms, as for whale (sporadic_inflected_osl)."
 words = ["bare", "hazel"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_dere_e]
 time = 1250
 name = "SPORADIC: *darjaz > ME dēre has a close ē"
-description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. Word-scoped fronting/raising to close ē."
+description = "*darjaz gives ME dēre /deːr/; our cascade carries a long *aː. Word-scoped fronting/raising to close ē. The cause is not known."
 words = ["dere"]
 definition = "aː → eː"
 
@@ -3592,15 +3609,15 @@ definition = "eː → ɛ"
 
 [sporadic_quean_close_e]
 time = 1210
-name = "SPORADIC: *kwēniz > ME quēne has a close ē"
-description = "*kwēniz gives ME quēne /kweːn/ (> queen); our cascade carries the open /ɛː/. Word-scoped close ē."
+name = "SPORADIC: quean has a close ē in ME"
+description = "OE cwene gives ME quēne /kweːn/ in the 1400 target; our cascade carries the open /ɛː/ of open-syllable lengthening. Word-scoped close ē. The cause is not known: the close ē matches queen (OE cwēn), not quean."
 words = ["quean"]
 definition = "ɛː → eː"
 
 [sporadic_salve_v]
 time = 1300
 name = "SPORADIC: *salbō > ME salve voices its *f to *v"
-description = "*salbō gives ME salve /salv/; the word-final *f voices to *v (the -ve of the spelling). Word-scoped."
+description = "*salbō gives ME salve /salv/; the word-final *f voices to *v (the -ve of the spelling). Word-scoped. Cause: the [v] of the inflected forms, as in five (eme_final_fricative_voicing)."
 words = ["salve"]
 definition = "f → v / _ #"
 
@@ -3614,7 +3631,7 @@ definition = "eː → i / _ x"
 [sporadic_knee_no_w]
 time = 1150
 name = "SPORADIC: *knewą > ME knē drops the final *w"
-description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-scoped."
+description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-scoped. Cause: ME knē continues the OE variant cnēo, without the levelled *w (Ringe & Taylor, PDF 189)."
 words = ["knee"]
 definition = "w → ∅ / _ #"
 
@@ -3650,14 +3667,14 @@ definition = "e → e o"
 [sporadic_wort_imutation]
 time = 476
 name = "SPORADIC: *wurtiz > OE wyrt — i-mutation and r-metathesis"
-description = "OE wyrt 'plant' i-mutates the *u to *y; our cascade carries the metathesised *wroːt. Word-scoped restoration of the attested order and vowel."
+description = "OE wyrt 'plant' i-mutates the *u to *y; our cascade carries the metathesised *wroːt. Word-scoped restoration of the attested order and vowel. Cause: OE wyrt continues the i-stem *wurti- (Kroonen, PDF 641), a different formation from the root noun *wrōt- of the 200 target (PDF 637). This rule stands in for that difference."
 words = ["wort"]
 definition = "1=r oː → y @1 / w _"
 
 [sporadic_kind_imutation]
 time = 476
 name = "SPORADIC: *kinþiz > OE cynd — i-stem, unpalatalised, dental"
-description = "OE cynd keeps a hard *k (its *y is younger than palatalisation), i-mutates to *y, and has the OE *d for *þ; our cascade palatalises and over-lengthens. Word-scoped to the attested outcome."
+description = "OE cynd keeps a hard *k (its *y is younger than palatalisation), i-mutates to *y, and has the OE *d for *þ; our cascade palatalises and over-lengthens. Word-scoped to the attested outcome. Cause: OE (ġe)cynd continues the zero-grade oblique stem *ǵn̥h₁tí- (Wiktionary s.v. *kinþiz), that is *kundi- with the d of Verner's law, not the nominative of the 200 target."
 words = ["kind"]
 definition = ["t͡ʃ → k", "iː → y", "θ → d"]
 
@@ -3689,7 +3706,7 @@ definition = "ɔ → ɛ"
 [sporadic_yard_front_r]
 time = 1160
 name = "SPORADIC: *geard > ME yerd has a front *ɛː before *r"
-description = "OE ġeard gives ME yerd /jɛːrd/, with the front reflex of *ea before *r, where our cascade merges it to back *a. Word-scoped."
+description = "OE ġeard gives ME yerd /jɛːrd/, with the front reflex of *ea before *r, where our cascade merges it to back *a. Word-scoped. Cause: yerd is the West and Central Southern reflex (Jones Table 2.34, PDF 78)."
 words = ["yard"]
 definition = "a → ɛː / _ r"
 
@@ -3710,21 +3727,21 @@ definition = "ɛː → ɑ / _ r"
 [sporadic_halm]
 time = 1000
 name = "SPORADIC: *halmaz > OE healm > ME halm keeps a back *a"
-description = "*halmaz gives ME halm /halm/ (the 'haulm' straw-word); the broken *ea smooths to back *a here, not the front *e our smoothing gives. Word-scoped."
+description = "*halmaz gives ME halm /halm/ (the 'haulm' straw-word); the broken *ea smooths to back *a here, not the front *e our smoothing gives. Word-scoped. Cause: Anglian retraction instead of West Saxon breaking before *lC: *halmaz > WS healm, Angl. halm (Ringe & Taylor, PDF 199)."
 words = ["helm-handle"]
 definition = "æ ɑ → ɑ ∅"
 
 [sporadic_atter_a]
 time = 1210
 name = "SPORADIC: *attraz > ME ater keeps a short *a"
-description = "OE ātor/attor gives ME ater /atər/ with a short unrounded *a, not the *ɔ our ā-rounding + OSL give. Word-scoped."
+description = "OE ātor/attor gives ME ater /atər/ with a short unrounded *a, not the *ɔ our ā-rounding + OSL give. Word-scoped. Cause: ME ater continues the short a of the geminated variant attor (sporadic_atter_short)."
 words = ["atter"]
 definition = "ɔ → a"
 
 [sporadic_lindo_nd]
 time = 1250
 name = "SPORADIC: *lindō > ME line loses the *d of *nd"
-description = "OE lind 'linden' gives ME line /liːn/ — the *d of the *nd cluster is lost. Word-scoped."
+description = "OE lind 'linden' gives ME line /liːn/ — the *d of the *nd cluster is lost. Word-scoped. The cause is not known. Hoad calls line a variant of lind (s.v. lime³)."
 words = ["lindō"]
 definition = "d → ∅ / n _ #"
 
@@ -3767,7 +3784,7 @@ definition = "d → ð / [+syll] _ [+syll]"
 [sporadic_evil_long]
 time = 1500
 name = "SPORADIC: evil keeps a long *iː"
-description = "OE yfel > ME evel lengthens in the open syllable to /eːvəl/ (whence modern /ˈiːvəl/ via the Vowel Shift); our cascade carries a short high vowel, so it is set to the long mid *eː the shift then raises. Word-scoped."
+description = "OE yfel > ME evel lengthens in the open syllable to /eːvəl/ (whence modern /ˈiːvəl/ via the Vowel Shift); our cascade carries a short high vowel, so it is set to the long mid *eː the shift then raises. Word-scoped. Cause: ME e for OE y is the South-Eastern reflex, as in merry and bury (Minkova, PDF 195–196), and the lengthening is the lexical one of words with a sonorant peak (Minkova §7.5.2.1, PDF 223)."
 words = ["evil"]
 definition = "i → eː"
 
@@ -3785,21 +3802,21 @@ definition = "ɔ → oː"
 [sporadic_ell_no_n]
 time = 1500
 name = "SPORADIC: *eln > modern ell drops the final *n"
-description = "OE eln > ME elne > modern ell /ɛl/ — the final *n is lost. Word-scoped."
+description = "OE eln > ME elne > modern ell /ɛl/ — the final *n is lost. Word-scoped. Cause: assimilation of final n to the preceding l, as in OE mylen 'mill' > ME melle (Minkova, PDF 196)."
 words = ["ell"]
 definition = "n → ∅ / _ #"
 
 [sporadic_erf_no_voice]
 time = 1900
 name = "SPORADIC: erf keeps a voiceless *f"
-description = "RP erf /ɜːf/ has a voiceless final *f where ME erve had [v] (the 1400 target ɛrv, voiced between vowels before the schwa was lost). Word-scoped re-devoicing."
+description = "RP erf /ɜːf/ has a voiceless final *f where ME erve had [v] (the 1400 target ɛrv, voiced between vowels before the schwa was lost). Word-scoped re-devoicing. Cause: devoicing of a final [v], which ME spellings such as luf 'love' and gif 'give' show (Jones Table 3.32, PDF 189). Wiktionary tags the word Northern England and Scotland, rare."
 words = ["erf"]
 definition = "v → f / _ #"
 
 [sporadic_wagnaz_ae]
 time = 1150
 name = "SPORADIC: *wagnaz > ME wain has a front *æ"
-description = "OE wægn > ME wain /wæjn/ keeps the front *æ before the *j, where our æ/ɑ merger backs it. Word-scoped."
+description = "OE wægn > ME wain /wæjn/ keeps the front *æ before the *j, where our æ/ɑ merger backs it. Word-scoped. No cause in the word: the æ is the first half of the diphthong that OE æ formed with a palatal g, spelled dæi beside dæġ (Minkova, PDF 83), which the æ/ɑ merger does not reach. Only this word is scored on it at 1400."
 words = ["wagnaz"]
 definition = "a → æ / _ j"
 
@@ -3832,15 +3849,15 @@ definition = ["[+syll, stress: primary, +back, aperture: low] → [+front, back:
 
 [sporadic_sixth_ks]
 time = 426
-name = "SPORADIC (numeral): *sehstō > OE sixta — *x gives /k/ + /s/ before *t"
-description = "The same *hs > /ks/ as six (sporadic_six_numeral2): *sehstō > sixta /siksta/. After Anglian smoothing/raising the sequence is *sixt-, so the *x becomes /ks/ before the *t. Word-scoped."
+name = "SPORADIC (Anglian): *sehstō > OE sixta — *x gives /k/ + /s/ before *t"
+description = "The same *hs > /ks/ as six (sporadic_six_numeral2): *sehstō > sixta /siksta/. After Anglian smoothing/raising the sequence is *sixt-, so the *x becomes /ks/ before the *t. Word-scoped. Cause: analogy with six. Ringe & Taylor give North. sesta beside WS siexta (PDF 172), and note that sixth can have been influenced by six (PDF 173)."
 words = ["sixth"]
 definition = "x → k s / _ t"
 
 [sporadic_south_syncope]
 time = -940
 name = "SPORADIC: *sunþraz syncopates the *-teros suffix vowel before *r"
-description = "The attested PGmc *sunþraz 'south' has the syncopated *-þr-, where *anþeraz 'other' keeps the vowel — the *-tero- suffix's vowel is lost lexically. Word-scoped, justified by the attested form."
+description = "The attested PGmc *sunþraz 'south' has the syncopated *-þr-, where *anþeraz 'other' keeps the vowel — the *-tero- suffix's vowel is lost lexically. Word-scoped. The cause is not known. Ringe & Taylor give PNWGmc *sunþraz (PDF 156), but Kroonen reconstructs *sunþera- with the vowel (PDF 433)."
 words = ["south"]
 definition = "ɑ → ∅ / θ _ r"
 
@@ -3854,7 +3871,7 @@ definition = "i → e / m _ l"
 [sporadic_riutidi_suffix]
 time = 0
 name = "SPORADIC: *riutidi keeps the suffix *i (no syncope)"
-description = "The 3sg *riutidi keeps its *-i-, which our syncope wrongly drops (giving **riwtði). Word-scoped restoration."
+description = "The 3sg *riutidi keeps its *-i-, which our syncope wrongly drops (giving **riwtði). Word-scoped restoration. No cause in the word: the rule undoes a syncope that the regular rules apply here wrongly."
 words = ["riutidi"]
 definition = "∅ → i / [-syll] _ ð"
 
@@ -3862,7 +3879,7 @@ definition = "∅ → i / [-syll] _ ð"
 [sporadic_stojo_j]
 time = 0
 name = "SPORADIC: *stōjō keeps its intervocalic *j"
-description = "The attested *stōjō keeps the *j our cascade drops between the two long vowels. Word-scoped restoration."
+description = "The attested *stōjō keeps the *j our cascade drops between the two long vowels. Word-scoped restoration. No cause in the word: the rule restores a *j that the regular rules drop wrongly."
 words = ["stōjō"]
 definition = "∅ → j / [+syll] _ [+syll]"
 
