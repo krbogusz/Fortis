@@ -3969,11 +3969,10 @@ forms = [
 [[words]]
 id = "gesteraz"
 gloss = "gesteraz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈjestrɑn was removed on 2026-10-08 (DECISIONS.md, four cases): Wrong word: OE ġiestran 'yesterday' continues the adverb PGmc *gesteran, which Wiktionary derives from *gesteraz + *-n, not the adjective *gesteraz itself."
 forms = [
-  { time = -2000, ipa = "ˈdʱgʲʱjesteros", category = "adj", note = "PIE *dʰǵʰyésteros, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈɣesterɑz", category = "adj" },
-  { time = 900, ipa = "ˈjestrɑn" },
+  { time = -2000, ipa = "ˈdʱgʲʱesros", category = "adj", note = "PREFORM revised 2026-10-08 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3): was ˈdʱgʲʱjesteros, PIE *dʰǵʰyésteros as cited by Wiktionary. Kroonen (s.v. *gestra-, PDF 215–216) derives the Germanic word from *dʰgʰes-ro-, with *t inserted between *s and *r, and the glide of the other preforms lost." },
+  { time = 200, ipa = "ˈɣestrɑz", category = "adj", note = "TARGET corrected 2026-10-08 (rule 3): was ˈɣesterɑz, PGmc *gesteraz (Wiktionary). Kroonen (PDF 215–216) and Ringe & Taylor (PDF 231) both reconstruct *gestra-." },
 ]
 
 [[words]]
