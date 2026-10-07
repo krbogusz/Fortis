@@ -2286,8 +2286,8 @@ gloss = "wort"
 frequency = 247
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈwreħds", category = "noun", note = "PIE *wréh₂ds, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈwrɔːts", category = "noun" },
+  { time = -2000, ipa = "ˈwr̩ħdis", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈwreħds; now *wŕ̥h₂dis. The rules prompted the change (DECISIONS.md, 2026-10-07): OE wyrt and the 403 target *wurti continue the zero-grade i-stem, Kroonen's *wurti- '(medicinal) root, herb' (Goth. waurts, OE wyrt, OHG wurz; PDF 641), not the root noun *wrōt- of *wréh₂ds (ON rót; PDF 637). The root accent gives the Verner *-z of *wurtiz. PIE *wréh₂ds, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈwurtiz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈwrɔːts. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target was the root noun *wrōts, a different formation from the i-stem *wurti- that the 403, 900 and later targets continue (Kroonen, PDF 637 and 641)." },
   { time = 403, ipa = "ˈwurti", note = "PWGmc *wurti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwyrt" },
   { time = 1400, ipa = "ˈwirt" },

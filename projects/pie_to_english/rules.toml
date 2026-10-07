@@ -3653,13 +3653,6 @@ description = "OE sweostor has the *eo of back mutation (u-umlaut); oe_back_muta
 words = ["sister"]
 definition = "e → e o"
 
-[sporadic_wort_imutation]
-time = 476
-name = "SPORADIC: *wurtiz > OE wyrt — i-mutation and r-metathesis"
-description = "OE wyrt 'plant' i-mutates the *u to *y; our cascade carries the metathesised *wroːt. Word-scoped restoration of the attested order and vowel. Cause: OE wyrt continues the i-stem *wurti- (Kroonen, PDF 641), a different formation from the root noun *wrōt- of the 200 target (PDF 637). This rule stands in for that difference."
-words = ["wort"]
-definition = "1=r oː → y @1 / w _"
-
 [sporadic_kind_imutation]
 time = 476
 name = "SPORADIC: *kinþiz > OE cynd — i-stem, unpalatalised, dental"
