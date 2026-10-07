@@ -2192,6 +2192,17 @@ definition = [
     "[+syll, length: short, aperture: high] → [length: long] / _ n [-son, +voice, -cont, back: none, labial: none] $",
 ]
 
+[sporadic_last_short]
+time = 1050
+name = "SPORADIC: lāst shortens its vowel before -st"
+description = """Minkova (§7.5.1.1, PDF 213): only about a dozen OE monosyllables in a long vowel and two
+consonants have a short vowel in PDE, half of them before -st: blǣst > blast, brēost > breast, dūst
+> dust, fȳst > fist. The cluster -st "behaves inconsistently", so the shortening is lexical. PDE last
+/lɑːst/ and Cooper's (1687) [æː] continue the short a, through BATH lengthening. Cause: that
+lexical shortening before -st. Before the rounding of ā (1100), which a long vowel would undergo."""
+words = ["last"]
+definition = "ɑː → ɑ / _ s t"
+
 [sporadic_comb_long]
 time = 1050
 name = "SPORADIC: comb lengthens before *mb"
