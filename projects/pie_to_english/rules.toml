@@ -3764,9 +3764,9 @@ definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_bare_long]
 time = 1205
-name = "SPORADIC: *bazaz > ME bāre lengthens in the open syllable"
-description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening. ME hāzel too: only about a quarter of words with a sonorant-final second syllable lengthen, so it is lexical (Minkova §7.5.2.1, PDF 223). For bare the cause is the inflected, disyllabic forms, as for whale (sporadic_inflected_osl)."
-words = ["bare", "hazel"]
+name = "SPORADIC: bare, hazel, late, theal lengthen in the open syllable"
+description = "*bazaz gives ME bāre /baːr/; open-syllable lengthening should reach it. Word-scoped lengthening. ME hāzel too: only about a quarter of words with a sonorant-final second syllable lengthen, so it is lexical (Minkova §7.5.2.1, PDF 223). For bare the cause is the inflected, disyllabic forms, as for whale (sporadic_inflected_osl), and so it is for ME lāte (OE læt, inflected late) and þēle (OE þel, pl. þelu), whose 1400 targets have the long vowel."
+words = ["bare", "hazel", "lataz", "theal"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_dere_e]
