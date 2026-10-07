@@ -3705,8 +3705,11 @@ name = "The unstressed suffix -iġ is ME -i"
 description = """Minkova §7.6 (PDF 230–231): "With the exception of [-i] in the affix <-y> (> OE -iġ), all
 uncovered vowels in final unstressed syllables in native words were dropped." The reduction of
 unstressed vowels (1200) leaves -iġ as [əj]; the suffix is [i] instead, and final schwa loss
-(1350) does not touch it."""
-definition = "ə j → i / _ #"
+(1350) does not touch it.
+
+The same vocalisation takes a final *j after a consonant, with or without the -e: OE belġ > ME bely,
+myrġe > mirie. The 1400 targets write the vowel long."""
+definition = ["ə j → i / _ #", "j ə → iː ∅ / [-syll] _ #", "j → iː / [-syll] _ #"]
 
 [sporadic_r_metathesis]
 time = 1200
