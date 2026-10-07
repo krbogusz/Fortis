@@ -6587,9 +6587,9 @@ forms = [
 [[words]]
 id = "skuwwô"
 gloss = "skuwwô"
-note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *skuwwan-, PDF 492; Ringe PDF 103: *skuṓ. Wiktionary cites only a bare root. Added 2026-10-06."
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *skuwwan-, PDF 492: the n-stem *sku-ón-, nominative *skuṓ. Ringe (PDF 103) gives the ending: the PIE masculine n-stem nominative *-ō, which becomes PGmc *-ô. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
-  { time = -2000, ipa = "skuˈoː", category = "noun", note = "PIE *skuṓ (Kroonen s.v. *skuwwan-, PDF 492; Ringe PDF 103); Wiktionary cites only a bare root." },
+  { time = -2000, ipa = "skuˈoː", category = "noun", note = "PIE *skuṓ, the nominative of Kroonen's n-stem *sku-ón- (s.v. *skuwwan-, PDF 492), with Ringe's n-stem nominative *-ō (PDF 103); Wiktionary cites only a bare root." },
   { time = 403, ipa = "ˈskuːwɔː", note = "PWGmc *skūwō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃuːwɑ" },
 ]
