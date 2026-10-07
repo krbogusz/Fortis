@@ -1105,7 +1105,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpukʲsos", category = "noun", note = "PIE *púḱsos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸuxsɑz", category = "noun" },
-  { time = 403, ipa = "ˈfuxs", note = "PWGmc *fuhs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈfoxs", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈfuxs. a-umlaut lowered *u before a non-high vowel in Northwest Germanic, before PWGmc (Ringe & Taylor PDF 42, with ON and OE examples), and their PWGmc paradigm of 'yoke' has *jok (PDF 129). OE has fox. Wiktionary's *fuhs writes the umlaut in corn, horn and word but not here. The books outrank Wiktionary for the 403 column. PWGmc *fuhs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfoks" },
   { time = 1400, ipa = "ˈfɔks" },
   { time = "final", ipa = "ˈfɔks", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fox /fɔ́ks/, with r written ɹ and the stress as ˈ. Was ˈfɒks (Wiktionary RP, Gimsonian symbols)." },
@@ -2180,7 +2180,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "juˈgom", category = "noun", note = "PIE *yugóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈjukɑ̃", category = "noun" },
-  { time = 403, ipa = "ˈjuk", note = "PWGmc *juk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈjok", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈjuk. Ringe & Taylor give the PWGmc paradigm of 'yoke' as nom. *jok (PDF 129), with the Northwest Germanic a-umlaut (PDF 42). Wiktionary's *juk lacks it. The books outrank Wiktionary for the 403 column. PWGmc *juk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjok" },
   { time = 1400, ipa = "ˈjɔk" },
   { time = "final", ipa = "ˈjəwk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): yoke /jə́wk/, with r written ɹ and the stress as ˈ. Was ˈjəʊk (Wiktionary RP, Gimsonian symbols)." },
@@ -2955,7 +2955,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *snusós is re
 forms = [
   { time = -2000, ipa = "snuˈseħ", category = "noun", note = "PIE *snusós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsnuzɔː", category = "noun" },
-  { time = 403, ipa = "ˈsnuzu", note = "PWGmc *snuʀu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈsnozu", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsnuzu. a-umlaut lowered *u before the *-ō of the ending in Northwest Germanic, before that *-ō became *-u (Ringe & Taylor PDF 42, 129), and OE has snoru. Wiktionary's *snuzu lacks it. The books outrank Wiktionary for the 403 column. PWGmc *snuʀu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsnoru" },
   { time = 1400, ipa = "ˈsnɔːr" },
 ]
@@ -4663,7 +4663,7 @@ note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *tótḱus is 
 forms = [
   { time = -2000, ipa = "ˈtaksus", category = "noun", note = "PIE *tótḱus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈθɑxsuz", category = "noun" },
-  { time = 403, ipa = "ˈθɑxs", note = "PWGmc *þahs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈθɑxsu", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈθɑxs. Ringe & Taylor keep the *-u of heavy u-stems in West Germanic: *handuz > *hąndu > OE hand (PDF 159), and their PWGmc 'son' is *sunu (PDF 130). Wiktionary's *þahs drops it. The books outrank Wiktionary for the 403 column. PWGmc *þahs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5809,7 +5809,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "speχˈtis", category = "adj", note = "PIE *speh₁-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈspɛːðiz", category = "adj" },
-  { time = 403, ipa = "ˈspɑːdiː", note = "PWGmc *spādī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈspɑːdi", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈspɑːdiː. Ringe & Taylor's PWGmc i-stem 'deed' has nom. sg. *dādi with a short *-i after a heavy syllable (PDF 130). Wiktionary's *spādī has a long *-ī. The books outrank Wiktionary for the 403 column. PWGmc *spādī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6528,7 +6528,7 @@ note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *wetman-, PDF 623
 forms = [
   { time = -2000, ipa = "ˈχwedmoː", category = "noun", note = "PIE *h₁wédmō (Kroonen s.v. *wetman-, PDF 623; Ringe PDF 103); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈwetmɔːː", category = "noun" },
-  { time = 403, ipa = "ˈweθmɔː", note = "PWGmc *weþmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈwetmɔː", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈweθmɔː. Wiktionary derives its PWGmc *weþmō 'from earlier *wetmō through Bahder's law', but the Old English descendants it lists (wituma, wetma, weotuma) keep the *t. The English line continues *wetmō. PWGmc *weþmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwitumɑ" },
 ]
 
@@ -6584,11 +6584,10 @@ forms = [
 [[words]]
 id = "mōhô"
 gloss = "mōhô"
-note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *mōhan- ~ *magan-, PDF 411: *méh₂kō. Wiktionary cites only a bare root. Added 2026-10-06."
+note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *mōhan- ~ *magan-, PDF 411: *méh₂kō. Wiktionary cites only a bare root. Added 2026-10-06. The 403 target ˈmɑxɔː was removed on 2026-10-07 (DECISIONS.md, four cases): Wrong word: Wiktionary derives PWGmc *mahō 'From Proto-Germanic *mōhô ~ *makkaz ~ *magini', a blend of three forms, so it is not the regular descendant of *mōhô. The word has no Old English target."
 forms = [
   { time = -2000, ipa = "ˈmeħkoː", category = "noun", note = "PIE *méh₂kō (Kroonen s.v. *mōhan- ~ *magan-, PDF 411); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈmɔːxɔːː", category = "noun" },
-  { time = 403, ipa = "ˈmɑxɔː", note = "PWGmc *mahō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
