@@ -358,6 +358,17 @@ derivation of the nominative. Before pgmc_osthoffs_law, which would shorten the 
 words = ["cow"]
 definition = ["w → ∅ / oː _ s #", "gʷ → g / # _ oː", "s → z / oː _ #"]
 
+[sporadic_ajja_kroonen]
+time = -1950
+name = "SPORADIC: *h₂ōwyóm loses its glide and shortens its vowel before the accent"
+description = """Kroonen derives *ajja- 'egg' as "*ajja- < *ojó- < *ōjó- < *h₂ōu-yó-" (§2.1.2, PDF 18): the long
+diphthong loses its glide (§2.1.5), Dybo's law shortens the pretonic vowel, and Holtzmann's law
+then geminates the *j (PDF 37; kroonen_holtzmann_j). The cascade adopts neither the glide loss nor
+Dybo's law as a regular rule (DECISIONS.md, 2026-10-07), so this rule applies them to this word.
+Word-scoped. Cause: Kroonen's derivation. Before pgmc_osthoffs_law."""
+words = ["ajją"]
+definition = "oː w → o ∅ / _ j [+syll, stress: primary]"
+
 [pgmc_osthoffs_law]
 time = -1900
 name = "Osthoff's law: a long vowel shortens before a sonorant + consonant"
