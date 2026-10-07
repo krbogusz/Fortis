@@ -1055,6 +1055,19 @@ definition = [
     "[+syll, length: long, aperture: low, +back, stress: primary, rounded: none, nasal: none] → [+front, back: none, advancement: atr]",
 ]
 
+[sporadic_even_j_extension]
+time = 404
+name = "SPORADIC: OE ǣfen extends the stem *āban- with *-j-, not with the dental"
+description = """Ringe & Taylor (PDF 141): PWGmc *āban- 'evening' gives OE ǣfen, OF ēvend, OS āƀand, OHG
+ābant, and "the OE word has been extended with *-j- (thus gen. sg. ǣfennes, etc.) and is usually
+neuter, while the other words have been extended with *-d-". So OE has no reflex of the dental of
+*ēbanþs. The *j umlauts the suffix vowel (ǣfen) and doubles the *n only in the oblique cases
+(ǣfennes), so the nominative ends in a single *n. Word-scoped. Cause: OE continues a different
+extension of the stem. Dated 404, after the PWGmc checkpoint, which keeps Wiktionary's *ābanþ, and placed ahead
+of the nasal-spirant law, which would take the *n."""
+words = ["even"]
+definition = "ɑ n θ → e n ∅ / _ #"
+
 # The Ingvaeonic nasal-spirant law: a nasal is lost before a voiceless fricative and the
 # vowel lengthens to compensate — Gothic munþs vs OE mūþ 'mouth', Gothic uns vs OE ūs
 # (Minkova §3.4, n. 8). Two rules, as in latin_to_french's ns-loss: lengthen, then delete,
