@@ -263,6 +263,36 @@ chains with no preform in either book (Germanic-only, substrate or unexplained w
 duplicates *gold, ēbanþs, swēgraz, humelaz*, and *betwixt*, a be- formation. The finals of
 *sole, riff, sullow, leam* were dropped as an obsolete, dialect or different word.
 
+### Words added on 2026-10-07, scored at first contact
+
+Since the rules and the words shape each other, the accuracy table measures fit, so a fresh batch
+was added and scored before any change was made for it (DECISIONS.md, 2026-10-07, rule 5). The
+bootstrap yields no new word: every chain it keeps is already in the lexicon. The batch comes from
+the chains it drops because Wiktionary cites only a bare PIE root (58) or a form it cannot
+transliterate (2). Under "Start a word at its earliest secure reconstruction" (DECISIONS.md,
+2026-10-07) these words start at their Proto-Germanic form, so a doubtful preform no longer keeps
+a word out: *miltiją, hugiz, līþu* and *hehlǭ* are back. Of the 60, 22 were already in the lexicon
+under another name. Four were left out: *twiskaz* (ME bitwiks carries the prefix be-), *raskuz*
+(OE ræsċettan is a verb), *miuzijō* (no Old or Middle English target) and *dungz* (its targets are
+those of *dung*). The modern target of *razną* is blank, since barn is the compound bere-ærn. That
+leaves 34 words, short of the 50 that were asked for. The 403 forms come from Wiktionary's PWGmc
+entries (13 words). The modern targets come from CUBE (13 words) and, for *swith*, from
+Wiktionary's RP in CUBE's symbols.
+
+First contact, with no rule or target changed for them:
+
+| checkpoint | exact | within 1 phone |
+|---|---|---|
+| 403 | 12 / 13 | 13 |
+| 900 | 20 / 34 | 27 |
+| 1400 | 9 / 20 | 13 |
+| final | 8 / 14 | 9 |
+| all | 49 / 81 (60%) | 62 |
+
+The misses point to gaps in the rules. OE flǣsċ comes out as **flæːst͡ʃ**, so the palatalisation
+of *sk leaves an s. OE nēah loses its final h. ME udder and swith need a shortening of the long
+vowel that the rules lack.
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed
@@ -607,20 +637,20 @@ says so and names the words it came from.
 
 ## Where it stands
 
-On 2026-10-07, 603 words. A run of the cascade writes the current figures to
+On 2026-10-07, 637 words. A run of the cascade writes the current figures to
 `reports/accuracy.csv`.
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 597 | 569 (95.3%) | 571 |
-| 403 Proto-West Germanic | 299 | 283 (94.6%) | 289 |
-| 900 Old English | 385 | 348 (90.4%) | 356 |
-| 1400 Middle English | 271 | 245 (90.4%) | 252 |
+| 200 Proto-Germanic | 592 | 569 (96.1%) | 571 |
+| 403 Proto-West Germanic | 312 | 300 (96.2%) | 307 |
+| 900 Old English | 419 | 373 (89.0%) | 388 |
+| 1400 Middle English | 291 | 258 (88.7%) | 270 |
 | 1570 Hart | 7 | 5 | 5 |
-| 1580 Bullokar, Mulcaster | 11 | 6 | 8 |
+| 1580 Bullokar, Mulcaster | 11 | 7 | 9 |
 | 1621 Gil | 14 | 10 | 11 |
 | 1687 Coles, Cooper | 14 | 12 | 13 |
-| final current SSB (CUBE) | 229 | 206 (90.0%) | 211 |
+| final current SSB (CUBE) | 243 | 217 (89.3%) | 223 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 

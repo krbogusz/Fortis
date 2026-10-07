@@ -6845,3 +6845,369 @@ forms = [
   { time = 900, ipa = "ˈliːθe" },
   { time = "final", ipa = "ˈlɑjð", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lithe /lɑ́jð/, with r written ɹ and the stress as ˈ. Was ˈlaɪð (Wiktionary RP, Gimsonian symbols)." },
 ]
+
+[[words]]
+id = "deal"
+gloss = "deal"
+frequency = 174929
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *dʰ(h₁)-oy-lo-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈdɑjliz", category = "noun", note = "PGmc *dailiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈdæːl" },
+  { time = 1400, ipa = "ˈdɛːl" },
+  { time = "final", ipa = "ˈdɪjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): deal /dɪ́jl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "aihtiz"
+gloss = "aihtiz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₂eyḱ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈɑjxtiz", category = "noun", note = "PGmc *aihtiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈɑjxti", note = "PWGmc *aihti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈæːxt" },
+  { time = 1400, ipa = "ˈɔwxt" },
+]
+
+[[words]]
+id = "louse"
+gloss = "louse"
+frequency = 884
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *lewH-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈluːs", category = "noun", note = "PGmc *lūs (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈluːs", note = "PWGmc *lūs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈluːs" },
+  { time = 1400, ipa = "ˈluːs" },
+  { time = "final", ipa = "ˈlaws", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): louse /láws/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "weapon"
+gloss = "weapon"
+frequency = 40033
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈwɛːpnɑ̃", category = "noun", note = "PGmc *wēpną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈwɑːpn", note = "PWGmc *wāpn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈwæːpn" },
+  { time = 1400, ipa = "ˈweːpən" },
+  { time = "final", ipa = "ˈwɛpən", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): weapon /wɛ́pən/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "balk"
+gloss = "balk"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *bʰelǵʰ-on-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈbɑlkɔːː", category = "noun", note = "PGmc *balkô (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈbɑlkɑ" },
+  { time = 1400, ipa = "ˈbalk" },
+  { time = "final", ipa = "ˈboːk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): balk /bóːk/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "karilaz"
+gloss = "karilaz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ǵerh₂-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈkɑrilɑz", category = "noun", note = "PGmc *karilaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈt͡ʃeorl" },
+  { time = 1400, ipa = "ˈt͡ʃeːrl" },
+]
+
+[[words]]
+id = "dung"
+gloss = "dung"
+frequency = 1861
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *dʰḿ̥ǵʰ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈduŋgɔː", category = "noun", note = "PGmc *dungō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈduŋg" },
+  { time = 1400, ipa = "ˈduŋg" },
+  { time = "final", ipa = "ˈdʌŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dung /dʌ́ŋ/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "miltiją"
+gloss = "miltiją"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *(s)meld-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈmiltijɑ̃", category = "noun", note = "PGmc *miltiją (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈmiltiː", note = "PWGmc *miltī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈmilt" },
+]
+
+[[words]]
+id = "dear"
+gloss = "dear"
+frequency = 167351
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *dʰegʷʰ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈdiwrijɑz", category = "adj", note = "PGmc *diurijaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈdeːre" },
+  { time = 1400, ipa = "ˈdeːr" },
+  { time = "final", ipa = "ˈdɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dear /dɪ́ː/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "nawiz"
+gloss = "nawiz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *nh̥₂w-i-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈnɑwiz", category = "noun", note = "PGmc *nawiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈneoː" },
+]
+
+[[words]]
+id = "wlitiz"
+gloss = "wlitiz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *wél-ti-s ~ *wl̥-téy-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈwlitiz", category = "noun", note = "PGmc *wlitiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈwliti", note = "PWGmc *wliti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈwlite" },
+  { time = 1400, ipa = "ˈwlit" },
+]
+
+[[words]]
+id = "razną"
+gloss = "razną"
+frequency = 9047
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁rh̥₁-s-nó-m, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction'). The modern target is blank: modern barn is the compound OE bere-ærn."
+forms = [
+  { time = 200, ipa = "ˈrɑznɑ̃", category = "noun", note = "PGmc *razną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈrɑzn", note = "PWGmc *raʀn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈærn" },
+  { time = 1400, ipa = "ˈɛːrn" },
+]
+
+[[words]]
+id = "wunjō"
+gloss = "wunjō"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *wénh₁-ih₂ ~ wn̥h₁-yéh₂-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈwunjɔː", category = "noun", note = "PGmc *wunjō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈwunnju", note = "PWGmc *wunnju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈwynn" },
+  { time = 1400, ipa = "ˈwin" },
+]
+
+[[words]]
+id = "flesh"
+gloss = "flesh"
+frequency = 16064
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *pleh₁ḱ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈɸlɑjski", category = "noun", note = "PGmc *flaiski (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈflæːʃ" },
+  { time = 1400, ipa = "ˈflɛːʃ" },
+  { time = "final", ipa = "ˈflɛʃ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): flesh /flɛ́ʃ/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "shaft"
+gloss = "shaft"
+frequency = 4133
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *skeh₂p-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈskɑɸtɑz", category = "noun", note = "PGmc *skaftaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈskɑft", note = "PWGmc *skaft (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈʃæɑft" },
+  { time = 1400, ipa = "ˈʃaft" },
+  { time = "final", ipa = "ˈʃɑːft", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): shaft /ʃɑ́ːft/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "brōks"
+gloss = "brōks"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *bʰreg-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈbrɔːks", category = "noun", note = "PGmc *brōks (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈbrɔːk", note = "PWGmc *brōk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈbroːk" },
+]
+
+[[words]]
+id = "swith"
+gloss = "swith"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *sǵʰ-wént-s ~ *sǵʰ-unt-és, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈswinθɑz", category = "adj", note = "PGmc *swinþaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈswiːθ" },
+  { time = "final", ipa = "ˈswɪθ", note = "CUBE has no entry. Wiktionary (kaikki) /ˈswɪθ/, in CUBE's symbols (DECISIONS.md, 2026-10-07)." },
+]
+
+[[words]]
+id = "hugiz"
+gloss = "hugiz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ḱk-í-s ~ *ḱk-éy-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈxuɣiz", category = "noun", note = "PGmc *hugiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈxuɣi", note = "PWGmc *hugi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈxyje" },
+]
+
+[[words]]
+id = "grim"
+gloss = "grim"
+frequency = 3248
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *gʰrem-nó-s or *gʰrem-wó-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈɣrimmɑz", category = "adj", note = "PGmc *grimmaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈgrimm" },
+  { time = "final", ipa = "ˈgɹɪm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): grim /grɪ́m/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "kīþą"
+gloss = "kīþą"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ǵéyH-ti-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈkiːθɑ̃", category = "noun", note = "PGmc *kīþą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈt͡ʃiːθ" },
+  { time = 1400, ipa = "ˈt͡ʃiːs" },
+]
+
+[[words]]
+id = "nigh"
+gloss = "nigh"
+frequency = 867
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₂neḱ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈnɛːxʷɑz", category = "adj", note = "PGmc *nēhwaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈnæɑːx" },
+  { time = 1400, ipa = "ˈneːx" },
+  { time = "final", ipa = "ˈnɑj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): nigh /nɑ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "līþu"
+gloss = "līþu"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *léyH-tu ~ *liH-téw-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈliːθu", category = "noun", note = "PGmc *līþu (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈliːθ" },
+]
+
+[[words]]
+id = "eburaz"
+gloss = "eburaz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁ep-r-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈeβurɑz", category = "noun", note = "PGmc *eburaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈeβur", note = "PWGmc *ebur (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈeofor" },
+]
+
+[[words]]
+id = "udder"
+gloss = "udder"
+frequency = 187
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁éwHdʰr̥, *h₁uHdʰ-n-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈuːðɑrɑ̃", category = "noun", note = "PGmc *ūdarą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈuːder" },
+  { time = 1400, ipa = "ˈudər" },
+  { time = "final", ipa = "ˈʌdə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): udder /ʌ́də/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "halluz"
+gloss = "halluz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈxɑlluz", category = "noun", note = "PGmc *halluz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈxæɑll" },
+]
+
+[[words]]
+id = "þuldiz"
+gloss = "þuldiz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *télh₂-ti-s ~ *tl̥h₂-téy-s, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈθuldiz", category = "noun", note = "PGmc *þuldiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈθuldi", note = "PWGmc *þuldi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈθyld" },
+  { time = 1400, ipa = "ˈθild" },
+]
+
+[[words]]
+id = "hehlǭ"
+gloss = "hehlǭ"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ḱé-ḱl(h₁)-eh₂-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈxexlɔ̃ː", category = "noun", note = "PGmc *hehlǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈxeolkɑ" },
+]
+
+[[words]]
+id = "sheer"
+gloss = "sheer"
+frequency = 3893
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *sḱēy-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈskɑjriz", category = "adj", note = "PGmc *skairiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈʃæːre" },
+  { time = 1400, ipa = "ˈʃɛːr" },
+  { time = "final", ipa = "ˈʃɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sheer /ʃɪ́ː/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "ēþrǭ"
+gloss = "ēþrǭ"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁éh₁t-r̥ ~ *h₁h₁t-éns, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈɛːθrɔ̃ː", category = "noun", note = "PGmc *ēþrǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈɑːdrɑː", note = "PWGmc *ādrā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈæːdre" },
+  { time = 1400, ipa = "ˈɛːdɾə" },
+]
+
+[[words]]
+id = "dill"
+gloss = "dill"
+frequency = 690
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *dʰelh₁-íh₂s ~ *dʰl̥h₁-ih₂és, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈdiliː", category = "noun", note = "PGmc *dilī (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈdile" },
+  { time = 1400, ipa = "ˈdil" },
+  { time = "final", ipa = "ˈdɪl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dill /dɪ́l/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "wōhmaz"
+gloss = "wōhmaz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *wekʷ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈwɔːxmɑz", category = "noun", note = "PGmc *wōhmaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈwoːm" },
+]
+
+[[words]]
+id = "idisiz"
+gloss = "idisiz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈiðisiz", category = "noun", note = "PGmc *idisiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈides" },
+]
+
+[[words]]
+id = "wōmaz"
+gloss = "wōmaz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *-mos, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈwɔːmɑz", category = "noun", note = "PGmc *wōmaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈwoːm" },
+]
+
+[[words]]
+id = "nikraz"
+gloss = "nikraz"
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *neygʷ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈnikrɑz", category = "noun", note = "PGmc *nikraz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈnikor" },
+]
