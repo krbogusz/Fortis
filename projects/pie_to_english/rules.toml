@@ -3216,6 +3216,16 @@ the nominative. Before the 1400 checkpoint, whose udder is short."""
 words = ["udder"]
 definition = "uː → u"
 
+[sporadic_weapon_short]
+time = 1300
+name = "SPORADIC: weapon takes the short vowel of the plural wǣpnu"
+description = """Wiktionary gives ME wepen with long /eː/ and short /ɛ/ readings, and says the form wepne was
+originally the plural, from OE wǣpnu. The plural has the cluster pn, before which a long vowel
+shortened (Minkova §7.5.1.1, PDF 212). PDE weapon /wɛpən/ continues the short vowel. Cause: the
+shortening in the plural, levelled into the singular. Before the 1400 checkpoint."""
+words = ["weapon"]
+definition = "eː → ɛ"
+
 [sporadic_osl_high_vowel]
 time = 1200
 name = "SPORADIC: week lengthens its high vowel in an open syllable, to ē"

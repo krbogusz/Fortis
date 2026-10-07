@@ -6870,7 +6870,7 @@ forms = [
   { time = 200, ipa = "ˈwɛːpnɑ̃", category = "noun", note = "PGmc *wēpną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈwɑːpn", note = "PWGmc *wāpn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈwæːpn" },
-  { time = 1400, ipa = "ˈweːpən" },
+  { time = 1400, ipa = "ˈwɛpən", note = "TARGET corrected 2026-10-08 (DECISIONS.md, four cases): was ˈweːpən. Dialect variant: Wiktionary gives ME wepen as /ˈweːpən/, /ˈwɛ̝ːpən/, /ˈwɛpən/, /ˈwɛpnə/ and more, and the target took the first. PDE weapon /wɛpən/ continues the short vowel, which came from the plural wǣpnu (Wiktionary) by the shortening before two consonants (Minkova PDF 212)." },
   { time = "final", ipa = "ˈwɛpən", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): weapon /wɛ́pən/, with r written ɹ and the stress as ˈ." },
 ]
 
