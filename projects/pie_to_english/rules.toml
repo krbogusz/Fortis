@@ -2725,6 +2725,17 @@ name = "w is lost after an initial s or t before a back rounded vowel"
 description = "Minkova PDF 139; Pyles & Algeo p. 144 — sweord > sword, twā > two"
 definition = "w → ∅ / # (s | t) _ [+syll, +back, +rounded]"
 
+[sporadic_hair_haire]
+time = 1450
+name = "SPORADIC: hair takes the vowel of ME haire 'haircloth'"
+description = """Hoad (s.v. hair) calls the present spelling and pronunciation abnormal, "for *here or *hear",
+and traces them to assimilation to haire 'hair shirt', from Old French. Klein (s.v. hair) says the
+same: the word was confused with ME haire 'haircloth'. Cause: that French loan. The ME vowel of hēr
+takes the diphthong of haire, which leads to SQUARE, not NEAR. After the 1400 checkpoint, whose
+target is hēr."""
+words = ["hair"]
+definition = "ɛː → æ j"
+
 [sporadic_iron_irn]
 time = 1450
 name = "SPORADIC: iron takes its one-syllable variant irn"
