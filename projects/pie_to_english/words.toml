@@ -6151,7 +6151,7 @@ gloss = "moth"
 frequency = 1923
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "maˈteːn", category = "noun", note = "PIE *mat-ḗn, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈmotoːn", category = "noun", note = "PREFORM corrected 2026-10-07: was maˈteːn; now *mótōn. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target *maþô has the *þ of a root accent, which the cited *mat-ḗn cannot give (Verner's law gives *ð). Kroonen derives the paradigm nom. *maþō, gen. *muttaz from *mót-ōn, *mt-n-ós (s.v. *maþan-, PDF 398). PIE *mat-ḗn, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈmɑθɔːː", category = "noun" },
   { time = 900, ipa = "ˈmoθθe" },
   { time = "final", ipa = "ˈmɔθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): moth /mɔ́θ/, with r written ɹ and the stress as ˈ. Was ˈmɒθ (Wiktionary RP, Gimsonian symbols)." },

@@ -145,7 +145,7 @@ nominatives had come to end in *-ō by Szemerényi's Law and loss of the *n (PDF
 *hazō < *kas-ōn (PDF 263), nom. *bulō (PDF 121). Cause: the old nominative of the masculine type.
 Word-scoped, because the engine does not know gender; the list names the masculine nouns. Before
 overlong_vowels, which then makes the final *ō overlong."""
-words = ["bull", "hare", "tehswô"]
+words = ["bull", "hare", "tehswô", "moth"]
 definition = "n → ∅ / oː _ #"
 
 [overlong_vowels]
@@ -1087,6 +1087,18 @@ definition = [
     "w → ɣ / [+syll, aperture: high, +rounded] _ [+syll, aperture: high]",
     "w → ɣ / [+syll, aperture: high] _ [+syll, aperture: high, +rounded]",
 ]
+
+[sporadic_moth_levelling]
+time = 403
+name = "SPORADIC: *maþō takes the root of the oblique *mutt- and turns feminine: *moþþā"
+description = """Wiktionary's PWGmc *moþþā (> OE moþþe) is "Feminized and leveled from *maþô ~ *muttaz".
+Kroonen gives the same paradigm, nom. *maþō, gen. *muttaz < *mót-ōn, *mt-n-ós, and a zero-grade
+form for 'moth' beside it (s.v. *maþan-, PDF 398). Hoad calls OE moþþe "obscurely rel." to MLG,
+MDu. motte. Word-scoped. Cause: levelling between the nominative and the oblique stem, with a shift
+into the feminine n-stems. The root already has the *o that *moþþā shows. Dated 403, after the
+West Germanic ending rules at 402."""
+words = ["moth"]
+definition = ["ɑ → o / _ θ", "θ → θ θ / o _", "ɔː → ɑː / _ #"]
 
 [sporadic_nine_nigun]
 time = 350
