@@ -3875,11 +3875,10 @@ forms = [
 [[words]]
 id = "juhtaz"
 gloss = "juhtaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target jeˈixt was removed on 2026-10-08 (DECISIONS.md, four cases): Wrong word: OE ġeiht 'yoked together' (Wiktionary, /jeˈixt/) is the prefixed ġe- + *iht. The simplex is not attested, and the cascade derives no prefix. The same reasoning removed abuhaz's OE afuhlīċ."
 forms = [
   { time = -2000, ipa = "jugˈtos", category = "adj", note = "PIE *yugtós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈjuxtɑz", category = "adj" },
-  { time = 900, ipa = "jeˈixt" },
 ]
 
 [[words]]
