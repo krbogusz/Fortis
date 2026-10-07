@@ -305,3 +305,28 @@ changes.
 
 **Rejected:** Keeping the West Saxon targets and breaking, with word-scoped rules for the Anglian
 outcomes. It scores the same but models a dialect that the later columns do not descend from.
+
+## 2026-10-07: Take the modern targets from CUBE
+
+**Choice:** The final targets are the transcriptions of CUBE, Current British English searchable
+transcriptions (Geoff Lindsey and Péter Szigetvári, seas3.elte.hu/cube), in CUBE's default symbols
+for current Standard Southern British. Three notational changes fit them to the project's
+inventory: CUBE's r is written ɹ, its ʧ and ʤ are t͡ʃ and d͡ʒ, and its stress accent becomes ˈ
+before the stressed syllable. Where a spelling has several CUBE entries, the one with the word's
+part of speech is taken (wind is the noun /wɪ́nd/). Ten words that CUBE lacks (atter, dere, ell,
+erf, lede, neve, nift, sweven, theed, wort) keep their Wiktionary RP form, written in CUBE's
+symbols with the table on CUBE's symbols page. Each note keeps the old value. The cascade gets rules
+for the changes that CUBE's accent page lists between classic RP and current Standard Southern
+British.
+
+**Reason:** Asked for on 2026-10-07. The Wiktionary targets use the symbols Gimson chose for classic
+RP, an accent that CUBE's authors call "rarely heard in the 21st century". CUBE gives one
+recommended pronunciation per entry for the standard accent heard today. CUBE's pages say
+"© Geoff Lindsey & Péter Szigetvári" and state no licence; the transcriptions are used as facts
+about pronunciation, with the source in each note, and publishing them needs a separate decision.
+
+**Rejected:**
+- Keeping the Wiktionary RP targets.
+- Converting the RP targets symbol by symbol instead of taking CUBE's entries. That misses the words
+  whose CUBE form differs in more than its symbols: dew /ʤʉ́w/, salve /sálv/.
+- CUBE's optional Gimsonian display, which keeps the old symbols.

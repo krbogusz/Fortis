@@ -20,6 +20,9 @@ Proto-Indo-European to Present-Day English, scored at nine checkpoints.
 >   uses them, never redistributed** — `.gitignore` keeps the books out, and no book text belongs
 >   in the tree. Because nothing here is redistributed, none of this appears in
 >   `docs/acknowledgements.md` (which lists only the CC BY-SA lexicon we do redistribute).
+> - **The final targets in `words.toml` come from CUBE** (seas3.elte.hu/cube), whose pages say
+>   "© Geoff Lindsey & Péter Szigetvári" and state no licence. Each note names the source
+>   (DECISIONS.md, 2026-10-07). Publishing them needs a separate decision.
 
 ## Lexicon (`words.toml`) — CC BY-SA 4.0
 
@@ -140,6 +143,17 @@ The same refresh found Wiktionary IPA, missing at the bootstrap, for three Old E
 normalised as the bootstrap normalises its own, and each note quotes the source IPA. Two were
 left out. ME *widwe* /ˈwidwə/ would lose its only syllable nucleus to the column's dropped final
 -e. OE *sīen* would pass through `anglianise()`, which wrongly turns the īe from *īo into ē.
+
+### The modern column (final)
+
+Since 2026-10-07 the final targets are CUBE's transcriptions of current Standard Southern British
+(Lindsey & Szigetvári, seas3.elte.hu/cube), in CUBE's default symbols: ɪj ɛj ɑj oj əw ʉw aw for
+FLEECE, FACE, PRICE, CHOICE, GOAT, GOOSE, MOUTH; ɪː ɛː ɑː əː oː ɵː for NEAR, SQUARE, PALM, NURSE,
+THOUGHT, CURE; ɪ ɛ a ʌ ɔ ɵ ə for KIT, DRESS, TRAP, STRUT, LOT, FOOT, commA. CUBE's r is written ɹ,
+its ʧ ʤ as t͡ʃ d͡ʒ, and its stress accent as ˈ. Ten words CUBE lacks keep their Wiktionary RP
+form in CUBE's symbols. The choice, and what it replaced, is in DECISIONS.md (2026-10-07). The
+section "Finals filled on 2026-10-06" describes how the words were chosen; the transcriptions
+themselves are now CUBE's.
 
 ### The Proto-West Germanic column (403)
 

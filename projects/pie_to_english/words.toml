@@ -14,7 +14,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲommojnis", category = "adj", note = "PIE *ḱom-moynis, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣɑmɑjniz", category = "adj" },
   { time = 900, ipa = "jeˈmæːne" },
-  { time = "final", ipa = "ˈmiːn" },
+  { time = "final", ipa = "ˈmɪjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mean /mɪ́jn/, with r written ɹ and the stress as ˈ. Was ˈmiːn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -27,7 +27,7 @@ forms = [
   { time = 200, ipa = "ˈɑjnɑɣɑz", category = "adj" },
   { time = 403, ipa = "ˈɑjnɑɣ", note = "PWGmc *ainag (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæːnij" },
-  { time = "final", ipa = "ˈɛni" },
+  { time = "final", ipa = "ˈɛnɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): any /ɛ́nɪj/, with r written ɹ and the stress as ˈ. Was ˈɛni (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -53,7 +53,7 @@ forms = [
   { time = 403, ipa = "ˈɑːβɑnθ", note = "PWGmc *ābanþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæːfen" },
   { time = 1400, ipa = "ˈɛːvən" },
-  { time = "final", ipa = "ˈiːvən" },
+  { time = "final", ipa = "ˈɪjvən", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): even /ɪ́jvən/, with r written ɹ and the stress as ˈ. Was ˈiːvən (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -68,7 +68,7 @@ forms = [
   { time = 900, ipa = "ˈoːθer" },
   { time = 1400, ipa = "ˈoːðər", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈuðər. Dialect variant: Wiktionary gives ME other as /ˈuðər/ and /ˈoːðər/, and the target had the short variant. Hart (1570) has [uː] in other (Jones §4.2, PDF 222), which continues the long variant through the Vowel Shift. RP /ʌ/ then comes from the shortening before /ð/ that brother and mother also show." },
   { time = 1570, ipa = "ˈuːðər", note = "Early Modern English, Hart 1551, scored at 1570: Hart says the o of do, to and other has 'the proper sound of the u'. (Jones sect. 4.2, PDF 222 (book p. 209)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈʌðə" },
+  { time = "final", ipa = "ˈʌðə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): other /ʌ́ðə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -82,7 +82,7 @@ forms = [
   { time = 403, ipa = "ˈlɑjst", note = "PWGmc *laist (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑːst" },
   { time = 1687, ipa = "ˈlæːst", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper says the a of ass is lengthened in last with no change of quality. (Jones sect. 4.2(2), PDF 232 (book p. 219); vowel values PDF 233, 273). Added 2026-10-06." },
-  { time = "final", ipa = "ˈlɑːst" },
+  { time = "final", ipa = "ˈlɑːst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): last /lɑ́ːst/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -96,7 +96,7 @@ forms = [
   { time = 403, ipa = "ˈniwi", note = "PWGmc *niwi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈniːwe", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈneːwe. Transcription convention: anglianise() turned West Saxon nīewe into ē, but its īe comes from *īo, and Northumbrian has nīwe (Ringe & Taylor §6.6.3, PDF 264; Hoad, Klein s.v. new)." },
   { time = 1400, ipa = "ˈniw" },
-  { time = "final", ipa = "ˈnjuː" },
+  { time = "final", ipa = "ˈnjʉw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): new /njʉ́w/, with r written ɹ and the stress as ˈ. Was ˈnjuː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -110,7 +110,7 @@ forms = [
   { time = 403, ipa = "ˈlɑŋg", note = "PWGmc *lang (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑŋg" },
   { time = 1400, ipa = "ˈlɔːŋg" },
-  { time = "final", ipa = "ˈlɒŋ" },
+  { time = "final", ipa = "ˈlɔŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): long /lɔ́ŋ/, with r written ɹ and the stress as ˈ. Was ˈlɒŋ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -125,7 +125,7 @@ forms = [
   { time = 900, ipa = "ˈɑld", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈæɑld. Dialect variant: eald is West Saxon, with breaking before *lC. Anglian retracted the vowel instead: Angl. ald (Ringe & Taylor §6.2.3, PDF 199 and 234; Wiktionary lists ald as the Anglian form). ME ōld continues the Anglian vowel." },
   { time = 1400, ipa = "ˈɔːld" },
   { time = 1580, ipa = "ˈoʊld", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨ołd⟩ with his half-vowel l, beside ⟨old⟩. (Jones sect. 4.3.1, Table 4.12, PDF 264 (book p. 251)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈəʊld" },
+  { time = "final", ipa = "ˈəwld", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): old /ə́wld/, with r written ɹ and the stress as ˈ. Was ˈəʊld (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -138,7 +138,7 @@ forms = [
   { time = 200, ipa = "ˈkindiz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈkinθiz. Kroonen reconstructs *kindi- with Verner's d (ON kind; PDF 328), where Wiktionary's *kinþiz assumes a root accent. The books outrank Wiktionary for the 200 column." },
   { time = 900, ipa = "ˈkynd" },
   { time = 1400, ipa = "ˈkiːnd" },
-  { time = "final", ipa = "ˈkaɪnd" },
+  { time = "final", ipa = "ˈkɑjnd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): kind /kɑ́jnd/, with r written ɹ and the stress as ˈ. Was ˈkaɪnd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -153,7 +153,7 @@ forms = [
   { time = 900, ipa = "ˈmixt" },
   { time = 1400, ipa = "ˈmixt" },
   { time = 1570, ipa = "ˈmɪxt", note = "Early Modern English, Hart 1570, scored at 1570: Attested only inside almighty, Hart's ⟨aul-mih-ti⟩. (Jones sect. 4.1, PDF 211-212 (book pp. 198-199)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈmaɪt" },
+  { time = "final", ipa = "ˈmɑjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): might /mɑ́jt/, with r written ɹ and the stress as ˈ. Was ˈmaɪt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -166,7 +166,7 @@ forms = [
   { time = 200, ipa = "ˈθriːz", category = "num" },
   { time = 900, ipa = "ˈθriː" },
   { time = 1400, ipa = "ˈθreː" },
-  { time = "final", ipa = "ˈθɹiː" },
+  { time = "final", ipa = "ˈθɹɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): three /θrɪ́j/, with r written ɹ and the stress as ˈ. Was ˈθɹiː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -181,7 +181,7 @@ forms = [
   { time = 900, ipa = "ˈsunu" },
   { time = 1400, ipa = "ˈsun" },
   { time = 1570, ipa = "ˈsʊn", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨sun⟩ with short u, the letter he also uses in ⟨tu⟩ 'to' and ⟨kum⟩ 'come'. (Jones sect. 4.1, PDF 211-212 (book pp. 198-199)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈsʌn" },
+  { time = "final", ipa = "ˈsʌn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): son /sʌ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -194,7 +194,7 @@ forms = [
   { time = 200, ipa = "ˈmundiz", category = "noun" },
   { time = 900, ipa = "ˈmynd", note = "Transcribed from OE mynd (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = 1400, ipa = "ˈmiːnd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈmuːnd. Dialect variant: ME u for OE y is West Midland and South-Western [y]; the standard has [iː], which final /maɪnd/ continues (Minkova §7.3.1; Steponavičius §180, §194; Pyles & Algeo pp. 145-146; Klein PDF 493)." },
-  { time = "final", ipa = "ˈmaɪnd" },
+  { time = "final", ipa = "ˈmɑjnd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mind /mɑ́jnd/, with r written ɹ and the stress as ˈ. Was ˈmaɪnd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -208,7 +208,7 @@ forms = [
   { time = 403, ipa = "ˈsɑɣu", note = "PWGmc *sagu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsɑgu" },
   { time = 1400, ipa = "ˈsaw" },
-  { time = "final", ipa = "ˈsɔː" },
+  { time = "final", ipa = "ˈsoː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): saw /sóː/, with r written ɹ and the stress as ˈ. Was ˈsɔː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -245,7 +245,7 @@ forms = [
   { time = 403, ipa = "ˈbrɔːθer", note = "PWGmc *brōþer (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbroːθor" },
   { time = 1400, ipa = "ˈbroːðər" },
-  { time = "final", ipa = "ˈbɹʌðə" },
+  { time = "final", ipa = "ˈbɹʌðə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): brother /brʌ́ðə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -259,7 +259,7 @@ forms = [
   { time = 403, ipa = "ˈxɑβɑnu", note = "PWGmc *habanu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæfen" },
   { time = 1400, ipa = "ˈhaːvən" },
-  { time = "final", ipa = "ˈheɪvən" },
+  { time = "final", ipa = "ˈhɛjvən", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): haven /hɛ́jvən/, with r written ɹ and the stress as ˈ. Was ˈheɪvən (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -271,7 +271,7 @@ forms = [
   { time = -2000, ipa = "ˈkeħilos", category = "adj", note = "PIE *kéh₂ilos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑjlɑz", category = "adj" },
   { time = 900, ipa = "ˈxɑːl" },
-  { time = "final", ipa = "ˈhəʊl" },
+  { time = "final", ipa = "ˈhəwl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): whole /hə́wl/, with r written ɹ and the stress as ˈ. Was ˈhəʊl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -284,7 +284,7 @@ forms = [
   { time = 200, ipa = "ˈxɑrðuz", category = "adj" },
   { time = 900, ipa = "ˈxæɑrd" },
   { time = 1400, ipa = "ˈhard" },
-  { time = "final", ipa = "ˈhɑːd" },
+  { time = "final", ipa = "ˈhɑːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hard /hɑ́ːd/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -298,7 +298,7 @@ forms = [
   { time = 403, ipa = "ˈɑndiː", note = "PWGmc *andī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈende" },
   { time = 1400, ipa = "ˈeːnd" },
-  { time = "final", ipa = "ˈɛnd" },
+  { time = "final", ipa = "ˈɛnd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): end /ɛ́nd/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -313,7 +313,7 @@ forms = [
   { time = 900, ipa = "ˈxeorte" },
   { time = 1400, ipa = "ˈhɛrt" },
   { time = 1621, ipa = "ˈhæɹt", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨hart⟩, listed under [æː]/[æ]. (Jones sect. 4.3(2), Table 4.10, PDF 260 (book p. 247); sample PDF 224 (book p. 211)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈhɑːt" },
+  { time = "final", ipa = "ˈhɑːt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): heart /hɑ́ːt/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -327,7 +327,7 @@ forms = [
   { time = 403, ipa = "ˈjuŋg", note = "PWGmc *jung (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjuŋg" },
   { time = 1400, ipa = "ˈjuŋg" },
-  { time = "final", ipa = "ˈjʌŋ" },
+  { time = "final", ipa = "ˈjʌŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): young /jʌ́ŋ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -342,7 +342,7 @@ forms = [
   { time = 900, ipa = "ˈdæɑːθ" },
   { time = 1400, ipa = "ˈdɛːθ" },
   { time = 1687, ipa = "ˈdɛθ", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists death where ea stands for 'e short', which Jones gives as [ɛ]. (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈdɛθ" },
+  { time = "final", ipa = "ˈdɛθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): death /dɛ́θ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -356,7 +356,7 @@ forms = [
   { time = 403, ipa = "ˈfimf", note = "PWGmc *fimf (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiːf" },
   { time = 1400, ipa = "ˈfiːf" },
-  { time = "final", ipa = "ˈfaɪv" },
+  { time = "final", ipa = "ˈfɑjv", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): five /fɑ́jv/, with r written ɹ and the stress as ˈ. Was ˈfaɪv (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -370,7 +370,7 @@ forms = [
   { time = 403, ipa = "ˈfewwɑr", note = "PWGmc *feuwar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfeoːwer" },
   { time = 1400, ipa = "ˈfɔwr" },
-  { time = "final", ipa = "ˈfɔː" },
+  { time = "final", ipa = "ˈfoː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): four /fóː/, with r written ɹ and the stress as ˈ. Was ˈfɔː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -385,7 +385,7 @@ forms = [
   { time = 900, ipa = "ˈword" },
   { time = 1400, ipa = "ˈwurd" },
   { time = 1621, ipa = "ˈwuːɹd", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨würd⟩, in the [uː] column. (Jones sect. 4.3(2), Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈwɜːd" },
+  { time = "final", ipa = "ˈwəːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): word /wə́ːd/, with r written ɹ and the stress as ˈ. Was ˈwɜːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -400,7 +400,7 @@ forms = [
   { time = 900, ipa = "ˈdoxtor" },
   { time = 1400, ipa = "ˈdɔxtər" },
   { time = 1621, ipa = "ˈdaʊxtəɹ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨dauħter⟩. (Jones sect. 4.4.3, Table 4.17, PDF 274 (book p. 261); text PDF 275). Added 2026-10-06." },
-  { time = "final", ipa = "ˈdɔːtə" },
+  { time = "final", ipa = "ˈdoːtə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): daughter /dóːtə/, with r written ɹ and the stress as ˈ. Was ˈdɔːtə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -415,7 +415,7 @@ forms = [
   { time = 900, ipa = "ˈfyːr" },
   { time = 1400, ipa = "ˈfiːr" },
   { time = 1621, ipa = "ˈfəɪəɹ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨fjer⟩, his own example of j and e joining, which Jones reads [əiər]. (Jones sect. 4.3(2), Table 4.6, PDF 255 (book p. 242)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈfaɪə" },
+  { time = "final", ipa = "ˈfɑjə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fire /fɑ́jə/, with r written ɹ and the stress as ˈ. Was ˈfaɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -442,7 +442,7 @@ forms = [
   { time = 403, ipa = "ˈfriː", note = "PWGmc *frī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfreoː" },
   { time = 1400, ipa = "ˈfreː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈfrøː. Dialect variant: ME [øː] for OE ēo is South-Western and West Midland; elsewhere [eː], which the final /iː/ continues (Jones §2.4.4, Table 2.35; Minkova §7.2.2; Steponavičius §180; Pyles & Algeo p. 147)." },
-  { time = "final", ipa = "ˈfɹiː" },
+  { time = "final", ipa = "ˈfɹɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): free /frɪ́j/, with r written ɹ and the stress as ˈ. Was ˈfɹiː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -456,7 +456,7 @@ forms = [
   { time = 403, ipa = "ˈbɑdi", note = "PWGmc *badi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbedd" },
   { time = 1400, ipa = "ˈbɛd" },
-  { time = "final", ipa = "ˈbɛd" },
+  { time = "final", ipa = "ˈbɛd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bed /bɛ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -471,7 +471,7 @@ forms = [
   { time = 900, ipa = "ˈfull" },
   { time = 1400, ipa = "ˈful", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈfoːl. Wrong word: the old target /ˈfoːl/ is ME fol 'fool', borrowed from Old French, which the bootstrap attached. Klein s.v. full, PDF 325: ME full, from OE full." },
   { time = 1687, ipa = "ˈfʊl", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper treats the vowel of full as a short vowel whose long partner is the vowel of fole 'foal'. (Jones sect. 4.2(2), PDF 233 (book p. 220)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈfʊl" },
+  { time = "final", ipa = "ˈfɵl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): full /fɵ́l/, with r written ɹ and the stress as ˈ. Was ˈfʊl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -485,7 +485,7 @@ forms = [
   { time = 403, ipa = "ˈlewxt", note = "PWGmc *leuht (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈleoːxt" },
   { time = 1400, ipa = "ˈlixt" },
-  { time = "final", ipa = "ˈlaɪt" },
+  { time = "final", ipa = "ˈlɑjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): light /lɑ́jt/, with r written ɹ and the stress as ˈ. Was ˈlaɪt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -499,7 +499,7 @@ forms = [
   { time = 403, ipa = "ˈsexs", note = "PWGmc *sehs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsiks" },
   { time = 1400, ipa = "ˈsiks" },
-  { time = "final", ipa = "ˈsɪks" },
+  { time = "final", ipa = "ˈsɪks", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): six /sɪ́ks/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -513,7 +513,7 @@ forms = [
   { time = 403, ipa = "ˈxwiːt", note = "PWGmc *hwīt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwiːt" },
   { time = 1400, ipa = "ˈhwiːt" },
-  { time = "final", ipa = "ˈwaɪt" },
+  { time = "final", ipa = "ˈwɑjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): white /wɑ́jt/, with r written ɹ and the stress as ˈ. Was ˈwaɪt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -527,7 +527,7 @@ forms = [
   { time = 403, ipa = "ˈtexun", note = "PWGmc *tehun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈteːn" },
   { time = 1400, ipa = "ˈtɛn" },
-  { time = "final", ipa = "ˈtɛn" },
+  { time = "final", ipa = "ˈtɛn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ten /tɛ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -541,7 +541,7 @@ forms = [
   { time = 403, ipa = "ˈkɑld", note = "PWGmc *kald (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkɑld", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈt͡ʃæɑld. Dialect variant: ċeald is West Saxon, with breaking and palatalisation. Ringe & Taylor give *kaldaz > *kæld > WS ċeald, Angl. cald (PDF 199); Wiktionary lists cald as the Anglian form. ME cōld, with its k, continues the Anglian form." },
   { time = 1400, ipa = "ˈkɔːld" },
-  { time = "final", ipa = "ˈkəʊld" },
+  { time = "final", ipa = "ˈkəwld", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): cold /kə́wld/, with r written ɹ and the stress as ˈ. Was ˈkəʊld (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -556,7 +556,7 @@ forms = [
   { time = 900, ipa = "ˈdræɑːm" },
   { time = 1400, ipa = "ˈdrɛːm" },
   { time = 1687, ipa = "ˈdɹiːm", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists dream where ea stands for 'e long', a class he keeps apart from 'ee' (ear, near, fear). (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈdɹiːm" },
+  { time = "final", ipa = "ˈdɹɪjm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dream /drɪ́jm/, with r written ɹ and the stress as ˈ. Was ˈdɹiːm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -570,7 +570,7 @@ forms = [
   { time = 403, ipa = "ˈswɔːtiː", note = "PWGmc *swōtī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsweːte" },
   { time = 1400, ipa = "ˈsweːt" },
-  { time = "final", ipa = "ˈswiːt" },
+  { time = "final", ipa = "ˈswɪjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sweet /swɪ́jt/, with r written ɹ and the stress as ˈ. Was ˈswiːt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -585,7 +585,7 @@ forms = [
   { time = 900, ipa = "ˈkwik" },
   { time = 1400, ipa = "ˈkwik" },
   { time = 1570, ipa = "ˈkwɪk", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨kuik⟩ ('the quick and the dead'). (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈkwɪk" },
+  { time = "final", ipa = "ˈkwɪk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): quick /kwɪ́k/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -599,7 +599,7 @@ forms = [
   { time = 403, ipa = "ˈseβun", note = "PWGmc *sebun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈseofon" },
   { time = 1400, ipa = "ˈsɛvən" },
-  { time = "final", ipa = "ˈsɛvən" },
+  { time = "final", ipa = "ˈsɛvən", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): seven /sɛ́vən/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -613,7 +613,7 @@ forms = [
   { time = 900, ipa = "ˈfloːr" },
   { time = 1400, ipa = "ˈfloːr" },
   { time = 1687, ipa = "ˈfloːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles puts floor in the set with foal, mole, soul and loaf, which Jones gives as [ɔː] or [oː]. (Jones sect. 4.3(2), PDF 258 (book p. 245)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈflɔː" },
+  { time = "final", ipa = "ˈfloː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): floor /flóː/, with r written ɹ and the stress as ˈ. Was ˈflɔː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -627,7 +627,7 @@ forms = [
   { time = 403, ipa = "ˈbɑjt", note = "PWGmc *bait (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbɑːt" },
   { time = 1400, ipa = "ˈbɔːt" },
-  { time = "final", ipa = "ˈbəʊt" },
+  { time = "final", ipa = "ˈbəwt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): boat /bə́wt/, with r written ɹ and the stress as ˈ. Was ˈbəʊt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -641,7 +641,7 @@ forms = [
   { time = 403, ipa = "ˈfisk", note = "PWGmc *fisk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiʃ" },
   { time = 1400, ipa = "ˈfiʃ" },
-  { time = "final", ipa = "ˈfɪʃ" },
+  { time = "final", ipa = "ˈfɪʃ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fish /fɪ́ʃ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -656,7 +656,7 @@ forms = [
   { time = 900, ipa = "ˈæxtɑ", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈæɑxtɑ. Dialect variant: eahta is West Saxon, with breaking. Ringe & Taylor §6.6.3 (PDF 327): *æhtā > OE eahta (WS), with Anglian smoothing in North. æhto and Merc. hund-æhta-tiġ 'eighty'. PDE eight continues the Anglian form (Minkova §7.4 starts ME eighte from OE ehta)." },
   { time = 1400, ipa = "ˈæjxt" },
   { time = 1687, ipa = "ˈæɪt", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper says eight is 'commonly sounded ait', with the diphthong formed from the a of can and i. (Jones sect. 4.4.4, PDF 276 (book p. 263)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈeɪt" },
+  { time = "final", ipa = "ˈɛjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): eight /ɛ́jt/, with r written ɹ and the stress as ˈ. Was ˈeɪt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -669,7 +669,7 @@ forms = [
   { time = 200, ipa = "ˈsternɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈsteorrɑ" },
   { time = 1400, ipa = "ˈstɛr" },
-  { time = "final", ipa = "ˈstɑː", note = "RP from Wiktionary (kaikki), star; added 2026-10-06." },
+  { time = "final", ipa = "ˈstɑː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): star /stɑ́ː/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), star; added 2026-10-06." },
 ]
 
 [[words]]
@@ -682,7 +682,7 @@ forms = [
   { time = 200, ipa = "ˈskɑrɔː", category = "noun" },
   { time = 900, ipa = "ˈʃɑru" },
   { time = 1400, ipa = "ˈʃaːr" },
-  { time = "final", ipa = "ˈʃɛə" },
+  { time = "final", ipa = "ˈʃɛː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): share /ʃɛ́ː/, with r written ɹ and the stress as ˈ. Was ˈʃɛə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -696,7 +696,7 @@ forms = [
   { time = 403, ipa = "ˈuβil", note = "PWGmc *ubil (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈyfel" },
   { time = 1400, ipa = "ˈivəl" },
-  { time = "final", ipa = "ˈiːvəl" },
+  { time = "final", ipa = "ˈɪjvəl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): evil /ɪ́jvəl/, with r written ɹ and the stress as ˈ. Was ˈiːvəl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -709,7 +709,7 @@ forms = [
   { time = 200, ipa = "ˈsunθrɑz", category = "adj" },
   { time = 900, ipa = "ˈsuːθ" },
   { time = 1400, ipa = "ˈsuːθ" },
-  { time = "final", ipa = "ˈsaʊθ" },
+  { time = "final", ipa = "ˈsawθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): south /sáwθ/, with r written ɹ and the stress as ˈ. Was ˈsaʊθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -723,7 +723,7 @@ forms = [
   { time = 403, ipa = "ˈbewz", note = "PWGmc *beuʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeoːr" },
   { time = 1400, ipa = "ˈbeːr" },
-  { time = "final", ipa = "ˈbɪə" },
+  { time = "final", ipa = "ˈbɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): beer /bɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈbɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -737,7 +737,7 @@ forms = [
   { time = 403, ipa = "ˈwind", note = "PWGmc *wind (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwind" },
   { time = 1400, ipa = "ˈwiːnd" },
-  { time = "final", ipa = "ˈwɪnd" },
+  { time = "final", ipa = "ˈwɪnd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wind /wɪ́nd/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -752,7 +752,7 @@ forms = [
   { time = 900, ipa = "ˈfoːt" },
   { time = 1400, ipa = "ˈfoːt" },
   { time = 1687, ipa = "ˈfuːt", note = "Early Modern English, Coles 1674, scored at 1687: Coles groups foot with good, food and book, which Jones reads as [uː]. (Jones sect. 4.3(2), PDF 258 (book p. 245) and Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈfʊt", note = "RP from Wiktionary (kaikki), foot; added 2026-10-06." },
+  { time = "final", ipa = "ˈfɵt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): foot /fɵ́t/, with r written ɹ and the stress as ˈ. Was ˈfʊt (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), foot; added 2026-10-06." },
 ]
 
 [[words]]
@@ -766,7 +766,7 @@ forms = [
   { time = 403, ipa = "ˈniɣun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈnewn. Ringe & Taylor §5.3, PDF 181: the English line has northern West Germanic *nigun (OE nigon, OF niugen, OS nigun); *neun is the form of OHG niun. Reconstruction column, where Ringe & Taylor outrank Wiktionary. Transcribed by pwgmc_ipa. PWGmc *neun (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnigon" },
   { time = 1400, ipa = "ˈniːn" },
-  { time = "final", ipa = "ˈnaɪn" },
+  { time = "final", ipa = "ˈnɑjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): nine /nɑ́jn/, with r written ɹ and the stress as ˈ. Was ˈnaɪn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -779,7 +779,7 @@ forms = [
   { time = 200, ipa = "ˈɑrmɑz", category = "noun" },
   { time = 900, ipa = "ˈæɑrm" },
   { time = 1400, ipa = "ˈarm" },
-  { time = "final", ipa = "ˈɑːm" },
+  { time = "final", ipa = "ˈɑːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): arm /ɑ́ːm/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -791,7 +791,7 @@ forms = [
   { time = -2000, ipa = "ˈgʲustus", category = "noun", note = "PIE *ǵéwstus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkustuz", category = "noun" },
   { time = 900, ipa = "ˈkost" },
-  { time = "final", ipa = "ˈkɒst" },
+  { time = "final", ipa = "ˈkɔst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): cost /kɔ́st/, with r written ɹ and the stress as ˈ. Was ˈkɒst (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -806,7 +806,7 @@ forms = [
   { time = 900, ipa = "ˈwæɑrm" },
   { time = 1400, ipa = "ˈwarm" },
   { time = 1580, ipa = "ˈwærəm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨warḿ⟩ with his half-vowel m. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈwɔːm" },
+  { time = "final", ipa = "ˈwoːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): warm /wóːm/, with r written ɹ and the stress as ˈ. Was ˈwɔːm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -846,7 +846,7 @@ forms = [
   { time = 900, ipa = "ˈgɑːst" },
   { time = 1400, ipa = "ˈgɔːst" },
   { time = 1570, ipa = "ˈgoːst", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨gōst⟩ with the long mark. (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈgəʊst" },
+  { time = "final", ipa = "ˈgəwst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ghost /gə́wst/, with r written ɹ and the stress as ˈ. Was ˈgəʊst (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -860,7 +860,7 @@ forms = [
   { time = 403, ipa = "ˈxluːd", note = "PWGmc *hlūd (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxluːd" },
   { time = 1400, ipa = "ˈluːd" },
-  { time = "final", ipa = "ˈlaʊd" },
+  { time = "final", ipa = "ˈlawd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): loud /láwd/, with r written ɹ and the stress as ˈ. Was ˈlaʊd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -874,7 +874,7 @@ forms = [
   { time = 403, ipa = "ˈfiŋgr", note = "PWGmc *fingr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiŋger" },
   { time = 1400, ipa = "ˈfiŋgər" },
-  { time = "final", ipa = "ˈfɪŋgə", note = "Short final schwa (RP /ˈfɪŋɡə/), consistent with the column — Wiktionary's ˈfɪŋgəː was the lone long-schwa transcription of 177." },
+  { time = "final", ipa = "ˈfɪŋgə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): finger /fɪ́ŋgə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. Short final schwa (RP /ˈfɪŋɡə/), consistent with the column — Wiktionary's ˈfɪŋgəː was the lone long-schwa transcription of 177." },
 ]
 
 [[words]]
@@ -888,7 +888,7 @@ forms = [
   { time = 403, ipa = "ˈwedr", note = "PWGmc *wedr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈweder" },
   { time = 1400, ipa = "ˈwɛdər" },
-  { time = "final", ipa = "ˈwɛðə" },
+  { time = "final", ipa = "ˈwɛðə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): weather /wɛ́ðə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -902,7 +902,7 @@ forms = [
   { time = 900, ipa = "ˈxæɑrm" },
   { time = 1400, ipa = "ˈharm", note = "Transcribed from ME harm (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = 1580, ipa = "ˈhærəm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨harḿ⟩. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈhɑːm" },
+  { time = "final", ipa = "ˈhɑːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): harm /hɑ́ːm/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -916,7 +916,7 @@ forms = [
   { time = 403, ipa = "ˈwintru", note = "PWGmc *wintru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwinter" },
   { time = 1400, ipa = "ˈwintər" },
-  { time = "final", ipa = "ˈwɪntə" },
+  { time = "final", ipa = "ˈwɪntə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): winter /wɪ́ntə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -930,7 +930,7 @@ forms = [
   { time = 403, ipa = "ˈxorn", note = "PWGmc *horn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxorn" },
   { time = 1400, ipa = "ˈhɔrn" },
-  { time = "final", ipa = "ˈhɔːn" },
+  { time = "final", ipa = "ˈhoːn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): horn /hóːn/, with r written ɹ and the stress as ˈ. Was ˈhɔːn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -944,7 +944,7 @@ forms = [
   { time = 900, ipa = "ˈxoːre" },
   { time = 1400, ipa = "ˈhoːr" },
   { time = 1687, ipa = "ˈhoːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles puts whore, and hore 'hoar', in the set with foal, mole and soul, which Jones gives as [ɔː] or [oː]. (Jones sect. 4.3(2), PDF 258 (book p. 245)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈhɔː" },
+  { time = "final", ipa = "ˈhoː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): whore /hóː/, with r written ɹ and the stress as ˈ. Was ˈhɔː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -959,7 +959,7 @@ forms = [
   { time = 900, ipa = "ˈæɑːr" },
   { time = 1400, ipa = "ˈɛːr" },
   { time = 1687, ipa = "ˈiːɹ", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists ears where ea stands for 'ee', which Jones gives as [iː]. (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈɪə" },
+  { time = "final", ipa = "ˈɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ear /ɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -972,7 +972,7 @@ forms = [
   { time = 200, ipa = "ˈdunstɑ̃", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈdustɑ̃. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target is a reconstruction, and Kroonen reconstructs *dunsta- (PDF 149), which Wiktionary also lists as *dunstą. *dustą cannot give the long ū of OE dūst." },
   { time = 900, ipa = "ˈduːst" },
   { time = 1400, ipa = "ˈdust" },
-  { time = "final", ipa = "ˈdʌst" },
+  { time = "final", ipa = "ˈdʌst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dust /dʌ́st/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -986,7 +986,7 @@ forms = [
   { time = 403, ipa = "ˈwulf", note = "PWGmc *wulf (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwulf" },
   { time = 1400, ipa = "ˈwulf" },
-  { time = "final", ipa = "ˈwʊlf" },
+  { time = "final", ipa = "ˈwɵlf", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wolf /wɵ́lf/, with r written ɹ and the stress as ˈ. Was ˈwʊlf (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1000,7 +1000,7 @@ forms = [
   { time = 403, ipa = "ˈkɔː", note = "PWGmc *kō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkuː" },
   { time = 1400, ipa = "ˈkuː" },
-  { time = "final", ipa = "ˈkaʊ" },
+  { time = "final", ipa = "ˈkaw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): cow /káw/, with r written ɹ and the stress as ˈ. Was ˈkaʊ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1025,7 +1025,7 @@ forms = [
   { time = 200, ipa = "ˈxʷexʷlɑ̃", category = "noun" },
   { time = 900, ipa = "ˈxweoːl" },
   { time = 1400, ipa = "ˈhweːl" },
-  { time = "final", ipa = "ˈwiːl" },
+  { time = "final", ipa = "ˈwɪjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wheel /wɪ́jl/, with r written ɹ and the stress as ˈ. Was ˈwiːl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1039,7 +1039,7 @@ forms = [
   { time = 403, ipa = "ˈjuɣunθi", note = "PWGmc *jugunþi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjuguθ" },
   { time = 1400, ipa = "ˈjuːð" },
-  { time = "final", ipa = "ˈjuːθ" },
+  { time = "final", ipa = "ˈjʉwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): youth /jʉ́wθ/, with r written ɹ and the stress as ˈ. Was ˈjuːθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1052,7 +1052,7 @@ forms = [
   { time = 200, ipa = "ˈwiːrɑz", category = "noun" },
   { time = 900, ipa = "ˈwiːr" },
   { time = 1400, ipa = "ˈwiːr", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈwɛːr. Wrong word: the old target /ˈwɛːr(ə)/ is the ME verb were (past of be), which the bootstrap attached. Klein s.v. wire, PDF 856: ME wyre, wir, from OE wīr." },
-  { time = "final", ipa = "ˈwaɪə", note = "RP from Wiktionary (kaikki), wire; added 2026-10-06." },
+  { time = "final", ipa = "ˈwɑjə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wire /wɑ́jə/, with r written ɹ and the stress as ˈ. Was ˈwaɪə (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), wire; added 2026-10-06." },
 ]
 
 [[words]]
@@ -1066,7 +1066,7 @@ forms = [
   { time = 403, ipa = "ˈɣɑrd", note = "PWGmc *gard (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjæɑrd" },
   { time = 1400, ipa = "ˈjɛːrd" },
-  { time = "final", ipa = "ˈjɑːd" },
+  { time = "final", ipa = "ˈjɑːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): yard /jɑ́ːd/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1080,7 +1080,7 @@ forms = [
   { time = 403, ipa = "ˈθunniː", note = "PWGmc *þunnī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθynne" },
   { time = 1400, ipa = "ˈθin" },
-  { time = "final", ipa = "ˈθɪn" },
+  { time = "final", ipa = "ˈθɪn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thin /θɪ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1094,7 +1094,7 @@ forms = [
   { time = 403, ipa = "ˈfimftɔː", note = "PWGmc *fimftō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfiːftɑ" },
   { time = 1400, ipa = "ˈfift" },
-  { time = "final", ipa = "ˈfɪfθ", note = "RP from Wiktionary (kaikki), fifth; added 2026-10-06." },
+  { time = "final", ipa = "ˈfɪfθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fifth /fɪ́fθ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), fifth; added 2026-10-06." },
 ]
 
 [[words]]
@@ -1108,7 +1108,7 @@ forms = [
   { time = 403, ipa = "ˈfuxs", note = "PWGmc *fuhs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfoks" },
   { time = 1400, ipa = "ˈfɔks" },
-  { time = "final", ipa = "ˈfɒks" },
+  { time = "final", ipa = "ˈfɔks", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fox /fɔ́ks/, with r written ɹ and the stress as ˈ. Was ˈfɒks (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1122,7 +1122,7 @@ forms = [
   { time = 403, ipa = "ˈbukk", note = "PWGmc *bukk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbukk" },
   { time = 1400, ipa = "ˈbuk" },
-  { time = "final", ipa = "ˈbʌk" },
+  { time = "final", ipa = "ˈbʌk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): buck /bʌ́k/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1136,7 +1136,7 @@ forms = [
   { time = 403, ipa = "ˈθikkwiː", note = "PWGmc *þikkwī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθikke" },
   { time = 1400, ipa = "ˈθik" },
-  { time = "final", ipa = "ˈθɪk" },
+  { time = "final", ipa = "ˈθɪk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thick /θɪ́k/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1149,7 +1149,7 @@ forms = [
   { time = 200, ipa = "ˈwɑrðɑz", category = "noun" },
   { time = 403, ipa = "ˈwɑrd", note = "PWGmc *ward (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæɑrd" },
-  { time = "final", ipa = "ˈwɔːd" },
+  { time = "final", ipa = "ˈwoːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ward /wóːd/, with r written ɹ and the stress as ˈ. Was ˈwɔːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1163,7 +1163,7 @@ forms = [
   { time = 403, ipa = "ˈskɑllju", note = "PWGmc *skallju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃell" },
   { time = 1400, ipa = "ˈʃɛl", note = "Transcribed from ME schelle (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
-  { time = "final", ipa = "ˈʃɛl" },
+  { time = "final", ipa = "ˈʃɛl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): shell /ʃɛ́l/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1176,7 +1176,7 @@ forms = [
   { time = 200, ipa = "ˈwiðuwɔ̃ː", category = "noun" },
   { time = 403, ipa = "ˈwiduwɑː", note = "PWGmc *widuwā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwiduwe" },
-  { time = "final", ipa = "ˈwɪdəʊ" },
+  { time = "final", ipa = "ˈwɪdəw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): widow /wɪ́dəw/, with r written ɹ and the stress as ˈ. Was ˈwɪdəʊ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1190,7 +1190,7 @@ forms = [
   { time = 403, ipa = "ˈknew", note = "PWGmc *kneu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkneoːw" },
   { time = 1400, ipa = "ˈkneː" },
-  { time = "final", ipa = "ˈniː", note = "RP from Wiktionary (kaikki), knee; added 2026-10-06." },
+  { time = "final", ipa = "ˈnɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): knee /nɪ́j/, with r written ɹ and the stress as ˈ. Was ˈniː (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), knee; added 2026-10-06." },
 ]
 
 [[words]]
@@ -1205,7 +1205,7 @@ forms = [
   { time = 900, ipa = "ˈkorn" },
   { time = 1400, ipa = "ˈkɔrn" },
   { time = 1580, ipa = "ˈkɔrən", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨corń⟩ with his half-vowel n. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈkɔːn" },
+  { time = "final", ipa = "ˈkoːn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): corn /kóːn/, with r written ɹ and the stress as ˈ. Was ˈkɔːn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1219,7 +1219,7 @@ forms = [
   { time = 403, ipa = "ˈtɑlu", note = "PWGmc *talu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtɑlu" },
   { time = 1400, ipa = "ˈtaːl" },
-  { time = "final", ipa = "ˈteɪl", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈteːl. Transcription convention: RP has the FACE diphthong; /eː/ is Scots and Northern (McMahon §3.3.1; Steponavičius §187; Jones §5.3; Minkova Fig. 8.4). Every other FACE target has /eɪ/." },
+  { time = "final", ipa = "ˈtɛjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): tale /tɛ́jl/, with r written ɹ and the stress as ˈ. Was ˈteɪl (Wiktionary RP, Gimsonian symbols). TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈteːl. Transcription convention: RP has the FACE diphthong; /eː/ is Scots and Northern (McMahon §3.3.1; Steponavičius §187; Jones §5.3; Minkova Fig. 8.4). Every other FACE target has /eɪ/." },
 ]
 
 [[words]]
@@ -1234,7 +1234,7 @@ forms = [
   { time = 900, ipa = "ˈtoːθ" },
   { time = 1400, ipa = "ˈtoːθ" },
   { time = 1621, ipa = "ˈtuːθ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨tüth⟩, in the [uː] column. (Jones sect. 4.3(2), Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈtuːθ" },
+  { time = "final", ipa = "ˈtʉwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): tooth /tʉ́wθ/, with r written ɹ and the stress as ˈ. Was ˈtuːθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1248,7 +1248,7 @@ forms = [
   { time = 403, ipa = "ˈkinnu", note = "PWGmc *kinnu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈt͡ʃinn" },
   { time = 1400, ipa = "ˈt͡ʃin" },
-  { time = "final", ipa = "ˈt͡ʃɪn" },
+  { time = "final", ipa = "ˈt͡ʃɪn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): chin /ʧɪ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1262,7 +1262,7 @@ forms = [
   { time = 403, ipa = "ˈnest", note = "PWGmc *nest (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnest" },
   { time = 1400, ipa = "ˈnɛst" },
-  { time = "final", ipa = "ˈnɛst" },
+  { time = "final", ipa = "ˈnɛst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): nest /nɛ́st/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1287,7 +1287,7 @@ forms = [
   { time = 200, ipa = "ˈɸurðuz", category = "noun" },
   { time = 403, ipa = "ˈfurdu", note = "PWGmc *furdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈford" },
-  { time = "final", ipa = "ˈfɔːd" },
+  { time = "final", ipa = "ˈfoːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ford /fóːd/, with r written ɹ and the stress as ˈ. Was ˈfɔːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1300,7 +1300,7 @@ forms = [
   { time = 200, ipa = "ˈɸexu", category = "noun" },
   { time = 403, ipa = "ˈfexu", note = "PWGmc *fehu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfeox" },
-  { time = "final", ipa = "ˈfiː" },
+  { time = "final", ipa = "ˈfɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fee /fɪ́j/, with r written ɹ and the stress as ˈ. Was ˈfiː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1314,7 +1314,7 @@ forms = [
   { time = 403, ipa = "ˈbrɑjd", note = "PWGmc *braid (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbrɑːd" },
   { time = 1400, ipa = "ˈbrɔːd" },
-  { time = "final", ipa = "ˈbɹɔːd" },
+  { time = "final", ipa = "ˈbɹoːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): broad /bróːd/, with r written ɹ and the stress as ˈ. Was ˈbɹɔːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1328,7 +1328,7 @@ forms = [
   { time = 403, ipa = "ˈɑjθ", note = "PWGmc *aiþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːθ" },
   { time = 1400, ipa = "ˈɔːθ" },
-  { time = "final", ipa = "ˈəʊθ" },
+  { time = "final", ipa = "ˈəwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): oath /ə́wθ/, with r written ɹ and the stress as ˈ. Was ˈəʊθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1354,7 +1354,7 @@ forms = [
   { time = 200, ipa = "ˈmɑri", category = "noun" },
   { time = 403, ipa = "ˈmɑri", note = "PWGmc *mari (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmere" },
-  { time = "final", ipa = "ˈmɪə" },
+  { time = "final", ipa = "ˈmɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mere /mɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈmɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1368,7 +1368,7 @@ forms = [
   { time = 403, ipa = "ˈxwɑl", note = "PWGmc *hwal (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxwæl" },
   { time = 1400, ipa = "ˈhwal" },
-  { time = "final", ipa = "ˈweɪl" },
+  { time = "final", ipa = "ˈwɛjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): whale /wɛ́jl/, with r written ɹ and the stress as ˈ. Was ˈweɪl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1382,7 +1382,7 @@ forms = [
   { time = 403, ipa = "ˈɣɑns", note = "PWGmc *gans (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgoːs" },
   { time = 1400, ipa = "ˈgoːs" },
-  { time = "final", ipa = "ˈguːs" },
+  { time = "final", ipa = "ˈgʉws", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): goose /gʉ́ws/, with r written ɹ and the stress as ˈ. Was ˈguːs (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1396,7 +1396,7 @@ forms = [
   { time = 403, ipa = "ˈdewz", note = "PWGmc *deuʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdeoːr" },
   { time = 1400, ipa = "ˈdeːr" },
-  { time = "final", ipa = "ˈdɪə" },
+  { time = "final", ipa = "ˈdɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): deer /dɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈdɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1409,7 +1409,7 @@ forms = [
   { time = 200, ipa = "ˈdewzɑz", category = "adj" },
   { time = 403, ipa = "ˈdewz", note = "PWGmc *deuʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdeoːr" },
-  { time = "final", ipa = "ˈdɪə" },
+  { time = "final", ipa = "ˈdɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): deer /dɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈdɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1423,7 +1423,7 @@ forms = [
   { time = 403, ipa = "ˈbɑz", note = "PWGmc *baʀ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbær" },
   { time = 1400, ipa = "ˈbaːr" },
-  { time = "final", ipa = "ˈbɛə" },
+  { time = "final", ipa = "ˈbɛː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bare /bɛ́ː/, with r written ɹ and the stress as ˈ. Was ˈbɛə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1437,7 +1437,7 @@ forms = [
   { time = 403, ipa = "ˈstrɑwm", note = "PWGmc *straum (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstræɑːm" },
   { time = 1400, ipa = "ˈstrɛːm" },
-  { time = "final", ipa = "ˈstɹiːm" },
+  { time = "final", ipa = "ˈstɹɪjm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): stream /strɪ́jm/, with r written ɹ and the stress as ˈ. Was ˈstɹiːm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1450,7 +1450,7 @@ forms = [
   { time = 200, ipa = "ˈsɛːðiz", category = "noun" },
   { time = 900, ipa = "ˈsæːd" },
   { time = 1400, ipa = "ˈseːd" },
-  { time = "final", ipa = "ˈsiːd" },
+  { time = "final", ipa = "ˈsɪjd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): seed /sɪ́jd/, with r written ɹ and the stress as ˈ. Was ˈsiːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1463,7 +1463,7 @@ forms = [
   { time = 200, ipa = "ˈdɛːðiz", category = "noun" },
   { time = 403, ipa = "ˈdɑːdi", note = "PWGmc *dādi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæːd" },
-  { time = "final", ipa = "ˈdiːd" },
+  { time = "final", ipa = "ˈdɪjd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): deed /dɪ́jd/, with r written ɹ and the stress as ˈ. Was ˈdiːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1478,7 +1478,7 @@ forms = [
   { time = 900, ipa = "ˈfloːd" },
   { time = 1400, ipa = "ˈfloːd" },
   { time = 1621, ipa = "ˈflʊd", note = "Early Modern English, Gil 1619, scored at 1621: Gil's sample poem has ⟨fludz⟩ 'floods' with plain u, the short vowel of ⟨but⟩. (Jones sect. 4.2(1), PDF 224 (book p. 211)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈflʌd" },
+  { time = "final", ipa = "ˈflʌd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): flood /flʌ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1504,7 +1504,7 @@ forms = [
   { time = 200, ipa = "ˈstɑllɑz", category = "noun" },
   { time = 403, ipa = "ˈstɑll", note = "PWGmc *stall (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstɑll", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈstæɑll. Dialect variant: steall is West Saxon, with breaking before *ll. Anglian retracted the vowel instead (Ringe & Taylor §6.2.3, PDF 199: *allai > WS ealle, Angl. alle); Wiktionary lists stall as an alternative form. PDE stall continues the Anglian vowel." },
-  { time = "final", ipa = "ˈstɔːl" },
+  { time = "final", ipa = "ˈstoːl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): stall /stóːl/, with r written ɹ and the stress as ˈ. Was ˈstɔːl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1518,7 +1518,7 @@ forms = [
   { time = 403, ipa = "ˈɑjk", note = "PWGmc *aik (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːk" },
   { time = 1400, ipa = "ˈɔːk" },
-  { time = "final", ipa = "ˈəʊk" },
+  { time = "final", ipa = "ˈəwk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): oak /ə́wk/, with r written ɹ and the stress as ˈ. Was ˈəʊk (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1531,7 +1531,7 @@ forms = [
   { time = 200, ipa = "ˈθrɛːðuz", category = "noun" },
   { time = 900, ipa = "ˈθræːd" },
   { time = 1400, ipa = "ˈθrɛːd" },
-  { time = "final", ipa = "ˈθɹɛd" },
+  { time = "final", ipa = "ˈθɹɛd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thread /θrɛ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1546,7 +1546,7 @@ forms = [
   { time = 900, ipa = "ˈsuːr" },
   { time = 1400, ipa = "ˈsuːr" },
   { time = 1687, ipa = "ˈsoːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles lists sour in the same set as foal, sore and floor, which Jones gives as [ɔː] or [oː]. (Jones sect. 4.3(2), PDF 258 (book p. 245)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈsaʊə" },
+  { time = "final", ipa = "ˈsawə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sour /sáwə/, with r written ɹ and the stress as ˈ. Was ˈsaʊə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1559,7 +1559,7 @@ forms = [
   { time = 200, ipa = "ˈɸrustɑz", category = "noun" },
   { time = 900, ipa = "ˈfrost", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈforst. Dialect variant: OE has forst and frost, and ME and PDE continue frost (Ringe & Taylor §6.10.2; Steponavičius §174; Jones Table 3.42; Hoad, Klein s.v. frost)." },
   { time = 1400, ipa = "ˈfrɔst" },
-  { time = "final", ipa = "ˈfɹɒst" },
+  { time = "final", ipa = "ˈfɹɔst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): frost /frɔ́st/, with r written ɹ and the stress as ˈ. Was ˈfɹɒst (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1573,7 +1573,7 @@ forms = [
   { time = 403, ipa = "ˈɑxtudɔː", note = "PWGmc *ahtudō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæxtoθɑ", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈæɑxtoθɑ. Dialect variant: eahtoþa is West Saxon, with breaking. Ringe & Taylor §6.6.3 (PDF 327) give Anglian æh- for 'eight' (Merc. hund-æhta-tiġ); PDE eighth continues the Anglian form." },
   { time = 1400, ipa = "ˈæjxtəð" },
-  { time = "final", ipa = "ˈeɪtθ" },
+  { time = "final", ipa = "ˈɛjtθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): eighth /ɛ́jtθ/, with r written ɹ and the stress as ˈ. Was ˈeɪtθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1588,7 +1588,7 @@ forms = [
   { time = 900, ipa = "ˈkynn" },
   { time = 1400, ipa = "ˈkin" },
   { time = 1621, ipa = "ˈkɪn", note = "Early Modern English, Gil 1619, scored at 1621: Gil writes ⟨kin⟩ 'blood relation' against ⟨kïn⟩ 'keen'. (Jones sect. 4.2(1), PDF 225 (book p. 212)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈkɪn" },
+  { time = "final", ipa = "ˈkɪn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): kin /kɪ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1602,7 +1602,7 @@ forms = [
   { time = 403, ipa = "ˈxlid", note = "PWGmc *hlid (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxlid" },
   { time = 1400, ipa = "ˈlid" },
-  { time = "final", ipa = "ˈlɪd" },
+  { time = "final", ipa = "ˈlɪd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lid /lɪ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1617,7 +1617,7 @@ forms = [
   { time = 900, ipa = "ˈdoːm" },
   { time = 1400, ipa = "ˈdoːm" },
   { time = 1621, ipa = "ˈduːm", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨düm⟩ 'judgment', in the [uː] column. (Jones sect. 4.3(2), Table 4.7, PDF 257 (book p. 244)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈduːm" },
+  { time = "final", ipa = "ˈdʉwm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): doom /dʉ́wm/, with r written ɹ and the stress as ˈ. Was ˈduːm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1631,7 +1631,7 @@ forms = [
   { time = 403, ipa = "ˈstewr", note = "PWGmc *steur (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsteoːr" },
   { time = 1400, ipa = "ˈsteːr" },
-  { time = "final", ipa = "ˈstɪə" },
+  { time = "final", ipa = "ˈstɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): steer /stɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈstɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1644,7 +1644,7 @@ forms = [
   { time = 200, ipa = "ˈkɑmbɑz", category = "noun" },
   { time = 900, ipa = "ˈkɑmb" },
   { time = 1400, ipa = "ˈkɔːm" },
-  { time = "final", ipa = "ˈkəʊm" },
+  { time = "final", ipa = "ˈkəwm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): comb /kə́wm/, with r written ɹ and the stress as ˈ. Was ˈkəʊm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1682,7 +1682,7 @@ forms = [
   { time = 200, ipa = "ˈslɑkɑz", category = "adj" },
   { time = 403, ipa = "ˈslɑk", note = "PWGmc *slak (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈslæk" },
-  { time = "final", ipa = "ˈslæk" },
+  { time = "final", ipa = "ˈslak", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): slack /slák/, with r written ɹ and the stress as ˈ. Was ˈslæk (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1696,7 +1696,7 @@ forms = [
   { time = 403, ipa = "ˈfɑxs", note = "PWGmc *fahs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfæɑks" },
   { time = 1400, ipa = "ˈfaks" },
-  { time = "final", ipa = "ˈfæks" },
+  { time = "final", ipa = "ˈfaks", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fax /fáks/, with r written ɹ and the stress as ˈ. Was ˈfæks (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1710,7 +1710,7 @@ forms = [
   { time = 403, ipa = "ˈfɑjm", note = "PWGmc *faim (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfɑːm" },
   { time = 1400, ipa = "ˈfɔːm" },
-  { time = "final", ipa = "ˈfəʊm" },
+  { time = "final", ipa = "ˈfəwm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): foam /fə́wm/, with r written ɹ and the stress as ˈ. Was ˈfəʊm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1724,7 +1724,7 @@ forms = [
   { time = 403, ipa = "ˈriβi", note = "PWGmc *ribi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈribb" },
   { time = 1400, ipa = "ˈrib", note = "Transcribed from ME ribbe (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
-  { time = "final", ipa = "ˈɹɪb" },
+  { time = "final", ipa = "ˈɹɪb", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): rib /rɪ́b/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1738,7 +1738,7 @@ forms = [
   { time = 403, ipa = "ˈoxsɔː", note = "PWGmc *ohsō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈoksɑ" },
   { time = 1400, ipa = "ˈɔks" },
-  { time = "final", ipa = "ˈɒks" },
+  { time = "final", ipa = "ˈɔks", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ox /ɔ́ks/, with r written ɹ and the stress as ˈ. Was ˈɒks (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1752,7 +1752,7 @@ forms = [
   { time = 403, ipa = "ˈwullu", note = "PWGmc *wullu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwull" },
   { time = 1400, ipa = "ˈwul" },
-  { time = "final", ipa = "ˈwʊl" },
+  { time = "final", ipa = "ˈwɵl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wool /wɵ́l/, with r written ɹ and the stress as ˈ. Was ˈwʊl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1766,7 +1766,7 @@ forms = [
   { time = 403, ipa = "ˈbeβru", note = "PWGmc *bebru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbefer" },
   { time = 1400, ipa = "ˈbɛːvər" },
-  { time = "final", ipa = "ˈbiːvə" },
+  { time = "final", ipa = "ˈbɪjvə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): beaver /bɪ́jvə/, with r written ɹ and the stress as ˈ. Was ˈbiːvə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1791,7 +1791,7 @@ forms = [
   { time = 200, ipa = "ˈstɔːlɑz", category = "noun" },
   { time = 403, ipa = "ˈstɔːl", note = "PWGmc *stōl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstoːl" },
-  { time = "final", ipa = "ˈstuːl" },
+  { time = "final", ipa = "ˈstʉwl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): stool /stʉ́wl/, with r written ɹ and the stress as ˈ. Was ˈstuːl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1805,7 +1805,7 @@ forms = [
   { time = 403, ipa = "ˈxɑsl", note = "PWGmc *hasl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæsl" },
   { time = 1400, ipa = "ˈhaːzəl" },
-  { time = "final", ipa = "ˈheɪzəl" },
+  { time = "final", ipa = "ˈhɛjzəl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hazel /hɛ́jzəl/, with r written ɹ and the stress as ˈ. Was ˈheɪzəl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1820,7 +1820,7 @@ forms = [
   { time = 900, ipa = "ˈθorn" },
   { time = 1400, ipa = "ˈθɔrn" },
   { time = 1580, ipa = "ˈθɔrən", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨thorń⟩, and Jones gives [θɔrən] with an inserted vowel before the half-vowel n. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈθɔːn" },
+  { time = "final", ipa = "ˈθoːn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thorn /θóːn/, with r written ɹ and the stress as ˈ. Was ˈθɔːn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1834,7 +1834,7 @@ forms = [
   { time = 403, ipa = "ˈmidi", note = "PWGmc *midi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmidd" },
   { time = 1400, ipa = "ˈmid", note = "Transcribed from ME midde (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
-  { time = "final", ipa = "ˈmɪd" },
+  { time = "final", ipa = "ˈmɪd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mid /mɪ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1848,7 +1848,7 @@ forms = [
   { time = 403, ipa = "ˈmɑzɣ", note = "PWGmc *maʀg (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmæɑrx" },
   { time = 1400, ipa = "ˈmarɔw" },
-  { time = "final", ipa = "ˈmæɹəʊ" },
+  { time = "final", ipa = "ˈmaɹəw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): marrow /márəw/, with r written ɹ and the stress as ˈ. Was ˈmæɹəʊ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1861,7 +1861,7 @@ forms = [
   { time = 200, ipa = "ˈtimrɑ̃", category = "noun" },
   { time = 403, ipa = "ˈtimr", note = "PWGmc *timr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtimber" },
-  { time = "final", ipa = "ˈtɪmbə" },
+  { time = "final", ipa = "ˈtɪmbə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): timber /tɪ́mbə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1875,7 +1875,7 @@ forms = [
   { time = 403, ipa = "ˈdɑww", note = "PWGmc *dauw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæɑːw" },
   { time = 1400, ipa = "ˈdɛw" },
-  { time = "final", ipa = "ˈdjuː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈd͡ʒuː. Transcription convention: Steponavičius §203 (PDF 193) says RP retains the yod after /t d/ ('tune, duke'), and Minkova §5.4.1 (p. 144) reports Walker (1791) condemning [dʒ] in duke and the variation that continues. The coalesced /dʒuː/ is a variant, not the RP form the column records." },
+  { time = "final", ipa = "ˈd͡ʒʉw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dew /ʤʉ́w/, with r written ɹ and the stress as ˈ. Was ˈdjuː (Wiktionary RP, Gimsonian symbols). TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈd͡ʒuː. Transcription convention: Steponavičius §203 (PDF 193) says RP retains the yod after /t d/ ('tune, duke'), and Minkova §5.4.1 (p. 144) reports Walker (1791) condemning [dʒ] in duke and the variation that continues. The coalesced /dʒuː/ is a variant, not the RP form the column records." },
 ]
 
 [[words]]
@@ -1889,7 +1889,7 @@ forms = [
   { time = 900, ipa = "ˈxelm" },
   { time = 1400, ipa = "ˈhɛlm" },
   { time = 1580, ipa = "ˈhɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨hełm⟩ with his half-vowel l, and Jones gives [hɛləm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈhɛlm" },
+  { time = "final", ipa = "ˈhɛlm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): helm /hɛ́lm/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1903,7 +1903,7 @@ forms = [
   { time = 900, ipa = "ˈxelmɑ" },
   { time = 1400, ipa = "ˈhɛlm", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈhalm. Wrong word: ME halm is haulm 'straw' < OE healm; helm 'tiller' is ME helme < OE helma (Klein s.v. helm, PDF 368, and s.v. halm, PDF 363)." },
   { time = 1580, ipa = "ˈhɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨hełm⟩ with his half-vowel l, and Jones gives [hɛləm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈhɛlm" },
+  { time = "final", ipa = "ˈhɛlm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): helm /hɛ́lm/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1917,7 +1917,7 @@ forms = [
   { time = 403, ipa = "ˈxɑggju", note = "PWGmc *haggju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxejj" },
   { time = 1400, ipa = "ˈhɛd͡ʒ" },
-  { time = "final", ipa = "ˈhɛd͡ʒ" },
+  { time = "final", ipa = "ˈhɛd͡ʒ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hedge /hɛ́ʤ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -1931,7 +1931,7 @@ forms = [
   { time = 403, ipa = "ˈruɣi", note = "PWGmc *rugi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈryje" },
   { time = 1400, ipa = "ˈriː" },
-  { time = "final", ipa = "ˈɹaɪ" },
+  { time = "final", ipa = "ˈɹɑj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): rye /rɑ́j/, with r written ɹ and the stress as ˈ. Was ˈɹaɪ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1944,7 +1944,7 @@ forms = [
   { time = 200, ipa = "ˈseβuntɛːxundɑ̃", category = "num" },
   { time = 900, ipa = "xundˈseofontij" },
   { time = 1400, ipa = "ˈsɛvəntiː" },
-  { time = "final", ipa = "ˈsɛvənti" },
+  { time = "final", ipa = "ˈsɛvəntɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): seventy /sɛ́vəntɪj/, with r written ɹ and the stress as ˈ. Was ˈsɛvənti (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1958,7 +1958,7 @@ forms = [
   { time = 403, ipa = "ˈbroθ", note = "PWGmc *broþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbroθ" },
   { time = 1400, ipa = "ˈbrɔθ" },
-  { time = "final", ipa = "ˈbɹɒθ" },
+  { time = "final", ipa = "ˈbɹɔθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): broth /brɔ́θ/, with r written ɹ and the stress as ˈ. Was ˈbɹɒθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1985,7 +1985,7 @@ forms = [
   { time = 403, ipa = "ˈɑkr", note = "PWGmc *akr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæker" },
   { time = 1400, ipa = "ˈaːkər" },
-  { time = "final", ipa = "ˈeɪkə" },
+  { time = "final", ipa = "ˈɛjkə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): acre /ɛ́jkə/, with r written ɹ and the stress as ˈ. Was ˈeɪkə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -1998,7 +1998,7 @@ forms = [
   { time = 200, ipa = "ˈelxɑz", category = "noun" },
   { time = 900, ipa = "ˈeolx" },
   { time = 1400, ipa = "ˈɛlk" },
-  { time = "final", ipa = "ˈɛlk" },
+  { time = "final", ipa = "ˈɛlk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): elk /ɛ́lk/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2033,7 +2033,7 @@ forms = [
   { time = 200, ipa = "ˈtruɣɑz", category = "noun" },
   { time = 900, ipa = "ˈtrog" },
   { time = 1400, ipa = "ˈtrɔx" },
-  { time = "final", ipa = "ˈtɹɒf" },
+  { time = "final", ipa = "ˈtɹɔf", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): trough /trɔ́f/, with r written ɹ and the stress as ˈ. Was ˈtɹɒf (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2046,7 +2046,7 @@ forms = [
   { time = 200, ipa = "ˈdɑjlɑ̃", category = "noun" },
   { time = 900, ipa = "ˈdɑːl" },
   { time = 1400, ipa = "ˈdɔːl" },
-  { time = "final", ipa = "ˈdəʊl" },
+  { time = "final", ipa = "ˈdəwl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dole /də́wl/, with r written ɹ and the stress as ˈ. Was ˈdəʊl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2060,7 +2060,7 @@ forms = [
   { time = 403, ipa = "ˈmedu", note = "PWGmc *medu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmedu" },
   { time = 1400, ipa = "ˈmɛːd" },
-  { time = "final", ipa = "ˈmiːd" },
+  { time = "final", ipa = "ˈmɪjd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mead /mɪ́jd/, with r written ɹ and the stress as ˈ. Was ˈmiːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2073,7 +2073,7 @@ forms = [
   { time = 200, ipa = "ˈbɑnɔːː", category = "noun" },
   { time = 900, ipa = "ˈbɑnɑ" },
   { time = 1400, ipa = "ˈbaːn" },
-  { time = "final", ipa = "ˈbeɪn" },
+  { time = "final", ipa = "ˈbɛjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bane /bɛ́jn/, with r written ɹ and the stress as ˈ. Was ˈbeɪn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2087,7 +2087,7 @@ forms = [
   { time = 403, ipa = "ˈɑlinu", note = "PWGmc *alinu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈeln" },
   { time = 1400, ipa = "ˈɛln" },
-  { time = "final", ipa = "ˈɛl" },
+  { time = "final", ipa = "ˈɛl", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2101,7 +2101,7 @@ forms = [
   { time = 403, ipa = "ˈotr", note = "PWGmc *otr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈotr" },
   { time = 1400, ipa = "ˈɔtər" },
-  { time = "final", ipa = "ˈɒtə" },
+  { time = "final", ipa = "ˈɔtə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): otter /ɔ́tə/, with r written ɹ and the stress as ˈ. Was ˈɒtə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2115,7 +2115,7 @@ forms = [
   { time = 403, ipa = "ˈstork", note = "PWGmc *stork (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstork" },
   { time = 1400, ipa = "ˈstɔrk" },
-  { time = "final", ipa = "ˈstɔːk" },
+  { time = "final", ipa = "ˈstoːk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): stork /stóːk/, with r written ɹ and the stress as ˈ. Was ˈstɔːk (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2142,7 +2142,7 @@ forms = [
   { time = 403, ipa = "ˈmuggju", note = "PWGmc *muggju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmyjj" },
   { time = 1400, ipa = "ˈmidʒ" },
-  { time = "final", ipa = "ˈmɪd͡ʒ" },
+  { time = "final", ipa = "ˈmɪd͡ʒ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): midge /mɪ́ʤ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2155,7 +2155,7 @@ forms = [
   { time = 200, ipa = "ˈɸɑrxɑz", category = "noun" },
   { time = 403, ipa = "ˈfɑrx", note = "PWGmc *farh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈfæɑrx" },
-  { time = "final", ipa = "ˈfæɹəʊ" },
+  { time = "final", ipa = "ˈfaɹəw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): farrow /fárəw/, with r written ɹ and the stress as ˈ. Was ˈfæɹəʊ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2169,7 +2169,7 @@ forms = [
   { time = 403, ipa = "ˈstɑdi", note = "PWGmc *stadi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstede" },
   { time = 1400, ipa = "ˈstɛːd" },
-  { time = "final", ipa = "ˈstɛd" },
+  { time = "final", ipa = "ˈstɛd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): stead /stɛ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2183,7 +2183,7 @@ forms = [
   { time = 403, ipa = "ˈjuk", note = "PWGmc *juk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjok" },
   { time = 1400, ipa = "ˈjɔk" },
-  { time = "final", ipa = "ˈjəʊk" },
+  { time = "final", ipa = "ˈjəwk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): yoke /jə́wk/, with r written ɹ and the stress as ˈ. Was ˈjəʊk (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2197,7 +2197,7 @@ forms = [
   { time = 403, ipa = "ˈwɑr", note = "PWGmc *war (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwær" },
   { time = 1687, ipa = "ˈwɛːɹ", note = "Early Modern English, Coles 1674, scored at 1687: Coles pairs wear and ware as homophones in a list that Jones describes as unambiguous [ɛː]. (Jones sect. 4.3(2), PDF 259 (book p. 246)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈwɛə" },
+  { time = "final", ipa = "ˈwɛː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ware /wɛ́ː/, with r written ɹ and the stress as ˈ. Was ˈwɛə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2212,7 +2212,7 @@ forms = [
   { time = 900, ipa = "ˈsɑlf", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsæɑlf. Dialect variant: sealf is West Saxon, with breaking before *lC. Anglian retracted the vowel instead (Ringe & Taylor §6.2.3, PDF 199 and 234); Wiktionary lists salf as an alternative form. ME salve continues the Anglian vowel." },
   { time = 1400, ipa = "ˈsalv" },
   { time = 1580, ipa = "ˈsaʊv", note = "Early Modern English, Mulcaster 1582, scored at 1580: Mulcaster says salues is said sawues, with the l turned into u. (Jones sect. 4.3(1), PDF 253 (book p. 240)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈsɑːv", note = "RP from Wiktionary (kaikki), salve; added 2026-10-06." },
+  { time = "final", ipa = "ˈsalv", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): salve /sálv/, with r written ɹ and the stress as ˈ. Was ˈsɑːv (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), salve; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2225,7 +2225,7 @@ forms = [
   { time = 200, ipa = "ˈskɑlɔː", category = "noun" },
   { time = 403, ipa = "ˈskɑlu", note = "PWGmc *skalu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈʃɑlu", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈʃæɑlu. Dialect variant: OE has sċealu and scalu, and the ea is West Saxon (Klein s.v. shale; Ringe & Taylor PDF 222, 232-233; Steponavičius §141)." },
-  { time = "final", ipa = "ˈʃeɪl" },
+  { time = "final", ipa = "ˈʃɛjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): shale /ʃɛ́jl/, with r written ɹ and the stress as ˈ. Was ˈʃeɪl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2249,7 +2249,7 @@ forms = [
   { time = 200, ipa = "ˈɑβjɔ̃ː", category = "noun" },
   { time = 900, ipa = "ˈebbɑ" },
   { time = 1400, ipa = "ˈɛb" },
-  { time = "final", ipa = "ˈɛb" },
+  { time = "final", ipa = "ˈɛb", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ebb /ɛ́b/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2262,7 +2262,7 @@ forms = [
   { time = 200, ipa = "ˈbɔːɣuz", category = "noun" },
   { time = 900, ipa = "ˈboːg" },
   { time = 1621, ipa = "ˈboʊ", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨bou⟩, one of his rare forms without the fricative. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈbaʊ" },
+  { time = "final", ipa = "ˈbaw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bough /báw/, with r written ɹ and the stress as ˈ. Was ˈbaʊ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2274,7 +2274,7 @@ forms = [
   { time = -2000, ipa = "ˈlowʁʷtrom", category = "noun", note = "PIE *lówh₃trom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈlɑwθrɑ̃", category = "noun" },
   { time = 900, ipa = "ˈlæɑːθor" },
-  { time = "final", ipa = "ˈlɑːðə" },
+  { time = "final", ipa = "ˈlɑːðə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lather /lɑ́ːðə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2288,7 +2288,7 @@ forms = [
   { time = 403, ipa = "ˈwurti", note = "PWGmc *wurti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwyrt" },
   { time = 1400, ipa = "ˈwirt" },
-  { time = "final", ipa = "ˈwɜːt" },
+  { time = "final", ipa = "ˈwəːt", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈwɜːt (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2300,7 +2300,7 @@ forms = [
   { time = -2000, ipa = "polˈχwos", category = "adj", note = "PIE *polHwós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸɑlwɑz", category = "adj" },
   { time = 900, ipa = "ˈfæɑlu" },
-  { time = "final", ipa = "ˈfæləʊ", note = "RP from Wiktionary (kaikki), fallow; added 2026-10-06." },
+  { time = "final", ipa = "ˈfaləw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fallow /fáləw/, with r written ɹ and the stress as ˈ. Was ˈfæləʊ (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), fallow; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2314,7 +2314,7 @@ forms = [
   { time = 403, ipa = "ˈnefɔː", note = "PWGmc *nefō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈnefɑ" },
   { time = 1400, ipa = "ˈnɛːv" },
-  { time = "final", ipa = "ˈniːv" },
+  { time = "final", ipa = "ˈnɪjv", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈniːv (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2328,7 +2328,7 @@ forms = [
   { time = 403, ipa = "ˈrɑwm", note = "PWGmc *raum (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈræɑːm" },
   { time = 1400, ipa = "ˈrɛːm" },
-  { time = "final", ipa = "ˈɹiːm" },
+  { time = "final", ipa = "ˈɹɪjm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ream /rɪ́jm/, with r written ɹ and the stress as ˈ. Was ˈɹiːm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2342,7 +2342,7 @@ forms = [
   { time = 403, ipa = "ˈdɑru", note = "PWGmc *daru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdɑru" },
   { time = 1400, ipa = "ˈdeːr" },
-  { time = "final", ipa = "ˈdɪə" },
+  { time = "final", ipa = "ˈdɪː", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈdɪə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2368,7 +2368,7 @@ forms = [
   { time = 403, ipa = "ˈlɑjθ", note = "PWGmc *laiþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑːθ" },
   { time = 1400, ipa = "ˈlɔːθ" },
-  { time = "final", ipa = "ˈləʊθ" },
+  { time = "final", ipa = "ˈləwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): loath /lə́wθ/, with r written ɹ and the stress as ˈ. Was ˈləʊθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2381,7 +2381,7 @@ forms = [
   { time = 403, ipa = "ˈɣumɔː", note = "PWGmc *gumō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgumɑ" },
   { time = 1400, ipa = "ˈgoːm" },
-  { time = "final", ipa = "ˈgʌm" },
+  { time = "final", ipa = "ˈgʌm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): gum /gʌ́m/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2394,7 +2394,7 @@ forms = [
   { time = 403, ipa = "ˈliwdi", note = "PWGmc *liudi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈleoːd" },
   { time = 1400, ipa = "ˈleːd" },
-  { time = "final", ipa = "ˈliːd" },
+  { time = "final", ipa = "ˈlɪjd", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈliːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2407,7 +2407,7 @@ forms = [
   { time = 403, ipa = "ˈθewdu", note = "PWGmc *þeudu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθeoːd" },
   { time = 1400, ipa = "ˈθeːd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈθøːd. Dialect variant: ME [øː] for OE ēo is South-Western and West Midland; elsewhere [eː] (Jones §2.4.4, Table 2.35; Minkova §7.2.2; Steponavičius §180; Pyles & Algeo p. 147)." },
-  { time = "final", ipa = "ˈθiːd" },
+  { time = "final", ipa = "ˈθɪjd", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈθiːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2430,7 +2430,7 @@ forms = [
   { time = 403, ipa = "ˈswefn", note = "PWGmc *swefn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈswefn" },
   { time = 1400, ipa = "ˈswɛvən" },
-  { time = "final", ipa = "ˈswɛvən" },
+  { time = "final", ipa = "ˈswɛvən", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2443,7 +2443,7 @@ forms = [
   { time = 403, ipa = "ˈkwenɑː", note = "PWGmc *kwenā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkwene" },
   { time = 1400, ipa = "ˈkwɛːn", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈkweːn. Wrong word: /kweːn/ is the IPA of ME quene 'queen' (from OE cwēn). Wiktionary gives ME quene 'woman' (from OE cwene, this word) as /ˈkwɛ̞ːn(ə)/, with the open vowel that open-syllable lengthening of OE e gives." },
-  { time = "final", ipa = "ˈkwiːn" },
+  { time = "final", ipa = "ˈkwɪjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): quean /kwɪ́jn/, with r written ɹ and the stress as ˈ. Was ˈkwiːn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2456,7 +2456,7 @@ forms = [
   { time = 403, ipa = "ˈmizdu", note = "PWGmc *miʀdu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmeːd" },
   { time = 1400, ipa = "ˈmeːd", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈmɛːd. Wrong word: OE mēd has a close ē, which ME [meː] continues; /mɛːd/ is mead 'drink' < medu (Minkova §5.2.3, PDF 121, and PDF 201, 221; Pyles & Algeo p. 145)." },
-  { time = "final", ipa = "ˈmiːd" },
+  { time = "final", ipa = "ˈmɪjd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): meed /mɪ́jd/, with r written ɹ and the stress as ˈ. Was ˈmiːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2468,7 +2468,7 @@ forms = [
   { time = 200, ipa = "ˈniɸtiz", category = "noun" },
   { time = 900, ipa = "ˈnift" },
   { time = 1400, ipa = "ˈnift" },
-  { time = "final", ipa = "ˈnɪft" },
+  { time = "final", ipa = "ˈnɪft", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2481,7 +2481,7 @@ forms = [
   { time = 403, ipa = "ˈsɑlu", note = "PWGmc *salu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsɑlu" },
   { time = 1400, ipa = "ˈsalɔw" },
-  { time = "final", ipa = "ˈsæləʊ" },
+  { time = "final", ipa = "ˈsaləw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sallow /sáləw/, with r written ɹ and the stress as ˈ. Was ˈsæləʊ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2493,7 +2493,7 @@ forms = [
   { time = 200, ipa = "ˈtɑlɣɑz", category = "noun" },
   { time = 900, ipa = "ˈtælg" },
   { time = 1400, ipa = "ˈtalɔw" },
-  { time = "final", ipa = "ˈtæləʊ", note = "TARGET corrected: the bootstrap took Wiktionary's GENERAL AMERICAN /ˈtæloʊ/. This project's modern column is RP, whose GOAT vowel is /əʊ/ — as every other GOAT word in this lexicon already has (old, boat, widow, marrow, sallow, farrow). tallow was the lone oʊ outlier." },
+  { time = "final", ipa = "ˈtaləw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): tallow /táləw/, with r written ɹ and the stress as ˈ. Was ˈtæləʊ (Wiktionary RP, Gimsonian symbols). TARGET corrected: the bootstrap took Wiktionary's GENERAL AMERICAN /ˈtæloʊ/. This project's modern column is RP, whose GOAT vowel is /əʊ/ — as every other GOAT word in this lexicon already has (old, boat, widow, marrow, sallow, farrow). tallow was the lone oʊ outlier." },
 ]
 
 [[words]]
@@ -2506,7 +2506,7 @@ forms = [
   { time = 403, ipa = "ˈɑrβiː", note = "PWGmc *arbī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈerfe" },
   { time = 1400, ipa = "ˈɛrv" },
-  { time = "final", ipa = "ˈɜːf" },
+  { time = "final", ipa = "ˈəːf", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈɜːf (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -2519,7 +2519,7 @@ forms = [
   { time = 403, ipa = "ˈɑjtr", note = "PWGmc *aitr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑːtor" },
   { time = 1400, ipa = "ˈatər" },
-  { time = "final", ipa = "ˈætə", note = "Non-rhotic (RP), consistent with the rest of the modern column — Wiktionary's ˈætəɹ was the lone rhotic transcription of 177." },
+  { time = "final", ipa = "ˈatə", note = "Not in CUBE; the Wiktionary RP form is written in CUBE's symbols with its own table of Gimsonian and current symbols (seas3.elte.hu/cube/symbols.html; DECISIONS.md, 2026-10-07). Was ˈætə (Wiktionary RP, Gimsonian symbols). Non-rhotic (RP), consistent with the rest of the modern column — Wiktionary's ˈætəɹ was the lone rhotic transcription of 177." },
 ]
 
 [[words]]
@@ -2532,7 +2532,7 @@ forms = [
   { time = 403, ipa = "ˈwolkn", note = "PWGmc *wolkn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwolkn" },
   { time = 1400, ipa = "ˈwɛlkən" },
-  { time = "final", ipa = "ˈwɛlkɪn" },
+  { time = "final", ipa = "ˈwɛlkɪn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): welkin /wɛ́lkɪn/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2544,7 +2544,7 @@ forms = [
   { time = 200, ipa = "ˈbɑrmɑz", category = "noun" },
   { time = 900, ipa = "ˈbæɑrm" },
   { time = 1400, ipa = "ˈbarm" },
-  { time = "final", ipa = "ˈbɑːm" },
+  { time = "final", ipa = "ˈbɑːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): barm /bɑ́ːm/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -2558,7 +2558,7 @@ forms = [
   { time = 900, ipa = "ˈgod" },
   { time = 1400, ipa = "ˈgɔd" },
   { time = 1570, ipa = "ˈgɔd", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨God⟩ with short o. (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈgɒd", note = "RP from Wiktionary (kaikki), god; added 2026-10-06." },
+  { time = "final", ipa = "ˈgɔd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): god /gɔ́d/, with r written ɹ and the stress as ˈ. Was ˈgɒd (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), god; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2618,7 +2618,7 @@ forms = [
   { time = 900, ipa = "ˈfæder" },
   { time = 1400, ipa = "ˈfadər" },
   { time = 1570, ipa = "ˈfaːðr̩", note = "Early Modern English, Hart 1570, scored at 1570: Hart's Credo has ⟨fāðr⟩, with long ā and no vowel before the final r, so the r is syllabic. (Jones sect. 4.1, Hart's Credo, PDF 211 (book p. 198)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈfɑːðə", note = "RP from Wiktionary (kaikki), father: faeder is the Scots form. Added 2026-10-06." },
+  { time = "final", ipa = "ˈfɑːðə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): father /fɑ́ːðə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), father: faeder is the Scots form. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2631,7 +2631,7 @@ forms = [
   { time = 403, ipa = "ˈmɔːder", note = "PWGmc *mōder (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmoːdor" },
   { time = 1400, ipa = "ˈmoːdər" },
-  { time = "final", ipa = "ˈmʌðə", note = "RP from Wiktionary (kaikki), mother; added 2026-10-06." },
+  { time = "final", ipa = "ˈmʌðə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mother /mʌ́ðə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), mother; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2644,7 +2644,7 @@ forms = [
   { time = 403, ipa = "ˈtexundɔː", note = "PWGmc *tehundō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈteoːθɑ" },
   { time = 1400, ipa = "ˈtiːð", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈtɛnð. Wrong word: /ˈtɛnð/ is ME tenthe, which Wiktionary gives as 'a remodelling of tithe (Old English teoþa) on the basis of ten + -the' (also Hoad s.v. tenth). This word's reflex is ME tithe, /ˈtiːð(ə)/ in Wiktionary, which the final target tithe continues." },
-  { time = "final", ipa = "ˈtaɪð", note = "RP from Wiktionary (kaikki), tithe: tithe continues OE tēoþa; tenth is a new formation on ten. Added 2026-10-06." },
+  { time = "final", ipa = "ˈtɑjð", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): tithe /tɑ́jð/, with r written ɹ and the stress as ˈ. Was ˈtaɪð (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), tithe: tithe continues OE tēoþa; tenth is a new formation on ten. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2657,7 +2657,7 @@ forms = [
   { time = 403, ipa = "ˈsnɑjw", note = "PWGmc *snaiw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsnɑːw" },
   { time = 1400, ipa = "ˈsnɔw", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈsnɑw. Dialect variant: ME snaw with [aw] is Northern; elsewhere OE ā gives [ɔw], which PDE snow continues (Steponavičius §183; Jones Table 3.15; Minkova Fig. 7.8b; Klein PDF 721)." },
-  { time = "final", ipa = "ˈsnəʊ", note = "RP from Wiktionary (kaikki), snow; added 2026-10-06." },
+  { time = "final", ipa = "ˈsnəw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): snow /snə́w/, with r written ɹ and the stress as ˈ. Was ˈsnəʊ (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), snow; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2682,7 +2682,7 @@ forms = [
   { time = 403, ipa = "ˈrɑwd", note = "PWGmc *raud (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈræɑːd" },
   { time = 1400, ipa = "ˈrɛːd" },
-  { time = "final", ipa = "ˈɹɛd", note = "RP from Wiktionary (kaikki), red; added 2026-10-06." },
+  { time = "final", ipa = "ˈɹɛd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): red /rɛ́d/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), red; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2695,7 +2695,7 @@ forms = [
   { time = 403, ipa = "ˈwɑtɑr", note = "PWGmc *watar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæter" },
   { time = 1400, ipa = "ˈwatər" },
-  { time = "final", ipa = "ˈwɔːtə", note = "RP from Wiktionary (kaikki), water; added 2026-10-06." },
+  { time = "final", ipa = "ˈwoːtə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): water /wóːtə/, with r written ɹ and the stress as ˈ. Was ˈwɔːtə (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), water; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2721,7 +2721,7 @@ forms = [
   { time = 900, ipa = "ˈæɑːre" },
   { time = 1400, ipa = "ˈɛːr" },
   { time = 1687, ipa = "ˈiːɹ", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper lists ears where ea stands for 'ee', which Jones gives as [iː]. (Jones sect. 4.3(2), Table 4.8, PDF 259 (book p. 246)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈɪə", note = "RP from Wiktionary (kaikki), ear; added 2026-10-06." },
+  { time = "final", ipa = "ˈɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ear /ɪ́ː/, with r written ɹ and the stress as ˈ. Was ˈɪə (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), ear; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2735,7 +2735,7 @@ forms = [
   { time = 900, ipa = "ˈnixt" },
   { time = 1400, ipa = "ˈnixt" },
   { time = 1621, ipa = "ˈnəɪxt", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨njħt⟩. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈnaɪt", note = "RP from Wiktionary (kaikki), night; added 2026-10-06." },
+  { time = "final", ipa = "ˈnɑjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): night /nɑ́jt/, with r written ɹ and the stress as ˈ. Was ˈnaɪt (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), night; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2758,7 +2758,7 @@ forms = [
   { time = 200, ipa = "ˈwerkɑ̃", category = "noun" },
   { time = 900, ipa = "ˈweork" },
   { time = 1400, ipa = "ˈwɛrk" },
-  { time = "final", ipa = "ˈwɜːk", note = "RP from Wiktionary (kaikki), work; added 2026-10-06." },
+  { time = "final", ipa = "ˈwəːk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): work /wə́ːk/, with r written ɹ and the stress as ˈ. Was ˈwɜːk (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), work; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2794,7 +2794,7 @@ forms = [
   { time = 900, ipa = "ˈnɑmɑ" },
   { time = 1400, ipa = "ˈnaːm" },
   { time = 1687, ipa = "ˈnɛːm", note = "Early Modern English, Cooper 1687, scored at 1687: Jones lists name among Cooper's words with the cane vowel. (Jones sect. 4.2(2), PDF 234 (book p. 221); see PDF 233 and 276). Added 2026-10-06." },
-  { time = "final", ipa = "ˈneɪm", note = "RP from Wiktionary (kaikki), name; added 2026-10-06." },
+  { time = "final", ipa = "ˈnɛjm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): name /nɛ́jm/, with r written ɹ and the stress as ˈ. Was ˈneɪm (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), name; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2820,7 +2820,7 @@ forms = [
   { time = 900, ipa = "ˈrixt" },
   { time = 1400, ipa = "ˈrixt" },
   { time = 1621, ipa = "ˈɹəɪxt", note = "Early Modern English, Gil 1621, scored at 1621: Gil writes ⟨rjħt⟩, with the same values as night. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈɹaɪt", note = "RP from Wiktionary (kaikki), right; added 2026-10-06." },
+  { time = "final", ipa = "ˈɹɑjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): right /rɑ́jt/, with r written ɹ and the stress as ˈ. Was ˈɹaɪt (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), right; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2833,7 +2833,7 @@ forms = [
   { time = 403, ipa = "ˈxɑjm", note = "PWGmc *haim (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑːm" },
   { time = 1400, ipa = "ˈhɔːm" },
-  { time = "final", ipa = "ˈhəʊm", note = "RP from Wiktionary (kaikki), home; added 2026-10-06." },
+  { time = "final", ipa = "ˈhəwm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): home /hə́wm/, with r written ɹ and the stress as ˈ. Was ˈhəʊm (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), home; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2859,7 +2859,7 @@ forms = [
   { time = 900, ipa = "ˈwyrm" },
   { time = 1400, ipa = "ˈwurm" },
   { time = 1580, ipa = "ˈwɔrəm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨worḿ⟩ with o, while he writes u in ⟨burń⟩ and ⟨cħurł⟩. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252); reading of the symbols PDF 264). Added 2026-10-06." },
-  { time = "final", ipa = "ˈwɜːm", note = "RP from Wiktionary (kaikki), worm: wyrm is an archaic revival. Added 2026-10-06." },
+  { time = "final", ipa = "ˈwəːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): worm /wə́ːm/, with r written ɹ and the stress as ˈ. Was ˈwɜːm (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), worm: wyrm is an archaic revival. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2884,7 +2884,7 @@ forms = [
   { time = 403, ipa = "ˈɑrs", note = "PWGmc *ars (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈæɑrs" },
   { time = 1400, ipa = "ˈars" },
-  { time = "final", ipa = "ˈɑːs", note = "RP from Wiktionary (kaikki), arse: ass is the American form. Added 2026-10-06." },
+  { time = "final", ipa = "ˈɑːs", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): arse /ɑ́ːs/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), arse: ass is the American form. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -2933,7 +2933,7 @@ forms = [
   { time = 403, ipa = "ˈlɑwx", note = "PWGmc *lauh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlæɑːx" },
   { time = 1400, ipa = "ˈlæj" },
-  { time = "final", ipa = "ˈliː", note = "RP from Wiktionary (kaikki), lea; added 2026-10-06." },
+  { time = "final", ipa = "ˈlɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lea /lɪ́j/, with r written ɹ and the stress as ˈ. Was ˈliː (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), lea; added 2026-10-06." },
 ]
 
 [[words]]
@@ -2982,7 +2982,7 @@ forms = [
   { time = 900, ipa = "ˈæl" },
   { time = 1400, ipa = "ˈal" },
   { time = 1687, ipa = "ˈɔːl", note = "Early Modern English, Cooper 1687, scored at 1687: Cooper gives the aw of awl as one spelling of his 'o guttural', which Jones gives as [ɔ] or [ɔː]. (Jones sect. 4.4.2, PDF 271 (book p. 258)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈɔːl", note = "RP from Wiktionary (kaikki), awl; added 2026-10-06." },
+  { time = "final", ipa = "ˈoːl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): awl /óːl/, with r written ɹ and the stress as ˈ. Was ˈɔːl (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), awl; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3018,7 +3018,7 @@ forms = [
   { time = 403, ipa = "ˈlindu", note = "PWGmc *lindu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlind" },
   { time = 1400, ipa = "ˈliːn" },
-  { time = "final", ipa = "ˈlaɪm", note = "RP from Wiktionary (kaikki), lime; added 2026-10-06." },
+  { time = "final", ipa = "ˈlɑjm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lime /lɑ́jm/, with r written ɹ and the stress as ˈ. Was ˈlaɪm (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), lime; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3030,7 +3030,7 @@ forms = [
   { time = 200, ipa = "ˈkʷernɔː", category = "noun" },
   { time = 900, ipa = "ˈkweorn" },
   { time = 1400, ipa = "ˈkwɛrn" },
-  { time = "final", ipa = "ˈkwɜːn", note = "RP from Wiktionary (kaikki), quern; added 2026-10-06." },
+  { time = "final", ipa = "ˈkwəːn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): quern /kwə́ːn/, with r written ɹ and the stress as ˈ. Was ˈkwɜːn (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), quern; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3065,7 +3065,7 @@ forms = [
   { time = 200, ipa = "ˈbuttɑz", category = "noun" },
   { time = 900, ipa = "ˈbytt" },
   { time = 1400, ipa = "ˈbut" },
-  { time = "final", ipa = "ˈbʌt", note = "RP from Wiktionary (kaikki), butt; added 2026-10-06." },
+  { time = "final", ipa = "ˈbʌt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): butt /bʌ́t/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), butt; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3077,7 +3077,7 @@ forms = [
   { time = 200, ipa = "ˈkluːtɑz", category = "noun" },
   { time = 900, ipa = "ˈkluːt" },
   { time = 1400, ipa = "ˈkluːt" },
-  { time = "final", ipa = "ˈklaʊt", note = "RP from Wiktionary (kaikki), clout: clout continues OE clūt; cloud continues OE clūd. Added 2026-10-06." },
+  { time = "final", ipa = "ˈklawt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): clout /kláwt/, with r written ɹ and the stress as ˈ. Was ˈklaʊt (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), clout: clout continues OE clūt; cloud continues OE clūd. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -3102,7 +3102,7 @@ forms = [
   { time = 403, ipa = "ˈwɑpsu", note = "PWGmc *wapsu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwæps" },
   { time = 1400, ipa = "ˈwasp" },
-  { time = "final", ipa = "ˈwɒsp", note = "RP from Wiktionary (kaikki), wasp; added 2026-10-06." },
+  { time = "final", ipa = "ˈwɔsp", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wasp /wɔ́sp/, with r written ɹ and the stress as ˈ. Was ˈwɒsp (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), wasp; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3116,7 +3116,7 @@ forms = [
   { time = 900, ipa = "ˈelm" },
   { time = 1400, ipa = "ˈɛlm" },
   { time = 1580, ipa = "ˈɛləm", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar has ⟨elḿ⟩ and ⟨ełḿ⟩, and Jones reads the second as [ɛələm]. (Jones sect. 4.3.1, Table 4.13, PDF 265 (book p. 252)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈɛlm", note = "RP from Wiktionary (kaikki), elm; added 2026-10-06." },
+  { time = "final", ipa = "ˈɛlm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): elm /ɛ́lm/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), elm; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3129,7 +3129,7 @@ forms = [
   { time = 403, ipa = "ˈxuːs", note = "PWGmc *hūs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxuːs" },
   { time = 1400, ipa = "ˈhuːs" },
-  { time = "final", ipa = "ˈhaʊs", note = "RP from Wiktionary (kaikki), house; added 2026-10-06." },
+  { time = "final", ipa = "ˈhaws", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): house /háws/, with r written ɹ and the stress as ˈ. Was ˈhaʊs (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), house; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3142,7 +3142,7 @@ forms = [
   { time = 403, ipa = "ˈxɑwx", note = "PWGmc *hauh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxæɑːx" },
   { time = 1400, ipa = "ˈheːx" },
-  { time = "final", ipa = "ˈhaɪ", note = "RP from Wiktionary (kaikki), high; added 2026-10-06." },
+  { time = "final", ipa = "ˈhɑj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): high /hɑ́j/, with r written ɹ and the stress as ˈ. Was ˈhaɪ (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), high; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3155,7 +3155,7 @@ forms = [
   { time = 403, ipa = "ˈmunθ", note = "PWGmc *munþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmuːθ" },
   { time = 1400, ipa = "ˈmuːθ" },
-  { time = "final", ipa = "ˈmaʊθ", note = "RP from Wiktionary (kaikki), mouth; added 2026-10-06." },
+  { time = "final", ipa = "ˈmawθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mouth /máwθ/, with r written ɹ and the stress as ˈ. Was ˈmaʊθ (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), mouth; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3169,7 +3169,7 @@ forms = [
   { time = 900, ipa = "ˈfolk" },
   { time = 1400, ipa = "ˈfɔlk" },
   { time = 1621, ipa = "ˈfoːk", note = "Early Modern English, Gil 1621, scored at 1621: Gil gives ⟨fók⟩, the l-less form he says is said more often, beside ⟨folk⟩ for the learned. (Jones sect. 4.3(1), PDF 254 (book p. 241)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈfəʊk", note = "RP from Wiktionary (kaikki), folk; added 2026-10-06." },
+  { time = "final", ipa = "ˈfəwk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): folk /fə́wk/, with r written ɹ and the stress as ˈ. Was ˈfəʊk (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), folk; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3192,7 +3192,7 @@ forms = [
   { time = 200, ipa = "ˈwiːsɑz", category = "adj" },
   { time = 900, ipa = "ˈwiːs" },
   { time = 1400, ipa = "ˈwiːs" },
-  { time = "final", ipa = "ˈwaɪz", note = "RP from Wiktionary (kaikki), wise; added 2026-10-06." },
+  { time = "final", ipa = "ˈwɑjz", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): wise /wɑ́jz/, with r written ɹ and the stress as ˈ. Was ˈwaɪz (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), wise; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3205,7 +3205,7 @@ forms = [
   { time = 403, ipa = "ˈblɑd", note = "PWGmc *blad (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈblæd" },
   { time = 1400, ipa = "ˈblaːd" },
-  { time = "final", ipa = "ˈbleɪd", note = "RP from Wiktionary (kaikki), blade; added 2026-10-06." },
+  { time = "final", ipa = "ˈblɛjd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): blade /blɛ́jd/, with r written ɹ and the stress as ˈ. Was ˈbleɪd (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), blade; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3301,7 +3301,7 @@ forms = [
   { time = 403, ipa = "ˈxɑjt", note = "PWGmc *hait (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑːt" },
   { time = 1400, ipa = "ˈhɔːt" },
-  { time = "final", ipa = "ˈhɒt", note = "RP from Wiktionary (kaikki), hot; added 2026-10-06." },
+  { time = "final", ipa = "ˈhɔt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hot /hɔ́t/, with r written ɹ and the stress as ˈ. Was ˈhɒt (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), hot; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3314,7 +3314,7 @@ forms = [
   { time = 403, ipa = "ˈstɑβ", note = "PWGmc *stab (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈstæf" },
   { time = 1400, ipa = "ˈstaf" },
-  { time = "final", ipa = "ˈstɑːf", note = "RP from Wiktionary (kaikki), staff; added 2026-10-06." },
+  { time = "final", ipa = "ˈstɑːf", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): staff /stɑ́ːf/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), staff; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3327,7 +3327,7 @@ forms = [
   { time = 900, ipa = "ˈmolde" },
   { time = 1400, ipa = "ˈmɔld" },
   { time = 1580, ipa = "ˈmoʊld", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨mołd⟩ with his half-vowel l. (Jones sect. 4.3.1, Table 4.12, PDF 264 (book p. 251)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈməʊld", note = "RP from Wiktionary (kaikki), mould: mold is the American spelling. Added 2026-10-06." },
+  { time = "final", ipa = "ˈməwld", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mould /mə́wld/, with r written ɹ and the stress as ˈ. Was ˈməʊld (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), mould: mold is the American spelling. Added 2026-10-06." },
 ]
 
 [[words]]
@@ -3388,7 +3388,7 @@ forms = [
   { time = 403, ipa = "ˈduni", note = "PWGmc *duni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdyne" },
   { time = 1400, ipa = "ˈdin" },
-  { time = "final", ipa = "ˈdɪn", note = "RP from Wiktionary (kaikki), din; added 2026-10-06." },
+  { time = "final", ipa = "ˈdɪn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): din /dɪ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), din; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3522,7 +3522,7 @@ forms = [
   { time = 200, ipa = "ˈberɣɑz", category = "noun" },
   { time = 403, ipa = "ˈberɣ", note = "PWGmc *berg (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeorg" },
-  { time = "final", ipa = "ˈbæɹəʊ", note = "RP from Wiktionary (kaikki), barrow; added 2026-10-06." },
+  { time = "final", ipa = "ˈbaɹəw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): barrow /bárəw/, with r written ɹ and the stress as ˈ. Was ˈbæɹəʊ (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), barrow; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3836,7 +3836,7 @@ forms = [
   { time = -2000, ipa = "snoχˈteħ", category = "noun", note = "PIE *snoh₁téh₂, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsnɔːðɔː", category = "noun" },
   { time = 900, ipa = "ˈsnoːd", note = "Transcribed from OE snōd (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
-  { time = "final", ipa = "ˈsnuːd" },
+  { time = "final", ipa = "ˈsnʉwd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): snood /snʉ́wd/, with r written ɹ and the stress as ˈ. Was ˈsnuːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -3912,7 +3912,7 @@ forms = [
   { time = 403, ipa = "ˈxriːdrɑː", note = "PWGmc *hrīdrā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxridder" },
   { time = 1400, ipa = "ˈridər", note = "Transcribed from ME ridder (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
-  { time = "final", ipa = "ˈɹɪdəl", note = "RP from Wiktionary (kaikki), riddle; added 2026-10-06." },
+  { time = "final", ipa = "ˈɹɪdəl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): riddle /rɪ́dəl/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), riddle; added 2026-10-06." },
 ]
 
 [[words]]
@@ -3924,7 +3924,7 @@ forms = [
   { time = 200, ipa = "ˈdrɔːxs", category = "noun" },
   { time = 900, ipa = "ˈdroːs", note = "Transcribed from OE drōs (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = 1400, ipa = "ˈdrɔs", note = "Transcribed from ME drosse (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
-  { time = "final", ipa = "ˈdɹɒs" },
+  { time = "final", ipa = "ˈdɹɔs", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dross /drɔ́s/, with r written ɹ and the stress as ˈ. Was ˈdɹɒs (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -4031,7 +4031,7 @@ forms = [
   { time = 900, ipa = "ˈbeorxt" },
   { time = 1400, ipa = "ˈbrixt", note = "Transcribed from ME briht (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = 1621, ipa = "ˈbɹəɪxt", note = "Early Modern English, Gil 1621, scored at 1621: Attested only in Gil's ⟨brjħtnes⟩ 'brightness', so the stem is taken from the derivative. (Jones sect. 4.3(1), PDF 252 (book p. 239)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈbɹaɪt", note = "RP from Wiktionary (kaikki), bright; added 2026-10-06." },
+  { time = "final", ipa = "ˈbɹɑjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bright /brɑ́jt/, with r written ɹ and the stress as ˈ. Was ˈbɹaɪt (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), bright; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4248,7 +4248,7 @@ forms = [
   { time = 200, ipa = "ˈθrɑwɔː", category = "noun" },
   { time = 403, ipa = "ˈθrɑw", note = "PWGmc *þrau (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈθræɑː" },
-  { time = "final", ipa = "ˈθɹəʊ", note = "RP from Wiktionary (kaikki), throe; added 2026-10-06." },
+  { time = "final", ipa = "ˈθɹəw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): throe /θrə́w/, with r written ɹ and the stress as ˈ. Was ˈθɹəʊ (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), throe; added 2026-10-06." },
 ]
 
 [[words]]
@@ -4885,7 +4885,7 @@ forms = [
   { time = -2000, ipa = "ˈweχitis", category = "noun", note = "PIE *wéh₁itis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwiθiz", category = "noun" },
   { time = 900, ipa = "ˈwiθe", note = "Transcribed from OE wiþe (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
-  { time = "final", ipa = "ˈwɪθ", note = "RP from Wiktionary (kaikki), withe; added 2026-10-06." },
+  { time = "final", ipa = "ˈwɪθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): withe /wɪ́θ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), withe; added 2026-10-06." },
 ]
 
 [[words]]
@@ -5704,7 +5704,7 @@ forms = [
   { time = 900, ipa = "ˈkynn", note = "IPA from Wiktionary (kaikki) for OE cynn /kynn/; added 2026-10-06." },
   { time = 1400, ipa = "ˈkin", note = "IPA from Wiktionary (kaikki) for ME kyn /kin/; added 2026-10-06." },
   { time = 1621, ipa = "ˈkɪn", note = "Early Modern English, Gil 1619, scored at 1621: Gil writes ⟨kin⟩ 'blood relation' against ⟨kïn⟩ 'keen'. (Jones sect. 4.2(1), PDF 225 (book p. 212)). Added 2026-10-06." },
-  { time = "final", ipa = "ˈkɪn", note = "RP from Wiktionary (kaikki), kin; added 2026-10-06." },
+  { time = "final", ipa = "ˈkɪn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): kin /kɪ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), kin; added 2026-10-06." },
 ]
 
 [[words]]
@@ -6087,7 +6087,7 @@ forms = [
   { time = -2000, ipa = "ˈmorgʲs", category = "noun", note = "PIE *mórǵs, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑrkɔː", category = "noun" },
   { time = 900, ipa = "ˈmæɑrk" },
-  { time = "final", ipa = "ˈmɑːk" },
+  { time = "final", ipa = "ˈmɑːk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mark /mɑ́ːk/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -6101,7 +6101,7 @@ forms = [
   { time = 403, ipa = "ˈdewp", note = "PWGmc *deup (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdeoːp" },
   { time = 1400, ipa = "ˈdeːp" },
-  { time = "final", ipa = "ˈdiːp" },
+  { time = "final", ipa = "ˈdɪjp", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): deep /dɪ́jp/, with r written ɹ and the stress as ˈ. Was ˈdiːp (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6115,7 +6115,7 @@ forms = [
   { time = 403, ipa = "ˈɣrɔːniː", note = "PWGmc *grōnī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgreːne" },
   { time = 1400, ipa = "ˈgreːn" },
-  { time = "final", ipa = "ˈgɹiːn" },
+  { time = "final", ipa = "ˈgɹɪjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): green /grɪ́jn/, with r written ɹ and the stress as ˈ. Was ˈgɹiːn (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6129,7 +6129,7 @@ forms = [
   { time = 403, ipa = "ˈtuŋgɑː", note = "PWGmc *tungā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈtuŋge" },
   { time = 1400, ipa = "ˈtuŋg" },
-  { time = "final", ipa = "ˈtʌŋ" },
+  { time = "final", ipa = "ˈtʌŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): tongue /tʌ́ŋ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -6142,7 +6142,7 @@ forms = [
   { time = 200, ipa = "ˈbitrɑz", category = "adj" },
   { time = 403, ipa = "ˈbitr", note = "PWGmc *bitr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbiter" },
-  { time = "final", ipa = "ˈbɪtə" },
+  { time = "final", ipa = "ˈbɪtə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bitter /bɪ́tə/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -6154,7 +6154,7 @@ forms = [
   { time = -2000, ipa = "maˈteːn", category = "noun", note = "PIE *mat-ḗn, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈmɑθɔːː", category = "noun" },
   { time = 900, ipa = "ˈmoθθe" },
-  { time = "final", ipa = "ˈmɒθ" },
+  { time = "final", ipa = "ˈmɔθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): moth /mɔ́θ/, with r written ɹ and the stress as ˈ. Was ˈmɒθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6165,7 +6165,7 @@ forms = [
   { time = -2000, ipa = "ˈχsonts", category = "adj", note = "PIE *h₁sónts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsɑnθɑz", category = "adj" },
   { time = 900, ipa = "ˈsoːθ" },
-  { time = "final", ipa = "ˈsuːθ" },
+  { time = "final", ipa = "ˈsʉwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sooth /sʉ́wθ/, with r written ɹ and the stress as ˈ. Was ˈsuːθ (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6308,7 +6308,7 @@ forms = [
   { time = 200, ipa = "ˈbulɔːː", category = "noun" },
   { time = 900, ipa = "ˈbulɑ" },
   { time = 1400, ipa = "ˈbul" },
-  { time = "final", ipa = "ˈbʊl" },
+  { time = "final", ipa = "ˈbɵl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bull /bɵ́l/, with r written ɹ and the stress as ˈ. Was ˈbʊl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6322,7 +6322,7 @@ forms = [
   { time = 403, ipa = "ˈlɑmb", note = "PWGmc *lamb (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑmb" },
   { time = 1400, ipa = "ˈlam" },
-  { time = "final", ipa = "ˈlæm" },
+  { time = "final", ipa = "ˈlam", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lamb /lám/, with r written ɹ and the stress as ˈ. Was ˈlæm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6336,7 +6336,7 @@ forms = [
   { time = 403, ipa = "ˈxɑzɔː", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈxɑsɔː. Kroonen s.v. *hesan- ~ *hazan-, PDF 263: the English line has *hazan-; the cited *hasō is the continental form (OS haso, OHG haso). PWGmc *hasō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈxɑrɑ" },
   { time = 1400, ipa = "ˈhaːr" },
-  { time = "final", ipa = "ˈhɛə" },
+  { time = "final", ipa = "ˈhɛː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hare /hɛ́ː/, with r written ɹ and the stress as ˈ. Was ˈhɛə (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6349,7 +6349,7 @@ forms = [
   { time = 200, ipa = "ˈnɑβɑlɔːː", category = "noun" },
   { time = 900, ipa = "ˈnɑfolɑ" },
   { time = 1400, ipa = "ˈnaːvəl" },
-  { time = "final", ipa = "ˈneɪvəl" },
+  { time = "final", ipa = "ˈnɛjvəl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): navel /nɛ́jvəl/, with r written ɹ and the stress as ˈ. Was ˈneɪvəl (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6363,7 +6363,7 @@ forms = [
   { time = 403, ipa = "ˈiːxu", note = "PWGmc *īhu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈiːw" },
   { time = 1400, ipa = "ˈiw" },
-  { time = "final", ipa = "ˈjuː" },
+  { time = "final", ipa = "ˈjʉw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): yew /jʉ́w/, with r written ɹ and the stress as ˈ. Was ˈjuː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6704,7 +6704,7 @@ forms = [
   { time = 200, ipa = "ˈxriŋgɑz", category = "noun" },
   { time = 900, ipa = "ˈxriŋg" },
   { time = 1400, ipa = "ˈriŋg" },
-  { time = "final", ipa = "ˈɹɪŋ" },
+  { time = "final", ipa = "ˈɹɪŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ring /rɪ́ŋ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -6717,7 +6717,7 @@ forms = [
   { time = 200, ipa = "ˈburzdɑ̃", category = "noun", note = "TARGET corrected 2026-10-06 (DECISIONS.md, four cases): was ˈburðɑ̃. Kroonen s.v. *burzda-, PDF 124: PGmc *burzdą from *bʰr̥sdʰ-o-, whose *z left no trace because the preceding r assimilated it after rhotacism (Goth. fotu-baurd, OE bord). Wiktionary itself derives *burdą from earlier *burzdnaz. Reconstruction column, where Kroonen outranks Wiktionary. Transcribed by pgmc_ipa." },
   { time = 900, ipa = "ˈbord" },
   { time = 1400, ipa = "ˈboːrd" },
-  { time = "final", ipa = "ˈbɔːd" },
+  { time = "final", ipa = "ˈboːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): board /bóːd/, with r written ɹ and the stress as ˈ. Was ˈbɔːd (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6730,7 +6730,7 @@ forms = [
   { time = 200, ipa = "ˈmurɣuz", category = "adj" },
   { time = 900, ipa = "ˈmyrje" },
   { time = 1400, ipa = "ˈmiriː" },
-  { time = "final", ipa = "ˈmɛɹi" },
+  { time = "final", ipa = "ˈmɛɹɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): merry /mɛ́rɪj/, with r written ɹ and the stress as ˈ. Was ˈmɛɹi (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6743,7 +6743,7 @@ forms = [
   { time = 200, ipa = "ˈxɑmmɔː", category = "noun" },
   { time = 900, ipa = "ˈxɑmm" },
   { time = 1400, ipa = "ˈham" },
-  { time = "final", ipa = "ˈhæm" },
+  { time = "final", ipa = "ˈham", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ham /hám/, with r written ɹ and the stress as ˈ. Was ˈhæm (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6767,7 +6767,7 @@ forms = [
   { time = 200, ipa = "ˈθurstuz", category = "noun" },
   { time = 900, ipa = "ˈθurst" },
   { time = 1400, ipa = "ˈθirst" },
-  { time = "final", ipa = "ˈθɜːst" },
+  { time = "final", ipa = "ˈθəːst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thirst /θə́ːst/, with r written ɹ and the stress as ˈ. Was ˈθɜːst (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6791,7 +6791,7 @@ forms = [
   { time = 200, ipa = "ˈxɑɣɔːː", category = "noun" },
   { time = 900, ipa = "ˈxɑgɑ" },
   { time = 1400, ipa = "ˈhaw" },
-  { time = "final", ipa = "ˈhɔː" },
+  { time = "final", ipa = "ˈhoː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): haw /hóː/, with r written ɹ and the stress as ˈ. Was ˈhɔː (Wiktionary RP, Gimsonian symbols)." },
 ]
 
 [[words]]
@@ -6804,7 +6804,7 @@ forms = [
   { time = 200, ipa = "ˈɸɑnjɑ̃", category = "noun" },
   { time = 900, ipa = "ˈfenn" },
   { time = 1400, ipa = "ˈfɛn" },
-  { time = "final", ipa = "ˈfɛn" },
+  { time = "final", ipa = "ˈfɛn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fen /fɛ́n/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -6816,7 +6816,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲnids", category = "noun", note = "PIE *ḱnids (Kroonen s.v. *hnit-, PDF 276); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈxnits", category = "noun" },
   { time = 900, ipa = "ˈxnitu" },
-  { time = "final", ipa = "ˈnɪt" },
+  { time = "final", ipa = "ˈnɪt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): nit /nɪ́t/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
 [[words]]
@@ -6849,5 +6849,5 @@ forms = [
   { time = -2000, ipa = "ˈlentos", category = "adj", note = "PIE *léntos (Kroonen s.v. *linþa-, PDF 379); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈlinθɑz", category = "adj" },
   { time = 900, ipa = "ˈliːθe" },
-  { time = "final", ipa = "ˈlaɪð" },
+  { time = "final", ipa = "ˈlɑjð", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lithe /lɑ́jð/, with r written ɹ and the stress as ˈ. Was ˈlaɪð (Wiktionary RP, Gimsonian symbols)." },
 ]
