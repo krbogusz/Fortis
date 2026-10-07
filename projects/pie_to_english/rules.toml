@@ -3408,13 +3408,6 @@ the OPEN ME ē: bēn, ēþe give /bɛːn/, /ɛːðe/. Word-scoped to distinguish
 words = ["bōniz", "eath"]
 definition = "eː → ɛː"
 
-[sporadic_other_u]
-time = 1150
-name = "SPORADIC: *anþeraz > ME other /uðer/ has a short *u"
-description = "*anþeraz gives ME other with a short *u where our cascade carries a long *oː. Word-scoped. The cause is not known. Hart (1570) has [uː] in other, which points to a long ME vowel, so the short u of the 1400 target may be a variant."
-words = ["other"]
-definition = "oː → u"
-
 [sporadic_gome_full_osl]
 time = 1200
 name = "SPORADIC: *gumô lowers and lengthens — ME gome"

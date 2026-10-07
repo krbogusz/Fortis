@@ -66,7 +66,7 @@ forms = [
   { time = 200, ipa = "ˈɑnθɑrɑz", category = "adj", note = "Corrected against a cited reconstruction (see the word note)." },
   { time = 403, ipa = "ˈɑnθɑr", note = "PWGmc *anþar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈoːθer" },
-  { time = 1400, ipa = "ˈuðər" },
+  { time = 1400, ipa = "ˈoːðər", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈuðər. Dialect variant: Wiktionary gives ME other as /ˈuðər/ and /ˈoːðər/, and the target had the short variant. Hart (1570) has [uː] in other (Jones §4.2, PDF 222), which continues the long variant through the Vowel Shift. RP /ʌ/ then comes from the shortening before /ð/ that brother and mother also show." },
   { time = 1570, ipa = "ˈuːðər", note = "Early Modern English, Hart 1551, scored at 1570: Hart says the o of do, to and other has 'the proper sound of the u'. (Jones sect. 4.2, PDF 222 (book p. 209)). Added 2026-10-06." },
   { time = "final", ipa = "ˈʌðə" },
 ]
