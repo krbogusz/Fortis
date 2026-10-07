@@ -1966,6 +1966,16 @@ definition = "[+syll, length: long, aperture: mid, advancement: atr] → [advanc
 # Old English → Middle English → Modern. Minkova chs. 5, 7–8.
 # ─────────────────────────────────────────────────────────────────────────────
 
+# Ringe & Taylor (§6.10.2, PDF 354) find OE V̄ser > V̄re in two words, ūser > ūre and īsern > īren,
+# after syncope, probably in the south. The distribution of īsern and īren in the texts looks random
+# to them. The 900 targets keep īsern, so the rule is dated after that checkpoint; ME iren continues
+# īren.
+[oe_ser_to_re]
+time = 950
+name = "After a long vowel, *ser becomes *re"
+description = "Ringe & Taylor §6.10.2 (PDF 354): ūser > ūre, īsern > īren"
+definition = "s [+syll, stress: none] r → r e ∅ / [+syll, length: long, stress: primary] _"
+
 # Late OE also lengthened a vowel before *ŋg: Jones's Table 2.11 (PDF 39) lists lang, sang, strang,
 # ȝung, þing. The Ormulum (Table 2.13, PDF 42) writes lang, sang, strang, gang with the long vowel
 # but lannge, ganngenn, brinngenn, where a syllable follows, with the short one. So the rule takes
