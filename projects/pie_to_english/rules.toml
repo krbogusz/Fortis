@@ -136,7 +136,7 @@ nominatives had come to end in *-ō by Szemerényi's Law and loss of the *n (PDF
 *hazō < *kas-ōn (PDF 263), nom. *bulō (PDF 121). Cause: the old nominative of the masculine type.
 Word-scoped, because the engine does not know gender; the list names the masculine nouns. Before
 overlong_vowels, which then makes the final *ō overlong."""
-words = ["bull", "hare"]
+words = ["bull", "hare", "tehswô"]
 definition = "n → ∅ / oː _ #"
 
 [overlong_vowels]
@@ -2964,6 +2964,7 @@ This *-ī arose in PWGmc (`wg_final_j_vocalisation`, 402), after the older final
 (`oe_final_long_high_shortening`, 399), so it was still long when `oe_high_vowel_deletion` (460)
 took the short ones. It shortens after that, and `oe_final_i_to_e` (470) lowers it to *-e."""
 definition = "[+syll, length: long, aperture: high, +front, stress: none] → [length: short] / _ #"
+
 
 
 [me_gg_affrication]
