@@ -3450,14 +3450,15 @@ definition = "θ → d / [+lat] _"
 
 [oe_final_j_loss]
 time = 471
-name = "A word-final *j after a vowel is lost"
+name = "A word-final *j after *i is lost"
 description = """The *-ijaz nouns end in a stranded *j once the ending is gone — *andijaz > *andij,
 *mēkijaz > *mēkij — and Old English has ende, mēċe. The *j simply goes, and the *i before it is the
 *-e of the citation form (oe_unstressed_i_to_e, 472).
 
-AFTER A VOWEL. Written unrestricted it also takes the second half of the GEMINATE *jj that West
-Germanic gemination has just made, and *hagjō > heċġ came out **heċ."""
-definition = "j → ∅ / [+syll] _ #"
+AFTER *i. Written unrestricted it also takes the second half of the GEMINATE *jj that West
+Germanic gemination has just made, and *hagjō > heċġ came out **heċ. Written after any vowel it
+took the *j that palatalisation makes of a final *g, and OE dæġ, weġ came out **dæ, **we."""
+definition = "j → ∅ / i _ #"
 
 
 
@@ -3868,9 +3869,9 @@ definition = "e → ɑ / _ #"
 [sporadic_any_ending]
 time = 476
 name = "SPORADIC: *ainagaz > OE ǣniġ — front vowel and the -iġ suffix"
-description = "*ainagaz gives OE ǣniġ; our cascade leaves *ɑːne. Word-scoped: the vowel fronts to *ǣ and the ending is the *-iġ suffix. Cause: OE ǣniġ has the suffix variant -iġ, whose *i fronts the vowel by i-mutation."
+description = "*ainagaz gives OE ǣniġ; our cascade leaves *ɑːnej. Word-scoped: the vowel fronts to *ǣ and the ending is the *-iġ suffix. Cause: OE ǣniġ has the suffix variant -iġ, whose *i fronts the vowel by i-mutation."
 words = ["any"]
-definition = ["ɑː → æː", "e → i j / _ #"]
+definition = ["ɑː → æː", "e → i / _ j #"]
 
 [sporadic_eath_smoothing]
 time = 476
