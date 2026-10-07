@@ -3690,13 +3690,15 @@ definition = "uː → ʌ"
 
 [sporadic_oe_homorganic_length]
 time = 1090
-name = "SPORADIC: long and ond lengthen before *ŋg, *nd in late Old English"
+name = "SPORADIC: long, ond and bord lengthen before *ŋg, *nd, *rd in late Old English"
 description = """OE lang, ened > lāng, ānd before the rounding of OE ā (me_a_rounding, 1100), which gives the
 ME lǭng, ǭnd of the 1400 targets. Jones (§2.2.5–6) dates homorganic lengthening to late OE and early
 ME and calls it "patchy". The regular oe_homorganic_lengthening (1050) excludes *ŋg, so the two words
 are named here. The ME o of long comes from this long ā, not from a rounding of short a before a
-nasal, which Minkova (PDF 156, 238) assigns to the North and West Midlands."""
-words = ["anadô", "long"]
+nasal, which Minkova (PDF 156, 238) assigns to the North and West Midlands. OE bord > ME bōrd
+lengthens before rd, a cluster Minkova §6.4 (PDF 168–169) lists; a regular rule for the r-clusters
+was tested and lost hard, word and yard at 1400 and final, so board is named here."""
+words = ["anadô", "long", "board"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_me_homorganic_length]
