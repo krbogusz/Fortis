@@ -1703,9 +1703,13 @@ description = "Minkova §6.3 — FOOT-FEET, FULL-FILL, SELL-SALE"
 # front vowels come in pairs on this axis (æ low front atr vs a low front, e mid front atr vs ɛ
 # mid front rtr), and a rule that moves only the lingual node lands on the wrong member of each:
 # *haisiz came out **hās for hǣs, and *banjō **benn with an ɛ for the e of benn, stede, here, mere.
+# A *j right after the vowel also mutates it: Ringe & Taylor (PDF 249, 271) give PWGmc *aij > *āj >
+# OE ǣġ 'egg'. The third clause takes that *j. The offglide of *ai is no longer there to trigger it,
+# since *ai became ā at 404.
 definition = [
     "[+syll, +back] → [+front, back: none, advancement: atr] / _ [-syll]* [+syll, aperture: high, +front]",
     "[+syll, +back] → [+front, back: none, advancement: atr] / _ [-syll][-syll]* j",
+    "[+syll, +back] → [+front, back: none, advancement: atr] / _ j",
     "[+syll, aperture: low, +front, length: short] → [aperture: mid, advancement: atr] / _ [-syll]* [+syll, aperture: high, +front]",
     "[+syll, aperture: low, +front, length: short] → [aperture: mid, advancement: atr] / _ [-syll][-syll]* j",
 ]
