@@ -2954,6 +2954,16 @@ Cause: a Northern form that the standard took. Word-scoped, because the change m
 words = ["week"]
 definition = "[+syll, length: short, stress: primary, aperture: high, +front] → eː / _ $ [-syll] ə #"
 
+[sporadic_door_duru]
+time = 1200
+name = "SPORADIC: door takes the close ō of OE duru"
+description = """OE had two words for 'door', the neuter dor, which the cascade derives from *durą, and the
+feminine u-stem duru. Hoad (s.v. door) says their ME descendants coalesced. Minkova (PDF 172, 221)
+derives ME dōr(e) from duru, whose lengthened [ʊ] merged with [oː]. Cause: the merger with the
+reflex of duru. Word-scoped: the short o of dor takes that ō."""
+words = ["door"]
+definition = "[+syll, +back, +rounded, aperture: mid, length: short, stress: primary] → oː"
+
 [eme_trap_vowel]
 time = 1575
 name = "ME /a/ becomes Early Modern /æ/"
