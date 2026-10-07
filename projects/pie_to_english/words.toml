@@ -7159,7 +7159,7 @@ forms = [
   { time = 200, ipa = "ˈɛːðrɔ̃ː", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈɛːθrɔ̃ː, PGmc *ēþrǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py; now *ēdrǭ, with the Verner variant. The rules prompted the change (DECISIONS.md, 2026-10-07): the PIE paradigm Wiktionary cites, *h₁éh₁t-r̥ ~ *h₁h₁t-éns, has the accent on the suffix in the oblique cases, where Verner's law gives *ð. OE ǣdre and Wiktionary's own PWGmc *ādrā have the d that continues it, and *þ cannot give that d." },
   { time = 403, ipa = "ˈɑːdrɑː", note = "PWGmc *ādrā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈæːdre" },
-  { time = 1400, ipa = "ˈɛːdɾə" },
+  { time = 1400, ipa = "ˈɛːdr", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈɛːdɾə. Transcription convention. Wiktionary gives ME edre as /ˈɛːd.ɾə/, the only one of the 289 ME targets with a tap and the only one with a final schwa. The column writes r and leaves the final -e out (SOURCE.md, Middle English transcriptions, rule 4; me_final_e_loss)." },
 ]
 
 [[words]]
