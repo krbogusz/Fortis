@@ -3894,11 +3894,11 @@ forms = [
 [[words]]
 id = "hrīdrǭ"
 gloss = "hrīdrǭ"
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kréydʰrom is replaced by *kreydʰrṓn on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM restored 2026-10-08 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3) to Wiktionary's neuter *kréydʰrom, which Ringe gives among the root-accented instrument nouns in *-dʰro- (PDF 86). An earlier correction had replaced it by the feminine *kreydʰrṓn and cited Ringe and Kroonen for it, but both give the neuter, and the feminine gave OE hrīdre, not hridder."
 forms = [
-  { time = -2000, ipa = "krejˈdʱroːn", category = "noun", note = "PIE *kréydʰrom, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈxriːðrɔ̃ː", category = "noun" },
-  { time = 403, ipa = "ˈxriːdrɑː", note = "PWGmc *hrīdrā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = -2000, ipa = "ˈkrejdʱrom", category = "noun", note = "PIE *kréydʰrom, as cited by Wiktionary and Ringe (PDF 86). Was krejˈdʱroːn." },
+  { time = 200, ipa = "ˈxriːðrɑ̃", category = "noun", note = "TARGET corrected 2026-10-08 (rule 3): was ˈxriːðrɔ̃ː, PGmc *hrīdrǭ. Kroonen heads the entry with the neuter *hrīdra- (PDF 287), which gives OE hridder; he puts the OHG feminine ritera under a separate *hrīdrō-." },
+  { time = 403, ipa = "ˈxriːdr", note = "TARGET corrected 2026-10-08 (rule 3): was ˈxriːdrɑː, PWGmc *hrīdrā (Wiktionary), the feminine of OHG ritera. The neuter *hrīdra- gives PWGmc *hrīdr." },
   { time = 900, ipa = "ˈxridder" },
   { time = 1400, ipa = "ˈridər", note = "Transcribed from ME ridder (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
   { time = "final", ipa = "ˈɹɪdəl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): riddle /rɪ́dəl/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), riddle; added 2026-10-06." },
