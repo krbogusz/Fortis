@@ -1075,6 +1075,19 @@ definition = "[+syll, length: long, aperture: low, +back, rounded: none] → oː
 # West Germanic a-umlaut: a short high vowel lowers before a non-high vowel in the next
 # syllable — PrG *gulþam > OE gold, *kurną > corn (Minkova §3.4 n.9). It must run before the
 # apocope below, which destroys the conditioning vowel.
+[wg_w_velarization]
+time = 350
+name = "West Germanic: *w between high vowels becomes *ɣ"
+description = """Kroonen s.v. *ju(w)unþi- (PDF 316): "The West Germanic material points to a form *juwunþi-
+with regular velarization of the *w (cf. *sū- 'sow' and *newun '9') between two high vowels (one of
+them being rounded)". So PGmc *juwunþiz gives PWGmc *jugunþi (Ringe & Taylor PDF 156). Dated
+between the 200 and 403 checkpoints. In this set only youth reaches it: midge needs Dybo's law,
+which the cascade does not adopt, and nine stays word-scoped (sporadic_nine_nigun)."""
+definition = [
+    "w → ɣ / [+syll, aperture: high, +rounded] _ [+syll, aperture: high]",
+    "w → ɣ / [+syll, aperture: high] _ [+syll, aperture: high, +rounded]",
+]
+
 [sporadic_nine_nigun]
 time = 350
 name = "SPORADIC: northern West Germanic *nigun 'nine'"
@@ -2124,6 +2137,16 @@ definition = "[-son, glottal_aperture: spread] → [glottal_aperture: neutral]"
 # Two identical short vowels left in hiatus by laryngeal loss collapse into one — *h₂yuHn̥ḱós
 # loses its laryngeal between the root /u/ and the /u/ epenthesised into *n̥, and the *uu that
 # results is a single /u/ in the attested *jungaz. (The long+short case is `vowel_contraction`.)
+[sporadic_youth_hiatus_glide]
+time = -1950
+name = "SPORADIC: the hiatus of *ju.unþi- takes a *w"
+description = """Kroonen s.v. *ju(w)unþi- (PDF 316): "The w probably arose in hiatus position of a proto-form
+*juunþi-. Go. junds*, on the other hand, seems simply to have lost the hiatus." young has the same
+hiatus and contracts (*junga-, Kroonen PDF 27), so the glide is word-scoped. Cause: a glide inserted
+in the hiatus, as Kroonen says. Before pgmc_identical_vowel_hiatus, which would merge the two *u."""
+words = ["youth"]
+definition = "∅ → w / u _ u"
+
 [pgmc_identical_vowel_hiatus]
 time = -1900
 name = "Identical short vowels in hiatus merge"

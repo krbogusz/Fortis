@@ -1034,8 +1034,8 @@ gloss = "youth"
 frequency = 17703
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ħjuχn̩ˈtis", category = "noun", note = "PIE *h₂yu-Hn̥-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈjuɣunθiz", category = "noun" },
+  { time = -2000, ipa = "ħjuˈχn̩tis", category = "noun", note = "PREFORM corrected 2026-10-07: was ħjuχn̩ˈtis; now *h₂yuHń̥tis. The rules prompted the change (DECISIONS.md, 2026-10-07): OE ġeoguþ, OS juguth and OHG jugund continue a *þ, so the accent stood on the syllable before the *t (Verner's law). Kroonen gives *h₂iu-Hn̥-ti- with no accent (s.v. *ju(w)unþi-, PDF 316). The accent on *n̥ is inferred from the *þ. Gothic junds has the Verner *d of the cited *h₂yu-Hn̥-tí-s. PIE *h₂yu-Hn̥-tí-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈjuwunθiz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈjuɣunθiz. The rules prompted the change (DECISIONS.md, 2026-10-07): Kroonen reconstructs PGmc *ju(w)unþi- with *w and says the *g of the West Germanic forms is a West Germanic velarization of that *w (PDF 316). Wiktionary's *jugunþiz writes the West Germanic *g into Proto-Germanic. The books outrank Wiktionary for the 200 column." },
   { time = 403, ipa = "ˈjuɣunθi", note = "PWGmc *jugunþi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjuguθ" },
   { time = 1400, ipa = "ˈjuːð" },

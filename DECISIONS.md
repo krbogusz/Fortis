@@ -396,3 +396,22 @@ Mahlow's and Dybo's laws.
 **Rejected:**
 - Kroonen's unrestricted pretonic gemination of *j.
 - A laryngeal condition like the one for *w. It covers twajjaz (*dwoyHós) but not wajjuz.
+
+## 2026-10-07: Adopt Kroonen's West Germanic velarization of *w
+
+**Choice:** `wg_w_velarization` turns *w between two high vowels, one of them rounded, into *ɣ
+between the 200 and 403 checkpoints. youth gets a word-scoped hiatus glide, an accent on the
+syllabic *n̥, and Kroonen's PGmc *juwunþiz as its 200 target.
+
+**Reason:** Kroonen derives the *g of PWGmc *jugunþi from *juwunþi- by this velarization (PDF 316),
+and Ringe & Taylor give *jugunþi with no derivation (PDF 156). Tested alone, the rule changes no
+word. With the youth changes, youth becomes exact at 200 and 403 and moves closer at 900 and final.
+OE ġeoguþ still misses: its second vowel shows no i-umlaut, which Ringe & Taylor's double umlaut
+(PDF 266–268) would predict, so the word was probably remodelled as an ō-stem, as gūþ was.
+
+**Rejected:**
+- midge by the same rule. Its short *u needs Dybo's law, which the cascade does not adopt.
+- Replacing `sporadic_nine_nigun`. Kroonen's account needs a raising of *e before *u that OE
+  seofon does not show.
+- Lengthening unstressed vowels before a nasal and a voiceless fricative. It brought youth closer at
+  900 but gave the wrong vowel in even, and it changed no exact count.
