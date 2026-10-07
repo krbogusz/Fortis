@@ -2988,6 +2988,15 @@ name = "Close *oː rises to *uː before *x"
 description = "Jones §3.4.1; Steponavičius §183; Minkova §7.4 n. 14 — bōh > bough, plōh > plough"
 definition = "oː → uː / _ x"
 
+[sporadic_fifth_th]
+time = 1450
+name = "SPORADIC: ME fifte takes the -th of the other ordinals"
+description = """RP fifth continues ME fifthe beside fifte, fift (Wiktionary, English fifth), a form "remodeled"
+on the ordinal suffix -the (Wiktionary, ME fifte). Cause: analogy with the ordinals in -th (fourth,
+seventh). Dated after the 1400 checkpoint, whose target is fift."""
+words = ["fifth"]
+definition = "t → θ / f _ #"
+
 [sporadic_trough_x_to_f]
 time = 1440
 name = "SPORADIC: trough keeps its *x as *f"
