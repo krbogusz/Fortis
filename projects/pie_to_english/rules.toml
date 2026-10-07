@@ -1987,6 +1987,15 @@ name = "A vowel lengthens before a word-final *ŋg in late Old English"
 description = "Jones Table 2.11 (PDF 39), Table 2.13 (PDF 42): lang, sang, strang, gang"
 definition = "[+syll, length: short, stress: primary] → [length: long] / _ ŋ g #"
 
+# OE ǣ before *j does not take part in the raising to ME ɛː below: Steponavičius §183 (8), PDF 171,
+# gives grǣg [græːj] > grei, gray [græi], with the low vowel kept and the length lost in the new
+# diphthong. Before the raising (1100).
+[me_ae_before_j]
+time = 1099
+name = "OE ǣ before *j stays low and shortens"
+description = "Steponavičius §183 (8), PDF 171: grǣg [græːj] > grei [græi]"
+definition = "[+syll, aperture: low, +front, length: long] → [length: short] / _ j"
+
 # OE ā rounds to ME open ɔː — the change behind stān > stone, bāt > boat (§7.3).
 [me_a_rounding]
 time = 1100
