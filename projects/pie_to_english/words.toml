@@ -813,9 +813,8 @@ forms = [
 id = "bottle"
 gloss = "bottle"
 frequency = 38229
-note = "Source: Wiktionary (kaikki). The final target ˈbɒtl̩ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE bottle is Old French botele (Hoad, Klein PDF 117); OE botl 'dwelling' has none."
+note = "Source: Wiktionary (kaikki). The final target ˈbɒtl̩ was removed on 2026-10-06 (DECISIONS.md, four cases): No modern reflex: PDE bottle is Old French botele (Hoad, Klein PDF 117); OE botl 'dwelling' has none. The PIE seed ˈbʱoħutlom (PIE *bʰoh₂u-tlo-m, as cited by Wiktionary) was removed on 2026-10-07: no book in hand gives it: Kroonen has no entry for the word, and Ringe & Taylor give OE botl 'dwelling' without an etymology (PDF 356). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈbʱoħutlom", category = "noun", note = "PIE *bʰoh₂u-tlo-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɔːθlɑ̃", category = "noun" },
   { time = 403, ipa = "ˈbɔːθl", note = "PWGmc *bōþl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbotl" },
@@ -1936,9 +1935,8 @@ forms = [
 id = "seventy"
 gloss = "seventy"
 frequency = 1653
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed sepˈtm̩dkʲomt (PIE *septḿ̥dḱomt, as cited by Wiktionary) was removed on 2026-10-07: Ringe derives PGmc *sebun-tēhund- by reanalysis of pre-PGmc *sebunt-ēhund-, whose *-ēhund- spread by analogy from the decads below it (PDF 241), so the word is a Germanic formation. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "sepˈtm̩dkʲomt", category = "num", note = "PIE *septḿ̥dḱomt, as cited by Wiktionary." },
   { time = 200, ipa = "ˈseβuntɛːxundɑ̃", category = "num" },
   { time = 900, ipa = "xundˈseofontij" },
   { time = 1400, ipa = "ˈsɛvəntiː" },
@@ -3860,9 +3858,8 @@ forms = [
 [[words]]
 id = "undern"
 gloss = "undern"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈχn̩ter (PIE *h₁n̥ter, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. Kroonen gives *h₁n̥-ter- as one source of the preposition *under- (PDF 599), not of this noun. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈχn̩ter", category = "noun", note = "PIE *h₁n̥ter, as cited by Wiktionary." },
   { time = 200, ipa = "ˈundurniz", category = "noun" },
   { time = 900, ipa = "ˈundern" },
 ]
@@ -3925,9 +3922,8 @@ forms = [
 [[words]]
 id = "twifōtijaz"
 gloss = "twifōtijaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈdwipoːds (PIE *dwípōds, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈdwipoːds", category = "adj", note = "PIE *dwípōds, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtwiɸɔːtijɑz", category = "adj" },
   { time = 900, ipa = "ˈtwiˌfeːte" },
 ]
@@ -4875,9 +4871,8 @@ forms = [
 [[words]]
 id = "wiþiz"
 gloss = "wiþiz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈweχitis (PIE *wéh₁itis, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. Kroonen names the root *ueh₁i- 'to twist' only under other words (*wajju-, PDF 608; *wīman-, PDF 627). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈweχitis", category = "noun", note = "PIE *wéh₁itis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwiθiz", category = "noun" },
   { time = 900, ipa = "ˈwiθe", note = "Transcribed from OE wiþe (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
   { time = "final", ipa = "ˈwɪθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): withe /wɪ́θ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), withe; added 2026-10-06." },
@@ -5190,9 +5185,8 @@ forms = [
 [[words]]
 id = "hulisō"
 gloss = "hulisō"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈkʲeloːs (PIE *ḱélōs, as cited by Wiktionary) was removed on 2026-10-07: Kroonen takes the Germanic and Celtic words for holly to be 'adopted independently from a third, extinct European language' (s.v. *hulisa-, PDF 293). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈkʲeloːs", category = "noun", note = "PIE *ḱélōs, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxulisɔː", category = "noun" },
 ]
 
@@ -5254,9 +5248,8 @@ forms = [
 [[words]]
 id = "muþraz"
 gloss = "muþraz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈmuχtrom (PIE *múHtrom, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈmuχtrom", category = "noun", note = "PIE *múHtrom, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmuθrɑz", category = "noun" },
 ]
 
@@ -5326,9 +5319,8 @@ forms = [
 [[words]]
 id = "wastijō"
 gloss = "wastijō"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈwestis (PIE *wéstis, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. Kroonen gives only the verb *wazjan- 'to clothe' < *uos-eie- (PDF 616), and Ringe & Taylor call Gothic wasti a derived noun (PDF 98). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈwestis", category = "noun", note = "PIE *wéstis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑstijɔː", category = "noun" },
 ]
 
@@ -5939,18 +5931,16 @@ forms = [
 [[words]]
 id = "snauþuz"
 gloss = "snauþuz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈksnewtus (PIE *ksnéw-tu-s, as cited by Wiktionary) was removed on 2026-10-07: Kroonen supports only the root: ON snauðr 'naked, poor' < *snauþu- belongs with *snawwa- 'bald' < *ksnou-ó- (PDF 501), and no book gives the cited formation. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈksnewtus", category = "adj", note = "PIE *ksnéw-tu-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈsnɑwθuz", category = "adj" },
 ]
 
 [[words]]
 id = "fadurbanô"
 gloss = "fadurbanô"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈpħtr̩gʷʱonoː (PIE *ph₂tr̥-gʷʰon-ō, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has the compound. Kroonen derives *banan- 'killer' from *bʰon-on- and calls a change of *gʷʰ to *b 'unlikely' (PDF 89), and the cited *-gʷʰon- needs that change. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈpħtr̩gʷʱonoː", category = "noun", note = "PIE *ph₂tr̥-gʷʰon-ō, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸɑðurˌbɑnɔːː", category = "noun" },
 ]
 
@@ -6022,9 +6012,8 @@ forms = [
 [[words]]
 id = "hajaz"
 gloss = "hajaz"
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kéHy-os is replaced by *káyos on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kéHy-os is replaced by *káyos on the evidence of the attested Germanic form (Ringe / Kroonen). The PIE seed ˈkajos (PIE *kéHy-os, as cited by Wiktionary) was removed on 2026-10-07: Kroonen gives *haj(j)a- 'heat' only a questioned *koi-io- with a purely Germanic distribution (PDF 243). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈkajos", category = "noun", note = "PIE *kéHy-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈxɑjɑz", category = "noun" },
 ]
 
@@ -6199,9 +6188,8 @@ forms = [
 [[words]]
 id = "gamalaz"
 gloss = "gamalaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈkʲomħelos (PIE *ḱom-h₂el-o-s, as cited by Wiktionary) was removed on 2026-10-07: Kroonen gives '*ḱom-h₂el-o-? (DRV?)' and calls the etymology uncertain (s.v. *gamala-, PDF 206). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈkʲomħelos", category = "adj", note = "PIE *ḱom-h₂el-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣɑmɑlɑz", category = "adj" },
   { time = 900, ipa = "ˈgɑmol" },
 ]
@@ -6274,9 +6262,8 @@ forms = [
 [[words]]
 id = "tēlō"
 gloss = "tēlō"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈdolχeħ (PIE *dolH-eh₂, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. Kroonen's *tala- 'number; speech' from *dolH-o- has a short *a (PDF 548), not the long *ē of *tēlō. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈdolχeħ", category = "noun", note = "PIE *dolH-eh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈtɛːlɔː", category = "noun" },
 ]
 
