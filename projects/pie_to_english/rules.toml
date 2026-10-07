@@ -1136,9 +1136,9 @@ were usually backformed to the original feminines of i- and u-stems". So *grōni
 take the nominative of *-ijaz, PWGmc *grōnī, *swōtī, *þunnī. That *-ī is the secondary long vowel
 which the shortening of final *-ī (399) does not reach (PDF 30–31). The transfer is morphological,
 and only "usually" so, so the rule names the adjectives whose OE forms show it: grēne, swēte, þynne
-and þyrre have the i-umlaut and the -e of the ja-stems. OE ange 'narrow' has no umlaut and þicce
-an unpalatalised [kk], so anguz and thick are not listed."""
-words = ["green", "hrainiz", "sweet", "thin", "þursuz"]
+and þyrre have the i-umlaut and the -e of the ja-stems, and so has myrġe 'merry' (*murɣuz). OE ange
+'narrow' has no umlaut and þicce an unpalatalised [kk], so anguz and thick are not listed."""
+words = ["green", "hrainiz", "sweet", "thin", "þursuz", "merry"]
 definition = "[+syll, aperture: high, length: short, stress: none] → iː / _ z #"
 
 [wg_final_z_loss]
