@@ -1496,12 +1496,14 @@ description = "*xɔːrɔ̃ː > hōre, *wiðuwɔ̃ː > widuwe, *kʷenɔ̃ː > cwe
 definition = "[+syll, length: long, aperture: low, +back] → e / [+syll] []* [-syll] _ #"
 
 # After palatalisation, *w is lost after a non-initial velar: *ahwō > *eahu, *sehwan > sēon
-# (Ringe & Taylor §6.4.2, PDF 229–230).
+# (Ringe & Taylor §6.4.2, PDF 229–230). Also after a geminate velar: *sihhwā > seohhe (PDF 64).
 [oe_w_loss_after_velar]
 time = 411
 name = "*w is lost after a non-initial velar"
-description = "Ringe & Taylor §6.4.2, PDF 229–230 — *ahwō > *eahu, *sehwan > sēon"
-definition = "w → ∅ / [+syll] [+cons, +back, -son] _"
+description = """Ringe & Taylor §6.4.2, PDF 229–230 — *ahwō > *eahu, *sehwan > sēon. The velar may be a
+geminate: *sihhwā > seohhe, *þikkwī > þicce (PDF 64). The loss follows palatalisation, since the *w
+kept the velar of þicce from palatalising (PDF 65)."""
+definition = "w → ∅ / [+syll] [+cons, +back, -son]+ _"
 
 [oe_w_loss_before_i]
 time = 440
