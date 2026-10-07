@@ -369,8 +369,14 @@ definition = "kʷ → p / _ t"
 [labiovelar_delabialization]
 time = -2000
 name = "Labiovelar delabialization"
-description = "Labiovelars are delabialised next to */u/ (or */un/) or before */t/"
-definition = "[+bk, aperture: high, +rnd, -son] → [labial: none] / _ (u|t)"
+description = """Labiovelars are delabialised next to */u/ (or after */un/) or before */t/. Ringe PDF 122–123:
+"Labiovelars were delabialized next to *u", and also "when preceded by the sequence *un", as in
+*lungraz and *tungōn. The second line states the left side, which the rule used to lack: dunkalaz
+kept its *kʷ."""
+definition = [
+    "[+bk, aperture: high, +rnd, -son] → [labial: none] / _ (u|t)",
+    "[+bk, aperture: high, +rnd, -son] → [labial: none] / [+syll, +bk, +rnd, aperture: high] n? _",
+]
 
 [final_non_high_short_vowel_loss]
 time = -1000
