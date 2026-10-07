@@ -747,7 +747,8 @@ is *already* Anglian so the mixed words are never corrupted:
 
 * `anglianise()` in `build_gold` maps the West Saxon `īe/ie` in the OE **targets** to the Anglian
   monophthong — a regular correspondence (Campbell §200-1), fired on the shape, and the one West
-  Saxon feature the later columns visibly reject;
+  Saxon feature the later columns visibly reject. Since 2026-10-07 a long *īe from the umlaut of
+  *īo (PGmc *iu) becomes ēo instead, because Anglian kept that diphthong: WS dīere, Merc. dēore;
 * Anglian **rules**, each scoped to a cluster where the gold is uniformly Anglian: smoothing and
   raising before *ht* (`niht`, `riht`, `miht`), and the collapse of our derivation's i-mutated *æe*
   to Anglian *e* (`sċell`, `erfe`) — the derivation-side twin of the gold step above.

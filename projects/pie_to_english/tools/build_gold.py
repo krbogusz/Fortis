@@ -513,7 +513,7 @@ ATTESTED_FIXES = {
 CONVENTIONS = [("ɪ̯", "j"), ("i̯", "j"), ("u̯", "w")]
 
 
-def anglianise(oe: str) -> str:
+def anglianise(oe: str, pgmc: str = "") -> str:
     """Normalise a West Saxon Old English form to its Anglian equivalent.
 
     The Old English column is Wiktionary's, and Wiktionary lemmatises at whatever spelling is best
@@ -537,7 +537,15 @@ def anglianise(oe: str) -> str:
     per-word reconstruction — it fires on the shape, and it is the one West-Saxon feature the gold's
     later columns visibly reject. Broader Anglian features (smoothing before a velar) are left to
     the RULES, scoped to where the gold is uniformly Anglian, because there the column is mixed and
-    a blanket normalisation would corrupt the West-Saxon-gold words instead."""
+    a blanket normalisation would corrupt the West-Saxon-gold words instead.
+
+    The long *īe that is the i-umlaut of *īo is the exception. *īo continues PGmc *iu, and Anglian
+    did not umlaut it: *diurijaz > WS dīere, but North. dīore (Ringe & Taylor, PDF 263-264), and
+    Mercian merged *īo with ēo (PDF 353), so the Anglian form is dēore. Where the Proto-Germanic
+    headword *pgmc* has *iu, or the *iw of *niwjaz (PWGmc *niuwi), the long *īe becomes ēo. A short
+    *ie from the umlaut of *io is not told apart from the others and still becomes *e."""
+    if re.search(r"i[uw]", pgmc):
+        oe = oe.replace("iyː", "eoː")
     oe = oe.replace("iyː", "eː").replace("iy", "e")
     return oe
 
@@ -733,7 +741,7 @@ def main() -> None:
             ATTESTED_FIXES.get(c["pgmc"])
             or (f"/{transcribed}/" if transcribed else c["pgmc_ipa"])
         )
-        oe = anglianise(segmentable(OE_FIXES.get(c["pgmc"], c["oe_ipa"])))
+        oe = anglianise(segmentable(OE_FIXES.get(c["pgmc"], c["oe_ipa"])), c["pgmc"] or "")
         me = segmentable(c["me_ipa"])
         # A row with no target at ANY checkpoint scores nothing and is only noise in the reports.
         if not (pgmc or oe or me or final):
