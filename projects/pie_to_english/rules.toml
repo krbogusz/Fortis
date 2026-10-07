@@ -1133,6 +1133,17 @@ only?); for instance, botl 'dwelling' > bold, setl 'seat' > seld". Dated after t
 checkpoint, which has setl, and before ME seld."""
 definition = "t l → l d / _ #"
 
+[sporadic_four_prominence]
+time = 990
+name = "SPORADIC: OE fēower > ME four, the prominence moves onto the second element"
+description = """Minkova PDF 177: "A following /-w/ could also result in shift of the prominence onto the
+second element, thus OE fēower > ME four(e) 'four', OE trēowþ > ME trowþe 'troth'". The shift is
+lexical: OE cnēow gives ME knee with no shift. The unstressed vowel between the w and the r goes as
+the word becomes ME four. Word-scoped. Cause: the prominence shift before w that Minkova
+describes. Dated before me_diphthong_smoothing (1000), which would turn the ēo into ē."""
+words = ["four"]
+definition = ["e oː → ɔː ∅ / _ w", "e → ∅ / w _ r #"]
+
 [sporadic_nine_nigun]
 time = 350
 name = "SPORADIC: northern West Germanic *nigun 'nine'"
