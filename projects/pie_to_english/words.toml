@@ -6995,7 +6995,7 @@ note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score 
 forms = [
   { time = 200, ipa = "ˈskɑɸtɑz", category = "noun", note = "PGmc *skaftaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈskɑft", note = "PWGmc *skaft (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
-  { time = 900, ipa = "ˈʃæɑft" },
+  { time = 900, ipa = "ˈʃæft", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈʃæɑft. Dialect variant: sċeaft is West Saxon. The diphthong after an initial palatal arose in West Saxon only, and Ringe & Taylor give *sċæft > WS sċeaft (§6.5.1, PDF 230-231). So the other dialects kept the *sċæft that precedes it, the form the cascade derives." },
   { time = 1400, ipa = "ˈʃaft" },
   { time = "final", ipa = "ˈʃɑːft", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): shaft /ʃɑ́ːft/, with r written ɹ and the stress as ˈ." },
 ]
@@ -7099,7 +7099,7 @@ gloss = "halluz"
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
   { time = 200, ipa = "ˈxɑlluz", category = "noun", note = "PGmc *halluz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
-  { time = 900, ipa = "ˈxæɑll" },
+  { time = 900, ipa = "ˈxɑll", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈxæɑll. Dialect variant: heall is West Saxon, with breaking before the geminate *ll. Anglian retracted the vowel instead: Ringe & Taylor give *hallu > *hællu > WS heall, Angl. hall (PDF 200, 300). The cascade derives the Anglian form, as for the rest of the *lC cluster (DECISIONS.md, 2026-10-07, 'Model Anglian retraction before *lC')." },
 ]
 
 [[words]]
