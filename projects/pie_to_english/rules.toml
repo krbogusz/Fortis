@@ -3947,6 +3947,16 @@ words = ["buck", "buttaz-end"]
 definition = "[+syll, aperture: mid, +back, length: short] → [aperture: high]"
 
 
+[sporadic_rest_restan]
+time = 421
+name = "SPORADIC (levelling): ræst takes the e of the verb restan"
+description = """Hoad (s.v. rest) gives the OE noun as ræst and rest, beside the verb ræstan, restan. The verb has
+e by i-umlaut, *rastijan > *ræstjąn > restan (Ringe & Taylor PDF 252), and the same page explains an
+æ where e was expected (fæstan) as levelling from a related word. ME rest and PDE rest continue the
+e-form of the noun. Cause: levelling from the verb. Dated just after i-mutation (420)."""
+words = ["rest"]
+definition = "æ → e"
+
 [sporadic_gunthiz_no_umlaut]
 time = 421
 name = "SPORADIC (leveling): *gunþiz > OE gūþ keeps *u, i-mutation levelled out"

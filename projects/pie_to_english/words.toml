@@ -7367,7 +7367,7 @@ note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score 
 forms = [
   { time = 200, ipa = "ˈrɑstɔː", category = "noun", note = "PGmc *rastō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈrɑstu", note = "PWGmc *rastu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
-  { time = 900, ipa = "ˈræst" },
+  { time = 900, ipa = "ˈrest", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈræst. Dialect variant: Hoad (s.v. rest) gives the OE noun as ræst and rest. ME rest and PDE rest continue the e-form, which the noun took from the verb restan (sporadic_rest_restan), not the ræst the target had." },
   { time = 1400, ipa = "ˈrɛst" },
   { time = "final", ipa = "ˈɹɛst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): rest /rɛ́st/, with r written ɹ and the stress as ˈ." },
 ]
