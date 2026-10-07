@@ -7355,8 +7355,8 @@ note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score 
 forms = [
   { time = 200, ipa = "ˈwikɔ̃ː", category = "noun", note = "PGmc *wikǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈwikɑː", note = "PWGmc *wikā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
-  { time = 900, ipa = "ˈwit͡ʃe", note = "Transcribed from OE wiċe by tools/oe_ipa.py (SOURCE.md, 'Old English transcriptions'); added 2026-10-07." },
-  { time = 1400, ipa = "ˈwik" },
+  { time = 900, ipa = "ˈwike", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈwit͡ʃe. Reading chosen by the rules: the OE spelling wice leaves its c open between [k] and [tʃ]. Ringe & Taylor reconstruct the nominative as *wiċe, with an asterisk, but the attested oblique wican and the ō-stem wicu have a velar (PDF 338). ME wēke and PDE week continue the velar (Minkova PDF 221), so the rules choose [k] (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4). Transcribed from OE wiċe by tools/oe_ipa.py (SOURCE.md, 'Old English transcriptions'); added 2026-10-07." },
+  { time = 1400, ipa = "ˈweːk", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈwik. Dialect variant: ME had wike and weke. PDE week continues weke, with the chiefly Northern lengthening of a high vowel in an open syllable: OE wicu > ME wēk(e) (Minkova PDF 172, 221). The target had wike, which the modern word does not continue." },
   { time = "final", ipa = "ˈwɪjk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): week /wɪ́jk/, with r written ɹ and the stress as ˈ." },
 ]
 

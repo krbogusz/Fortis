@@ -2944,6 +2944,16 @@ targets (hāven, bēver). Word-scoped, because three quarters of the class keep 
 words = ["acre", "haven", "beaver", "navel"]
 definition = "[+syll, length: short, stress: primary, aperture: !high] → [length: long]"
 
+[sporadic_osl_high_vowel]
+time = 1200
+name = "SPORADIC: week lengthens its high vowel in an open syllable, to ē"
+description = """Minkova §7.5.2 (PDF 221): open-syllable lengthening reached the high vowels only
+inconsistently. It is "chiefly Northern", and few of its results reach PDE: OE wicu > ME wēk(e) >
+week, but hype > hip, wudu > wood. The lengthened [ɪ] merges with [eː], not with [iː] (PDF 172).
+Cause: a Northern form that the standard took. Word-scoped, because the change mostly failed."""
+words = ["week"]
+definition = "[+syll, length: short, stress: primary, aperture: high, +front] → eː / _ $ [-syll] ə #"
+
 [eme_trap_vowel]
 time = 1575
 name = "ME /a/ becomes Early Modern /æ/"
