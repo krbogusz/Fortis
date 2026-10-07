@@ -3814,11 +3814,10 @@ forms = [
 [[words]]
 id = "abuhaz"
 gloss = "abuhaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈɑfuxliːt͡ʃ was removed on 2026-10-07 (DECISIONS.md, four cases): Wrong word. OE afuhlīċ perverse is a derivative, *afuh + -līċ (Wiktionary), whose simplex is not attested. It is not the reflex of *abuhaz itself, and the cascade derives no suffix."
 forms = [
   { time = -2000, ipa = "ˈħepoʁʷkʷos", category = "adj", note = "PIE *h₂époh₃kʷos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑβuxɑz", category = "adj" },
-  { time = 900, ipa = "ˈɑfuxliːt͡ʃ" },
 ]
 
 [[words]]
