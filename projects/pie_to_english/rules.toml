@@ -4423,6 +4423,25 @@ unstressed vowels (1200) leaves -iġ as [əj]; the suffix is [i] instead, and fi
 (1350) does not touch it."""
 definition = ["ə j → iː / _ #", "j ə → iː ∅ / [-syll] _ #", "j → iː / [-syll] _ #"]
 
+[sporadic_seventy_hund_tig]
+time = 490
+name = "SPORADIC: *sebuntēhund is resegmented as OE hundseofontiġ"
+description = """Ringe & Taylor (PDF 137): the OE prefix hund- of the higher decades is the last syllable of the
+Gothic-type *sibuntēhund, moved to the front when the decades were counted in sequence, and the
+remaining suffix was reanalysed as the -tiġ of the lower decades. They call both steps native-learner
+errors. Cause: that resegmentation and reanalysis. Word-scoped. The rule replaces the reflex of
+*-tēhund with -tiġ and puts hund- before the stem."""
+words = ["seventy"]
+definition = ["t ɛ n d → t i j / _ #", "∅ → x u n d / # _ s"]
+
+[sporadic_seventy_hund_loss]
+time = 1100
+name = "SPORADIC: hundseofontiġ drops hund-, as the lower decades have none"
+description = """Ringe & Taylor (PDF 137): in every West Germanic language the formation of the lower decades
+eventually took over the higher ones. ME seventy has no hund-. Cause: that levelling. Word-scoped."""
+words = ["seventy"]
+definition = "x u n d → ∅ / # _"
+
 [sporadic_r_metathesis]
 time = 1200
 name = "SPORADIC: r metathesis in bright and wright"
