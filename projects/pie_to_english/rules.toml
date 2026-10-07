@@ -3237,6 +3237,19 @@ hrīdder > hridder."""
 definition = "[+syll, length: long, stress: primary] → [length: short] / _ 1=[-syll] @1"
 
 
+[sporadic_riddle_gemination]
+time = 601
+name = "SPORADIC: OE hrīder doubles its d before r"
+description = """Ringe & Taylor (PDF 69): consonants geminated sporadically before r in West Germanic, probably
+only where a vowel followed the cluster, with levelling in both directions. They name *p, *t, *k
+and *h, and add that a similar gemination recurred in OE (bettra). OE has the same doubled d before
+r in blǣddre 'bladder' (Steponavičius §162, PDF 143) and nǣddre 'adder' (Minkova §7.5.1.1, PDF 212),
+and Kroonen gives OE hrīdder, hriddel (s.v. *hrīdra-, PDF 287). Cause: that sporadic gemination
+before r. Word-scoped: OE ǣdre 'vein' keeps a single d."""
+words = ["hrīdrǭ"]
+definition = "d → d d / [+syll] _ [+syll] r #"
+
+
 [sporadic_osl_high_vowel]
 time = 1200
 name = "SPORADIC: week lengthens its high vowel in an open syllable, to ē"
