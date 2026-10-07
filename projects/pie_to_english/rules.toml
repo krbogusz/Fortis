@@ -1053,10 +1053,14 @@ root itself (*ǵʰh₂éns): OE keeps it, gōs. The obstruent is the phonologica
 morphological fact, and without the condition goose comes out **gō.
 
 Dated 400, which also matters: it is BEFORE the apocope, so a word whose *s is not yet final keeps
-it. *hūsą still has its ending here, so its *s is medial and survives — OE hūs, not **hū."""
+it. *hūsą still has its ending here, so its *s is medial and survives — OE hūs, not **hū.
+
+The *s stays after a vowel and *h. Inferred from the lexicon (DECISIONS.md, 2026-10-07): in *sehs
+'six' and *drōhs 'dross' the *hs is a cluster from PIE *ks, and OE keeps the *s (six, drōs), where
+*nahts and *sulhs, with a consonant before the *h, lose it (niht, sulh)."""
 definition = [
     "z → ∅ / _ #",
-    "s → ∅ / [-son] _ #",
+    "s → ∅ / [-son] _ # // [+syll] x _ #",
 ]
 
 # Rhotacism: the *z left over becomes /r/ (Minkova §3.4.1 — "original /z/, an allophone of /s/
@@ -2908,20 +2912,23 @@ oe_breaking made in front of an *h collapses back to a monophthong. Present-Day 
 from the Anglian dialects, not West Saxon, and the modern words are the Anglian outcome — niht >
 night, riht > right, miht > might. Restricted to *h + CONSONANT (the *ht cluster): word-final and
 pre-vocalic *h keep their West Saxon diphthong in the gold (feax, eoh), so the smoothing there
-would trade one dialect's words for the other's. Pinned to *ht specifically — *fax keeps its West
-Saxon *feax in the gold, and *hs is a velar + consonant too."""
-definition = ["e o → e ∅ / _ x t", "æ ɑ → æ ∅ / _ x t"]
+would trade one dialect's words for the other's. The *eo clause runs before *ht, *hs and *hþ, the
+clusters of palatal umlaut (Ringe & Taylor §6.9.7, PDF 351–352), which on Campbell's account began
+with this monophthongization; it gives six. The *ea clause stays pinned to *ht: *fax keeps its
+West Saxon *feax in the gold, and palatal umlaut does not include ea."""
+definition = ["e o → e ∅ / _ x (t | s | θ)", "æ ɑ → æ ∅ / _ x t"]
 
 [oe_anglian_raising]
 time = 426
-name = "Palatal umlaut: *e raises to *i before /xt/"
+name = "Palatal umlaut: *e raises to *i before /x/ + t, s, θ"
 description = """*e raises to *i before the *ht cluster: niht, riht, miht, liht, the ancestors of night,
-right, might, light. Ringe & Taylor (§6.9.7, PDF 351–352) call this West Saxon and Kentish palatal
+right, might, light. Ringe & Taylor give the clusters as ht, hþ and hs (PDF 351), and six takes the
+same raising before *hs. Ringe & Taylor (§6.9.7, PDF 351–352) call this West Saxon and Kentish palatal
 umlaut; Anglian keeps *æ smoothed but unraised (æhta 'eight', §6.9.2, PDF 327). So only *e raises:
 the old *æ clause turned eahta into **ihta. night gets its *e from the i-umlauted oblique stem
 (`sporadic_night_oblique_i`). The rule id is kept for continuity. t = 426, after
 oe_anglian_smoothing_liquid, which turns the i-mutated *æe into the *e this rule raises."""
-definition = "e → i / _ x t"
+definition = "e → i / _ x (t | s | θ)"
 
 [sporadic_night_oblique_i]
 time = 419
@@ -3128,16 +3135,6 @@ Word-scoped removal of the epenthetic vowel. Cause: the targets record the older
 words = ["otter", "hazel"]
 definition = "[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons] #"
 
-[sporadic_six_numeral]
-time = 415
-name = "SPORADIC (Anglian): *sehs > OE six — the *hs cluster gives /ks/ and the vowel raises"
-description = """*sehs gives OE six /siks/: the *h before *s hardens to a stop and the *e raises to *i.
-Word-scoped. Both changes are regular Anglian ones: *hs became /ks/ after breaking (Ringe & Taylor,
-PDF 203), and Anglian smoothing turned *iox into ix (PDF 324). The cascade limits smoothing to *ht
-because the flax target is West Saxon feax, so this rule stands in for it here."""
-words = ["six"]
-definition = ["e → i", "x → k / _ s"]
-
 [sporadic_free_eo]
 time = 476
 name = "SPORADIC: *frijaz, *frijō > OE frēo — the stem vowel becomes the *ēo diphthong"
@@ -3291,13 +3288,6 @@ name = "SPORADIC: *auþuz > OE ēþe — Anglian i-mutation and ja-stem -e"
 description = "*auþuz gives OE ēþe; our cascade leaves the diphthong *æɑː. The cause is the West Germanic ja-stem *auþī, the 403 target, with Anglian i-mutation of its ēa: *auþī > *ēaþī > WS īeþe, Angl. ēþe (Ringe & Taylor, PDF 261; on the ja-stems, PDF 36). This rule makes the vowel and the -e in one step."
 words = ["eath"]
 definition = ["æ ɑː → eː ∅", "∅ → e / [-syll] _ #"]
-
-[sporadic_six_numeral2]
-time = 415
-name = "SPORADIC (Anglian): *sehs > OE six — the offglide drops and *h gives /k/ + /s/"
-description = "*sehs gives OE six /siks/; after breaking our cascade has *siox. Word-scoped: the offglide drops and the *x becomes /ks/. The cause is Anglian smoothing of *iox to ix (Ringe & Taylor, PDF 324), with the regular change of *hs to /ks/ (PDF 203)."
-words = ["six"]
-definition = "o x → k s"
 
 [sporadic_haulaz_ending]
 time = 456
