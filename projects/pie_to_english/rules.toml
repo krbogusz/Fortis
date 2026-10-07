@@ -1127,6 +1127,16 @@ OHG lindi beside lind shows. The *-ī is the secondary long vowel that the short
 words = ["lithe"]
 definition = "ɑ → iː / _ z #"
 
+[sporadic_thursuz_verner_z]
+time = 390
+name = "SPORADIC (levelling): West Germanic *þurzī takes the Verner *z"
+description = """Ringe & Taylor: "PGmc *þursu- ~ *þurzu- 'dry, dried up' (Goth. þaúrsus, ON þurr) >! PWGmc
+*þurzī > OE þyrre, OHG durri" (PDF 98). The paradigm alternated between *s and the Verner *z, and
+West Germanic generalized the *z, which rhotacism (405) makes the *rr of þyrre. Cause: levelling of
+the Verner alternant. Before the ja-stem transfer (395) and the 403 checkpoint, whose *þurʀī has it."""
+words = ["þursuz"]
+definition = "s → z / r _"
+
 [sporadic_wg_adjective_ja_stem]
 time = 395
 name = "SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic"
