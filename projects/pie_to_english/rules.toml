@@ -1334,6 +1334,18 @@ definition = [
     "[+syll, nasal, length: long] → ɑː / [+syll] []* [-syll] _ #",
 ]
 
+[sporadic_neuter_nstem_a]
+time = 402
+name = "SPORADIC: the neuter n-stems take the PWGmc *-ā of the feminines"
+description = """Ringe & Taylor: "PGmc *ausōn- ~ *auzōn- 'ear' ... >! PWGmc *auzā > OE ēare" (PDF 98), and "PWGmc
+nom. sg. *tungā 'tongue', *augā 'eye' ... > OE tunge, ēage"; the PGmc endings "are not securely
+reconstructable because they have been remodelled in every daughter" (PDF 168). So the neuter
+n-stems share the feminine *-ā, which OE gives as -e, where wg_final_long_o makes the masculine
+*-ō. Cause: remodelling of the neuter ending. Word-scoped because the engine does not know gender;
+the list names the neuter nouns (ear, and heart, whose PGmc *hertô is neuter)."""
+words = ["ausô", "heart"]
+definition = "ɔː → ɑː / [+syll] []* [-syll] _ #"
+
 # A final short *-i that survives the weight test above lowers to *-e — Ringe & Taylor's own
 # chain is *stadiz > *stædi > OE stedi > *stede*. This is what puts the final vowel on mere, here,
 # stede and the rest of the light-stemmed i-stems.
@@ -3138,16 +3150,6 @@ in Old English). Each gained a final *-e the strong stem did not have — a para
 sound change, so it fires only on these words. Dated 476, after every apocope that would strip it."""
 words = ["anguz", "tulguz", "muldō"]
 definition = "∅ → e / [-syll] _ #"
-
-[sporadic_nstem_gender_e]
-time = 476
-name = "SPORADIC (reanalysis): the neuter n-stem *hertô is feminine in OE, ending -e not -a"
-description = """*hertô is a NEUTER n-stem in Proto-Germanic (Wiktionary: *hertô n) and takes the
-regular masculine/neuter weak ending *-a in our cascade (as guma, nama do). But Old English heorte
-is FEMININE, with *-e — the word changed gender, and the ending followed. A lexical reassignment,
-not a sound change."""
-words = ["heart"]
-definition = "ɑ → e / _ #"
 
 [sporadic_harjaz_here]
 time = 476
