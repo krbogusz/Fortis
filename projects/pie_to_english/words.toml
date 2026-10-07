@@ -7109,7 +7109,7 @@ forms = [
   { time = 200, ipa = "ˈθuldiz", category = "noun", note = "PGmc *þuldiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈθuldi", note = "PWGmc *þuldi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈθyld" },
-  { time = 1400, ipa = "ˈθild" },
+  { time = 1400, ipa = "ˈθiːld", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈθild. Reading chosen by the rules: ME thild leaves the length of its i open, and Wiktionary's /θild/ is an editorial reading. A short vowel before ld lengthened in late OE (Minkova §6.4, PDF 166-168; Jones Table 2.11, PDF 39, has cild, milde, wilde), and the column already writes the long vowel in gīlden and sēld (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4)." },
 ]
 
 [[words]]
