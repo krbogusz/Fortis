@@ -1255,6 +1255,15 @@ ordinal has the same *g: OE nigoþa, OS nigudo (Hoad s.v. nine)."""
 words = ["nine", "ninth"]
 definition = "e w → i ɣ"
 
+# Ringe & Taylor (PDF 81): PWGmc reanalysed the geminate glides *ijj and *uww as *īj and *ūw:
+# *Frijjōz > *Frījā (OE Frīġedæġ), *skuwwō > *skūwō > OE sċūwa. They place it in PWGmc. Dated before
+# wg_a_umlaut (350), which would otherwise lower the *u of *skuwwō; that order is an assumption.
+[wg_holtzmann_reanalysis]
+time = 340
+name = "The geminate glides *ijj and *uww become *īj and *ūw"
+description = "Ringe & Taylor PDF 81: *Frijjōz > *Frījā, *skuwwō > *skūwō > OE sċūwa"
+definition = ["u w → uː ∅ / _ w", "i j → iː ∅ / _ j"]
+
 [wg_a_umlaut]
 time = 350
 name = "a-umlaut: short u, i lower before a non-high vowel"
