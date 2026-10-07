@@ -3026,6 +3026,15 @@ After the æ/ɑ merger (1150), which would otherwise take the glide's vowel."""
 words = ["eight", "eighth"]
 definition = "a → æ j / _ x"
 
+[sporadic_thirst_i]
+time = 1160
+name = "SPORADIC: ME thirst takes the i of the verb"
+description = """OE þurst gives ME thirst (the 1400 target) with i. Hoad (s.v. thirst) gives the noun OE þurst
+beside the verb OE þyrstan, whose y unrounds to ME i. Cause, probably: analogy with the verb; no
+source at hand says so outright."""
+words = ["thirst"]
+definition = "u → i / θ _ r"
+
 [sporadic_trough_x_to_f]
 time = 1440
 name = "SPORADIC: trough keeps its *x as *f"
