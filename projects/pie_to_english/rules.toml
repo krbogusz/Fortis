@@ -1448,6 +1448,17 @@ definition = [
     "xʷ → x w",
 ]
 
+[pnwgmc_w_loss_before_u]
+time = 401
+name = "*w is lost between a consonant and an unstressed *u"
+description = """Ringe & Taylor §2.1.1 (PDF 31): "At some time after the change of final *ō to *ū, possibly
+immediately, *w was lost between a consonant and an unstressed u-vowel": PGmc *badwō > PNWGmc
+*badu, OE beadu. So PGmc *ahwō 'river' > PWGmc *ahu, acc. *ahwā > OE ēa (PDF 230). Dated 401,
+after oe_final_long_o_to_u, which makes the *u, and after oe_labiovelar_resolution, which splits
+the *w off the *xʷ of *ahwō. Not after a *w: a geminate *ww is one long glide, and *lawwō keeps it
+in its PWGmc target *lawwu. That condition is inferred from lawwō."""
+definition = "w → ∅ / [-syll] _ [+syll, aperture: high, +back, stress: none] // w _"
+
 # The n-stem nominative *-ô becomes Old English *-a: *uxsɔːː > oxa, *neɸɔːː > nefa, *ɣumɔːː >
 # guma, and every ordinal (*feðurθɔːː > feorþa). By now it is the PWGmc *-ō of `wg_final_long_o`
 # (402), raised to oː by `wg_long_mid_raising` (404). The ō-stem *-ō has long since become *-u
