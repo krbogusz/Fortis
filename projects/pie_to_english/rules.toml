@@ -2753,8 +2753,9 @@ name = "SPORADIC: eġe and siġe re-form their s-stem as an i-stem"
 description = """OE eġe 'fear' and siġe 'victory' continue s-stems (*agaz-, *segaz-) that levelled the *-iz
 of their oblique forms into the nominative and became masculine i-stems (Ringe & Taylor §7.2.3,
 PDF 400; *agaz >! *agi > eġe, PDF 252). A morphological change, so word-scoped. Before the West
-Germanic loss of final *-z (400)."""
-words = ["ey", "segaz"]
+Germanic loss of final *-z (400). hete 'hatred' is the third of Ringe & Taylor's examples: PGmc
+*hataz, *hatiz- >! PWGmc *hati > OE hete (PDF 252, 400)."""
+words = ["ey", "segaz", "hate"]
 definition = ["ɑ → i / _ z #", "e → i / _ ɣ"]
 
 [sporadic_zstem_r]
