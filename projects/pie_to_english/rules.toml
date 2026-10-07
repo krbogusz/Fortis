@@ -3043,6 +3043,17 @@ with this monophthongization; it gives six. The *ea clause stays pinned to *ht: 
 West Saxon *feax in the gold, and palatal umlaut does not include ea."""
 definition = ["e o → e ∅ / _ x (t | s | θ)", "æ ɑ → æ ∅ / _ x t"]
 
+[sporadic_ten_anglian_smoothing]
+time = 412
+name = "SPORADIC: Anglian smoothing before the intervocalic *h of *tehun"
+description = """OE (Angl., Kent.) tēn 'ten' beside WS tīen (Ringe & Taylor, PDF 181). Anglian monophthongized a
+diphthong before a velar, "eoh > eh" (§6.9.2, PDF 323), so *teohun > *tehun, and the loss of the *h
+then contracts it to tēn. Cause: the Anglian form, which ME tēn > ten continues. Word-scoped because
+oe_anglian_smoothing is pinned to *h + consonant: the 900 targets feoh and eoh keep their West
+Saxon diphthong before a final *h."""
+words = ["ten"]
+definition = "e o → e ∅ / _ x [+syll]"
+
 [oe_anglian_raising]
 time = 426
 name = "Palatal umlaut: *e raises to *i before /x/ + t, s, θ"
