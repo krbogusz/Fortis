@@ -472,3 +472,19 @@ kīþą and aihtiz the targets of other words.
   column. That can follow as a separate step.
 - Taking all 422 candidates. Fifty keeps the batch the size of the last one.
 - Taking Middle English IPA by page title alone, as the bootstrap does.
+
+## 2026-10-08: Derive midge by Kroonen's velarization after all
+
+**Choice:** midge goes through `wg_w_velarization`, as youth does. It takes the same word-scoped
+hiatus glide (*muH-íh₂ > *muwī), and a word rule levels the root *mug- onto the jō-stem of the
+genitive. Its 200 target becomes Kroonen's *muwī. This replaces the rejection of midge in
+"2026-10-07: Adopt Kroonen's West Germanic velarization of *w".
+
+**Reason:** That entry rejected midge because its short *u seemed to need Dybo's law. It does not:
+`loss_of_laryngeals_before_vowels` already drops the *H before a vowel without lengthening, so the
+*u is short. Kroonen (PDF 420) gives the paradigm *muwī, gen. *mujjōz, the velarization of the
+nominative's *w and the spread of *mug- to the genitive, and he gives bridge the same history (PDF
+119). Tested: midge becomes exact at 200, 403, 900, 1400 and final, and no other row changes.
+
+**Rejected:** Keeping Wiktionary's *mugjō as the 200 target. It writes the West Germanic *g into
+Proto-Germanic.

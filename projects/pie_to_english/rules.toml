@@ -1143,13 +1143,24 @@ name = "West Germanic: *w between high vowels becomes *ɣ"
 description = """Kroonen s.v. *ju(w)unþi- (PDF 316): "The West Germanic material points to a form *juwunþi-
 with regular velarization of the *w (cf. *sū- 'sow' and *newun '9') between two high vowels (one of
 them being rounded)". So PGmc *juwunþiz gives PWGmc *jugunþi (Ringe & Taylor PDF 156). Dated
-between the 200 and 403 checkpoints. In this set only youth reaches it: midge needs Dybo's law,
-which the cascade does not adopt, and nine stays word-scoped (sporadic_nine_nigun)."""
+between the 200 and 403 checkpoints. youth and midge reach it (*muwī > *muɣī, Kroonen PDF 420). nine
+stays word-scoped (sporadic_nine_nigun)."""
 definition = [
     "w → ɣ / [+syll, aperture: high, +rounded] _ [+syll, aperture: high]",
     "w → ɣ / [+syll, aperture: high] _ [+syll, aperture: high, +rounded]",
 ]
 
+
+[sporadic_midge_jo_stem]
+time = 351
+name = "SPORADIC (levelling): *muɣī takes the jō-stem of its genitive"
+description = """Kroonen (s.v. *muwi-, PDF 420): after the West Germanic velarization of the *w in the nominative
+*muwī, "the new root *mug- was subsequently generalized throughout the paradigm, and became
+geminated in the gen. *mugjōz according to WGm. gemination". He gives bridge the same history:
+the root spread to the genitive, "giving rise to the required stem *brugjō-" (PDF 119). Cause:
+levelling of the paradigm on the jō-stem of the genitive. Just after wg_w_velarization (350)."""
+words = ["midge"]
+definition = "iː → j ɔː / ɣ _ #"
 [sporadic_moth_levelling]
 time = 403
 name = "SPORADIC: *maþō takes the root of the oblique *mutt- and turns feminine: *moþþā"
@@ -2392,13 +2403,16 @@ definition = "[-son, glottal_aperture: spread] → [glottal_aperture: neutral]"
 # results is a single /u/ in the attested *jungaz. (The long+short case is `vowel_contraction`.)
 [sporadic_youth_hiatus_glide]
 time = -1950
-name = "SPORADIC: the hiatus of *ju.unþi- takes a *w"
+name = "SPORADIC: the hiatus of *ju.unþi- and *mu.ī takes a *w"
 description = """Kroonen s.v. *ju(w)unþi- (PDF 316): "The w probably arose in hiatus position of a proto-form
 *juunþi-. Go. junds*, on the other hand, seems simply to have lost the hiatus." young has the same
 hiatus and contracts (*junga-, Kroonen PDF 27), so the glide is word-scoped. Cause: a glide inserted
-in the hiatus, as Kroonen says. Before pgmc_identical_vowel_hiatus, which would merge the two *u."""
-words = ["youth"]
-definition = "∅ → w / u _ u"
+in the hiatus, as Kroonen says. Before pgmc_identical_vowel_hiatus, which would merge the two *u.
+
+Kroonen gives midge the same glide: *muH-íh₂ > PGmc *muwī, gen. *mujjōz (s.v. *muwi-, PDF 420),
+like *bruwī 'bridge', where "the *w ... arose in the hiatus of the nom." (s.v. *bru(w)i-, PDF 119)."""
+words = ["youth", "midge"]
+definition = "∅ → w / u _ [+syll]"
 
 [pgmc_identical_vowel_hiatus]
 time = -1900

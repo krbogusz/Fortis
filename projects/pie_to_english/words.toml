@@ -2134,10 +2134,10 @@ frequency = 710
 note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "muˈχiħ", category = "noun", note = "PIE *muH-íh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈmuɣjɔː", category = "noun" },
+  { time = 200, ipa = "ˈmuwiː", category = "noun", note = "TARGET corrected 2026-10-08 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3): was ˈmuɣjɔː, PGmc *mugjō (Wiktionary). Kroonen (s.v. *muwi-, PDF 420) reconstructs the PGmc paradigm as *muwī, gen. *mujjōz, from PIE *muH-íh₂. The *g of *mugjō arose later, in West Germanic, by velarization of the *w of the nominative, and the new root *mug- then spread to the genitive. Wiktionary's form writes that West Germanic *g into Proto-Germanic." },
   { time = 403, ipa = "ˈmuggju", note = "PWGmc *muggju (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈmyjj" },
-  { time = 1400, ipa = "ˈmidʒ" },
+  { time = 1400, ipa = "ˈmid͡ʒ", note = "TARGET corrected 2026-10-08 (DECISIONS.md, four cases): was ˈmidʒ. Transcription convention: affricates are written with the tie bar (SOURCE.md), and this was the only target without one." },
   { time = "final", ipa = "ˈmɪd͡ʒ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): midge /mɪ́ʤ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
 ]
 
