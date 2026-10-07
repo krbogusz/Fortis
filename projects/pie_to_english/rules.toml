@@ -4138,13 +4138,14 @@ definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_blade_inflected_osl]
 time = 1200
-name = "SPORADIC: blade takes the long vowel of its inflected forms before 1400"
+name = "SPORADIC: blade and grave take the long vowel of their inflected forms before 1400"
 description = """OE blæd 'leaf' has the disyllabic plural bladu, and open-syllable lengthening can take its
 disyllabic base from an inflected form (Minkova §7.5.2.1, PDF 222). ME blāde has the long vowel,
 which the modern blade continues. The cause is that of sporadic_inflected_osl, but the 1400 target
-blāde already has the long vowel, so this rule is dated with the lengthening itself (1200)."""
-words = ["bladą"]
-definition = "[+syll, length: short, stress: primary] → [length: long]"
+blāde already has the long vowel, so this rule is dated with the lengthening itself (1200). OE græf
+'grave' has the plural grafu in the same way, and ME grāve also takes the [v] of those forms."""
+words = ["bladą", "grave"]
+definition = ["[+syll, length: short, stress: primary] → [length: long]", "f → v / _ #"]
 
 [sporadic_bare_long]
 time = 1205
