@@ -3573,8 +3573,12 @@ Middle English these have merged with the true stops (buck, oak) that do NOT voc
 farrow joins the list on the strength of its OBLIQUE stem: OE fearh 'pig' inflects fearges, and it
 is that *ɣ — not the nominative's final *h — that the Middle English farow generalises, exactly as
 marrow generalises the *ɣ of mearges. The nominative-only *h of a word with no such oblique does
-not vocalise, which is why this stays a word list rather than a general rule about final velars."""
-words = ["marrow", "tallow", "gelwaz", "farrow", "sallow"]
+not vocalise, which is why this stays a word list rather than a general rule about final velars.
+
+sullow (OE sulh, pl. sylh, Kroonen PDF 531) has ME sulow without any oblique *ɣ: its *h after *l
+had two Middle English outcomes, the vocalisation here and the hardening to k of elk (1000). The
+choice between them is lexical, so sullow is named here."""
+words = ["marrow", "tallow", "gelwaz", "farrow", "sallow", "sullow"]
 definition = [
     "[+back, aperture: high, -son, nasal: none] → ɔ w / [+cons, +son] _ #",
     "[+back, aperture: high, -son, nasal: none] → w / [+syll] _ #",
