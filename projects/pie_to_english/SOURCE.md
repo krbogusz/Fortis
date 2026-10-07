@@ -190,11 +190,8 @@ word-scoped rule citing the page.
 
 Still open at 403:
 
-- skuwwô needs Holtzmann's law.
-- flunþrą: its *o rests only on Old Dutch.
 - anadô: Kroonen reconstructs *anad- and Ringe *anud-, and neither matches the preform.
 - sōl: the cascade's *sōul is one step from the target *sōl.
-- midge (*muggju): its derivation already fails at 200.
 
 Closed on 2026-10-07: the West Germanic gemination of a medial *Cj now keeps the *j, which Old
 English loses later, so hedge (*haggju) is exact. The lowering of *i to *e, which Ringe & Taylor
@@ -203,7 +200,10 @@ of fox and yoke follow Ringe & Taylor's a-umlaut, and the lowering in ford is da
 is lost before an unstressed *u after a consonant (§2.1.1) and after a stressed vowel (§3.1.5), so
 ahwō, roo and þrawō are exact. ear restores its s-stem *z after the loss of final *-z, so its 403
 form keeps the *z that rhotacism turns into *r later. Later that night thick took the feminine
-stem *þikkwī before 403, with its velar geminated before *w (Ringe & Taylor PDF 64).
+stem *þikkwī before 403, with its velar geminated before *w (Ringe & Taylor PDF 64). On 2026-10-08
+midge took Kroonen's *muwī and the West Germanic velarization (DECISIONS.md), flunþrą's target kept
+the *u that Ringe & Taylor leave unlowered before a nasal, and skuwwô took Kroonen's pretonic *ww
+with Ringe & Taylor's PWGmc *uww > *ūw.
 
 ### The Early Modern checkpoints (1570, 1580, 1621, 1687)
 
@@ -348,9 +348,11 @@ and dead their pre-shift shortening, tree and few their levelled *w, and grave t
 inflected forms. Later the same night the batch reached 183 of 187 exact. Among the changes were
 general syncope and the epenthesis before l (soul), the ME palatal glide (fly), a lengthening
 before final ŋg that ME undid again (song), the lengthening before -nd limited to high vowels (hand,
-land), and the ME open-syllable lengthening of a high vowel, word-scoped as Northern (week). Still
-missing are OE ġēar, sumor and melu and modern fly, whose ME [ɛj] has no sourced path to PRICE. The
-score above stays as the batch's first-contact record.
+land), and the ME open-syllable lengthening of a high vowel, word-scoped as Northern (week). On
+2026-10-08 melu took the levelled form that Ringe & Taylor call the commoner one, and fly the ME
+variant flie from OE flyge (Klein). That brings the batch to 185 of 187 and leaves OE ġēar and
+sumor open. The score above stays as
+the batch's first-contact record.
 
 ### Middle English transcriptions
 
@@ -696,20 +698,20 @@ says so and names the words it came from.
 
 ## Where it stands
 
-On 2026-10-07, 687 words. A run of the cascade writes the current figures to
+On 2026-10-08, 687 words. A run of the cascade writes the current figures to
 `reports/accuracy.csv`.
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 576 | 569 (98.8%) | 569 |
-| 403 Proto-West Germanic | 354 | 349 (98.6%) | 352 |
-| 900 Old English | 468 | 439 (93.8%) | 449 |
-| 1400 Middle English | 333 | 323 (97.0%) | 325 |
+| 200 Proto-Germanic | 576 | 572 (99.3%) | 572 |
+| 403 Proto-West Germanic | 354 | 352 (99.4%) | 354 |
+| 900 Old English | 466 | 448 (96.1%) | 456 |
+| 1400 Middle English | 332 | 329 (99.1%) | 330 |
 | 1570 Hart | 7 | 6 | 6 |
 | 1580 Bullokar, Mulcaster | 11 | 10 | 11 |
-| 1621 Gil | 14 | 10 | 11 |
+| 1621 Gil | 14 | 12 | 13 |
 | 1687 Coles, Cooper | 14 | 13 | 13 |
-| final current SSB (CUBE) | 293 | 279 (95.2%) | 283 |
+| final current SSB (CUBE) | 293 | 285 (97.3%) | 288 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
