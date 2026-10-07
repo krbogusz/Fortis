@@ -6861,12 +6861,11 @@ forms = [
 [[words]]
 id = "aihtiz"
 gloss = "aihtiz"
-note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₂eyḱ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₂eyḱ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction'). The 1400 target ˈɔwxt was removed on 2026-10-07 (DECISIONS.md, four cases): Wrong word. The target is the IPA of ME ought pron. anything, which Wiktionary derives from OE āht, ōht, a shortening of āwiht, not from ǣht property. Wiktionary lists ME aught and ought under ǣht, but the only ME entry for either word in the kaikki extract is that pronoun."
 forms = [
   { time = 200, ipa = "ˈɑjxtiz", category = "noun", note = "PGmc *aihtiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈɑjxti", note = "PWGmc *aihti (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈæːxt" },
-  { time = 1400, ipa = "ˈɔwxt" },
 ]
 
 [[words]]
@@ -7062,11 +7061,10 @@ forms = [
 [[words]]
 id = "kīþą"
 gloss = "kīþą"
-note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ǵéyH-ti-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *ǵéyH-ti-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction'). The 1400 target ˈt͡ʃiːs was removed on 2026-10-07 (DECISIONS.md, four cases): Wrong word. The target is the IPA of ME chis adj. picky, which Wiktionary derives from OE ċīes. OE ċīþ continues as ME chithe, whose stressed vowel stands in an open syllable, so the rules in SOURCE.md, Middle English transcriptions, leave it blank."
 forms = [
   { time = 200, ipa = "ˈkiːθɑ̃", category = "noun", note = "PGmc *kīþą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 900, ipa = "ˈt͡ʃiːθ" },
-  { time = 1400, ipa = "ˈt͡ʃiːs" },
 ]
 
 [[words]]
