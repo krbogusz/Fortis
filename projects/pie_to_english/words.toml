@@ -1007,13 +1007,12 @@ forms = [
 id = "fourth"
 gloss = "fourth"
 frequency = 18301
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kʷetwr̥tós is replaced by *kʷetwr̥tṓ on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *kʷetwr̥tós is replaced by *kʷetwr̥tṓ on the evidence of the attested Germanic form (Ringe / Kroonen). The final target ˈfɔːθ was removed on 2026-10-07 (DECISIONS.md, four cases): No modern reflex: RP fourth continues ME fourthe, which Wiktionary gives as ferthe 'often remodelled after four + -the'. The reflex of OE fēorþa, ME ferthe, did not survive."
 forms = [
-  { time = -2000, ipa = "kʷetwr̩ˈtoː", category = "adj", note = "PIE *kʷetwr̥tós, as cited by Wiktionary." },
+  { time = -2000, ipa = "kʷeˈturtχoː", category = "adj", note = "PREFORM corrected 2026-10-07: was kʷetwr̩ˈtoː; now *kʷetúrtHō. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target *fedurþô has the zero grade *-ur- of Kroonen's quasi-PIE *kʷet-ur-tHo- (s.v. *fedwōr, PDF 173; Ringe gives the oblique stem *fedur-, PDF 330), not the *-wr̥- of the cited *kʷetwr̥tós. The accent on *úr gives Verner's ð in *feður- and leaves the *þ of the suffix voiceless. PIE *kʷetwr̥tós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɸeðurθɔːː", category = "adj" },
   { time = 900, ipa = "ˈfeoːrθɑ" },
   { time = 1400, ipa = "ˈfeːrð" },
-  { time = "final", ipa = "ˈfɔːθ" },
 ]
 
 [[words]]

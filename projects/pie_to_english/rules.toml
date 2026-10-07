@@ -1053,6 +1053,17 @@ because *h survives before a single *s (six, fox)."""
 words = ["dross"]
 definition = "x → ∅ / _ s"
 
+[sporadic_fourth_dental_loss]
+time = 300
+name = "SPORADIC: West Germanic *feurþō 'fourth' loses its first dental"
+description = """PGmc *fedurþô gives PWGmc *feurþō and OE fēorþa (Wiktionary). Kroonen (s.v. *fedwōr, PDF
+173): "The first dental may have been dissimilated in the ordinal *fewurþ/dan-", against the *þ of
+the suffix, as in 'seventh'. Cause: dissimilation. Kroonen's *fewurþ- has a *w for the dental,
+and *ewur- gives the diphthong *eu of PWGmc *feurþō, which the Old English diphthong rules (404)
+make ēo. By its date the *ð has hardened to *d (260)."""
+words = ["fourth"]
+definition = "d u → w ∅ / e _ r"
+
 [sporadic_wg_adjective_ja_stem]
 time = 395
 name = "SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic"
@@ -1395,6 +1406,15 @@ definition = "ɣ → g"
 time = 440
 name = "x becomes k before s"
 definition = "x → k / _ s"
+
+[sporadic_fourth_f]
+time = -950
+name = "SPORADIC: *fedurþô takes the *f of the cardinal *fedwōr"
+description = """The ordinal *kʷet-ur-tHo- has no plain labial to trigger the labial jump (pgmc_labial_jump),
+yet PGmc *fedurþô has the *f of the cardinal *fedwōr. Kroonen (s.v. *fedwōr, PDF 173) puts the *f-
+of 'four' itself down to the influence of *fimf 'five'. Cause: analogy with the cardinal."""
+words = ["fourth"]
+definition = "xʷ → ɸ / # _"
 
 # Artikulatorischer Sprung — assimilation at a distance. A labiovelar *kʷ becomes *p when the
 # word holds another PLAIN labial, on either side of it:
