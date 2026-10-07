@@ -931,8 +931,11 @@ description = """Minkova §3.4 n.8 — the first half of the Ingvaeonic nasal-sp
 t = 404, after the Proto-West Germanic checkpoint (403). The nasal-spirant law is a northern
 West Germanic change, after PWGmc (Ringe & Taylor §5.1.1, PDF 155); Wiktionary's PWGmc still has
 *gans, *munþ, *fimf. The three rules keep their order: they come first among the 404 rules in
-the file."""
-definition = "[+syll] → [length: long] / _ [+cons, nasal: 1] [-son, +cont, -voice]"
+the file.
+
+Only a stressed vowel lengthens. Old English unstressed vowels are short, and the ordinal suffix
+*-unþ- gives a short o (seofoþa, nigoþa), where lengthening gave **seofūþa."""
+definition = "[+syll, stress: primary] → [length: long] / _ [+cons, nasal: 1] [-son, +cont, -voice]"
 
 [wg_nasal_spirant_loss]
 time = 404
@@ -942,8 +945,14 @@ description = """*gans > gōs, *tanþs > tōþ, *fimf > fīf — the compensatin
 t = 404, after the Proto-West Germanic checkpoint (403). The nasal-spirant law is a northern
 West Germanic change, after PWGmc (Ringe & Taylor §5.1.1, PDF 155); Wiktionary's PWGmc still has
 *gans, *munþ, *fimf. The three rules keep their order: they come first among the 404 rules in
-the file."""
-definition = "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ [-son, +cont, -voice]"
+the file.
+
+After an unstressed vowel the nasal goes too, with no lengthening: *-unþ- > OE -oþ- in the
+ordinals, like the -aþ of the present plural < *-anþ."""
+definition = [
+    "[+cons, nasal: 1] → ∅ / [+syll, length: long] _ [-son, +cont, -voice]",
+    "[+cons, nasal: 1] → ∅ / [+syll, stress: none] _ [-son, +cont, -voice]",
+]
 
 # West Germanic loses final *-z (PGmc *wulfaz > *wulfa), and the final short vowel then
 # apocopates (*wulfa > OE wulf). The apocope needs an earlier vowel in the word, or it would
