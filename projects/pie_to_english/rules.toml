@@ -1137,6 +1137,15 @@ the Verner alternant. Before the ja-stem transfer (395) and the 403 checkpoint, 
 words = ["þursuz"]
 definition = "s → z / r _"
 
+[sporadic_agitho_on_stem]
+time = 395
+name = "SPORADIC: *agiþō 'harrow' is the West Germanic ōn-stem *agiþā"
+description = """Ringe & Taylor: "PWGmc *agiþā 'rake, harrow' (OHG egida) > *æġiþǣ > OE *eġiþǣ > eġeþe" (PDF 252),
+where PGmc has the ō-stem *agiþō. Cause: transfer to the ōn-stems, whose West Germanic nominative
+is *-ā (OE -e). Before the ō-stem *-ō becomes *-u (401)."""
+words = ["agiþō"]
+definition = "ɔː → ɑː / [-syll] _ #"
+
 [sporadic_wg_adjective_ja_stem]
 time = 395
 name = "SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic"
