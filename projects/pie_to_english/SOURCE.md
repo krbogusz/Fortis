@@ -598,7 +598,8 @@ Neither book is redistributed here: the sound laws are facts and are encoded as 
 book text or extract belongs in the repo.
 
 Rules added since also cite the other books listed at the top of this file: Ringe and Kroonen on
-the first leg, and Jones, Pyles & Algeo, Hoad and Klein on the English legs.
+the first leg, and Jones, Pyles & Algeo, Hoad and Klein on the English legs. The rules dated 1980
+cite CUBE's accent page, which lists how current Standard Southern British differs from classic RP.
 
 Since 2026-10-07 a rule may also be inferred from the lexicon (DECISIONS.md). Its description then
 says so and names the words it came from.
@@ -610,15 +611,15 @@ On 2026-10-07, 603 words. A run of the cascade writes the current figures to
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 597 | 536 (89.8%) | 549 |
-| 403 Proto-West Germanic | 300 | 251 (83.7%) | 280 |
-| 900 Old English | 386 | 317 (82.1%) | 339 |
-| 1400 Middle English | 272 | 224 (82.4%) | 238 |
-| 1570 Hart | 7 | 4 | 5 |
+| 200 Proto-Germanic | 597 | 544 (91.1%) | 553 |
+| 403 Proto-West Germanic | 300 | 263 (87.7%) | 281 |
+| 900 Old English | 385 | 340 (88.3%) | 348 |
+| 1400 Middle English | 271 | 239 (88.2%) | 248 |
+| 1570 Hart | 7 | 5 | 5 |
 | 1580 Bullokar, Mulcaster | 11 | 0 | 7 |
 | 1621 Gil | 14 | 10 | 11 |
-| 1687 Coles, Cooper | 14 | 11 | 12 |
-| final Modern (RP) | 233 | 197 (84.5%) | 203 |
+| 1687 Coles, Cooper | 14 | 12 | 13 |
+| final current SSB (CUBE) | 229 | 201 (87.8%) | 207 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 

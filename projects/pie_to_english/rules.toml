@@ -2256,31 +2256,112 @@ time = 1900
 name = "The GOAT vowel: /oː/ diphthongises to /əʊ/"
 description = """After the Great Vowel Shift the long open *ɔː of Middle English has become *oː
 (ghost, oath, oak, dole, loath). Received Pronunciation does not have a long monophthong there —
-it has the GOAT diphthong, and the modern column is transcribed in it."""
+it has the GOAT diphthong [əʊ], which pde_back_closing_diphthongs later closes to CUBE's [əw]."""
 definition = "oː → ə ʊ"
 
 [pde_happy_tensing]
 time = 1950
-name = "Final unstressed /ɪ/ is tense /i/ (happY)"
+name = "Final unstressed /ɪ/ becomes the FLEECE vowel (happY)"
 description = """Minkova §8.2.1 (PDF 237), after Wells 1982: "happY-tensing", the second vowel of happy
-realised "as a more peripheral vowel, a compromise between [ɪ] and [iː]". The RP targets write it
-[i]: any, ready, merry. Minkova gives no date; Wells describes it in recent RP, so the rule is
-dated last. It undoes the laxing of 1569 at the word end."""
-definition = "ɪ → i / [-syll] _ #"
+realised "as a more peripheral vowel, a compromise between [ɪ] and [iː]". CUBE's accent page (happY)
+calls it a change of phoneme: "Classic RP allowed the KIT vowel finally and before vowels ... In
+current SSB, the FLEECE vowel is used instead." So the rule gives FLEECE [iː], and
+pde_front_closing_diphthongs (1980) makes it [ɪj] with every other FLEECE: any /ˈɛnɪj/, merry
+/ˈmɛɹɪj/. Neither source gives a date, and Wells describes it in recent RP. It undoes the laxing of
+1569 at the word end."""
+definition = "ɪ → iː / [-syll] _ #"
 
-[pde_final_schwa_w_is_goat]
-time = 1900
-name = "A word-final /w/ after a schwa is the GOAT offglide /ʊ/"
-description = """RP has no word-final sequence of schwa plus a consonantal /w/: where one would
-stand, what is actually said is the GOAT diphthong, /əʊ/. widow ends /-dəʊ/, not **/-dəw/.
+# The CUBE block. CUBE's accent page lists how current Standard Southern British (SSB) differs from
+# classic RP, and the modern targets are CUBE's (DECISIONS.md, 2026-10-07). The page gives no dates.
+# It sets classic RP, the speech of "the period before the tumultuous social changes of the 1960s",
+# against the SSB of the 21st century. So each rule in the block is dated 1980, and the file order
+# decides the order among them. eme_short_e_opens has the same date.
+[pde_front_closing_diphthongs]
+time = 1980
+name = "FACE, PRICE, FLEECE end in /j/, and PRICE starts at /ɑ/"
+description = """CUBE's accent page (FACE, PRICE, CHOICE): classic RP ended these diphthongs in a
+less-than-high [ɪ], and current SSB ends them "in [i] or [j]". The start of PRICE "is backer, nearer
+to [ɑ]". FLEECE, "often a very close monophthong" [iː] in classic RP, is now [ɪj] and "belongs to
+the set of front-closing diphthongs". eight /ˈɛjt/, five /ˈfɑjv/, three /ˈθɹɪj/.
 
-This is a realisation rule, not a sound change — it belongs with the others in this block. The
-words that reach it are the ones whose *-ow was already a diphthong by Middle English (marrow,
-tallow, sallow, yellow) and got to /əʊ/ the historical way, through eme_toe_tow_merger and the
-GOAT rule above; widow instead had its unstressed vowel reduced to schwa at 1200, before any of
-that machinery could see it, and arrives here with the glide still consonantal. Both spellings of
-the same modern vowel, and this levels them."""
-definition = "w → ʊ / ə _ #"
+The rule comes before pde_centring_smoothing in the file. fire and wire must have their [j] before
+NEAR loses its schwa. No word in the set has CHOICE."""
+definition = [
+    "ɪ → j / [+syll] _",
+    "a → ɑ / _ j",
+    "iː → ɪ j",
+]
+
+[pde_back_closing_diphthongs]
+time = 1980
+name = "GOAT, MOUTH, GOOSE end in /w/"
+description = """CUBE's accent page (MOUTH, GOAT and GOOSE): classic RP ended GOAT and MOUTH in a
+less-than-high [ʊ], and current SSB ends them "in [u] or [w]". GOOSE, "often a very close
+monophthong" [uː] in classic RP, is now [ʉw] and joins "the set of back-closing diphthongs". oak
+/ˈəwk/, loud /ˈlawd/, tooth /ˈtʉwθ/.
+
+widow already ends in the consonant [w]. Its vowel became a schwa at 1200, before the GOAT rules
+could see it, and CUBE's GOAT /əw/ now matches it as it stands.
+
+The rule comes before pde_foot_fronting in the file. The [ʊ] of GOAT and MOUTH must be [w] before
+FOOT's [ʊ] moves."""
+definition = [
+    "ʊ → w / [+syll] _",
+    "uː → ʉ w",
+]
+
+[pde_centring_smoothing]
+time = 1980
+name = "SQUARE and NEAR lose the schwa: /ɛə/ > /ɛː/, /ɪə/ > /ɪː/"
+description = """CUBE's accent page (SQUARE, NEAR): classic RP had the centring diphthongs [ɛə] and [ɪə].
+In current SSB, SQUARE "is a long open-mid monophthong, [ɛː]", and NEAR "is becoming a long
+near-close monophthong, [ɪː]". share /ˈʃɛː/, beer /ˈbɪː/. CURE moves to THOUGHT, but no word in
+the set has CURE."""
+definition = [
+    "ɛ ə → ɛː ∅",
+    "ɪ ə → ɪː ∅",
+]
+
+[pde_trap_lowering]
+time = 1980
+name = "TRAP lowers to /a/"
+description = """CUBE's accent page (TRAP): classic RP had "a relatively nonlow vowel" [æ], and current
+SSB has "an opener vowel, nearer to [a]". lamb /ˈlam/, marrow /ˈmaɹəw/."""
+definition = "æ → a"
+
+[pde_lot_raising]
+time = 1980
+name = "LOT rises to /ɔ/"
+description = """CUBE's accent page (LOT): classic RP had "a relatively low vowel" [ɒ], and current SSB
+has "a higher vowel, nearer to [ɔ]". fox /ˈfɔks/. The vowel returns to the quality that
+eme_short_o_opens took from it."""
+definition = "ɒ → ɔ"
+
+[pde_thought_raising]
+time = 1980
+name = "THOUGHT rises to /oː/"
+description = """CUBE's accent page (THOUGHT): classic RP had "a relatively low mid vowel" [ɔː], and
+current SSB has "a higher vowel, nearer to [oː]". saw /ˈsoː/, horn /ˈhoːn/. The start of CHOICE
+rises with it, but no word in the set has CHOICE."""
+definition = "ɔː → oː"
+
+[pde_foot_fronting]
+time = 1980
+name = "FOOT fronts to /ɵ/"
+description = """CUBE's accent page (FOOT): classic RP had "a relatively back vowel" [ʊ], and current SSB
+has "a fronter vowel, nearer to [ɵ]". foot /ˈfɵt/, wolf /ˈwɵlf/."""
+definition = "ʊ → ɵ"
+
+[pde_yod_coalescence]
+time = 1980
+name = "/dj/ before a stressed vowel becomes /d͡ʒ/"
+description = """CUBE's accent page calls the change of [tj] and [dj] to [tʃ] and [dʒ] "perhaps the
+main consonantal difference between classic RP and current SSB". Its section on accents says the
+default SSB has the affricates "before stressed vowels, eg tune and dune", and the entries agree:
+dew /ʤʉ́w/, tune /ʧʉ́wn/, Tuesday /ʧʉ́wzdɛj/ (accessed 2026-10-07). Section 2 of the same page still
+says that Tuesday keeps [tj]. dew is the only word in the set with either cluster, so the rule
+states only [dj]."""
+definition = "d j → d͡ʒ ∅ / _ [+syll, stress: primary]"
 
 [me_h_cluster_loss]
 time = 1250
@@ -2333,14 +2414,13 @@ dating this at 1400 takes it away before the column that records it."""
 definition = "g → ∅ / ŋ _ #"
 
 [eme_short_e_opens]
-time = 1900
+time = 1980
 name = "Short /e/ opens to /ɛ/"
-description = """RP's DRESS vowel: bed, nest, elk, helm.
-
-NOT the *e of the FACE diphthong, which pde_face_vowel has just made and which is short too —
-acre, bane, haven came out **ɛɪkə, **bɛɪn, **hɛɪvən. Same restriction, and for the same reason, as
-eme_trap_vowel's."""
-definition = "e → ɛ / _ [-syll]"
+description = """The DRESS vowel: bed, nest, elk, helm. CUBE's accent page (DRESS): classic RP had "a
+relatively close mid vowel" [e], and current SSB has "an opener vowel, nearer to [ɛ]". "The same
+change applies to the start-point of the FACE diphthong", so the rule has no context: bane
+/ˈbɛjn/. It is dated with the CUBE block (see the comment above pde_front_closing_diphthongs)."""
+definition = "e → ɛ"
 
 [eme_foot_strut_split]
 time = 1640
@@ -2929,8 +3009,12 @@ definition = "y → u"
 
 [pde_nurse_vowel]
 time = 1740
-name = "NURSE: a stressed short vowel before coda /r/ becomes /ɜː/"
-description = """ME wurd, herd, first, bird > RP /wɜːd/, /hɜːd/, /fɜːst/, /bɜːd/.
+name = "NURSE: a stressed short vowel before coda /r/ becomes /əː/"
+description = """ME wurd, herd, first, bird > /wəːd/, /həːd/, /fəːst/, /bəːd/.
+
+CUBE's accent page (NURSE) writes the vowel [əː], "a long schwa", and says that it "is essentially
+unchanged" since classic RP. Gimson wrote it [ɜː] only so that no short and long vowel shared a
+symbol. So the rule gives [əː].
 
 STRESSED, and the gold is blunt about it. The unstressed *-er of acre, beaver, finger, brother,
 daughter is the very same short-vowel-before-coda-/r/, and RP has a plain schwa there: an
@@ -2940,7 +3024,7 @@ unrestricted rule gave **eɪkɜː, **biːvɜː, **fɪŋgɜː. It also reached in
 It is not the NORTH vowel either: ME corn, horn, thorn, stork have RP /ɔː/, not /ɜː/. They are kept
 out by DATE rather than by a clause — pde_north_vowel (1735) has already lengthened their /ɔ/, and
 this rule asks for a SHORT vowel."""
-definition = "[+syll, length: short, stress: primary, aperture: !low] → ɜː / _ ɹ [-syll]* $"
+definition = "[+syll, length: short, stress: primary, aperture: !low] → əː / _ ɹ [-syll]* $"
 
 [pde_centring_diphthongs]
 time = 1745
@@ -3855,6 +3939,17 @@ name = "SPORADIC: *salbō > ME salve voices its *f to *v"
 description = "*salbō gives ME salve /salv/; the word-final *f voices to *v (the -ve of the spelling). Word-scoped. Cause: the [v] of the inflected forms, as in five (eme_final_fricative_voicing)."
 words = ["salve"]
 definition = "f → v / _ #"
+
+[sporadic_salve_l]
+time = 1980
+name = "SPORADIC: salve takes back its /l/ with the TRAP vowel: /sɑːv/ > /salv/"
+description = """CUBE has only /sálv/. The rules give the older /sɑːv/: Mulcaster (1582) and Cooper (1687)
+have no l (see eme_l_loss), and Minkova §8.2.1 (PDF 241) still prints [sɑːv]. Walker (1791, quoted by
+Jones, PDF 310) has the l "mute in the noun salve" but "heard in the verb to salve, and in salver".
+Word-scoped. Cause: not known. Walker's verb kept the [l], but no source here says that the noun took
+it from the verb. The date is not known either, so the rule shares the date of the CUBE block."""
+words = ["salve"]
+definition = "ɑː → a l / _ v"
 
 [sporadic_light_raising]
 time = 1105
