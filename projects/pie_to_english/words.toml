@@ -968,8 +968,8 @@ gloss = "dust"
 frequency = 18820
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *dʰus-tó-s is replaced by *dʰustóm on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
-  { time = -2000, ipa = "dʱusˈtom", category = "noun", note = "PIE *dʰus-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
-  { time = 200, ipa = "ˈdustɑ̃", category = "noun" },
+  { time = -2000, ipa = "dʱunsˈtom", category = "noun", note = "PREFORM corrected 2026-10-07: was dʱusˈtom; now *dʰunstóm. The rules prompted the change (DECISIONS.md, 2026-10-07): OE dūst has a long ū that *dʰustóm cannot give. Kroonen derives the word from *dʰuns-to- (s.v. *dunsta-, PDF 149), and the nasal-spirant law then lengthens the vowel and drops the *n. The accent stays on the ending as before; it cannot change the *st. PIE *dʰus-tó-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = 200, ipa = "ˈdunstɑ̃", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈdustɑ̃. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target is a reconstruction, and Kroonen reconstructs *dunsta- (PDF 149), which Wiktionary also lists as *dunstą. *dustą cannot give the long ū of OE dūst." },
   { time = 900, ipa = "ˈduːst" },
   { time = 1400, ipa = "ˈdust" },
   { time = "final", ipa = "ˈdʌst" },

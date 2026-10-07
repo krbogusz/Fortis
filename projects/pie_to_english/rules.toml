@@ -3117,17 +3117,6 @@ Word-scoped removal of the epenthetic vowel. Cause: the targets record the older
 words = ["otter", "hazel"]
 definition = "[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons] #"
 
-[sporadic_dust_long_u]
-time = 465
-name = "SPORADIC: *dustaz > OE dūst keeps a long *u, not the a-umlauted *o"
-description = """*dustaz gives OE dūst — the *u is kept (a-umlaut did not lower it) and lengthened.
-Word-scoped: the *o wg_a_umlaut wrongly produced is raised back to *u and lengthened. Cause: OE dūst
-continues *dunstą (Kroonen s.v. *dunsta-, PDF 149), whose *n was lost before *s with lengthening of
-the vowel. The 200 target *dustą cannot give the long ū, so this rule stands in for a revision of
-the preform."""
-words = ["dust"]
-definition = "[+syll, aperture: mid, +back, length: short] → [aperture: high, length: long]"
-
 [sporadic_six_numeral]
 time = 415
 name = "SPORADIC (Anglian): *sehs > OE six — the *hs cluster gives /ks/ and the vowel raises"
