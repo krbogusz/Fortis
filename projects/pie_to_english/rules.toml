@@ -3237,6 +3237,18 @@ definition = [
     "[+syll, -cons, aperture: mid, +front, length: short] → e o / _ [-syll, +labial] [+syll, +back, aperture: high]",
 ]
 
+
+[sporadic_no_back_mutation_levelled]
+time = 471
+name = "SPORADIC (levelling): melu and delu level out the back-mutated eo"
+description = """Ringe & Taylor (PDF 335): back mutation left alternations between e and eo inside paradigms, and
+"those alternations were widely levelled in both directions", by dialect, date and lexeme. For meal
+they give *melwą > melu, meolw- >! meolu and "(more often) melu, melw-" (PDF 202). delu 'teat' is an
+ō-stem whose dele, dela had no u to trigger the change, and in West Saxon back mutation of e needed a
+following u (PDF 339). Cause: levelling of the paradigm on the unmutated forms. Just after
+oe_back_mutation (470)."""
+words = ["meal", "delō"]
+definition = "e o → e ∅ / _ l"
 [oe_final_w_vocalisation]
 time = 402
 name = "A final *w after a consonant becomes *u"
