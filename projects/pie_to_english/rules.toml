@@ -4084,6 +4084,32 @@ description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-sc
 words = ["knee"]
 definition = "w → ∅ / _ #"
 
+[eme_bullokar_epenthesis]
+time = 1578
+name = "Bullokar's epenthesis: a vowel splits a stressed liquid + sonorant cluster"
+description = """Jones §4.3, Table 4.13 (PDF 264–265), from Bullokar's Booke at Large (1580): his half-vowel
+symbols suggest that "stressed vowel peak + syllable termination in bi-continuant cluster
+combinations were heard as bi-syllabic, the highly vowelly double sonorant cluster being 'split' by
+an epenthetic vowel peak". His [rn], [rm], [rl] and [lm] examples include corn, thorn, warm, worm,
+harm, helm and elm. Dated just before the 1580 checkpoint, where the targets write the vowel."""
+definition = [
+    "∅ → ə / [+syll, stress: primary] r _ (m | n | l)",
+    "∅ → ə / [+syll, stress: primary] l _ m",
+]
+
+[eme_bullokar_epenthesis_lost]
+time = 1585
+name = "The epenthetic vowel of Bullokar's clusters is gone again"
+description = """Inferred from the lexicon: none of warm, harm, corn, thorn, helm, worm or elm has the vowel in
+its modern form, and no later checkpoint in the set records it. Jones presents the split as
+Bullokar's (PDF 264–265). Dated right after the 1580 checkpoint, before eme_w_rounding_a (1590).
+The rule cannot tell an inserted vowel from an old one: it also takes the old schwa of azaniz
+(*ærən > *ærn), which has no target after 403."""
+definition = [
+    "ə → ∅ / [+syll, stress: primary] r _ (m | n | l)",
+    "ə → ∅ / [+syll, stress: primary] l _ m",
+]
+
 [eme_w_rounding_a]
 time = 1590
 name = "Short *a rounds to *ɒ after *w (Early Modern English)"
