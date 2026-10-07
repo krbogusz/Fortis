@@ -2768,7 +2768,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈħengʲʱus", category = "adj", note = "PIE *h₂énǵʰus, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑŋguz", category = "adj" },
-  { time = 403, ipa = "ˈɑŋgiː", note = "PWGmc *angī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈɑŋgu", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈɑŋgiː. The 900 target ange has no i-umlaut, so the English line did not take the West Germanic ja-stem *angī that Wiktionary gives. Ringe & Taylor say u-stem adjectives became ja-stems only 'usually' (PDF 36), and sporadic_wg_adjective_ja_stem leaves anguz out for that reason. The u-stem *angu leads to OE ange. PWGmc *angī (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈɑŋge" },
   { time = 1400, ipa = "ˈaŋg" },
 ]
