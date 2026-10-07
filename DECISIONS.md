@@ -330,3 +330,22 @@ about pronunciation, with the source in each note, and publishing them needs a s
 - Converting the RP targets symbol by symbol instead of taking CUBE's entries. That misses the words
   whose CUBE form differs in more than its symbols: dew /ʤʉ́w/, salve /sálv/.
 - CUBE's optional Gimsonian display, which keeps the old symbols.
+
+## 2026-10-07: Geminate *w from a laryngeal only before the accent
+
+**Choice:** `w_gemination_before_laryngeal` turns *wH into *ww only when the accent follows. The
+preforms of dew and bewwą move the accent to the ending. `velar_labialization` asks for an
+obstruent, and the word-scoped `sporadic_glide_gemination` (dew, lawwō) is deleted.
+
+**Reason:** Kroonen states Holtzmann's law as pretonic gemination (§2.2.5.7, PDF 36–37) and says of
+*lawwō that "the geminate *-ww- points to original oxytony" (PDF 370). Of the *wH words in the set,
+dew, lawwō and bewwą have *ww, and þrawō and awô, both root-accented, have a single *w. The
+condition fits all of them. The gemination rule had never worked: `velar_labialization` matched
+*w + *w and merged the geminate, and the word-scoped rule put it back for dew and lawwō. Tested:
+bewwą becomes exact at 200, 403 and 900, dew and lawwō stay exact, and no other score changes.
+
+**Rejected:**
+- Kroonen's general pretonic gemination of *j and *w. It made twajjaz and wajjuz exact at 200 and
+  broke 12 words, among them free, kin, thin, widow and gelwaz. Kroonen calls the counter-examples
+  "numerous" (PDF 36). The *jj of ajją, twajjaz and wajjuz stays open.
+- The laryngeal condition without the accent. It geminates þrawō and awô.

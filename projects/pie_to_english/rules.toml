@@ -200,14 +200,19 @@ definition = "ʁʷ → g / [+syll] _ w"
 # and the loss never sees them.
 [w_gemination_before_laryngeal]
 time = -2000
-name = "A laryngeal after */w/ geminates it"
-description = """*dʰówh₂om > PGmc *dawwą 'dew', *lowHéh₂ > *lawwō. The laryngeal does not vocalise
+name = "A laryngeal after */w/ geminates it before the accent"
+description = """*dʰowh₂óm > PGmc *dawwą 'dew', *lowHéh₂ > *lawwō. The laryngeal does not vocalise
 and does not simply drop — it is absorbed into the *w, which comes out long. The Germanic *ww of
 these words has no other source.
 
+Only before the accent. Kroonen states Holtzmann's law as pretonic gemination (§2.2.5.7, PDF 36–37)
+and says of *lawwō that "the geminate *-ww- points to original oxytony" (PDF 370). The root-accented
+*trówh₂eh₂ and *h₂éwh₂ōn keep a single *w in *þrawō and *awô. The condition holds for every *wH
+word in the set (DECISIONS.md, 2026-10-07).
+
 t = -2000, and placed ahead of the laryngeal-loss rules at the same time: they run first and there
 is nothing left for this one to absorb."""
-definition = "[+cons, advancement: rtr] → w / w _"
+definition = "[+cons, advancement: rtr] → w / w _ [+syll, stress: primary]"
 
 [loss_of_laryngeals_before_vowels]
 time = -2000
@@ -349,8 +354,8 @@ definition = "w → ∅ / [+labial, -syll, lingual: none] _ [+syll, +rounded]"
 [velar_labialization]
 time = -2000
 name = "Velar labialization"
-description = "Velars are labialised by following */w/, which is deleted"
-definition = "[+bk, aperture: high] w → [+rounded] ∅ "
+description = "Velars are labialised by following */w/, which is deleted. The rule asks for an obstruent: a *w is back and high too, and the rule used to merge the *ww of w_gemination_before_laryngeal into one *w."
+definition = "[-son, +bk, aperture: high] w → [+rounded] ∅ "
 
 [sporadic_fifth_cardinal_p]
 time = -2000
@@ -3456,15 +3461,6 @@ form is *w-, where our labiovelar treatment yields *b-. Word-scoped to the attes
 cause is not known."""
 words = ["warm"]
 definition = "b → w / # _"
-
-[sporadic_glide_gemination]
-time = -1000
-name = "SPORADIC: a *w geminates after a short vowel (Germanic sharpening) — dew, lawwō"
-description = """*dawwaz, *lawwō have a geminate *ww where our cascade leaves a single *w — the
-Germanic sharpening (Holtzmann's Law) of a glide, which is sporadic and hits only some words.
-Word-scoped."""
-words = ["dew", "lawwō"]
-definition = "∅ → w / [+syll] w _"
 
 [sporadic_a_restoration]
 time = 407

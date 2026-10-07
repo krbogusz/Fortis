@@ -1870,7 +1870,7 @@ gloss = "dew"
 frequency = 1834
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈdʱowħom", category = "noun", note = "PIE *dʰowh₂-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "dʱowˈħom", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈdʱowħom; now *dʰowh₂óm. The rules prompted the change (DECISIONS.md, 2026-10-07): the *ww of *dawwą comes from the laryngeal only before the accent (pretonic gemination, Kroonen §2.2.5.7, PDF 36-37). Kroonen gives *dʰouh₂-o/eh₂- with no accent (s.v. *dawwa/ō-, PDF 129), and he says of *lawwō that 'the geminate *-ww- points to original oxytony' (PDF 370). The accent on the ending is inferred from that. PIE *dʰowh₂-o-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈdɑwwɑ̃", category = "noun" },
   { time = 403, ipa = "ˈdɑww", note = "PWGmc *dauw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈdæɑːw" },
@@ -6453,7 +6453,7 @@ id = "bewwą"
 gloss = "bewwą"
 note = "Source: Wiktionary (kaikki). PREFORM from Kroonen s.v. *bewwa-, PDF 101: *bʰewh₂om. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
-  { time = -2000, ipa = "ˈbʱewħom", category = "noun", note = "PIE *bʰewh₂om (Kroonen s.v. *bewwa-, PDF 101); Wiktionary cites only a bare root." },
+  { time = -2000, ipa = "bʱewˈħom", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈbʱewħom; now *bʰewh₂óm. The rules prompted the change (DECISIONS.md, 2026-10-07): the *ww of *bewwą comes from the laryngeal only before the accent (pretonic gemination, Kroonen §2.2.5.7, PDF 36-37). Kroonen gives *bʰeuh₂-o- with no accent (s.v. *bewwa-, PDF 101), and he says of *lawwō that 'the geminate *-ww- points to original oxytony' (PDF 370). The accent on the ending is inferred from that. PIE *bʰewh₂om (Kroonen s.v. *bewwa-, PDF 101); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈbewwɑ̃", category = "noun" },
   { time = 403, ipa = "ˈbeww", note = "PWGmc *beuw (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈbeoːw" },
