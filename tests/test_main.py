@@ -200,7 +200,9 @@ def test_main_run_summary_splits_out_analysis(project, tmp_path, capsys):
 
 def _derive(word, rules, project):
     return derive(
-        Word.from_series(id=word, seed=word),
+        Word.from_series(
+            id=word, seed=word, seed_time=min((t for t in rules if t is not None), default=0)
+        ),
         string_to_sequence(word, project),
         rules,
         project.letters,

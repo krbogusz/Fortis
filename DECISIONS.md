@@ -431,3 +431,22 @@ not the *ō of the 200 target.
 
 **Rejected:**
 - Kroonen's lengthening before *u with his glide loss, in both forms.
+
+## 2026-10-07: Start a word at its earliest secure reconstruction
+
+**Choice:** A word enters the cascade at its seed, its earliest form: the engine skips every timed
+rule dated before the seed. In `pie_to_english`, a word whose PIE etymology no book supports starts
+at its Proto-Germanic form. The PIE form that Wiktionary cites moves into the word's note. The
+first such words are winter, steer, gaukaz, bladą and elmaz.
+
+**Reason:** Asked for on 2026-10-07. These five words missed at every checkpoint because their PIE
+inputs are guesses: Kroonen gives winter "no certain etymology", steer "uncertain origin", calls
+the cuckoo word onomatopoeic and *blada- "created ... within Germanic itself", and has no entry
+for elm. Started at Proto-Germanic, their Old English, Middle English and modern rows test the
+later rules. Every word in the other projects is seeded at or before its project's earliest rule,
+so their outputs do not change.
+
+**Rejected:**
+- Back-projected PIE inputs fitted to the Proto-Germanic targets. They would score at 200 without
+  predicting anything.
+- Leaving the five words as residue.

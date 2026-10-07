@@ -798,6 +798,10 @@ def derive(
     steps: list[DerivationStep] = []
 
     for time in sorted(rules.keys(), key=lambda t: (t is None, t)):  # untimed (None) rules last
+        # A word enters the cascade at its seed: a word whose earliest form is a later
+        # reconstruction starts there, and the rules dated before it have already acted.
+        if time is not None and word.seed_time is not None and time < word.seed_time:
+            continue
         for rule in rules[time]:
             # A word-scoped rule names its words by id, gloss, or seed IPA — whichever the author
             # reached for. (The seed IPA is not an identifier: two words can share one, and such

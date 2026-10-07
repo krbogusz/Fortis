@@ -171,7 +171,9 @@ a single-segment bundle for the nucleus, an element sequence for an onset or cod
 **A word is a series of attested forms through time.** The **earliest** is the derivation
 **seed** — the input — and every later one is a **target** the derived form is scored against at
 that time (§8.3). The input is not a different kind of thing from an attested form; it is simply
-the earliest one we have.
+the earliest one we have. A word enters the cascade at its seed: a timed rule dated before the
+seed does not apply to it. A word whose earliest secure form is a later reconstruction can
+therefore start at that stage.
 
 Each form carries an IPA transcription and, optionally, a grammatical **category** (§4.1.1).
 

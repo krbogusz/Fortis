@@ -246,9 +246,9 @@ class Word:
             human-label are different concerns, glosses collide (``lay`` is both a verb and a
             noun), and a generated lexicon's gloss is often not even a gloss — where a word has
             no modern reflex there is nothing to gloss it with. Write ``bear-v``/``bear-n``.
-        forms: Attested forms keyed by time. The EARLIEST is the derivation seed (the input);
-            every later one is a target the derived form is scored against at that time. A seed
-            is not scored against itself.
+        forms: Attested forms keyed by time. The EARLIEST is the derivation seed (the input),
+            and rules dated before it do not apply; every later one is a target the derived form
+            is scored against at that time. A seed is not scored against itself.
         gloss: A human label. Free text; never load-bearing.
         frequency: A token frequency (a positive integer weight; default 1) for
             frequency-weighted accuracy — a word counts this many times toward the weighted

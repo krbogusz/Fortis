@@ -21,8 +21,9 @@ def load_word_inventory(path: Path) -> Result[WordInventory, list[str]]:
 
     Both formats carry the same model: a word is an ``id``, a ``gloss``, a ``frequency``, and a
     series of **attested forms through time**, each an IPA transcription with an optional
-    grammatical ``category``. The EARLIEST form is the derivation seed (the input); every later
-    one is a target the derived form is scored against at that time. The time ``"final"`` means
+    grammatical ``category``. The EARLIEST form is the derivation seed (the input), and rules dated
+    before it do not apply; every later one is a target the derived form is scored against at that
+    time. The time ``"final"`` means
     "after every rule, including the untimed ones" — the surface.
 
     A ``.csv`` path is read as a lexicon table (:func:`load_word_inventory_csv`); any other path
