@@ -3924,7 +3924,7 @@ id = "twifōtijaz"
 gloss = "twifōtijaz"
 note = "Source: Wiktionary (kaikki). The PIE seed ˈdwipoːds (PIE *dwípōds, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = 200, ipa = "ˈtwiɸɔːtijɑz", category = "adj" },
+  { time = 200, ipa = "ˈtwiˌɸɔːtijɑz", category = "adj", note = "TARGET corrected 2026-10-07: was ˈtwiɸɔːtijɑz. The rules prompted the change (DECISIONS.md, 2026-10-07): the word is a compound of *twi- and *fōt-, and the lexicon marks the secondary stress of a compound, as in *fadurbanô and the 900 target twiˌfēte. Unmarked, the *ō counts as unstressed and shortens. The segments are unchanged." },
   { time = 900, ipa = "ˈtwiˌfeːte" },
 ]
 
