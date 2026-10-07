@@ -191,7 +191,6 @@ word-scoped rule citing the page.
 Still open at 403:
 
 - skuwwô needs Holtzmann's law.
-- thick: the target is Ringe & Taylor's ja-stem *þikkwī.
 - flunþrą: its *o rests only on Old Dutch.
 - anadô: Kroonen reconstructs *anad- and Ringe *anud-, and neither matches the preform.
 - sōl: the cascade's *sōul is one step from the target *sōl.
@@ -203,7 +202,8 @@ find in only two words (§2.3.1), is now word-scoped to them, so lid and meed ar
 of fox and yoke follow Ringe & Taylor's a-umlaut, and the lowering in ford is dated after PWGmc. *w
 is lost before an unstressed *u after a consonant (§2.1.1) and after a stressed vowel (§3.1.5), so
 ahwō, roo and þrawō are exact. ear restores its s-stem *z after the loss of final *-z, so its 403
-form keeps the *z that rhotacism turns into *r later.
+form keeps the *z that rhotacism turns into *r later. Later that night thick took the feminine
+stem *þikkwī before 403, with its velar geminated before *w (Ringe & Taylor PDF 64).
 
 ### The Early Modern checkpoints (1570, 1580, 1621, 1687)
 
@@ -345,7 +345,12 @@ lost only after *i, so OE dæġ and weġ keep their ġ. ME æ before j no longer
 resolves into *g + *w. *w is lost before an unstressed *i (sǣ 'sea'). [uː] shortens before a final
 [k] (book). Breaking acts only on stressed vowels (īsern). Word rules with a named cause gave bread
 and dead their pre-shift shortening, tree and few their levelled *w, and grave the long vowel of its
-inflected forms. The score above stays as the batch's first-contact record.
+inflected forms. Later the same night the batch reached 183 of 187 exact. Among the changes were
+general syncope and the epenthesis before l (soul), the ME palatal glide (fly), a lengthening
+before final ŋg that ME undid again (song), the lengthening before -nd limited to high vowels (hand,
+land), and the ME open-syllable lengthening of a high vowel, word-scoped as Northern (week). Still
+missing are OE ġēar, sumor and melu and modern fly, whose ME [ɛj] has no sourced path to PRICE. The
+score above stays as the batch's first-contact record.
 
 ### Middle English transcriptions
 
@@ -697,14 +702,14 @@ On 2026-10-07, 687 words. A run of the cascade writes the current figures to
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
 | 200 Proto-Germanic | 576 | 569 (98.8%) | 569 |
-| 403 Proto-West Germanic | 354 | 348 (98.3%) | 351 |
-| 900 Old English | 468 | 428 (91.5%) | 447 |
-| 1400 Middle English | 334 | 303 (90.7%) | 317 |
-| 1570 Hart | 7 | 5 | 5 |
-| 1580 Bullokar, Mulcaster | 11 | 7 | 9 |
+| 403 Proto-West Germanic | 354 | 349 (98.6%) | 352 |
+| 900 Old English | 468 | 439 (93.8%) | 449 |
+| 1400 Middle English | 333 | 323 (97.0%) | 325 |
+| 1570 Hart | 7 | 6 | 6 |
+| 1580 Bullokar, Mulcaster | 11 | 10 | 11 |
 | 1621 Gil | 14 | 10 | 11 |
-| 1687 Coles, Cooper | 14 | 12 | 13 |
-| final current SSB (CUBE) | 293 | 263 (89.8%) | 273 |
+| 1687 Coles, Cooper | 14 | 13 | 13 |
+| final current SSB (CUBE) | 293 | 279 (95.2%) | 283 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
