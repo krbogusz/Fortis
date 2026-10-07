@@ -1629,8 +1629,14 @@ definition = "w ɑ → u ∅ / [+syll, stress: primary] [-syll]+ _"
 [oe_a_fronting]
 time = 406
 name = "Anglo-Frisian brightening: a > æ, except before a nasal"
-description = "Minkova §3.4 — blocked before a nasal (*and stays and, not *ænd)"
-definition = "[+syll, -cons, aperture: low, +back, length: short] → [+front, back: none, advancement: atr] / _ [nasal: none]"
+description = """Minkova §3.4: blocked before a nasal (*and stays and, not *ænd). Ringe & Taylor §5.1.2 (PDF 157)
+make the block depend on stress: stressed low vowels were nasalised before any nasal, but
+unstressed *a only before a nasal in the syllable coda, not before an intervocalic one. So the
+unstressed *a of the prefix *ga- in *gamāni fronts, and OE has ġemǣne."""
+definition = [
+    "[+syll, -cons, aperture: low, +back, length: short, stress: primary] → [+front, back: none, advancement: atr] / _ [nasal: none]",
+    "[+syll, -cons, aperture: low, +back, length: short, stress: none] → [+front, back: none, advancement: atr] // _ [+cons, nasal] ([-syll] | #)",
+]
 
 [oe_a_restoration]
 time = 409
