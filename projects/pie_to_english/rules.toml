@@ -3852,12 +3852,14 @@ words = ["tallow"]
 definition = "ɑ → æ"
 
 [sporadic_thick_istem]
-time = 476
-name = "SPORADIC: *þekuz > OE þicce — i-stem fronting and gemination"
-description = """*þekuz gives OE þicce: the u-stem adjective moves to the i-stem (fronting *e > *i)
-and the *k geminates. Word-scoped to the attested outcome."""
+time = 402
+name = "SPORADIC (levelling): *þekuz takes the feminine stem *þikkwī"
+description = """Ringe & Taylor (PDF 64): pre-PGmc *tegus, fem. *tegwī gave PGmc *þekuz, *þikwī. The *k of
+the feminine geminated before its *w, and PWGmc generalised that stem as a ja-stem, *þikkwī, the
+source of OE þicce. Cause: levelling from the feminine. Dated 402, before the Proto-West Germanic
+checkpoint, which has *þikkwī."""
 words = ["thick"]
-definition = ["e → i", "∅ → k / k _", "u → e / _ #"]
+definition = ["e → i", "∅ → k w / k _", "u → iː / _ #"]
 
 [sporadic_knee_eo]
 time = 476
