@@ -2795,6 +2795,16 @@ name = "w is lost after an initial s or t before a back rounded vowel"
 description = "Minkova PDF 139; Pyles & Algeo p. 144: sweord > sword, twā > two"
 definition = "w → ∅ / # (s | t) _ [+syll, +back, +rounded]"
 
+[sporadic_fly_flie]
+time = 1401
+name = "SPORADIC: fly takes the ME variant flie, from OE flyge"
+description = """Klein (s.v. fly, n.) gives "ME. flege, flie, fr. OE. fleoge, flyge", and Wiktionary lists ME flye
+with /ˈflei̯(ə)/ and /ˈfliː(ə)/. The 1400 target is flei, the reflex of flēoge that the cascade
+derives. PDE fly /flaɪ/ continues the other variant, flie with ī, from flyge. Cause: that variant.
+After the 1400 checkpoint."""
+words = ["fly"]
+definition = "e j → iː ∅"
+
 [sporadic_hair_haire]
 time = 1450
 name = "SPORADIC: hair takes the vowel of ME haire 'haircloth'"
