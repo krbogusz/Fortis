@@ -1095,6 +1095,16 @@ make ēo. By its date the *ð has hardened to *d (260)."""
 words = ["fourth"]
 definition = "d u → w ∅ / e _ r"
 
+[sporadic_lithe_ja_stem]
+time = 395
+name = "SPORADIC: *linþaz 'gentle' becomes the ja-stem PWGmc *linþī"
+description = """Ringe & Taylor give PWGmc *linþī 'gentle' (OHG lind(i)) > *lį̄þī > OE līþe (PDF 156), a ja-stem,
+where Proto-Germanic has the a-stem *linþaz. Cause: transfer of the adjective to the ja-stems, as
+OHG lindi beside lind shows. The *-ī is the secondary long vowel that the shortening of final *-ī
+(399) does not reach, and OE līþe has the -e of the ja-stems."""
+words = ["lithe"]
+definition = "ɑ → iː / _ z #"
+
 [sporadic_wg_adjective_ja_stem]
 time = 395
 name = "SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic"
@@ -2909,7 +2919,7 @@ definition = "x → f / [+syll, +back] _"
 
 [eme_final_fricative_voicing]
 time = 1500
-name = "SPORADIC: five, wise and lithe take the voiced fricative of their inflected forms"
+name = "SPORADIC: five and wise take the voiced fricative of their inflected forms"
 description = """ME fīf, fīve > RP five. Final fricatives were voiceless in Old English, and Middle English
 voices them only where an inflection followed (Minkova §4.4, PDF 89–91; Jones §3.5, Table 3.32, PDF
 189, and §3.5.1, PDF 199: fif/fiues). So the [v] of five is the allophone of its inflected forms,
@@ -2917,10 +2927,10 @@ not a sound law: reef, staff, sheaf keep [f]. Word-scoped; it used to be stated 
 
 Minkova (PDF 93–94) gives the same origin for "<wise> with [-z]": the singleton fricative of wīse
 was voiced before the final schwa, and the schwa loss left the [z] at the word end. All final [ð]
-in PDE goes back to that schwa loss, and lithe is one of the two words with no verb to explain it.
+in PDE goes back to that schwa loss; lithe reaches it regularly from OE līþe (sporadic_lithe_ja_stem).
 The 1400 targets of five and wise still have the voiceless fricative."""
-words = ["five", "wīsaz", "lithe"]
-definition = ["f → v / [+syll] _ #", "s → z / [+syll] _ #", "θ → ð / [+syll] _ #"]
+words = ["five", "wīsaz"]
+definition = ["f → v / [+syll] _ #", "s → z / [+syll] _ #"]
 
 
 
