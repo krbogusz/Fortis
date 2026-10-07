@@ -11,7 +11,7 @@ gloss = "mean"
 frequency = 821275
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈkʲommojnis", category = "adj", note = "PIE *ḱom-moynis, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈkomojnis", category = "adj", note = "PREFORM revised 2026-10-08 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3): was ˈkʲommojnis, PIE *ḱom-moynis as cited by Wiktionary. Ringe gives post-PIE *ko(m)moini-s (PDF 201), with the prefix's *m in brackets, and Klein (s.v. common) cites Old Latin acc. comoinem with one m. Kroonen writes the prefix *kom- with a plain velar (PDF 26, 388). PGmc *gamainiz has one *m." },
   { time = 200, ipa = "ɣɑˈmɑjniz", category = "adj", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈɣɑmɑjniz. The rules prompted the change (DECISIONS.md, 2026-10-07): the prefix *ga- is unstressed, as OE ġemǣne shows, so the stress mark stands before the root (sporadic_mean_root_stress). The segments are unchanged." },
   { time = 900, ipa = "jeˈmæːne" },
   { time = "final", ipa = "ˈmɪjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mean /mɪ́jn/, with r written ɹ and the stress as ˈ. Was ˈmiːn (Wiktionary RP, Gimsonian symbols)." },

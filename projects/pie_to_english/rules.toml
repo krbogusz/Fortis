@@ -594,13 +594,24 @@ name = "SPORADIC: the stress of *gamainiz falls on the root, after the prefix"
 description = """OE ġemǣne is stressed on the root: the prefix ġe- < *ga- is unstressed in Old English
 nouns and adjectives as well as verbs. The general rule puts the Germanic stress on the first
 syllable, which here is the prefix. Word-scoped, since mean is the only prefixed word in the set.
-Cause: the prefix *ga- did not take the stress. The *g of *ga- itself has no source here: Kroonen
-derives *gam- from *ḱom- (PDF 206), and Grimm's law gives *h, so mean still misses."""
+Cause: the prefix *ga- did not take the stress. The *g of *ga- comes from Verner's law acting on the
+unstressed prefix (sporadic_mean_clitic_verner, below)."""
 words = ["mean"]
 definition = [
     "[+syll, stress: primary] → [stress: none] / # [-syll]* _ [-syll]+ [+syll]",
     "[+syll] → [stress: primary] / # [-syll]* [+syll, stress: none] [-syll]+ _",
 ]
+
+[sporadic_mean_clitic_verner]
+time = -1000
+name = "SPORADIC: Verner's law voices the fricative of the unstressed prefix *xa-"
+description = """Kroonen (PDF 26): "In a number of cases, Verner's law also operated word-initially",
+probably because the words "predominantly occurred in clitic position and therefore had no
+stress". His first example is the prefix *ga(n)- < *kom-, Lat. con-, com-. Cause: the clitic,
+unstressed prefix. Word-scoped, since mean is the only word with the prefix. After the stress has
+moved to the root (sporadic_mean_root_stress) and Grimm's law has made the *x."""
+words = ["mean"]
+definition = "[-son, +cont, -voice] → [+vc] / # _ [+syll, stress: none]"
 
 [word_initial_gw_to_b]
 time = -1000
@@ -1348,9 +1359,10 @@ take the nominative of *-ijaz, PWGmc *grōnī, *swōtī, *þunnī. That *-ī is 
 which the shortening of final *-ī (399) does not reach (PDF 30–31). The transfer is morphological,
 and only "usually" so, so the rule names the adjectives whose OE forms show it: grēne, swēte, þynne
 and þyrre have the i-umlaut and the -e of the ja-stems, and so have myrġe 'merry' (*murɣuz),
-Anglian ēþe 'easy' (*auþuz, see sporadic_eath_smoothing) and sċǣre 'sheer' (*skairiz). OE ange
+Anglian ēþe 'easy' (*auþuz, see sporadic_eath_smoothing), sċǣre 'sheer' (*skairiz) and ġemǣne
+'common' (*gamainiz). OE ange
 'narrow' has no umlaut and þicce an unpalatalised [kk], so anguz and thick are not listed."""
-words = ["green", "hrainiz", "sweet", "thin", "þursuz", "merry", "eath", "sheer"]
+words = ["green", "hrainiz", "sweet", "thin", "þursuz", "merry", "eath", "sheer", "mean"]
 definition = "[+syll, aperture: high, length: short, stress: none] → iː / _ z #"
 
 [wg_final_z_loss]
