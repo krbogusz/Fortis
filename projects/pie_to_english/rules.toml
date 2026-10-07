@@ -2645,14 +2645,18 @@ definition = [
 
 [eme_th_voicing]
 time = 1200
-name = "The dental fricative voices between vowels"
+name = "The dental fricative voices between voiced sounds"
 description = """other /ˈʌðə/, brother /ˈbɹʌðə/, weather /ˈwɛðə/ — the Old English /θ/ is voiced here.
 
 t = 1200, before the Middle English checkpoint: ME already HAS the voiced fricative (other is
 /ˈuðər/ there), so dating it in the modern block misses the column that records it.
 
-The dental *þ [θ] is the segment Grimm makes (grimm_dentalisation), so this is written on it."""
-definition = "θ → ð / [+syll] _ [+syll]"
+The dental *þ [θ] is the segment Grimm makes (grimm_dentalisation), so this is written on it.
+
+Between voiced sounds, not only between vowels: [v, ð, z] were the allophones of /f, θ, s/ "between
+voiced sounds in OE" (Minkova PDF 79; hwæðer, baþian, PDF 81), as in me_f_voicing. So ME ferthe
+'fourth' has [ð] after its r."""
+definition = "θ → ð / [+voice] _ [+voice]"
 
 
 # ─── Middle English ───────────────────────────────────────────────────────────────────────────
