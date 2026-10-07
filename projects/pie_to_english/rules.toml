@@ -3851,8 +3851,9 @@ description = """*knewą gives OE cnēow; our cascade leaves *kneoː, the diphth
 It used to leave *kneu: oe_final_long_o_to_u, then dated 440, took the second half of the new
 *ēo for an ō-stem ending. Dated 401 (PNWGmc), that rule no longer reaches it, and this one only
 restores the *w. Cause: levelling. Ringe & Taylor give *knewą >! OE cnēo(w) (PDF 189): the *w of the
-oblique stem cnēow- spread to the nominative, as in trēo(w) 'tree'."""
-words = ["knee"]
+oblique stem cnēow- spread to the nominative, as in trēo(w) 'tree', which they give the same way
+(*trewą > trēo, treow- > trēo(w)), so tree is listed too."""
+words = ["knee", "tree"]
 definition = "∅ → w / oː _ #"
 
 
@@ -4243,8 +4244,8 @@ definition = "eː → i / _ x"
 [sporadic_knee_no_w]
 time = 1150
 name = "SPORADIC: *knewą > ME knē drops the final *w"
-description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-scoped. Cause: ME knē continues the OE variant cnēo, without the levelled *w (Ringe & Taylor, PDF 189)."
-words = ["knee"]
+description = "OE cnēow gives ME knē /kneː/ — the final *w is lost. Word-scoped. Cause: ME knē continues the OE variant cnēo, without the levelled *w (Ringe & Taylor, PDF 189). ME tre 'tree' continues trēo in the same way."
+words = ["knee", "tree"]
 definition = "w → ∅ / _ #"
 
 [eme_bullokar_epenthesis]
