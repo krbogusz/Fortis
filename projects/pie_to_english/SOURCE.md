@@ -271,7 +271,7 @@ is a transcription. The other 53 spellings without IPA stay blank.
 What survives is nouns, adjectives and numerals: **249 rows**, the same order as the FLLAPS gold
 that `latin_to_french` scores against.
 
-### The residue is untuned, and should stay that way
+### The residue at first contact
 
 Of the 240 rows scorable at Proto-Germanic, **126 are new** and have never been curated. They
 land **56/128 exact (44%) with no `PREFORM_FIXES` entry at all**, which is the useful number:
@@ -280,11 +280,9 @@ says the cascade generalises rather than having been tuned to the gold.
 
 The misses among them are mostly the wrong-preform problem this file opens with — Wiktionary
 citing `*h₂ébōl` against a Proto-Germanic `*apaliją` that no cascade can reach from it. They are
-*not* evidence the rules are wrong, and the temptation to `PREFORM_FIXES` them until the number
-goes back up should be resisted: their whole value is that they are untuned. Curating them is a
-separate, deliberate pass, held to the same discipline as the rest of that table — read the
-preform off the **attested** form (its consonant voicing, its vowel, its gender ending), never
-invent the one feature that would make the cascade land.
+*not* evidence the rules are wrong. Since 2026-10-07 their preforms may be revised to fit the
+rules, under rule 2 of "Correcting the gold itself" below. The figure above stays as this batch's
+first-contact score.
 
 ### A vocalised laryngeal can be syllabic — and can carry the accent
 
@@ -326,10 +324,10 @@ This applies to *reconstructions only*, and the distinction is the whole point:
 
 | column | status | who wins |
 | --- | --- | --- |
-| the PIE **input** | reconstruction | Ringe/Kroonen → `PREFORM_FIXES` |
-| **200** (Proto-Germanic) | reconstruction | Ringe/Kroonen → `ATTESTED_FIXES` |
-| **403** (Proto-West Germanic) | reconstruction | Ringe & Taylor → a direct edit with a citation |
-| **900 / 1400 / final** | **attestation** — a real recorded form | a cited source, in four cases only (below) |
+| the PIE **input** | reconstruction | Ringe/Kroonen, or the rules (rule 2 below) |
+| **200** (Proto-Germanic) | reconstruction | Ringe/Kroonen, or the rules (rule 2 below) |
+| **403** (Proto-West Germanic) | reconstruction | Ringe & Taylor, or the rules (rule 2 below) |
+| **900 / 1400 / final** | **attestation** — a real recorded form | any cited source, in four cases only (rule 1 below) |
 | **1570 / 1580 / 1621 / 1687** | an orthoepist's description, as Jones reads it | nobody |
 
 Old English *nest*, *fisc*, *wer* are things people actually wrote down. Proto-Germanic `*nestą`
@@ -349,8 +347,8 @@ of staring at the attested form could have produced:
   preform.
 
 Kroonen is equally useful when he says he *doesn't* know: \*steura- is "a word of uncertain
-origin", \*wintru- has "no certain etymology". Those are honest misses, not failures of the rules,
-and should be left alone rather than curated into a number.
+origin", \*wintru- has "no certain etymology". Those are honest misses, not failures of the rules.
+Since 2026-10-07 their preforms may be revised to fit the rules, under rule 2 below.
 
 ### Correcting the gold itself — `ATTESTED_FIXES`, and the fence around it
 
@@ -377,11 +375,15 @@ wrong. Where the standard reference work says so in as many words, the reference
    form in the RP column); it records a dialect variant the later columns do not continue (South-
    Western ME *frøː*); it belongs to a different word (*twēġen* is *twain*, not *two*); or the
    modern target is a loan or a new formation, not the word's reflex, and is removed (*sister* is
-   Old Norse *systir*). Each correction keeps the old value in its note.
-2. **Only with an explicit citation** from Kroonen or Ringe, quoted in the comment. Never from our
-   own inference, and never because a word would otherwise miss.
-3. **The entry must be defensible with the derivation switched off.** If the only argument for it
-   is "the cascade would then land", it does not go in.
+   Old Norse *systir*). Each correction keeps the old value in its note. Since 2026-10-07 any
+   source may support such a correction, and where the spelling leaves a sound open, such as vowel
+   length, the rules may choose the reading.
+2. **A reconstruction may answer to the rules.** Since 2026-10-07 (DECISIONS.md) a PIE input, or a
+   200 or 403 target, may be revised when the rules predict a different form and the attested forms
+   allow it. The note keeps the old value and says that the rules prompted the change.
+3. **An attested target must be defensible with the derivation switched off.** If the only
+   argument for it is "the cascade would then land", it does not go in, unless the spelling leaves
+   that sound open (rule 1).
 
 The entries so far are all one finding. Kroonen reconstructs `*nista-` 'nest' (< \*ni-zd-o-),
 `*fiska-` (< \*pisk-o-, cf. Lat. *piscis*) and `*wira-` 'man' (cf. Skt *vīrá-*) — **all three with
@@ -573,6 +575,9 @@ Two legs, from two sources:
 Neither book is redistributed here: the sound laws are facts and are encoded as rules, but no
 book text or extract belongs in the repo.
 
+Since 2026-10-07 a rule may also be inferred from the lexicon (DECISIONS.md). Its description then
+says so and names the words it came from.
+
 ## Where it stands
 
 553 words.
@@ -597,7 +602,8 @@ PIE accent: `*þunnuz > þynne` (u-stem → i-stem, the ending and the i-mutatio
 splits), `*sehs > six` (numeral), the Anglian close *ē*, the `-ow` vocalisation. A blanket rule for
 any of these was *measured* to regress — the geminate-blocked a-umlaut, the general *u > *o, the
 final velar vocalisation each broke more than they fixed — which is the empirical case that they
-are not regular.
+are not regular. Since 2026-10-07 a word-scoped rule also names its cause, such as analogy with a
+named word, Norse influence or a dialect form, or says that the cause is unknown (DECISIONS.md).
 
 This keeps the two figures legible: the regular cascade's accuracy is what it derives with no
 word-scoped help, and the sporadic layer is a labelled, auditable list of the morphological and
@@ -696,8 +702,10 @@ The split is the number that means anything:
 | the 165 new words | 88 / 165 (53%) | **untuned** — not one `PREFORM_FIXES` entry |
 
 A coin-flip hit rate on words the rules have never seen is the evidence that the cascade
-generalises rather than having been fitted to the gold. **Do not curate them to pull the rate back
-up.** Their value is that they are untuned.
+generalises rather than having been fitted to the gold. Since 2026-10-07 the rules and the words
+shape each other (DECISIONS.md), so the accuracy table measures fit. New words are therefore scored
+before any change is made for them, and the section that adds them records that first-contact
+score, as this split records it for the 165.
 
 ### Where the 165 new words came from: two filters that were too blunt
 

@@ -249,3 +249,42 @@ step away there (Hart's short [ɪ]); no final row changes.
 
 **Rejected:** The single shift at 1600. Also rejected: Stenbrenden's 13th–14th-century start for
 the high and upper-mid vowels (Minkova §8.2.2.1, PDF 253–254), which the 1400 targets do not show.
+
+## 2026-10-07: Let the rules and the words shape each other
+
+**Choice:** In `pie_to_english`, the rules and the lexicon are developed together:
+
+1. A miss may start a rule. A regular rule applies to a class of sounds, not to listed words. It
+   stays if, across all checkpoints, it makes more targets exact than it breaks. A rule without a
+   source says in its description that it was inferred from the lexicon, and names the words it
+   came from.
+2. A word-scoped rule names its cause, such as analogy with a named word, Norse influence or a
+   dialect form. If no cause is known, the rule says so.
+3. The PIE input and the 200 and 403 targets may be revised to fit the rules when the attested
+   forms allow it. The note keeps the old value and says that the rules prompted the change.
+4. The 900, 1400 and final targets keep the four cases, but any source may support a correction,
+   not only a printed book. Where the spelling leaves a sound open, such as vowel length, the rules
+   may choose the reading.
+5. New words are scored before any change is made for them, and SOURCE.md records that
+   first-contact score.
+
+The Early Modern targets stay as they are: no source corrects them.
+
+Item 4 amends "Correct attested targets with a citation, in four cases" (2026-10-06). The entry
+also replaces three passages of SOURCE.md: the ban on curating the untuned words, and rules 2 and
+3 of "Correcting the gold itself".
+
+**Reason:** The project exists to develop a set of rules, and a miss is the main evidence of a
+missing rule or a wrong reconstruction. While every change needed a printed source, misses such as
+father, water, dross, kind and cow stayed open because no source at hand explains them. A
+reconstruction is itself inferred through sound laws, so it may answer to the rules. An attested
+form is the data, so it keeps the four cases. Once the rules and the words shape each other, the
+accuracy table measures fit. The first-contact score measures how well the rules predict words
+they were not shaped on. Asked for on 2026-10-07.
+
+**Rejected:**
+- Requiring a printed source for every rule and every target change.
+- Letting every column move, the attested ones included.
+- Loosening the rules only, and keeping every target under the cited four cases.
+- Two further checks: a count of the word-scoped rules beside each accuracy table, and a score
+  with the word-scoped rules switched off.
