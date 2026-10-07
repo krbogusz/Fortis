@@ -3236,7 +3236,6 @@ sēlra > sella. Only the geminate clause is written here, and in this lexicon it
 hrīdder > hridder."""
 definition = "[+syll, length: long, stress: primary] → [length: short] / _ 1=[-syll] @1"
 
-
 [sporadic_riddle_gemination]
 time = 601
 name = "SPORADIC: OE hrīder doubles its d before r"
@@ -3249,6 +3248,14 @@ before r. Word-scoped: OE ǣdre 'vein' keeps a single d."""
 words = ["hrīdrǭ"]
 definition = "d → d d / [+syll] _ [+syll] r #"
 
+[sporadic_riddle_dissimilation]
+time = 1401
+name = "SPORADIC: riddle takes the dissimilated variant riddel"
+description = """Klein (s.v. riddle 'sieve', PDF 665) derives ME riddel, ridel from OE hriddel, "formed with
+dissimilation" from earlier hridder, and Hoad dates hriddel to late OE. The 1400 target is ridder;
+PDE riddle continues riddel. Cause: that variant. After the 1400 checkpoint."""
+words = ["hrīdrǭ"]
+definition = "r → l / ə _ #"
 
 [sporadic_osl_high_vowel]
 time = 1200
