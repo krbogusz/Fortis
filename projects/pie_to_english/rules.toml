@@ -2965,6 +2965,17 @@ This *-ī arose in PWGmc (`wg_final_j_vocalisation`, 402), after the older final
 took the short ones. It shortens after that, and `oe_final_i_to_e` (470) lowers it to *-e."""
 definition = "[+syll, length: long, aperture: high, +front, stress: none] → [length: short] / _ #"
 
+[oe_internal_long_shortening]
+time = 465
+name = "An unstressed long vowel before a consonant shortens"
+description = """Ringe & Taylor §6.8.3 (PDF 313): "After the general syncope of short vowels had run its
+course, unstressed long vowels in internal syllables were shortened". PWGmc *guldīn > OE gylden
+(PDF 171), *latōst > latost (PDF 206). The rule asks for a consonant on each side. The one after
+leaves a word-final long vowel to oe_final_new_long_i_shortening. The one before keeps the second
+half of the long diphthongs ēa and ēo, which the cascade writes as two vowels: without it, dēop and
+strēam lost their length. The rule comes before oe_unstressed_i_to_e (472), which lowers the new
+short *i to e."""
+definition = "[+syll, length: long, stress: none] → [length: short] / [-syll] _ [-syll]"
 
 
 [me_gg_affrication]

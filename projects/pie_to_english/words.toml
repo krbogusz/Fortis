@@ -3371,7 +3371,7 @@ id = "gulþīnaz"
 gloss = "gulþīnaz"
 note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *ǵʰolh₃-t-inos is replaced by *ǵʰl̥h₃tínos on the evidence of the attested Germanic form (Ringe / Kroonen)."
 forms = [
-  { time = -2000, ipa = "gʲʱl̩ʁʷˈtinos", category = "adj", note = "PIE *ǵʰolh₃-t-inos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈgʲʱl̩ʁʷtiːnos", category = "adj", note = "PREFORM corrected 2026-10-07: was gʲʱl̩ʁʷˈtinos; now *ǵʰĺ̥h₃tīnos. The rules prompted the change (DECISIONS.md, 2026-10-07): the suffix is *-īna- with a long vowel (Ringe PDF 337, 'adjectives of material in *-īna-', with *gulþīnaz). The 200 target *gulþīnaz has the þ of Gothic gulþeins, which needs the accent on the root. Ringe & Taylor derive OE gylden from PWGmc *gulþīn by the northern *lþ > *ld (PDF 171). PIE *ǵʰolh₃-t-inos, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɣulθiːnɑz", category = "adj" },
   { time = 403, ipa = "ˈɣulθiːn", note = "PWGmc *gulþīn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈgylden" },
