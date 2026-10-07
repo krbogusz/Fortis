@@ -2243,6 +2243,15 @@ definition = [
     "[+syll, length: short, aperture: high] → [length: long] / _ n [-son, +voice, -cont, back: none, labial: none] $",
 ]
 
+[sporadic_lea_hless]
+time = 1000
+name = "SPORADIC: lea continues the h-less OE byform lēa"
+description = """Hoad (s.v. lea) gives the OE word as "lea(h)", with and without its h, and Klein (s.v. lea) gives
+ME lee and leye. PDE lea /liː/ continues lee, from the h-less lēa; leye, from lēah, gives the
+place-name ley. Cause: the h-less byform. After the 900 checkpoint, whose target is lēah."""
+words = ["lauhaz"]
+definition = "x → ∅ / _ #"
+
 [sporadic_last_short]
 time = 1050
 name = "SPORADIC: lāst shortens its vowel before -st"

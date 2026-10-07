@@ -2927,7 +2927,7 @@ forms = [
   { time = 200, ipa = "ˈlɑwxɑz", category = "noun" },
   { time = 403, ipa = "ˈlɑwx", note = "PWGmc *lauh (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlæɑːx" },
-  { time = 1400, ipa = "ˈlæj" },
+  { time = 1400, ipa = "ˈlɛː", note = "TARGET corrected 2026-10-08 (DECISIONS.md, four cases): was ˈlæj. Dialect variant: Klein (s.v. lea) gives ME lee and leye. The target took leye /læi̯/ (Wiktionary), which continues lēah and gives the place-name ley. PDE lea /liː/ continues lee, from the h-less lēa that Hoad gives beside lēah. The spelling lee does not show the vowel's quality, so the rules give ɛː, the ME reflex of OE ēa." },
   { time = "final", ipa = "ˈlɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lea /lɪ́j/, with r written ɹ and the stress as ˈ. Was ˈliː (Wiktionary RP, Gimsonian symbols). RP from Wiktionary (kaikki), lea; added 2026-10-06." },
 ]
 
