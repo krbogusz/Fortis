@@ -3917,8 +3917,9 @@ name = "SPORADIC: OE ǣ continues as the Anglian close ē in Middle English — 
 description = """Present-Day English descends from Anglian, where OE ǣ (from *ē₁ or i-mutation) is a
 close ē: seed, queen, high, match give ME sēd, kwēn, hēh, mēche with /eː/, not the West Saxon open
 /ɛː/ our cascade carries. Word-scoped to those whose modern reflex (seed /iː/, etc.) confirms the
-close vowel."""
-words = ["seed", "hauhaz", "mēkijaz"]
+close vowel. nigh is Anglian nēh, monophthongised before *h, against WS nēah (Ringe & Taylor PDF
+194)."""
+words = ["seed", "hauhaz", "mēkijaz", "nigh"]
 definition = "ɛː → eː"
 
 [sporadic_three_lowering]
