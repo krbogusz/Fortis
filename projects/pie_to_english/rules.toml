@@ -1021,6 +1021,17 @@ i-mutation (420), which makes the *y of cynd."""
 words = ["kind"]
 definition = "[+syll, aperture: high, +front, length: short, stress: primary] → [+back, front: none, +rounded, +labial]"
 
+[sporadic_dross_h_loss]
+time = 401
+name = "SPORADIC: West Germanic *drōs- 'dregs' has lost its *h"
+description = """PGmc *drōhs (PIE *dʰrā́ks) has an *h that no West Germanic form shows: OE drōs and gen. pl.
+drosna, MDu. droes(e), OHG truosana 'dregs' (Hoad s.v. dross). Ringe & Taylor find that *h was lost,
+variably, before two consonants (PDF 172–173: nēosan, North. sesta, þīsl), which the *-sn- of
+drosna and truosana provides. Cause, probably: that loss, spread to the whole word. Word-scoped,
+because *h survives before a single *s (six, fox)."""
+words = ["dross"]
+definition = "x → ∅ / _ s"
+
 [sporadic_wg_adjective_ja_stem]
 time = 395
 name = "SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic"
@@ -3509,6 +3520,14 @@ name = "SPORADIC: yard, sharp-type keep a front vowel before *r in ME"
 description = "ME yerd, þerf front the vowel before *r where our cascade backs or keeps it. Word-scoped to the attested ME forms. Cause: a Southern form. ME e for OE ea before r is the West and Central Southern reflex (Jones Table 2.34, PDF 78, cited for yerd)."
 words = ["þarbō"]
 definition = "a → ɛ"
+
+[sporadic_dross_short]
+time = 1200
+name = "SPORADIC: ME drosse has a short vowel"
+description = """OE drōs gives ME drosse, whose double s marks a short vowel (the 1400 target), and RP /drɒs/.
+Word-scoped. The cause is not known."""
+words = ["dross"]
+definition = "oː → ɔ"
 
 [sporadic_inflected_osl]
 time = 1440
