@@ -1619,8 +1619,12 @@ Written `[-syll]*` — any number of consonants — the rule reaches *harduz too
 taking death, cold, dream, arm and a dozen more with it. Dated 409: after `oe_a_fronting` (406),
 which makes the *æ, and after `oe_breaking` (408). Breaking takes an *æ before a single *h even when
 a back vowel follows: *ahu > *æhu > *eahu > ēa, *slahaną > *slæhan > *sleahan > slēan (Ringe &
-Taylor PDF 192). So the *h is the one place the two environments meet, and breaking comes first."""
-definition = "[+syll, -cons, aperture: low, +front, length: short] → [+back, front: none, advancement: rtr] / _ [-syll] [+syll, +back]"
+Taylor PDF 192). So the *h is the one place the two environments meet, and breaking comes first.
+
+Only a STRESSED *æ goes back (Ringe & Taylor §6.3.1, PDF 204). An unstressed *æ stays front: the
+second syllable of *hægætusi kept it, which is why its stressed vowel and *g stayed front (PDF 207).
+So *sāwælu keeps the *æ that general syncope (458) then removes."""
+definition = "[+syll, -cons, aperture: low, +front, length: short, stress: primary] → [+back, front: none, advancement: rtr] / _ [-syll] [+syll, +back]"
 
 [sporadic_kinship_or]
 time = 404
