@@ -248,13 +248,17 @@ definition = [
 # drove a note in PREFORM_FIXES calling *hūnaz an honest miss "whose long *ū the corpus flatly
 # contradicts" — reasoning from the exceptions to condemn the rule.
 #
+# delō joins the list on 2026-10-07. Kroonen derives its short *e from *dʰeh₁l-éh₂ by Dybo's law,
+# pretonic shortening before a resonant (§2.1.2, PDF 17). As a regular rule that law shortened the
+# same four words and sīmô, so the cascade does not adopt it (DECISIONS.md, 2026-10-07).
+#
 # t = -2000, NOT earlier: `syllable_parts` is time-keyed, and a rule dated before the first
 # nucleus definition is syllabified against nothing — which strands the stress autoseg and
 # silently unstresses every word in the lexicon.
 [lex_laryngeal_lost_without_lengthening]
 time = -2000
 name = "SPORADIC: the laryngeal is lost without lengthening (a lexical handful — Ringe)"
-words = ["son", "weraz", "lunaz", "ell", "young", "youth"]
+words = ["son", "weraz", "lunaz", "ell", "young", "youth", "delō"]
 definition = "[+cons, advancement: rtr] → ∅ / [+syll] _ [+son, +cons]"
 
 [loss_of_laryngeals_after_vowels]

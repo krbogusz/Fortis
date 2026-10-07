@@ -364,3 +364,19 @@ Nádasdy and Szigetvári, *Huron's English Pronouncing Dictionary*, 2000), and s
 - Asking the authors for permission first.
 - Keeping the targets local until a later decision.
 - Replacing them with Wiktionary RP written in CUBE's symbols.
+
+## 2026-10-07: Do not adopt Dybo's law
+
+**Choice:** The cascade has no regular rule for Dybo's law, Kroonen's pretonic shortening of a long
+vowel before a resonant (§2.1.2, PDF 17). delō, his example, joins the word-scoped
+`lex_laryngeal_lost_without_lengthening` with his account as its cause.
+
+**Reason:** Tested as a regular rule, the law made delō exact at 200 and broke dūnaz, glēmaz, hūnaz,
+mēraz and sīmô at 200, and three of them again at 403 or 900. All five have oxytone preforms and
+attested long vowels. Saving the law would mean moving five accents with no book behind them. Ringe
+holds that "there was certainly no regular sound change that could have shortened these vowels"
+(PDF 109).
+
+**Rejected:**
+- Kroonen's Dybo's law as a regular rule.
+- Moving the accents of the five words to the root to fit the law.
