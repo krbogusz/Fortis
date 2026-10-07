@@ -1459,6 +1459,16 @@ the *w off the *xʷ of *ahwō. Not after a *w: a geminate *ww is one long glide,
 in its PWGmc target *lawwu. That condition is inferred from lawwō."""
 definition = "w → ∅ / [-syll] _ [+syll, aperture: high, +back, stress: none] // w _"
 
+[wg_w_loss_after_vowel_before_u]
+time = 402
+name = "*w is lost between a stressed vowel and an unstressed *u"
+description = """Ringe & Taylor §3.1.5 (PDF 76): "In WGmc *w between a stressed vowel and an unstressed u-vowel
+was apparently likewise lost": PNWGmc *knewu > PWGmc *kneu, *fawu > *fau > OE fēa, *þrawu > *þrau >
+OE þrēa. The *u is then the second half of a diphthong, which the cascade writes as the glide: *þrau
+is ˈθrɑw. Both *awu and *āwu lose it (PDF 188). Dated 402, after the NWGmc loss after a consonant
+(pnwgmc_w_loss_before_u, 401)."""
+definition = "[+syll, aperture: high, +back, stress: none] → ∅ / [+syll, stress: primary] w _"
+
 # The n-stem nominative *-ô becomes Old English *-a: *uxsɔːː > oxa, *neɸɔːː > nefa, *ɣumɔːː >
 # guma, and every ordinal (*feðurθɔːː > feorþa). By now it is the PWGmc *-ō of `wg_final_long_o`
 # (402), raised to oː by `wg_long_mid_raising` (404). The ō-stem *-ō has long since become *-u
