@@ -3795,7 +3795,7 @@ id = "sīmô"
 gloss = "sīmô"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "sħiˈmoː", category = "noun", note = "PIE *sh₂imṓ, as cited by Wiktionary." },
+  { time = -2000, ipa = "siˈħmoː", category = "noun", note = "PREFORM corrected 2026-10-07: was sħiˈmoː; now *sih₂mṓ. The rules prompted the change (DECISIONS.md, 2026-10-07): *sīmô has a long ī, which the cited zero grade *sh₂i-, with the laryngeal before the vowel, cannot give. Before a consonant the zero grade appears as *sih₂-, the laryngeal metathesis that Kroonen invokes for *hōfa- (*ḱoHp- beside *ḱopH-); the root is *sh₂ei- 'to bind' (Kroonen s.v. *saila-, PDF 462). PIE *sh₂imṓ, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsiːmɔːː", category = "noun" },
   { time = 403, ipa = "ˈsiːmɔː", note = "PWGmc *sīmō (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsiːmɑ" },
