@@ -53,6 +53,16 @@ definition = [
     "∅ → t / # s _ [+trill, +syll]",
 ]
 
+# Of the PIE "thorn" clusters, Germanic kept only the dorsal: Ringe (PDF 32–33) says Latin and
+# Germanic generalised the plain palatal (Lat. humus, PGmc *gumō 'man' from *dʰǵʰm-), and Kroonen
+# derives PGmc *gestra- 'yesterday' from *dʰgʰes-ro- (PDF 215–216). Neither states a sound law for
+# the initial *dʰ, so the rule is inferred. In this lexicon it reaches only gesteraz.
+[thorn_cluster_dental_loss]
+time = -2000
+name = "A word-initial *dʰ is lost before a dorsal stop"
+description = "Ringe PDF 32–33 (PGmc *gumō); Kroonen s.v. *gestra-, PDF 215–216: *dʰgʰes-ro- > *gestra-"
+definition = "dʱ → ∅ / # _ [-son, -cont, +back]"
+
 # Word-initial *ps- metathesises to *sp-, and *pst- simplifies to *sp-: *psórwos > *sparwaz
 # 'sparrow', *psten-on- > *spenô 'teat'. Kroonen calls the metathesis regular (s.v. *sparwa(n)-,
 # PDF 506, "cf. *stelan- < *tsel-e-"; s.v. *spenan-, PDF 506). Ringe is silent.
