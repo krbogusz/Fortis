@@ -4262,15 +4262,17 @@ definition = "e → oː / w _ r d"
 
 [sporadic_oe_homorganic_length]
 time = 1090
-name = "SPORADIC: ond and bord lengthen before *nd, *rd in late Old English"
+name = "SPORADIC: ond, bord and ceorl lengthen before *nd, *rd, *rl in late Old English"
 description = """OE anda 'breath' > ānda before the rounding of OE ā (me_a_rounding, 1100), which gives the ME
 ǭnd of the 1400 target. Jones (§2.2.5–6) dates homorganic lengthening to late OE and early ME and
 calls it "patchy". The regular oe_homorganic_lengthening (1050) lengthens only high vowels before
 *nd, so the word is named here. The ME o comes from this long ā, not from a rounding of short a
 before a nasal, which Minkova (PDF 156, 238) assigns to the North and West Midlands. OE bord > ME bōrd
 lengthens before rd, a cluster Minkova §6.4 (PDF 168–169) lists; a regular rule for the r-clusters
-was tested and lost hard, word and yard at 1400 and final, so board is named here."""
-words = ["anadô", "board"]
+was tested and lost hard, word and yard at 1400 and final, so board is named here. OE ceorl >
+ME chērl lengthens before rl: Jones lists (cerl) under [rl] (Table 2.11, PDF 39), and the Ormulum
+writes cherl with the long vowel (Table 2.13, PDF 42)."""
+words = ["anadô", "board", "karilaz"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_me_homorganic_length]
