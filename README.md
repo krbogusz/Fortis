@@ -38,7 +38,7 @@ Fortis makes no distinction between "historical sound change" and
 time; whether that time span is three millennia or a single derivation is
 determined entirely by what you put in `rules.toml`. The repository
 includes five example projects: a **feature showcase** (one rule per
-mechanism), **Proto-Indo-European → Proto-Germanic**, **Latin → Modern
+mechanism), **Proto-Indo-European → Present-Day English**, **Latin → Modern
 French**, the **Halle-Vaux-Wolfe feature geometry** (autosegmental
 spreading phenomena), and a flat **SPE** feature matrix (demonstrating
 that the engine requires no feature geometry at all).

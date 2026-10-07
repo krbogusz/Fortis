@@ -13,7 +13,9 @@ Proto-Indo-European to Present-Day English, scored at nine checkpoints.
 > - **`sources/` is NOT in the repo and must never be.** It holds copyrighted reference books —
 >   for PIE/PGmc: Ringe (*From PIE to Proto-Germanic*), Kroonen (*Etymological Dictionary of
 >   Proto-Germanic*), Ringe & Taylor (*The Development of Old English*); for the English legs:
->   Minkova, Jones (*A History of English Phonology*), McMahon, Steponavičius, Plotkin. A sound
+>   Minkova, Jones (*A History of English Phonology*), McMahon, Steponavičius, Plotkin, Pyles &
+>   Algeo (*The Origins and Development of the English Language*), and the etymological
+>   dictionaries of Hoad, Klein and Liberman. A sound
 >   law is a fact, and facts are not copyrightable: they are **read and cited in the rule that
 >   uses them, never redistributed** — `.gitignore` keeps the books out, and no book text belongs
 >   in the tree. Because nothing here is redistributed, none of this appears in
@@ -171,10 +173,11 @@ The earlier vocalisation of *j and *w made several Old English forms analogical,
 describe them: the ja-stem geminates (bedd, cynn), fealu, feoh, cwic and eoh. Each has a
 word-scoped rule citing the page.
 
-Still open at 403: the West Germanic gemination of a medial *Cj (*haggju, *muggju), which the
-cascade does together with the later loss of the *j; the lowering of *i to *e (lid, meed), which
-Ringe & Taylor find in only two words (§2.3.1); and Wiktionary's PWGmc *u where Old English shows
-a-umlaut (fox, ford, yoke).
+Still open at 403: Wiktionary's PWGmc *u where Old English shows a-umlaut (fox, ford, yoke). Two
+earlier items were closed on 2026-10-07. The West Germanic gemination of a medial *Cj now keeps the
+*j, which Old English loses later, so hedge (*haggju) is exact. The lowering of *i to *e, which
+Ringe & Taylor find in only two words (§2.3.1), is now word-scoped to them, so lid and meed are
+exact. midge (*muggju) still misses at 403, but its derivation already fails at 200.
 
 ### The Early Modern checkpoints (1570, 1580, 1621, 1687)
 
@@ -268,14 +271,14 @@ This added 15 targets: *harm*, *schelle*, *ribbe*, *midde*, *hals*, *morth*, *ri
 *drosse*, *briht*, *frosk*, *wedde*, *thank*, *inke*, *wrihte*, *gūth*. Each one's note says it
 is a transcription. The other 53 spellings without IPA stay blank.
 
-What survives is nouns, adjectives and numerals: **249 rows**, the same order as the FLLAPS gold
-that `latin_to_french` scores against.
+What survived the first build was nouns, adjectives and numerals: **249 rows**, the same order as
+the FLLAPS gold that `latin_to_french` scores against.
 
 ### The residue at first contact
 
-Of the 240 rows scorable at Proto-Germanic, **126 are new** and have never been curated. They
-land **56/128 exact (44%) with no `PREFORM_FIXES` entry at all**, which is the useful number:
-the rules were fitted against the old 114, so a coin-flip hit-rate on words they have never seen
+Of the 240 rows then scorable at Proto-Germanic, **126 were new** and had never been curated. They
+landed **56/128 exact (44%) with no `PREFORM_FIXES` entry at all**, which is the useful number:
+the rules had been fitted against the old 114, so a coin-flip hit-rate on words they had never seen
 says the cascade generalises rather than having been tuned to the gold.
 
 The misses among them are mostly the wrong-preform problem this file opens with — Wiktionary
@@ -311,9 +314,12 @@ Two consequences worth knowing:
 
 ### The source hierarchy — Wiktionary is the *weakest* source, not the truth
 
-For anything **reconstructed**, the order is:
+For anything **reconstructed**, the books outrank Wiktionary:
 
-> **Ringe** > **Kroonen** > **Wiktionary**
+> **Ringe**, **Kroonen** > **Wiktionary**
+
+Where Ringe and Kroonen disagree, each case is decided on its evidence and recorded in DECISIONS.md
+("Decide each Ringe–Kroonen conflict on its evidence", 2026-10-06).
 
 Wiktionary's Proto-Germanic and PIE are anonymous, unrefereed reconstructions of uneven quality.
 Ringe (*From Proto-Indo-European to Proto-Germanic*) and Kroonen (*Etymological Dictionary of
@@ -541,8 +547,10 @@ by a flag rather than deleted.
   A poisoned row can also make a *correct* rule look broken: OE palatalisation dutifully
   palatalised the front vowel that *cost* should never have had. Fix the word, not the rule.
 
-  Some rows are not recoverable and remain a permanent ceiling — the ordinals (*seventh*,
-  *sixth*, *eighth*) are built on a different suffix in Germanic than in the cited PIE form.
+  The ordinals (*seventh*, *sixth*, *eighth*) were once such rows, built on a different suffix
+  in Germanic than in the cited PIE form. Their 200 forms are now exact, and *sixth* is exact
+  throughout. *seventh*, *eighth* and *ninth* still miss in Old English, whose targets have the
+  -þ- variant of the suffix (*seofoþa*, *eahtoþa*, *nigoþa*) where the cascade derives -d-.
 - **The Proto-Germanic column is a reconstruction, not an attestation.** Some of its distance
   from the derived form is transcription convention rather than phonology (see `CONVENTIONS`
   in the builder), so a miss there is a question to investigate, not automatically a rule bug.
@@ -552,7 +560,7 @@ by a flag rather than deleted.
 
 ## Rules (`rules.toml`)
 
-Two legs, from two sources:
+Two legs, which began from two sources:
 
 - **PIE → Proto-Germanic** — originally the cascade of a separate `pie_to_germanic` sample
   project, now folded in here and that project deleted (this one supersedes it: same rules, plus
@@ -575,19 +583,28 @@ Two legs, from two sources:
 Neither book is redistributed here: the sound laws are facts and are encoded as rules, but no
 book text or extract belongs in the repo.
 
+Rules added since also cite the other books listed at the top of this file: Ringe and Kroonen on
+the first leg, and Jones, Pyles & Algeo, Hoad and Klein on the English legs.
+
 Since 2026-10-07 a rule may also be inferred from the lexicon (DECISIONS.md). Its description then
 says so and names the words it came from.
 
 ## Where it stands
 
-553 words.
+On 2026-10-07, 603 words. A run of the cascade writes the current figures to
+`reports/accuracy.csv`.
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 528 | 449 (85.0%) | 465 |
-| 900 Old English | 333 | 250 (75.1%) | 279 |
-| 1400 Middle English | 226 | 147 (65.0%) | 176 |
-| final Modern (RP) | 177 | 103 (58.2%) | 128 |
+| 200 Proto-Germanic | 597 | 536 (89.8%) | 549 |
+| 403 Proto-West Germanic | 300 | 251 (83.7%) | 280 |
+| 900 Old English | 386 | 317 (82.1%) | 339 |
+| 1400 Middle English | 272 | 224 (82.4%) | 238 |
+| 1570 Hart | 7 | 4 | 5 |
+| 1580 Bullokar, Mulcaster | 11 | 0 | 7 |
+| 1621 Gil | 14 | 10 | 11 |
+| 1687 Coles, Cooper | 14 | 11 | 12 |
+| final Modern (RP) | 233 | 197 (84.5%) | 203 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
@@ -605,19 +622,19 @@ final velar vocalisation each broke more than they fixed — which is the empiri
 are not regular. Since 2026-10-07 a word-scoped rule also names its cause, such as analogy with a
 named word, Norse influence or a dialect form, or says that the cause is unknown (DECISIONS.md).
 
-This keeps the two figures legible: the regular cascade's accuracy is what it derives with no
-word-scoped help, and the sporadic layer is a labelled, auditable list of the morphological and
-lexical facts on top. The provenance of every gold word travels with it in `words.toml`; the
-sporadic *decisions* live in `rules.toml`, where the change itself is.
+This keeps the sporadic layer a labelled, auditable list of the morphological and lexical facts on
+top of the regular cascade. The reports give one accuracy figure, which includes the word-scoped
+rules; no report scores the regular cascade alone. The provenance of every gold word travels with it
+in `words.toml`; the sporadic *decisions* live in `rules.toml`, where the change itself is.
 
-The 900 denominator is 333, not 337, because the descendant-picker now drops four words whose only
-Old English reflex is a COMPOUND — *fetą survives solely in sīþfæt ('journey-vat'), *skaibaz in
-sċāffōt — of which just the second element descends from our Proto-Germanic word. Scoring a simplex
-derivation against the whole compound is a category error, and `root_nodes` in build_chains keeps
-only the Old English node that is not itself descended from another (the compound is a child of the
-simplex), leaving those four to score at Proto-Germanic alone. No derived form changed and no hit
-moved — the correction is entirely in the denominator, removing rows that never belonged in the
-Old English column.
+When this was written, the 900 denominator was 333, not 337, because the descendant-picker drops
+four words whose only Old English reflex is a COMPOUND — *fetą survives solely in sīþfæt
+('journey-vat'), *skaibaz in sċāffōt — of which just the second element descends from our
+Proto-Germanic word. Scoring a simplex derivation against the whole compound is a category error,
+and `root_nodes` in build_chains keeps only the Old English node that is not itself descended from
+another (the compound is a child of the simplex), leaving those four to score at Proto-Germanic
+alone. No derived form changed and no hit moved — the correction is entirely in the denominator,
+removing rows that never belonged in the Old English column.
 
 ### The later legs were not broken — they were UNBUILT
 
@@ -676,21 +693,25 @@ This is slow because it must be done cluster by cluster — *ht*, then the *æe*
 never in bulk. But it is honest and it moves the number: 900 went 173 → 200 doing it. What it cannot
 do is close the whole gap, because much of the residue is not dialect at all but the second thing:
 
-**2. Some misses are a CITATION FORM, not a sound.** OE *þynne*, *swēte*, *ange* end in an `-e` we
-correctly do not derive: their Proto-Germanic is *þunnuz, *swōtuz, *anguz — u-stem adjectives that
+**2. Some misses are a CITATION FORM, not a sound.** OE *þynne*, *swēte*, *ange* end in an `-e` that
+no sound change derives: their Proto-Germanic is *þunnuz, *swōtuz, *anguz — u-stem adjectives that
 Old English cites as i-stems. The `-e` is a morphological reanalysis (u-stem → i-stem), and the
-attested i-mutation in *þynne* proves the *i* was there. No sound change adds a morpheme; this is the
-line `KEEP_WEAK_PRESENTS = False` draws for the verbs, drawn again. A handful more are compounds the
-descendant-picker took for a simplex (*fetą* → `sīþfæt`, *trumaz* → `wyrttruma`) — the simplex has no
-separate OE reflex in the tree, so they are simply unscoreable at 900.
+attested i-mutation in *þynne* proves the *i* was there. No sound change adds a morpheme; this is
+the line `KEEP_WEAK_PRESENTS = False` draws for the verbs, drawn again. Word-scoped rules now supply
+these endings: `sporadic_wg_adjective_ja_stem` gives thin and sweet the West Germanic ja-stem *-ī
+(Ringe & Taylor, PDF 36), and `sporadic_weak_reanalysis_final_e` gives ange its -e. All three are
+exact at 900. A handful more are compounds the descendant-picker took for a simplex (*fetą* →
+`sīþfæt`, *trumaz* → `wyrttruma`) — the simplex has no separate OE reflex in the tree, so they are
+simply unscoreable at 900.
 
-Together these cap what regular sound-laws can reach: pushing 900 toward 75% would mean either
-reconstructing Anglian targets wholesale (inventing forms, i.e. circularity) or adding morphology
-rules to hit the citation forms (fitting). **The dialect normalisation is the honest lever, and it
-is real but incremental; the rest of the gap is a property of the gold, not the rules.**
+When 900 stood near 200 exact, these two looked like a cap on what regular sound laws could
+reach: pushing 900 toward 75% seemed to need either reconstructed Anglian targets (inventing forms)
+or morphology rules for the citation forms (fitting). Since then 900 has passed 80% (the table
+above), partly through word-scoped rules for citation forms, which DECISIONS.md allows since
+2026-10-07 ("Let the rules and the words shape each other").
 
-On 2026-10-07 Proto-Germanic is **536/597 (89.8%)** exact. Report the **count and the denominator**, never the
-percentage alone: an earlier expansion took it from 222/260 (85.4%) to 310/425 — **+88 exact**
+Report the **count and the denominator**, never the percentage alone: an earlier expansion took
+Proto-Germanic from 222/260 (85.4%) to 310/425 — **+88 exact**
 while the rate *fell 12 points*, because 165 new and entirely untuned words entered the
 denominator. The old 260 still scored exactly 222; nothing regressed.
 
@@ -895,8 +916,9 @@ Note what this cost on the old gold: **nothing**. Not one of the 260 curated wor
 onset, so the bug was completely invisible until 165 new words walked into it. That is the case for
 expanding a gold lexicon, in one line.
 
-**Still open:** `*penkʷrós` derives `**fimbraz` against an attested `*fingraz` — the labiovelar is
-coming out labial and dragging the nasal with it. Logged, not chased.
+**Once open:** `*penkʷrós` derived `**fimbraz` against an attested `*fingraz`, with the labiovelar
+coming out labial and dragging the nasal with it. On 2026-10-07 finger is exact at every
+checkpoint.
 
 ### What the gold found in the inherited PIE→PGmc rules
 
@@ -931,9 +953,9 @@ Two things the gold caught that are worth keeping in mind when reading it:
   lowering` + `wg_long_mid_raising`); writing them as rules instead was worth 7 exact matches
   at Proto-Germanic. The lesson: prefer a rule to a normalisation, and let the score decide.
 
-Next, in yield order: OE breaking (*eald*, *heorte*), the palatalisation and affrication of
-velars (§4.3 — *ċinn* > *chin*, *heċġ* > *hedge*), then the Middle English leg (§7.3–7.5) and
-the long-vowel shifting (ch. 8).
+The next steps were then, in yield order: OE breaking (*eald*, *heorte*), the palatalisation and
+affrication of velars (§4.3: *ċinn* > *chin*, *heċġ* > *hedge*), the Middle English leg
+(§7.3–7.5) and the long-vowel shifting (ch. 8). All four have since been built.
 
 ## Transliteration (`tools/pie_ipa.py`)
 
