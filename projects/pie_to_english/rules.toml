@@ -2149,12 +2149,14 @@ description = "Minkova §4.3 — ċinn > chin, heċġ > hedge, fisċ > fish. NOT
 # (`wg_g_hardening` was moved to 405, ahead of this rule, for the same reason: at 430 the PGmc *ɣ
 # was still a fricative when palatalisation looked, so no *g existed for it to find.)
 #
-# *sk stays after a back vowel. Ringe & Taylor call non-palatal sc /sk/ rare and name āscian 'to
-# ask' (PDF 19); OE frosc 'frog', like āscian, has a metathesised variant (frox, axian) that shows
-# the [sk], and ME frosk keeps it. Every other *sk in the lexicon is word-initial or follows a front
-# vowel (sċip, fisċ). The condition is inferred from the lexicon (DECISIONS.md, 2026-10-07).
+# *sk palatalises in three positions (Ringe & Taylor PDF 219). Initially it does so before every
+# vowel, by extension from the front ones. Medially it does so unless a back vowel follows:
+# *flāski > flǣsċ, but *aiskōn > āscian. Finally it does so unless a back vowel precedes: fisċ, but
+# frosc, whose variant frox shows the [sk], and ME frosk keeps it.
 definition = [
-    "s k → ʃ ∅ // [+syll, +back] _",
+    "s k → ʃ ∅ / # _",
+    "s k → ʃ ∅ / _ [+syll, +front]",
+    "s k → ʃ ∅ / _ # // [+syll, +back] _",
     "k → t͡ʃ / _ [+syll, +front]",
     # The geminate *gg before *j, from the West Germanic gemination (*hagjō > *haggju), is
     # palatal as a whole: OE heċġ, leċġ. Before the clauses below, which would take only its
