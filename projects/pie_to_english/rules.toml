@@ -4844,6 +4844,16 @@ description = "The attested PGmc *sunþraz 'south' has the syncopated *-þr-, wh
 words = ["south"]
 definition = "ɑ → ∅ / θ _ r"
 
+[sporadic_south_rless]
+time = 402
+name = "SPORADIC: OE sūþ continues the stem without the *-r suffix"
+description = """Hoad (s.v. south) gives OE sūþ = OS sūth, OHG sunt, and only "ON. (with r-suffix) suðr". Klein
+(s.v. south, PDF 727) derives OE sūð, OS and OFris. sūth from *sunþ-, and ON suðr from *sunþ(r)a.
+So the OE word continues a formation without the suffix that PGmc *sunþraz has. Cause: that
+formation. Word-scoped: the *r is dropped from the cascade's *sunþr, after the apocope of *-a (402)."""
+words = ["south"]
+definition = "r → ∅ / θ _ #"
+
 [sporadic_bumblebee_no_raising]
 time = -900
 name = "SPORADIC: *humelaz keeps *e — no unstressed *e > *i raising"
