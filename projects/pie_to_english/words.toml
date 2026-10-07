@@ -6945,7 +6945,7 @@ frequency = 167351
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *dʰegʷʰ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
   { time = 200, ipa = "ˈdiwrijɑz", category = "adj", note = "PGmc *diurijaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
-  { time = 900, ipa = "ˈdeːre" },
+  { time = 900, ipa = "ˈdeoːre", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈdeːre. Dialect variant. Wiktionary lemmatises West Saxon dīere, and the build step rewrote its īe as ē, which is right for the i-umlaut of ea but not for that of īo: Anglian did not umlaut īo (Ringe & Taylor PDF 264: *diurijaz > WS dīere, North. dīore), and Mercian merged īo with ēo (PDF 353). Wiktionary lists dēore /ˈdeoːre/ as an alternative form. ME dēre with close ē and modern dear continue the Anglian dēore, not WS dīere." },
   { time = 1400, ipa = "ˈdeːr" },
   { time = "final", ipa = "ˈdɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dear /dɪ́ː/, with r written ɹ and the stress as ˈ." },
 ]
