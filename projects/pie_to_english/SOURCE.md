@@ -340,6 +340,13 @@ First contact, with no rule or target changed for them:
 | final | 31 / 50 | 35 |
 | all | 138 / 187 (74%) | 159 |
 
+The misses pointed to rule gaps, and most have since been closed from the books. A final *j is now
+lost only after *i, so OE dæġ and weġ keep their ġ. ME æ before j no longer merges with a. *gʷ
+resolves into *g + *w. *w is lost before an unstressed *i (sǣ 'sea'). [uː] shortens before a final
+[k] (book). Breaking acts only on stressed vowels (īsern). Word rules with a named cause gave bread
+and dead their pre-shift shortening, tree and few their levelled *w, and grave the long vowel of its
+inflected forms. The score above stays as the batch's first-contact record.
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed
@@ -690,14 +697,14 @@ On 2026-10-07, 687 words. A run of the cascade writes the current figures to
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
 | 200 Proto-Germanic | 576 | 569 (98.8%) | 569 |
-| 403 Proto-West Germanic | 354 | 346 (97.7%) | 350 |
-| 900 Old English | 468 | 420 (89.7%) | 444 |
-| 1400 Middle English | 334 | 297 (88.9%) | 310 |
+| 403 Proto-West Germanic | 354 | 348 (98.3%) | 351 |
+| 900 Old English | 468 | 428 (91.5%) | 447 |
+| 1400 Middle English | 334 | 303 (90.7%) | 317 |
 | 1570 Hart | 7 | 5 | 5 |
 | 1580 Bullokar, Mulcaster | 11 | 7 | 9 |
 | 1621 Gil | 14 | 10 | 11 |
 | 1687 Coles, Cooper | 14 | 12 | 13 |
-| final current SSB (CUBE) | 293 | 255 (87.0%) | 264 |
+| final current SSB (CUBE) | 293 | 263 (89.8%) | 273 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
