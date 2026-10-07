@@ -80,6 +80,18 @@ description = "Epenthesis of /u/ before the syllabic sonorants"
 # Kroonen's *n̥h₂-s-eh₂- came out **unsō.
 definition = "∅ [+cons, +syll, +son] → u [-syll]"
 
+# A laryngeal between a voiceless stop and another stop, after a vowel, is lost, as it is between a
+# resonant and an obstruent (laryngeal_vocalization, first clause): the syllable already has its
+# nucleus. Before dental_cluster, which then turns the new *tt into *ss.
+[laryngeal_loss_between_stops]
+time = -2000
+name = "A laryngeal is lost between a voiceless stop and a stop"
+description = """*mith₂-tós > *mittós > *missaz 'wrong' (dental_cluster). Without this, laryngeal_aspiration
+gave the *t a breathy aspiration that no letter spells, and missaz ended in an unspellable segment.
+Voiced stops keep the aspiration that daughter needs (*dʰugh₂tér > *duhtēr). Inferred from the
+lexicon (DECISIONS.md, 2026-10-07): missaz is the only word with the sequence."""
+definition = "[+cons, advancement: rtr] → ∅ / [+syll] [-son, -cont, -voice] _ [-son, -cont]"
+
 # A dental stop + epenthetic s + dental stop collapses to ss (*TsT > ss): the dental
 # stops ([+cons,-continuant,+anterior,-sonorant], i.e. t/d) become s, the span
 # shrinking 3→2. The result is letters (replacement path) so the lengths may differ.
