@@ -4053,6 +4053,16 @@ is word-scoped."""
 words = ["foot"]
 definition = "uː → ʊ"
 
+[eme_short_u_before_k]
+time = 1700
+name = "[uː] shortens before a final [k]"
+description = """Minkova §8.3.1 (PDF 272): "Shortening also occurs before the voiceless velar coda [-k], as in book,
+cook, look, took, nook, rook, forsook, crook", a seventeenth-century change whose consistency before
+the velar she calls surprising. Unlike the shortening before -d and -t (sporadic_foot_late_shortening),
+it is regular, so the rule is too. Dated 1700 with foot: after eme_foot_strut_split (1640), so the
+vowel stays [ʊ], as in book /bɵk/."""
+definition = "uː → ʊ / _ k #"
+
 [sporadic_gome_strut]
 time = 1650
 name = "SPORADIC: GOME shortens to the STRUT vowel"
