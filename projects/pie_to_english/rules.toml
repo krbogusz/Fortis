@@ -2797,6 +2797,15 @@ Cause: the one-syllable variant. Word-scoped."""
 words = ["iron"]
 definition = "ə → ∅ / r _ n #"
 
+# Minkova (PDF 232–233): the OE prefix ġe- [jə-] continues in ME as i- [ɪ ~ ə], "increasingly
+# replaced by zero". She names the exceptions: enough, and the a- of alike, along, aware. None of
+# them is in this lexicon.
+[me_ge_prefix_loss]
+time = 1300
+name = "The unstressed prefix i- < OE ġe- is lost"
+description = "Minkova PDF 232–233: OE ġemǣne > ME mene"
+definition = "j ə → ∅ / # _ [-syll]+ [+syll, stress: primary]"
+
 [me_degemination]
 time = 1250
 name = "Geminates simplify"
