@@ -659,8 +659,8 @@ On 2026-10-07, 637 words. A run of the cascade writes the current figures to
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 579 | 569 (98.3%) | 569 |
-| 403 Proto-West Germanic | 312 | 305 (97.8%) | 309 |
+| 200 Proto-Germanic | 578 | 569 (98.4%) | 569 |
+| 403 Proto-West Germanic | 312 | 306 (98.1%) | 309 |
 | 900 Old English | 419 | 384 (91.6%) | 397 |
 | 1400 Middle English | 289 | 266 (92.0%) | 274 |
 | 1570 Hart | 7 | 5 | 5 |
