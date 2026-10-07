@@ -109,7 +109,7 @@ forms = [
   { time = 200, ipa = "ˈlɑŋgɑz", category = "adj" },
   { time = 403, ipa = "ˈlɑŋg", note = "PWGmc *lang (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈlɑŋg" },
-  { time = 1400, ipa = "ˈlɔːŋg" },
+  { time = 1400, ipa = "ˈlɔŋg", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈlɔːŋg. Reading chosen by the rules: Wiktionary gives ME long as /lɔ̝ːnɡ/, /lɔnɡ/ and four more, and the spelling does not mark the length. The lengthening before *ŋg was undone by the late 14th century (Jones §3.2.6, PDF 138), so the rules give the short vowel, as for ME song /sɔnɡ/ and gong /ɡɔnɡ/ (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4)." },
   { time = "final", ipa = "ˈlɔŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): long /lɔ́ŋ/, with r written ɹ and the stress as ˈ. Was ˈlɒŋ (Wiktionary RP, Gimsonian symbols)." },
 ]
 

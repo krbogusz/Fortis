@@ -1966,6 +1966,17 @@ definition = "[+syll, length: long, aperture: mid, advancement: atr] → [advanc
 # Old English → Middle English → Modern. Minkova chs. 5, 7–8.
 # ─────────────────────────────────────────────────────────────────────────────
 
+# Late OE also lengthened a vowel before *ŋg: Jones's Table 2.11 (PDF 39) lists lang, sang, strang,
+# ȝung, þing. The Ormulum (Table 2.13, PDF 42) writes lang, sang, strang, gang with the long vowel
+# but lannge, ganngenn, brinngenn, where a syllable follows, with the short one. So the rule takes
+# a word-final *ŋg only. Before the rounding of ā (1100), which turns the lengthened a of lang,
+# sang into the o of ME long, song.
+[oe_lengthening_before_ng]
+time = 1090
+name = "A vowel lengthens before a word-final *ŋg in late Old English"
+description = "Jones Table 2.11 (PDF 39), Table 2.13 (PDF 42): lang, sang, strang, gang"
+definition = "[+syll, length: short, stress: primary] → [length: long] / _ ŋ g #"
+
 # OE ā rounds to ME open ɔː — the change behind stān > stone, bāt > boat (§7.3).
 [me_a_rounding]
 time = 1100
@@ -2148,8 +2159,8 @@ name = "Vowel lengthens before a homorganic sonorant + voiced stop"
 description = "Minkova §6.4 — CHILD-CHILDREN, HOUND; *ald > āld, *kind > kīnd"
 # Two restrictions the gold forces, both of them standard:
 #   the sonorant is a NASAL or a LATERAL, not *r — ME hard, arm, barm keep their short vowel;
-#   the stop is NOT VELAR — ME long and young keep a short vowel before their *ŋg (/lɔŋg/,
-#   /juŋg/), which is homorganic phonetically but takes no part in the change.
+#   the stop is NOT VELAR — the lengthening before *ŋg is a separate rule with its own
+#   conditions (oe_lengthening_before_ng, 1090), undone again by 1400.
 # And not before *mb. Minkova §6.4 (PDF 167) counts nine -mb words (climb, comb, coomb, dumb,
 # December, lamb, timber, tumble, womb), finds lengthening in only four, and concludes: "There is no
 # compelling argument for classifying -mb as a lengthening cluster." Jones (PDF 40, 138) names lamb
@@ -2772,6 +2783,15 @@ definition = "ə → ∅ / [+syll, stress: primary] (j | w) _ [+cons] #"
 # A high front vowel and a following *j in the same syllable merge as *iː: OE drȳġe > drie > dry,
 # tigol > tile (Minkova §7.4, PDF 205; §8.2.2.2, PDF 257–258; Jones §2.3.6, PDF 68–70;
 # Steponavičius §183, PDF 170–171). Beside the glide shortening (1360): both reshape a vowel + glide.
+# The lengthening before *ŋg did not last. Jones (§3.2.6, PDF 138) says the homorganic
+# lengthenings were often undone by the late 14th century, and Pyles & Algeo (pp. 148–149) find it
+# surviving at the end of ME only before mb, nd and ld. ME long, song keep the o of the rounded ā.
+[me_ng_reshortening]
+time = 1380
+name = "A long vowel shortens again before *ŋg"
+description = "Jones §3.2.6 (PDF 138); Pyles & Algeo pp. 148–149"
+definition = "[+syll, length: long] → [length: short] / _ ŋ g"
+
 [me_ij_merger]
 time = 1360
 name = "*ij in one syllable becomes *iː"
@@ -4222,15 +4242,15 @@ definition = "uː → ʌ"
 
 [sporadic_oe_homorganic_length]
 time = 1090
-name = "SPORADIC: long, ond and bord lengthen before *ŋg, *nd, *rd in late Old English"
-description = """OE lang, ened > lāng, ānd before the rounding of OE ā (me_a_rounding, 1100), which gives the
-ME lǭng, ǭnd of the 1400 targets. Jones (§2.2.5–6) dates homorganic lengthening to late OE and early
-ME and calls it "patchy". The regular oe_homorganic_lengthening (1050) excludes *ŋg, so the two words
-are named here. The ME o of long comes from this long ā, not from a rounding of short a before a
-nasal, which Minkova (PDF 156, 238) assigns to the North and West Midlands. OE bord > ME bōrd
+name = "SPORADIC: ond and bord lengthen before *nd, *rd in late Old English"
+description = """OE anda 'breath' > ānda before the rounding of OE ā (me_a_rounding, 1100), which gives the ME
+ǭnd of the 1400 target. Jones (§2.2.5–6) dates homorganic lengthening to late OE and early ME and
+calls it "patchy". The regular oe_homorganic_lengthening (1050) lengthens only high vowels before
+*nd, so the word is named here. The ME o comes from this long ā, not from a rounding of short a
+before a nasal, which Minkova (PDF 156, 238) assigns to the North and West Midlands. OE bord > ME bōrd
 lengthens before rd, a cluster Minkova §6.4 (PDF 168–169) lists; a regular rule for the r-clusters
 was tested and lost hard, word and yard at 1400 and final, so board is named here."""
-words = ["anadô", "long", "board"]
+words = ["anadô", "board"]
 definition = "[+syll, length: short, stress: primary] → [length: long]"
 
 [sporadic_me_homorganic_length]
@@ -4256,13 +4276,6 @@ hundą) would give a long one — the "patchy" underside of the same change (Jon
 that [nd] clusters are "particularly open to exceptional behaviour"). Word-scoped shortening."""
 words = ["dust", "hundą"]
 definition = "[+syll, length: long] → [length: short]"
-
-[sporadic_long_short]
-time = 1620
-name = "SPORADIC: LONG shortens again before the GOAT diphthongisation"
-description = "ME lōng /lɔːŋg/ > RP long /lɒŋ/: the vowel lengthened in ME shortens again before it could diphthongise to GOAT. Word-scoped. Cause: homorganic lengthening was patchy, and some words lengthened and then shortened again (Jones §2.2.5–6, cited under sporadic_me_homorganic_length)."
-words = ["long"]
-definition = "oː → ɒ"
 
 [sporadic_end_long]
 time = 1105
