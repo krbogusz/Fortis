@@ -3804,11 +3804,10 @@ forms = [
 [[words]]
 id = "trumaz"
 gloss = "trumaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The 900 target ˈwyrtˌtrumɑ was removed on 2026-10-07 (DECISIONS.md, four cases): Wrong word: wyrttruma 'root-trunk' is a compound, and only its second element continues *trumaz. SOURCE.md ('What is left at 900') already names it as a compound the descendant-picker took for the simplex."
 forms = [
   { time = -2000, ipa = "ˈdrumos", category = "noun", note = "PIE *drumos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈtrumɑz", category = "noun" },
-  { time = 900, ipa = "ˈwyrtˌtrumɑ" },
 ]
 
 [[words]]
@@ -6470,7 +6469,7 @@ forms = [
   { time = -2000, ipa = "ˈdolχom", category = "noun", note = "PIE *dolHom (Kroonen s.v. *tala-, PDF 548); Wiktionary cites only a bare root." },
   { time = 200, ipa = "ˈtɑlɑ̃", category = "noun" },
   { time = 403, ipa = "ˈtɑl", note = "PWGmc *tal (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈtæːl" },
+  { time = 900, ipa = "ˈtæl", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈtæːl. Wrong word: /tæːl/ is the IPA of Wiktionary's OE tæl 'calumny, slander', whose etymology it gives as uncertain (a deverbal of tǣlan, or PWGmc *tāli). Kroonen gives the reflex of *tala- as 'OE tæl, ge-tæl n. number; reckoning' (PDF 548)." },
 ]
 
 [[words]]
