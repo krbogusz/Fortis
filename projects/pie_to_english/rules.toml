@@ -1267,9 +1267,10 @@ were usually backformed to the original feminines of i- and u-stems". So *grōni
 take the nominative of *-ijaz, PWGmc *grōnī, *swōtī, *þunnī. That *-ī is the secondary long vowel
 which the shortening of final *-ī (399) does not reach (PDF 30–31). The transfer is morphological,
 and only "usually" so, so the rule names the adjectives whose OE forms show it: grēne, swēte, þynne
-and þyrre have the i-umlaut and the -e of the ja-stems, and so has myrġe 'merry' (*murɣuz). OE ange
+and þyrre have the i-umlaut and the -e of the ja-stems, and so have myrġe 'merry' (*murɣuz) and
+Anglian ēþe 'easy' (*auþuz, see sporadic_eath_smoothing). OE ange
 'narrow' has no umlaut and þicce an unpalatalised [kk], so anguz and thick are not listed."""
-words = ["green", "hrainiz", "sweet", "thin", "þursuz", "merry"]
+words = ["green", "hrainiz", "sweet", "thin", "þursuz", "merry", "eath"]
 definition = "[+syll, aperture: high, length: short, stress: none] → iː / _ z #"
 
 [wg_final_z_loss]
@@ -3747,10 +3748,10 @@ definition = ["ɑː → æː", "e → i j / _ #"]
 
 [sporadic_eath_smoothing]
 time = 476
-name = "SPORADIC: *auþuz > OE ēþe — Anglian i-mutation and ja-stem -e"
-description = "*auþuz gives OE ēþe; our cascade leaves the diphthong *æɑː. The cause is the West Germanic ja-stem *auþī, the 403 target, with Anglian i-mutation of its ēa: *auþī > *ēaþī > WS īeþe, Angl. ēþe (Ringe & Taylor, PDF 261; on the ja-stems, PDF 36). This rule makes the vowel and the -e in one step."
+name = "SPORADIC: OE ēþe — the Anglian i-mutation of ēa"
+description = "sporadic_wg_adjective_ja_stem gives eath the West Germanic ja-stem *auþī, the 403 target, and the regular rules then give the -e. Its ēa is i-mutated in Anglian to ē: *auþī > *ēaþī > WS īeþe, Angl. ēþe (Ringe & Taylor, PDF 261; on the ja-stems, PDF 36). The cascade's i-mutation leaves the diphthong as *æ æː, so this rule makes the Anglian ē. Word-scoped, since the 900 column has WS forms elsewhere (ǣġ for ajją)."
 words = ["eath"]
-definition = ["æ ɑː → eː ∅", "∅ → e / [-syll] _ #"]
+definition = "æ æː → eː ∅"
 
 [sporadic_haulaz_ending]
 time = 456
