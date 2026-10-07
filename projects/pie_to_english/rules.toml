@@ -1423,8 +1423,10 @@ definition = [
 [wg_rhotacism]
 time = 405
 name = "Rhotacism: *z > *r"
-description = "PrG *laiz- > OE lār; *bewzą > *beoːr 'beer'; *mazgą > *mæɑrx 'marrow'"
-definition = "z → r"
+description = """PrG *laiz- > OE lār; *bewzą > *beoːr 'beer'; *mazgą > *mæɑrx 'marrow'. Not in *razn 'house' and
+*hraznu 'wave': Ringe & Taylor (PDF 99–100) find that their *a was fronted while the *z still stood
+before it, and the *z was then lost (oe_z_loss_after_fronted_a)."""
+definition = "z → r // [+syll, aperture: low, length: short] _ n"
 
 # Final *-a and *-i are lost outright (*wulfa > wulf, *wara > wær). Final *-u is not: it
 # survives after a light syllable (*sunu > sunu, *medu > medu) and goes only after a heavy one
@@ -1604,6 +1606,17 @@ definition = [
 # *g was intervocalic before a BACK vowel, which correctly blocks, so ǣniġ came out **ǣnag.
 # Lose the *-a first and the *g is word-final after a front vowel, which is exactly Ringe &
 # Taylor's environment (4) — the clause added to `oe_palatalisation` below.
+
+# Ringe & Taylor (PDF 99–100) on OE ærn 'house' and hærn 'wave': "Apparently *a was fronted to *æ in
+# this word ... while it was still immediately followed by *z; the *z was then eliminated by one
+# sound change or another, so that it could not induce raising", and no breaking followed. They give
+# no rule for the loss, so this one is inferred from the two words, the only ones here with *azn.
+# After the high-vowel deletion (460), since the *zn cluster makes *hræznu heavy and costs it its *-u.
+[oe_z_loss_after_fronted_a]
+time = 461
+name = "*z is lost before *n after the fronted *æ"
+description = "Ringe & Taylor PDF 99–100: PWGmc *razn > OE ærn, *hraznu > hærn"
+definition = "z → ∅ / [+syll, aperture: low, +front, length: short] _ n"
 [wg_final_a_apocope]
 time = 402
 name = "The thematic final *-a apocopates"
