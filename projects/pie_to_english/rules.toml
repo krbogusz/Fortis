@@ -2478,13 +2478,15 @@ Old English after i-mutation (oe_j_loss_after_geminate):
 
     *banjō  > *bannju > OE benn     *skaljō > *skallju > OE sċiell     *hagjō > *haggju > OE heċġ
 
-*r is the exception and does not geminate (*harjaz > OE here, not **herre). The geminate of *ɣ is
-the stop *gg. Ringe & Taylor show that the change follows the loss of final *-a and *-ą and the
-vocalisation of a stranded *-j, so it is dated 402, after those rules, and before the 403
+*r is the exception and does not geminate (*harjaz > OE here, not **herre). The geminates of *ɣ
+and *β are the stops *gg and *bb: PGmc *sibjō > PWGmc *[sibjbju] > OE sibb, *habjan > hebban
+(Ringe & Taylor, PDF 66). Ringe & Taylor show that the change follows the loss of final *-a and *-ą
+and the vocalisation of a stranded *-j, so it is dated 402, after those rules, and before the 403
 checkpoint."""
 definition = [
     "1=[+cons, -syll, trill: none] j → @1 @1 j / [+syll, length: short] _",
     "ɣ ɣ → g g",
+    "β β → b b",
 ]
 [sporadic_final_u_levelling]
 time = 461
@@ -3302,15 +3304,8 @@ definition = "x → ∅ / r _"
 [sporadic_rib_bb]
 time = 431
 name = "SPORADIC: *ribją > OE ribb — the geminate is *bb, not the *ff our cascade makes"
-description = "*ribją gives OE ribb; West Germanic gemination doubles the *b, but our cascade has spirantised it to *ff first. Word-scoped restoration of the stop. No cause in the word: West Germanic gemination of *b before *j gives the stop *bb (Ringe & Taylor, PDF 66: *sibjō > OE sibb, *habjan > hebban). The cascade lacks that clause, so this rule stands in for it."
+description = "*ribją gives OE ribb. The nominative *ribi had no *j left to geminate, so its single *β becomes *f (404). Cause: levelling. ribb takes the stop *bb of its oblique forms, where West Germanic gemination of *b before *j gave *bb (Ringe & Taylor, PDF 66; wg_gemination). This rule restores the stop, and sporadic_ja_stem_gemination (459) then doubles it."
 words = ["rib"]
-definition = "f → b"
-
-[sporadic_ebb_bb]
-time = 431
-name = "SPORADIC: *abjǭ > OE ebba — geminate *bb and final -a"
-description = "*abjǭ gives OE ebba; like rib, the geminate is a stop *bb and it takes final -a. Word-scoped. No cause in the word: it is the regular gemination described under sporadic_rib_bb."
-words = ["ebb"]
 definition = "f → b"
 
 [sporadic_ebb_ending]
