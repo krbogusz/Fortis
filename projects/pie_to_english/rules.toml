@@ -3622,7 +3622,12 @@ DERIVATION to Anglian, the gold step brings the West Saxon TARGETS to Anglian, a
 Only the i-mutated *æe — NOT the plain broken *eo of weorc, beorg, feorh, which the gold keeps as
 a West Saxon diphthong (there is no Anglian normalisation of those in the column, so smoothing them
 would trade a West-Saxon-gold word for nothing)."""
-definition = "æ e → e ∅ / _ [+cons, -syll]"
+definition = [
+    "æ e → e ∅ / _ [+cons, -syll]",
+    # The i-mutated *eo goes the same way: WS ie, Anglian and Kentish e (Ringe & Taylor PDF 268:
+    # *tehuni- > Kent., Merc. tēn; *fergunją > North. fergen-). The cascade writes it *ee.
+    "e e → e ∅ / _ [+cons, -syll]",
+]
 
 
 # ─── SPORADIC MORPHOLOGICAL CHANGES ────────────────────────────────────────────────────────────
