@@ -334,6 +334,18 @@ definition = [
 # tautosyllabic *VH has become long, which feeds it: *pḗrsneh₂ > *fersnō 'heel', post-PIE *wēntós >
 # *wentós > *windaz 'wind', *yūnkós > *yunkós. Ringe says it "probably applied"; Kroonen also
 # explains *mimza- < *mēms-o- by it. The two books agree, so it is regular here.
+[sporadic_cow_nominative]
+time = -1950
+name = "SPORADIC: *gʷōws gives the nominative *kōz"
+description = """Kroonen s.v. *kō- ~ *kū- 'cow' (PDF 339): "both of which belonged to an originally ablauting
+paradigm nom. *kōz, obl. *kū-, continuing a PIE u-stem *gʷeh₃-u-s, obl. *gʷh₃-u-". The long
+diphthong of the nominative loses its glide, as Kroonen says such diphthongs did before Osthoff's
+law (§2.1.5, PDF 22–23), and *kō- has a plain *k beside the round vowel. Word-scoped: the cascade
+does not adopt Kroonen's glide loss as a regular rule (DECISIONS.md, 2026-10-07). Cause: Kroonen's
+derivation of the nominative. Before pgmc_osthoffs_law, which would shorten the *ō."""
+words = ["cow"]
+definition = ["w → ∅ / oː _ s #", "gʷ → g / # _ oː", "s → z / oː _ #"]
+
 [pgmc_osthoffs_law]
 time = -1900
 name = "Osthoff's law: a long vowel shortens before a sonorant + consonant"
@@ -1143,6 +1155,16 @@ the word becomes ME four. Word-scoped. Cause: the prominence shift before w that
 describes. Dated before me_diphthong_smoothing (1000), which would turn the ēo into ē."""
 words = ["four"]
 definition = ["e oː → ɔː ∅ / _ w", "e → ∅ / w _ r #"]
+
+[sporadic_cow_oblique]
+time = 405
+name = "SPORADIC: OE cū takes the oblique stem *kū-"
+description = """Kroonen s.v. *kō- ~ *kū- (PDF 339): the paradigm was nom. *kōz, obl. *kū-, and OE cū, ON kýr
+continue the oblique variant, while OS kō, OHG kuo continue the nominative. Word-scoped. Cause:
+the levelling of the oblique stem into the nominative. After the Proto-West Germanic checkpoint,
+whose target *kō still has the nominative vowel."""
+words = ["cow"]
+definition = "oː → uː"
 
 [sporadic_nine_nigun]
 time = 350
@@ -2136,7 +2158,8 @@ definition = "ð → d / [+cons, nasal: 1] _"
 # (*gʷih₃wós > *kʷikʷaz), whose second labiovelar stands next to the rounded *h₃ and wrongly
 # delabialises — a net loss of one exact match. The real rule is restricted to *u and *w, so it
 # needs that narrower environment (and it must be ordered BEFORE the back-vowel merger, which
-# unrounds *ō to *ɑː and leaves nothing to trigger on).
+# unrounds *ō to *ɑː and leaves nothing to trigger on). Since 2026-10-07 cow takes its *kōz from
+# the word-scoped sporadic_cow_nominative, after Kroonen (PDF 339).
 
 # A nasal takes the place of a following velar: *jungaz, not *jungaz with a plain /n/.
 [pgmc_nasal_velar_assimilation]
