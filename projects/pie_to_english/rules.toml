@@ -2731,6 +2731,24 @@ name = "A *g after a back vowel vocalises to *w before a vowel"
 description = "Minkova §4.2.1, §5.1.2; Jones Table 3.18 — sagu > sawe, lagu > lawe, boga > bowe"
 definition = "g → w / [+syll, +back] _ [+syll]"
 
+# After a front vowel the same *g is the palatal glide (Minkova §4.2.1, PDF 83; Steponavičius §168,
+# PDF 150): flēoge, smoothed to flēge, gives [fleːjə] > ME flei(e), and nigon gives [nijon]
+# (Steponavičius §183, PDF 170–171).
+[me_g_palatalisation]
+time = 1140
+name = "A *g after a front vowel becomes the palatal glide *j before a vowel"
+description = "Minkova §4.2.1 (PDF 83); Steponavičius §168 (PDF 150), §183 (PDF 170–171) — flēoge > ME flei(e), nigon > [nijon]"
+definition = "g → j / [+syll, +front] _ [+syll]"
+
+# Once the glide closes the stressed syllable, the unstressed vowel after it is lost before a
+# final consonant: tigol > [tijol] > [tijl] > tile, fugol > foul (Steponavičius §183, PDF 170–171;
+# Minkova §7.4, PDF 207–208). Before the two mergers at 1360, which then take the *ij and *uw.
+[me_glide_syncope]
+time = 1355
+name = "The unstressed vowel after a vocalised glide is lost before a final consonant"
+description = "Steponavičius §183 (PDF 170–171): tigol > [tijl] > tile, fugol > foul; Minkova §7.4 (PDF 207–208)"
+definition = "ə → ∅ / [+syll, stress: primary] (j | w) _ [+cons] #"
+
 # A high front vowel and a following *j in the same syllable merge as *iː: OE drȳġe > drie > dry,
 # tigol > tile (Minkova §7.4, PDF 205; §8.2.2.2, PDF 257–258; Jones §2.3.6, PDF 68–70;
 # Steponavičius §183, PDF 170–171). Beside the glide shortening (1360): both reshape a vowel + glide.
@@ -2739,6 +2757,14 @@ time = 1360
 name = "*ij in one syllable becomes *iː"
 description = "Minkova §7.4, §8.2.2.2; Jones §2.3.6; Steponavičius §183 — ryġe > rye, drȳġe > dry"
 definition = "i j → iː ∅ / _ [-syll]* $"
+
+# The back counterpart: *uw in one syllable is ME ū. Steponavičius §183 (PDF 171): fugol [fuɣol] >
+# foul [fuul]; Minkova §7.4 (PDF 205, 208).
+[me_uw_merger]
+time = 1360
+name = "*uw in one syllable becomes *uː"
+description = "Steponavičius §183 (PDF 171): fugol > foul [fuul]; Minkova §7.4 (PDF 205, 208)"
+definition = "u w → uː ∅ / _ [-syll]* $"
 
 # In a vowel + glide diphthong the vowel's length is neutralised (Minkova §6.5.3, PDF 177–178;
 # §7.4, PDF 208): OE dēaw gives ME [dɛw], and the 1400 column writes every ME diphthong as a short
