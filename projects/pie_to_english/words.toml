@@ -6001,7 +6001,7 @@ note = "Source: Wiktionary (kaikki)."
 forms = [
   { time = -2000, ipa = "ˈpln̩ħtrom", category = "noun", note = "PIE *pl-n̥-h₂-tro-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈɸlunθrɑ̃", category = "noun" },
-  { time = 403, ipa = "ˈflonθr", note = "PWGmc *flonþr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
+  { time = 403, ipa = "ˈflunθr", note = "TARGET corrected 2026-10-08 (DECISIONS.md, four cases): was ˈflonθr. Reconstruction revised under rule 3 of DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other'. Ringe & Taylor (PDF 44): throughout North-West Germanic, stressed *u was not lowered before a nasal in the syllable coda (sunne, hund, pund, *munþaz). Wiktionary's *flonþr rests only on its Old Dutch descendant, so it writes the later Dutch o into PWGmc. The other 403 targets keep *u before a nasal cluster. PWGmc *flonþr (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
 
 [[words]]
