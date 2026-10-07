@@ -7443,7 +7443,7 @@ note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score 
 forms = [
   { time = 200, ipa = "ˈluɣiz", category = "noun", note = "PGmc *lugiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈluɣi", note = "PWGmc *lugi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
-  { time = 900, ipa = "ˈlyge" },
+  { time = 900, ipa = "ˈlyje", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈlyge. Wiktionary heads the word lyge or lyġe and gives both /ˈly.ɡe/ and /ˈly.je/; the batch took the first. The palatal is the regular outcome of PWGmc *lugi, whose *g stood before the front vowel that palatalised it, so the rules choose /ˈly.je/ (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4)." },
   { time = "final", ipa = "ˈlɑj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lie /lɑ́j/, with r written ɹ and the stress as ˈ." },
 ]
 
