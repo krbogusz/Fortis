@@ -3291,6 +3291,17 @@ This *-ī arose in PWGmc (`wg_final_j_vocalisation`, 402), after the older final
 took the short ones. It shortens after that, and `oe_final_i_to_e` (470) lowers it to *-e."""
 definition = "[+syll, length: long, aperture: high, +front, stress: none] → [length: short] / _ #"
 
+[oe_unstressed_long_o_to_a]
+time = 464
+name = "An unstressed *ō before a single final consonant becomes a"
+description = """Ringe & Taylor §3.1.4 (PDF 74–75) give OE a for PWGmc *ō before one final consonant:
+*salbōþ > sealfaþ '(s)he anoints', *mānōþ > mōnaþ 'month', and *fiskōþ > fiscaþ beside fiscoþ.
+Before two consonants the *ō stays o: *armōst > earmost, *latōst > latost (PDF 75, 206). The
+book lists the outcomes without stating a rule, so this one is inferred. In this lexicon it
+reaches only month. Before the shortening of unstressed long vowels (465), which would otherwise
+give the o."""
+definition = "[+syll, length: long, +back, +rounded, aperture: mid, stress: none] → ɑ / [-syll] _ [-syll] #"
+
 [oe_internal_long_shortening]
 time = 465
 name = "An unstressed long vowel before a consonant shortens"
