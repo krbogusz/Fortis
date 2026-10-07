@@ -6953,12 +6953,11 @@ forms = [
 id = "razną"
 gloss = "razną"
 frequency = 9047
-note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁rh̥₁-s-nó-m, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction'). The modern target is blank: modern barn is the compound OE bere-ærn."
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *h₁rh̥₁-s-nó-m, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction'). The modern target is blank: modern barn is the compound OE bere-ærn. The 1400 target ˈɛːrn was removed on 2026-10-08 (DECISIONS.md, four cases): Wrong word: /ɛ̝ːrn/ is Wiktionary's ME ern 'eagle', from OE earn. Wiktionary lists ME ærn only as an alternative form of that word, and no ME entry continues OE ærn 'house'."
 forms = [
   { time = 200, ipa = "ˈrɑznɑ̃", category = "noun", note = "PGmc *razną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈrɑzn", note = "PWGmc *raʀn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈærn" },
-  { time = 1400, ipa = "ˈɛːrn" },
 ]
 
 [[words]]
