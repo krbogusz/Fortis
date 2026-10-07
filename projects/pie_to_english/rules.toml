@@ -1762,7 +1762,8 @@ is eme_price_mouth_lowering."""
 # PRICE is /aɪ/ and MOUTH /aʊ/, not /aj/ and /aw/. The glide letters are different segments from
 # the lax vowels, so writing them as glides misses every long-*i and long-*u word in the lexicon.
 definition = [
-    "iː → ə ɪ", "uː → ə ʊ",
+    # Only stressed vowels shift; an unstressed final -y stays [i] (lme_unstressed_final_i_short).
+    "ˈiː → ə ɪ", "ˈuː → ə ʊ",
     # Not before r: Jones (PDF 258) reads Coles (1674) as keeping ME ō before r unraised,
     # [oo] in floor, whore, door, against [uu] in good, food, book.
     "eː → iː", "oː → uː // _ r",
@@ -2113,6 +2114,14 @@ has carried since PIE. Dated 1620, after the Great Vowel Shift and BEFORE the se
 pre-/r/ vowel changes (Jones §4.6) and the later r-loss, which therefore act on the approximant —
 those rules are written with ɹ."""
 definition = "r → ɹ"
+
+[lme_unstressed_final_i_short]
+time = 1569
+name = "The unstressed final -y is short [i]"
+description = """Minkova §7.6 (PDF 230–231) gives the ME suffix <-y> as [-i]. The 1400 targets write it long
+(bely, mirie: [iː]), and so does me_y_suffix after a consonant; the vowel is short and unstressed, so
+the Vowel Shift does not touch it, and the laxing below and pde_happy_tensing (1950) give RP [i]."""
+definition = "iː^[stress: none] → i / _ #"
 
 [lme_short_high_vowels_lax]
 time = 1569
