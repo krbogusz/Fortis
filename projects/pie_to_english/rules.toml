@@ -2705,6 +2705,16 @@ name = "w is lost after an initial s or t before a back rounded vowel"
 description = "Minkova PDF 139; Pyles & Algeo p. 144 — sweord > sword, twā > two"
 definition = "w → ∅ / # (s | t) _ [+syll, +back, +rounded]"
 
+[sporadic_iron_irn]
+time = 1450
+name = "SPORADIC: iron takes its one-syllable variant irn"
+description = """Wiktionary gives ME iren as /ˈiːrən/ and also /ˈiːrn/, with the spellings irn, yrn. Bullokar (1580)
+lists iron in the compounds andyrn and brondyrn among his words with final -rn (Jones Table 4.13,
+PDF 265). PDE /ˈaɪən/ continues the one-syllable form, whose r breaks to a schwa before the n.
+Cause: the one-syllable variant. Word-scoped."""
+words = ["iron"]
+definition = "ə → ∅ / r _ n #"
+
 [me_degemination]
 time = 1250
 name = "Geminates simplify"
