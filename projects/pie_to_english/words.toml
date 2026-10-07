@@ -6084,7 +6084,7 @@ gloss = "mark"
 frequency = 61805
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈmorgʲs", category = "noun", note = "PIE *mórǵs, as cited by Wiktionary." },
+  { time = -2000, ipa = "ˈmorgʲeħ", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈmorgʲs; now *mórǵeh₂. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target *markō is an ō-stem, and the root noun *mórǵs gives *marks. Kroonen derives *markō- f. 'boundary, region' from *morǵ-eh₂ (PDF 395), and OE mearc is feminine. PIE *mórǵs, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑrkɔː", category = "noun" },
   { time = 900, ipa = "ˈmæɑrk" },
   { time = "final", ipa = "ˈmɑːk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): mark /mɑ́ːk/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols." },
@@ -6162,7 +6162,7 @@ id = "sooth"
 gloss = "sooth"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈχsonts", category = "adj", note = "PIE *h₁sónts, as cited by Wiktionary." },
+  { time = -2000, ipa = "ˈχsontos", category = "adj", note = "PREFORM corrected 2026-10-07: was ˈχsonts; now *h₁sóntos. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target *sanþaz is a thematic adjective, and the consonant stem *h₁sónts gives *sanþs. Kroonen derives *sanþa- adj. 'true' from the thematic *h₁s-ónt-o- (PDF 467). PIE *h₁sónts, as cited by Wiktionary." },
   { time = 200, ipa = "ˈsɑnθɑz", category = "adj" },
   { time = 900, ipa = "ˈsoːθ" },
   { time = "final", ipa = "ˈsʉwθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sooth /sʉ́wθ/, with r written ɹ and the stress as ˈ. Was ˈsuːθ (Wiktionary RP, Gimsonian symbols)." },
@@ -6262,7 +6262,7 @@ id = "līką"
 gloss = "līką"
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈlejgʲos", category = "noun", note = "PIE *leyǵ-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
+  { time = -2000, ipa = "ˈlejgʲom", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈlejgʲos; now *léyǵom. The rules prompted the change (DECISIONS.md, 2026-10-07): the 200 target *līką is neuter, and the masculine ending *-os gives *līkaz. Kroonen derives the neuter *līka- 1 '(dead) body' from *leig-o- (PDF 376), and OE līc is neuter. PIE *leyǵ-os, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈliːkɑ̃", category = "noun" },
   { time = 403, ipa = "ˈliːk", note = "PWGmc *līk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
 ]
