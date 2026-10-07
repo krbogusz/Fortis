@@ -101,6 +101,15 @@ definition = "[+cons, advancement: rtr] → ∅ / [+syll] [-son, -cont, -voice] 
 # turns the *d into a *t and the words end in **wettaz, **settaz, **hwattaz for the attested
 # *wissaz, *sessaz, *hwassaz. This is the dental half of Primärberührung; the velar half (a
 # stop before *t going to a fricative) is the clause added to Grimm's law below.
+[pgmc_dtl_simplification]
+time = -2000
+name = "*dtl simplifies to *tl"
+description = """Kroonen s.v. *maþla- (PDF 398): "*mad-tlo- developed into PGm. *maþla- through a
+simplified form *matlo-". So *sed-tlo- 'seat' (Kroonen s.v. *setla-, PDF 474) gives *setlo-, and
+Grimm's law then gives the *seþlą that Ringe & Taylor's PWGmc *seþl continues (PDF 344). It comes
+before dental_cluster in the file, which would otherwise make the *-dt- into *-ss-."""
+definition = "d → ∅ / _ t l"
+
 [dental_cluster]
 time = -2000
 name = "Dental cluster simplification"
