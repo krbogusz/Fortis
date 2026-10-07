@@ -134,8 +134,8 @@ gloss = "kind"
 frequency = 392242
 note = "Source: Wiktionary (kaikki)."
 forms = [
-  { time = -2000, ipa = "ˈgʲenχtis", category = "noun", note = "PIE *ǵénh₁tis, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈkinθiz", category = "noun" },
+  { time = -2000, ipa = "gʲenχˈtis", category = "noun", note = "PREFORM corrected 2026-10-07: was ˈgʲenχtis; now *ǵenh₁tís. Kroonen reconstructs the ti-stem *kindi- 'kind' from the oxytone *ǵenh₁-tí- (PDF 328): ON kind has the d of Verner's law, which a root accent would not give. PIE *ǵénh₁tis, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈkindiz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈkinθiz. Kroonen reconstructs *kindi- with Verner's d (ON kind; PDF 328), where Wiktionary's *kinþiz assumes a root accent. The books outrank Wiktionary for the 200 column." },
   { time = 900, ipa = "ˈkynd" },
   { time = 1400, ipa = "ˈkiːnd" },
   { time = "final", ipa = "ˈkaɪnd" },

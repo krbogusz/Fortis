@@ -1010,6 +1010,17 @@ definition = [
     "[+syll, aperture: high, length: short, +back, stress: !none] → [aperture: mid] / _ [-syll, +lateral] [-syll, lateral: none, labial: none] [-syll]* [+syll, aperture: !high]",
 ]
 
+[sporadic_kind_zero_grade]
+time = 395
+name = "SPORADIC (levelling): PWGmc *kundi takes the zero grade of the oblique stem"
+description = """OE (ġe)cynd and OHG gikunt continue PWGmc *kundi (Wiktionary, English kind), the zero grade of
+the oblique stem *ǵn̥h₁tí- (Wiktionary s.v. *kinþiz). Kroonen's *kindi- (ON kind; PDF 328) keeps
+the full grade of the nominative. Cause: levelling of the oblique stem in West Germanic. Dated 395,
+before palatalisation (410), which then leaves the *k before the back *u alone, and before
+i-mutation (420), which makes the *y of cynd."""
+words = ["kind"]
+definition = "[+syll, aperture: high, +front, length: short, stress: primary] → [+back, front: none, +rounded, +labial]"
+
 [sporadic_wg_adjective_ja_stem]
 time = 395
 name = "SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic"
@@ -3652,13 +3663,6 @@ name = "SPORADIC: *swestr- > OE sweostor — back mutation of *e to *eo across t
 description = "OE sweostor has the *eo of back mutation (u-umlaut); oe_back_mutation reaches it only across a single liquid, not the *str cluster. Word-scoped."
 words = ["sister"]
 definition = "e → e o"
-
-[sporadic_kind_imutation]
-time = 476
-name = "SPORADIC: *kinþiz > OE cynd — i-stem, unpalatalised, dental"
-description = "OE cynd keeps a hard *k (its *y is younger than palatalisation), i-mutates to *y, and has the OE *d for *þ; our cascade palatalises and over-lengthens. Word-scoped to the attested outcome. Cause: OE (ġe)cynd continues the zero-grade oblique stem *ǵn̥h₁tí- (Wiktionary s.v. *kinþiz), that is *kundi- with the d of Verner's law, not the nominative of the 200 target."
-words = ["kind"]
-definition = ["t͡ʃ → k", "iː → y", "θ → d"]
 
 [sporadic_buttaz_u]
 time = 1145
