@@ -3665,8 +3665,9 @@ North early in the 14th century and reached the South by its end (Dobson §64, c
 §7.3.1, PDF 200, and §8.3.2, PDF 275–277). It was incomplete: spelling and Latin restored [ɛr] in
 many words (serve, perfect, AmE clerk), and her, herd and fern keep NURSE. So the rule is
 word-scoped. Minkova names star in both sections, and says heart "must have had the short [ε] for
-it to be lowered to [a]". From here both words follow the ME /ar/ of arm and hard."""
-words = ["star", "heart"]
+it to be lowered to [a]". From here both words follow the ME /ar/ of arm and hard. barrow < OE
+beorg has ME barewe beside berewe (Klein s.v. barrow)."""
+words = ["star", "heart", "bergaz"]
 definition = "ɛ → a / _ r"
 
 [sporadic_ansuz_nasal]
@@ -3897,8 +3898,10 @@ not vocalise, which is why this stays a word list rather than a general rule abo
 
 sullow (OE sulh, pl. sylh, Kroonen PDF 531) has ME sulow without any oblique *ɣ: its *h after *l
 had two Middle English outcomes, the vocalisation here and the hardening to k of elk (1000). The
-choice between them is lexical, so sullow is named here."""
-words = ["marrow", "tallow", "gelwaz", "farrow", "sallow", "sullow", "fallow"]
+choice between them is lexical, so sullow is named here.
+
+barrow (OE beorg, oblique beorges) has ME barewe, berewe (Klein s.v. barrow), so it is named too."""
+words = ["marrow", "tallow", "gelwaz", "farrow", "sallow", "sullow", "fallow", "bergaz"]
 definition = [
     "[+back, aperture: high, -son, nasal: none] → ɔ w / [+cons, +son] _ #",
     "[+back, aperture: high, -son, nasal: none] → w / [+syll] _ #",
