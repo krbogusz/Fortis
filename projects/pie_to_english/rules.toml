@@ -3489,8 +3489,20 @@ description = """The lowering of *u to *o in Old English is notoriously irregula
 *furduz > ford, *fulmô > folm lower, while *fullaz > full, *bukkaz > bucc, *hundą > hund and the
 i-stem *kustiz > cyst keep their *u in the very same environments. Because it cannot be predicted
 from the phonology it is word-scoped, applied to the words that attest it. Dated with a-mutation,
-which is the regular relative of the same change."""
-words = ["cost", "ford", "fulmō"]
+which is the regular relative of the same change. Only fulmō is lowered here, since OHG folma shares
+its *o (Ringe & Taylor PDF 48). cost and ford, whose OHG cognates keep *u, are in
+sporadic_u_lowering_oe after the 403 checkpoint."""
+words = ["fulmō"]
+definition = "[+syll, aperture: high, +back, length: short, stress: primary] → [aperture: mid]"
+
+[sporadic_u_lowering_oe]
+time = 404
+name = "SPORADIC: short *u lowers to *o in Old English only"
+description = """The same lexically diffused lowering as sporadic_u_lowering, but in words where it is Old
+English only: OE ford and cost against OHG furt and kust. Ringe & Taylor set *fulmō (OE folm, OHG
+folma) apart as a word where the lowering is shared (PDF 48), so it stays in the earlier rule.
+Dated after the Proto-West Germanic checkpoint, whose *furdu keeps the *u."""
+words = ["cost", "ford"]
 definition = "[+syll, aperture: high, +back, length: short, stress: primary] → [aperture: mid]"
 
 [sporadic_hwassaz_leveling]
