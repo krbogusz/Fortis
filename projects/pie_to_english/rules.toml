@@ -4497,11 +4497,13 @@ words = ["ferhuz"]
 definition = ["[+syll] → [length: long] / _ r x", "x → ∅ / r _"]
 
 [sporadic_haven]
-time = 460
+time = 457
 name = "SPORADIC: *habanō > OE hæfen keeps the brightened *æ (a-restoration not applied)"
 description = """OE hæfen 'haven' keeps the Anglo-Frisian *æ where a-restoration would back it before
-the following *a — the same lexical patchiness Jones §3.2 notes for these changes. Word-scoped:
-re-front the stressed vowel, and the *-anō ending reduces to *-en (the *a to *e, the *u lost)."""
+the following *a. Cause: the word is a late borrowing. Hoad (s.v. haven) dates OE hæfen, hæfne to
+the 11th century and derives it from ON hafn-, so it never went through the native changes.
+Word-scoped: re-front the stressed vowel, and the *-anō ending reduces to *-en (the *a to *e, the *u
+lost). Dated 457, before general syncope (458), which a native *hæbænu would have undergone."""
 words = ["haven"]
 definition = ["[+syll, stress: primary, +back, aperture: low] → [+front, back: none, advancement: atr]", "ɑ → e", "u → ∅ / n _ #"]
 
