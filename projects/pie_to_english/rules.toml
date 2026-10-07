@@ -1514,6 +1514,18 @@ before the apocope of a final *-i after a heavy syllable (460), which then takes
 restores the *w from its oblique stem (sporadic_new_oblique_iw)."""
 definition = "w → ∅ / [+syll] _ [+syll, aperture: high, +front, stress: none]"
 
+# General syncope (Ringe & Taylor §6.7.3, PDF 279): a short vowel in an unstressed internal open
+# syllable is lost. Nonhigh *æ and *e go after any stressed syllable; high *i and *u only after a
+# heavy one. Only the nonhigh half is here. The high half would take eighth's *u (*ahtuðɔːː > *eahtþa,
+# against OE eahtoþa), so it waits for a preform that fits. After the loss of *w before *i (440)
+# and before the apocope (460), as Ringe & Taylor order them (PDF 280).
+[oe_general_syncope]
+time = 458
+name = "General syncope: a short nonhigh vowel is lost in an internal open syllable"
+description = """Ringe & Taylor §6.7.3 (PDF 279–280): *saiwalō > *sāwælu > *sāwlu > sāwl, later sāwol by
+epenthesis (PDF 345)."""
+definition = "[+syll, length: short, stress: none, aperture: !high] → ∅ / [+syll, stress: primary] [+syll]? [-syll]+ _ [-syll] [+syll]"
+
 [oe_high_vowel_deletion]
 time = 460
 name = "Final -u is deleted after a heavy syllable, kept after a light one"
