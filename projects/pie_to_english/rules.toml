@@ -553,6 +553,20 @@ definition = [
     "[+syll] → [stress: none] / [+syll] []* _",
 ]
 
+[sporadic_mean_root_stress]
+time = -1000
+name = "SPORADIC: the stress of *gamainiz falls on the root, after the prefix"
+description = """OE ġemǣne is stressed on the root: the prefix ġe- < *ga- is unstressed in Old English
+nouns and adjectives as well as verbs. The general rule puts the Germanic stress on the first
+syllable, which here is the prefix. Word-scoped, since mean is the only prefixed word in the set.
+Cause: the prefix *ga- did not take the stress. The *g of *ga- itself has no source here: Kroonen
+derives *gam- from *ḱom- (PDF 206), and Grimm's law gives *h, so mean still misses."""
+words = ["mean"]
+definition = [
+    "[+syll, stress: primary] → [stress: none] / # [-syll]* _ [-syll]+ [+syll]",
+    "[+syll] → [stress: primary] / # [-syll]* [+syll, stress: none] [-syll]+ _",
+]
+
 [word_initial_gw_to_b]
 time = -1000
 name = "Word-initial */gʷ/ > */b/"
