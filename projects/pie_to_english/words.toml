@@ -909,9 +909,8 @@ forms = [
 id = "winter"
 gloss = "winter"
 frequency = 24005
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈħweχn̩tos (PIE *h₂wéh₁n̥tos, as cited by Wiktionary) was removed on 2026-10-07: Kroonen gives *wintru- 'no certain etymology' and rejects the derivation from *wed- 'to be wet' (PDF 628). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈħweχn̩tos", category = "noun", note = "PIE *h₂wéh₁n̥tos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwintruz", category = "noun" },
   { time = 403, ipa = "ˈwintru", note = "PWGmc *wintru (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈwinter" },
@@ -1624,9 +1623,8 @@ forms = [
 id = "steer"
 gloss = "steer"
 frequency = 3892
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈtawros (PIE *táwros, as cited by Wiktionary) was removed on 2026-10-07: Kroonen calls *steura- 'a word of uncertain origin' and the link with *tauro- 'problematic' (PDF 518–519). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈtawros", category = "noun", note = "PIE *táwros, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstewrɑz", category = "noun" },
   { time = 403, ipa = "ˈstewr", note = "PWGmc *steur (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsteoːr" },
@@ -2988,9 +2986,8 @@ forms = [
 [[words]]
 id = "gaukaz"
 gloss = "gaukaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈgʱegʱugʲʱos (PIE *gʰegʰuǵʰos, as cited by Wiktionary) was removed on 2026-10-07: Kroonen calls *gauka- 'an old onomatopoetic word' (PDF 211). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈgʱegʱugʲʱos", category = "noun", note = "PIE *gʰegʰuǵʰos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɣɑwkɑz", category = "noun" },
   { time = 403, ipa = "ˈɣɑwk", note = "PWGmc *gauk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈjæɑːk" },
@@ -3108,9 +3105,8 @@ forms = [
 [[words]]
 id = "elmaz"
 gloss = "elmaz"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈχelem (PIE *h₁élem, as cited by Wiktionary) was removed on 2026-10-07: No book in the source set has an entry for *elmaz. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈχelem", category = "noun", note = "PIE *h₁élem, as cited by Wiktionary." },
   { time = 200, ipa = "ˈelmɑz", category = "noun" },
   { time = 403, ipa = "ˈelm", note = "PWGmc *elm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈelm" },
@@ -3198,9 +3194,8 @@ forms = [
 [[words]]
 id = "bladą"
 gloss = "bladą"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed bʱl̩ʁʷˈtom (PIE *bʰl̥h₃-tó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form) was removed on 2026-10-07: Kroonen says that *blada- 'must have been created at a late stage, i.e. within Germanic itself', since *bʰl̥h₁-tó- would give *bulda- (PDF 104). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "bʱl̩ʁʷˈtom", category = "noun", note = "PIE *bʰl̥h₃-tó-m, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈblɑðɑ̃", category = "noun" },
   { time = 403, ipa = "ˈblɑd", note = "PWGmc *blad (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈblæd" },
