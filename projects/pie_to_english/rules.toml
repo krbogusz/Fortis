@@ -4250,6 +4250,16 @@ description = "ME gome /goːm/ > RP /gʌm/: the *uː shortens and unrounds to ST
 words = ["gome"]
 definition = "uː → ʌ"
 
+[sporadic_sword_o]
+time = 1090
+name = "SPORADIC: sword takes the o of the OE variant sword, lengthened before rd"
+description = """OE had sweord beside swurd and sword (Klein s.v. sword), and Jones lists both (swerd) and (sword)
+among the late OE lengthenings before rd (Table 2.11, PDF 39). PDE sword continues the o-form:
+Wiktionary notes that ME /swoːrd/ began in the Northwest Midlands and spread in late ME. Cause: the
+OE variant with o. Word-scoped: the smoothed e of swerd becomes the lengthened ō."""
+words = ["sword"]
+definition = "e → oː / w _ r d"
+
 [sporadic_oe_homorganic_length]
 time = 1090
 name = "SPORADIC: ond and bord lengthen before *nd, *rd in late Old English"

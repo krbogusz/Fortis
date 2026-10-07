@@ -7711,7 +7711,7 @@ forms = [
   { time = 200, ipa = "ˈswerðɑ̃", category = "noun", note = "PGmc *swerdą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈswerd", note = "PWGmc *swerd (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈsweord" },
-  { time = 1400, ipa = "ˈsweːrd" },
+  { time = 1400, ipa = "ˈswoːrd", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsweːrd. Dialect variant: Wiktionary gives ME swerd as /sweːrd/, /swɛːrd/, /swɛrd/, /swoːrd/, /swɔrd/ and /s(w)urd/, and notes that the o-forms began in the Northwest Midlands and spread in late ME. PDE sword /sɔːd/ continues /swoːrd/, from the OE variant sword (Klein s.v. sword), not the /sweːrd/ the target had." },
   { time = "final", ipa = "ˈsoːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sword /sóːd/, with r written ɹ and the stress as ˈ." },
 ]
 
