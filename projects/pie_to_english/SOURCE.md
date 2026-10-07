@@ -310,6 +310,36 @@ source at hand names the cause of the shortening in udder and swith, so both sti
 targets turned out to belong to other words and were removed (*kīþą*, *aihtiz*). The score above
 stays as the batch's first-contact record.
 
+### Words added from Kroonen's headwords on 2026-10-07, scored at first contact
+
+The bootstrap keeps only Proto-Germanic records with an inherited PIE parent, so it never reached
+the many Wiktionary records that have none. The second batch comes from them (DECISIONS.md,
+2026-10-07, "Draw the next batch from Kroonen's headwords, starting at Proto-Germanic"). Of 3345
+Proto-Germanic nouns, adjectives and numerals, 422 are not in the lexicon, have a stem that is a
+headword in Kroonen, and reach an attested Old English word. 418 of them have no PIE parent in
+Wiktionary. 167 have an Old English, a Middle English and a single modern reflex. The fifty most
+frequent of these were taken. Five records among them were passed over: four whose modern word
+is a homograph (*more* from *murhǭ* and *murhō* 'wild carrot', *side* from an adjective, *blow*
+from *blēwaz* 'blue') and one duplicate (*flugiz* 'flight', beside *fleugǭ* 'fly'). The batch is
+core vocabulary: *back, way, thing, life, day, year, hand, stone, bread, sword* and forty more.
+
+The targets come from the same sources as before. The 403 forms are Wiktionary's PWGmc entries (42
+words). The Old English forms are Wiktionary's IPA, except *wiċe* 'week', transcribed by
+`tools/oe_ipa.py`. A Middle English target is kept only when the Middle English entry's etymology
+names the word's Old English form. That check dropped six targets taken from homographs, such as
+ME *here* 'here' for *year*. The modern targets are CUBE's. All fifty start at Proto-Germanic, so
+the batch does not test the 200 column.
+
+First contact, with no rule or target changed for them:
+
+| checkpoint | exact | within 1 phone |
+|---|---|---|
+| 403 | 40 / 42 | 41 |
+| 900 | 36 / 50 | 47 |
+| 1400 | 31 / 45 | 36 |
+| final | 31 / 50 | 35 |
+| all | 138 / 187 (74%) | 159 |
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed
@@ -654,20 +684,20 @@ says so and names the words it came from.
 
 ## Where it stands
 
-On 2026-10-07, 637 words. A run of the cascade writes the current figures to
+On 2026-10-07, 687 words. A run of the cascade writes the current figures to
 `reports/accuracy.csv`.
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
 | 200 Proto-Germanic | 576 | 569 (98.8%) | 569 |
-| 403 Proto-West Germanic | 312 | 306 (98.1%) | 309 |
-| 900 Old English | 418 | 384 (91.9%) | 397 |
-| 1400 Middle English | 289 | 266 (92.0%) | 274 |
+| 403 Proto-West Germanic | 354 | 346 (97.7%) | 350 |
+| 900 Old English | 468 | 420 (89.7%) | 444 |
+| 1400 Middle English | 334 | 297 (88.9%) | 310 |
 | 1570 Hart | 7 | 5 | 5 |
 | 1580 Bullokar, Mulcaster | 11 | 7 | 9 |
 | 1621 Gil | 14 | 10 | 11 |
 | 1687 Coles, Cooper | 14 | 12 | 13 |
-| final current SSB (CUBE) | 243 | 224 (92.2%) | 229 |
+| final current SSB (CUBE) | 293 | 255 (87.0%) | 264 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 

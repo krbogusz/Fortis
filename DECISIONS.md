@@ -450,3 +450,25 @@ so their outputs do not change.
 - Back-projected PIE inputs fitted to the Proto-Germanic targets. They would score at 200 without
   predicting anything.
 - Leaving the five words as residue.
+
+## 2026-10-07: Draw the next batch from Kroonen's headwords, starting at Proto-Germanic
+
+**Choice:** In `pie_to_english`, the second first-contact batch comes from Wiktionary's
+Proto-Germanic nouns, adjectives and numerals that the lexicon lacks, whose stem is a headword in
+Kroonen, and that reach an attested Old English word. Fifty are taken: the most frequent, by their
+modern reflex, of those with an Old English, a Middle English and a single modern reflex. They
+start at their Proto-Germanic form. A Middle English target is kept only when the Middle English
+entry's etymology names the word's Old English form.
+
+**Reason:** Asked for on 2026-10-07. The bootstrap keeps only Proto-Germanic records with an
+inherited PIE parent, and 418 of the 422 candidates have none in Wiktionary, so it never reached
+them. Kroonen's headword confirms each reconstruction. The batch tests the rules after
+Proto-Germanic. Its words have no PIE input in Wiktionary, and Kroonen's preforms would have to be
+transcribed by hand from the scanned text. The Middle English check removes the fault that gave
+kīþą and aihtiz the targets of other words.
+
+**Rejected:**
+- Transcribing Kroonen's PIE preforms for every word now, so that the batch also tests the 200
+  column. That can follow as a separate step.
+- Taking all 422 candidates. Fifty keeps the batch the size of the last one.
+- Taking Middle English IPA by page title alone, as the bootstrap does.

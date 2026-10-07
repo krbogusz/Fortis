@@ -7192,3 +7192,640 @@ forms = [
   { time = 200, ipa = "ˈnikrɑz", category = "noun", note = "PGmc *nikraz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 900, ipa = "ˈnikor" },
 ]
+
+[[words]]
+id = "back"
+gloss = "back"
+frequency = 1405024
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 86). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈbɑkɑ̃", category = "noun", note = "PGmc *baką (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈbæk" },
+  { time = 1400, ipa = "ˈbak" },
+  { time = "final", ipa = "ˈbak", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): back /bák/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "way"
+gloss = "way"
+frequency = 1000182
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 617). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈweɣɑz", category = "noun", note = "PGmc *wegaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈweɣ", note = "PWGmc *weg (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈwej" },
+  { time = 1400, ipa = "ˈwæj" },
+  { time = "final", ipa = "ˈwɛj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): way /wɛ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "thing"
+gloss = "thing"
+frequency = 697528
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 582). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈθiŋgɑ̃", category = "noun", note = "PGmc *þingą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈθiŋg", note = "PWGmc *þing (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈθiŋg" },
+  { time = 1400, ipa = "ˈθiŋg" },
+  { time = "final", ipa = "ˈθɪŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thing /θɪ́ŋ/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "life"
+gloss = "life"
+frequency = 624596
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 375). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈliːβɑ̃", category = "noun", note = "PGmc *lībą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈliːβ", note = "PWGmc *līb (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈliːf" },
+  { time = 1400, ipa = "ˈliːf" },
+  { time = "final", ipa = "ˈlɑjf", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): life /lɑ́jf/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "day"
+gloss = "day"
+frequency = 617674
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 124). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈdɑɣɑz", category = "noun", note = "PGmc *dagaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈdɑɣ", note = "PWGmc *dag (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈdæj" },
+  { time = 1400, ipa = "ˈdæj" },
+  { time = "final", ipa = "ˈdɛj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): day /dɛ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "care"
+gloss = "care"
+frequency = 330956
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 321). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈkɑrɔː", category = "noun", note = "PGmc *karō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈkɑru", note = "PWGmc *karu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈkɑru" },
+  { time = 1400, ipa = "ˈkaːr" },
+  { time = "final", ipa = "ˈkɛː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): care /kɛ́ː/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "dead"
+gloss = "dead"
+frequency = 317589
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 128). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈdɑwðɑz", category = "adj", note = "PGmc *daudaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈdɑwd", note = "PWGmc *daud (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈdæɑːd" },
+  { time = 1400, ipa = "ˈdɛːd" },
+  { time = "final", ipa = "ˈdɛd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): dead /dɛ́d/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "door"
+gloss = "door"
+frequency = 261118
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 150). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈdurɑ̃", category = "noun", note = "PGmc *durą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈdor", note = "PWGmc *dor (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈdor" },
+  { time = 1400, ipa = "ˈdoːr" },
+  { time = "final", ipa = "ˈdoː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): door /dóː/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "while"
+gloss = "while"
+frequency = 255970
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 306). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈxʷiːlɔː", category = "noun", note = "PGmc *hwīlō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈxwiːlu", note = "PWGmc *hwīlu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈxwiːl" },
+  { time = 1400, ipa = "ˈhwiːl" },
+  { time = "final", ipa = "ˈwɑjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): while /wɑ́jl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "few"
+gloss = "few"
+frequency = 231375
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 172). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈɸɑwɑz", category = "adj", note = "PGmc *fawaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈfɑw", note = "PWGmc *fau (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈfæɑːw" },
+  { time = 1400, ipa = "ˈfɛw" },
+  { time = "final", ipa = "ˈfjʉw", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): few /fjʉ́w/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "year"
+gloss = "year"
+frequency = 208705
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 313). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈjɛːrɑ̃", category = "noun", note = "PGmc *jērą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈjɑːr", note = "PWGmc *jār (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈjæɑːr" },
+  { time = "final", ipa = "ˈjɪː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): year /jɪ́ː/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "hand"
+gloss = "hand"
+frequency = 206247
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 247). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈxɑnduz", category = "noun", note = "PGmc *handuz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈxɑndu", note = "PWGmc *handu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈxɑnd" },
+  { time = 1400, ipa = "ˈhɔːnd" },
+  { time = "final", ipa = "ˈhand", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hand /hánd/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "week"
+gloss = "week"
+frequency = 159444
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 626). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈwikɔ̃ː", category = "noun", note = "PGmc *wikǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈwikɑː", note = "PWGmc *wikā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈwit͡ʃe", note = "Transcribed from OE wiċe by tools/oe_ipa.py (SOURCE.md, 'Old English transcriptions'); added 2026-10-07." },
+  { time = 1400, ipa = "ˈwik" },
+  { time = "final", ipa = "ˈwɪjk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): week /wɪ́jk/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "rest"
+gloss = "rest"
+frequency = 158976
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 445). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈrɑstɔː", category = "noun", note = "PGmc *rastō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈrɑstu", note = "PWGmc *rastu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈræst" },
+  { time = 1400, ipa = "ˈrɛst" },
+  { time = "final", ipa = "ˈɹɛst", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): rest /rɛ́st/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "cool"
+gloss = "cool"
+frequency = 138139
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 339). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈkɔːluz", category = "adj", note = "PGmc *kōluz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈkoːl" },
+  { time = "final", ipa = "ˈkʉwl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): cool /kʉ́wl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "team"
+gloss = "team"
+frequency = 134358
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 551). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈtɑwmɑz", category = "noun", note = "PGmc *taumaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈtæɑːm" },
+  { time = 1400, ipa = "ˈtɛːm" },
+  { time = "final", ipa = "ˈtɪjm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): team /tɪ́jm/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "book"
+gloss = "book"
+frequency = 113963
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 109). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈbɔːks", category = "noun", note = "PGmc *bōks (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈbɔːk", note = "PWGmc *bōk (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈboːk" },
+  { time = 1400, ipa = "ˈboːk" },
+  { time = "final", ipa = "ˈbɵk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): book /bɵ́k/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "small"
+gloss = "small"
+frequency = 112316
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 496). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsmɑlɑz", category = "adj", note = "PGmc *smalaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsmɑl", note = "PWGmc *smal (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsmæl" },
+  { time = 1400, ipa = "ˈsmal" },
+  { time = "final", ipa = "ˈsmoːl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): small /smóːl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "hair"
+gloss = "hair"
+frequency = 101852
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 260). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈxɛːrɑ̃", category = "noun", note = "PGmc *hērą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈxɑːr", note = "PWGmc *hār (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈxæːr" },
+  { time = 1400, ipa = "ˈhɛːr" },
+  { time = "final", ipa = "ˈhɛː", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hair /hɛ́ː/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "lie"
+gloss = "lie"
+frequency = 95930
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 382). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈluɣiz", category = "noun", note = "PGmc *lugiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈluɣi", note = "PWGmc *lugi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈlyge" },
+  { time = "final", ipa = "ˈlɑj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lie /lɑ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "song"
+gloss = "song"
+frequency = 86877
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 25). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsɑnɣʷɑz", category = "noun", note = "PGmc *sangwaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsɑŋgu", note = "PWGmc *sangu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsɑŋg" },
+  { time = 1400, ipa = "ˈsɔŋg" },
+  { time = "final", ipa = "ˈsɔŋ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): song /sɔ́ŋ/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "land"
+gloss = "land"
+frequency = 83422
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 366). Wiktionary cites only the PIE root *lendʰ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
+forms = [
+  { time = 200, ipa = "ˈlɑndɑ̃", category = "noun", note = "PGmc *landą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈlɑnd", note = "PWGmc *land (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈlɑnd" },
+  { time = 1400, ipa = "ˈlɔːnd" },
+  { time = "final", ipa = "ˈland", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): land /lánd/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "ship"
+gloss = "ship"
+frequency = 74224
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 486). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈskipɑ̃", category = "noun", note = "PGmc *skipą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈskip", note = "PWGmc *skip (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈʃip" },
+  { time = 1400, ipa = "ˈʃip" },
+  { time = "final", ipa = "ˈʃɪp", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ship /ʃɪ́p/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "month"
+gloss = "month"
+frequency = 71163
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 405). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈmɛːnɔːθs", category = "noun", note = "PGmc *mēnōþs (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈmɑːnɔːθ", note = "PWGmc *mānōþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈmoːnɑθ" },
+  { time = 1400, ipa = "ˈmoːnθ" },
+  { time = "final", ipa = "ˈmʌnθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): month /mʌ́nθ/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "sun"
+gloss = "sun"
+frequency = 65448
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 503). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsunnɔ̃ː", category = "noun", note = "PGmc *sunnǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsunnɑː", note = "PWGmc *sunnā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsunne" },
+  { time = 1400, ipa = "ˈsun" },
+  { time = "final", ipa = "ˈsʌn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sun /sʌ́n/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "sea"
+gloss = "sea"
+frequency = 60812
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 463). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsɑjwiz", category = "noun", note = "PGmc *saiwiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsɑjwi", note = "PWGmc *saiwi (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsæː" },
+  { time = 1400, ipa = "ˈsɛː" },
+  { time = "final", ipa = "ˈsɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sea /sɪ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "soul"
+gloss = "soul"
+frequency = 58677
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 463). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsɑjwɑlɔː", category = "noun", note = "PGmc *saiwalō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsɑjwɑlu", note = "PWGmc *saiwalu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsɑːwol" },
+  { time = 1400, ipa = "ˈsɔwl" },
+  { time = "final", ipa = "ˈsəwl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): soul /sə́wl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "ice"
+gloss = "ice"
+frequency = 57545
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 311). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈiːsɑ̃", category = "noun", note = "PGmc *īsą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈiːs", note = "PWGmc *īs (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈiːs" },
+  { time = 1400, ipa = "ˈiːs" },
+  { time = "final", ipa = "ˈɑjs", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): ice /ɑ́js/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "fly"
+gloss = "fly"
+frequency = 56595
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 186). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈɸlewɣɔ̃ː", category = "noun", note = "PGmc *fleugǭ (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈflewɣɑː", note = "PWGmc *fleugā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈfleoːge" },
+  { time = 1400, ipa = "ˈflej" },
+  { time = "final", ipa = "ˈflɑj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): fly /flɑ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "queen"
+gloss = "queen"
+frequency = 53006
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 18). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈkʷɛːniz", category = "noun", note = "PGmc *kwēniz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈkwɑːni", note = "PWGmc *kwāni (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈkweːn" },
+  { time = 1400, ipa = "ˈkweːn" },
+  { time = "final", ipa = "ˈkwɪjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): queen /kwɪ́jn/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "sake"
+gloss = "sake"
+frequency = 52827
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 464). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsɑkɔː", category = "noun", note = "PGmc *sakō (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsɑku", note = "PWGmc *saku (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsɑku" },
+  { time = "final", ipa = "ˈsɛjk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sake /sɛ́jk/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "glass"
+gloss = "glass"
+frequency = 50103
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 220). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈɣlɑsɑ̃", category = "noun", note = "PGmc *glasą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈɣlɑs", note = "PWGmc *glas (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈglæs" },
+  { time = 1400, ipa = "ˈglas" },
+  { time = "final", ipa = "ˈglɑːs", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): glass /glɑ́ːs/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "tree"
+gloss = "tree"
+frequency = 49017
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 562). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈtrewɑ̃", category = "noun", note = "PGmc *trewą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈtrew", note = "PWGmc *treu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈtreoːw" },
+  { time = 1400, ipa = "ˈtreː" },
+  { time = "final", ipa = "ˈtɹɪj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): tree /trɪ́j/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "summer"
+gloss = "summer"
+frequency = 45611
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 531). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsumɑrɑz", category = "noun", note = "PGmc *sumaraz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsumɑr", note = "PWGmc *sumar (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsumor" },
+  { time = 1400, ipa = "ˈsumər" },
+  { time = "final", ipa = "ˈsʌmə", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): summer /sʌ́mə/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "lock"
+gloss = "lock"
+frequency = 40462
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 383). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈlukkɑz", category = "noun", note = "PGmc *lukkaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈlokk" },
+  { time = "final", ipa = "ˈlɔk", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): lock /lɔ́k/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "rain"
+gloss = "rain"
+frequency = 37417
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 448). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈreɣnɑ̃", category = "noun", note = "PGmc *regną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈreɣn", note = "PWGmc *regn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈrejn" },
+  { time = 1400, ipa = "ˈræjn" },
+  { time = "final", ipa = "ˈɹɛjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): rain /rɛ́jn/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "stone"
+gloss = "stone"
+frequency = 37203
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 512). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈstɑjnɑz", category = "noun", note = "PGmc *stainaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈstɑjn", note = "PWGmc *stain (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈstɑːn" },
+  { time = 1400, ipa = "ˈstɔːn" },
+  { time = "final", ipa = "ˈstəwn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): stone /stə́wn/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "hat"
+gloss = "hat"
+frequency = 35828
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 254). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈxɑttuz", category = "noun", note = "PGmc *hattuz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈxætt" },
+  { time = 1400, ipa = "ˈhat" },
+  { time = "final", ipa = "ˈhat", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hat /hát/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "blind"
+gloss = "blind"
+frequency = 35066
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 107). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈblindɑz", category = "adj", note = "PGmc *blindaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈblind", note = "PWGmc *blind (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈblind" },
+  { time = 1400, ipa = "ˈbliːnd" },
+  { time = "final", ipa = "ˈblɑjnd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): blind /blɑ́jnd/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "meat"
+gloss = "meat"
+frequency = 33050
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 398). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈmɑtiz", category = "noun", note = "PGmc *matiz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈmɑti", note = "PWGmc *mati (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈmete" },
+  { time = 1400, ipa = "ˈmɛːt" },
+  { time = "final", ipa = "ˈmɪjt", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): meat /mɪ́jt/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "sword"
+gloss = "sword"
+frequency = 27928
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 539). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈswerðɑ̃", category = "noun", note = "PGmc *swerdą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈswerd", note = "PWGmc *swerd (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈsweord" },
+  { time = 1400, ipa = "ˈsweːrd" },
+  { time = "final", ipa = "ˈsoːd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): sword /sóːd/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "pool"
+gloss = "pool"
+frequency = 27818
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 438). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈpɔːlɑz", category = "noun", note = "PGmc *pōlaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈpoːl" },
+  { time = 1400, ipa = "ˈpoːl" },
+  { time = "final", ipa = "ˈpʉwl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): pool /pʉ́wl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "path"
+gloss = "path"
+frequency = 26681
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 436). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈpɑθɑz", category = "noun", note = "PGmc *paþaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈpɑθ", note = "PWGmc *paþ (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈpæθ" },
+  { time = 1400, ipa = "ˈpaθ" },
+  { time = "final", ipa = "ˈpɑːθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): path /pɑ́ːθ/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "roof"
+gloss = "roof"
+frequency = 26204
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 288). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈxrɔːɸɑ̃", category = "noun", note = "PGmc *hrōfą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈxroːf" },
+  { time = 1400, ipa = "ˈroːf" },
+  { time = "final", ipa = "ˈɹʉwf", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): roof /rʉ́wf/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "storm"
+gloss = "storm"
+frequency = 25143
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 528). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈsturmɑz", category = "noun", note = "PGmc *sturmaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈsturm", note = "PWGmc *sturm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈstorm" },
+  { time = 1400, ipa = "ˈstɔrm" },
+  { time = "final", ipa = "ˈstoːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): storm /stóːm/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "bread"
+gloss = "bread"
+frequency = 24828
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 112). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈbrɑwðɑ̃", category = "noun", note = "PGmc *braudą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈbrɑwd", note = "PWGmc *braud (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈbræɑːd" },
+  { time = 1400, ipa = "ˈbrɛːd" },
+  { time = "final", ipa = "ˈbɹɛd", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): bread /brɛ́d/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "thief"
+gloss = "thief"
+frequency = 23870
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 579). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈθewβɑz", category = "noun", note = "PGmc *þeubaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈθewβ", note = "PWGmc *þeub (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈθeoːf" },
+  { time = 1400, ipa = "ˈθeːf" },
+  { time = "final", ipa = "ˈθɪjf", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): thief /θɪ́jf/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "meal"
+gloss = "meal"
+frequency = 22145
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 405). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈmelwɑ̃", category = "noun", note = "PGmc *melwą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈmelu", note = "PWGmc *melu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈmelu" },
+  { time = 1400, ipa = "ˈmɛːl" },
+  { time = "final", ipa = "ˈmɪjl", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): meal /mɪ́jl/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "grave"
+gloss = "grave"
+frequency = 21831
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 225). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈɣrɑβɑ̃", category = "noun", note = "PGmc *grabą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 900, ipa = "ˈgræf" },
+  { time = 1400, ipa = "ˈgraːv" },
+  { time = "final", ipa = "ˈgɹɛjv", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): grave /grɛ́jv/, with r written ɹ and the stress as ˈ." },
+]
+
+[[words]]
+id = "iron"
+gloss = "iron"
+frequency = 20252
+note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 311). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
+forms = [
+  { time = 200, ipa = "ˈiːsɑrnɑ̃", category = "noun", note = "PGmc *īsarną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 403, ipa = "ˈiːsɑrn", note = "PWGmc *īsarn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 900, ipa = "ˈiːsern" },
+  { time = 1400, ipa = "ˈiːrən" },
+  { time = "final", ipa = "ˈɑjən", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): iron /ɑ́jən/, with r written ɹ and the stress as ˈ." },
+]
