@@ -7760,7 +7760,7 @@ frequency = 25143
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 528). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
 forms = [
   { time = 200, ipa = "ˈsturmɑz", category = "noun", note = "PGmc *sturmaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
-  { time = 403, ipa = "ˈsturm", note = "PWGmc *sturm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
+  { time = 403, ipa = "ˈstorm", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsturm. a-umlaut lowered *u before a non-high vowel in Northwest Germanic, before PWGmc (Ringe & Taylor PDF 42), as the 403 targets of fox and yoke already have it. OE, OS storm and ON stormr show the *o. The books outrank Wiktionary for the 403 column. PWGmc *sturm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈstorm" },
   { time = 1400, ipa = "ˈstɔrm" },
   { time = "final", ipa = "ˈstoːm", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): storm /stóːm/, with r written ɹ and the stress as ˈ." },
