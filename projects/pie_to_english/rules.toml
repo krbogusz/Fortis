@@ -2782,9 +2782,11 @@ time = 1300
 name = "SPORADIC: ME quiste, heste take an excrescent final *t"
 description = """Hoad calls the t of ME quiste 'bequest' parasitic and that of heste 'behest' added on the model
 of abstract nouns in -te (s.v. bequest, hest); Jones §3.5 (PDF 190) records syllable-final t epenthesis
-in the 13th–14th centuries (fesant, plought). Word-scoped."""
+in the 13th–14th centuries (fesant, plought). Word-scoped. The vowel before the new cluster then
+shortens, as the 1400 target hɛst has it; shortening before st is lexical (Minkova §7.5.1.1, PDF
+212–213)."""
 words = ["bequest", "haisiz"]
-definition = "∅ → t / s _ #"
+definition = ["∅ → t / s _ #", "[+syll, length: long] → [length: short] / _ s t #"]
 
 [sporadic_sister_suster]
 time = 950
