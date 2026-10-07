@@ -2154,7 +2154,13 @@ description = "Minkova §6.4 — CHILD-CHILDREN, HOUND; *ald > āld, *kind > kī
 # December, lamb, timber, tumble, womb), finds lengthening in only four, and concludes: "There is no
 # compelling argument for classifying -mb as a lengthening cluster." Jones (PDF 40, 138) names lamb
 # as unlengthened or shortened again. comb is lengthened by sporadic_comb_long.
-definition = "[+syll, length: short] → [length: long] / _ [+son, -syll, +cons, trill: none] [-son, +voice, -cont, back: none, labial: none] $"
+# Before *nd only the high vowels lengthen for good. Minkova §6.4 (PDF 168–169): the cluster
+# "applies systematically only to the high vowels [i] and [u]" (blind, grind, ground, hound), which
+# leaves band, hand, land, sand, bend, end, send with short vowels in PDE.
+definition = [
+    "[+syll, length: short] → [length: long] / _ l [-son, +voice, -cont, back: none, labial: none] $",
+    "[+syll, length: short, aperture: high] → [length: long] / _ n [-son, +voice, -cont, back: none, labial: none] $",
+]
 
 [sporadic_comb_long]
 time = 1050

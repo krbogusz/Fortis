@@ -7342,7 +7342,7 @@ forms = [
   { time = 200, ipa = "ˈxɑnduz", category = "noun", note = "PGmc *handuz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈxɑndu", note = "PWGmc *handu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈxɑnd" },
-  { time = 1400, ipa = "ˈhɔːnd" },
+  { time = 1400, ipa = "ˈhand", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈhɔːnd. Dialect variant: Wiktionary gives ME hond as /hɔ̝ːnd/, /hɔnd/, /haːnd/, /hand/ and /hoːnd/, and the target took the first. The o before a nasal is the Northern and West Midland spelling (Minkova PDF 156), and the lengthening before -nd lasted only in the high vowels, leaving hand short (PDF 168-169). PDE hand continues /hand/." },
   { time = "final", ipa = "ˈhand", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): hand /hánd/, with r written ɹ and the stress as ˈ." },
 ]
 
@@ -7468,7 +7468,7 @@ forms = [
   { time = 200, ipa = "ˈlɑndɑ̃", category = "noun", note = "PGmc *landą (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈlɑnd", note = "PWGmc *land (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈlɑnd" },
-  { time = 1400, ipa = "ˈlɔːnd" },
+  { time = 1400, ipa = "ˈland", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈlɔːnd. Dialect variant: Wiktionary gives ME lond as /lɔ̝ːnd/, /lɔnd/, /land/ and /laːnd/, and the target took the first. The o before a nasal is the Northern and West Midland spelling (Minkova PDF 156), and the lengthening before -nd lasted only in the high vowels, leaving land short (PDF 168-169). PDE land continues /land/." },
   { time = "final", ipa = "ˈland", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): land /lánd/, with r written ɹ and the stress as ˈ." },
 ]
 
