@@ -163,7 +163,7 @@ English, where most of the 900 errors arise.
 
 - **Source.** Wiktionary's Proto-West Germanic entries, joined to the lexicon through their
   `inh` link to the Proto-Germanic headword. Where one headword has several PWGmc entries, the
-  one whose descendants list the word's own Old English form is used. 270 words have a form.
+  one whose descendants list the word's own Old English form is used. 312 words have a form.
 - **Transcription.** `tools/pwgmc_ipa.py`. Wiktionary gives IPA for only 8 of its 5578 PWGmc
   entries, so the headword is transcribed, as the 200 column is. The letters follow Ringe &
   Taylor's PWGmc phonology (§4.1, PDF 120–121): *d* is a stop everywhere, *f* is labiodental,
@@ -188,11 +188,23 @@ The earlier vocalisation of *j and *w made several Old English forms analogical,
 describe them: the ja-stem geminates (bedd, cynn), fealu, feoh, cwic and eoh. Each has a
 word-scoped rule citing the page.
 
-Still open at 403: Wiktionary's PWGmc *u where Old English shows a-umlaut (fox, ford, yoke). Two
-earlier items were closed on 2026-10-07. The West Germanic gemination of a medial *Cj now keeps the
-*j, which Old English loses later, so hedge (*haggju) is exact. The lowering of *i to *e, which
-Ringe & Taylor find in only two words (§2.3.1), is now word-scoped to them, so lid and meed are
-exact. midge (*muggju) still misses at 403, but its derivation already fails at 200.
+Still open at 403:
+
+- ear: a word-scoped rule turns its s-stem *z into *r before 403, to keep it from the loss of
+  final *-z.
+- skuwwô needs Holtzmann's law.
+- thick: the target is Ringe & Taylor's ja-stem *þikkwī.
+- flunþrą: its *o rests only on Old Dutch.
+- anadô: Kroonen reconstructs *anad- and Ringe *anud-, and neither matches the preform.
+- sōl: the cascade's *sōul is one step from the target *sōl.
+- midge (*muggju): its derivation already fails at 200.
+
+Closed on 2026-10-07: the West Germanic gemination of a medial *Cj now keeps the *j, which Old
+English loses later, so hedge (*haggju) is exact. The lowering of *i to *e, which Ringe & Taylor
+find in only two words (§2.3.1), is now word-scoped to them, so lid and meed are exact. The targets
+of fox and yoke follow Ringe & Taylor's a-umlaut, and the lowering in ford is dated after PWGmc. *w
+is lost before an unstressed *u after a consonant (§2.1.1) and after a stressed vowel (§3.1.5), so
+ahwō, roo and þrawō are exact.
 
 ### The Early Modern checkpoints (1570, 1580, 1621, 1687)
 
@@ -292,6 +304,12 @@ First contact, with no rule or target changed for them:
 The misses point to gaps in the rules. OE flǣsċ comes out as **flæːst͡ʃ**, so the palatalisation
 of *sk leaves an s. OE nēah loses its final h. ME udder and swith need a shortening of the long
 vowel that the rules lack.
+
+The first two gaps are now closed. *sk palatalises in Ringe & Taylor's three positions, and
+breaking keeps the length of a long vowel, so flesh and nigh are exact at every checkpoint. No
+source at hand names the cause of the shortening in udder and swith, so both still miss. Two ME
+targets turned out to belong to other words and were removed (*kīþą*, *aihtiz*). The score above
+stays as the batch's first-contact record.
 
 ### Middle English transcriptions
 
@@ -642,15 +660,15 @@ On 2026-10-07, 637 words. A run of the cascade writes the current figures to
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 592 | 569 (96.1%) | 571 |
-| 403 Proto-West Germanic | 312 | 300 (96.2%) | 307 |
-| 900 Old English | 419 | 373 (89.0%) | 388 |
-| 1400 Middle English | 291 | 258 (88.7%) | 270 |
+| 200 Proto-Germanic | 579 | 569 (98.3%) | 569 |
+| 403 Proto-West Germanic | 312 | 305 (97.8%) | 309 |
+| 900 Old English | 419 | 384 (91.6%) | 397 |
+| 1400 Middle English | 289 | 266 (92.0%) | 274 |
 | 1570 Hart | 7 | 5 | 5 |
 | 1580 Bullokar, Mulcaster | 11 | 7 | 9 |
 | 1621 Gil | 14 | 10 | 11 |
 | 1687 Coles, Cooper | 14 | 12 | 13 |
-| final current SSB (CUBE) | 243 | 217 (89.3%) | 223 |
+| final current SSB (CUBE) | 243 | 224 (92.2%) | 229 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
