@@ -2172,6 +2172,14 @@ checkpoint."""
 words = ["merry"]
 definition = "i → ɛ / # m _"
 
+[lme_ai_diphthong_notation]
+time = 1569
+name = "The ME diphthong [æi] is written [æɪ]"
+description = """This rule changes the notation, not the sound, like the laxing below. The 1400 targets write
+the ME diphthong of eighte, wain as [æj]; the Early Modern readings write its second half [ɪ]:
+Cooper's eight, "commonly sounded ait" (Jones §4.4.4, PDF 276), is [æɪt]."""
+definition = "æ j → æ ɪ"
+
 [lme_short_high_vowels_lax]
 time = 1569
 name = "The short high vowels are written lax: /i/ > /ɪ/, /u/ > /ʊ/"
@@ -2946,6 +2954,16 @@ definition = [
     "uː → ʊ ə / _ ɹ",
 ]
 
+[eme_ai_monophthongisation]
+time = 1700
+name = "The ME diphthong [æɪ] monophthongises and merges with ME ā"
+description = """Jones (PDF 277): the monophthongal realization of the earlier [æi] diphthong "was conflated with,
+merged with" the vowel that the Vowel Shift made of ME ā, which is [ɛː] in this cascade at this
+date (Cooper's name, the 1687 target). Cooper (1687) still has the diphthong in eight ([æɪt]), and
+John Jones (1701) gives both pronunciations for pair, pain, maid (PDF 317), so the merger is dated
+1700. pde_face_vowel (1750) then gives RP [eɪ]."""
+definition = "æ ɪ → ɛː ∅"
+
 [pde_force_vowel]
 time = 1700
 name = "FORCE: a long back vowel before /r/ lowers to /ɔː/"
@@ -2996,6 +3014,17 @@ on the ordinal suffix -the (Wiktionary, ME fifte). Cause: analogy with the ordin
 seventh). Dated after the 1400 checkpoint, whose target is fift."""
 words = ["fifth"]
 definition = "t → θ / f _ #"
+
+[sporadic_me_breaking_eight]
+time = 1250
+name = "SPORADIC: Middle English Breaking gives eighte its [æi] before the palatal fricative"
+description = """Jones §3.4.1 (PDF 155–156): ME spellings (eighte), (eyȝte) show the stressed vowel of 'eight'
+diphthongized before the palatal fricative, "Middle English Breaking", a process "by and large
+confined to dialects south of the Humber" and "relatively sporadic" even there. The 1400 targets of
+eight and eighth have it (eighte, eightethe). Cause: ME Breaking, which is lexically sporadic.
+After the æ/ɑ merger (1150), which would otherwise take the glide's vowel."""
+words = ["eight", "eighth"]
+definition = "a → æ j / _ x"
 
 [sporadic_trough_x_to_f]
 time = 1440
