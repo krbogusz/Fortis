@@ -2447,7 +2447,7 @@ forms = [
   { time = 200, ipa = "ˈkʷenɔ̃ː", category = "noun" },
   { time = 403, ipa = "ˈkwenɑː", note = "PWGmc *kwenā (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈkwene" },
-  { time = 1400, ipa = "ˈkweːn" },
+  { time = 1400, ipa = "ˈkwɛːn", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈkweːn. Wrong word: /kweːn/ is the IPA of ME quene 'queen' (from OE cwēn). Wiktionary gives ME quene 'woman' (from OE cwene, this word) as /ˈkwɛ̞ːn(ə)/, with the open vowel that open-syllable lengthening of OE e gives." },
   { time = "final", ipa = "ˈkwiːn" },
 ]
 

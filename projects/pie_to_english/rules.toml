@@ -3385,12 +3385,12 @@ definition = "u → w / [+cons] _ #"
 
 [sporadic_anglian_close_e]
 time = 1100
-name = "SPORADIC: OE ǣ continues as the Anglian close ē in Middle English — seed, quean"
+name = "SPORADIC: OE ǣ continues as the Anglian close ē in Middle English — seed, high"
 description = """Present-Day English descends from Anglian, where OE ǣ (from *ē₁ or i-mutation) is a
 close ē: seed, queen, high, match give ME sēd, kwēn, hēh, mēche with /eː/, not the West Saxon open
 /ɛː/ our cascade carries. Word-scoped to those whose modern reflex (seed /iː/, etc.) confirms the
 close vowel."""
-words = ["seed", "quean", "hauhaz", "mēkijaz"]
+words = ["seed", "hauhaz", "mēkijaz"]
 definition = "ɛː → eː"
 
 [sporadic_three_lowering]
@@ -3606,13 +3606,6 @@ name = "SPORADIC: END shortens to DRESS before the Vowel Shift"
 description = "ME ēnd shortens to /ɛnd/ before the shift can raise it, like death/stead. Word-scoped."
 words = ["end"]
 definition = "eː → ɛ"
-
-[sporadic_quean_close_e]
-time = 1210
-name = "SPORADIC: quean has a close ē in ME"
-description = "OE cwene gives ME quēne /kweːn/ in the 1400 target; our cascade carries the open /ɛː/ of open-syllable lengthening. Word-scoped close ē. The cause is not known: the close ē matches queen (OE cwēn), not quean."
-words = ["quean"]
-definition = "ɛː → eː"
 
 [sporadic_salve_v]
 time = 1300
