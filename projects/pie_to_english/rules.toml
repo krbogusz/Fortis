@@ -3241,6 +3241,16 @@ among the i-stems. Cause: OE continues a different stem formation. Word-scoped: 
 words = ["fersnō"]
 definition = "ɔː → i / _ #"
 
+[sporadic_nit_ostem]
+time = 401
+name = "SPORADIC: the root noun *hnit- takes the ō-stem nominative *-u"
+description = """OE hnitu 'nit' continues the feminine root noun *hnit- (Kroonen s.v. *hnit-, PDF 276), but
+with the *-u of the light ō-stems. Ringe & Taylor (PDF 43) list the same shape in two more feminine
+root nouns, OE hnutu 'nut' from *hnut- and stuþu 'pillar' from *stuþ-, and name the cause for OHG
+zurba from *turb-: the noun has been shifted into the ō-stems. Cause: that shift of stem class."""
+words = ["nit"]
+definition = "∅ → u / t _ #"
+
 [sporadic_zstem_r]
 time = 401
 name = "SPORADIC: ēar 'ear of grain' restores its s-stem *-z"
