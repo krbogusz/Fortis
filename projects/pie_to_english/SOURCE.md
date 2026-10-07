@@ -705,13 +705,13 @@ On 2026-10-08, 687 words. A run of the cascade writes the current figures to
 |---|---|---|---|
 | 200 Proto-Germanic | 576 | 572 (99.3%) | 572 |
 | 403 Proto-West Germanic | 354 | 352 (99.4%) | 354 |
-| 900 Old English | 466 | 448 (96.1%) | 456 |
-| 1400 Middle English | 332 | 329 (99.1%) | 330 |
+| 900 Old English | 466 | 450 (96.6%) | 457 |
+| 1400 Middle English | 332 | 331 (99.7%) | 331 |
 | 1570 Hart | 7 | 6 | 6 |
 | 1580 Bullokar, Mulcaster | 11 | 10 | 11 |
 | 1621 Gil | 14 | 12 | 13 |
 | 1687 Coles, Cooper | 14 | 13 | 13 |
-| final current SSB (CUBE) | 293 | 285 (97.3%) | 288 |
+| final current SSB (CUBE) | 293 | 286 (97.6%) | 289 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
