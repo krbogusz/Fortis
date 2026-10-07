@@ -3221,6 +3221,16 @@ Germanic loss of final *-z (400). hete 'hatred' is the third of Ringe & Taylor's
 words = ["ey", "segaz", "hate"]
 definition = ["ɑ → i / _ z #", "e → i / _ ɣ"]
 
+[sporadic_fersn_istem]
+time = 399
+name = "SPORADIC: OE fiersn 'heel' continues the i-stem *fersni-"
+description = """Kroonen (s.v. *fersnō, PDF 177) derives Go. fairzna and OHG fersana from *pter-sneh₂-, but OE
+fiersn from the i-stem *pter-sni-, as in Skt. pā́rṣṇi-. Ringe (PDF 106, 314) also counts fiersn
+among the i-stems. Cause: OE continues a different stem formation. Word-scoped: the *-ō becomes the
+*-i that i-mutates the root (WS ie, Anglian e) and is then lost."""
+words = ["fersnō"]
+definition = "ɔː → i / _ #"
+
 [sporadic_zstem_r]
 time = 401
 name = "SPORADIC: ēar 'ear of grain' restores its s-stem *-z"
