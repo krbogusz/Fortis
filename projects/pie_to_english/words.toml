@@ -4530,9 +4530,8 @@ forms = [
 [[words]]
 id = "apaliją"
 gloss = "apaliją"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈħeboːl (PIE *h₂ébōl, as cited by Wiktionary) was removed on 2026-10-07: Kroonen supports the PIE l-stem nom. *h₂eb-ōl only for the base, and calls the Nordic *aplja-, the formation of *apaliją, 'a secondary neuter formation' (s.v. *apla-, PDF 70). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈħeboːl", category = "noun", note = "PIE *h₂ébōl, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑpɑlijɑ̃", category = "noun" },
 ]
 
