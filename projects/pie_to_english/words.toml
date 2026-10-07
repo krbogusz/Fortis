@@ -5109,9 +5109,8 @@ forms = [
 [[words]]
 id = "wagnisô"
 gloss = "wagnisô"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈwogʷʱnis (PIE *wogʷʰnis, as cited by Wiktionary) was removed on 2026-10-07: Kroonen supports only the base *uogʷʰ-ni- of *wagnisan- 'plowshare' and says 'the exact suffixation is difficult to recover' (PDF 605). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈwogʷʱnis", category = "noun", note = "PIE *wogʷʰnis, as cited by Wiktionary." },
   { time = 200, ipa = "ˈwɑɣnisɔːː", category = "noun" },
 ]
 
@@ -5964,9 +5963,8 @@ forms = [
 [[words]]
 id = "bardō"
 gloss = "bardō"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈbʱorsdʱos (PIE *bʰórsdʰ-o-s, as cited by Wiktionary) was removed on 2026-10-07: no book in hand derives the word for 'axe'. Kroonen's *barzda- 'edge, brim; beard' < *bʰorzdʰ-o- (PDF 92) is the beard word, and Wiktionary calls *bardō 'of uncertain origin'. The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈbʱorsdʱos", category = "noun", note = "PIE *bʰórsdʰ-o-s, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈbɑrðɔː", category = "noun" },
 ]
 
