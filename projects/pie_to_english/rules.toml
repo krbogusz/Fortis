@@ -2597,12 +2597,15 @@ definition = "i j → iː ∅ / _ [-syll]* $"
 
 # In a vowel + glide diphthong the vowel's length is neutralised (Minkova §6.5.3, PDF 177–178;
 # §7.4, PDF 208): OE dēaw gives ME [dɛw], and the 1400 column writes every ME diphthong as a short
-# vowel + w (niw, saw, fɔwr). After the loss of final -e (1350), which leaves the *w in the coda.
+# vowel + glide (niw, saw, fɔwr, ɛj). After the loss of final -e (1350), which leaves the glide in
+# the coda. Minkova's statement covers both glides: "whether the input was a short vowel, as in dæġ
+# 'day', ... or a long vowel, as in grēġ 'grey', the result is a falling diphthong of the same type".
+# The *j clause was added on 2026-10-07 for OE eġe 'awe' > ME ey [ɛj].
 [me_glide_length_neutralisation]
 time = 1360
-name = "A long vowel shortens before a coda *w"
-description = "Minkova §6.5.3, §7.4 — dēaw > ME dɛw"
-definition = "[+syll, length: long] → [length: short] / _ w [-syll]* $"
+name = "A long vowel shortens before a coda *w or *j"
+description = "Minkova §6.5.3, §7.4 — dēaw > ME dɛw, eġe > ME ey [ɛj]"
+definition = "[+syll, length: long] → [length: short] / _ (w | j) [-syll]* $"
 
 # Late ME *a before a final *l develops a *w glide and joins *au: hall > haul, ball > bawl
 # (Jones §3.4.4, Table 3.24, PDF 172–173; Salesbury 1547, PDF 253; Minkova §8.2.2.3, PDF 268–269).
