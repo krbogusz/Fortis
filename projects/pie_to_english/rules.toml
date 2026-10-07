@@ -1566,7 +1566,7 @@ description = "Minkova §3.4 — blocked before a nasal (*and stays and, not *æ
 definition = "[+syll, -cons, aperture: low, +back, length: short] → [+front, back: none, advancement: atr] / _ [nasal: none]"
 
 [oe_a_restoration]
-time = 407
+time = 409
 name = "A-restoration: the brightened æ goes back to a before a BACK vowel"
 description = """Minkova §3.4. Anglo-Frisian brightening fronts *a to *æ, but it is undone where a
 BACK vowel follows in the next syllable — the fronting never survives in front of one:
@@ -1575,15 +1575,17 @@ BACK vowel follows in the next syllable — the fronting never survives in front
     *skadu  > OE sceadu                  *laguz  > OE lagu
 
 EXACTLY ONE consonant may stand between, and that is what keeps restoration and breaking apart —
-they are in complementary environments. Breaking wants *r/*l/*h plus ANOTHER consonant; restoration
-wants a single one:
+they are in complementary environments. Breaking wants *r/*l plus ANOTHER consonant, or an *h;
+restoration wants a single one:
 
     *sagu    æ-g-u     one consonant   -> restored:  OE sagu
     *harduz  æ-r-d-u   a CLUSTER       -> broken:    OE heard
 
 Written `[-syll]*` — any number of consonants — the rule reaches *harduz too and gives **hard,
-taking death, cold, dream, arm and a dozen more with it. Dated 407: after `oe_a_fronting` (406),
-which makes the *æ, and before `oe_breaking` (408)."""
+taking death, cold, dream, arm and a dozen more with it. Dated 409: after `oe_a_fronting` (406),
+which makes the *æ, and after `oe_breaking` (408). Breaking takes an *æ before a single *h even when
+a back vowel follows: *ahu > *æhu > *eahu > ēa, *slahaną > *slæhan > *sleahan > slēan (Ringe &
+Taylor PDF 192). So the *h is the one place the two environments meet, and breaking comes first."""
 definition = "[+syll, -cons, aperture: low, +front, length: short] → [+back, front: none, advancement: rtr] / _ [-syll] [+syll, +back]"
 
 [sporadic_kinship_or]
@@ -1594,7 +1596,7 @@ description = """Ringe & Taylor (PDF 396–397): "PWGmc nom. sg. *-er and acc. s
 the vowel of the suffixal syllable has generally been replaced by u or its later reflex": early WS
 mōdor ~ -ur, brōðor ~ -ur, dohtor, sweostor. They explain it as levelling from the genitive -ur
 (< PGmc *-urz). So it is word-scoped. Dated 404, so that the back *o is in place for
-oe_a_restoration (407)."""
+oe_a_restoration (409)."""
 words = ["brother", "mōdēr", "daughter", "sister"]
 definition = "[+syll, aperture: mid, +front, length: short, stress: none] → [aperture: mid, +back, front: none, +rounded, +labial, advancement: atr] / _ r #"
 
