@@ -6443,7 +6443,7 @@ gloss = "sōl"
 note = "Source: Wiktionary (kaikki). PREFORM from Ringe §3.2.6 (i) p. 162, PDF 173, and p. 309, PDF 320; Kroonen s.v. *sōel- ~ *sunnōn-, PDF 503: *sáh₂wl̥. Wiktionary cites only a bare root. Added 2026-10-06."
 forms = [
   { time = -2000, ipa = "ˈsaħwl̩", category = "noun", note = "PIE *sáh₂wl̥ (Ringe §3.2.6 (i) p. 162, PDF 173, and p. 309, PDF 320; Kroonen s.v. *sōel- ~ *sunnōn-, PDF 503); Wiktionary cites only a bare root." },
-  { time = 200, ipa = "ˈsɔːl", category = "noun" },
+  { time = 200, ipa = "ˈsɔːwul", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsɔːl. Ringe: 'PIE neut. *sáh₂wl̥ should have become (pre-)PGmc *sōwul', and ON soulu in the Codex Leidensis 'suggests strongly that *w had not been lost in this word in PGmc'; Goth. sauil agrees (PDF 173). Wiktionary's *sōl writes the later contraction into Proto-Germanic. The books outrank Wiktionary for the 200 column." },
   { time = 403, ipa = "ˈsɔːl", note = "PWGmc *sōl (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
   { time = 900, ipa = "ˈsoːl" },
 ]
