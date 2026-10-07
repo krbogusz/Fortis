@@ -4442,6 +4442,17 @@ eventually took over the higher ones. ME seventy has no hund-. Cause: that level
 words = ["seventy"]
 definition = "x u n d → ∅ / # _"
 
+[sporadic_tithe_teogotha]
+time = 1100
+name = "SPORADIC: ME tīþe continues the OE byform teogoþa"
+description = """OE had tēoþa, the 900 target, and the byform teogoþa with the northern West Germanic *g, which
+Ringe & Taylor (PDF 181) place in the OE Bede and call possibly Mercian. Hoad (s.v. tithe) gives both
+and ME tīþe. Wiktionary lists ME tigeðe, tiȝeþe, which keep the g, and ME [ij] became [iː]
+(Steponavičius §183, PDF 170–171). Cause: the byform with *g. Word-scoped: the ē of tēoþa takes the ī
+of tiȝeþe."""
+words = ["tehundô"]
+definition = "eː → iː"
+
 [sporadic_r_metathesis]
 time = 1200
 name = "SPORADIC: r metathesis in bright and wright"
