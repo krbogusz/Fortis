@@ -7214,7 +7214,7 @@ forms = [
   { time = 200, ipa = "ˈweɣɑz", category = "noun", note = "PGmc *wegaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈweɣ", note = "PWGmc *weg (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈwej" },
-  { time = 1400, ipa = "ˈwæj" },
+  { time = 1400, ipa = "ˈwɛj", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈwæj. The ME spelling wey leaves the first element of the diphthong open: Minkova gives late ME [ɛj] ~ [æj] for OE weġ (Fig. 7.8, PDF 206). The rules read [ɛj], as the 1400 target of ey (OE eġe) already does (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4). Wiktionary writes /wæi̯/." },
   { time = "final", ipa = "ˈwɛj", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): way /wɛ́j/, with r written ɹ and the stress as ˈ." },
 ]
 
@@ -7648,7 +7648,7 @@ forms = [
   { time = 200, ipa = "ˈreɣnɑ̃", category = "noun", note = "PGmc *regną (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈreɣn", note = "PWGmc *regn (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈrejn" },
-  { time = 1400, ipa = "ˈræjn" },
+  { time = 1400, ipa = "ˈrɛjn", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈræjn. The ME spelling reyn leaves the first element of the diphthong open: Minkova gives late ME [ɛj] ~ [æj] for OE e before a palatal (weġ, Fig. 7.8, PDF 206). The rules read [ɛj], as the 1400 target of ey (OE eġe) already does (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 4). Wiktionary writes /ræi̯n/." },
   { time = "final", ipa = "ˈɹɛjn", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): rain /rɛ́jn/, with r written ɹ and the stress as ˈ." },
 ]
 
