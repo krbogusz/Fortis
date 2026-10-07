@@ -4870,8 +4870,8 @@ id = "wiþiz"
 gloss = "wiþiz"
 note = "Source: Wiktionary (kaikki). The PIE seed ˈweχitis (PIE *wéh₁itis, as cited by Wiktionary) was removed on 2026-10-07: no book in hand has an entry for the word. Kroonen names the root *ueh₁i- 'to twist' only under other words (*wajju-, PDF 608; *wīman-, PDF 627). The word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = 200, ipa = "ˈwiθiz", category = "noun" },
-  { time = 900, ipa = "ˈwiθe", note = "Transcribed from OE wiþe (Wiktionary, kaikki) by tools/oe_ipa.py, which agrees with Wiktionary's own IPA on 435 of 450 lemmas; added 2026-10-06." },
+  { time = 200, ipa = "ˈwiθjɔ̃ː", category = "noun", note = "START FORM revised 2026-10-07 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3): was ˈwiθiz, PGmc *wiþiz (Wiktionary, kaikki). Wiktionary derives OE wiþþe from PGmc *wiþjǭ beside *wiþiz, and its geminate needs the *j: West Germanic gemination doubles the *þ before it. ON viðja shows the same *j." },
+  { time = 900, ipa = "ˈwiθθe", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈwiθe, transcribed from OE wiþe. Transcription convention: wiþe is an alternative spelling. Wiktionary's lemma is wiþþe /ˈwiθ.θe/, and Hoad and Klein (s.v. withe) give OE wiþþe. The geminate is what keeps the θ of PDE withe voiceless." },
   { time = "final", ipa = "ˈwɪθ", note = "From CUBE, Current British English (Lindsey & Szigetvári, seas3.elte.hu/cube), accessed 2026-10-07 (DECISIONS.md, 2026-10-07): withe /wɪ́θ/, with r written ɹ and the stress as ˈ. The Wiktionary RP form had the same symbols. RP from Wiktionary (kaikki), withe; added 2026-10-06." },
 ]
 
