@@ -1447,6 +1447,18 @@ definition = [
 
 # Old English breaking: a front vowel diphthongises before /r/ or /l/ + consonant, and before
 # /x/ — *arm > earm, *ald > eald, *hert > heorte, *dauþ > dēaþ (Minkova §6, the OE diphthongs).
+[oe_anglian_retraction]
+time = 408
+name = "Anglian retraction: *æ becomes *a before *l + consonant"
+description = """Ringe & Taylor §6.2.3 (PDF 199): before *l and a consonant, West Saxon broke *æ to ea, but
+the Anglian dialects retracted it to *a: *kaldaz > *kæld > WS ċeald, Angl. cald; *halmaz > WS
+healm, Angl. halm; *allai > WS ealle, Angl. alle. Mercian ald, all, fallan, haldan, halm and salt
+keep the retracted vowel (PDF 234). Present-Day English continues the Anglian forms (old, cold,
+salve), so the West Saxon 900 targets of this cluster are corrected to them (DECISIONS.md,
+2026-10-07). Placed before oe_breaking, which then finds no *æ before *lC. The *a is back, so
+palatalisation (410) leaves the *k of cald alone."""
+definition = "[+syll, -cons, aperture: low, +front, length: short] → [+back, front: none, advancement: rtr] / _ l [+cons]"
+
 [oe_breaking]
 time = 408
 name = "Breaking: front vowels diphthongise before r/l + C and before x"
@@ -3188,11 +3200,11 @@ definition = "n → r / r _"
 
 [sporadic_albi_ae]
 time = 427
-name = "SPORADIC: *albiz > OE ælf keeps *æ, not the *e Anglian smoothing gives"
-description = """*albiz gives OE ælf with *æ; oe_anglian_smoothing_liquid collapses our i-mutated
-*æe to *e here, but this word keeps the diphthong's first element. A lexical exception, restored.
-Cause: Anglian retraction. Before *lC, Anglian retracted *æ to *a instead of breaking it, and
-i-mutation then gave æ: *ælbi > Angl. *albi > ælf- (Ringe & Taylor, PDF 246)."""
+name = "SPORADIC: *albiz > OE ælf keeps the Anglian *æ of i-mutation"
+description = """*albiz gives OE ælf with *æ. After Anglian retraction (oe_anglian_retraction), the cascade's
+i-mutation takes the *a to *æ and on to *e. Cause: in Anglian, i-mutation of the retracted *a
+stopped at æ: *ælbi > Angl. *albi > ælf- (Ringe & Taylor, PDF 246). The rule is word-scoped because
+the targets of shell and belg, with the same history, are not Anglian and have e."""
 words = ["albī"]
 definition = "e → æ"
 
@@ -3216,12 +3228,12 @@ definition = "[+syll, +back, aperture: low, length: short] → æ ɑ / _ l"
 
 [sporadic_tallow_no_breaking]
 time = 409
-name = "SPORADIC: *talȝaz > OE tælg does not break before *lg"
-description = """*talȝaz gives OE tælg with a plain *æ; oe_breaking diphthongises it to *æɑ before
-the *lg, but this word keeps the monophthong. Word-scoped undo of the breaking. The cause is not
-known."""
+name = "SPORADIC: *talȝaz > OE tælg has a front *æ before *lg"
+description = """*talȝaz gives OE tælg with a front *æ, where West Saxon breaking would give ea and Anglian
+retraction (oe_anglian_retraction) gives the *a that ME talow continues. Word-scoped. The cause is
+not known."""
 words = ["tallow"]
-definition = "æ ɑ → æ ∅"
+definition = "ɑ → æ"
 
 [sporadic_thick_istem]
 time = 476
@@ -3494,13 +3506,6 @@ that [nd] clusters are "particularly open to exceptional behaviour"). Word-scope
 words = ["dust", "hundą"]
 definition = "[+syll, length: long] → [length: short]"
 
-[sporadic_cold_no_palatal]
-time = 1050
-name = "SPORADIC: *kaldaz > ME cold keeps *k, not the OE palatal"
-description = "ME cold has a hard /k/ (reinforced by Norse); OE ċeald palatalised, but the modern word continues the unpalatalised Anglian/Norse form. Word-scoped."
-words = ["cold"]
-definition = "t͡ʃ → k"
-
 [sporadic_long_short]
 time = 1620
 name = "SPORADIC: LONG shortens again before the GOAT diphthongisation"
@@ -3718,13 +3723,6 @@ the rule came after the Vowel Shift in file order. The shift had already raised 
 rule never fired."""
 words = ["yard"]
 definition = "ɛː → ɑ / _ r"
-
-[sporadic_halm]
-time = 1000
-name = "SPORADIC: *halmaz > OE healm > ME halm keeps a back *a"
-description = "*halmaz gives ME halm /halm/ (the 'haulm' straw-word); the broken *ea smooths to back *a here, not the front *e our smoothing gives. Word-scoped. Cause: Anglian retraction instead of West Saxon breaking before *lC: *halmaz > WS healm, Angl. halm (Ringe & Taylor, PDF 199)."
-words = ["helm-handle"]
-definition = "æ ɑ → ɑ ∅"
 
 [sporadic_atter_a]
 time = 1210

@@ -122,7 +122,7 @@ forms = [
   { time = -2000, ipa = "ħelˈtos", category = "adj", note = "PIE *h₂eltós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈɑldɑz", category = "adj" },
   { time = 403, ipa = "ˈɑld", note = "PWGmc *ald (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈæɑld" },
+  { time = 900, ipa = "ˈɑld", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈæɑld. Dialect variant: eald is West Saxon, with breaking before *lC. Anglian retracted the vowel instead: Angl. ald (Ringe & Taylor §6.2.3, PDF 199 and 234; Wiktionary lists ald as the Anglian form). ME ōld continues the Anglian vowel." },
   { time = 1400, ipa = "ˈɔːld" },
   { time = 1580, ipa = "ˈoʊld", note = "Early Modern English, Bullokar 1580, scored at 1580: Bullokar writes ⟨ołd⟩ with his half-vowel l, beside ⟨old⟩. (Jones sect. 4.3.1, Table 4.12, PDF 264 (book p. 251)). Added 2026-10-06." },
   { time = "final", ipa = "ˈəʊld" },
@@ -539,7 +539,7 @@ forms = [
   { time = -2000, ipa = "golˈtos", category = "adj", note = "PIE *goltós, as cited by Wiktionary." },
   { time = 200, ipa = "ˈkɑldɑz", category = "adj" },
   { time = 403, ipa = "ˈkɑld", note = "PWGmc *kald (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈt͡ʃæɑld" },
+  { time = 900, ipa = "ˈkɑld", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈt͡ʃæɑld. Dialect variant: ċeald is West Saxon, with breaking and palatalisation. Ringe & Taylor give *kaldaz > *kæld > WS ċeald, Angl. cald (PDF 199); Wiktionary lists cald as the Anglian form. ME cōld, with its k, continues the Anglian form." },
   { time = 1400, ipa = "ˈkɔːld" },
   { time = "final", ipa = "ˈkəʊld" },
 ]
@@ -1505,7 +1505,7 @@ forms = [
   { time = -2000, ipa = "ˈstħdʱlos", category = "noun", note = "PIE *sth₂dʰlóm, as cited by Wiktionary." },
   { time = 200, ipa = "ˈstɑllɑz", category = "noun" },
   { time = 403, ipa = "ˈstɑll", note = "PWGmc *stall (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈstæɑll" },
+  { time = 900, ipa = "ˈstɑll", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈstæɑll. Dialect variant: steall is West Saxon, with breaking before *ll. Anglian retracted the vowel instead (Ringe & Taylor §6.2.3, PDF 199: *allai > WS ealle, Angl. alle); Wiktionary lists stall as an alternative form. PDE stall continues the Anglian vowel." },
   { time = "final", ipa = "ˈstɔːl" },
 ]
 
@@ -2212,7 +2212,7 @@ forms = [
   { time = -2000, ipa = "solˈpeħ", category = "noun", note = "PIE *solp-éh₂, as cited by Wiktionary. Morpheme hyphens are stripped for a complete form." },
   { time = 200, ipa = "ˈsɑlβɔː", category = "noun" },
   { time = 403, ipa = "ˈsɑlβu", note = "PWGmc *salbu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈsæɑlf" },
+  { time = 900, ipa = "ˈsɑlf", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsæɑlf. Dialect variant: sealf is West Saxon, with breaking before *lC. Anglian retracted the vowel instead (Ringe & Taylor §6.2.3, PDF 199 and 234); Wiktionary lists salf as an alternative form. ME salve continues the Anglian vowel." },
   { time = 1400, ipa = "ˈsalv" },
   { time = 1580, ipa = "ˈsaʊv", note = "Early Modern English, Mulcaster 1582, scored at 1580: Mulcaster says salues is said sawues, with the l turned into u. (Jones sect. 4.3(1), PDF 253 (book p. 240)). Added 2026-10-06." },
   { time = "final", ipa = "ˈsɑːv", note = "RP from Wiktionary (kaikki), salve; added 2026-10-06." },
@@ -2574,7 +2574,7 @@ forms = [
   { time = -2000, ipa = "ˈkʲolħmos", category = "noun", note = "PIE *ḱolh₂mos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑlmɑz", category = "noun" },
   { time = 403, ipa = "ˈxɑlm", note = "PWGmc *halm (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈxæɑlm" },
+  { time = 900, ipa = "ˈxɑlm", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈxæɑlm. Dialect variant: healm is West Saxon. Ringe & Taylor give *halmaz > WS healm, Angl. halm (PDF 199); Wiktionary lists halm as an alternative form. ME halm continues the Anglian form." },
   { time = 1400, ipa = "ˈhalm" },
 ]
 
@@ -3493,7 +3493,7 @@ forms = [
   { time = -2000, ipa = "ˈkolsos", category = "noun", note = "PIE *kólsos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈxɑlsɑz", category = "noun" },
   { time = 403, ipa = "ˈxɑls", note = "PWGmc *hals (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈxæɑls" },
+  { time = 900, ipa = "ˈxɑls", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈxæɑls. Dialect variant: heals is West Saxon, with breaking before *lC. Anglian retracted the vowel instead (Ringe & Taylor §6.2.3, PDF 199 and 234). ME hals continues the Anglian vowel." },
   { time = 1400, ipa = "ˈhals", note = "Transcribed from ME hals (Wiktionary, kaikki) under the rules in SOURCE.md, 'Middle English transcriptions'; added 2026-10-06." },
 ]
 
@@ -4012,7 +4012,7 @@ forms = [
   { time = -2000, ipa = "ˈmoldos", category = "adj", note = "PIE *moldos, as cited by Wiktionary." },
   { time = 200, ipa = "ˈmɑltɑz", category = "adj" },
   { time = 403, ipa = "ˈmɑlt", note = "PWGmc *malt (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-06." },
-  { time = 900, ipa = "ˈmæɑlt" },
+  { time = 900, ipa = "ˈmɑlt", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈmæɑlt. Dialect variant: mealt is West Saxon, with breaking before *lC. Anglian retracted the vowel instead (Ringe & Taylor §6.2.3, PDF 199 and 234); Wiktionary lists malt as an alternative form. PDE malt continues the Anglian vowel." },
 ]
 
 [[words]]

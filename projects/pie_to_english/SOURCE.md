@@ -689,6 +689,11 @@ is *already* Anglian so the mixed words are never corrupted:
   raising before *ht* (`niht`, `riht`, `miht`), and the collapse of our derivation's i-mutated *æe*
   to Anglian *e* (`sċell`, `erfe`) — the derivation-side twin of the gold step above.
 
+Since 2026-10-07 a third move goes the other way. Where the gold is uniformly West Saxon but the
+later columns continue the Anglian form, the target is corrected under the dialect case. Anglian
+retraction before *lC* (`oe_anglian_retraction`) replaces breaking there, and *eald*, *ċeald*,
+*healm* and four others become *ald*, *cald*, *halm* (DECISIONS.md).
+
 This is slow because it must be done cluster by cluster — *ht*, then the *æe* class, then the next —
 never in bulk. But it is honest and it moves the number: 900 went 173 → 200 doing it. What it cannot
 do is close the whole gap, because much of the residue is not dialect at all but the second thing:

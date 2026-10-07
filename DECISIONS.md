@@ -288,3 +288,20 @@ they were not shaped on. Asked for on 2026-10-07.
 - Loosening the rules only, and keeping every target under the cited four cases.
 - Two further checks: a count of the word-scoped rules beside each accuracy table, and a score
   with the word-scoped rules switched off.
+
+## 2026-10-07: Model Anglian retraction before *lC
+
+**Choice:** `oe_anglian_retraction` retracts *æ to *a before *l and a consonant, as the Anglian
+dialects did (Ringe & Taylor §6.2.3, PDF 199 and 234). The seven West Saxon 900 targets of this
+cluster (eald, ċeald, steall, sealf, healm, heals, mealt) are corrected to their Anglian forms
+under the dialect case of the four cases.
+
+**Reason:** The Middle English and modern forms continue the Anglian vowel: ME ōld, cōld with its
+k, halm, hals and salve. So the West Saxon targets record a dialect variant that the later columns
+do not continue. Wiktionary lists ald and cald as the Anglian forms, and halm, salf, stall and
+malt as alternative forms. The rule makes the velar of cold regular, which a word-scoped rule
+supplied before. Tested: every target in the cluster is exact before and after, and no other row
+changes.
+
+**Rejected:** Keeping the West Saxon targets and breaking, with word-scoped rules for the Anglian
+outcomes. It scores the same but models a dialect that the later columns do not descend from.
