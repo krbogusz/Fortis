@@ -7453,7 +7453,7 @@ gloss = "song"
 frequency = 86877
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Kroonen has the reconstruction (PDF 25). Wiktionary links the word to no PIE parent, so it starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Draw the next batch from Kroonen's headwords, starting at Proto-Germanic')."
 forms = [
-  { time = 200, ipa = "ˈsɑnɣʷɑz", category = "noun", note = "PGmc *sangwaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 200, ipa = "ˈsɑŋgʷɑz", category = "noun", note = "TARGET corrected 2026-10-07 (DECISIONS.md, four cases): was ˈsɑnɣʷɑz. Transcription convention: the 200 forms write *ngw as [ŋgʷ], as in lingwō, because PGmc *gw survived only after a homorganic nasal, as a stop (Ringe PDF 122). The seed is a PGmc form, so the cascade's hardening after a nasal (100) never reached it. PGmc *sangwaz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
   { time = 403, ipa = "ˈsɑŋgu", note = "PWGmc *sangu (Wiktionary, kaikki), transcribed by tools/pwgmc_ipa.py; added 2026-10-07." },
   { time = 900, ipa = "ˈsɑŋg" },
   { time = 1400, ipa = "ˈsɔŋg" },

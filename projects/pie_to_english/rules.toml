@@ -1442,10 +1442,12 @@ definition = [
 [oe_labiovelar_resolution]
 time = 401
 name = "Labiovelars resolve into velar + w"
-description = "Ringe & Taylor §3.1.3 — PWGmc *kʷ, *xʷ > *kw, *xw (cwic, hwæl)"
+description = """Ringe & Taylor §3.1.3 — PWGmc *kʷ, *xʷ > *kw, *xw (cwic, hwæl). The *gʷ that survived after
+a nasal resolves too: PGmc *singwaną > PWGmc *singwan > OE singan (PDF 230)."""
 definition = [
     "kʷ → k w",
     "xʷ → x w",
+    "gʷ → g w",
 ]
 
 [pnwgmc_w_loss_before_u]
