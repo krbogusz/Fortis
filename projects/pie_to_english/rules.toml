@@ -4223,6 +4223,18 @@ words = ["buck", "buttaz-end"]
 definition = "[+syll, aperture: mid, +back, length: short] → [aperture: high]"
 
 
+[sporadic_duck_umlaut]
+time = 421
+name = "SPORADIC: OE ened has the double umlaut of the i-stem *anudi"
+description = """Ringe & Taylor (PDF 159, 266, 302) derive OE ened from PWGmc *anudi (OHG anut), an i-stem that
+replaced the PGmc consonant stem, with double umlaut: *ąnudi > *ænydi > ænid (Épinal Glossary) >
+ened. Kroonen (PDF 64) keeps the stem *anad- and rejects *anud-, so the start form stays his. Tested
+as a regular rule, the double umlaut breaks undern and youth. Cause: the i-stem with its double
+umlaut, as Ringe & Taylor give it. Word-scoped: the first vowel takes the umlauted e. Just after
+i-mutation (420)."""
+words = ["anadz"]
+definition = "ɑ → e / # _ n"
+
 [sporadic_rest_restan]
 time = 421
 name = "SPORADIC (levelling): ræst takes the e of the verb restan"
