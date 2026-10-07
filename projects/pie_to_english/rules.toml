@@ -912,6 +912,17 @@ definition = [
 # vowel lengthens to compensate — Gothic munþs vs OE mūþ 'mouth', Gothic uns vs OE ūs
 # (Minkova §3.4, n. 8). Two rules, as in latin_to_french's ns-loss: lengthen, then delete,
 # so the deletion can require the length it is compensating for.
+[sporadic_ordinal_voiceless_suffix]
+time = 404
+name = "SPORADIC: the OE ordinals take the voiceless Verner alternant of the suffix"
+description = """OE seofoþa, eahtoþa, nigoþa and tēoþa have þ where PGmc *sebundô, *ahtudô, *newundô and
+*tehundô have the voiced *d, as OS sivondo and OHG zehanto do. Ringe & Taylor (PDF 181): OE tēoþa
+"exhibits a voiceless Verner's Law alternant in the suffix". Cause: Old English generalized the
+voiceless alternant *-unþ-, *-uþ- in these ordinals. Dated after the 403 checkpoint, whose West
+Germanic forms have *d, and placed before the nasal-spirant law, which then drops the *n."""
+words = ["seventh", "eighth", "ninth", "tehundô"]
+definition = "d → θ / [+syll, stress: none] [+cons, nasal: 1]? _ [+syll] #"
+
 [wg_nasal_spirant_lengthening]
 time = 404
 name = "Vowel lengthens before a nasal + voiceless fricative"
