@@ -7189,7 +7189,7 @@ id = "nikraz"
 gloss = "nikraz"
 note = "Source: Wiktionary (kaikki). Added 2026-10-07 for a first-contact score (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 5). Wiktionary cites only the bare PIE root *neygʷ-, so the word starts at its Proto-Germanic form (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = 200, ipa = "ˈnikrɑz", category = "noun", note = "PGmc *nikraz (Wiktionary, kaikki), transcribed by tools/pgmc_ipa.py." },
+  { time = 200, ipa = "ˈnikʷɑzɑz", category = "noun", note = "START FORM revised 2026-10-07 (DECISIONS.md, 2026-10-07, 'Let the rules and the words shape each other', rule 3): was ˈnikrɑz, PGmc *nikraz (Wiktionary, kaikki). Kroonen (s.v. *nikwas/za-, PDF 430) derives ON nykr and OE nicor from the Verner variant *nikwaza-. Wiktionary's *nikraz already has the medial vowel lost, so the rules cannot give OE nicor from it." },
   { time = 900, ipa = "ˈnikor" },
 ]
 
