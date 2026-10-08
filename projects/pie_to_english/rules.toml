@@ -2377,8 +2377,10 @@ Dated 466, after EVERY rule that can strip a final vowel — not just `wg_final_
 # with a spurious front vowel. It looks back to the NEAREST vowel across however many consonants
 # stand between: *sundr is u-n-d-r, and a single-consonant environment cannot reach its *u.
 #
-# After a dental stop no vowel is inserted before *l: Ringe & Taylor list setl, botl, ādl and
-# spātl as words without epenthesis (PDF 344), hence the exception on the two *l clauses.
+# Before *l no vowel is usually inserted after a coronal obstruent, a labial fricative or palatal
+# ġ: Ringe & Taylor list hūsl, ġīsl, nǣdl, þīxl, setl, botl, ādl, ċeafl and næġl (PDF 344), hence
+# the exception on the two *l clauses. They note that hazel often took the vowel after s anyway
+# (WS hæsel ~ hæsl). The target is hæsl.
 #
 # Before *l the vowel is inserted "after other consonants", sonorants included: sāwl > sāwol
 # (PDF 345). It is not inserted after *r (PDF 344), nor between the halves of a GEMINATE:
@@ -2387,8 +2389,8 @@ Dated 466, after EVERY rule that can strip a final vowel — not just `wg_final_
 definition = [
     "∅ → o / [+syll, +back] [-syll]* [-syll] _ r #",
     "∅ → e / [-syll] _ r #",
-    "∅ → o / [+syll, +back] [-syll]* [-syll] _ l # // ([-son, -cont, +anterior] | r | l) _",
-    "∅ → e / [-syll] _ l # // ([-son, -cont, +anterior] | r | l) _",
+    "∅ → o / [+syll, +back] [-syll]* [-syll] _ l # // ([-son, +anterior] | [-son, +cont, +labial] | j | r | l) _",
+    "∅ → e / [-syll] _ l # // ([-son, +anterior] | [-son, +cont, +labial] | j | r | l) _",
 ]
 
 [oe_palatalisation]
@@ -4195,11 +4197,11 @@ definition = "[+syll, aperture: low, +front, length: short] → [+back, front: n
 
 [sporadic_syncope_no_parasite]
 time = 467
-name = "SPORADIC: no parasite vowel — OE otr, hæsl keep a syllabic sonorant"
-description = """*utraz, *haslaz give OE otr, hæsl (ottor, hæsel are the later, resyllabified
-forms); the parasite vowel oe_parasite_vowel inserts one where these words attest a bare cluster.
-Word-scoped removal of the epenthetic vowel. Cause: the targets record the older forms."""
-words = ["otter", "hazel"]
+name = "SPORADIC: no parasite vowel: OE otr keeps a syllabic sonorant"
+description = """*utraz gives OE otr (ottor is the later, resyllabified form); the parasite vowel
+oe_parasite_vowel inserts one where this word attests a bare cluster. Word-scoped removal of the
+epenthetic vowel. Cause: the target records the older form."""
+words = ["otter"]
 definition = "[+syll, stress: none] → ∅ / [-syll] _ [+son, +cons] #"
 
 [sporadic_free_eo]
