@@ -32,20 +32,17 @@ import sys
 import unicodedata as ud
 from pathlib import Path
 
-sys.path.insert(0, "src")
 sys.path.insert(0, str(Path(__file__).parent))
 
 import pgmc_ipa  # noqa: E402
 from pie_ipa import (  # noqa: E402
     ACUTE,
+    Fortis,
     PieError,
     accent_first_nucleus,
     has_accent,
     to_ipa,
 )
-
-from fortis.analysis.accuracy import try_segment  # noqa: E402
-from fortis.loaders.project import load_project  # noqa: E402
 
 # The kaikki extracts and the intermediate chains.json. Big (~280 MB) and regenerable, so it
 # is never committed — see SOURCE.md for how to populate it. Override with FORTIS_PIE_CACHE;
@@ -622,7 +619,7 @@ def modern_ipa(sounds: dict, word: str, pos: str) -> str:
 
 
 def main() -> None:
-    project = load_project(Path("projects/pie_to_english")).unwrap()
+    fortis = Fortis(Path(__file__).parent.parent, SEED_TIME)
     chains = json.load(open(CACHE / "chains.json"))
     pde_sounds = json.load(open(CACHE / "pde_sounds.json"))
     freq = {}
@@ -635,7 +632,7 @@ def main() -> None:
         if not ipa:
             return ""
         s = normalise(ipa, reconstructed=reconstructed)
-        return s if s and try_segment(s, project) is not None else ""
+        return s if s and "error" not in fortis(s) else ""
 
     rows, dropped, blanked = [], {}, {}
 
@@ -698,7 +695,7 @@ def main() -> None:
         if not has_accent(pie_form):
             pie_form = accent_first_nucleus(pie_form)
         try:
-            word = to_ipa(pie_form, project)
+            word = to_ipa(pie_form, fortis)
         except PieError as exc:
             drop(f"PIE not transliterable ({str(exc).split(' in ')[0]})")
             continue

@@ -47,6 +47,12 @@ cache the extracts must be re-fetched from [kaikki.org](https://kaikki.org/) fir
 `tools/ringe.py` (needs the Ringe PDF in `sources/`), `tools/build_chains.py`, then
 `tools/pde_sounds.py`.
 
+The tools are Python scripts, run with Python 3.12 or later from the repository root.
+`tools/ringe.py` needs pypdf: `pip install -r projects/pie_to_english/tools/requirements.txt`.
+`tools/build_gold.py` asks the engine whether a form segments and where its syllables break,
+through `fortis --segment`. Install `fortis` as the repository README says, or set `FORTIS` to
+its path.
+
 The spine is the **Proto-Germanic** extract. Each record carries its PIE parent (an `inh`
 etymology template) and, usually, a `descendants` tree running down through Old English →
 Middle English → English, so one record yields a whole chain and the OE/ME/English entries

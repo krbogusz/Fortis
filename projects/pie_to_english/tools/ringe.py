@@ -10,7 +10,7 @@ harvestable:
 
 Writes `ringe.json` into the cache, for `build_chains` to fold in beside the Wiktionary chains.
 
-    PYTHONPATH=. python projects/pie_to_english/tools/ringe.py
+    python projects/pie_to_english/tools/ringe.py
 
 The book is NOT in the repo (copyrighted; `sources/` is gitignored). Drop the PDF there and this
 reads it; sound laws are facts and are encoded as rules, but no book text belongs in the tree.
@@ -35,7 +35,6 @@ import sys
 import unicodedata as ud
 from pathlib import Path
 
-sys.path.insert(0, "src")
 sys.path.insert(0, str(Path(__file__).parent))
 
 CACHE = Path(os.environ.get("FORTIS_PIE_CACHE") or Path(__file__).parent.parent / ".cache")

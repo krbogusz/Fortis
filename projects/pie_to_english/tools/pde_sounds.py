@@ -13,7 +13,7 @@ of the file makes the fallback impossible without changing the bootstrap.
 
 The pages are cached in `<cache>/en_pages/`, so a re-run fetches only what is missing.
 
-Run:  PYTHONPATH=. python projects/pie_to_english/tools/pde_sounds.py
+Run:  python projects/pie_to_english/tools/pde_sounds.py
 """
 
 import json

@@ -75,7 +75,7 @@ def _selftest() -> None:
     import sys
     from pathlib import Path
 
-    sys.path[:0] = [str(Path(__file__).parent), "src", "."]
+    sys.path[:0] = [str(Path(__file__).parent)]
     import build_gold as bg
 
     cache = Path(__file__).parent.parent / ".cache"

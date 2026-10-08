@@ -13,7 +13,7 @@ correction from any of them. `words.csv` shows only the result; this shows the p
     because the source gave none;
   * the attested Old English / Middle English / Modern English forms behind the later columns.
 
-Run:  PYTHONPATH=. python projects/pie_to_english/tools/provenance.py
+Run:  python projects/pie_to_english/tools/provenance.py
 """
 
 import csv
@@ -23,7 +23,6 @@ import sys
 import unicodedata as ud
 from pathlib import Path
 
-sys.path.insert(0, "src")
 sys.path.insert(0, str(Path(__file__).parent))
 
 import build_gold as BG  # noqa: E402

@@ -11,12 +11,16 @@ Two things make it more than a lookup table:
   it marks the PIE accent.
 * Wiktionary marks the accent on the *nucleus*; the engine wants `ˈ` before the accented
   syllable's *onset*. Where the onset starts is a phonotactic question (*oḱtṓw* is okʲ.ˈtoːw,
-  not o.ˈkʲtoːw), so we hand the segmented form to the engine's own syllabifier rather than
-  guessing at a maximal onset.
+  not o.ˈkʲtoːw), so we hand the form to the engine's own syllabifier, through the `fortis`
+  command, rather than guessing at a maximal onset.
 """
 
+import json
+import os
 import re
+import subprocess
 import unicodedata as ud
+from pathlib import Path
 
 ACUTE, MACRON, RING = "́", "̄", "̥"
 
@@ -46,6 +50,25 @@ SYLLABIC = {
 
 class PieError(ValueError):
     """A PIE form this transliterator will not guess at."""
+
+
+class Fortis:
+    """The `fortis` command, kept open to segment and syllabify forms one at a time.
+
+    Install it as the repository README says. Set FORTIS to its path if it is not on PATH.
+    """
+
+    def __init__(self, project: Path, time: int):
+        command = [os.environ.get("FORTIS", "fortis"), "--project", str(project),
+                   "--segment", "-", "--time", str(time)]
+        self.process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                        text=True, encoding="utf-8")
+
+    def __call__(self, form: str) -> dict:
+        """The segments and syllable boundaries of *form*, or the "error" that stops it."""
+        self.process.stdin.write(form + "\n")
+        self.process.stdin.flush()
+        return json.loads(self.process.stdout.readline())
 
 
 def _units(form: str):
@@ -139,20 +162,15 @@ def to_tokens(form: str) -> tuple[list[str], int]:
     return tokens, accent
 
 
-def to_ipa(form: str, project) -> str:
+def to_ipa(form: str, fortis: Fortis) -> str:
     """Transliterate *form*, placing ˈ before the onset of its accented syllable."""
-    from fortis.application.segmentation import string_to_sequence
-    from fortis.application.syllabifying import syllabify
-
     tokens, accent = to_tokens(form)
     bare = "".join(tokens)
-    word = string_to_sequence(bare, project)
-    if len(word.segments) != len(tokens):
+    word = fortis(bare)
+    if "error" in word:
+        raise ValueError(word["error"])
+    if len(word["segments"]) != len(tokens):
         raise PieError(f"{form!r} → {bare!r}: {len(tokens)} tokens vs "
-                       f"{len(word.segments)} segments")
-    bounds = syllabify(
-        [segment.bundle for segment in word.segments],
-        project.sonorities, project.syllable_parts, -2000, project.letters,
-    )
-    onset = max((b for b in bounds if b <= accent), default=0)
+                       f"{len(word['segments'])} segments")
+    onset = max((b for b in word["boundaries"] if b <= accent), default=0)
     return "".join(("ˈ" if i == onset else "") + t for i, t in enumerate(tokens))

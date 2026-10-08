@@ -1,0 +1,3 @@
+# For tools/ringe.py, which reads the Ringe PDF. The other tools need only the standard library
+# and, for build_gold.py, the fortis command.
+pypdf>=6.19.0
