@@ -563,3 +563,17 @@ most 2 s, so the whole program moves. Identical reports prove the port without p
 The Python CLI writes `rule_dependencies.html` with its edges in set-iteration order, which
 changes with the hash seed for `latin_to_french` and `pie_to_english`. The Rust port writes them
 in sorted order, and `rust/parity.sh` compares that file with its edges sorted on both sides.
+
+## 2026-10-08: Make the dependency graph's edge order deterministic in Python
+
+**Choice:** `build_dependency_graph` walks a firing's consumed segments in sorted order, so
+`rule_dependencies.html` lists its edges in the same order on every run, and in the order the Rust
+port writes them. `rust/parity.sh` now compares that file byte for byte. This replaces the note in
+"2026-10-08: Port Fortis to Rust, checked by identical reports" that the parity script compares
+the file with its edges sorted.
+
+**Reason:** Asked for on 2026-10-08. The edge order followed set iteration, which varies with
+Python's hash seed, so two runs of `latin_to_french` or `pie_to_english` wrote different files.
+
+**Rejected:** Keeping the normalization in the parity script, which leaves the Python report
+nondeterministic.

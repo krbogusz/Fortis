@@ -16,30 +16,13 @@ cargo build --release --quiet --manifest-path "$ROOT/rust/Cargo.toml" || exit 1
 BIN="$ROOT/rust/target/release/fortis"
 PY="$ROOT/.venv/bin/python"
 
-# rule_dependencies.html lists its edges in Python set-iteration order, which varies with the hash
-# seed, so that file is compared with its edges sorted.
-normalize_html() {
-  "$PY" -I - "$1" <<'EOF'
-import json, re, sys
-text = open(sys.argv[1], encoding="utf-8").read()
-m = re.search(r"const D=(.*), bands=", text)
-data = json.loads(m.group(1))
-data["edges"].sort(key=lambda e: (e["from"], e["to"]))
-sys.stdout.write(text[: m.start(1)] + json.dumps(data) + text[m.end(1):])
-EOF
-}
-
 compare_dirs() {  # compare_dirs <label> <python dir> <rust dir>
   local label=$1 a=$2 b=$3 bad=0
   for f in $( (ls "$a"; ls "$b") | sort -u ); do
     if [ ! -f "$a/$f" ] || [ ! -f "$b/$f" ]; then
       echo "  $label: $f written by only one side"; bad=1; continue
     fi
-    if [ "$f" = rule_dependencies.html ]; then
-      cmp -s <(normalize_html "$a/$f") <(normalize_html "$b/$f") || { echo "  $label: $f differs"; bad=1; }
-    else
-      cmp -s "$a/$f" "$b/$f" || { echo "  $label: $f differs"; bad=1; }
-    fi
+    cmp -s "$a/$f" "$b/$f" || { echo "  $label: $f differs"; bad=1; }
   done
   [ $bad -eq 0 ] && echo "  $label: $(ls "$a" | wc -l | tr -d ' ') reports identical"
   return $bad

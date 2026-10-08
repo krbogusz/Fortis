@@ -124,7 +124,7 @@ def build_dependency_graph(
             )
             node_requires[base] |= required
             node_produces[base] |= produced
-            for value in required:
+            for value in sorted(required):  # sorted: set order varies with the hash seed
                 source = producer.get(value)
                 if source is not None and source != base and index[source] < index[base]:
                     edge_via[(index[base], index[source])].add(value)
