@@ -703,9 +703,9 @@ On 2026-10-08, 687 words. A run of the cascade writes the current figures to
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
-| 200 Proto-Germanic | 576 | 572 (99.3%) | 572 |
+| 200 Proto-Germanic | 575 | 571 (99.3%) | 571 |
 | 403 Proto-West Germanic | 354 | 352 (99.4%) | 354 |
-| 900 Old English | 466 | 450 (96.6%) | 457 |
+| 900 Old English | 466 | 451 (96.8%) | 458 |
 | 1400 Middle English | 332 | 331 (99.7%) | 331 |
 | 1570 Hart | 7 | 6 | 6 |
 | 1580 Bullokar, Mulcaster | 11 | 10 | 11 |
