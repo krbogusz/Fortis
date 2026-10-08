@@ -527,3 +527,39 @@ comparable.
 - Adding words with only an Old English reflex, which test the Old English rules alone.
 - Seeding the batch at PIE with Kroonen's preforms, transcribed by hand from the scanned text.
 - Taking all 115 words that qualify.
+
+## 2026-10-08: Port Fortis to Rust, checked by identical reports
+
+**Choice:** Port the whole Python program to Rust, to see whether it runs faster. The port lives
+in `rust/`, a Cargo crate named `fortis` built with the stable toolchain from rustup (Rust 1.99).
+It covers the loaders, the rule parser, the engine, every report the CLI writes, and the induction
+CLI. The web app keeps running the Python engine through Pyodide until a later WebAssembly step.
+The port is correct when, on all five shipped projects, the Rust binary writes the same report
+files as the Python CLI, byte for byte. `rust/parity.sh` runs both and diffs them. Rust gets unit
+tests only where the reports cannot show a fault.
+
+The crate uses these dependencies:
+- `toml` with `preserve_order`: reads the TOML project files in file order (replaces `tomllib`).
+- `indexmap`: maps that keep insertion order, as Python's `dict` does.
+- `csv`: reads `letters.csv` and the CSV inventories (replaces `csv.DictReader`). The reports are
+  written by hand, to match `csv.writer`'s quoting exactly.
+- `rayon`: derives the words in parallel (replaces `multiprocessing`).
+- `clap`: parses the command line (replaces `argparse`).
+- `unicode-general-category`: tells a combining mark from a base character (replaces
+  `unicodedata.category`).
+- `caseless`: Unicode case folding for the blame report's sort (replaces `str.casefold`).
+
+**Reason:** Asked for on 2026-10-08. A run of `pie_to_english` takes 9.4 s in Python: 2.0 s
+deriving, 4.7 s of analysis and 2.6 s writing reports. A port of the engine alone could save at
+most 2 s, so the whole program moves. Identical reports prove the port without porting the
+9,500 lines of pytest tests.
+
+**Rejected:**
+- Porting only the engine and keeping the Python analysis.
+- A Rust extension module called from Python (PyO3), which adds a build step to the Python
+  install.
+- Porting the pytest suite to Rust tests.
+
+The Python CLI writes `rule_dependencies.html` with its edges in set-iteration order, which
+changes with the hash seed for `latin_to_french` and `pie_to_english`. The Rust port writes them
+in sorted order, and `rust/parity.sh` compares that file with its edges sorted on both sides.
