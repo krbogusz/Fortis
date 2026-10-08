@@ -19,23 +19,49 @@ fn strip_spaces(s: &str) -> String {
     s.replace(' ', "")
 }
 
+/// Where *name* first occurs in *text* as a whole word: no ASCII letter or `_` touches it on
+/// either side. A sign, a Greek variable or an `@` position may sit next to it (`+voice`, `αback`,
+/// `tone@2`), but the `t` inside `nonexistent` is not the short name `t`.
+fn find_word(text: &str, name: &str) -> Option<usize> {
+    let is_word = |c: char| c.is_ascii_alphabetic() || c == '_';
+    text.match_indices(name).map(|(i, _)| i).find(|&i| {
+        let before = text[..i].chars().next_back();
+        let after = text[i + name.len()..].chars().next();
+        !before.is_some_and(is_word) && !after.is_some_and(is_word)
+    })
+}
+
+/// The value part of a spec: *spaced* without the feature name that [`identify_feature`]
+/// matched, and without spaces.
+fn without_word(spaced: &str, name: &str) -> String {
+    let i = find_word(spaced, name).unwrap();
+    strip_spaces(&format!("{}{}", &spaced[..i], &spaced[i + name.len()..]))
+}
+
+/// The inner spec of a conditional `<n: F>`, with its spaces. Call it after [`split_conditional`]
+/// has checked the form.
+fn conditional_inner(spaced: &str) -> &str {
+    let body = &spaced[1..spaced.len() - 1];
+    body.split_once(':').map_or(body, |(_, inner)| inner)
+}
+
 /// The feature named in a spec string: longest full name first, then longest short name, each
-/// searched as a substring of the part before any `:`.
+/// searched as a whole word in the part before any `:`. *raw* keeps its spaces, since a space
+/// separates words: in `mid tone`, `tone` is a word.
 pub fn identify_feature(raw: &str, features: &FeatureInventory) -> Result<(FeatId, String), String> {
-    let raw = strip_spaces(raw);
     let lhs = raw.split(':').next().unwrap_or("");
     for &id in features.names_by_length() {
         let name = &features.get(id).name;
-        if lhs.contains(name.as_str()) {
+        if find_word(lhs, name).is_some() {
             return Ok((id, name.clone()));
         }
     }
     for short in features.short_names_by_length() {
-        if lhs.contains(short.as_str()) {
+        if find_word(lhs, short).is_some() {
             return Ok((features.short_to_long(short).unwrap(), short.clone()));
         }
     }
-    Err(format!("No feature could be identified from '{raw}'"))
+    Err(format!("No feature could be identified from '{}'", strip_spaces(raw)))
 }
 
 fn scalar_label_requires_colon(
@@ -187,13 +213,14 @@ pub fn parse_feature_spec(
     features: &FeatureInventory,
     feature: Option<FeatId>,
 ) -> Result<(FeatId, Value), String> {
+    let spaced = raw.trim();
     let raw = strip_spaces(raw);
     let (feature, raw_value, had_colon) = match feature {
         None => {
-            let Ok((feature, matched)) = identify_feature(&raw, features) else {
+            let Ok((feature, matched)) = identify_feature(spaced, features) else {
                 return Err(format!("Could not identify feature spec from string '{raw}'"));
             };
-            let raw_value = raw.replacen(&matched, "", 1).replace(':', "");
+            let raw_value = without_word(spaced, &matched).replace(':', "");
             (feature, raw_value, raw.contains(':'))
         }
         Some(feature) => {
@@ -257,15 +284,16 @@ fn negation_prefix(raw_value: &str) -> bool {
 }
 
 pub fn parse_pattern_spec(raw: &str, features: &FeatureInventory) -> Result<PatternSpec, String> {
+    let spaced = raw.trim();
     let raw = strip_spaces(raw);
     if raw.starts_with('<') {
-        let (label, inner) = split_conditional(&raw)?;
-        let mut spec = parse_pattern_spec(&inner, features)?;
+        let (label, _) = split_conditional(&raw)?;
+        let mut spec = parse_pattern_spec(conditional_inner(spaced), features)?;
         spec.condition_label = Some(label);
         return Ok(spec);
     }
-    let (feature, matched) = identify_feature(&raw, features)?;
-    let mut raw_value = raw.replacen(&matched, "", 1).replace(':', "");
+    let (feature, matched) = identify_feature(spaced, features)?;
+    let mut raw_value = without_word(spaced, &matched).replace(':', "");
     let had_colon = raw.contains(':');
     let mut negated = false;
     if negation_prefix(&raw_value) {
@@ -428,15 +456,16 @@ pub fn parse_result_bundle(raw: &str, features: &FeatureInventory) -> Result<Res
 }
 
 pub fn parse_result_spec(raw: &str, features: &FeatureInventory) -> Result<ResultSpec, String> {
+    let spaced = raw.trim();
     let raw = strip_spaces(raw);
     if raw.starts_with('<') {
-        let (label, inner) = split_conditional(&raw)?;
-        let mut spec = parse_result_spec(&inner, features)?;
+        let (label, _) = split_conditional(&raw)?;
+        let mut spec = parse_result_spec(conditional_inner(spaced), features)?;
         spec.condition_label = Some(label);
         return Ok(spec);
     }
-    let (feature, matched) = identify_feature(&raw, features)?;
-    let raw_value = raw.replacen(&matched, "", 1).replace(':', "");
+    let (feature, matched) = identify_feature(spaced, features)?;
+    let raw_value = without_word(spaced, &matched).replace(':', "");
     let had_colon = raw.contains(':');
     if negation_prefix(&raw_value) {
         return Err("Result spec does not support negation".into());

@@ -646,3 +646,17 @@ manifest. A command finds `projects/default` two folders above its crate, or thr
 workspace lets `cargo build` and `cargo test` run from the repository root.
 
 **Rejected:** Keeping the crates in `rust/`.
+
+## 2026-10-08: Match a feature name in a spec as a whole word
+
+**Choice:** The parser accepts a feature name or short name in a spec only where no ASCII letter
+or `_` touches it. It searches the spec with its spaces, so a space separates words. `+voice`,
+`αback`, `tone@2` and `mid tone` still name their feature.
+
+**Reason:** The parser searched for each name as a bare substring. In `+nonexistent` it found
+`t`, the short name of `tone`, and reported "Could not identify value for 'tone'". It now reports
+that it cannot identify the feature. The Python program had the same fault. No saved report
+changes.
+
+**Rejected:** Matching only at the end of the part before the colon, which would reject a
+position suffix such as `tone@2`.
