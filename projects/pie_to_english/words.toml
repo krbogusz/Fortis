@@ -5021,9 +5021,9 @@ forms = [
 [[words]]
 id = "þinhslō"
 gloss = "þinhslō"
-note = "Source: Wiktionary (kaikki)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈtengʱsleħ (PIE *tengʰs(e)leh₂, as cited by Wiktionary) was removed on 2026-10-08: no book in hand gives the PIE form, and the cascade turns its *gʰs into *ks, as in *aiks, where the Germanic forms have *hs. The word starts at Wiktionary's PGmc *þinhslō, written with the nasalised long vowel as tools/pgmc_ipa.py writes *wanhaz. Ringe & Taylor give PNWGmc *þīhslu, OS thīsla, OHG dīhsala and OE þīxl (PDF 344) (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction')."
 forms = [
-  { time = -2000, ipa = "ˈtengʱsleħ", category = "noun", note = "PIE *tengʰs(e)leh₂, as cited by Wiktionary." },
+  { time = 200, ipa = "ˈθĩːxslɔː", category = "noun" },
   { time = 900, ipa = "ˈθiːksl" },
 ]
 
