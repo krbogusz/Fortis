@@ -509,3 +509,21 @@ hypothesis.
 - The rule for *-i alone: 900 loses one exact row (undern).
 - The rule for *-i and *-u: 900 loses two (undern, and soul, whose ending Ringe & Taylor say was
   restored, PDF 71).
+
+## 2026-10-08: Draw a third batch from Kroonen's headwords by the same criteria
+
+**Choice:** In `pie_to_english`, the third first-contact batch takes fifty more words by the
+criteria of "2026-10-07: Draw the next batch from Kroonen's headwords, starting at Proto-Germanic":
+the most frequent Proto-Germanic nouns, adjectives and numerals that the lexicon lacks, whose stem
+is a Kroonen headword, and that have an Old English, a Middle English and a single modern reflex.
+They start at their Proto-Germanic form. A record is passed over when its modern spelling is mostly
+another word, or when another record in the batch has the same modern word.
+
+**Reason:** Asked for on 2026-10-08, to test the rules added on 2026-10-07 and 2026-10-08 on words
+they were not shaped on. The second batch's criteria and size keep the two first-contact scores
+comparable.
+
+**Rejected:**
+- Adding words with only an Old English reflex, which test the Old English rules alone.
+- Seeding the batch at PIE with Kroonen's preforms, transcribed by hand from the scanned text.
+- Taking all 115 words that qualify.

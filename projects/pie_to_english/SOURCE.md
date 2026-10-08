@@ -354,6 +354,44 @@ variant flie from OE flyge (Klein). That brings the batch to 185 of 187 and leav
 sumor open. The score above stays as
 the batch's first-contact record.
 
+### A third batch from Kroonen's headwords on 2026-10-08, scored at first contact
+
+The third batch takes fifty more words by the second batch's criteria (DECISIONS.md, 2026-10-08,
+"Draw a third batch from Kroonen's headwords by the same criteria"). After the second batch and
+the night's changes, 369 Proto-Germanic records qualify, and 115 of them have an Old English, a
+Middle English and a single modern reflex. The fifty most frequent were taken. Ten records were
+passed over. Eight have a modern spelling that is mostly another word: *more* (*murhǭ*, *murhō*),
+*side* (*sīdaz*), *blow* (*blēwaz*), *halt* (*haltaz* 'lame'), *neat* (*nautą* 'cattle'), *wong*
+(*wangaz*) and *wont* (*wanduz* 'mole'). Two are duplicates: *saltaz* beside *saltą*, and *fuldō*
+beside *faludaz*. The batch is again core vocabulary: *edge, apple, salt, sand, grass, sheep,
+hammer, liver, goat, net* and forty more.
+
+The targets come from the same sources as the second batch. The 403 forms are Wiktionary's PWGmc
+entries (36 words). The Old English forms are Wiktionary's IPA, except *drit* and *barc*,
+transcribed by `tools/oe_ipa.py`. The Middle English check dropped the targets of *narrow*, *hawk*
+and *bark*, whose Middle English entries do not name the Old English form. The modern targets are
+CUBE's. *sand* and *herd* have a PIE form in a book (Ringe PDF 132; Kroonen PDF 261), but start at
+Proto-Germanic like the rest of the batch.
+
+First contact, with no rule or target changed for them:
+
+| checkpoint | exact | within 1 phone |
+|---|---|---|
+| 403 | 33 / 36 | 35 |
+| 900 | 29 / 50 | 42 |
+| 1400 | 26 / 47 | 34 |
+| final | 28 / 50 | 31 |
+| all | 116 / 183 (63%) | 142 |
+
+The misses point to these gaps:
+- *net* and *web* lack the geminate of OE *nett* and *webb*, and *apple* that of *æppel*.
+- *arrow* and *sorrow* end in a velar in Middle English (arx, sɔrg), where the targets have
+  *arwe* and *sorwe*.
+- *salt*, *sheep* and *swallow* have West Saxon 900 targets (*sealt*, *sċēap*, *swealwe*). The
+  cascade derives the Anglian forms, which Middle English continues.
+- *edge* has a Middle English target written dʒ without the tie bar, which the scorer reads as two
+  segments.
+
 ### Middle English transcriptions
 
 Where Wiktionary gives a Middle English spelling without IPA, the 1400 target may be transcribed
@@ -698,20 +736,20 @@ says so and names the words it came from.
 
 ## Where it stands
 
-On 2026-10-08, 687 words. A run of the cascade writes the current figures to
+On 2026-10-08, 737 words. A run of the cascade writes the current figures to
 `reports/accuracy.csv`.
 
 | checkpoint | assessed | exact | within 1 phone |
 |---|---|---|---|
 | 200 Proto-Germanic | 575 | 571 (99.3%) | 571 |
-| 403 Proto-West Germanic | 354 | 352 (99.4%) | 354 |
-| 900 Old English | 466 | 451 (96.8%) | 458 |
-| 1400 Middle English | 332 | 331 (99.7%) | 331 |
+| 403 Proto-West Germanic | 390 | 385 (98.7%) | 389 |
+| 900 Old English | 516 | 480 (93.0%) | 500 |
+| 1400 Middle English | 379 | 357 (94.2%) | 365 |
 | 1570 Hart | 7 | 6 | 6 |
 | 1580 Bullokar, Mulcaster | 11 | 10 | 11 |
 | 1621 Gil | 14 | 12 | 13 |
 | 1687 Coles, Cooper | 14 | 13 | 13 |
-| final current SSB (CUBE) | 293 | 286 (97.6%) | 289 |
+| final current SSB (CUBE) | 343 | 314 (91.5%) | 320 |
 
 ### Sporadic changes — how the regular cascade and the word-scoped ones divide the work
 
