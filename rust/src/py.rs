@@ -214,6 +214,7 @@ pub fn json_str(s: &str, out: &mut String) {
 /// A JSON value written the way `json.dumps` writes it (`", "` and `": "` separators).
 pub enum Json {
     Null,
+    Bool(bool),
     Int(i64),
     Float(f64),
     Str(String),
@@ -225,6 +226,7 @@ impl Json {
     pub fn dump(&self, out: &mut String) {
         match self {
             Json::Null => out.push_str("null"),
+            Json::Bool(b) => out.push_str(if *b { "true" } else { "false" }),
             Json::Int(n) => {
                 let _ = write!(out, "{n}");
             }

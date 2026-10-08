@@ -124,7 +124,45 @@ pub fn build_dependency_graph(derivations: &[Derivation], rules: &RuleInventory,
 
 const TEMPLATE: &str = include_str!("dependencies.html");
 
+struct Layout {
+    nodes: Json,
+    edges: Json,
+    bands: Json,
+    width: i64,
+    height: i64,
+    roots: usize,
+}
+
+/// The graph laid out for the web app's Tree view: the HTML report's data as one object.
+pub fn dependency_layout(graph: &DependencyGraph) -> Json {
+    let l = layout(graph);
+    Json::Obj(vec![
+        ("nodes".into(), l.nodes),
+        ("edges".into(), l.edges),
+        ("bands".into(), l.bands),
+        ("width".into(), Json::Int(l.width)),
+        ("height".into(), Json::Int(l.height)),
+        ("rules".into(), Json::Int(graph.nodes.len() as i64)),
+        ("edgeCount".into(), Json::Int(graph.edges.len() as i64)),
+        ("roots".into(), Json::Int(l.roots as i64)),
+    ])
+}
+
 pub fn render_dependency_html(graph: &DependencyGraph) -> String {
+    let l = layout(graph);
+    let data = Json::Obj(vec![("nodes".into(), l.nodes), ("edges".into(), l.edges)]);
+    TEMPLATE
+        .replace("__WIDTH__", &l.width.to_string())
+        .replace("__HEIGHT__", &l.height.to_string())
+        .replace("__HEIGHT_MINUS__", &(l.height - 40).to_string())
+        .replace("__NRULES__", &graph.nodes.len().to_string())
+        .replace("__NEDGES__", &graph.edges.len().to_string())
+        .replace("__NROOTS__", &l.roots.to_string())
+        .replace("__BANDS__", &l.bands.dumps())
+        .replace("__DATA__", &data.dumps())
+}
+
+fn layout(graph: &DependencyGraph) -> Layout {
     let (sub_w, row_h, pad_x, pad_y, gap) = (150.0f64, 16i64, 60.0f64, 80i64, 34.0f64);
     let nodes = &graph.nodes;
     let mut column = vec![0usize; nodes.len()];
@@ -192,17 +230,12 @@ pub fn render_dependency_html(graph: &DependencyGraph) -> String {
             ])
         })
         .collect();
-    let width = (cursor + pad_x) as i64;
-    let height = pad_y + stack.values().copied().max().unwrap_or(1) * row_h + 40;
-    let roots = nodes.iter().filter(|n| n.deps.is_empty()).count();
-    let data = Json::Obj(vec![("nodes".into(), Json::List(node_json)), ("edges".into(), Json::List(edge_json))]);
-    TEMPLATE
-        .replace("__WIDTH__", &width.to_string())
-        .replace("__HEIGHT__", &height.to_string())
-        .replace("__HEIGHT_MINUS__", &(height - 40).to_string())
-        .replace("__NRULES__", &nodes.len().to_string())
-        .replace("__NEDGES__", &graph.edges.len().to_string())
-        .replace("__NROOTS__", &roots.to_string())
-        .replace("__BANDS__", &Json::List(bands).dumps())
-        .replace("__DATA__", &data.dumps())
+    Layout {
+        nodes: Json::List(node_json),
+        edges: Json::List(edge_json),
+        bands: Json::List(bands),
+        width: (cursor + pad_x) as i64,
+        height: pad_y + stack.values().copied().max().unwrap_or(1) * row_h + 40,
+        roots: nodes.iter().filter(|n| n.deps.is_empty()).count(),
+    }
 }

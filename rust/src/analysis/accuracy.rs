@@ -296,7 +296,7 @@ impl AccuracyReport {
         self.distances.iter().any(|d| d.frequency != 1)
     }
 
-    fn weight(&self) -> i64 {
+    pub fn weight(&self) -> i64 {
         self.distances.iter().map(|d| d.frequency).sum()
     }
 

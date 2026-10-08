@@ -81,6 +81,11 @@ pub struct ContextAssociation {
 
 pub struct FocusAutopsy {
     pub phone: String,
+    /// How often the phone came out wrong, and how often it occurred.
+    pub errors: i64,
+    pub total: i64,
+    /// The support a predictor needed to be listed.
+    pub support_floor: i64,
     pub associations: Vec<ContextAssociation>,
 }
 
@@ -211,7 +216,7 @@ fn error_contexts(distances: &[DistanceToTarget], focus: &str, project: &Project
             .then_with(|| b.err_here.cmp(&a.err_here))
             .then_with(|| a.predictor.cmp(&b.predictor))
     });
-    FocusAutopsy { phone: focus.to_string(), associations }
+    FocusAutopsy { phone: focus.to_string(), errors, total, support_floor: floor, associations }
 }
 
 pub struct StageDiagnosis {

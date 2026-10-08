@@ -523,7 +523,9 @@ fn tree_diagram(target: &FeatureBundle, source: &FeatureBundle, focus: FeatId, p
     grid.iter().map(|row| joined(row)).collect::<Vec<_>>().join("\n")
 }
 
-fn render_change(before: &Form, after: &Form, rule: &Rule, project: &Project, r: &Renderer) -> Vec<(String, String)> {
+/// Every autosegmental change one rule made, as `(sublabel, diagram)`: a tier change first,
+/// then each segmental spread.
+pub fn render_change(before: &Form, after: &Form, rule: &Rule, project: &Project, r: &Renderer) -> Vec<(String, String)> {
     let mut out = Vec::new();
     if tier_changed(before, after) {
         out.push((String::new(), render_autosegmental_change(before, after, project, r)));
