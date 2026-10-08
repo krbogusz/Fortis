@@ -785,8 +785,8 @@ Every CLI run writes into a `reports/` subfolder of the project directory:
 
   The web app shows the same content in a **Warnings** tab.
 - **`accuracy.csv`** and **`distance_to_target.csv`** — the **accuracy**
-  analysis, written only when the lexicon carries attested forms (`final`/`stages`,
-  §4.1). It measures each derived form's distance to its target with two edit
+  analysis, written only when the lexicon carries a target, a form later than the seed
+  (§4.1). It measures each derived form's distance to its target with two edit
   distances: a **phone** distance (one inventory *segment* is one phone — an affricate `d͡ʒ` is
   a single unit, not two codepoints — and an exact match is 0) and a finer **feature** distance
   (a substitution costs
