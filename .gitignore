@@ -1,12 +1,6 @@
-# Python-generated files
+# Python caches and virtual environments (the pie_to_english data tools)
 __pycache__/
 *.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
 .venv
 
 # Generated analysis reports — written into the project's reports/ subfolder on

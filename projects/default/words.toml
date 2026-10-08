@@ -1,8 +1,8 @@
 # Default project — a showcase of the engine's rule features. Each word is the sole
 # target of one rule (scoped by gloss), so each feature shows in isolation.
 #
-#   python -m src.fortis.main          # run this showcase
-#   python -m src.fortis.main --project projects/pie_to_english   # the PIE → Present-Day English project
+#   fortis          # run this showcase
+#   fortis --project projects/pie_to_english   # the PIE → Present-Day English project
 #
 # Most words carry a `final` — the attested target the engine is graded against (here,
 # its own correct derivation, so the showcase grades 100% exact). The "sound change over

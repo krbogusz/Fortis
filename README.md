@@ -86,11 +86,20 @@ that the engine requires no feature geometry at all).
 
 ### Command line
 
+Fortis is a Rust program. To install it:
+
+1. Install the Rust toolchain with rustup (<https://rustup.rs>).
+2. From the repository root, run `cargo install --path crates/fortis`. This puts three
+   commands on your path: `fortis`, `fortis-induce` and `fortis-scoreboard`.
+
+Each command finds the shipped `projects/default` in the checkout it was built from. If you
+move the checkout, set `FORTIS_ROOT` to its new location.
+
 Run the derivations — the shipped default is a **feature showcase**, one word-scoped rule per
 mechanism (voicing assimilation, i-umlaut, devoicing, deletion, epenthesis, degemination, tone spread):
 
 ```
-python -m src.fortis.main
+fortis
 ```
 
 Or point it at your own data. `--words FILE` and `--rules FILE` override just the lexicon and
@@ -99,8 +108,8 @@ defaults); `--project DIR` runs a **project** — a directory whose own files ov
 defaults, with any it omits falling back to them, so a project holds only what differs:
 
 ```
-python -m src.fortis.main --words my_words.toml --rules my_rules.toml
-python -m src.fortis.main --project projects/pie_to_english    # PIE → Present-Day English
+fortis --words my_words.toml --rules my_rules.toml
+fortis --project projects/pie_to_english    # PIE → Present-Day English
 ```
 
 The lexicon, the rule list, the diacritics, and the sonority scale may each be written in
@@ -137,20 +146,19 @@ analysis writes `errors.csv` (which segments came out wrong, per stage) and the
 associated with each error, per stage and segment); and `blame.csv` records every
 assessed word's per-step distance trajectory, worst first (see
 [Diagnosing a rule set](#diagnosing-a-rule-set)). A run ends with a one-line
-summary on stderr — words derived, rules applied, per-phase timing, files saved —
-and shows a progress bar while deriving in a terminal. All reports land in
+summary on stderr — words derived, rules applied, per-phase timing, files saved.
+All reports land in
 `<project>/reports/`; `--output` overrides the main report's path (the others
 follow into the same directory):
 
 ```
-python -m src.fortis.main --project projects/latin_to_french --output /tmp/run/derivations.csv
+fortis --project projects/latin_to_french --output /tmp/run/derivations.csv
 ```
 
-Deriving one word never touches another, so a large lexicon is fanned across worker
-processes **automatically** — a ~4–6× speedup on a multi-core machine, with output
-byte-identical to a serial run. Small lexica stay in a single process (the pool's
-startup cost is not worth paying below a couple hundred words). Pass `--serial` to
-force one process, or `--workers N` to pin the pool size.
+Deriving one word never touches another, so `fortis` derives a lexicon in parallel, one
+thread per core, with output byte-identical to a serial run. Pass `--serial` to use one
+thread, or `--workers N` to pin the thread count. A full run of `pie_to_english` takes about
+0.3 s.
 
 The `--lint` flag runs a static check over the rules instead of deriving: it flags any
 rule position whose feature bundle can never match a segment — a feature required present
@@ -161,7 +169,7 @@ deliberately carries one such rule — `contradictory_bundle` — as its demo of
 so `--lint` on the default project reports exactly that finding.)
 
 ```
-python -m src.fortis.main --project projects/latin_to_french --lint
+fortis --project projects/latin_to_french --lint
 ```
 
 `--single WORD` derives just one word instead of the whole project — looked up in the
@@ -174,34 +182,16 @@ word has a target).
 standard input) it prints the form's segments and syllable boundaries as JSON, or why the
 inventory cannot segment it. See §8.6 of the [user guide](docs/user_guide.md).
 
-### Rust port
-
-`crates/fortis` holds a port of the whole program to Rust: the loaders, the engine, every report and
-the inducer. It writes the same files as the Python program, byte for byte. On the large
-projects a full run is about 30 times faster: `pie_to_english` takes 0.34 s, against 9.4 s in
-Python. The inducer is about 100 times faster: 31 s against 53 minutes on `pie_to_english`.
-
-To build and run it:
-
-1. Install the Rust toolchain with rustup (<https://rustup.rs>).
-2. Build the binaries: `cargo build --release`.
-3. Run a project: `target/release/fortis --project projects/pie_to_english`.
-
-`fortis` takes the flags of `python -m src.fortis.main`. `fortis-induce` and
-`fortis-scoreboard` take the flags of `src.fortis.induction.main` and
-`src.fortis.induction.scoreboard`. A binary finds the shipped `projects/default` in the
-repository it was built from. If you move the binary, set `FORTIS_ROOT` to the repository root.
-
-`parity.sh` runs both programs on every shipped project and compares every file they
-write. To include the inducer on `latin_to_french` and `pie_to_english`, which takes Python
-about 90 minutes, set `PARITY_INDUCE_ALL=1`.
+`fortis-induce` induces a rule cascade from a project's attested forms, and
+`fortis-scoreboard` scores the identity cascade and the hand-written one on the same data.
+Run either with `--help` to list its options.
 
 ### Web app
 
 **Live: <https://krbogusz.github.io/Fortis/>** — no install; it runs entirely in your
 browser.
 
-`web/` is a browser front end that runs the [Rust port](#rust-port) of the engine,
+`web/` is a browser front end that runs the same Rust engine as the command line,
 compiled to WebAssembly, rather than a separate JavaScript reimplementation. Every
 project in `projects/` is
 auto-discovered into the picker (or load your own); edit any inventory file and the
@@ -447,11 +437,12 @@ sonority alone wouldn't (e.g. _s_+stop onsets). See §7 of
 
 ## Layout
 
-A strict downward dependency DAG — each layer imports only from those above it
-(`models` ← `parsing` ← `loaders` ← `application`); `models` is inert data.
+A strict downward dependency DAG — each layer uses only those above it
+(`models` ← `parsing` ← `loaders`, `engine` ← `analysis` ← `induction`); `models` is inert data.
 
 ```
 fortis/
+├── Cargo.toml                   # the Cargo workspace: crates/fortis and crates/fortis-web
 ├── projects/
 │   ├── default/                 # shipped project — user-authored data, fallback base for all others
 │   │   ├── features.toml  letters.csv  diacritics.toml   # words/rules/diacritics/sonorities may
@@ -459,77 +450,38 @@ fortis/
 │   │   └── words.toml  rules.toml  settings.toml   # settings.toml: tunable analysis params (optional)
 │   └── ...                      # other projects, e.g. latin_to_french, pie_to_english
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
-├── web/                         # browser playground (the Rust engine as WebAssembly) — see web/README.md
-├── crates/                      # the Rust port: fortis (the program) and fortis-web (its WASM wrapper)
-├── parity.sh                    # runs the Python and Rust programs and compares their reports
-├── tests/
-└── src/fortis/
-    ├── config.py                # paths, value symbols, greek alphabet, special symbols
-    ├── result.py                # Result / Ok / Err
-    ├── main.py                  # load → derive → write reports (derivations + accuracy/errors/blame CSVs) → run summary
-    │
-    ├── general/                 # generic helpers, zero domain knowledge
-    │   ├── file_handling.py     #   load_toml_file, load_csv_file
-    │   ├── presenting.py        #   symbol presentation helpers
-    │   └── utils.py             #   safe_int, ...
-    │
-    ├── models/                  # INERT DATA — imports only stdlib + within models
-    │   ├── values.py            #   Value, AlphaRef, AlphaOp, ContourEdge, contours
-    │   ├── tiers.py             #   Tier
-    │   ├── specs.py             #   FeatureSpec, PatternSpec, ResultSpec
-    │   ├── bundles.py           #   FeatureBundle, PatternBundle, ResultBundle
-    │   ├── bindings.py          #   Bindings (alpha + element-ref state)
-    │   ├── elements.py          #   Element union (LetterRef, Group, Quantified, $, …)
-    │   ├── rules.py             #   ApplicationMode, StructuralDescription, Rule, RuleInventory
-    │   ├── features.py          #   FeatureKind, Feature, FeatureInventory
-    │   ├── inventories.py       #   Letter/Diacritic/Sonority/SyllablePart/Word + inventories
-    │   ├── settings.py          #   Settings (tunable analysis parameters, from settings.toml)
-    │   ├── project.py           #   Project (every inventory bundled together)
-    │   ├── derivation.py        #   DerivationStep, Derivation
-    │   ├── segment.py  form.py  #   Segment (bundle + stable id), Form (segments + tiers)
-    │   ├── syllable.py          #   Syllable (computed onset/nucleus/coda view — never stored)
-    │   ├── autosegment.py       #   Autoseg, AutosegmentalTier (the tier representation)
-    │   └── tier_declaration.py  #   TierDeclaration, TierInventory (from tiers.toml)
-    │
-    ├── parsing/                 # STRING → models       (depends on: models)
-    │   ├── lexer.py             #   tokenise rule notation
-    │   ├── bundles.py           #   parse_value, parse_*_spec, parse_*_bundle
-    │   ├── notation.py          #   parse_definition / parse_sequence → Elements
-    │   └── rule_validation.py   #   structural validation of a parsed rule
-    │
-    ├── loaders/                 # FILE → models         (depends on: models, parsing)
-    │   ├── features.py          #   features.toml      → FeatureInventory
-    │   ├── letters.py           #   letters.csv        → LetterInventory
-    │   ├── diacritics.py  sonorities.py  syllable_parts.py  tiers.py  words.py  settings.py
-    │   ├── rules.py             #   rules.toml (bodies parsed via parsing.notation)
-    │   └── project.py           #   load everything    → Project
-    │
-    ├── application/             # THE ENGINE            (depends on: models, parsing, loaders)
-    │   ├── combining.py         #   bundle algebra: combine, merge (node-delink), compare
-    │   ├── matching.py          #   pattern_matches; find_matches (sequence matcher); full_match
-    │   ├── applying.py          #   apply_match: rewrite a matched locus
-    │   ├── syllabifying.py      #   syllabify: sonority + onset/coda-pattern boundaries
-    │   ├── segmentation.py      #   string_to_sequence: IPA → feature bundles
-    │   ├── rendering.py         #   sequence_to_string, render_syllabified; render_residue → �
-    │   ├── tiers.py             #   autosegmental tier ops: associate, cleanup/OCP, redock, spread/dock
-    │   └── deriving.py          #   apply_rule per mode; derive_all → [Derivation]; form_at_time
-    │
-    └── analysis/                # OUTPUT ANALYSIS       (depends on: models, application)
-        ├── accuracy.py          #   phone + feature edit distance vs attested targets (on BUNDLES)
-        ├── diagnosis.py         #   per-stage confusions (errors) + per-segment context autopsy
-        ├── dependencies.py      #   firing-based rule feeding graph → rule_dependencies.html
-        ├── blame.py             #   attribute each wrong word to the rule that produced it
-        ├── warnings.py          #   what the engine did silently: unspellable segments (�),
-        │                        #   syllabification fallbacks → warnings.md
-        └── reporting.py         #   render the accuracy CSVs (per-stage summary + per-word)
+├── web/                         # browser playground (the engine as WebAssembly) — see web/README.md
+└── crates/
+    ├── fortis-web/              # the engine's session for the web app (wasm-bindgen)
+    └── fortis/
+        ├── tests/               # golden.rs (saved reports of frozen projects), error-path and edge-case tests
+        └── src/
+            ├── main.rs          # `fortis`: load → derive → write reports → run summary
+            ├── bin/             # `fortis-induce`, `fortis-scoreboard`
+            ├── cli.rs           # the analysis phase of a run, and --single
+            ├── reports.rs       # derivations.csv, derivation_matrix.csv, rule_firings.csv
+            ├── diagram.rs       # autosegmental diagrams (--autosegmental, the web Graph toggle)
+            ├── py.rs            # text formatting the reports share: CSV quoting, floats, JSON
+            ├── models.rs        # INERT DATA: values, specs, bundles, rules, features, inventories,
+            │                    #   words, forms, derivations, project
+            ├── parsing/         # STRING → models: lexer, bundles, notation, validation
+            ├── loaders/         # FILE → models: files (disk or in-memory source), inventories,
+            │                    #   lexicon (words, rules, settings), project
+            ├── engine/          # THE ENGINE: combining, matching, applying, syllabifying,
+            │                    #   segmentation, rendering, tiers, deriving
+            ├── analysis/        # accuracy, diagnosis (errors + context), blame, dependencies,
+            │                    #   warnings, reporting, diagnostics (lint, class query)
+            └── induction/       # the rule inducer: intervals, correspond, candidates, evaluate,
+                                 #   boost, refine, objective, report
 ```
 
 ### Tests
 
-`cargo test` runs the Rust tests. `crates/fortis/tests/golden.rs` runs the commands on frozen
+`cargo test` runs the tests. `crates/fortis/tests/golden.rs` runs the commands on frozen
 copies of the five shipped projects and compares every file they write with saved reports.
-The saved reports are the Python program's output on the same inputs. The other test files
-cover what the reports cannot show, such as the error messages for a malformed input file.
+The saved reports are the output of the Python program that Fortis was first written in,
+tagged `python-final` in git. The other test files cover what the reports cannot show, such
+as the error messages for a malformed input file.
 
 After a change meant to alter the reports, rewrite the saved reports and review the diff:
 
@@ -573,7 +525,7 @@ only on request: `cargo test --release --test golden -- --ignored`.
   Optimality-Theoretic ranking or violation-tableau mode.
 - **The browser engine is slower than the Rust CLI.** It runs in one thread:
   a full run of `pie_to_english` takes about 2 s in the browser, against
-  0.34 s for the [Rust binary](#rust-port).
+  0.3 s on the [command line](#command-line).
 - **The web app has no persistence layer.** A loaded project lives only in
   that browser tab's memory; there's no save-to-cloud, sharing, or
   multi-user collaboration, only per-file download.

@@ -713,3 +713,21 @@ in the lexicon.
 - A frozen copy of the 45 Python modules inside the project: a second engine that drifts.
 - Running the tools from a checkout of `python-final`: they would read and write that checkout.
 - Reimplementing segmentation and syllabification in the tools: about 300 lines that drift.
+
+## 2026-10-08: Retire the Python engine; Rust is the only implementation
+
+**Choice:** Delete the Python engine (`src/fortis`), its pytest suite (`tests/`), `pyproject.toml`,
+`uv.lock`, `.python-version` and `parity.sh`. The Rust crate is now the program. The git tag
+`python-final` marks the last commit with the Python code. The web app keeps its Svelte front end
+and runs the Rust engine as WebAssembly. The Python data tools in `projects/pie_to_english/tools`
+stay, and reach the engine through `fortis --segment` (see the entry before this one).
+
+**Reason:** Asked for on 2026-10-08. The Rust port writes the same reports on all five shipped
+projects, runs about 30 times faster, and already runs the web app. Two implementations would need
+every change made twice.
+
+**Rejected:**
+- Keeping the Python code in the repository as an unmaintained reference. The tag keeps it
+  reachable without the risk that someone edits a copy that no longer runs.
+- Rewriting the web front end in a Rust UI framework. That is a full rewrite with no speed gain,
+  because the front end is not the slow part.

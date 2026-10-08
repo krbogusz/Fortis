@@ -835,15 +835,11 @@ always, and — when the word carries a target — `single_accuracy.csv`,
 
 ### 8.5 Parallel derivation
 
-Because deriving one word never affects another, the CLI (`python -m src.fortis.main`)
-fans a large lexicon across worker processes **automatically**, giving a ~4–6× speedup
-on a multi-core machine. The result is
-byte-identical to a serial run and in the same order. A small lexicon (below a couple
-hundred words) stays in a single process, since the pool's start-up cost — spawning
-processes and handing each the project — would outweigh the gain. `--serial` forces a
-single process (useful for profiling or a reproducible baseline); `--workers N` pins the
-pool size (default: about two below the CPU count). The browser app derives in one
-thread, so this applies to the CLIs only.
+Because deriving one word never affects another, the CLI (`fortis`) derives a lexicon in
+parallel, one thread per core. The result is byte-identical to a serial run and in the same
+order. `--serial` uses one thread (useful for profiling or a reproducible baseline);
+`--workers N` pins the thread count. The browser app derives in one thread, so this applies
+to the CLIs only.
 
 ### 8.6 Segmenting forms
 
