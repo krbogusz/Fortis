@@ -3865,10 +3865,9 @@ forms = [
 [[words]]
 id = "staþlaz"
 gloss = "staþlaz"
-note = "Source: Wiktionary (kaikki). PREFORM corrected: the cited *sth₂tlos is replaced by *sth₂̥́tlos on the evidence of the attested Germanic form (Ringe / Kroonen)."
+note = "Source: Wiktionary (kaikki). The PIE seed ˈstħ̩tlos (*sth₂̥́tlos, corrected from Wiktionary's *sth₂tlos) was removed on 2026-10-08: no book in hand gives the PIE form. The word starts at Ringe & Taylor's PNWGmc *staþulaz (PDF 206, 287), whose *u OE staþol continues (DECISIONS.md, 2026-10-07, 'Start a word at its earliest secure reconstruction'). The 200 form was ˈstɑθlɑz, Wiktionary's *staþlaz."
 forms = [
-  { time = -2000, ipa = "ˈstħ̩tlos", category = "noun", note = "PIE *sth₂tlos, as cited by Wiktionary." },
-  { time = 200, ipa = "ˈstɑθlɑz", category = "noun" },
+  { time = 200, ipa = "ˈstɑθulɑz", category = "noun" },
   { time = 900, ipa = "ˈstɑθol" },
 ]
 
