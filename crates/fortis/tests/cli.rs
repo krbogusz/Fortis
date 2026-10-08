@@ -5,6 +5,7 @@
 mod common;
 
 use std::fs;
+use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
 use std::sync::Arc;
@@ -437,4 +438,46 @@ fn standalone_rule_keeps_its_own_heading() {
         reports::rule_firings_csv(&[derivation], &rules, &r),
         "rule,t,sporadic,count,changes,matched\r\ndevoicing,0,,1,b→p,ˈba → ˈpa\r\n"
     );
+}
+
+// `--segment` has no Python counterpart; its expected values come from the Python engine's
+// string_to_sequence and syllabify at python-final on the same forms.
+
+#[test]
+fn segment_prints_segments_and_boundaries_per_line() {
+    let dir = scratch("segment");
+    let forms = dir.join("forms.txt");
+    fs::write(&forms, "astra\na€b\n").unwrap();
+    let out = fortis(&["--segment", path(&forms)]);
+    assert!(out.status.success());
+    assert_eq!(
+        String::from_utf8(out.stdout).unwrap(),
+        "{\"form\": \"astra\", \"segments\": [\"a\", \"s\", \"t\", \"r\", \"a\"], \"boundaries\": [0, 1, 5]}\n\
+         {\"form\": \"a\\u20acb\", \"error\": \"Unknown character '\\u20ac' at position 1\"}\n"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn segment_time_selects_the_syllable_parts() {
+    // The default project allows an s + stop + liquid onset only from time 500.
+    let mut child = Command::new(env!("CARGO_BIN_EXE_fortis"))
+        .args(["--segment", "-", "--time", "-2000"])
+        .current_dir(golden())
+        .env("FORTIS_ROOT", golden())
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    child.stdin.take().unwrap().write_all("astra\nekstra\n".as_bytes()).unwrap();
+    let out = child.wait_with_output().unwrap();
+    let lines: Vec<String> = String::from_utf8(out.stdout).unwrap().lines().map(str::to_string).collect();
+    assert!(lines[0].ends_with("\"boundaries\": [0, 2, 5]}"), "{}", lines[0]);
+    assert!(lines[1].ends_with("\"boundaries\": [0, 3, 6]}"), "{}", lines[1]);
+}
+
+#[test]
+fn time_requires_segment() {
+    let out = fortis(&["--time", "5"]);
+    assert!(!out.status.success());
 }

@@ -170,6 +170,10 @@ absent — printing a compact summary and writing the same reports prefixed `sin
 (`single_derivations.csv` always; `single_accuracy.csv`, `single_errors.csv`, … when the
 word has a target).
 
+`--segment FILE` checks transcriptions without deriving: for each line of `FILE` (`-` reads
+standard input) it prints the form's segments and syllable boundaries as JSON, or why the
+inventory cannot segment it. See §8.6 of the [user guide](docs/user_guide.md).
+
 ### Rust port
 
 `crates/fortis` holds a port of the whole program to Rust: the loaders, the engine, every report and

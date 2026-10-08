@@ -1,5 +1,6 @@
 //! The `fortis` command: load a project, derive every word, and write the reports.
 
+use std::io::{BufRead, Write};
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use std::time::Instant;
@@ -10,6 +11,8 @@ use fortis::analysis::dependencies::{build_dependency_graph, render_dependency_h
 use fortis::analysis::diagnostics::unsatisfiable_rules;
 use fortis::engine::deriving::Engine;
 use fortis::engine::rendering::Renderer;
+use fortis::engine::segmentation::string_to_sequence;
+use fortis::engine::syllabifying::syllabify;
 use fortis::loaders::{default_project_dir, load_project, unfired_scoped_rules};
 use fortis::models::*;
 use fortis::py;
@@ -42,6 +45,15 @@ struct Args {
     /// Check the rules for unsatisfiable bundles, then exit.
     #[arg(long)]
     lint: bool,
+    /// Segment and syllabify each line of FILE ('-' for standard input) against the project's
+    /// inventory, and print one JSON object per line: the segments and the syllable boundaries,
+    /// or the reason the form cannot be segmented.
+    #[arg(long, value_name = "FILE")]
+    segment: Option<PathBuf>,
+    /// With --segment: syllabify with the syllable parts in force at time T (default: the
+    /// latest).
+    #[arg(long, value_name = "T", allow_negative_numbers = true, requires = "segment")]
+    time: Option<i64>,
     /// Derive in a single thread.
     #[arg(long)]
     serial: bool,
@@ -93,6 +105,9 @@ fn main() -> ExitCode {
             return ExitCode::from(1);
         }
     };
+    if let Some(file) = &args.segment {
+        return run_segment(&project, file, args.time);
+    }
     let engine = match Engine::new(&project) {
         Ok(e) => e,
         Err(e) => {
@@ -212,6 +227,49 @@ fn print_summary(
     let stems: Vec<String> =
         saved.iter().map(|p| p.file_stem().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default()).collect();
     eprintln!("{}", dim(&py::fill(&stems.join(" · "), 76, "  ", "  ")));
+}
+
+/// `--segment`: answer one form per line, flushing each answer, so a caller can keep the command
+/// open and ask about forms one at a time.
+fn run_segment(project: &Project, file: &Path, time: Option<i64>) -> ExitCode {
+    let input: Box<dyn BufRead> = if file == Path::new("-") {
+        Box::new(std::io::stdin().lock())
+    } else {
+        match std::fs::File::open(file) {
+            Ok(f) => Box::new(std::io::BufReader::new(f)),
+            Err(e) => {
+                eprintln!("error: could not read '{}': {e}", file.display());
+                return ExitCode::from(1);
+            }
+        }
+    };
+    let renderer = Renderer::new(project);
+    let mut out = std::io::stdout().lock();
+    for line in input.lines() {
+        let line = match line {
+            Ok(l) => l,
+            Err(e) => {
+                eprintln!("error: could not read '{}': {e}", file.display());
+                return ExitCode::from(1);
+            }
+        };
+        let form = line.trim();
+        let mut fields = vec![("form".to_string(), py::Json::Str(form.to_string()))];
+        match string_to_sequence(form, project) {
+            Ok(sequence) => {
+                let bundles = sequence.bundles();
+                let segments = bundles.iter().map(|b| py::Json::Str(renderer.segment(b, false))).collect();
+                let boundaries = syllabify(&bundles, project, time).into_iter().map(|b| py::Json::Int(b as i64)).collect();
+                fields.push(("segments".into(), py::Json::List(segments)));
+                fields.push(("boundaries".into(), py::Json::List(boundaries)));
+            }
+            Err(e) => fields.push(("error".into(), py::Json::Str(e))),
+        }
+        if writeln!(out, "{}", py::Json::Obj(fields).dumps()).and_then(|_| out.flush()).is_err() {
+            return ExitCode::from(1); // the reader went away
+        }
+    }
+    ExitCode::SUCCESS
 }
 
 fn run_lint(project: &Project, start: Instant) -> ExitCode {

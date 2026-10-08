@@ -687,3 +687,29 @@ reports alone, 90% with the ported tests, and 93.5% with the slow cases included
 - Saved reports only, which leaves every error message untested.
 - Porting all 951 pytest test functions.
 - Comparing against the live projects.
+
+## 2026-10-08: Give fortis a --segment option, and move the pie_to_english tools onto it
+
+**Choice:** `fortis --segment FILE` segments and syllabifies each line of `FILE` (`-` for
+standard input) against the project's inventory, and prints one JSON object per line: the
+segments and the syllable boundaries, or the reason the form cannot be segmented. `--time T`
+picks the syllable parts in force at `T`. It answers each line as soon as it reads it.
+
+The `pie_to_english` data tools stay Python and stay inside that project. `build_gold.py` and
+`pie_ipa.py` keep one `fortis --segment` process open and ask it whether a form segments and
+where its syllables break, where they used to import the Python engine. Their one package,
+pypdf for `ringe.py`, is listed in `projects/pie_to_english/tools/requirements.txt`, so the
+main project declares nothing for them.
+
+**Reason:** Asked for on 2026-10-08, once removing the Python engine turned out to break three
+tools. The tools imported four engine functions, which pulled in 45 modules (10,700 lines),
+and they reached into the engine's internals where its public command would do. With the
+option, the tools use Fortis the way any user does. Run on the local kaikki cache, the tools
+write the same `words.toml`, `gold_rows.json` and `provenance.csv` as with the Python engine,
+and `--segment` gives the Python engine's segments and boundaries on all 2,800 distinct forms
+in the lexicon.
+
+**Rejected:**
+- A frozen copy of the 45 Python modules inside the project: a second engine that drifts.
+- Running the tools from a checkout of `python-final`: they would read and write that checkout.
+- Reimplementing segmentation and syllabification in the tools: about 300 lines that drift.

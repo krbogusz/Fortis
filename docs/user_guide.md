@@ -845,6 +845,28 @@ single process (useful for profiling or a reproducible baseline); `--workers N` 
 pool size (default: about two below the CPU count). The browser app derives in one
 thread, so this applies to the CLIs only.
 
+### 8.6 Segmenting forms
+
+`--segment FILE` checks forms against the project's inventory without deriving anything.
+`FILE` holds one form per line, and `-` reads standard input. For each line, `fortis` prints
+one JSON object on standard output: the form's segments and its syllable boundaries, or the
+reason the inventory cannot segment it.
+
+```
+$ printf 'astra\na€b\n' | fortis --segment -
+{"form": "astra", "segments": ["a", "s", "t", "r", "a"], "boundaries": [0, 1, 5]}
+{"form": "a\u20acb", "error": "Unknown character '\u20ac' at position 1"}
+```
+
+A boundary is the index of the segment that starts a syllable, and the last one is the
+number of segments. The output escapes non-ASCII characters, as JSON allows. `--time T`
+syllabifies with the syllable parts in force at time `T`; without it, the latest ones
+apply. In the default project, `astra` splits as `as.tra` at `--time -2000` and as `a.stra`
+from time 500, where the onsets admit *s* + stop + liquid.
+
+`fortis` answers each line as soon as it reads it, so a script can keep one process open
+and ask about forms one at a time. The `pie_to_english` data tools work this way.
+
 ---
 
 ## 9. Validation
