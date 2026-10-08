@@ -633,3 +633,16 @@ memory, and a service worker that reloads the page on the first visit.
   service worker for no gain.
 - Looking for an allocator with per-thread caches, which adds a dependency and may still not beat
   one thread.
+
+## 2026-10-08: Move the Rust crates into a Cargo workspace at the root
+
+**Choice:** `Cargo.toml` at the repository root declares a workspace with two members:
+`crates/fortis` (the library and the three commands) and `crates/fortis-web` (the WebAssembly
+session). `default-members` holds only `crates/fortis`, so `cargo build` and `cargo test` skip the
+web crate, which `web/scripts/build-engine.mjs` builds. The release profile lives in the root
+manifest. A command finds `projects/default` two folders above its crate, or through `FORTIS_ROOT`.
+
+**Reason:** With Python gone, a folder named `rust/` no longer marks one version among two. A root
+workspace lets `cargo build` and `cargo test` run from the repository root.
+
+**Rejected:** Keeping the crates in `rust/`.

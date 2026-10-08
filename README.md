@@ -172,7 +172,7 @@ word has a target).
 
 ### Rust port
 
-`rust/` holds a port of the whole program to Rust: the loaders, the engine, every report and
+`crates/fortis` holds a port of the whole program to Rust: the loaders, the engine, every report and
 the inducer. It writes the same files as the Python program, byte for byte. On the large
 projects a full run is about 30 times faster: `pie_to_english` takes 0.34 s, against 9.4 s in
 Python. The inducer is about 100 times faster: 31 s against 53 minutes on `pie_to_english`.
@@ -180,15 +180,15 @@ Python. The inducer is about 100 times faster: 31 s against 53 minutes on `pie_t
 To build and run it:
 
 1. Install the Rust toolchain with rustup (<https://rustup.rs>).
-2. Build the binaries: `cargo build --release --manifest-path rust/Cargo.toml`.
-3. Run a project: `rust/target/release/fortis --project projects/pie_to_english`.
+2. Build the binaries: `cargo build --release`.
+3. Run a project: `target/release/fortis --project projects/pie_to_english`.
 
 `fortis` takes the flags of `python -m src.fortis.main`. `fortis-induce` and
 `fortis-scoreboard` take the flags of `src.fortis.induction.main` and
-`src.fortis.induction.scoreboard`. A binary finds the shipped `projects/default` next to the
-crate it was built from. If you move the binary, set `FORTIS_ROOT` to the repository root.
+`src.fortis.induction.scoreboard`. A binary finds the shipped `projects/default` in the
+repository it was built from. If you move the binary, set `FORTIS_ROOT` to the repository root.
 
-`rust/parity.sh` runs both programs on every shipped project and compares every file they
+`parity.sh` runs both programs on every shipped project and compares every file they
 write. To include the inducer on `latin_to_french` and `pie_to_english`, which takes Python
 about 90 minutes, set `PARITY_INDUCE_ALL=1`.
 
@@ -456,7 +456,8 @@ fortis/
 │   └── ...                      # other projects, e.g. latin_to_french, pie_to_english
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
 ├── web/                         # browser playground (the Rust engine as WebAssembly) — see web/README.md
-├── rust/                        # the Rust port (Cargo crate `fortis`), parity.sh, and web/ (its WASM wrapper)
+├── crates/                      # the Rust port: fortis (the program) and fortis-web (its WASM wrapper)
+├── parity.sh                    # runs the Python and Rust programs and compares their reports
 ├── tests/
 └── src/fortis/
     ├── config.py                # paths, value symbols, greek alphabet, special symbols

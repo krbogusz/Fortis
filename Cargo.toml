@@ -1,0 +1,9 @@
+[workspace]
+members = ["crates/fortis", "crates/fortis-web"]
+# A plain `cargo build` builds the CLI; the web crate is built by web/scripts/build-engine.mjs.
+default-members = ["crates/fortis"]
+resolver = "3"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1

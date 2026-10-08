@@ -23,7 +23,3 @@ path = "src/bin/fortis-induce.rs"
 [[bin]]
 name = "fortis-scoreboard"
 path = "src/bin/fortis-scoreboard.rs"
-
-[profile.release]
-lto = "fat"
-codegen-units = 1

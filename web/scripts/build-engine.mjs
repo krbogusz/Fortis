@@ -1,4 +1,4 @@
-// Builds the Rust engine (../rust/web) to WebAssembly with wasm-pack and copies it, with its
+// Builds the Rust engine (../crates/fortis-web) to WebAssembly with wasm-pack and copies it, with its
 // worker script, into public/engine/. Also copies the shipped default project and the example
 // projects into public/projects/.
 // Wired as npm predev / prebuild.
@@ -44,7 +44,7 @@ const INVENTORY = [
 // like the CLI's load_project).
 
 // 1. The engine. wasm-pack fetches the wasm-bindgen CLI that matches the crate's version.
-const crate = resolve(web, "..", "rust", "web");
+const crate = resolve(web, "..", "crates", "fortis-web");
 const env = { ...process.env, PATH: `${resolve(homedir(), ".cargo", "bin")}:${process.env.PATH}` };
 execSync("wasm-pack build --release --target web --no-pack --out-dir pkg", { cwd: crate, stdio: "inherit", env });
 const engineDir = resolve(web, "public", "engine");

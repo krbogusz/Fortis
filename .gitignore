@@ -14,6 +14,9 @@ wheels/
 # files like letters.csv and docs like SOURCE.md live outside it and stay).
 projects/**/reports/
 
+# Rust build output
+/target/
+
 # Other
 .DS_Store
 

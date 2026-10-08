@@ -9,14 +9,14 @@ use std::path::{Path, PathBuf};
 
 use crate::models::*;
 
-/// The shipped default project (`projects/default`), found next to the crate or via
-/// `FORTIS_ROOT`.
+/// The shipped default project (`projects/default`), found at the repository root two levels
+/// above the crate, or via `FORTIS_ROOT`.
 pub fn default_project_dir() -> PathBuf {
     if let Ok(root) = std::env::var("FORTIS_ROOT") {
         return PathBuf::from(root).join("projects").join("default");
     }
     let manifest = Path::new(env!("CARGO_MANIFEST_DIR"));
-    manifest.parent().unwrap_or(manifest).join("projects").join("default")
+    manifest.ancestors().nth(2).unwrap_or(manifest).join("projects").join("default")
 }
 
 fn file_name(path: &Path) -> String {

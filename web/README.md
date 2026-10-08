@@ -1,13 +1,13 @@
 # Fortis — web app
 
 A browser front-end for the Fortis phonology engine. It runs the Rust port of the
-engine (`../rust`), compiled to WebAssembly, rather than a separate JavaScript
+engine (`../crates`), compiled to WebAssembly, rather than a separate JavaScript
 reimplementation. Edit the inventories on the left, and the derivations re-run on the
 right.
 
 ## How it reflects the engine
 
-There is no JavaScript copy of the engine to keep in sync. The crate `../rust/web` wraps
+There is no JavaScript copy of the engine to keep in sync. The crate `../crates/fortis-web` wraps
 the `fortis` crate for the browser. At `predev`/`prebuild`, `scripts/build-engine.mjs`
 builds it with `wasm-pack` and copies the result into `public/engine/`, with the worker
 script `src/lib/engine.worker.js`. It also copies `../projects/default/` into
@@ -151,5 +151,5 @@ npm run smoke      # headless check that the engine loads and derives
 ```
 
 `npm run build-engine` rebuilds `public/engine/` and `public/projects/` on its own. Run
-it after changing `../rust` or `../projects` if the dev server is already up. The first
+it after changing `../crates` or `../projects` if the dev server is already up. The first
 build takes about a minute: wasm-pack compiles a matching `wasm-bindgen` CLI once.

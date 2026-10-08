@@ -2,18 +2,18 @@
 # Run the Python CLI and the Rust binaries on the shipped projects and diff everything they write:
 # every report of a full run (also with --autosegmental and --single), the induction scoreboard,
 # and the inducer's rules and trace.
-# usage: rust/parity.sh [project ...]        (default: all five projects)
+# usage: ./parity.sh [project ...]        (default: all five projects)
 # The inducer takes Python about 90 minutes on latin_to_french and pie_to_english, so it runs on
 # those two only with PARITY_INDUCE_ALL=1.
-# Exits non-zero if any file differs. Output lands in rust/target/parity/{py,rs}/.
+# Exits non-zero if any file differs. Output lands in target/parity/{py,rs}/.
 set -u
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-OUT="${PARITY_OUT:-$ROOT/rust/target/parity}"
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+OUT="${PARITY_OUT:-$ROOT/target/parity}"
 PROJECTS=("$@")
 [ ${#PROJECTS[@]} -eq 0 ] && PROJECTS=(default halle_vaux_wolfe latin_to_french pie_to_english spe)
 command -v cargo >/dev/null || . "$HOME/.cargo/env"
-cargo build --release --quiet --manifest-path "$ROOT/rust/Cargo.toml" || exit 1
-BIN="$ROOT/rust/target/release/fortis"
+cargo build --release --quiet --manifest-path "$ROOT/Cargo.toml" || exit 1
+BIN="$ROOT/target/release/fortis"
 PY="$ROOT/.venv/bin/python"
 
 compare_dirs() {  # compare_dirs <label> <python dir> <rust dir>
@@ -65,10 +65,10 @@ print(words[0].seed.ipa * 2)
   rm -rf "$OUT/py/$dir" "$OUT/rs/$dir"
   mkdir -p "$OUT/py/$dir" "$OUT/rs/$dir"
   "$PY" -m src.fortis.induction.scoreboard --project "projects/$p" --output "$OUT/py/$dir/scoreboard.md" > "$OUT/py/$dir/scoreboard.stdout" 2>/dev/null
-  "$ROOT/rust/target/release/fortis-scoreboard" --project "projects/$p" --output "$OUT/rs/$dir/scoreboard.md" > "$OUT/rs/$dir/scoreboard.stdout" 2>/dev/null
+  "$ROOT/target/release/fortis-scoreboard" --project "projects/$p" --output "$OUT/rs/$dir/scoreboard.md" > "$OUT/rs/$dir/scoreboard.stdout" 2>/dev/null
   if [ "${PARITY_INDUCE_ALL:-0}" = 1 ] || { [ "$p" != latin_to_french ] && [ "$p" != pie_to_english ]; }; then
     "$PY" -m src.fortis.induction.main --project "projects/$p" --out "$OUT/py/$dir/induced_rules.toml" --report "$OUT/py/$dir/induction.md" > "$OUT/py/$dir/induce.stdout" 2>/dev/null
-    "$ROOT/rust/target/release/fortis-induce" --project "projects/$p" --out "$OUT/rs/$dir/induced_rules.toml" --report "$OUT/rs/$dir/induction.md" > "$OUT/rs/$dir/induce.stdout" 2>/dev/null
+    "$ROOT/target/release/fortis-induce" --project "projects/$p" --out "$OUT/rs/$dir/induced_rules.toml" --report "$OUT/rs/$dir/induction.md" > "$OUT/rs/$dir/induce.stdout" 2>/dev/null
   fi
   compare_dirs "$p induction" "$OUT/py/$dir" "$OUT/rs/$dir" || fail=1
 done

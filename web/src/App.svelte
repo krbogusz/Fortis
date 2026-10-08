@@ -1295,7 +1295,7 @@
               <p class="muted">
                 {pendingSize.words} words × {pendingSize.rules} rules — too large to run on every
                 edit. Either run the whole project with the <strong>Run project</strong> button
-                above, or derive one word at a time below. The Rust CLI (<code>rust/</code>) runs a full
+                above, or derive one word at a time below. The Rust CLI (<code>crates/fortis</code>) runs a full
                 project several times faster than the browser.
               </p>
             {/if}

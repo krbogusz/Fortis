@@ -1,4 +1,4 @@
-// Browser-side bridge to the Fortis engine: the Rust crate in ../rust/web, compiled to
+// Browser-side bridge to the Fortis engine: the Rust crate in ../crates/fortis-web, compiled to
 // WebAssembly and run in a Web Worker (src/lib/engine.worker.js).
 //
 // The project files stay here on the main thread, so reading and editing them is synchronous.
