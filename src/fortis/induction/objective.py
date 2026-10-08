@@ -34,6 +34,7 @@ from src.fortis.analysis.accuracy import (
     align,
     feature_diff,
     form_phones,
+    ingest_targets,
     segment_form,
     specified_features,
     try_segment,
@@ -321,6 +322,7 @@ def cascade_score(derivations: Sequence[Derivation], project: Project) -> Cascad
     model = bits_model(project)
     cache: PhoneCache = {}
     final_weight = project.settings.induction.final_weight
+    ingest_targets(derivations, project)  # a fresh or parallel derivation's targets are unsegmented
     stages = accuracy_by_stage(derivations, project)
     fit = 0.0
     final_report: AccuracyReport | None = None

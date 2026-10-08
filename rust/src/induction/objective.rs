@@ -4,7 +4,10 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use crate::analysis::accuracy::{AccuracyReport, DistanceToTarget, OpKind, accuracy_by_stage, align, comparable_bundles, feature_diff, segment_form, try_segment};
+use crate::analysis::accuracy::{
+    AccuracyReport, DistanceToTarget, OpKind, accuracy_by_stage, align, comparable_bundles, feature_diff, ingest_targets,
+    segment_form, try_segment,
+};
 use crate::engine::rendering::Renderer;
 use crate::models::*;
 use crate::py::fsum;
@@ -147,10 +150,11 @@ pub fn fit_bits_of_report(report: &AccuracyReport, project: &Project, model: &Bi
 }
 
 /// The whole-cascade loss over every checkpoint, plus the final checkpoint's accuracy.
-pub fn cascade_score(derivations: &[Derivation], project: &Project, r: &Renderer) -> CascadeScore {
+pub fn cascade_score(derivations: &mut [Derivation], project: &Project, r: &Renderer) -> CascadeScore {
     let model = bits_model(project);
     let cache = PhoneCache::new();
     let final_weight = project.settings.induction.final_weight;
+    ingest_targets(derivations, project);
     let stages = accuracy_by_stage(derivations, project, r);
     let mut fit = 0.0;
     let mut final_report = None;

@@ -126,12 +126,11 @@ fn derive(project: &Project) -> Vec<Derivation> {
     Engine::new(project).expect("rules resolve").derive_all().expect("words segment")
 }
 
-/// The whole-lexicon loss of a cascade, scored as the Python inducer scores it: from the
-/// project's own (unsegmented) targets.
+/// The whole-lexicon loss of a cascade.
 fn score(project: &Project, inv: &RuleInventory) -> CascadeScore {
     let p = runnable(project, inv.clone());
-    let derivations = derive(&p);
-    cascade_score(&derivations, &p, &Renderer::new(&p))
+    let mut derivations = derive(&p);
+    cascade_score(&mut derivations, &p, &Renderer::new(&p))
 }
 
 fn global_shrink(project: &Project, rules: Vec<Rule>) -> (Vec<Rule>, Vec<String>) {

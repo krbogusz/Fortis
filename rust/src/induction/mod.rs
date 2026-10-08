@@ -18,8 +18,8 @@ use objective::{CascadeScore, cascade_score};
 use report::Scoreboard;
 
 fn score(project: &Project) -> CascadeScore {
-    let derivations = Engine::new(project).expect("rules resolve").derive_all().expect("words segment");
-    cascade_score(&derivations, project, &Renderer::new(project))
+    let mut derivations = Engine::new(project).expect("rules resolve").derive_all().expect("words segment");
+    cascade_score(&mut derivations, project, &Renderer::new(project))
 }
 
 /// The project with each word's targets replaced by the hand cascade's own output.
