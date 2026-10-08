@@ -16,6 +16,14 @@ unicode-general-category = "1.1.0"
 name = "fortis"
 path = "src/main.rs"
 
+[[bin]]
+name = "fortis-induce"
+path = "src/bin/fortis-induce.rs"
+
+[[bin]]
+name = "fortis-scoreboard"
+path = "src/bin/fortis-scoreboard.rs"
+
 [profile.release]
 lto = "fat"
 codegen-units = 1
