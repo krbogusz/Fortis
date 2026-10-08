@@ -170,6 +170,28 @@ absent — printing a compact summary and writing the same reports prefixed `sin
 (`single_derivations.csv` always; `single_accuracy.csv`, `single_errors.csv`, … when the
 word has a target).
 
+### Rust port
+
+`rust/` holds a port of the whole program to Rust: the loaders, the engine, every report and
+the inducer. It writes the same files as the Python program, byte for byte. On the large
+projects a full run is about 30 times faster: `pie_to_english` takes 0.34 s, against 9.4 s in
+Python. The inducer is about 100 times faster: 31 s against 53 minutes on `pie_to_english`.
+
+To build and run it:
+
+1. Install the Rust toolchain with rustup (<https://rustup.rs>).
+2. Build the binaries: `cargo build --release --manifest-path rust/Cargo.toml`.
+3. Run a project: `rust/target/release/fortis --project projects/pie_to_english`.
+
+`fortis` takes the flags of `python -m src.fortis.main`. `fortis-induce` and
+`fortis-scoreboard` take the flags of `src.fortis.induction.main` and
+`src.fortis.induction.scoreboard`. A binary finds the shipped `projects/default` next to the
+crate it was built from. If you move the binary, set `FORTIS_ROOT` to the repository root.
+
+`rust/parity.sh` runs both programs on every shipped project and compares every file they
+write. To include the inducer on `latin_to_french` and `pie_to_english`, which takes Python
+about 90 minutes, set `PARITY_INDUCE_ALL=1`.
+
 ### Web app
 
 **Live: <https://krbogusz.github.io/Fortis/>** — no install; it runs entirely in your
@@ -433,6 +455,7 @@ fortis/
 │   └── ...                      # other projects, e.g. latin_to_french, pie_to_english
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
 ├── web/                         # browser playground (Pyodide) — see web/README.md
+├── rust/                        # the Rust port (Cargo crate `fortis`) and parity.sh
 ├── tests/
 └── src/fortis/
     ├── config.py                # paths, value symbols, greek alphabet, special symbols
