@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Rule dependence tree</title>
+<style>
+ :root{--bg:#fff;--panel:#faf9fb;--code-bg:#f4f3ec;--border:#e2e0e6;--text:#4b4753;
+   --text-h:#08060d;--muted:#8a8594;--dep:#2f6fbf;--dependent:#a67a10;--shadow:rgba(0,0,0,.08) 0 4px 12px -4px}
+ @media (prefers-color-scheme:dark){:root{--bg:#14151a;--panel:#1a1b21;--code-bg:#1f2028;--border:#2c2e38;
+   --text:#c2c6cf;--text-h:#f3f4f6;--muted:#8b8f99;--dep:#6ea8ff;--dependent:#e0b84d;--shadow:rgba(0,0,0,.4) 0 4px 12px -4px}}
+ html,body{margin:0;background:var(--bg);color:var(--text);font:13px/1.4 system-ui,sans-serif}
+ header{padding:10px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;left:0;background:var(--bg);z-index:5}
+ header b{color:var(--text-h)}
+ .hint{color:var(--muted)} .hint .mgrp{white-space:nowrap} .hint .msep{opacity:.6}
+ .k-dep{color:var(--dep);font-weight:600} .k-dependent{color:var(--dependent);font-weight:600}
+ #wrap{overflow:auto;height:calc(100vh - 52px)}
+ svg{display:block;font:11px system-ui,sans-serif}
+ .band{fill:var(--panel)} .band.odd{fill:var(--code-bg)}
+ .bandlbl{fill:var(--muted);font-size:11px}
+ .edge{fill:none;stroke:var(--border);stroke-width:1;opacity:.55}
+ .edge.dim{opacity:.06}
+ .edge.dep{stroke:var(--dep);opacity:.95;stroke-width:1.6}
+ .edge.dependent{stroke:var(--dependent);opacity:.95;stroke-width:1.6}
+ .node{fill:var(--muted);stroke:var(--bg);stroke-width:1;cursor:pointer}
+ .node.root{stroke:var(--text-h);stroke-width:1.5}
+ .node.focus{fill:var(--text-h)}
+ .node.dep{fill:var(--dep)} .node.dependent{fill:var(--dependent)}
+ .node.dim{opacity:.16}
+ #tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--border);border-radius:6px;
+   padding:8px 10px;max-width:330px;font:12px system-ui,sans-serif;display:none;z-index:10;box-shadow:var(--shadow)}
+ #tip .nm{color:var(--text-h);font-weight:600;margin-bottom:3px}
+ #tip code{color:var(--text)} #tip .req,#tip .prod{color:var(--text);margin-top:2px}
+ #tip .fed{color:var(--dep);margin-top:4px} #tip .feeds{color:var(--dependent)}
+ #tip .ids{color:var(--muted);font-size:11px;word-break:break-word}
+</style></head><body>
+<header><b>Rule dependence tree</b>
+ &nbsp;<span class="hint"><span class="mgrp">5 rules · 0 feeding edges · 5 unconnected roots</span>
+ <span class="msep">·</span> <span class="mgrp">x = time, +1 sub-column per same-time dependency &rarr;</span>
+ <span class="msep">·</span> <span class="mgrp">hover a node: <span class="k-dep">blue</span> = fed by · <span class="k-dependent">orange</span> = feeds</span></span></header>
+<div id="wrap"><svg id="svg" width="304" height="200"></svg></div>
+<div id="tip"></div>
+<script>
+const D={"nodes": [{"i": 0, "id": "intervocalic_voicing", "name": "Intervocalic voicing", "t": null, "depth": 0, "x": 60.0, "y": 80, "requires": ["t"], "produces": ["d"], "deps": []}, {"i": 1, "id": "final_devoicing", "name": "Final devoicing", "t": null, "depth": 0, "x": 60.0, "y": 96, "requires": ["d"], "produces": ["t"], "deps": []}, {"i": 2, "id": "nasal_place_assimilation", "name": "Nasal place assimilation", "t": null, "depth": 0, "x": 60.0, "y": 112, "requires": ["n"], "produces": ["m", "\u014b"], "deps": []}, {"i": 3, "id": "backness_rounding_harmony", "name": "Backness & rounding harmony", "t": null, "depth": 0, "x": 60.0, "y": 128, "requires": ["i"], "produces": ["u"], "deps": []}, {"i": 4, "id": "metaphony_raising", "name": "Metaphony (raising)", "t": null, "depth": 0, "x": 60.0, "y": 144, "requires": ["e"], "produces": ["i"], "deps": []}], "edges": []}, bands=[{"x0": -15.0, "x1": 135.0, "label": "untimed"}];
+const H=160;
+const svg=document.getElementById('svg'), tip=document.getElementById('tip');
+const NS='http://www.w3.org/2000/svg';
+const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const baseCls=n=>D.nodes[n].deps.length?'node':'node root';
+bands.forEach((b,i)=>{
+  svg.appendChild(el('rect',{class:i%2?'band odd':'band',x:b.x0,y:40,width:b.x1-b.x0,height:H}));
+  const t=el('text',{class:'bandlbl',x:(b.x0+b.x1)/2,y:26,'text-anchor':'middle'});
+  t.textContent=b.label; svg.appendChild(t);
+});
+const node=i=>D.nodes[i];
+const edgeEls=[];
+D.edges.forEach(e=>{const a=node(e.from),b=node(e.to);  // e.from depends on e.to
+  const mx=(a.x+b.x)/2+(a.x===b.x?60:0);  // bulge same-column edges sideways
+  const p=el('path',{class:'edge',d:`M${b.x},${b.y} C${mx},${b.y} ${mx},${a.y} ${a.x},${a.y}`});
+  svg.appendChild(p); edgeEls.push({el:p,from:e.from,to:e.to});
+});
+const nodeEls=[];
+D.nodes.forEach(n=>{
+  const c=el('circle',{class:baseCls(n.i),cx:n.x,cy:n.y,r:4.5,'data-i':n.i});
+  svg.appendChild(c); nodeEls.push(c);
+  c.addEventListener('mouseenter',()=>hover(n));
+  c.addEventListener('mousemove',ev=>{tip.style.left=Math.min(ev.clientX+14,innerWidth-348)+'px';tip.style.top=(ev.clientY+14)+'px';});
+  c.addEventListener('mouseleave',clear);
+});
+function hover(n){
+  const deps=new Set(n.deps), dependents=new Set();
+  D.edges.forEach(e=>{if(e.to===n.i)dependents.add(e.from);});
+  edgeEls.forEach(({el,from,to})=>{
+    el.setAttribute('class', from===n.i?'edge dep':to===n.i?'edge dependent':'edge dim');
+  });
+  nodeEls.forEach(c=>{const i=+c.getAttribute('data-i');
+    c.setAttribute('class', i===n.i?'node focus':deps.has(i)?'node dep':dependents.has(i)?'node dependent':baseCls(i)+' dim');
+  });
+  const fedBy=n.deps.map(i=>D.nodes[i].id), feeds=[...dependents].map(i=>D.nodes[i].id);
+  tip.style.display='block';
+  tip.innerHTML=`<div class="nm">${n.name}</div>`+
+    `<div class="hint">t=${n.t===null?'untimed':n.t} · depth ${n.depth}${n.deps.length?'':' (root)'} · <code>${n.id}</code></div>`+
+    `<div class="req">needs: ${n.requires.join(' ')||'—'}</div>`+
+    `<div class="prod">makes: ${n.produces.join(' ')||'—'}</div>`+
+    `<div class="fed">fed by (${fedBy.length}):</div><div class="ids">${fedBy.join(', ')||'—'}</div>`+
+    `<div class="feeds">feeds (${feeds.length}):</div><div class="ids">${feeds.join(', ')||'—'}</div>`;
+}
+function clear(){tip.style.display='none';
+  edgeEls.forEach(({el})=>el.setAttribute('class','edge'));
+  nodeEls.forEach(c=>c.setAttribute('class', baseCls(+c.getAttribute('data-i'))));}
+</script></body></html>

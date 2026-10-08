@@ -1,0 +1,4 @@
+# HVW has no [syllabic] feature; the nucleus is any vowel — a [-consonantal, +sonorant]
+# segment. No onset/coda patterns, so medial clusters split by sonority (Maximal Onset).
+[0]
+nucleus = { definition = "consonantal: -, sonorant: +" }

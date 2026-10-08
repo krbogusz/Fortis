@@ -1,0 +1,25 @@
+stage,gloss,derived,target,d,fd,matches at,closest at
+100,sound change over time,pa.da,pada,0,0,100,100
+200,sound change over time,pa.ð̠a,pað̠a,0,0,200,200
+300,sound change over time,paː,paː,0,0,"300,final",300
+final,voicing assimilation,ag.ba,agba,0,0,final,final
+final,i-umlaut,te.ki,teki,0,0,final,final
+final,final devoicing,tak,tak,0,0,final,final
+final,feature override,se.kə,sekə,0,0,final,final
+final,"coda lenition, early",ah.ta,ahta,0,0,final,final
+final,"coda lenition, late",a.spa,aspa,0,0,final,final
+final,epenthesis,ka.tər,katər,0,0,final,final
+final,place assimilation,aŋ.ka,aŋka,0,0,final,final
+final,tone stability,kat˦,kat˦,0,0,final,final
+final,tone delinking,ka.ra,kara,0,0,final,final
+final,contour tone,pa˦.ta˦˨,pa˦ta˦˨,0,0,final,final
+final,stress,ˈka.ta,ˈkata,0,0,final,final
+final,gemination,bid.dja,biddja,0,0,final,final
+final,right-to-left,ti.pi.i,tipii,0,0,final,final
+final,sound change over time,paː,paː,0,0,"300,final",300
+final,vowel harmony (agreement),o.tu.nɤ,otunɤ,0,0,final,final
+final,vowel harmony (spreading),u.tu.nɤ,utunɤ,0,0,final,final
+final,morpheme boundary,a.ta,ata,0,0,final,final
+final,syllabification fallback,tas.tsa,tastsa,0,0,final,final
+final,tone spread,ta˦.ka˦,ta˦ka˦,0,0,final,final
+final,contradictory bundle,ti.ta,tita,0,0,final,final

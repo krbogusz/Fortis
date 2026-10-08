@@ -1,0 +1,4 @@
+word,rule,t,before,after,change
+metaphony-raising,input,,beti,be.ti,
+metaphony-raising,Metaphony (raising),,be.ti,bi.ti,e→i
+metaphony-raising,output,,,bi.ti,

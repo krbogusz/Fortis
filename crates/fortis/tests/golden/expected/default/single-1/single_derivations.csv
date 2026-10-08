@@ -1,0 +1,4 @@
+word,rule,t,before,after,change
+voicing-assimilation,input,,akba,ak.ba,
+voicing-assimilation,Voicing assimilation,,ak.ba,ag.ba,k→g
+voicing-assimilation,output,,,ag.ba,

@@ -1,0 +1,18 @@
+gloss,step,regression,t,form,target,d,fd
+abbé,input,,,ˌɑbˈbɑː.t̪em,ˌɑbˈbɑ.t̪ɛ,3,16
+abbé,"Classical Latin length distinction becomes a quality (tense) distinction, first pass",,-100,ˌɑbˈbɑː.t̪ɛm,ˌɑbˈbɑ.t̪ɛ,2,15
+abbé,the length feature is dropped now that quality carries the contrast,,-100,ˌɑbˈbɑ.t̪ɛm,ˌɑbˈbɑ.t̪ɛ,1,14
+abbé,word-final nasal consonant lost after an unstressed vowel,,-100,ˌɑbˈbɑ.t̪ɛ,ˌɑbˈbɑ.t̪ɛ,0,0
+abbé,a stressed vowel lengthens before a single consonant + glide,,400,ˌɑbˈbɑː.t̪ɛ,ˌaˈbeːθ,5,36
+abbé,the low vowel fronts by default,,500,ˌabˈbaː.t̪ɛ,ˌaˈbeːθ,4,32
+abbé,an unstressed non-low non-nasalized vowel reduces to schwa before a consonant or word end,,600,ˌabˈbaː.t̪ə,ˌaˈbeːθ,4,27
+abbé,schwa becomes non-syllabic,,600,ˌabˈbaːt̪ə̯,ˌaˈbeːθ,4,27
+abbé,non-syllabic schwa is lost elsewhere,,600,ˌabˈbaːt̪,ˌaˈbeːθ,3,16
+abbé,long stressed vowels diphthongize,true,600,ˌabˈbae̯t̪,ˌaˈbeːθ,4,33
+abbé,a word-final stop re-opens to a fricative after a vowel,,750,ˌabˈbae̯θ,ˌaˈbeːθ,3,32
+abbé,"the ae̯ diphthong monophthongizes to a long e, preserving its stress level",,750,ˌabˈbeːθ,ˌaˈbeːθ,1,13
+abbé,an identical consonant geminate reduces to one (recurrence),,750,ˌaˈbeːθ,ˌaˈbeːθ,0,0
+abbé,vowel length resets to short,,1100,ˌaˈbeθ,ˌaˈbe,1,16
+abbé,the interdental fricatives (plain and palatalized) efface,,1100,ˌaˈbe,ˌaˈbe,0,0
+abbé,stress is leveled — no longer distinctive,,1650,a.be,abe,0,0
+abbé,surface,,,a.be,abe,0,0

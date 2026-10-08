@@ -1,0 +1,3 @@
+word,rule,t,before,after,change
+contradictory-bundle,input,,tita,ti.ta,
+contradictory-bundle,output,,,ti.ta,

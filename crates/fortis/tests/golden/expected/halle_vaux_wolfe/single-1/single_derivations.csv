@@ -1,0 +1,4 @@
+word,rule,t,before,after,change
+assim-velar,input,,anka,an.ka,
+assim-velar,Nasal place assimilation (Place spreading),,an.ka,aŋ.ka,n→ŋ
+assim-velar,output,,,aŋ.ka,

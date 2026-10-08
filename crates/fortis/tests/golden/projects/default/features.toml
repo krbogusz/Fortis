@@ -1,0 +1,35 @@
+# Segmental features — every feature here lives on the segment (no `tier` field needed).
+# Suprasegmental features (tone, stress) live in tiers.toml. A `root` node parenting the
+# top-level features is synthesised automatically; no need to declare it.
+# Indentations are for readability only.
+consonantal = { kind = "binary", short = "cons" }
+syllabic = { kind = "binary", short = "syll" }
+sonorant = { kind = "binary", short = "son" }
+click = { kind = "unary", short = "cl" }
+length = { kind = "scalar", short = "ln", values = { 1 = "short", 2 = "long", 3 = "overlong" } }
+manner = { kind = "unary", children = ["continuant", "strident", "lateral", "tap", "trill"] }
+    continuant = { kind = "binary", short = "cont" }
+    strident = { kind = "unary", short = "strid" }
+    lateral = { kind = "unary", short = "lat" }
+    tap = { kind = "unary", short = "tap" }
+    trill = { kind = "unary", short = "tr" }
+nasal = { kind = "unary", short = "nas" }
+oral = { kind = "unary", children = ["labial", "lingual", "dental"] }
+    labial = { kind = "unary", short = "lab", children = ["rounded", "compressed"] }
+        rounded = { kind = "unary", short = "rnd"}
+        compressed = { kind = "unary", short = "cmpr"}
+    dental = { kind = "unary", short = "dnt"}
+    lingual = { kind = "unary", short = "ling", children = ["apical", "retroflex", "front", "back", "aperture", "advancement"] }
+        apical = { kind = "unary", short = "api"}
+        retroflex = { kind = "unary", short = "rflx"}
+        front = { kind = "unary", short = "fr", children = ["anterior", "posterior"] }
+            anterior = { kind = "unary", short = "ant"}
+            posterior = { kind = "unary", short = "post"}
+        back = { kind = "unary", short = "bk" }
+        aperture = { kind = "scalar", short = "aper", values = { -1 = "low", 0 = "mid", 1 = "high" } }
+        advancement = { kind = "scalar", short = "adv", values = { -1 = "rtr", 0 = "neutral", 1 = "atr" } }
+glottal = { kind = "unary", short = "glt", children = ["voice", "glottal_aperture", "tension", "larynx_height"] }
+    voice = { kind = "binary", short = "vc"}
+    glottal_aperture = { kind = "scalar", short = "glap", values = { -1 = "constricted", 0 = "neutral", 1 = "spread" } }
+    tension = { kind = "scalar", short = "tns", values = { -1 = "slack", 0 = "neutral", 1 = "stiff" } }
+    larynx_height = { kind = "scalar", short = "lhgt", values = { -1 = "lowered", 0 = "neutral", 1 = "raised" } }

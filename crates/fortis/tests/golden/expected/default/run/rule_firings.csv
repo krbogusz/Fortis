@@ -1,0 +1,29 @@
+rule,t,sporadic,count,changes,matched
+"Coda s-lenition (early, t=0)",0,"coda lenition, early",1,s→h,as.ta → ah.ta
+Intervocalic voicing,100,sound change over time,1,t→d,pa.ta → pa.da
+Spirantisation,200,sound change over time,1,d→ð̠,pa.da → pa.ð̠a
+Debuccalisation,300,sound change over time,1,ð̠→∅,pa.ð̠a → pa.a
+Hiatus coalescence,300,sound change over time,1,aa→aː,pa.a → paː
+"Coda s-lenition (late, t=500)",500,"coda lenition, late",0,,
+Voicing assimilation,,voicing assimilation,1,k→g,ak.ba → ag.ba
+i-umlaut,,i-umlaut,1,a→e,ta.ki → te.ki
+Final devoicing,,final devoicing,1,g→k,tag → tak
+Feature override (e^[oral: none] → schwa),,feature override,1,e→ə,se.ke → se.kə
+Intervocalic loss,,intervocalic loss,1,h→∅,ma.ha → ma.a
+Epenthesis,,epenthesis,1,∅→ə,katr → ka.tər
+Degemination,,degemination,1,t→∅,at.ta → a.ta
+Tone spread,,tone spread,1,a→a˦,ta˦.ka → ta˦.ka˦
+Place assimilation,,place assimilation,1,n→ŋ,an.ka → aŋ.ka
+Tone stability,,tone stability,1,ata˦→at˦,ka.ta˦ → kat˦
+Tone delinking,,tone delinking,1,a˦→a,ka.ra˦ → ka.ra
+Contour tone (by spreading),,contour tone,1,a˨→a˦˨,pa˦.ta˨ → pa˦.ta˦˨
+Stress assignment,,stress,1,a→ˈa,ka.ta → ˈka.ta
+Disjunction,,disjunction,1,a→e,kaj → kej
+Gemination,,gemination,1,∅→d,bi.dja → bid.dja
+Exception,,exception,1,s→z,a.sa.si → a.za.si
+Right-to-left raising,,right-to-left,1,e→i,te.pe.i → ti.pi.i
+Vowel harmony (agreement),,vowel harmony (agreement),1,"i→u, e→ɤ",o.ti.ne → o.tu.nɤ
+Vowel harmony (spreading),,vowel harmony (spreading),1,"i→u, e→ɤ",u.ti.ne → u.tu.nɤ
+Morpheme-boundary loss,,morpheme boundary,1,-→∅,at-a → a.ta
+Never-firing rule (showcase),,a gloss no word carries,0,,
+Contradictory bundle (showcase),,contradictory bundle,0,,

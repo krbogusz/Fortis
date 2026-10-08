@@ -1,0 +1,52 @@
+# Feature geometry of Halle, Vaux & Wolfe (2000), "On Feature Spreading and the
+# Representation of Place of Articulation", Linguistic Inquiry 31:387–444 — their
+# structure (1). A `root` node parenting the top-level features is synthesised by the
+# engine (it carries [consonantal] and [sonorant] here); indentation is for reading only.
+#
+# Node names hold the ARTICULATORS (Lips, Tongue Blade, Tongue Body, …) and the class
+# nodes Place and Guttural; the bracketed terminals hang beneath them. HVW's key claim is
+# that the designated articulator is marked by a privative feature ([labial], [coronal],
+# [dorsal], …) dependent on its articulator node — so those are `unary`, while the gradient
+# properties ([round], [high], [ATR], …) are `binary`. Feature names carry no spaces
+# (spread_glottis, tongue_blade); the labels below keep the paper's spelling.
+
+# --- Root dependents (attach directly to the segment root, per structure (1)) ---
+consonantal = { kind = "binary", short = "cons" }
+sonorant    = { kind = "binary", short = "son" }
+suction     = { kind = "binary", short = "suc" }
+continuant  = { kind = "binary", short = "cont" }
+strident    = { kind = "binary", short = "strid" }
+lateral     = { kind = "binary", short = "lat" }
+
+# --- Place: the oral articulators ---
+place = { kind = "unary", short = "pl", children = ["lips", "tongue_blade", "tongue_body"] }
+    lips = { kind = "unary", short = "lip", children = ["round", "labial"] }
+        round  = { kind = "binary", short = "rnd" }
+        labial = { kind = "unary",  short = "lab" }
+    tongue_blade = { kind = "unary", short = "tbl", children = ["anterior", "distributed", "coronal"] }
+        anterior    = { kind = "binary", short = "ant" }
+        distributed = { kind = "binary", short = "dist" }
+        coronal     = { kind = "unary",  short = "cor" }
+    tongue_body = { kind = "unary", short = "tbo", children = ["high", "low", "back", "dorsal"] }
+        high   = { kind = "binary", short = "hi" }
+        low    = { kind = "binary", short = "lo" }
+        back   = { kind = "binary", short = "bk" }
+        dorsal = { kind = "unary",  short = "dor" }
+
+# --- Soft Palate: velic (nasal) articulation, independent of oral place ---
+soft_palate = { kind = "unary", short = "sp", children = ["nasal", "rhinal"] }
+    nasal  = { kind = "binary", short = "nas" }
+    rhinal = { kind = "unary",  short = "rhi" }
+
+# --- Guttural: the tongue-root and laryngeal articulators ---
+guttural = { kind = "unary", short = "gut", children = ["tongue_root", "larynx"] }
+    tongue_root = { kind = "unary", short = "trt", children = ["atr", "rtr", "radical"] }
+        atr     = { kind = "binary", short = "atr" }
+        rtr     = { kind = "binary", short = "rtr" }
+        radical = { kind = "unary",  short = "rad" }
+    larynx = { kind = "unary", short = "lar", children = ["spread_glottis", "constricted_glottis", "stiff_vocal_folds", "slack_vocal_folds", "glottal"] }
+        spread_glottis      = { kind = "binary", short = "sg" }
+        constricted_glottis = { kind = "binary", short = "cg" }
+        stiff_vocal_folds   = { kind = "binary", short = "stf" }
+        slack_vocal_folds   = { kind = "binary", short = "slk" }
+        glottal             = { kind = "unary",  short = "glt" }

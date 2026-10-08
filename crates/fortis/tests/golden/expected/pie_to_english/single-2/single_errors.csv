@@ -1,0 +1,5 @@
+stage,expected,got,count,kind,examples (gloss: derived vs. attested)
+1400,b,∅,1,deletion,womb: ˈwam/ˈwɔːmb
+1400,ˈɔː,ˈa,1,substitution,womb: ˈwam/ˈwɔːmb
+final,w,ˈɔ,1,substitution,womb: ˈwɔm/ˈwʉwm
+final,ˈʉ,∅,1,deletion,womb: ˈwɔm/ˈwʉwm

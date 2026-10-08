@@ -1,0 +1,14 @@
+stage,gloss,derived,target,d,fd,matches at,closest at
+final,place assimilation -> velar,aŋ.ka,aŋka,0,0,final,final
+final,place assimilation -> labial,am.pa,ampa,0,0,final,final
+final,place assimilation -> coronal (vacuous),an.ta,anta,0,0,final,final
+final,Uyghur Raising: medial open syllable raises,ka.li.lar,kalilar,0,0,final,final
+final,Sibe: a triggers uvular k->q (u transparent),dʒa.lu.qun,dʒaluqun,0,0,final,final
+final,Sibe: ɔ triggers uvular x->χ,bɔ.du.χu,bɔduχu,0,0,final,final
+final,"Sibe: all-high, no uvularization",u.lu.kun,ulukun,0,0,final,final
+final,Emphasis spread: final tˤ RTR-izes the word,tˤa.tˤatˤ,tˤatˤatˤ,0,0,final,final
+final,Igbo: i rounds to u before b,o.bu.be,obube,0,0,final,final
+final,Igbo: i rounds to u before f,o.fu.fe,ofufe,0,0,final,final
+final,Igbo: i stays before l (non-labial),o.li.le,olile,0,0,final,final
+final,"Irish: palatalized nʲ takes [dorsal] from g, keeps -back -> ŋʲ",aŋʲ.ga,aŋʲga,0,0,final,final
+final,"Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ",aŋ.gʲa,aŋgʲa,0,0,final,final

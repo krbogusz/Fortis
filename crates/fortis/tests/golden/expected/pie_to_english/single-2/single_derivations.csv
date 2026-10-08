@@ -1,0 +1,10 @@
+word,rule,t,before,after,change
+womb,input,,ˈwɑmbɔː,ˈwɑm.bɔː,
+womb,The ō-stem ending *-ō becomes *-u,401,ˈwɑm.bɔː,ˈwɑm.bu,ɔː→u
+womb,"Final -u is deleted after a heavy syllable, kept after a light one",460,ˈwɑm.bu,ˈwɑmb,u→∅
+womb,OE æ and ɑ merge on ME /a/,1150,ˈwɑmb,ˈwamb,ˈɑ→ˈa
+womb,Final /mb/ loses its stop,1350,ˈwamb,ˈwam,b→∅
+womb,ME /a/ becomes Early Modern /æ/,1575,ˈwam,ˈwæm,ˈa→ˈæ
+womb,Short *a rounds to *ɒ after *w (Early Modern English),1590,ˈwæm,ˈwɒm,ˈæ→ˈɒ
+womb,LOT rises to /ɔ/,1980,ˈwɒm,ˈwɔm,ˈɒ→ˈɔ
+womb,output,,,ˈwɔm,

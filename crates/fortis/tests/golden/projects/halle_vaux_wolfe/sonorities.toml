@@ -1,0 +1,6 @@
+# Sonority scale for syllabification (first match in file order). `vowel` must precede the
+# other [+sonorant] classes.
+vowel  = { level = 5, bundle = "consonantal: -, sonorant: +" }
+nasal  = { level = 4, bundle = "sonorant: +, nasal: +" }
+liquid = { level = 3, bundle = "consonantal: +, sonorant: +" }
+stop   = { level = 1, bundle = "sonorant: -" }

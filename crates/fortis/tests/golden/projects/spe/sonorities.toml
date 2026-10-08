@@ -1,0 +1,9 @@
+# Sonority scale for syllabification (first-match in file order). Expressed in flat SPE
+# features. `vowel` must precede `glide`: a vowel is also [-consonant, +sonorant], so the
+# `+syllabic` test has to win first.
+vowel     = { level = 6, bundle = "syllabic: +" }
+glide     = { level = 5, bundle = "consonantal: -, sonorant: +" }
+liquid    = { level = 4, bundle = "consonantal: +, sonorant: +, nasal: -" }
+nasal     = { level = 3, bundle = "sonorant: +, nasal: +" }
+fricative = { level = 2, bundle = "sonorant: -, continuant: +" }
+stop      = { level = 1, bundle = "sonorant: -" }

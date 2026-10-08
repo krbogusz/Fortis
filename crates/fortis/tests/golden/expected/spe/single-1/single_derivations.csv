@@ -1,0 +1,4 @@
+word,rule,t,before,after,change
+intervocalic-voicing,input,,ata,a.ta,
+intervocalic-voicing,Intervocalic voicing,,a.ta,a.da,t→d
+intervocalic-voicing,output,,,a.da,

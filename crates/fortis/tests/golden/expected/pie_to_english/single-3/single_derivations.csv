@@ -1,0 +1,14 @@
+word,rule,t,before,after,change
+ˈkomojnisˈkomojnis,input,,ˈkomojnisˈkomojnis,ˈko.moj.nisˈko.moj.nis,
+ˈkomojnisˈkomojnis,The nominative *-az is levelled across the thematic nouns,150,ˈko.moj.nisˈko.moj.nis,ˈko.moj.nisˈko.moj.niz,s→z
+ˈkomojnisˈkomojnis,Final -z and -s are lost in West Germanic,400,ˈko.moj.nisˈko.moj.niz,ˈko.moj.nisˈko.moj.ni,z→∅
+ˈkomojnisˈkomojnis,I-Mutation: a back vowel fronts before i or j in the next syllable,420,ˈko.moj.nisˈko.moj.ni,ˈko.møj.nisˈko.møj.ni,"o→ø, o→ø"
+ˈkomojnisˈkomojnis,The i-mutated mid back vowels UNROUND,421,ˈko.møj.nisˈko.møj.ni,ˈko.mej.nisˈko.mej.ni,"ø→e, ø→e"
+ˈkomojnisˈkomojnis,"Final -u is deleted after a heavy syllable, kept after a light one",460,ˈko.mej.nisˈko.mej.ni,ˈko.mej.nisˈko.mejn,i→∅
+ˈkomojnisˈkomojnis,An unstressed short *i lowers to *e,472,ˈko.mej.nisˈko.mejn,ˈko.mej.nesˈko.mejn,i→e
+ˈkomojnisˈkomojnis,Short o opens to ɔ,1150,ˈko.mej.nesˈko.mejn,ˈkɔ.mej.nesˈkɔ.mejn,"ˈo→ˈɔ, ˈo→ˈɔ"
+ˈkomojnisˈkomojnis,Short /e/ and /o/ open to /ɛ/ and /ɔ/,1150,ˈkɔ.mej.nesˈkɔ.mejn,ˈkɔ.mɛj.nɛsˈkɔ.mɛjn,"e→ɛ, e→ɛ, e→ɛ"
+ˈkomojnisˈkomojnis,Unstressed vowels reduce to schwa,1200,ˈkɔ.mɛj.nɛsˈkɔ.mɛjn,ˈkɔ.məj.nəsˈkɔ.məjn,"ɛ→ə, ɛ→ə, ɛ→ə"
+ˈkomojnisˈkomojnis,Short /ɔ/ opens to /ɒ/,1900,ˈkɔ.məj.nəsˈkɔ.məjn,ˈkɒ.məj.nəsˈkɒ.məjn,"ˈɔ→ˈɒ, ˈɔ→ˈɒ"
+ˈkomojnisˈkomojnis,LOT rises to /ɔ/,1980,ˈkɒ.məj.nəsˈkɒ.məjn,ˈkɔ.məj.nəsˈkɔ.məjn,"ˈɒ→ˈɔ, ˈɒ→ˈɔ"
+ˈkomojnisˈkomojnis,output,,,ˈkɔ.məj.nəsˈkɔ.məjn,

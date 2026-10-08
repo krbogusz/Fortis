@@ -1,0 +1,27 @@
+word,rule,t,before,after,change
+mean,input,,ˈkomojnis,ˈko.moj.nis,
+mean,Grimm's law,-1000,ˈko.moj.nis,ˈxo.moj.nis,k→x
+mean,Verner's law,-1000,ˈxo.moj.nis,ˈxo.moj.niz,s→z
+mean,"SPORADIC: the stress of *gamainiz falls on the root, after the prefix",-1000,ˈxo.moj.niz,xo.moj.niz,ˈo→o
+mean,"SPORADIC: the stress of *gamainiz falls on the root, after the prefix",-1000,xo.moj.niz,xoˈmoj.niz,o→ˈo
+mean,SPORADIC: Verner's law voices the fricative of the unstressed prefix *xa-,-1000,xoˈmoj.niz,ɣoˈmoj.niz,x→ɣ
+mean,Merging of non-high back vowels,-1000,ɣoˈmoj.niz,ɣɑˈmɑj.niz,"o→ɑ, ˈo→ˈɑ"
+mean,SPORADIC: i- and u-stem adjectives become ja-stems in West Germanic,395,ɣɑˈmɑj.niz,ɣɑˈmɑj.niːz,i→iː
+mean,Final -z and -s are lost in West Germanic,400,ɣɑˈmɑj.niːz,ɣɑˈmɑj.niː,z→∅
+mean,"The Proto-Germanic diphthongs: *ai > ā, *au > ēa, *eu > ēo",404,ɣɑˈmɑj.niː,ɣɑˈmɑː.niː,ˈɑj→ˈɑː
+mean,ɣ becomes g,405,ɣɑˈmɑː.niː,gɑˈmɑː.niː,ɣ→g
+mean,"Anglo-Frisian brightening: a > æ, except before a nasal",406,gɑˈmɑː.niː,gæˈmɑː.niː,ɑ→æ
+mean,Unstressed */æ/ > */e/,410,gæˈmɑː.niː,geˈmɑː.niː,æ→e
+mean,Velars palatalise before a front vowel; sk becomes ʃ,410,geˈmɑː.niː,jeˈmɑː.niː,g→j
+mean,I-Mutation: a back vowel fronts before i or j in the next syllable,420,jeˈmɑː.niː,jeˈmæː.niː,ˈɑː→ˈæː
+mean,The PWGmc final *-ī from *-ij- shortens,465,jeˈmæː.niː,jeˈmæː.ni,iː→i
+mean,A surviving final *-i lowers to *-e,470,jeˈmæː.ni,jeˈmæː.ne,i→e
+mean,OE ǣ raises to ME /ɛː/,1100,jeˈmæː.ne,jeˈmɛː.ne,ˈæː→ˈɛː
+mean,Short /e/ and /o/ open to /ɛ/ and /ɔ/,1150,jeˈmɛː.ne,jɛˈmɛː.nɛ,"e→ɛ, e→ɛ"
+mean,Unstressed vowels reduce to schwa,1200,jɛˈmɛː.nɛ,jəˈmɛː.nə,"ɛ→ə, ɛ→ə"
+mean,The unstressed prefix i- < OE ġe- is lost,1300,jəˈmɛː.nə,ˈmɛː.nə,jə→∅
+mean,Final schwa is lost,1350,ˈmɛː.nə,ˈmɛːn,ə→∅
+mean,The Great Vowel Shift,1560,ˈmɛːn,ˈmeːn,ˈɛː→ˈeː
+mean,The MEAT vowel joins MEET: /eː/ raises to /iː/,1680,ˈmeːn,ˈmiːn,ˈeː→ˈiː
+mean,"FACE, PRICE, FLEECE end in /j/, and PRICE starts at /ɑ/",1980,ˈmiːn,ˈmɪjn,ˈiː→ˈɪj
+mean,output,,,ˈmɪjn,

@@ -1,0 +1,4 @@
+gloss,step,regression,t,form,target,d,fd
+"Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ",input,,,anˠ.gʲa,aŋgʲa,1,7
+"Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ","Irish dorsal assimilation ([dorsal] spreads, [back] does not)",,,aŋ.gʲa,aŋgʲa,0,0
+"Irish: velarized nˠ takes [dorsal] from gʲ, keeps +back -> ŋ",surface,,,aŋ.gʲa,aŋgʲa,0,0

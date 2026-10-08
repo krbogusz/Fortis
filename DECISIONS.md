@@ -660,3 +660,30 @@ changes.
 
 **Rejected:** Matching only at the end of the part before the colon, which would reject a
 position suffix such as `tone@2`.
+
+## 2026-10-08: Test with saved reports of frozen projects, plus the ported pytest cases
+
+**Choice:** `crates/fortis/tests/golden.rs` runs the three commands on frozen copies of the five
+shipped projects (`crates/fortis/tests/golden/projects/`) and compares every file they write with
+saved files (`crates/fortis/tests/golden/expected/`). The cases are a full run with
+`--autosegmental`, three `--single` words, the scoreboard, and the inducer with its options. The
+saved files are the Python program's output on the same inputs. The two full inducer runs on the
+large projects, and refinement on `latin_to_french`, are ignored by default because a debug build
+takes minutes; `cargo test --release -- --ignored` runs them. `UPDATE_GOLDEN=1` rewrites the saved
+files after an intended change.
+
+The pytest cases the reports cannot show were ported to Rust tests: the loaders, the parser and its
+validation, the command line, file reading, the lint and the class query, the warnings,
+segmentation, matching and rule application. That is 465 Rust tests from 24 Python files. Tests of
+Python-only internals were not ported. The induction, model, and remaining engine tests were not
+ported either, because the saved reports already run that code.
+
+**Reason:** Asked for on 2026-10-08. The fixtures are frozen copies because the research projects
+change often: 242 commits since September touched their rules, and each would have broken a test
+against the live files. Line coverage, measured with `cargo-llvm-cov`, was 78% from the saved
+reports alone, 90% with the ported tests, and 93.5% with the slow cases included.
+
+**Rejected:**
+- Saved reports only, which leaves every error message untested.
+- Porting all 951 pytest test functions.
+- Comparing against the live projects.

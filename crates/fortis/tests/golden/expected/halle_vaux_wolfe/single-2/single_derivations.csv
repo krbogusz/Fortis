@@ -1,0 +1,4 @@
+word,rule,t,before,after,change
+irish-velar-dorsal,input,,anˠgʲa,anˠ.gʲa,
+irish-velar-dorsal,"Irish dorsal assimilation ([dorsal] spreads, [back] does not)",,anˠ.gʲa,aŋ.gʲa,nˠ→ŋ
+irish-velar-dorsal,output,,,aŋ.gʲa,

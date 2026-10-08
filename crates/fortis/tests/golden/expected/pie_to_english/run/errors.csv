@@ -1,0 +1,155 @@
+stage,expected,got,count,kind,examples (gloss: derived vs. attested)
+200,ɑ,∅,2,deletion,anadô: ˈɑn.dɔːː/ˈɑnɑðɔːː; himinaz: ˈɑ.xmɔːː/ˈximinɑz
+200,∅,j,1,insertion,gǭ: ˈɣjɔːn/ˈɣɔ̃ː
+200,∅,ˈɔː,1,insertion,gǭ: ˈɣjɔːn/ˈɣɔ̃ː
+200,i,∅,1,deletion,himinaz: ˈɑ.xmɔːː/ˈximinɑz
+200,n,∅,1,deletion,himinaz: ˈɑ.xmɔːː/ˈximinɑz
+200,u,ɔː,1,substitution,abuhaz: ˈɑ.ɸɔː.wɑz/ˈɑβuxɑz
+200,x,w,1,substitution,abuhaz: ˈɑ.ɸɔː.wɑz/ˈɑβuxɑz
+200,x,ˈɑ,1,substitution,himinaz: ˈɑ.xmɔːː/ˈximinɑz
+200,z,ɔːː,1,substitution,himinaz: ˈɑ.xmɔːː/ˈximinɑz
+200,ð,d,1,substitution,anadô: ˈɑn.dɔːː/ˈɑnɑðɔːː
+200,ˈi,x,1,substitution,himinaz: ˈɑ.xmɔːː/ˈximinɑz
+200,ˈɔ̃ː,n,1,substitution,gǭ: ˈɣjɔːn/ˈɣɔ̃ː
+200,β,ɸ,1,substitution,abuhaz: ˈɑ.ɸɔː.wɑz/ˈɑβuxɑz
+403,∅,w,2,insertion,sōl: ˈsɔːwl/ˈsɔːl; toe: ˈtɑj.xwɑː/ˈtɑjxɑː
+403,t,d,1,substitution,elder: ˈxu.lɑndr/ˈxolɑntr
+403,w,ɣ,1,substitution,beam: ˈbɑɣm/ˈbɑwm
+403,ɑ,∅,1,deletion,anadô: ˈɑn.dɔː/ˈɑnɑdɔː
+403,ˈo,ˈu,1,substitution,elder: ˈxu.lɑndr/ˈxolɑntr
+900,∅,o,4,insertion,fergunją: ˈfe.or.ge.ne/ˈfergen; sōl: ˈsoː.wol/ˈsoːl; elder: ˈxu.lɑn.dor/ˈellen
+900,ˈæ,∅,4,deletion,year: ˈjæːr/ˈjæɑːr; salt: ˈsɑlt/ˈsæɑlt; sheep: ˈʃæːp/ˈʃæɑːp
+900,∅,e,3,insertion,fergunją: ˈfe.or.ge.ne/ˈfergen; lasiwaz: ˈle.sew/ˈlesu; miltiją: ˈmil.te/ˈmilt
+900,o,e,3,substitution,gamalaz: ˈgɑ.mel/ˈgɑmol; summer: ˈsu.mer/ˈsumor; hammer: ˈxɑ.mer/ˈxɑmor
+900,∅,w,2,insertion,aiwaz: ˈɑːw/ˈɑː; sōl: ˈsoː.wol/ˈsoːl
+900,n,ŋ,2,substitution,string: ˈstreŋj/ˈstrenj; ankle: ˈɑŋ.kol/ˈɑnˌkleoː
+900,u,∅,2,deletion,wetmô: ˈwe.tmɑ/ˈwitumɑ; nut: ˈxnut/ˈxnutu
+900,w,∅,2,deletion,raw: ˈxræ.ɑː/ˈxræɑːw; straw: ˈstræ.ɑː/ˈstræɑːw
+900,ɑ,ˈɑ,2,substitution,salt: ˈsɑlt/ˈsæɑlt; swallow: ˈswɑ.lwe/ˈswæɑlwe
+900,ɑː,ˈæː,2,substitution,year: ˈjæːr/ˈjæɑːr; sheep: ˈʃæːp/ˈʃæɑːp
+900,∅,d,1,insertion,elder: ˈxu.lɑn.dor/ˈellen
+900,∅,r,1,insertion,elder: ˈxu.lɑn.dor/ˈellen
+900,∅,ˈæ,1,insertion,bark: ˈbæ.ɑrk/ˈbɑrk
+900,b,e,1,substitution,web: ˈwe.fe/ˈwebb
+900,b,f,1,substitution,web: ˈwe.fe/ˈwebb
+900,e,ɑ,1,substitution,elder: ˈxu.lɑn.dor/ˈellen
+900,j,w,1,substitution,grēwaz: ˈgræːw/ˈgræːj
+900,k,∅,1,deletion,hehlǭ: ˈxe.oː.le/ˈxeolkɑ
+900,l,∅,1,deletion,ankle: ˈɑŋ.kol/ˈɑnˌkleoː
+900,l,ˈu,1,substitution,elder: ˈxu.lɑn.dor/ˈellen
+900,n,m,1,substitution,sand: ˈsɑmd/ˈsɑnd
+900,o,oː,1,substitution,hehlǭ: ˈxe.oː.le/ˈxeolkɑ
+900,o,u,1,substitution,narrow: ˈnɑ.ru/ˈnɑro
+900,oː,l,1,substitution,ankle: ˈɑŋ.kol/ˈɑnˌkleoː
+900,oː,æː,1,substitution,nawiz: ˈnæ.æː/ˈneoː
+900,p,∅,1,deletion,apple: ˈæ.pel/ˈæppel
+900,t,e,1,substitution,net: ˈne.te/ˈnett
+900,u,e,1,substitution,youth: ˈju.geθ/ˈjuguθ
+900,u,o,1,substitution,hawk: ˈxɑ.fok/ˈxɑfuk
+900,u,w,1,substitution,lasiwaz: ˈle.sew/ˈlesu
+900,u,ɑ,1,substitution,spenô: ˈspe.nɑ/ˈspɑnu
+900,ɑ,e,1,substitution,hehlǭ: ˈxe.oː.le/ˈxeolkɑ
+900,ɑː,j,1,substitution,beam: ˈbæjm/ˈbæɑːm
+900,ʃ,k,1,substitution,ash: ˈæs.ke/ˈæʃʃe
+900,ʃ,s,1,substitution,ash: ˈæs.ke/ˈæʃʃe
+900,ˈe,x,1,substitution,elder: ˈxu.lɑn.dor/ˈellen
+900,ˈe,ˈæ,1,substitution,nawiz: ˈnæ.æː/ˈneoː
+900,ˈi,ˈe,1,substitution,wetmô: ˈwe.tmɑ/ˈwitumɑ
+900,ˈo,ˈy,1,substitution,wurþiz: ˈwyrθ/ˈworθ
+900,ˈæ,ˈe,1,substitution,harvest: ˈxer.fest/ˈxærfest
+900,ˈɑ,ɑ,1,substitution,bark: ˈbæ.ɑrk/ˈbɑrk
+900,ˈɑ,ˈe,1,substitution,spenô: ˈspe.nɑ/ˈspɑnu
+900,ˌe,o,1,substitution,ankle: ˈɑŋ.kol/ˈɑnˌkleoː
+1400,ˈɔː,ˈa,3,substitution,sand: ˈsamd/ˈsɔːnd; fold: ˈfa.ləd/ˈfɔːld; womb: ˈwam/ˈwɔːmb
+1400,w,∅,2,deletion,arrow: ˈarx/ˈarwə; sorrow: ˈsɔrg/ˈsɔrwə
+1400,w,ˈɛː,2,substitution,raw: ˈrɛː/ˈraw; straw: ˈstrɛː/ˈstraw
+1400,ˈa,∅,2,deletion,raw: ˈrɛː/ˈraw; straw: ˈstrɛː/ˈstraw
+1400,ˈeː,ˈɛː,2,substitution,sheep: ˈʃɛːp/ˈʃeːp; sheet: ˈʃɛːt/ˈʃeːt
+1400,ˈɛ,ˈɛː,2,substitution,net: ˈnɛːt/ˈnɛt; web: ˈwɛːv/ˈwɛb
+1400,∅,d,1,insertion,elder: ˈhu.lən.dər/ˈɛlərn
+1400,∅,h,1,insertion,elder: ˈhu.lən.dər/ˈɛlərn
+1400,∅,k,1,insertion,seal: ˈsɛlk/ˈsɛl
+1400,∅,n,1,insertion,elder: ˈhu.lən.dər/ˈɛlərn
+1400,∅,s,1,insertion,ash: ˈask/ˈaʃ
+1400,∅,ə,1,insertion,fold: ˈfa.ləd/ˈfɔːld
+1400,∅,ˈæ,1,insertion,beam: ˈbæjm/ˈbɛːm
+1400,b,∅,1,deletion,womb: ˈwam/ˈwɔːmb
+1400,b,v,1,substitution,web: ˈwɛːv/ˈwɛb
+1400,d,∅,1,deletion,edge: ˈɛd͡ʒ/ˈɛdʒ
+1400,d͡ʒ,iː,1,substitution,string: ˈstrɛ.ŋiː/ˈstreːnd͡ʒ
+1400,j,w,1,substitution,grēwaz: ˈgrɛw/ˈgræj
+1400,n,m,1,substitution,sand: ˈsamd/ˈsɔːnd
+1400,n,r,1,substitution,elder: ˈhu.lən.dər/ˈɛlərn
+1400,n,ŋ,1,substitution,string: ˈstrɛ.ŋiː/ˈstreːnd͡ʒ
+1400,r,ə,1,substitution,elder: ˈhu.lən.dər/ˈɛlərn
+1400,ə,∅,1,deletion,swallow: ˈswalw/ˈswalwə
+1400,ə,g,1,substitution,sorrow: ˈsɔrg/ˈsɔrwə
+1400,ə,x,1,substitution,arrow: ˈarx/ˈarwə
+1400,ɛ,ə,1,substitution,harvest: ˈhɛr.vəst/ˈhɛrvɛst
+1400,ʃ,k,1,substitution,ash: ˈask/ˈaʃ
+1400,ʒ,d͡ʒ,1,substitution,edge: ˈɛd͡ʒ/ˈɛdʒ
+1400,ˈa,ˈɛː,1,substitution,blast: ˈblɛːst/ˈblast
+1400,ˈeː,ˈɛ,1,substitution,string: ˈstrɛ.ŋiː/ˈstreːnd͡ʒ
+1400,ˈæ,ˈɛ,1,substitution,grēwaz: ˈgrɛw/ˈgræj
+1400,ˈɛ,ˈu,1,substitution,elder: ˈhu.lən.dər/ˈɛlərn
+1400,ˈɛː,j,1,substitution,beam: ˈbæjm/ˈbɛːm
+1400,ˈɛː,ˈɛ,1,substitution,herd: ˈhɛrd/ˈhɛːrd
+1570,∅,ə,1,insertion,fadēr: ˈfa.ðər/ˈfaːðr̩
+1570,r̩,r,1,substitution,fadēr: ˈfa.ðər/ˈfaːðr̩
+1570,ˈaː,ˈa,1,substitution,fadēr: ˈfa.ðər/ˈfaːðr̩
+1580,ˈɔ,ˈʊ,1,substitution,wurmiz: ˈwʊ.rəm/ˈwɔrəm
+1621,∅,x,1,insertion,bough: ˈbə.ʊx/ˈboʊ
+1621,ˈo,ˈə,1,substitution,bough: ˈbə.ʊx/ˈboʊ
+1621,ˈuː,ˈʊ,1,substitution,word: ˈwʊɹd/ˈwuːɹd
+1687,∅,ˈə,1,insertion,sour: ˈsə.ʊɹ/ˈsoːɹ
+1687,ˈoː,ʊ,1,substitution,sour: ˈsə.ʊɹ/ˈsoːɹ
+final,∅,ˈɪ,6,insertion,lather: ˈlɪj.ðə/ˈlɑːðə; blast: ˈblɪjst/ˈblɑːst; net: ˈnɪjt/ˈnɛt
+final,ɹ,∅,3,deletion,arrow: ˈɑː/ˈaɹəw; sorrow: ˈsoːg/ˈsɔɹəw; narrow: ˈnɛː/ˈnaɹəw
+final,ˈɪ,ˈɛ,3,substitution,seal: ˈsɛlk/ˈsɪjl; string: ˈstɹɛ.ŋɪj/ˈstɹɪŋ; beam: ˈbɛjm/ˈbɪjm
+final,∅,ə,2,insertion,eighth: ˈɛj.təð/ˈɛjtθ; elder: ˈhʌ.lən.də/ˈɛldə
+final,ə,∅,2,deletion,arrow: ˈɑː/ˈaɹəw; narrow: ˈnɛː/ˈnaɹəw
+final,ɪ,ə,2,substitution,welkin: ˈwɛl.kən/ˈwɛlkɪn; harvest: ˈhəː.vəst/ˈhɑːvɪst
+final,ˈa,∅,2,deletion,arrow: ˈɑː/ˈaɹəw; narrow: ˈnɛː/ˈnaɹəw
+final,ˈoː,j,2,substitution,raw: ˈɹɪj/ˈɹoː; straw: ˈstɹɪj/ˈstɹoː
+final,ˈɑː,j,2,substitution,lather: ˈlɪj.ðə/ˈlɑːðə; blast: ˈblɪjst/ˈblɑːst
+final,ˈɔ,∅,2,deletion,swallow: ˈswɑːw/ˈswɔləw; sorrow: ˈsoːg/ˈsɔɹəw
+final,ˈɛ,j,2,substitution,net: ˈnɪjt/ˈnɛt; web: ˈwɪjv/ˈwɛb
+final,∅,h,1,insertion,elder: ˈhʌ.lən.də/ˈɛldə
+final,∅,j,1,insertion,string: ˈstɹɛ.ŋɪj/ˈstɹɪŋ
+final,∅,n,1,insertion,elder: ˈhʌ.lən.də/ˈɛldə
+final,∅,v,1,insertion,hawk: ˈha.vək/ˈhoːk
+final,∅,ɪ,1,insertion,string: ˈstɹɛ.ŋɪj/ˈstɹɪŋ
+final,∅,ɹ,1,insertion,dirt: ˈdɹɪt/ˈdəːt
+final,∅,ˈa,1,insertion,hawk: ˈha.vək/ˈhoːk
+final,∅,ˈɑ,1,insertion,swith: ˈswɑjθ/ˈswɪθ
+final,∅,ˈɑː,1,insertion,ash: ˈɑːsk/ˈaʃ
+final,∅,ˈʉ,1,insertion,hood: ˈhʉwd/ˈhɵd
+final,b,v,1,substitution,web: ˈwɪjv/ˈwɛb
+final,j,l,1,substitution,seal: ˈsɛlk/ˈsɪjl
+final,l,∅,1,deletion,swallow: ˈswɑːw/ˈswɔləw
+final,l,k,1,substitution,seal: ˈsɛlk/ˈsɪjl
+final,l,ə,1,substitution,fold: ˈfa.ləd/ˈfəwld
+final,n,m,1,substitution,sand: ˈsamd/ˈsand
+final,w,g,1,substitution,sorrow: ˈsoːg/ˈsɔɹəw
+final,w,j,1,substitution,þrawō: ˈθɹɪj/ˈθɹəw
+final,w,l,1,substitution,fold: ˈfa.ləd/ˈfəwld
+final,w,ˈɑː,1,substitution,arrow: ˈɑː/ˈaɹəw
+final,w,ˈɔ,1,substitution,womb: ˈwɔm/ˈwʉwm
+final,w,ˈɛː,1,substitution,narrow: ˈnɛː/ˈnaɹəw
+final,ə,ˈoː,1,substitution,sorrow: ˈsoːg/ˈsɔɹəw
+final,ə,ˈɑː,1,substitution,swallow: ˈswɑːw/ˈswɔləw
+final,ʃ,k,1,substitution,ash: ˈɑːsk/ˈaʃ
+final,ˈa,s,1,substitution,ash: ˈɑːsk/ˈaʃ
+final,ˈoː,ə,1,substitution,hawk: ˈha.vək/ˈhoːk
+final,ˈoː,ˈɔ,1,substitution,watōr: ˈwɔ.tə/ˈwoːtə
+final,ˈɑː,ˈa,1,substitution,fadēr: ˈfa.ðə/ˈfɑːðə
+final,ˈɑː,ˈəː,1,substitution,harvest: ˈhəː.vəst/ˈhɑːvɪst
+final,ˈɔ,ˈoː,1,substitution,salt: ˈsoːlt/ˈsɔlt
+final,ˈə,ˈa,1,substitution,fold: ˈfa.ləd/ˈfəwld
+final,ˈə,ˈɪ,1,substitution,þrawō: ˈθɹɪj/ˈθɹəw
+final,ˈəː,ˈɪ,1,substitution,dirt: ˈdɹɪt/ˈdəːt
+final,ˈɛ,ˈʌ,1,substitution,elder: ˈhʌ.lən.də/ˈɛldə
+final,ˈɪ,j,1,substitution,swith: ˈswɑjθ/ˈswɪθ
+final,ˈɵ,w,1,substitution,hood: ˈhʉwd/ˈhɵd
+final,ˈʉ,∅,1,deletion,womb: ˈwɔm/ˈwʉwm
+final,θ,ð,1,substitution,eighth: ˈɛj.təð/ˈɛjtθ

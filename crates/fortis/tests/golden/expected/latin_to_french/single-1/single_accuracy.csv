@@ -1,0 +1,6 @@
+stage,assessed,exact,within 1,mean phone dist,mean feature dist,token-wt exact,token-wt phone dist,token-wt feature dist
+300,1,1,1,0.000,0.000,1.000,0.000,0.000
+1000,1,1,1,0.000,0.000,1.000,0.000,0.000
+1200,1,1,1,0.000,0.000,1.000,0.000,0.000
+1500,1,1,1,0.000,0.000,1.000,0.000,0.000
+final,1,1,1,0.000,0.000,1.000,0.000,0.000

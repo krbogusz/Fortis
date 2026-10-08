@@ -1,0 +1,6 @@
+rule,t,sporadic,count,changes,matched
+Intervocalic voicing,,intervocalic-voicing,1,t→d,a.ta → a.da
+Final devoicing,,final-devoicing,1,d→t,tad → tat
+Nasal place assimilation,,"nasal-assim-labial, nasal-assim-velar",2,"n→m, n→ŋ","an.pa → am.pa, an.ka → aŋ.ka"
+Backness & rounding harmony,,backness-rounding-harmony,1,i→u,u.ti → u.tu
+Metaphony (raising),,metaphony-raising,1,e→i,be.ti → bi.ti

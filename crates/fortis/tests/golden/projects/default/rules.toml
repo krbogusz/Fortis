@@ -1,0 +1,182 @@
+# One rule per word (scoped by gloss). Together they exercise the engine's main features.
+
+[voicing_assimilation]              # α agreement + a natural-class target/context
+words      = ["voicing assimilation"]
+name       = "Voicing assimilation"
+definition = "[-sonorant] -> [α voice] / _ [-sonorant, α voice]"
+
+[i_umlaut]                          # context-sensitive change across a consonant (the * quantifier)
+words      = ["i-umlaut"]
+name       = "i-umlaut"
+definition = "a -> e / _ [+consonantal]* i"
+
+[final_devoicing]                   # a feature merge conditioned by the word edge (#)
+words      = ["final devoicing"]
+name       = "Final devoicing"
+definition = "[-sonorant] -> [-voice] / _ #"
+
+[feature_override]                  # letter^[Δ]: a letter written with a concrete feature override,
+words      = ["feature override"]   # here delinking the oral node (geometry-aware) → a schwa
+name       = "Feature override (e^[oral: none] → schwa)"
+definition = "e -> e^[oral: none] / _ #"
+
+# Syllabification is TIME-KEYED (see syllable_parts.toml): the onset/coda patterns switch on at
+# t=500. The same coda rule (s → h before a syllable boundary $) fires on two s+stop words at
+# different times — EARLY (t=0), before the patterns, when sonority puts s in the coda (asta →
+# as.ta → ah.ta); and LATE (t=500), after the patterns resyllabify s into the onset (aspa → a.spa),
+# where the coda rule no longer reaches it. The boundary moved because the syllable RULE changed.
+[coda_lenition_early]
+words      = ["coda lenition, early"]
+time       = 0
+name       = "Coda s-lenition (early, t=0)"
+definition = "s -> h / _ $"
+
+[coda_lenition_late]
+words      = ["coda lenition, late"]
+time       = 500
+name       = "Coda s-lenition (late, t=500)"
+definition = "s -> h / _ $"
+
+[intervocalic_loss]                 # deletion (-> the empty string)
+words      = ["intervocalic loss"]
+name       = "Intervocalic loss"
+definition = "h -> ∅ / [+syllabic] _ [+syllabic]"
+
+[epenthesis]                        # insertion (the empty string -> a segment)
+words      = ["epenthesis"]
+name       = "Epenthesis"
+definition = "∅ -> ə / [+consonantal] _ [+consonantal] #"
+
+[degemination]                      # two segments collapse to one (cardinality)
+words      = ["degemination"]
+name       = "Degemination"
+definition = "t t -> t"
+
+[tone_spread]                       # autosegmental: one tone, two anchors
+words      = ["tone spread"]
+name       = "Tone spread"
+definition = "[+syllabic, tone: none] -> [+syllabic, tone: ~1] / [+syllabic, tone: ~1=high] [-syllabic]* _"
+application = "left_to_right"
+
+[place_assimilation]                # autosegmental node spread: a nasal copies the next place node
+words      = ["place assimilation"]
+name       = "Place assimilation"
+definition = "[+nasal] -> [oral: ~1] / _ [+consonantal, oral: ~1]"
+
+[tone_stability]                    # autosegmental: a tone outlives its deleted vowel and re-docks
+words      = ["tone stability"]
+name       = "Tone stability"
+definition = "[+syllabic] -> ∅ / [+syllabic] [-syllabic]* _ #"
+
+[tone_delinking]                    # autosegmental: remove an association (tone: none)
+words      = ["tone delinking"]
+name       = "Tone delinking"
+definition = "[+syllabic, tone: high] -> [tone: none] / _ #"
+
+[contour_tone]                      # autosegmental: a high spreads onto a low, BUILDING a contour
+words      = ["contour tone"]
+name       = "Contour tone (by spreading)"
+definition = "[+syllabic, tone: low] -> [+syllabic, tone: ~1] / [+syllabic, tone: ~1=high] [-syllabic]* _"
+
+[stress]                            # the metrical tier: assign primary stress to the first vowel
+words      = ["stress"]
+name       = "Stress assignment"
+definition = "[+syllabic] -> [stress: primary] / # [-syllabic]* _"
+
+[disjunction]                       # a disjunctive context (X | Y)
+words      = ["disjunction"]
+name       = "Disjunction"
+definition = "a -> e / _ (i | j)"
+
+[gemination]                        # a binding + recall: the consonant before /j/ doubles (1= … @1)
+words      = ["gemination"]
+name       = "Gemination"
+definition = "1=[+consonantal] -> @1 @1 / _ j"
+
+[exception]                         # an exception environment (// …): blocked before a high vowel
+words      = ["exception"]
+name       = "Exception"
+definition = "s -> z / [+syllabic] _ [+syllabic] // _ [+syllabic, aperture: high]"
+
+[regressive_raising]                # right-to-left iteration: raising cascades leftward across Cs
+words       = ["right-to-left"]
+name        = "Right-to-left raising"
+definition  = "[+syllabic, +front, aperture: mid] -> [aperture: high] / _ [-syllabic]* [+syllabic, aperture: high]"
+application = "right_to_left"
+
+# A timed chain: the medial consonant of *pata* lenites step by step through the centuries
+# (t > d > ð > ∅), so one word's history shows across several timesteps. Rules sharing a
+# time (300) are grouped under that time.
+[lenition_voicing]
+words      = ["sound change over time"]
+time       = 100
+name       = "Intervocalic voicing"
+definition = "[-sonorant, -continuant] -> [+voice] / [+syllabic] _ [+syllabic]"
+
+[lenition_spirantization]
+words      = ["sound change over time"]
+time       = 200
+name       = "Spirantisation"
+definition = "[-sonorant, -continuant, +voice] -> [+continuant] / [+syllabic] _ [+syllabic]"
+
+[lenition_loss]
+words      = ["sound change over time"]
+time       = 300
+name       = "Debuccalisation"
+definition = "[-sonorant, +continuant, +voice] -> ∅ / [+syllabic] _ [+syllabic]"
+
+[lenition_hiatus]
+words      = ["sound change over time"]
+time       = 300
+name       = "Hiatus coalescence"
+definition = "[+syllabic] [+syllabic] -> [length: long] ∅"
+
+# Turkish vowel harmony, shown two equivalent ways on otine/utine (both → -unɤ).
+#
+# (1) By feature AGREEMENT: every vowel agrees in backness (α/β) with the preceding vowel;
+# rounding (γ/δ) is gated by the conditional <1: aperture: high>, so it reaches only a high vowel.
+[vowel_harmony]
+words       = ["vowel harmony (agreement)"]
+name        = "Vowel harmony (agreement)"
+definition  = "[+syllabic, <1: aperture: high>] -> [α front, β back, <1: γ rounded>, <1: δ labial>] / [+syllabic, α front, β back, γ rounded, δ labial] [-syllabic]* _"
+application = "left_to_right"
+
+# (2) By autosegmental SPREADING: each harmonic feature is copied from the preceding vowel by
+# node-spread (~n). Backness uses `back: ~1?` + `front: ~2?` — the `?` makes each a PRESENCE-
+# OPTIONAL spread that copies the node's presence *or* absence, so a back trigger (no `front`)
+# clears the target's `front` and a front trigger clears its `back` (plain `~n` would require the
+# node present and only spread one way). Rounding, gated by <1: aperture: high>, copies
+# `rounded`/`labial`. Same outcome as (1) by a different mechanism.
+[vowel_harmony_spread]
+words       = ["vowel harmony (spreading)"]
+name        = "Vowel harmony (spreading)"
+definition  = "[+syllabic, <1: aperture: high>] -> [back: ~1?, front: ~2?, <1: rounded: ~3>, <1: labial: ~4>] / [+syllabic, back: ~1?, front: ~2?, rounded: ~3, labial: ~4] [-syllabic]* _"
+application = "left_to_right"
+
+# A morpheme boundary "-" (written in the word, e.g. at-a) is a real, deletable segment that
+# forces a syllable break: at-a syllabifies as at.a (t in the coda), where ata is a.ta (t in the
+# onset). This rule deletes the boundary; because the form re-syllabifies before every rule, the
+# trace shows the influence (at-a) and then, once "-" is gone, ordinary syllabification (a.ta).
+[morpheme_boundary_loss]
+words      = ["morpheme boundary"]
+name       = "Morpheme-boundary loss"
+definition = "- -> ∅"
+
+# A deliberately never-firing rule: it is word-scoped to a gloss with no matching word in the
+# lexicon, so it can never apply. The run surfaces it as a warning (the CLI summary and the web
+# app's Diagnostics ▸ Warnings) — the showcase for that check, the way `tastsa` showcases the
+# syllabification fallback. Fix such a warning by correcting the word name or dropping the scope.
+[never_fires]
+words      = ["a gloss no word carries"]
+name       = "Never-firing rule (showcase)"
+definition = "a -> e"
+
+# A deliberately unsatisfiable rule: its target requires `front` present while delinking the
+# `oral` node it sits under — no segment can satisfy both, so the rule can never match. The
+# static rule check flags it without running anything (the CLI's `--lint`, the web app's
+# Diagnostics ▸ Warnings) — the showcase for that check. Fix such a finding by dropping one
+# side of the contradiction.
+[contradictory_bundle]
+words      = ["contradictory bundle"]
+name       = "Contradictory bundle (showcase)"
+definition = "[front, oral: none] -> e"

@@ -1,0 +1,39 @@
+# SPE (Chomsky & Halle 1968) distinctive features — deliberately FLAT.
+#
+# This project exists to show the engine does not require a feature GEOMETRY. None
+# of these features declares `children`, so none has a parent; the loader then
+# parents every one to a single synthesised `root` node (the segment's apex). The
+# result is a depth-1 tree — i.e. no tree at all, the classic SPE feature matrix,
+# where a segment is just an unstructured set of ± values.
+#
+# The pay-off is SPE's signature economy: consonants and vowels are described with
+# the SAME tongue-body features [high, low, back, round], so one rule with α-variables
+# can assimilate place across the board without a "place node" to spread (see the
+# nasal-assimilation rule in rules.toml). Everything is binary; there are no scalars
+# and no unary class nodes.
+
+# Major class
+consonantal = { kind = "binary", short = "cons" }
+syllabic    = { kind = "binary", short = "syll" }
+sonorant    = { kind = "binary", short = "son" }
+
+# Manner
+continuant  = { kind = "binary", short = "cont" }
+nasal       = { kind = "binary", short = "nas" }
+lateral     = { kind = "binary", short = "lat" }
+strident    = { kind = "binary", short = "strid" }
+
+# Laryngeal
+voice       = { kind = "binary", short = "voi" }
+
+# Place — tongue blade …
+coronal     = { kind = "binary", short = "cor" }
+anterior    = { kind = "binary", short = "ant" }
+# … and tongue body (shared by consonants AND vowels — the SPE hallmark)
+high        = { kind = "binary", short = "hi" }
+low         = { kind = "binary", short = "lo" }
+back        = { kind = "binary", short = "bk" }
+round       = { kind = "binary", short = "rnd" }
+
+# Vowel tenseness
+tense       = { kind = "binary", short = "tns" }

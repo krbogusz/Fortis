@@ -1,0 +1,7 @@
+rule,t,sporadic,count,changes,matched
+Nasal place assimilation (Place spreading),,"assim-velar, assim-labial, assim-coronal-vacuous",2,"n→ŋ, n→m","an.ka → aŋ.ka, an.pa → am.pa"
+Uyghur Raising,,uyghur-raising,1,a→i,ka.la.lar → ka.li.lar
+Sibe uvularization,,"sibe-uvular-k, sibe-uvular-x, sibe-all-high",2,"k→q, x→χ","dʒa.lu.kun → dʒa.lu.qun, bɔ.du.xu → bɔ.du.χu"
+Emphasis spread (RTR),,emphasis-spread,1,t→tˤ,ta.tatˤ → tˤa.tˤatˤ
+Igbo labial assimilation,,"igbo-rounding-b, igbo-rounding-f, igbo-no-rounding-l",2,i→u,"o.bi.be → o.bu.be, o.fi.fe → o.fu.fe"
+"Irish dorsal assimilation ([dorsal] spreads, [back] does not)",,"irish-palatal-dorsal, irish-velar-dorsal",2,"nʲ→ŋʲ, nˠ→ŋ","anʲ.ga → aŋʲ.ga, anˠ.gʲa → aŋ.gʲa"

@@ -1,0 +1,5 @@
+# Nucleus only — no onset/coda constraints, so syllabification uses sonority + the Maximal Onset
+# Principle. This insulates the project from the default inventory's Latin-style onset/coda example,
+# whose phonotactics don't fit PIE/Germanic (e.g. its `st` onset and split of `ʁʷm`).
+[-2000]
+nucleus = { definition = "+syll" }

@@ -1,0 +1,5 @@
+# The nucleus is any [+syllabic] segment. No onset/coda patterns are given, so the
+# consonants between two nuclei are divided by sonority under the Maximal Onset
+# Principle (the engine's fallback when no pattern constrains the split).
+[0]
+nucleus = { definition = "+syllabic" }

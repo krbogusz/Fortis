@@ -1,0 +1,4 @@
+# A tiny diacritic set — the showcase leans on plain letters, but a non-empty diacritics
+# file is required. Both reference only HVW features defined in features.toml.
+"◌̃" = { tier = "segment", kind = "combining", bundle = "soft_palate: +, nasal: +" }  # nasalization
+"◌ʷ" = { tier = "segment", kind = "combining", bundle = "lips: +, round: +" }          # labialization

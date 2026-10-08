@@ -1,0 +1,3 @@
+word,rule,t,before,after,change
+ataata,input,,ataata,a.ta.a.ta,
+ataata,output,,,a.ta.a.ta,

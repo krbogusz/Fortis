@@ -520,6 +520,22 @@ fortis/
         └── reporting.py         #   render the accuracy CSVs (per-stage summary + per-word)
 ```
 
+### Tests
+
+`cargo test` runs the Rust tests. `crates/fortis/tests/golden.rs` runs the commands on frozen
+copies of the five shipped projects and compares every file they write with saved reports.
+The saved reports are the Python program's output on the same inputs. The other test files
+cover what the reports cannot show, such as the error messages for a malformed input file.
+
+After a change meant to alter the reports, rewrite the saved reports and review the diff:
+
+```
+UPDATE_GOLDEN=1 cargo test --test golden
+```
+
+The inducer's runs on the two large projects take minutes in a debug build, so they run
+only on request: `cargo test --release --test golden -- --ignored`.
+
 ## Current limitations and future directions
 
 - **Deterministic only.** A rule either fires everywhere its structural

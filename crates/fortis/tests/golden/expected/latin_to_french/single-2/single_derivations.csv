@@ -1,0 +1,24 @@
+word,rule,t,before,after,change
+œil,input,,ˈokulum,ˈo.ku.lum,
+œil,"Classical Latin length distinction becomes a quality (tense) distinction, first pass",-100,ˈo.ku.lum,ˈɔ.kʊ.lʊm,"ˈo→ˈɔ, u→ʊ, u→ʊ"
+œil,posttonic ʊ/o syncopates before l + vowel near the end of the word,-100,ˈɔ.kʊ.lʊm,ˈɔ.klʊm,ʊ→∅
+œil,lax high vowels lower to tense mid vowels,-100,ˈɔ.klʊm,ˈɔ.klom,ʊ→o
+œil,word-final nasal consonant lost after an unstressed vowel,-100,ˈɔ.klom,ˈɔ.klo,m→∅
+œil,a stressed vowel lengthens before a plosive + non-nasal sonorant (muta cum liquida),400,ˈɔ.klo,ˈɔː.klo,ˈɔ→ˈɔː
+œil,a velar stop spirantizes after a vowel/glide before a coronal consonant,500,ˈɔː.klo,ˈɔː.xlo,k→x
+œil,a vowel shortens before a consonant cluster,500,ˈɔː.xlo,ˈɔ.xlo,ˈɔː→ˈɔ
+œil,the back high continuant obstruent (x) fronts before a coronal,500,ˈɔ.xlo,ˈɔ.çlo,x→ç
+œil,a lateral palatalizes after a high-front consonant,500,ˈɔ.çlo,ˈɔ.çʎo,l→ʎ
+œil,short stressed ɛ/ɔ also diphthongize before a high-front consonant,500,ˈɔ.çʎo,ˈuo̯.çʎo,ˈɔ→ˈuo̯
+œil,yod lost before ʎ or palatalized r,600,ˈuo̯.çʎo,ˈuo̯.ʎo,ç→∅
+œil,an unstressed non-low non-nasalized vowel reduces to schwa before a consonant or word end,600,ˈuo̯.ʎo,ˈuo̯.ʎə,o→ə
+œil,schwa becomes non-syllabic,600,ˈuo̯.ʎə,ˈuo̯ʎə̯,ə→ə̯
+œil,non-syllabic schwa is lost elsewhere,600,ˈuo̯ʎə̯,ˈuo̯ʎ,ə̯→∅
+œil,a high tense round non-nasal vowel centralizes (recurrence),600,ˈuo̯ʎ,ˈʉo̯ʎ,ˈu→ˈʉ
+œil,high round back vowels front (completion of u-fronting),950,ˈʉo̯ʎ,ˈyo̯ʎ,ˈʉ→ˈy
+œil,the diphthong uo becomes ue,1100,ˈyo̯ʎ,ˈye̯ʎ,o̯→e̯
+œil,the stressed diphthong ye̯ (from ue̯) monophthongizes to ø,1100,ˈye̯ʎ,ˈøʎ,ˈye̯→ˈø
+œil,front round ø opens to œ before a coda consonant in the final syllable,1550,ˈøʎ,ˈœʎ,ˈø→ˈœ
+œil,stress is leveled — no longer distinctive,1650,ˈœʎ,œʎ,ˈœ→œ
+œil,ʎ becomes j,1750,œʎ,œj,ʎ→j
+œil,output,,,œj,

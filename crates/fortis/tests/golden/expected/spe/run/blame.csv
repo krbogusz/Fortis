@@ -1,0 +1,19 @@
+gloss,step,regression,t,form,target,d,fd
+backness & rounding harmony,input,,,u.ti,utu,1,2
+backness & rounding harmony,Backness & rounding harmony,,,u.tu,utu,0,0
+backness & rounding harmony,surface,,,u.tu,utu,0,0
+final devoicing,input,,,tad,tat,1,1
+final devoicing,Final devoicing,,,tat,tat,0,0
+final devoicing,surface,,,tat,tat,0,0
+intervocalic voicing,input,,,a.ta,ada,1,1
+intervocalic voicing,Intervocalic voicing,,,a.da,ada,0,0
+intervocalic voicing,surface,,,a.da,ada,0,0
+metaphony (raising),input,,,be.ti,biti,1,1
+metaphony (raising),Metaphony (raising),,,bi.ti,biti,0,0
+metaphony (raising),surface,,,bi.ti,biti,0,0
+nasal place assimilation (labial),input,,,an.pa,ampa,1,1
+nasal place assimilation (labial),Nasal place assimilation,,,am.pa,ampa,0,0
+nasal place assimilation (labial),surface,,,am.pa,ampa,0,0
+nasal place assimilation (velar),input,,,an.ka,aŋka,1,4
+nasal place assimilation (velar),Nasal place assimilation,,,aŋ.ka,aŋka,0,0
+nasal place assimilation (velar),surface,,,aŋ.ka,aŋka,0,0

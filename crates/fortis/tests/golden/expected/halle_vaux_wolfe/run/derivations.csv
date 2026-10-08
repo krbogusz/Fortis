@@ -1,0 +1,37 @@
+word,rule,t,before,after,change
+assim-velar,input,,anka,an.ka,
+assim-velar,Nasal place assimilation (Place spreading),,an.ka,aŋ.ka,n→ŋ
+assim-velar,output,,,aŋ.ka,
+assim-labial,input,,anpa,an.pa,
+assim-labial,Nasal place assimilation (Place spreading),,an.pa,am.pa,n→m
+assim-labial,output,,,am.pa,
+assim-coronal-vacuous,input,,anta,an.ta,
+assim-coronal-vacuous,output,,,an.ta,
+uyghur-raising,input,,kalalar,ka.la.lar,
+uyghur-raising,Uyghur Raising,,ka.la.lar,ka.li.lar,a→i
+uyghur-raising,output,,,ka.li.lar,
+sibe-uvular-k,input,,dʒalukun,dʒa.lu.kun,
+sibe-uvular-k,Sibe uvularization,,dʒa.lu.kun,dʒa.lu.qun,k→q
+sibe-uvular-k,output,,,dʒa.lu.qun,
+sibe-uvular-x,input,,bɔduxu,bɔ.du.xu,
+sibe-uvular-x,Sibe uvularization,,bɔ.du.xu,bɔ.du.χu,x→χ
+sibe-uvular-x,output,,,bɔ.du.χu,
+sibe-all-high,input,,ulukun,u.lu.kun,
+sibe-all-high,output,,,u.lu.kun,
+emphasis-spread,input,,tatatˤ,ta.tatˤ,
+emphasis-spread,Emphasis spread (RTR),,ta.tatˤ,tˤa.tˤatˤ,"t→tˤ, t→tˤ"
+emphasis-spread,output,,,tˤa.tˤatˤ,
+igbo-rounding-b,input,,obibe,o.bi.be,
+igbo-rounding-b,Igbo labial assimilation,,o.bi.be,o.bu.be,i→u
+igbo-rounding-b,output,,,o.bu.be,
+igbo-rounding-f,input,,ofife,o.fi.fe,
+igbo-rounding-f,Igbo labial assimilation,,o.fi.fe,o.fu.fe,i→u
+igbo-rounding-f,output,,,o.fu.fe,
+igbo-no-rounding-l,input,,olile,o.li.le,
+igbo-no-rounding-l,output,,,o.li.le,
+irish-palatal-dorsal,input,,anʲga,anʲ.ga,
+irish-palatal-dorsal,"Irish dorsal assimilation ([dorsal] spreads, [back] does not)",,anʲ.ga,aŋʲ.ga,nʲ→ŋʲ
+irish-palatal-dorsal,output,,,aŋʲ.ga,
+irish-velar-dorsal,input,,anˠgʲa,anˠ.gʲa,
+irish-velar-dorsal,"Irish dorsal assimilation ([dorsal] spreads, [back] does not)",,anˠ.gʲa,aŋ.gʲa,nˠ→ŋ
+irish-velar-dorsal,output,,,aŋ.gʲa,

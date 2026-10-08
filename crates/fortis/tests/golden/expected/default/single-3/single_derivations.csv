@@ -1,0 +1,3 @@
+word,rule,t,before,after,change
+akbaakba,input,,akbaakba,ak.ba.ak.ba,
+akbaakba,output,,,ak.ba.ak.ba,

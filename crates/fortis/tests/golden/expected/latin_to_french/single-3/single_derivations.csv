@@ -1,0 +1,14 @@
+word,rule,t,before,after,change
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,input,,ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,ˌɑbˈbɑː.t̪eˌmɑbˈbɑː.t̪em,
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,the low vowel fronts by default,500,ˌɑbˈbɑː.t̪eˌmɑbˈbɑː.t̪em,ˌabˈbaː.t̪eˌmabˈbaː.t̪em,"ˌɑ→ˌa, ˈɑː→ˈaː, ˌɑ→ˌa, ˈɑː→ˈaː"
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,an unstressed non-low non-nasalized vowel reduces to schwa before a consonant or word end,600,ˌabˈbaː.t̪eˌmabˈbaː.t̪em,ˌabˈbaː.t̪əˌmabˈbaː.t̪əm,"e→ə, e→ə"
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,schwa becomes non-syllabic,600,ˌabˈbaː.t̪əˌmabˈbaː.t̪əm,ˌabˈbaːt̪ə̯ˌmabˈbaːt̪ə̯m,"ə→ə̯, ə→ə̯"
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,non-syllabic schwa is lost elsewhere,600,ˌabˈbaːt̪ə̯ˌmabˈbaːt̪ə̯m,ˌabˈbaːˌt̪mabˈbaːt̪m,ˌə̯mabˈbaːt̪ə̯→ˌmabˈbaːt̪
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,"schwa epenthesized after an obstruent + sonorant consonant, before optional consonants + word end",600,ˌabˈbaːˌt̪mabˈbaːt̪m,ˌabˈbaːˌt̪mabˈbaː.t̪mə,∅→ə
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,t voices to d before a nasal consonant,600,ˌabˈbaːˌt̪mabˈbaː.t̪mə,ˌabˈbaːˌd̪mabˈbaː.d̪mə,"t̪→d̪, t̪→d̪"
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,a vowel shortens before a consonant cluster ending in a nasal,600,ˌabˈbaːˌd̪mabˈbaː.d̪mə,ˌabˈbaˌd̪mabˈba.d̪mə,"ˈaː→ˈa, ˈaː→ˈa"
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,an identical consonant geminate reduces to one (recurrence),750,ˌabˈbaˌd̪mabˈba.d̪mə,ˌaˈbaˌd̪maˈba.d̪mə,ˈbaˌd̪mab→ˈaˌd̪ma
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,final ə becomes a non-syllabic off-glide,1550,ˌaˈbaˌd̪maˈba.d̪mə,ˌaˈbaˌd̪maˈbad̪mə̯,ə→ə̯
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,the final off-glide schwa is deleted elsewhere,1550,ˌaˈbaˌd̪maˈbad̪mə̯,ˌaˈbaˌd̪maˈbad̪m,ə̯→∅
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,stress is leveled — no longer distinctive,1650,ˌaˈbaˌd̪maˈbad̪m,a.ba.d̪ma.bad̪m,"ˌa→a, ˈa→a, ˌa→a, ˈa→a"
+ˌɑbˈbɑːt̪emˌɑbˈbɑːt̪em,output,,,a.ba.d̪ma.bad̪m,

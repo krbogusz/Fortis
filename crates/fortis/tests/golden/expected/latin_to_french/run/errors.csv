@@ -1,0 +1,291 @@
+stage,expected,got,count,kind,examples (gloss: derived vs. attested)
+300,ˌe,ˌɛ,2,substitution,effriter: ˌɛsˌfruxˈt̪ɑ.rɛ/ˌesˌfruxˈt̪ɑrɛ; essai: ˌɛxˈsɑʝ.ʝo/ˌesˈsɑʝʝo
+300,∅,u̯,1,insertion,août: ˌɑu̯ˈɣos.t̪o/ˌɑˈɣos.t̪o
+300,∅,ɑ,1,insertion,cinquante: ˌciŋ.kwɑˈʝen̪.t̪ɑ/ˌciŋˈkwɑn̪t̪ɑ
+300,∅,ʝ,1,insertion,cinquante: ˌciŋ.kwɑˈʝen̪.t̪ɑ/ˌciŋˈkwɑn̪t̪ɑ
+300,d̪,s,1,substitution,assez: ˌɑsˈsɑ.t̪es/ˌɑˈd̪.sɑ.t̪es
+300,e,g,1,substitution,veiller: ˌβeˈglɑ.rɛ/ˌβeʝeˈlɑrɛ
+300,s,x,1,substitution,essai: ˌɛxˈsɑʝ.ʝo/ˌesˈsɑʝʝo
+300,u,e,1,substitution,manger: ˌmɑn̪.d̪eˈkɑ.rɛ/ˌmɑn̪d̪uˈkɑrɛ
+300,ɛ,x,1,substitution,pitié: ˌpixˈt̪ɑ.t̪ɛ/ˌpiɛˈt̪ɑt̪ɛ
+300,ʝ,∅,1,deletion,veiller: ˌβeˈglɑ.rɛ/ˌβeʝeˈlɑrɛ
+300,ʝ,g,1,substitution,raide: ˈreg.d̪ɑ/ˈreʝd̪ɑ
+300,ʝ,ɟ,1,substitution,joie: ˈgɑw.ɟʝɑ/ˈgɑwʝʝɑ
+300,ˈɑ,ˈe,1,substitution,cinquante: ˌciŋ.kwɑˈʝen̪.t̪ɑ/ˌciŋˈkwɑn̪t̪ɑ
+300,ˌo,ˌɔ,1,substitution,ouvrier: ˌɔ.pɛˈrɑr.ʝo/ˌopɛˈrɑrʝo
+1000,ˈu,ˈũ,23,substitution,comble: ˈkũm.blə/ˈkumblə; don: ˈd̪ũn̪/ˈd̪un̪; donne: ˈd̪ũ.n̪əθ/ˈd̪un̪əθ
+1000,t͡s,t͡sʲ,22,substitution,aulx: ˈaɫt͡sʲ/ˈaɫt͡s; bains: ˈbãj̃t͡sʲ/ˈbãj̃n̪t͡s; bras: ˈbrat͡sʲ/ˈbrat͡s
+1000,n̪,∅,10,deletion,bains: ˈbãj̃t͡sʲ/ˈbãj̃n̪t͡s; feint: ˈfẽj̃t̪/ˈfẽj̃n̪t̪; hiver: ˌiˈvɛr/ˌiˈvɛrn̪
+1000,ˌu,ˌũ,9,substitution,cognée: ˌkũˈɲie̯.ðə/ˌkuˈɲie̯ðə; connaître: ˌkũˈn̪ojs.t̪rə/ˌkuˈn̪ojst̪rə; donner: ˌd̪ũˈn̪eːr/ˌd̪uˈn̪eːr
+1000,e̯,o̯,8,substitution,bœuf: ˈbyo̯f/ˈbye̯f; bœufs: ˈbyo̯s/ˈbye̯s; feuille: ˈfyo̯.ʎə/ˈfye̯ʎə
+1000,e̯,ˈeː,6,substitution,effriter: ˌezˌfryjˈt̪eːr/ˌezˌfryjˈt̪ie̯r; frayer: ˈd͡ʒeːr/ˌfreˈjie̯r; manger: ˌmãn̪ˈd͡ʒeːr/ˌmãn̪ˈd͡ʒie̯r
+1000,w,ˈø,6,substitution,honneur: ˌũˈn̪ør/ˌuˈn̪owr; leur: ˈlør/ˈlowr; meilleur: ˌmeˈʎør/ˌmeˈʎowr
+1000,ˈo,∅,6,deletion,honneur: ˌũˈn̪ør/ˌuˈn̪owr; leur: ˈlør/ˈlowr; meilleur: ˌmeˈʎør/ˌmeˈʎowr
+1000,ˌə,ˌe,6,substitution,âge: ˌeˈða.d͡ʒə/ˌəˈða.d͡ʒə; cheval: ˌt͡ʃeˈval/ˌt͡ʃəˈval; devoir: ˌd̪eˈvejr/ˌd̪əˈvejr
+1000,ˈi,∅,5,deletion,effriter: ˌezˌfryjˈt̪eːr/ˌezˌfryjˈt̪ie̯r; manger: ˌmãn̪ˈd͡ʒeːr/ˌmãn̪ˈd͡ʒie̯r; pitié: ˌpiˈt̪eːθ/ˌpiˈt̪ie̯θ
+1000,∅,e̯,4,insertion,git: ˈd͡ʒie̯jt͡sʲt̪/ˈd͡ʒit͡st̪; lit: ˈlie̯jt̪/ˈlit̪; pis: ˈpie̯jt͡sʲ/ˈpis
+1000,∅,j,4,insertion,git: ˈd͡ʒie̯jt͡sʲt̪/ˈd͡ʒit͡st̪; lit: ˈlie̯jt̪/ˈlit̪; pis: ˈpie̯jt͡sʲ/ˈpis
+1000,j̃,∅,4,deletion,bain: ˈbãɲ/ˈbãj̃ɲ; enseigne: ˌẽn̪ˈsẽ.ɲə/ˌẽn̪ˈsẽj̃ɲə; juin: ˈd͡ʒyɲ/ˈd͡ʒyj̃ɲ
+1000,ˈu,ˈo,3,substitution,double: ˈd̪o.blə/ˈd̪ublə; douve: ˈd̪o.və/ˈd̪uvə; louve: ˈlo.və/ˈluvə
+1000,ˌɛ,ˌe,3,substitution,personne: ˌperˈsũ.n̪ə/ˌpɛrˈsun̪ə; servir: ˌserˈvir/ˌsɛrˈvir; vergogne: ˌverˈgũ.ɲə/ˌvɛrˈguɲə
+1000,θ,t̪,3,substitution,foi: ˈfejt̪/ˈfejθ; neveu: ˌn̪eˈvowt̪/ˌn̪əˈvowθ; nœud: ˈn̪owt̪/ˈn̪owθ
+1000,∅,o̯,2,insertion,hui: ˈyo̯j/ˈyj; nuit: ˈn̪yo̯jt̪/ˈn̪yjt̪
+1000,∅,ə,2,insertion,cinquante: ˌt͡sʲiŋ.kɥəˈjin̪.t̪ə/ˌt͡siŋˈkwãn̪t̪ə; vair: ˈvaj.rə/ˈvajr
+1000,j,∅,2,deletion,frayer: ˈd͡ʒeːr/ˌfreˈjie̯r; oiseaux: ˌɔˈd͡zɛɫs/ˌɔjˈzɛɫs
+1000,j̃,ˈũ,2,substitution,coin: ˈkũɲ/ˈkuj̃ɲ; témoin: ˌt̪ɛˈzmũɲ/ˌt̪eˈzmuj̃ɲ
+1000,n̪,m,2,substitution,faim: ˈfãj̃m/ˈfãj̃n̪; raisin: ˌrajˈzʲim/ˌrajˈzin̪
+1000,s,sʲ,2,substitution,huisser: ˌyjˈsʲie̯r/ˌyjˈsie̯r; laisser: ˌlajˈsʲie̯r/ˌlajˈsie̯r
+1000,s,t͡sʲ,2,substitution,mais: ˈmajt͡sʲ/ˈmajs; pis: ˈpie̯jt͡sʲ/ˈpis
+1000,t͡s,s,2,substitution,ans: ˈãn̪s/ˈãn̪t͡s; pieds: ˈpie̯s/ˈpie̯t͡s
+1000,z,zʲ,2,substitution,plaisir: ˌplajˈzʲir/ˌplajˈzir; raisin: ˌrajˈzʲim/ˌrajˈzin̪
+1000,ð,∅,2,deletion,louer: ˌlɔˈweːr/ˌlɔwˈðeːr; sainteté: ˌsãj̃ˈt̪eːθ/ˌsãj̃n̪t̪əˈðeːθ
+1000,ə,∅,2,deletion,sainteté: ˌsãj̃ˈt̪eːθ/ˌsãj̃n̪t̪əˈðeːθ; tiennent: ˈt̪ie̯.n̪ə̃θ/ˈt̪ie̯n̪ən̪t̪
+1000,ʎ,ɫ,2,substitution,ficelle: ˌfiɫˈt͡sʲɛ.lə/ˌfiʎˈt͡sɛlə; fils: ˈfiɫt͡sʲ/ˈfiʎt͡s
+1000,ˈu,∅,2,deletion,coin: ˈkũɲ/ˈkuj̃ɲ; témoin: ˌt̪ɛˈzmũɲ/ˌt̪eˈzmuj̃ɲ
+1000,ˌɔ,ˌo,2,substitution,porter: ˌporˈt̪eːr/ˌpɔrˈt̪eːr; porteur: ˌpor.t̪əˈðør/ˌpɔrt̪əˈðowr
+1000,ˌə,ˌẽ,2,substitution,fumier: ˌfẽˈmie̯r/ˌfəˈmie̯r; mener: ˌmẽˈn̪eːr/ˌməˈn̪eːr
+1000,∅,k,1,insertion,sec: ˈsekk/ˈsek
+1000,∅,n̪,1,insertion,âme: ˈãn̪.mə/ˈã.mə
+1000,∅,v,1,insertion,cage: ˈt͡ʃav.d͡ʒə/ˈkad͡ʒə
+1000,∅,ɥ,1,insertion,cinquante: ˌt͡sʲiŋ.kɥəˈjin̪.t̪ə/ˌt͡siŋˈkwãn̪t̪ə
+1000,∅,ɪ̯,1,insertion,lundi: ˌlyn̪ˈd̪iɪ̯/ˌlyn̪zˈd̪i
+1000,∅,ˈi,1,insertion,ja: ˈd͡ʒie̯/ˈd͡ʒa
+1000,∅,ˌo,1,insertion,août: ˌoˈu̯ost̪/ˌaˈost̪
+1000,d̪,t̪,1,substitution,coude: ˈko.t̪ə/ˈkod̪ə
+1000,d͡ʒ,ˈi,1,substitution,engins: ˌẽˈɲie̯j̃t͡sʲ/ˌẽŋˈd͡ʒin̪t͡s
+1000,f,∅,1,deletion,frayer: ˈd͡ʒeːr/ˌfreˈjie̯r
+1000,j,ʒ,1,substitution,joie: ˈd͡ʒɔ.ʒə/ˈd͡ʒɔjə
+1000,j,ˈã,1,substitution,larme: ˈlãj̃.mə/ˈlajrmə
+1000,k,t͡ʃ,1,substitution,cage: ˈt͡ʃav.d͡ʒə/ˈkad͡ʒə
+1000,l,ˌe,1,substitution,pelerin: ˌperˈrin̪/ˌpələˈrin̪
+1000,m,n̪,1,substitution,singe: ˈsin̪.d͡ʒə/ˈsimd͡ʒə
+1000,n̪,j̃,1,substitution,engins: ˌẽˈɲie̯j̃t͡sʲ/ˌẽŋˈd͡ʒin̪t͡s
+1000,n̪,ə̃,1,substitution,tiennent: ˈt̪ie̯.n̪ə̃θ/ˈt̪ie̯n̪ən̪t̪
+1000,r,∅,1,deletion,frayer: ˈd͡ʒeːr/ˌfreˈjie̯r
+1000,r,j̃,1,substitution,larme: ˈlãj̃.mə/ˈlajrmə
+1000,t̪,θ,1,substitution,tiennent: ˈt̪ie̯.n̪ə̃θ/ˈt̪ie̯n̪ən̪t̪
+1000,v,p,1,substitution,pauvre: ˈpɔ.prə/ˈpɔvrə
+1000,w,j,1,substitution,cinquante: ˌt͡sʲiŋ.kɥəˈjin̪.t̪ə/ˌt͡siŋˈkwãn̪t̪ə
+1000,w,u̯,1,substitution,dieu: ˈd̪ie̯u̯/ˈd̪ie̯w
+1000,z,∅,1,deletion,lundi: ˌlyn̪ˈd̪iɪ̯/ˌlyn̪zˈd̪i
+1000,z,d͡z,1,substitution,oiseaux: ˌɔˈd͡zɛɫs/ˌɔjˈzɛɫs
+1000,ð,d̪,1,substitution,joue: ˈd͡ʒɔw.d̪ə/ˈd͡ʒɔwðə
+1000,ŋ,ɲ,1,substitution,engins: ˌẽˈɲie̯j̃t͡sʲ/ˌẽŋˈd͡ʒin̪t͡s
+1000,ə,r,1,substitution,pelerin: ˌperˈrin̪/ˌpələˈrin̪
+1000,ˈa,∅,1,deletion,larme: ˈlãj̃.mə/ˈlajrmə
+1000,ˈa,e̯,1,substitution,ja: ˈd͡ʒie̯/ˈd͡ʒa
+1000,ˈã,ˈi,1,substitution,cinquante: ˌt͡sʲiŋ.kɥəˈjin̪.t̪ə/ˌt͡siŋˈkwãn̪t̪ə
+1000,ˈeː,ˈa,1,substitution,pieux: ˈpaɫs/ˈpeːɫs
+1000,ˈi,d͡ʒ,1,substitution,frayer: ˈd͡ʒeːr/ˌfreˈjie̯r
+1000,ˈi,e̯,1,substitution,engins: ˌẽˈɲie̯j̃t͡sʲ/ˌẽŋˈd͡ʒin̪t͡s
+1000,ˈo,ˈu,1,substitution,tout: ˈt̪ut̪/ˈt̪ot̪
+1000,ˈɔ,ˈœ,1,substitution,or: ˈœr/ˈɔr
+1000,ˌa,u̯,1,substitution,août: ˌoˈu̯ost̪/ˌaˈost̪
+1000,ˌe,∅,1,deletion,frayer: ˈd͡ʒeːr/ˌfreˈjie̯r
+1000,ˌe,ˌɛ,1,substitution,témoin: ˌt̪ɛˈzmũɲ/ˌt̪eˈzmuj̃ɲ
+1000,ˌə,∅,1,deletion,pelerin: ˌperˈrin̪/ˌpələˈrin̪
+1000,ˌɛ̃,ˌẽ,1,substitution,sentir: ˌsẽn̪ˈt̪ir/ˌsɛ̃n̪ˈt̪ir
+1200,w,ˈu,10,substitution,avoir: ˌaˈvuɛ̯r/ˌaˈvwɛr; chaloir: ˌʃaˈluɛ̯r/ˌʃaˈlwɛr; connaître: ˌkũˈn̪uɛ̯.t̪rə/ˌkũˈn̪wɛːt̪rə
+1200,ˈɛ,ɛ̯,9,substitution,avoir: ˌaˈvuɛ̯r/ˌaˈvwɛr; chaloir: ˌʃaˈluɛ̯r/ˌʃaˈlwɛr; craie: ˈkru.ɛ̯ə/ˈkrwɛə
+1200,n̪,m,8,substitution,chambre: ˈʃãm.brə/ˈʃãn̪brə; champ: ˈʃãmp/ˈʃãn̪p; comble: ˈkũm.blə/ˈkũn̪blə
+1200,∅,ˈa,7,insertion,ais: ˈajs/ˈɛːs; défaire: ˌd̪eːˈfaj.rə/ˌd̪eˈfɛrə; essai: ˌeˈsaj/ˌeˈsɛ
+1200,ˈẽ,ˈe,7,substitution,bien: ˈbjen̪/ˈbjẽn̪; chien: ˈʃjen̪/ˈʃjẽn̪; moyen: ˌmuɛ̯ˈjen̪/ˌmwɛˈjẽn̪
+1200,ˈɛ,j,7,substitution,défaire: ˌd̪eːˈfaj.rə/ˌd̪eˈfɛrə; essai: ˌeˈsaj/ˌeˈsɛ; fait: ˈfajt̪/ˈfɛt̪
+1200,∅,j,6,insertion,git: ˈʒijst̪/ˈʒiːt̪; ja: ˈʒje/ˈʒa; lit: ˈlijt̪/ˈlit̪
+1200,n̪,∅,6,deletion,bains: ˈbɛ̃j̃s/ˈbɛ̃j̃n̪s; feint: ˈfɛ̃j̃t̪/ˈfɛ̃j̃n̪t̪; peinture: ˌpɛ̃j̃ˈt̪y.rə/ˌpɛ̃j̃n̪ˈt̪yrə
+1200,ˌɛ,j,6,substitution,laisser: ˌlajˈsjer/ˌlɛˈsjer; maison: ˌmajˈzũn̪/ˌmɛˈzũn̪; meilleur: ˌmejˈʎør/ˌmɛˈʎør
+1200,∅,ˌa,5,insertion,laisser: ˌlajˈsjer/ˌlɛˈsjer; maison: ˌmajˈzũn̪/ˌmɛˈzũn̪; plaisir: ˌplajˈzir/ˌplɛˈzir
+1200,j,∅,5,deletion,effriter: ˌeˌfryjˈt̪er/ˌeˌfrɥiˈt̪jer; manger: ˌmãn̪ˈʒer/ˌmãn̪ˈʒjer; pitié: ˌpiˈt̪e/ˌpiˈt̪je
+1200,w,ˌu,5,substitution,moisson: ˌmuɛ̯ˈsũn̪/ˌmwɛˈsũn̪; moyen: ˌmuɛ̯ˈjen̪/ˌmwɛˈjẽn̪; moyeu: ˌmuˈɛ̯øl/ˌmwɛˈøl
+1200,ˌɛ,ɛ̯,5,substitution,moisson: ˌmuɛ̯ˈsũn̪/ˌmwɛˈsũn̪; moyen: ˌmuɛ̯ˈjen̪/ˌmwɛˈjẽn̪; moyeu: ˌmuˈɛ̯øl/ˌmwɛˈøl
+1200,ɥ,ˈy,3,substitution,fruit: ˈfryjt̪/ˈfrɥit̪; hui: ˈyj/ˈɥi; nuit: ˈn̪yjt̪/ˈn̪ɥit̪
+1200,ˈi,j,3,substitution,fruit: ˈfryjt̪/ˈfrɥit̪; hui: ˈyj/ˈɥi; nuit: ˈn̪yjt̪/ˈn̪ɥit̪
+1200,ˈĩ,ĩ,3,substitution,coin: kwĩɲ/ˈkwĩɲ; juin: ʒɥĩɲ/ˈʒɥĩɲ; témoin: ˌt̪ɛ.mwĩɲ/ˌt̪eˈmwĩɲ
+1200,ˌe,ˌeː,3,substitution,défaire: ˌd̪eːˈfaj.rə/ˌd̪eˈfɛrə; épée: ˌeːˈpe.ə/ˌeˈpeə; épine: ˌeːˈpĩ.n̪ə/ˌeˈpĩn̪ə
+1200,∅,t̪,2,insertion,neveu: ˌn̪əˈvøt̪/ˌn̪əˈvø; nœud: ˈn̪øt̪/ˈn̪ø
+1200,∅,ˈɔ,2,insertion,fous: ˈfɔws/ˈfus; joue: ˈʒɔw.d̪ə/ˈʒuə
+1200,n̪,ĩ,2,substitution,point: pwĩt̪/ˈpwĩn̪t̪; pointure: pwĩˈt̪y.rə/ˌpwĩn̪ˈt̪yrə
+1200,t̪,∅,2,deletion,sainteté: ˌsɛ̃j̃ˈt̪e/ˌsɛ̃j̃n̪t̪əˈt̪e; tiennent: ˈt̪je.n̪ə/ˈt̪jẽn̪ət̪
+1200,w,∅,2,deletion,frayer: ˈʒer/ˌfrwɛˈjer; oiseaux: ˌɔˈze̯aws/ˌwɛˈze̯aws
+1200,w,ˈɛ,2,substitution,ploie: ˈplɛ.jə/ˈplwɛːə; raie: ˈrɛ.jə/ˈrwɛə
+1200,ɥ,ˌy,2,substitution,effriter: ˌeˌfryjˈt̪er/ˌeˌfrɥiˈt̪jer; huisser: ˌyjˈsjer/ˌɥiˈsjer
+1200,ˈɛː,j,2,substitution,ais: ˈajs/ˈɛːs; ploie: ˈplɛ.jə/ˈplwɛːə
+1200,ˌe,ˌɛ,2,substitution,fermer: ˌfɛrˈmer/ˌferˈmer; témoin: ˌt̪ɛ.mwĩɲ/ˌt̪eˈmwĩɲ
+1200,ˌi,j,2,substitution,effriter: ˌeˌfryjˈt̪er/ˌeˌfrɥiˈt̪jer; huisser: ˌyjˈsjer/ˌɥiˈsjer
+1200,ˌə,ˌã,2,substitution,fumier: ˌfãˈmjer/ˌfəˈmjer; mener: ˌmãˈn̪er/ˌməˈn̪er
+1200,∅,n̪,1,insertion,âme: ˈãn̪.mə/ˈã.mə
+1200,∅,u,1,insertion,cinquante: ˌsĩŋ.kɥuˈɛ̯ĩn̪.t̪ə/ˌsĩŋˈkãn̪t̪ə
+1200,∅,v,1,insertion,cage: ˈʃav.ʒə/ˈkaʒə
+1200,∅,w,1,insertion,joue: ˈʒɔw.d̪ə/ˈʒuə
+1200,∅,ə,1,insertion,vair: ˈvaj.rə/ˈvɛr
+1200,∅,ɛ̯,1,insertion,cinquante: ˌsĩŋ.kɥuˈɛ̯ĩn̪.t̪ə/ˌsĩŋˈkãn̪t̪ə
+1200,∅,ɥ,1,insertion,cinquante: ˌsĩŋ.kɥuˈɛ̯ĩn̪.t̪ə/ˌsĩŋˈkãn̪t̪ə
+1200,∅,ˈe,1,insertion,sec: ˈsekk/ˈsɛk
+1200,∅,ˈi,1,insertion,git: ˈʒijst̪/ˈʒiːt̪
+1200,∅,ˈu,1,insertion,foi: ˈfuɛ̯t̪/ˈfwɛ
+1200,∅,ˌe,1,insertion,meilleur: ˌmejˈʎør/ˌmɛˈʎør
+1200,∅,ˌɔ,1,insertion,souder: ˌsɔwˈd̪er/ˌsuˈd̪er
+1200,∅,ˌɛ̃,1,insertion,engins: ˌɛ̃j̃ˈɲjej̃s/ˌãn̪ˈʒĩn̪s
+1200,d̪,t̪,1,substitution,coude: ˈku.t̪ə/ˈkud̪ə
+1200,f,∅,1,deletion,frayer: ˈʒer/ˌfrwɛˈjer
+1200,j,t̪,1,substitution,traiter: ˌt̪rajˈt̪er/ˌt̪rɛˈt̪jer
+1200,j,ʒ,1,substitution,frayer: ˈʒer/ˌfrwɛˈjer
+1200,j,ˈa,1,substitution,pieux: ˈpaws/ˈpjøs
+1200,k,ʃ,1,substitution,cage: ˈʃav.ʒə/ˈkaʒə
+1200,l,∅,1,deletion,pelerin: ˌpeˈrĩn̪/ˌpələˈrĩn̪
+1200,n̪,j̃,1,substitution,engins: ˌɛ̃j̃ˈɲjej̃s/ˌãn̪ˈʒĩn̪s
+1200,n̪,ɲ,1,substitution,engins: ˌɛ̃j̃ˈɲjej̃s/ˌãn̪ˈʒĩn̪s
+1200,r,∅,1,deletion,frayer: ˈʒer/ˌfrwɛˈjer
+1200,r,j̃,1,substitution,larme: ˈlɛ̃j̃.mə/ˈlɛrmə
+1200,t̪,j,1,substitution,traiter: ˌt̪rajˈt̪er/ˌt̪rɛˈt̪jer
+1200,v,p,1,substitution,pauvre: ˈpɔ.prə/ˈpɔvrə
+1200,w,ɛ̯,1,substitution,foi: ˈfuɛ̯t̪/ˈfwɛ
+1200,w,ˈɔ,1,substitution,joie: ˈʒɔ.ʒə/ˈʒwɛə
+1200,ə,∅,1,deletion,sainteté: ˌsɛ̃j̃ˈt̪e/ˌsɛ̃j̃n̪t̪əˈt̪e
+1200,ə,ˌe,1,substitution,pelerin: ˌpeˈrĩn̪/ˌpələˈrĩn̪
+1200,ʒ,j,1,substitution,engins: ˌɛ̃j̃ˈɲjej̃s/ˌãn̪ˈʒĩn̪s
+1200,ˈa,ˈe,1,substitution,ja: ˈʒje/ˈʒa
+1200,ˈã,ˈĩ,1,substitution,cinquante: ˌsĩŋ.kɥuˈɛ̯ĩn̪.t̪ə/ˌsĩŋˈkãn̪t̪ə
+1200,ˈe,ˈɛ,1,substitution,cercle: ˈsɛr.klə/ˈserklə
+1200,ˈiː,s,1,substitution,git: ˈʒijst̪/ˈʒiːt̪
+1200,ˈĩ,∅,1,deletion,point: pwĩt̪/ˈpwĩn̪t̪
+1200,ˈĩ,ˈe,1,substitution,engins: ˌɛ̃j̃ˈɲjej̃s/ˌãn̪ˈʒĩn̪s
+1200,ˈoː,ˈɔː,1,substitution,tôt: ˈt̪ɔːt̪/ˈt̪oːt̪
+1200,ˈu,d̪,1,substitution,joue: ˈʒɔw.d̪ə/ˈʒuə
+1200,ˈu,w,1,substitution,fous: ˈfɔws/ˈfus
+1200,ˈø,w,1,substitution,pieux: ˈpaws/ˈpjøs
+1200,ˈø,ˈy,1,substitution,yeux: ˈys/ˈjøs
+1200,ˈɔ,ˈœ,1,substitution,or: ˈœr/ˈɔr
+1200,ˈɛ,k,1,substitution,sec: ˈsekk/ˈsɛk
+1200,ˈɛ,t̪,1,substitution,foi: ˈfuɛ̯t̪/ˈfwɛ
+1200,ˈɛ,ʒ,1,substitution,joie: ˈʒɔ.ʒə/ˈʒwɛə
+1200,ˈɛ,ˈɛː,1,substitution,presse: ˈprɛː.sə/ˈprɛsə
+1200,ˈɛ,ˈɛ̃,1,substitution,larme: ˈlɛ̃j̃.mə/ˈlɛrmə
+1200,ˈɛː,ɛ̯,1,substitution,connaître: ˌkũˈn̪uɛ̯.t̪rə/ˌkũˈn̪wɛːt̪rə
+1200,ˌa,ˌu,1,substitution,août: ˌuˈuːt̪/ˌaˈuːt̪
+1200,ˌã,j̃,1,substitution,engins: ˌɛ̃j̃ˈɲjej̃s/ˌãn̪ˈʒĩn̪s
+1200,ˌe,ˌə,1,substitution,léger: ˌləˈʒjer/ˌleˈʒjer
+1200,ˌĩ,∅,1,deletion,pointure: pwĩˈt̪y.rə/ˌpwĩn̪ˈt̪yrə
+1200,ˌu,w,1,substitution,souder: ˌsɔwˈd̪er/ˌsuˈd̪er
+1200,ˌu,ˌɔ,1,substitution,louer: ˌlɔˈer/ˌluˈer
+1200,ˌə,∅,1,deletion,pelerin: ˌpeˈrĩn̪/ˌpələˈrĩn̪
+1200,ˌɛ,∅,1,deletion,frayer: ˈʒer/ˌfrwɛˈjer
+1200,ˌɛ,ˌa,1,substitution,traiter: ˌt̪rajˈt̪er/ˌt̪rɛˈt̪jer
+1200,ˌɛ,ˌɔ,1,substitution,oiseaux: ˌɔˈze̯aws/ˌwɛˈze̯aws
+1500,∅,j,8,insertion,git: ˈʒijst̪/ˈʒiːt̪; huisser: ˌɥiˈsjer/ˌɥiˈser; laisser: ˌlɛːˈsjer/ˌlɛˈser
+1500,ˈɛ,ˈɛː,7,substitution,ais: ˈɛːs/ˈɛs; défaire: ˌd̪eːˈfɛː.rə/ˌd̪eˈfɛrə; essai: ˌeˈsɛː/ˌeˈsɛ
+1500,j,∅,5,deletion,moyeu: ˌmwɛˈøl/ˌmwɛˈjøl; pieux: ˈpoːs/ˈpjøs; pitié: ˌpiˈt̪e/ˌpiˈt̪je
+1500,ˌɛ,ˌɛː,5,substitution,laisser: ˌlɛːˈsjer/ˌlɛˈser; plaisir: ˌplɛːˈzir/ˌplɛˈzir; raisin: ˌrɛːˈzẽː/ˌrɛˈzẽː
+1500,ˈɛ̃ː,ˈɛ̃,4,substitution,bains: ˈbɛ̃s/ˈbɛ̃ːs; feint: ˈfɛ̃t̪/ˈfɛ̃ːt̪; plaindre: ˈplɛ̃.d̪rə/ˈplɛ̃ːd̪rə
+1500,∅,t̪,3,insertion,foi: ˈfwɛt̪/ˈfwɛ; neveu: ˌn̪əˈvøt̪/ˌn̪əˈvø; nœud: ˈn̪øt̪/ˈn̪ø
+1500,ˌe,ˌeː,3,substitution,défaire: ˌd̪eːˈfɛː.rə/ˌd̪eˈfɛrə; épée: ˌeːˈpeː/ˌeˈpeː; épine: ˌeːˈpi.n̪ə/ˌeˈpin̪ə
+1500,∅,ə̯,2,insertion,âge: ˈə̯a.ʒə/ˈaːʒə; fléaux: ˌflaˈjə̯oːs/ˌflaˈjoːs
+1500,∅,ˈɛ,2,insertion,ploie: ˈplɛjə̯/ˈplwɛː; raie: ˈrɛjə̯/ˈrɛː
+1500,ˈe,ˈeː,2,substitution,assez: ˌaˈseːs/ˌaˈses; pieds: ˈpjeːs/ˈpjes
+1500,ˈø,ˈøː,2,substitution,eux: ˈøːs/ˈøs; vieux: ˈvjøːs/ˈvjøs
+1500,ˈɛ,ˈe,2,substitution,pareil: ˌpaˈreʎ/ˌpaˈrɛʎ; sec: ˈsek/ˈsɛk
+1500,ˈɛː,ə̯,2,substitution,ploie: ˈplɛjə̯/ˈplwɛː; raie: ˈrɛjə̯/ˈrɛː
+1500,ˈɛ̃ː,ɛ̃ː,2,substitution,coin: kwɛ̃ː/ˈkwɛ̃ː; témoin: ˌt̪ɛ̃.mwɛ̃ː/ˌt̪eˈmwɛ̃ː
+1500,ˌɛ,∅,2,deletion,frayer: ˈʒer/ˌfrɛˈjer; pelerin: ˌpeˈrẽː/ˌpɛləˈrɛ̃ː
+1500,∅,d̪,1,insertion,joue: ˈʒu.d̪ə/ˈʒuː
+1500,∅,v,1,insertion,cage: ˈʃav.ʒə/ˈkaʒə
+1500,∅,w,1,insertion,cinquante: ˌsẽːkɥˈwẽː.t̪ə/ˌsẽːˈkãːt̪ə
+1500,∅,ə,1,insertion,vair: ˈvɛː.rə/ˈvɛr
+1500,∅,ɥ,1,insertion,cinquante: ˌsẽːkɥˈwẽː.t̪ə/ˌsẽːˈkãːt̪ə
+1500,∅,ˈi,1,insertion,git: ˈʒijst̪/ˈʒiːt̪
+1500,∅,ˈu,1,insertion,joue: ˈʒu.d̪ə/ˈʒuː
+1500,∅,ˈɔ,1,insertion,joie: ˈʒɔ.ʒə/ˈʒwɛː
+1500,∅,ˌe,1,insertion,meilleur: ˌmejˈʎør/ˌmɛˈʎør
+1500,∅,ˌɛ̃,1,insertion,engins: ˌɛ̃ˈɲjẽːs/ˌãːˈʒẽːs
+1500,d̪,t̪,1,substitution,coude: ˈku.t̪ə/ˈkud̪ə
+1500,f,∅,1,deletion,frayer: ˈʒer/ˌfrɛˈjer
+1500,j,ʒ,1,substitution,frayer: ˈʒer/ˌfrɛˈjer
+1500,k,ʃ,1,substitution,cage: ˈʃav.ʒə/ˈkaʒə
+1500,l,∅,1,deletion,pelerin: ˌpeˈrẽː/ˌpɛləˈrɛ̃ː
+1500,r,∅,1,deletion,frayer: ˈʒer/ˌfrɛˈjer
+1500,r,ˈɛ̃,1,substitution,larme: ˈlɛ̃.mə/ˈlarmə
+1500,t̪,∅,1,deletion,sainteté: ˌsɛ̃ˈt̪e/ˌsɛ̃ːt̪əˈt̪e
+1500,v,p,1,substitution,pauvre: ˈpɔ.prə/ˈpoːvrə
+1500,w,∅,1,deletion,oiseaux: ˌoːˈzə̯oːs/ˌwɛˈzə̯oːs
+1500,w,j,1,substitution,ploie: ˈplɛjə̯/ˈplwɛː
+1500,w,ʒ,1,substitution,joie: ˈʒɔ.ʒə/ˈʒwɛː
+1500,ə,ˌe,1,substitution,pelerin: ˌpeˈrẽː/ˌpɛləˈrɛ̃ː
+1500,ə,ˌɛ̃,1,substitution,sainteté: ˌsɛ̃ˈt̪e/ˌsɛ̃ːt̪əˈt̪e
+1500,ʒ,j,1,substitution,engins: ˌɛ̃ˈɲjẽːs/ˌãːˈʒẽːs
+1500,ˈa,∅,1,deletion,larme: ˈlɛ̃.mə/ˈlarmə
+1500,ˈa,ˈaː,1,substitution,bras: ˈbraːs/ˈbras
+1500,ˈa,ˈe,1,substitution,ja: ˈʒe/ˈʒa
+1500,ˈaː,ˈa,1,substitution,âge: ˈə̯a.ʒə/ˈaːʒə
+1500,ˈã,ˈãː,1,substitution,âme: ˈãː.mə/ˈã.mə
+1500,ˈãː,ˈẽː,1,substitution,cinquante: ˌsẽːkɥˈwẽː.t̪ə/ˌsẽːˈkãːt̪ə
+1500,ˈẽː,ẽː,1,substitution,juin: ʒɥẽː/ˈʒɥẽː
+1500,ˈi,ˈiː,1,substitution,fils: ˈfiːs/ˈfis
+1500,ˈiː,s,1,substitution,git: ˈʒijst̪/ˈʒiːt̪
+1500,ˈoː,ˈɔ,1,substitution,pauvre: ˈpɔ.prə/ˈpoːvrə
+1500,ˈuː,ə,1,substitution,joue: ˈʒu.d̪ə/ˈʒuː
+1500,ˈy,ˈyː,1,substitution,culs: ˈkyːs/ˈkys
+1500,ˈø,ˈoː,1,substitution,pieux: ˈpoːs/ˈpjøs
+1500,ˈø,ˈyː,1,substitution,yeux: ˈyːs/ˈjøs
+1500,ˈɔ,ˈœ,1,substitution,or: ˈœr/ˈɔr
+1500,ˈɛː,ə,1,substitution,joie: ˈʒɔ.ʒə/ˈʒwɛː
+1500,ˈɛː,ˈɛ,1,substitution,connaître: ˌkũˈn̪ɛ.t̪rə/ˌkũˈn̪ɛːt̪rə
+1500,ˈɛ̃ː,ɛ̃,1,substitution,point: pwɛ̃t̪/ˈpwɛ̃ːt̪
+1500,ˈɛ̃ː,ˈẽː,1,substitution,pelerin: ˌpeˈrẽː/ˌpɛləˈrɛ̃ː
+1500,ˌãː,ɲ,1,substitution,engins: ˌɛ̃ˈɲjẽːs/ˌãːˈʒẽːs
+1500,ˌe,ˌə,1,substitution,léger: ˌləˈʒer/ˌleˈʒer
+1500,ˌe,ˌɛ̃,1,substitution,témoin: ˌt̪ɛ̃.mwɛ̃ː/ˌt̪eˈmwɛ̃ː
+1500,ˌi,ˌẽ,1,substitution,lignée: ˌlẽˈɲeː/ˌliˈɲeː
+1500,ˌu,ˌɔ,1,substitution,louer: ˌlɔˈer/ˌluˈer
+1500,ˌy,ˌã,1,substitution,fumier: ˌfãˈmjer/ˌfyˈmjer
+1500,ˌə,ˌã,1,substitution,mener: ˌmãˈn̪er/ˌməˈn̪er
+1500,ˌɛ,j,1,substitution,meilleur: ˌmejˈʎør/ˌmɛˈʎør
+1500,ˌɛ,ˌeː,1,substitution,maison: ˌmeːˈzũː/ˌmɛˈzũː
+1500,ˌɛ,ˌoː,1,substitution,oiseaux: ˌoːˈzə̯oːs/ˌwɛˈzə̯oːs
+1500,ˌɛː,ˌeː,1,substitution,mêler: ˌmeːˈler/ˌmɛːˈler
+1500,ˌɛ̃ː,∅,1,deletion,sainteté: ˌsɛ̃ˈt̪e/ˌsɛ̃ːt̪əˈt̪e
+1500,ˌɛ̃ː,ɛ̃,1,substitution,pointure: pwɛ̃ˈt̪y.rə/ˌpwɛ̃ːˈt̪yrə
+1500,ˌɛ̃ː,ˌɛ̃,1,substitution,peinture: ˌpɛ̃ˈt̪y.rə/ˌpɛ̃ːˈt̪yrə
+final,j,∅,4,deletion,frayer: ʒɛʁ/fʁɛje; pieux: po/pjø; pitié: pi.t̪e/pit̪je
+final,∅,j,2,insertion,laisser: lɛ.sje/lɛse; raie: ʁɛj/ʁɛ
+final,∅,s,2,insertion,fils: fis/fi; git: ʒis/ʒi
+final,w,ɔ,2,substitution,joie: ʒɔʒ/ʒwɑ; louer: lɔ.e/lwe
+final,∅,d̪,1,insertion,joue: ʒud̪/ʒu
+final,∅,v,1,insertion,cage: ʃavʒ/kaʒ
+final,∅,w,1,insertion,cinquante: sɛ̃kɥ.wɛ̃t̪/sɛ̃kɑ̃t̪
+final,∅,ɥ,1,insertion,cinquante: sɛ̃kɥ.wɛ̃t̪/sɛ̃kɑ̃t̪
+final,a,∅,1,deletion,larme: lɛm/laʁm
+final,a,e,1,substitution,ja: ʒe/ʒa
+final,a,j,1,substitution,ploie: plɛj/plwa
+final,a,o,1,substitution,oiseaux: o.zo/wazo
+final,d̪,t̪,1,substitution,coude: kut̪/kud̪
+final,e,ə,1,substitution,léger: lə.ʒe/leʒe
+final,e,ɛ,1,substitution,témoin: t̪ɛ.mwɛ̃/t̪emwɛ̃
+final,e,ʁ,1,substitution,frayer: ʒɛʁ/fʁɛje
+final,f,∅,1,deletion,frayer: ʒɛʁ/fʁɛje
+final,i,∅,1,deletion,sanglier: sɑ̃.gle/sɑ̃glie
+final,i,ɛ,1,substitution,lignée: lɛ.ɲe/liɲe
+final,j,œ,1,substitution,moyeu: mwa.œl/mwajø
+final,k,ʃ,1,substitution,cage: ʃavʒ/kaʒ
+final,l,e,1,substitution,pelerin: pe.ʁɛ̃/pɛlʁɛ̃
+final,o,ɔ,1,substitution,pauvre: pɔpʁ/povʁ
+final,s,∅,1,deletion,nez: n̪e/n̪es
+final,t̪,∅,1,deletion,sainteté: sɛ̃.t̪e/sɛ̃t̪ət̪e
+final,v,p,1,substitution,pauvre: pɔpʁ/povʁ
+final,w,∅,1,deletion,oiseaux: o.zo/wazo
+final,w,ɛ,1,substitution,ploie: plɛj/plwa
+final,y,a,1,substitution,fumier: fa.mje/fymje
+final,ø,l,1,substitution,moyeu: mwa.œl/mwajø
+final,ø,o,1,substitution,pieux: po/pjø
+final,ø,y,1,substitution,yeux: y/jø
+final,ø,œ,1,substitution,bœuf: bœf/bøf
+final,ɑ,a,1,substitution,pailler: pa.je/pɑje
+final,ɑ,ʒ,1,substitution,joie: ʒɔʒ/ʒwɑ
+final,ɑ̃,ɛ,1,substitution,engins: ɛ.jɛ̃/ɑ̃ʒɛ̃
+final,ɑ̃,ɛ̃,1,substitution,cinquante: sɛ̃kɥ.wɛ̃t̪/sɛ̃kɑ̃t̪
+final,ə,∅,1,deletion,sainteté: sɛ̃.t̪e/sɛ̃t̪ət̪e
+final,ə,a,1,substitution,mener: ma.n̪e/mən̪e
+final,ɛ,∅,1,deletion,pelerin: pe.ʁɛ̃/pɛlʁɛ̃
+final,ɛ,e,1,substitution,sec: sek/sɛk
+final,ʁ,ɛ,1,substitution,larme: lɛm/laʁm
+final,ʁ,ʒ,1,substitution,frayer: ʒɛʁ/fʁɛje
+final,ʒ,j,1,substitution,engins: ɛ.jɛ̃/ɑ̃ʒɛ̃

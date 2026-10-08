@@ -1,0 +1,18 @@
+word,rule,t,before,after,change
+abbé,input,,ˌɑbˈbɑːt̪em,ˌɑbˈbɑː.t̪em,
+abbé,"Classical Latin length distinction becomes a quality (tense) distinction, first pass",-100,ˌɑbˈbɑː.t̪em,ˌɑbˈbɑː.t̪ɛm,e→ɛ
+abbé,the length feature is dropped now that quality carries the contrast,-100,ˌɑbˈbɑː.t̪ɛm,ˌɑbˈbɑ.t̪ɛm,ˈɑː→ˈɑ
+abbé,word-final nasal consonant lost after an unstressed vowel,-100,ˌɑbˈbɑ.t̪ɛm,ˌɑbˈbɑ.t̪ɛ,m→∅
+abbé,a stressed vowel lengthens before a single consonant + glide,400,ˌɑbˈbɑ.t̪ɛ,ˌɑbˈbɑː.t̪ɛ,ˈɑ→ˈɑː
+abbé,the low vowel fronts by default,500,ˌɑbˈbɑː.t̪ɛ,ˌabˈbaː.t̪ɛ,"ˌɑ→ˌa, ˈɑː→ˈaː"
+abbé,an unstressed non-low non-nasalized vowel reduces to schwa before a consonant or word end,600,ˌabˈbaː.t̪ɛ,ˌabˈbaː.t̪ə,ɛ→ə
+abbé,schwa becomes non-syllabic,600,ˌabˈbaː.t̪ə,ˌabˈbaːt̪ə̯,ə→ə̯
+abbé,non-syllabic schwa is lost elsewhere,600,ˌabˈbaːt̪ə̯,ˌabˈbaːt̪,ə̯→∅
+abbé,long stressed vowels diphthongize,600,ˌabˈbaːt̪,ˌabˈbae̯t̪,ˈaː→ˈae̯
+abbé,a word-final stop re-opens to a fricative after a vowel,750,ˌabˈbae̯t̪,ˌabˈbae̯θ,t̪→θ
+abbé,"the ae̯ diphthong monophthongizes to a long e, preserving its stress level",750,ˌabˈbae̯θ,ˌabˈbeːθ,ˈae̯→ˈeː
+abbé,an identical consonant geminate reduces to one (recurrence),750,ˌabˈbeːθ,ˌaˈbeːθ,b→∅
+abbé,vowel length resets to short,1100,ˌaˈbeːθ,ˌaˈbeθ,ˈeː→ˈe
+abbé,the interdental fricatives (plain and palatalized) efface,1100,ˌaˈbeθ,ˌaˈbe,θ→∅
+abbé,stress is leveled — no longer distinctive,1650,ˌaˈbe,a.be,"ˌa→a, ˈe→e"
+abbé,output,,,a.be,

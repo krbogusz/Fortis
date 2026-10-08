@@ -1,0 +1,64 @@
+gloss,step,regression,t,form,target,d,fd
+"coda lenition, early",input,,,as.ta,ahta,1,6
+"coda lenition, early","Coda s-lenition (early, t=0)",,0,ah.ta,ahta,0,0
+"coda lenition, early",surface,,,ah.ta,ahta,0,0
+"coda lenition, late",input,,,a.spa,aspa,0,0
+"coda lenition, late",surface,,,a.spa,aspa,0,0
+contour tone,input,,,pa˦.ta˨,pa˦ta˦˨,1,1
+contour tone,Contour tone (by spreading),,,pa˦.ta˦˨,pa˦ta˦˨,0,0
+contour tone,surface,,,pa˦.ta˦˨,pa˦ta˦˨,0,0
+contradictory bundle,input,,,ti.ta,tita,0,0
+contradictory bundle,surface,,,ti.ta,tita,0,0
+epenthesis,input,,,katr,katər,1,11
+epenthesis,Epenthesis,,,ka.tər,katər,0,0
+epenthesis,surface,,,ka.tər,katər,0,0
+feature override,input,,,se.ke,sekə,1,5
+feature override,Feature override (e^[oral: none] → schwa),,,se.kə,sekə,0,0
+feature override,surface,,,se.kə,sekə,0,0
+final devoicing,input,,,tag,tak,1,1
+final devoicing,Final devoicing,,,tak,tak,0,0
+final devoicing,surface,,,tak,tak,0,0
+gemination,input,,,bi.dja,biddja,1,15
+gemination,Gemination,,,bid.dja,biddja,0,0
+gemination,surface,,,bid.dja,biddja,0,0
+i-umlaut,input,,,ta.ki,teki,1,2
+i-umlaut,i-umlaut,,,te.ki,teki,0,0
+i-umlaut,surface,,,te.ki,teki,0,0
+morpheme boundary,input,,,at-a,ata,0,0
+morpheme boundary,Morpheme-boundary loss,,,a.ta,ata,0,0
+morpheme boundary,surface,,,a.ta,ata,0,0
+place assimilation,input,,,an.ka,aŋka,1,4
+place assimilation,Place assimilation,,,aŋ.ka,aŋka,0,0
+place assimilation,surface,,,aŋ.ka,aŋka,0,0
+right-to-left,input,,,te.pe.i,tipii,2,2
+right-to-left,Right-to-left raising,,,ti.pi.i,tipii,0,0
+right-to-left,surface,,,ti.pi.i,tipii,0,0
+sound change over time,input,,,pa.ta,pada,1,1
+sound change over time,Intervocalic voicing,,100,pa.da,pada,0,0
+sound change over time,Spirantisation,,200,pa.ð̠a,pað̠a,0,0
+sound change over time,Debuccalisation,,300,pa.a,paː,2,17
+sound change over time,Hiatus coalescence,,300,paː,paː,0,0
+sound change over time,surface,,,paː,paː,0,0
+stress,input,,,ka.ta,ˈkata,1,1
+stress,Stress assignment,,,ˈka.ta,ˈkata,0,0
+stress,surface,,,ˈka.ta,ˈkata,0,0
+syllabification fallback,input,,,tas.tsa,tastsa,0,0
+syllabification fallback,surface,,,tas.tsa,tastsa,0,0
+tone delinking,input,,,ka.ra˦,kara,1,1
+tone delinking,Tone delinking,,,ka.ra,kara,0,0
+tone delinking,surface,,,ka.ra,kara,0,0
+tone spread,input,,,ta˦.ka,ta˦ka˦,1,1
+tone spread,Tone spread,,,ta˦.ka˦,ta˦ka˦,0,0
+tone spread,surface,,,ta˦.ka˦,ta˦ka˦,0,0
+tone stability,input,,,ka.ta˦,kat˦,2,17
+tone stability,Tone stability,,,kat˦,kat˦,0,0
+tone stability,surface,,,kat˦,kat˦,0,0
+voicing assimilation,input,,,ak.ba,agba,1,1
+voicing assimilation,Voicing assimilation,,,ag.ba,agba,0,0
+voicing assimilation,surface,,,ag.ba,agba,0,0
+vowel harmony (agreement),input,,,o.ti.ne,otunɤ,2,6
+vowel harmony (agreement),Vowel harmony (agreement),,,o.tu.nɤ,otunɤ,0,0
+vowel harmony (agreement),surface,,,o.tu.nɤ,otunɤ,0,0
+vowel harmony (spreading),input,,,u.ti.ne,utunɤ,2,6
+vowel harmony (spreading),Vowel harmony (spreading),,,u.tu.nɤ,utunɤ,0,0
+vowel harmony (spreading),surface,,,u.tu.nɤ,utunɤ,0,0

@@ -1,0 +1,19 @@
+word,rule,t,before,after,change
+intervocalic-voicing,input,,ata,a.ta,
+intervocalic-voicing,Intervocalic voicing,,a.ta,a.da,t→d
+intervocalic-voicing,output,,,a.da,
+final-devoicing,input,,tad,tad,
+final-devoicing,Final devoicing,,tad,tat,d→t
+final-devoicing,output,,,tat,
+nasal-assim-labial,input,,anpa,an.pa,
+nasal-assim-labial,Nasal place assimilation,,an.pa,am.pa,n→m
+nasal-assim-labial,output,,,am.pa,
+nasal-assim-velar,input,,anka,an.ka,
+nasal-assim-velar,Nasal place assimilation,,an.ka,aŋ.ka,n→ŋ
+nasal-assim-velar,output,,,aŋ.ka,
+backness-rounding-harmony,input,,uti,u.ti,
+backness-rounding-harmony,Backness & rounding harmony,,u.ti,u.tu,i→u
+backness-rounding-harmony,output,,,u.tu,
+metaphony-raising,input,,beti,be.ti,
+metaphony-raising,Metaphony (raising),,be.ti,bi.ti,e→i
+metaphony-raising,output,,,bi.ti,
