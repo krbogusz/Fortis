@@ -488,3 +488,24 @@ nominative's *w and the spread of *mug- to the genitive, and he gives bridge the
 
 **Rejected:** Keeping Wiktionary's *mugjō as the 200 target. It writes the West Germanic *g into
 Proto-Germanic.
+
+## 2026-10-08: Explain ġeoguþ by the loss of a third-syllable *-i, without adding the rule
+
+**Choice:** OE ġeoguþ has no i-umlaut in its second vowel because PWGmc *jugunþi lost its final
+*-i, as Ringe & Taylor derive it (*jugunþi > *jugų̄þ, PDF 70–71, 156). This replaces the remark in
+"2026-10-07: Adopt Kroonen's West Germanic velarization of *w" that the word was probably remodelled
+as an ō-stem. The cascade does not add the loss as a rule, so youth still misses at 900.
+
+**Reason:** Asked for on 2026-10-08: add the rule only if it gains more exact rows than it breaks.
+Ringe & Taylor state the loss as a hypothesis. A final short high vowel was lost in the third or a
+later syllable, unless a short high vowel and one consonant stood before it. Tested at 404 for *-i
+alone, the rule breaks undern (ˈundorn) and does not fix youth. The *u it leaves before the *þ is
+short in the cascade, so it falls to the OE o of ˈjugoθ. Ringe & Taylor's *ų̄ is long there, but
+the cascade lengthens only stressed vowels before a nasal and a fricative, because the ordinals
+keep a short vowel (seofoþa). The rule does not reach fergunją, whose *-uni keeps its *-i under the
+hypothesis.
+
+**Rejected:**
+- The rule for *-i alone: 900 loses one exact row (undern).
+- The rule for *-i and *-u: 900 loses two (undern, and soul, whose ending Ringe & Taylor say was
+  restored, PDF 71).
