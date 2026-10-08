@@ -1164,6 +1164,15 @@ West Germanic change, after PWGmc (Ringe & Taylor §5.1.1, PDF 155); Wiktionary'
 the file."""
 definition = "[+syll, length: long, aperture: low, +back, rounded: none] → oː / _ [-son, +cont, -voice]"
 
+[oe_denasalisation]
+time = 405
+name = "The nasalised long vowels lose their nasality"
+description = """Ringe & Taylor §5.1.1 (PDF 156): the long vowels nasalised by the loss of a nasal before a
+fricative kept their nasality until "the loss of nasalization in the separate prehistories of the
+daughters". PNWGmc *þīhslu > OE þīxl. Dated after the nasal-spirant rounding (404), which takes
+*ą̄ to ō."""
+definition = "[+syll, nasal] → [nasal: none]"
+
 # West Germanic a-umlaut: a short high vowel lowers before a non-high vowel in the next
 # syllable — PrG *gulþam > OE gold, *kurną > corn (Minkova §3.4 n.9). It must run before the
 # apocope below, which destroys the conditioning vowel.
