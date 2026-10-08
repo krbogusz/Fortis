@@ -261,18 +261,18 @@
     return files.find((f) => fileSource[f] && fileSource[f] !== "absent") ?? files[0];
   }
 
-  // Yield to the browser so a state change (the progress bar) actually paints
-  // before the next synchronous Pyodide batch blocks the main thread again.
+  // Yield to the browser so a state change (the progress bar) paints before the next batch.
   const paint = () => new Promise((r) => setTimeout(r, 0));
 
   async function rerun(force = false) {
     if (!ready) return;
     const myToken = ++runToken; // claim this run; a newer run bumps the token and supersedes us
     try {
-      // Probe the project first (synchronous — no await yet, so an in-flight run can't slip in
-      // between the token bump and this session reset). A too-large project bails here WITHOUT
-      // touching the current results, so the pane keeps showing the last run.
-      const prep = prepareRun();
+      // Probe the project first. The worker answers calls in order, so this run's session
+      // replaces any earlier one. A too-large project bails here WITHOUT touching the current
+      // results, so the pane keeps showing the last run.
+      const prep = await prepareRun();
+      if (myToken !== runToken) return; // superseded while the engine loaded the project
       if (prep.error) {
         result = { error: prep.error };
         bigProject = false;
@@ -310,30 +310,33 @@
       const acc = [];
       // Drive the run in slices, painting the bar between them. Batch size is
       // adapted from the measured cost of the previous batch to keep each one a
-      // short, roughly fixed slice of wall-clock time (so the bar stays smooth
-      // and the thread never freezes for long, whatever the machine's speed).
+      // short, roughly fixed slice of wall-clock time (so the bar stays smooth,
+      // whatever the machine's speed). The engine runs in a worker, so a long batch
+      // never freezes the page, and each batch has a fixed cost: few, large ones are faster.
       let batch = 4;
       const runStart = performance.now();
       for (let i = 0; i < total; ) {
         const t0 = performance.now();
-        const slice = deriveBatch(i, batch);
+        const slice = await deriveBatch(i, batch);
+        if (myToken !== runToken) return; // a newer run took over
         acc.push(...slice);
         i += slice.length || batch; // guard against an empty slice stalling the loop
         progress = total ? i / total : 1;
         progressText = `${Math.min(i, total)} / ${total}`;
         const perWord = (performance.now() - t0) / Math.max(1, slice.length);
-        batch = Math.min(32, Math.max(1, Math.round(120 / Math.max(perWord, 1))));
+        batch = Math.min(256, Math.max(1, Math.round(120 / Math.max(perWord, 0.1))));
         if (i < total) {
           await paint();
           // If a newer run started, stop before the next batch: it has reset the
-          // Python session (prepare_run), so continuing would derive against it.
+          // engine's session (prepare_run), so continuing would render from it.
           if (myToken !== runToken) return;
         }
       }
       const deriveMs = performance.now() - runStart;
       // Analysis phase — a fresh progress bar, driven one step at a time so it repaints
       // between the (individually slow) report/analysis chunks.
-      const plan = finalizeRun();
+      const plan = await finalizeRun();
+      if (myToken !== runToken) return; // a newer run took over
       let fin = plan.result;
       if (plan.steps?.length) {
         progress = 0; // the derivation bar empties; the analysis bar fills from scratch
@@ -342,7 +345,8 @@
           progress = k / plan.steps.length;
           progressText = `analysing… ${plan.steps[k]}`;
           await paint();
-          const step = analysisStep();
+          const step = await analysisStep();
+          if (myToken !== runToken) return; // a newer run took over
           if (step?.result) fin = step.result;
         }
         progress = 1;
@@ -430,9 +434,8 @@
     if (!ready || singleBusy || !word) return;
     singleBusy = true;
     single = null; // clear the previous single result so the pane doesn't show stale output
-    await paint(); // paint "deriving…" before the synchronous Pyodide call blocks the thread
     try {
-      single = runSingle(word);
+      single = await runSingle(word);
     } catch (e) {
       single = { error: [e?.message ?? String(e)] };
     } finally {
@@ -442,10 +445,10 @@
 
   // Diagnostics class query: which inventory segments a feature bundle matches. Reads the live
   // overlay, so it reflects unsaved feature-system edits — the edit→diagnose loop.
-  function runClassQuery() {
+  async function runClassQuery() {
     if (!ready) return;
     try {
-      classResult = queryClasses(classInput);
+      classResult = await queryClasses(classInput);
     } catch (e) {
       classResult = { error: e?.message ?? String(e) };
     }
@@ -453,11 +456,11 @@
 
   // Diagnostics ▸ System: the feature geometry as a tree. Recomputed every time the tab is
   // opened (same live-overlay read as the class query), so it reflects unsaved edits.
-  function openDiagView(view) {
+  async function openDiagView(view) {
     diagView = view;
     if (view !== "system" || !ready) return;
     try {
-      const tree = featureTree();
+      const tree = await featureTree();
       // The synthesised apex reads better as a bare "ROOT" (its kind is an implementation detail).
       if (tree.root) tree.root = { ...tree.root, name: "ROOT", kind: null, values: null };
       systemTree = tree;
@@ -1292,8 +1295,8 @@
               <p class="muted">
                 {pendingSize.words} words × {pendingSize.rules} rules — too large to run on every
                 edit. Either run the whole project with the <strong>Run project</strong> button
-                above, or derive one word at a time below. Running the full project through the CLI
-                offers a 10× or greater speedup over in-browser derivation.
+                above, or derive one word at a time below. The Rust CLI (<code>rust/</code>) runs a full
+                project several times faster than the browser.
               </p>
             {/if}
             <form class="single-bar" onsubmit={(e) => { e.preventDefault(); runSingleWord(); }}>

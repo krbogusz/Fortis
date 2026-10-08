@@ -1,23 +1,27 @@
 # Fortis — web app
 
-A browser front-end for the Fortis phonology engine. It runs the same Python
-engine as the CLI (`../src/fortis`), compiled to WebAssembly and executed
-in-browser via [Pyodide](https://pyodide.org), rather than a separate
-JavaScript reimplementation. Edit the inventories on the left, and the
-derivations re-run on the right.
+A browser front-end for the Fortis phonology engine. It runs the Rust port of the
+engine (`../rust`), compiled to WebAssembly, rather than a separate JavaScript
+reimplementation. Edit the inventories on the left, and the derivations re-run on the
+right.
 
 ## How it reflects the engine
 
-There is no JavaScript copy of the engine to keep in sync. At `predev`/`prebuild`,
-`scripts/build-engine.mjs` tars the repo's live `src/` and `projects/default/` into
-`public/engine.tgz` and copies the version-locked Pyodide runtime into
-`public/pyodide/` (both are gitignored — built fresh). The browser unpacks that
-bundle, puts it on `sys.path`, imports `src.fortis`, and calls the engine directly
-(`src/lib/engine.js`). So any change to the engine or the shipped inventories is
-reflected on the next build — the glue only calls stable public functions
-(`derive`, `render_syllabified`, `describe_change`, the report builders `main.py` itself
-uses — `_build_derivations_csv`, `_build_matrix_csv`, `_build_rule_firings_csv` — and the
-analysis renderers, so the generated reports below are byte-identical to the CLI's).
+There is no JavaScript copy of the engine to keep in sync. The crate `../rust/web` wraps
+the `fortis` crate for the browser. At `predev`/`prebuild`, `scripts/build-engine.mjs`
+builds it with `wasm-pack` and copies the result into `public/engine/`, with the worker
+script `src/lib/engine.worker.js`. It also copies `../projects/default/` into
+`public/projects/default/`. Both are gitignored and built fresh, so any change to the
+engine or the shipped inventories shows on the next build. The reports come from the
+same Rust functions the CLI uses, so they are byte-identical to the CLI's. The one
+exception is `warnings.md`, which names no project folder and lists only the syllabification
+fallbacks.
+
+The engine runs in a Web Worker, so the page stays responsive during a run. It uses one
+thread: rayon's calls in the crate fall back to the calling thread. `src/lib/engine.js`
+keeps the project files on the main thread, so reading and editing them is synchronous.
+It sends the worker a copy of the edited files with the first engine call after a change,
+and keeps the reports each call returns.
 
 ## Using it
 
@@ -84,7 +88,8 @@ of {results, diagnostics} then show side by side:
 
   Example projects are built by `scripts/build-engine.mjs` into
   `public/projects/<dir>/` (only the inventory files each one overrides) plus a
-  `public/projects/index.json` manifest the picker reads — all gitignored,
+  `public/projects/index.json` manifest the picker reads (it also lists the files of
+  `public/projects/default/`, which the engine loads at start) — all gitignored,
   rebuilt on every `predev`/`prebuild`, so they never go stale against
   `../projects/`. Add a project by appending one row to `EXAMPLE_PROJECTS` in
   that script; nothing else changes. The picker fetches these relative to
@@ -132,12 +137,19 @@ variable names, so no component-level CSS needs to know which theme is active.
 
 ## Develop
 
+Before the first build:
+
+1. Install the Rust toolchain with rustup (<https://rustup.rs>).
+2. Add the WebAssembly target: `rustup target add wasm32-unknown-unknown`.
+3. Install wasm-pack: `cargo install wasm-pack --locked`.
+
 ```
 npm install
-npm run dev        # predev rebuilds the engine bundle, then starts Vite
-npm run build      # prebuild rebuilds the bundle, then builds to dist/
+npm run dev        # predev rebuilds the engine, then starts Vite
+npm run build      # prebuild rebuilds the engine, then builds to dist/
 npm run smoke      # headless check that the engine loads and derives
 ```
 
-`npm run build-engine` rebuilds `public/engine.tgz` on its own — run it after
-changing `../src` or `../projects/default` if the dev server is already up.
+`npm run build-engine` rebuilds `public/engine/` and `public/projects/` on its own. Run
+it after changing `../rust` or `../projects` if the dev server is already up. The first
+build takes about a minute: wasm-pack compiles a matching `wasm-bindgen` CLI once.

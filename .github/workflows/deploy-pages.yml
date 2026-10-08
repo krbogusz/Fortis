@@ -1,8 +1,8 @@
 name: Deploy web app to GitHub Pages
 
 # Builds the browser playground in web/ and publishes web/dist to GitHub Pages.
-# The app is fully client-side (Pyodide runs CPython in the browser) and resolves
-# its runtime assets relative to document.baseURI, so it works under the project
+# The app is fully client-side (the Rust engine runs as WebAssembly in the browser) and
+# resolves its runtime assets relative to document.baseURI, so it works under the project
 # subpath https://<user>.github.io/<repo>/ with vite's base: './'.
 
 on:
@@ -31,12 +31,18 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
+      - name: Install the Rust WebAssembly target and wasm-pack
+        # The runner image ships rustup; this brings stable up to date (the crates use the
+        # 2024 edition) and adds the target.
+        run: |
+          rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown
+          cargo install wasm-pack --version 0.15.0 --locked
       - name: Install dependencies
         # npm install (not ci) so a lockfile generated on another platform, which can
         # omit platform-conditional optional deps (e.g. @emnapi/*), still resolves here.
         run: npm install --no-audit --no-fund
         working-directory: web
-      - name: Build (bundles engine.tgz + pyodide + example projects, then vite build)
+      - name: Build (the WASM engine + the default and example projects, then vite build)
         run: npm run build
         working-directory: web
       - uses: actions/configure-pages@v6

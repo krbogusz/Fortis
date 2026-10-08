@@ -12,9 +12,8 @@ dist
 dist-ssr
 *.local
 
-# Generated engine bundle and copied Pyodide runtime assets
-public/engine.tgz
-public/pyodide
+# Generated engine (wasm-pack output + worker)
+public/engine
 
 # Generated example-project assets + manifest (built by scripts/build-engine.mjs)
 public/projects

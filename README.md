@@ -197,9 +197,9 @@ about 90 minutes, set `PARITY_INDUCE_ALL=1`.
 **Live: <https://krbogusz.github.io/Fortis/>** — no install; it runs entirely in your
 browser.
 
-`web/` is a browser front end that runs the same Python engine used by the CLI —
-compiled to WebAssembly and executed in-browser via [Pyodide](https://pyodide.org),
-rather than a separate JavaScript reimplementation. Every project in `projects/` is
+`web/` is a browser front end that runs the [Rust port](#rust-port) of the engine,
+compiled to WebAssembly, rather than a separate JavaScript reimplementation. Every
+project in `projects/` is
 auto-discovered into the picker (or load your own); edit any inventory file and the
 derivations re-run in a trace view. Each derivation card carries a **Definitions**
 toggle (the rule bodies) and — for a word touched by a rule that spreads, docks, or
@@ -216,7 +216,8 @@ reach of a class (e.g. that `[+front]` also picks out every coronal); and **Syst
 draws the feature geometry as a tree, exactly as the engine loads it. The layout is
 responsive down to a phone. See
 [`web/README.md`](web/README.md) for the full picture, including the type scale and
-theming. To run it locally:
+theming. To run it locally, install the Rust tools listed under
+[Develop](web/README.md#develop) in `web/README.md`, then:
 
 ```
 cd web
@@ -454,8 +455,8 @@ fortis/
 │   │   └── words.toml  rules.toml  settings.toml   # settings.toml: tunable analysis params (optional)
 │   └── ...                      # other projects, e.g. latin_to_french, pie_to_english
 ├── docs/                        # user_guide.md (full reference), default_system.md (the shipped inventory)
-├── web/                         # browser playground (Pyodide) — see web/README.md
-├── rust/                        # the Rust port (Cargo crate `fortis`) and parity.sh
+├── web/                         # browser playground (the Rust engine as WebAssembly) — see web/README.md
+├── rust/                        # the Rust port (Cargo crate `fortis`), parity.sh, and web/ (its WASM wrapper)
 ├── tests/
 └── src/fortis/
     ├── config.py                # paths, value symbols, greek alphabet, special symbols
@@ -549,10 +550,9 @@ fortis/
 - **Rule-based, not constraint-based.** Fortis models sound change as
   ordered rewrite rules (SPE/autosegmental style); there's no
   Optimality-Theoretic ranking or violation-tableau mode.
-- **The browser engine is slow relative to the CLI.** Pyodide runs real
-  CPython compiled to WASM, which is meaningfully slower than native
-  CPython — deriving a few dozen words can take tens of seconds in the
-  browser versus a fraction of a second from the command line.
+- **The browser engine is slower than the Rust CLI.** It runs in one thread:
+  a full run of `pie_to_english` takes about 2 s in the browser, against
+  0.34 s for the [Rust binary](#rust-port).
 - **The web app has no persistence layer.** A loaded project lives only in
   that browser tab's memory; there's no save-to-cloud, sharing, or
   multi-user collaboration, only per-file download.

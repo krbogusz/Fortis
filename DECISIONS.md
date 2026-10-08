@@ -577,3 +577,59 @@ Python's hash seed, so two runs of `latin_to_french` or `pie_to_english` wrote d
 
 **Rejected:** Keeping the normalization in the parity script, which leaves the Python report
 nondeterministic.
+
+## 2026-10-08: Run the web app on the Rust engine, compiled to WebAssembly
+
+**Choice:** The web app runs the Rust port in place of the Python engine under Pyodide. A second
+crate, `rust/web` (`fortis-web`), wraps the `fortis` crate for the browser and builds with the
+stable toolchain for the `wasm32-unknown-unknown` target. The engine runs in a Web Worker, so the
+page stays responsive during a run. The project files stay on the main thread, so reading and
+editing them stays synchronous. The worker gets a copy of the user's files with the first engine
+call after an edit. The loaders read through a file source, so one loader reads the disk for the
+CLI and a map of texts for the browser. This is the WebAssembly step that "2026-10-08: Port Fortis
+to Rust, checked by identical reports" left for later.
+
+The change is correct when the app shows what the Pyodide app showed. On all five shipped
+projects, the new engine gave the same JSON as the old helper for a full run, three single words,
+five class queries and the feature tree, and the same report texts. The old helper read the
+reports back with `\n` line ends; the new one keeps the `\r\n` that the CLI writes.
+
+The change adds these dependencies:
+- `wasm-bindgen` (crate): the bindings between the WebAssembly module and JavaScript (replaces
+  Pyodide's bridge between Python and JavaScript).
+- `wasm-pack` (build tool, installed with `cargo install`): builds the crate, then runs
+  `wasm-bindgen` and `wasm-opt` on it (replaces the `engine.tgz` tarball of `src/`).
+
+It removes the `pyodide` npm package.
+
+**Reason:** Asked for on 2026-10-08, after the Rust port ran about 30 times faster than Python.
+In headless Chrome on the same machine, a full run of `pie_to_english` took 27.5 s with Pyodide
+and 2.1 s with the WebAssembly engine. `latin_to_french` took 21.5 s and 1.6 s. The engine ships
+as one 1.5 MB file. GitHub Pages serves `.wasm` files with the `application/wasm` type that
+streaming compilation needs.
+
+**Rejected:**
+- Keeping Pyodide beside the WebAssembly engine.
+- Running the engine on the page's main thread, as the Pyodide app did, which freezes the page
+  during each batch.
+
+## 2026-10-08: Run the web engine in one thread
+
+**Choice:** The web engine runs in one thread. The `fortis` crate's rayon calls fall back to the
+calling thread on `wasm32-unknown-unknown`. This replaces the plan, chosen earlier on 2026-10-08,
+to run rayon's threads in the browser through `wasm-bindgen-rayon`, with `coi-serviceworker` to
+make the GitHub Pages site cross-origin isolated.
+
+**Reason:** Measured in headless Chrome on an 8-core machine, threads made the engine slower. A
+full run of `pie_to_english` took 2.0 s with 1 thread, 2.3 s with 2, 3.7 s with 4 and 10.8 s with
+8. Rust's WebAssembly allocator guards all memory with one global spin lock, and the engine
+allocates constantly. That is the likely cause, but it was not profiled. Threads also needed a
+pinned nightly toolchain that rebuilds the standard library, extra linker flags for a shared
+memory, and a service worker that reloads the page on the first visit.
+
+**Rejected:**
+- Threads through `wasm-bindgen-rayon` and `coi-serviceworker`, as above.
+- Keeping the threaded build but starting one thread, which keeps the nightly toolchain and the
+  service worker for no gain.
+- Looking for an allocator with per-thread caches, which adds a dependency and may still not beat
+  one thread.
