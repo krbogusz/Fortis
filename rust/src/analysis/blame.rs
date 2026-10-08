@@ -6,6 +6,7 @@ use indexmap::IndexMap;
 use rayon::prelude::*;
 
 use super::accuracy::{OpKind, align, comparable_bundles, edit_distance, feature_edit_distance, form_phones, phone_keys};
+use crate::engine::deriving::Engine;
 use crate::engine::rendering::Renderer;
 use crate::engine::tiers::lower_tiers;
 use crate::models::*;
@@ -21,29 +22,57 @@ pub struct TrajectoryPoint {
     pub regressed: bool,
 }
 
+/// One wrong surface phone. `expected` is `None` for an inserted phone, `got` for a deleted
+/// one. `culprit` names the last firing rule that set the phone's segment.
+pub struct Residual {
+    pub expected: Option<String>,
+    pub got: Option<String>,
+    pub culprit: Option<(String, Option<i64>)>,
+}
+
+impl Residual {
+    pub fn kind(&self) -> &'static str {
+        match (&self.expected, &self.got, &self.culprit) {
+            (None, _, _) => "insertion",
+            (_, None, _) => "deletion",
+            (_, _, None) => "omission",
+            _ => "substitution",
+        }
+    }
+}
+
+/// The earliest attested stage whose derived snapshot differs from the record.
+pub struct StageDivergence {
+    pub time: i64,
+    pub attested: String,
+    pub derived: String,
+}
+
 pub struct Blame {
     pub gloss: String,
     pub ipa: String,
+    pub target: String,
+    pub surface: String,
     pub distance: i64,
-    /// The rule id behind each wrong surface phone that a rule produced.
-    pub culprits: Vec<String>,
+    pub residuals: Vec<Residual>,
+    pub stage_divergence: Option<StageDivergence>,
     pub trajectory: Vec<TrajectoryPoint>,
 }
 
-/// The last firing rule that changed or introduced segment *id*.
-fn culprit_for_id(d: &Derivation, id: u32) -> Option<String> {
+/// The last firing rule that changed or introduced segment *id*, with its time.
+fn culprit_for_id(d: &Derivation, id: u32) -> Option<(String, Option<i64>)> {
     let mut culprit = None;
     for step in &d.steps {
         let Some(after) = step.after.segments.iter().find(|s| s.id == id) else { continue };
         match step.before.segments.iter().find(|s| s.id == id) {
             Some(before) if before.bundle == after.bundle => {}
-            _ => culprit = Some(step.rule.id.clone()),
+            _ => culprit = Some((step.rule.id.clone(), step.rule.time)),
         }
     }
     culprit
 }
 
-fn culprits(d: &Derivation, target: &Form, r: &Renderer) -> Vec<String> {
+fn residuals(d: &Derivation, target: &Form, r: &Renderer) -> Vec<Residual> {
     let mut phones = Vec::new();
     let mut ids = Vec::new();
     for (bundle, segment) in lower_tiers(&d.surface).iter().zip(&d.surface.segments) {
@@ -58,12 +87,28 @@ fn culprits(d: &Derivation, target: &Form, r: &Renderer) -> Vec<String> {
         if op.kind == OpKind::Match {
             continue;
         }
-        if let Some(i) = op.derived_index.filter(|i| *i < ids.len())
-            && let Some(c) = culprit_for_id(d, ids[i]) {
-                out.push(c);
-            }
+        let culprit = op.derived_index.filter(|i| *i < ids.len()).and_then(|i| culprit_for_id(d, ids[i]));
+        out.push(Residual { expected: op.target, got: op.derived, culprit });
     }
     out
+}
+
+fn stage_divergence(d: &Derivation, project: &Project, r: &Renderer) -> Option<StageDivergence> {
+    let swap = project.settings.accuracy.transposition_cost;
+    let mut stages = d.word.stages();
+    stages.sort_unstable_by_key(|(t, _)| *t);
+    for (time, attested) in stages {
+        let Some(target) = d.word.stage_form(time) else { continue };
+        let (form, boundaries) = Engine::form_at_time(d, time);
+        if edit_distance(&phone_keys(target), &phone_keys(&form), swap) > 0 {
+            return Some(StageDivergence {
+                time,
+                attested: attested.to_string(),
+                derived: r.syllabified(&lower_tiers(&form), &boundaries, true),
+            });
+        }
+    }
+    None
 }
 
 fn trajectory(d: &Derivation, project: &Project, r: &Renderer) -> Vec<TrajectoryPoint> {
@@ -127,8 +172,11 @@ pub fn blame_all(derivations: &[Derivation], project: &Project, r: &Renderer) ->
             Some(Blame {
                 gloss: word.gloss.clone(),
                 ipa: word.ipa().to_string(),
+                target: word.final_ipa().unwrap_or_default().to_string(),
+                surface: r.syllabified(&lower_tiers(&d.surface), &d.surface_boundaries, true),
                 distance,
-                culprits: culprits(d, final_form, r),
+                residuals: residuals(d, final_form, r),
+                stage_divergence: stage_divergence(d, project, r),
                 trajectory: trajectory(d, project, r),
             })
         })
@@ -144,8 +192,8 @@ pub fn blame_summary_line(blames: &[Blame]) -> String {
     }
     let mut counts: IndexMap<&str, usize> = IndexMap::new();
     for b in &wrong {
-        for c in &b.culprits {
-            *counts.entry(c).or_insert(0) += 1;
+        for (rule, _) in b.residuals.iter().filter_map(|x| x.culprit.as_ref()) {
+            *counts.entry(rule).or_insert(0) += 1;
         }
     }
     let mut worst: Option<(&str, usize)> = None;
