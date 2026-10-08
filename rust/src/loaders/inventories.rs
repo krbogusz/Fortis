@@ -6,7 +6,7 @@ use std::sync::Arc;
 use indexmap::IndexMap;
 use toml::{Table, Value as Toml};
 
-use super::files::{self, CsvRow};
+use super::files::{self, CsvRow, Source};
 use crate::models::*;
 use crate::parsing::bundles::{parse_feature_bundle, parse_feature_spec, parse_pattern_bundle};
 use crate::parsing::notation::parse_sequence;
@@ -176,8 +176,8 @@ fn load_children(name: &str, def: &Table) -> Result<Option<Vec<String>>, String>
     }
 }
 
-pub fn load_feature_inventory(path: &Path) -> Result<FeatureInventory, Vec<String>> {
-    let data = files::load_toml_file(path, false).map_err(|e| vec![e])?;
+pub fn load_feature_inventory(src: &dyn Source, path: &Path) -> Result<FeatureInventory, Vec<String>> {
+    let data = files::load_toml_file(src, path, false).map_err(|e| vec![e])?;
     let mut errors = Vec::new();
     let mut inventory = FeatureInventory::default();
     for (raw_name, def) in &data {
@@ -334,8 +334,8 @@ fn load_letter(row: &CsvRow, features: &FeatureInventory) -> Result<Letter, Vec<
     Ok(Letter { symbol, bundle: Arc::new(bundle) })
 }
 
-pub fn load_letter_inventory(path: &Path, features: &FeatureInventory) -> Result<LetterInventory, Vec<String>> {
-    let (header, rows) = files::load_csv_file(path).map_err(|e| vec![e])?;
+pub fn load_letter_inventory(src: &dyn Source, path: &Path, features: &FeatureInventory) -> Result<LetterInventory, Vec<String>> {
+    let (header, rows) = files::load_csv_file(src, path).map_err(|e| vec![e])?;
     let mut errors = Vec::new();
     for column in &header {
         if column != "symbol" && !features.contains(column) {
@@ -492,12 +492,12 @@ fn validate_diacritics(inventory: &DiacriticInventory, features: &FeatureInvento
     if errors.is_empty() { Ok(()) } else { Err(errors) }
 }
 
-pub fn load_diacritic_inventory(path: &Path, features: &FeatureInventory) -> Result<DiacriticInventory, Vec<String>> {
+pub fn load_diacritic_inventory(src: &dyn Source, path: &Path, features: &FeatureInventory) -> Result<DiacriticInventory, Vec<String>> {
     let is_csv = path.extension().is_some_and(|e| e.eq_ignore_ascii_case("csv"));
     let mut errors = Vec::new();
     let mut inventory = DiacriticInventory::default();
     if is_csv {
-        let (header, rows) = files::read_csv_lines(path).map_err(|e| vec![e])?;
+        let (header, rows) = files::read_csv_lines(src, path).map_err(|e| vec![e])?;
         let Some(header) = header else {
             return Err(vec![format!("'{}' is empty (no header row)", path.display())]);
         };
@@ -544,7 +544,7 @@ pub fn load_diacritic_inventory(path: &Path, features: &FeatureInventory) -> Res
             }
         }
     } else {
-        let data = files::load_toml_file(path, false).map_err(|e| vec![e])?;
+        let data = files::load_toml_file(src, path, false).map_err(|e| vec![e])?;
         for (raw_symbol, def) in &data {
             let symbol = py::strip(raw_symbol).replace('◌', "");
             if symbol.is_empty() {
@@ -617,12 +617,12 @@ fn load_sonority(label: &str, level: Option<&Toml>, bundle: Option<&Toml>, featu
     Ok(Sonority { label: label.to_string(), level, bundle })
 }
 
-pub fn load_sonorities_inventory(path: &Path, features: &FeatureInventory) -> Result<Vec<Sonority>, Vec<String>> {
+pub fn load_sonorities_inventory(src: &dyn Source, path: &Path, features: &FeatureInventory) -> Result<Vec<Sonority>, Vec<String>> {
     let is_csv = path.extension().is_some_and(|e| e.eq_ignore_ascii_case("csv"));
     let mut errors = Vec::new();
     let mut inventory: Vec<Sonority> = Vec::new();
     if is_csv {
-        let (header, rows) = files::read_csv_lines(path).map_err(|e| vec![e])?;
+        let (header, rows) = files::read_csv_lines(src, path).map_err(|e| vec![e])?;
         let Some(header) = header else {
             return Err(vec![format!("'{}' is empty (no header row)", path.display())]);
         };
@@ -655,7 +655,7 @@ pub fn load_sonorities_inventory(path: &Path, features: &FeatureInventory) -> Re
             }
         }
     } else {
-        let data = files::load_toml_file(path, false).map_err(|e| vec![e])?;
+        let data = files::load_toml_file(src, path, false).map_err(|e| vec![e])?;
         for (raw_label, def) in &data {
             let label = py::strip(raw_label).to_string();
             if inventory.iter().any(|s| s.label == label) {
@@ -685,8 +685,8 @@ pub fn load_sonorities_inventory(path: &Path, features: &FeatureInventory) -> Re
 
 // ---- Syllable parts ---------------------------------------------------------------------------
 
-pub fn load_syllable_parts_inventory(path: &Path, features: &FeatureInventory) -> Result<SyllablePartsInventory, Vec<String>> {
-    let data = files::load_toml_file(path, false).map_err(|e| vec![e])?;
+pub fn load_syllable_parts_inventory(src: &dyn Source, path: &Path, features: &FeatureInventory) -> Result<SyllablePartsInventory, Vec<String>> {
+    let data = files::load_toml_file(src, path, false).map_err(|e| vec![e])?;
     let mut errors = Vec::new();
     let mut inventory = SyllablePartsInventory::default();
     for (raw_time, parts) in &data {
@@ -736,8 +736,8 @@ pub fn load_syllable_parts_inventory(path: &Path, features: &FeatureInventory) -
 
 // ---- Tiers ------------------------------------------------------------------------------------
 
-pub fn load_tier_inventory(path: &Path, features: &mut FeatureInventory) -> Result<TierInventory, Vec<String>> {
-    let data = files::load_toml_file(path, true).map_err(|e| vec![e])?;
+pub fn load_tier_inventory(src: &dyn Source, path: &Path, features: &mut FeatureInventory) -> Result<TierInventory, Vec<String>> {
+    let data = files::load_toml_file(src, path, true).map_err(|e| vec![e])?;
     let mut errors = Vec::new();
     let mut inventory = TierInventory::new();
     for (raw_name, def) in &data {

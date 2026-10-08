@@ -5,7 +5,7 @@ use std::sync::Arc;
 
 use toml::{Table, Value as Toml};
 
-use super::files;
+use super::files::{self, Source};
 use crate::models::*;
 use crate::parsing::notation::parse_definition;
 use crate::parsing::validation::validate_structural_description;
@@ -151,11 +151,11 @@ fn parse_word_table(index: usize, table: &Table, errors: &mut Vec<String>) -> Op
     Some(Word { id, forms, gloss: py::strip(&gloss).to_string(), frequency, note })
 }
 
-pub fn load_word_inventory(path: &Path) -> Result<WordInventory, Vec<String>> {
+pub fn load_word_inventory(src: &dyn Source, path: &Path) -> Result<WordInventory, Vec<String>> {
     if path.extension().is_some_and(|e| e.eq_ignore_ascii_case("csv")) {
-        return load_word_inventory_csv(path);
+        return load_word_inventory_csv(src, path);
     }
-    let data = files::load_toml_file(path, false).map_err(|e| vec![e])?;
+    let data = files::load_toml_file(src, path, false).map_err(|e| vec![e])?;
     let mut errors = Vec::new();
     let mut inventory = WordInventory::new();
     let entries = match data.get("words") {
@@ -204,8 +204,8 @@ pub fn load_word_inventory(path: &Path) -> Result<WordInventory, Vec<String>> {
     if errors.is_empty() { Ok(inventory) } else { Err(errors) }
 }
 
-fn load_word_inventory_csv(path: &Path) -> Result<WordInventory, Vec<String>> {
-    let (header, rows) = files::read_csv_lines(path).map_err(|e| vec![e])?;
+fn load_word_inventory_csv(src: &dyn Source, path: &Path) -> Result<WordInventory, Vec<String>> {
+    let (header, rows) = files::read_csv_lines(src, path).map_err(|e| vec![e])?;
     let Some(header) = header else {
         return Err(vec![format!("'{}' is empty (no header row)", path.display())]);
     };
@@ -433,11 +433,11 @@ fn assemble(ordered: Vec<(String, Table)>, features: &FeatureInventory) -> Resul
     Ok(inventory)
 }
 
-pub fn load_rule_inventory(path: &Path, features: &FeatureInventory) -> Result<RuleInventory, Vec<String>> {
+pub fn load_rule_inventory(src: &dyn Source, path: &Path, features: &FeatureInventory) -> Result<RuleInventory, Vec<String>> {
     if path.extension().is_some_and(|e| e.eq_ignore_ascii_case("csv")) {
-        return load_rule_inventory_csv(path, features);
+        return load_rule_inventory_csv(src, path, features);
     }
-    let data = files::load_toml_file(path, false).map_err(|e| vec![e])?;
+    let data = files::load_toml_file(src, path, false).map_err(|e| vec![e])?;
     let ordered = data
         .into_iter()
         .map(|(k, v)| (k, if let Toml::Table(t) = v { t } else { Table::new() }))
@@ -445,8 +445,8 @@ pub fn load_rule_inventory(path: &Path, features: &FeatureInventory) -> Result<R
     assemble(ordered, features)
 }
 
-fn load_rule_inventory_csv(path: &Path, features: &FeatureInventory) -> Result<RuleInventory, Vec<String>> {
-    let (header, rows) = files::read_csv_lines(path).map_err(|e| vec![e])?;
+fn load_rule_inventory_csv(src: &dyn Source, path: &Path, features: &FeatureInventory) -> Result<RuleInventory, Vec<String>> {
+    let (header, rows) = files::read_csv_lines(src, path).map_err(|e| vec![e])?;
     let Some(header) = header else {
         return Err(vec![format!("'{}' is empty (no header row)", path.display())]);
     };
@@ -518,12 +518,12 @@ fn load_rule_inventory_csv(path: &Path, features: &FeatureInventory) -> Result<R
 
 // ---- Settings ---------------------------------------------------------------------------------
 
-pub fn load_settings(path: &Path) -> Result<Settings, Vec<String>> {
+pub fn load_settings(src: &dyn Source, path: &Path) -> Result<Settings, Vec<String>> {
     let mut settings = Settings::default();
-    if !path.is_file() {
+    if !src.is_file(path) {
         return Ok(settings);
     }
-    let data = files::load_toml_file(path, true).map_err(|e| vec![e])?;
+    let data = files::load_toml_file(src, path, true).map_err(|e| vec![e])?;
     let schema: [(&str, &[(&str, f64)]); 3] = [
         ("accuracy", &[("transposition_cost", 0.0)]),
         (

@@ -1,18 +1,49 @@
 //! Reading TOML and CSV files the way the Python loaders read them.
 
-use std::path::Path;
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 
 use indexmap::IndexMap;
 use toml::{Table, Value as Toml};
 
-pub fn load_toml_file(path: &Path, allow_empty: bool) -> Result<Table, String> {
-    if !path.is_file() {
+/// Where the loaders read project files: the disk, or a map of paths to texts (the browser).
+pub trait Source {
+    fn is_file(&self, path: &Path) -> bool;
+    fn read(&self, path: &Path) -> std::io::Result<String>;
+}
+
+pub struct Disk;
+
+impl Source for Disk {
+    fn is_file(&self, path: &Path) -> bool {
+        path.is_file()
+    }
+    fn read(&self, path: &Path) -> std::io::Result<String> {
+        std::fs::read_to_string(path)
+    }
+}
+
+#[derive(Default)]
+pub struct Memory(pub HashMap<PathBuf, String>);
+
+impl Source for Memory {
+    fn is_file(&self, path: &Path) -> bool {
+        self.0.contains_key(path)
+    }
+    fn read(&self, path: &Path) -> std::io::Result<String> {
+        self.0.get(path).cloned().ok_or_else(|| std::io::ErrorKind::NotFound.into())
+    }
+}
+
+pub fn load_toml_file(src: &dyn Source, path: &Path, allow_empty: bool) -> Result<Table, String> {
+    if !src.is_file(path) {
         return Err(format!("There is no file at '{}'", path.display()));
     }
     if !path.extension().is_some_and(|e| e.eq_ignore_ascii_case("toml")) {
         return Err(format!("File at '{}' is not a TOML file", path.display()));
     }
-    let text = std::fs::read_to_string(path)
+    let text = src
+        .read(path)
         .map_err(|e| format!("Could not open '{}': {e}", path.display()))?;
     let data: Table = text
         .parse::<Table>()
@@ -60,14 +91,15 @@ pub fn parse_csv(text: &str) -> Result<(Option<Vec<String>>, Vec<CsvRow>), Strin
 }
 
 /// `load_csv_file`: every row of a CSV file with a header, at least one data row.
-pub fn load_csv_file(path: &Path) -> Result<(Vec<String>, Vec<CsvRow>), String> {
-    if !path.is_file() {
+pub fn load_csv_file(src: &dyn Source, path: &Path) -> Result<(Vec<String>, Vec<CsvRow>), String> {
+    if !src.is_file(path) {
         return Err(format!("There is no file at '{}'", path.display()));
     }
     if !path.extension().is_some_and(|e| e.eq_ignore_ascii_case("csv")) {
         return Err(format!("File at '{}' is not a CSV file", path.display()));
     }
-    let text = std::fs::read_to_string(path)
+    let text = src
+        .read(path)
         .map_err(|e| format!("Could not read '{}': {e}", path.display()))?;
     let (header, rows) =
         parse_csv(&text).map_err(|e| format!("Could not read '{}': {e}", path.display()))?;
@@ -82,8 +114,9 @@ pub fn load_csv_file(path: &Path) -> Result<(Vec<String>, Vec<CsvRow>), String> 
 
 /// Read a CSV inventory the way the dual-format loaders do: `text.splitlines()` fed to
 /// `csv.DictReader`.
-pub fn read_csv_lines(path: &Path) -> Result<(Option<Vec<String>>, Vec<CsvRow>), String> {
-    let text = std::fs::read_to_string(path)
+pub fn read_csv_lines(src: &dyn Source, path: &Path) -> Result<(Option<Vec<String>>, Vec<CsvRow>), String> {
+    let text = src
+        .read(path)
         .map_err(|e| format!("could not read '{}': {e}", path.display()))?;
     let joined = crate::py::splitlines(&text).join("\n");
     parse_csv(&joined).map_err(|e| format!("could not read '{}': {e}", path.display()))

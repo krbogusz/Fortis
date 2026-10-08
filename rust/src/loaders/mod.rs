@@ -28,16 +28,26 @@ pub fn load_project(
     words_path: Option<&Path>,
     rules_path: Option<&Path>,
 ) -> Result<Project, Vec<String>> {
-    let defaults = default_project_dir();
-    let dir = project_dir.map(Path::to_path_buf).unwrap_or_else(|| defaults.clone());
+    load_project_from(&files::Disk, &default_project_dir(), project_dir, words_path, rules_path)
+}
+
+/// Load a project from *src*: each file from *project_dir*, else from *defaults*.
+pub fn load_project_from(
+    src: &dyn files::Source,
+    defaults: &Path,
+    project_dir: Option<&Path>,
+    words_path: Option<&Path>,
+    rules_path: Option<&Path>,
+) -> Result<Project, Vec<String>> {
+    let dir = project_dir.unwrap_or(defaults);
     let pick = |name: &str| {
         let candidate = dir.join(name);
-        if candidate.exists() { candidate } else { defaults.join(name) }
+        if src.is_file(&candidate) { candidate } else { defaults.join(name) }
     };
     let pick_dual = |toml_name: &str, csv_name: &str| {
         for name in [toml_name, csv_name] {
             let candidate = dir.join(name);
-            if candidate.exists() {
+            if src.is_file(&candidate) {
                 return candidate;
             }
         }
@@ -48,7 +58,7 @@ pub fn load_project(
     let diacritics_path = pick_dual("diacritics.toml", "diacritics.csv");
     let sonorities_path = pick_dual("sonorities.toml", "sonorities.csv");
 
-    let mut features = match inventories::load_feature_inventory(&pick("features.toml")) {
+    let mut features = match inventories::load_feature_inventory(src, &pick("features.toml")) {
         Ok(f) => f,
         Err(e) if e.len() > 1 => return Err(e.into_iter().map(|e| format!("features.toml: {e}")).collect()),
         Err(e) => return Err(e),
@@ -58,31 +68,31 @@ pub fn load_project(
 
     let mut tiers = TierInventory::new();
     let tiers_path = pick("tiers.toml");
-    if tiers_path.exists() {
-        match inventories::load_tier_inventory(&tiers_path, &mut features) {
+    if src.is_file(&tiers_path) {
+        match inventories::load_tier_inventory(src, &tiers_path, &mut features) {
             Ok(t) => tiers = t,
             Err(e) => errors.extend(prefix("tiers.toml".into(), e)),
         }
     }
-    let letters = inventories::load_letter_inventory(&pick("letters.csv"), &features)
+    let letters = inventories::load_letter_inventory(src, &pick("letters.csv"), &features)
         .map_err(|e| errors.extend(prefix("letters.csv".into(), e)))
         .ok();
-    let diacritics = inventories::load_diacritic_inventory(&diacritics_path, &features)
+    let diacritics = inventories::load_diacritic_inventory(src, &diacritics_path, &features)
         .map_err(|e| errors.extend(prefix(file_name(&diacritics_path), e)))
         .ok();
-    let sonorities = inventories::load_sonorities_inventory(&sonorities_path, &features)
+    let sonorities = inventories::load_sonorities_inventory(src, &sonorities_path, &features)
         .map_err(|e| errors.extend(prefix(file_name(&sonorities_path), e)))
         .ok();
-    let syllable_parts = inventories::load_syllable_parts_inventory(&pick("syllable_parts.toml"), &features)
+    let syllable_parts = inventories::load_syllable_parts_inventory(src, &pick("syllable_parts.toml"), &features)
         .map_err(|e| errors.extend(prefix("syllable_parts.toml".into(), e)))
         .ok();
-    let words = lexicon::load_word_inventory(&words_path)
+    let words = lexicon::load_word_inventory(src, &words_path)
         .map_err(|e| errors.extend(prefix(file_name(&words_path), e)))
         .ok();
-    let rules = lexicon::load_rule_inventory(&rules_path, &features)
+    let rules = lexicon::load_rule_inventory(src, &rules_path, &features)
         .map_err(|e| errors.extend(prefix(file_name(&rules_path), e)))
         .ok();
-    let settings = lexicon::load_settings(&pick("settings.toml"))
+    let settings = lexicon::load_settings(src, &pick("settings.toml"))
         .map_err(|e| errors.extend(prefix("settings.toml".into(), e)))
         .ok();
     if !errors.is_empty() {
